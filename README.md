@@ -1,13 +1,11 @@
 # Janux Authorization Angular Seed
 
 This is was initially based on the 
-[angular-app project](https://github.com/angular-app/angular-app). 
+[angular-app project](https://github.com/angular-app/angular-app). That project was simplified to 
+focus solely on providing Authentication and Authorization functionality based on the 
+[Janux Security](https://github.com/janux/janux-security.js) library.
 
-The project was simplified to focus solely on providing Authentication and Authorization
-functionality based on the [Janux Security](https://github.com/janux/janux-security.js)
-abstractions.
-
-The Janux Service project includes a flexible permission-based scheme that makes it possible to
+The Janux Service library includes a flexible permission-based scheme that makes it possible to
 declare in the configuration of an application the permissions that are available to a user, and to
 then aggregate these permissions into Roles in a declarative way.
 

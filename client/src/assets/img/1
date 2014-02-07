@@ -1,0 +1,3 @@
+gwenview(5632)/kdeui (kdelibs): Attempt to use QAction "edit_redo" with KXMLGUIFactory! 
+gwenview(5632)/kdeui (kdelibs): Attempt to use QAction "edit_undo" with KXMLGUIFactory! 
+gwenview(5632): Invalid url KUrl("") 

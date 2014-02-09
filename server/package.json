@@ -1,15 +1,15 @@
 {
-  "name": "angular-app-server",
-  "description": "Back end server to support our angular app",
+  "name": "janux-auth-server",
+  "description": "Back end server to support janux auth seed angular front-end",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "~3.0",
-    "passport": "~0.1.12",
-    "passport-local": "~0.1.6",
+    "express":           "~3.0",
     "express-namespace": "~0.1.1",
-    "open": "0.0.3",
-    "request": "~2.16.6"
+    "open":              "0.0.3",
+    "passport":          "~0.1.12",
+    "passport-local":    "~0.1.6",
+    "request":           "~2.16.6"
   },
   "devDependencies": {
     "rewire": "~1.0.3",

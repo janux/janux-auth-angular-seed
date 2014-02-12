@@ -1,8 +1,5 @@
 angular.module('app', [
   'ngRoute',
-  'projectsinfo',
-  'dashboard',
-  'projects',
   'admin',
   'services.breadcrumbs',
   'services.i18nNotifications',

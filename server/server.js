@@ -18,6 +18,16 @@ var app = express();
 var secureServer = https.createServer(credentials, app);
 var server = http.createServer(app);
 
+// pp-2014-02-14
+var
+  appContext = require('./app-context'),
+  log4js     = require('log4js')
+;
+
+// Logging config is done via 'config' package in config/default.js via property config.log4js; 
+// it is being initialized programmatically in app-context.js
+var log = log4js.getLogger('Server');
+
 require('./lib/routes/static').addRoutes(app, config);
 
 app.use(protectJSON);
@@ -33,9 +43,9 @@ security.initialize(config.mongo.dbUrl, config.mongo.apiKey, config.security.dbN
 
 app.use(function(req, res, next) {
   if ( req.user ) {
-    console.log('Current User:', req.user.firstName, req.user.lastName);
+    log.info('Current User:', req.user.firstName, req.user.lastName);
   } else {
-    console.log('Unauthenticated');
+    log.info('Unauthenticated');
   }
   next();
 });
@@ -72,6 +82,8 @@ server.listen(config.server.listenPort, '0.0.0.0', 511, function() {
   var open = require('open');
   open('http://localhost:' + config.server.listenPort + '/');
 });
-console.log('Angular App Server - listening on port: ' + config.server.listenPort);
+log.info('Angular App Server - listening on port: ' + config.server.listenPort);
 secureServer.listen(config.server.securePort);
-console.log('Angular App Server - listening on secure port: ' + config.server.securePort);
+log.info('Angular App Server - listening on secure port: ' + config.server.securePort);
+
+// set vim: expandtab ts=2 sw=2 :

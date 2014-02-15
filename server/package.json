@@ -4,8 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "config":            ">= 0.4.28",
     "express":           "~3.0",
     "express-namespace": "~0.1.1",
+    "log4js":            "*",
     "open":              "0.0.3",
     "passport":          "~0.1.12",
     "passport-local":    "~0.1.6",

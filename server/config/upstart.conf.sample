@@ -1,0 +1,22 @@
+#!upstart
+
+description "express instance running janux-auth-seed"
+author "pparavicini"
+
+start on startup
+stop on shutdown
+
+script
+	echo $$ > /var/run/janux-auth.pid
+	cd /path/to/your/janux-auth-seed
+	exec sudo -u janux-user /usr/bin/node server.js >> server.log
+end script
+
+pre-start script
+	echo "[`date -u +%Y-%m-%dT%T.%3N`] Starting janux-auth-seed" >> /path/to/your/janux-auth-seed/server.log
+end script
+
+pre-stop script
+	rm /var/run/janux-auth.pid
+	echo "[`date -u +%Y-%m-%dT%T.%3N`] Stopping janux-auth-seed" >> /path/to/your/janux-auth-seed/server.log
+end script

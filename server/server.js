@@ -7,7 +7,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 var express = require('express');
 var mongoProxy = require('./lib/mongo-proxy');
-var config = require('./config.js');
+var config = require('config');
 var passport = require('passport');
 var security = require('./lib/security');
 var xsrf = require('./lib/xsrf');

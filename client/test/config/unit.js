@@ -25,7 +25,7 @@ module.exports = function(karma) {
 		// reporters: 'junit',
 
 		junitReporter: {
-			outputFile: 'test.xml',
+			outputFile: 'test-results.xml',
 			suite: 'unit'
 		},
 

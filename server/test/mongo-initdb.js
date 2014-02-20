@@ -2,7 +2,7 @@
 
 var rewire = require('rewire');
 var initDB = require('../lib/initDB');
-var config = require('../config');
+var config = require('config');
 
 module.exports = {
   setUp: function (callback) {

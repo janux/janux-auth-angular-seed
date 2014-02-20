@@ -1,0 +1,25 @@
+#!upstart
+
+# Improve this startup script by replacing the repeating literals below
+# (like /var/log/some-app/server.log) with suitable variables
+
+description "express instance running some-app"
+author "your-name"
+
+start on startup
+stop on shutdown
+
+script
+	echo $$ > /var/run/some-app.pid
+	cd /var/www/some-app
+	exec sudo -u app-user /usr/bin/node server.js >> /var/log/some-app/server.log
+end script
+
+pre-start script
+	echo "[`date -u +%Y-%m-%dT%T.%3N`] Starting some-app" >> /var/log/some-app/server.log
+end script
+
+pre-stop script
+	rm /var/run/some-app.pid
+	echo "[`date -u +%Y-%m-%dT%T.%3N`] Stopping some-app" >> /var/log/some-app/server.log
+end script

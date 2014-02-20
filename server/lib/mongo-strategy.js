@@ -2,6 +2,7 @@ var util = require('util');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var rest = require('request');
+var log = require('log4js').getLogger('mongo-strategy');
 
 function MongoDBStrategy(dbUrl, apiKey, dbName, collection) {
   this.dbUrl = dbUrl;
@@ -43,6 +44,7 @@ MongoDBStrategy.prototype.query = function(query, done) {
 MongoDBStrategy.prototype.get = function(id, done) {
   var query = { apiKey: this.apiKey };
   var request = rest.get(this.baseUrl + id, { qs: query, json: {} }, function(err, response, body) {
+		log.debug('get resp:', response);
     done(err, body);
   });
 };
@@ -50,6 +52,7 @@ MongoDBStrategy.prototype.get = function(id, done) {
 // Find a user by their email
 MongoDBStrategy.prototype.findByEmail = function(email, done) {
   this.query({ q: JSON.stringify({email: email}) }, function(err, result) {
+		log.debug('findByEmail resp:', result);
     if ( result && result.length === 1 ) {
       return done(err, result[0]);
     }

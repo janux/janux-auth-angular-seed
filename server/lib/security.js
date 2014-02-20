@@ -1,9 +1,11 @@
 var express = require('express');
 var passport = require('passport');
 var MongoStrategy = require('./mongo-strategy');
+var log = require('log4js').getLogger('security');
 var app = express();
 
 var filterUser = function(user) {
+	log.debug('user in filterUser:', user);
   if ( user ) {
     return {
       user : {

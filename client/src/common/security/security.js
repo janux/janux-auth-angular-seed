@@ -61,6 +61,7 @@ angular.module('security.service', [
     login: function(email, password) {
       var request = $http.post('/login', {email: email, password: password});
       return request.then(function(response) {
+				console.debug("login resp:", JSON.stringify(response));
         service.currentUser = response.data.user;
         if ( service.isAuthenticated() ) {
           closeLoginDialog(true);
@@ -77,7 +78,8 @@ angular.module('security.service', [
 
     // Logout the current user and redirect
     logout: function(redirectTo) {
-      $http.post('/logout').then(function() {
+      $http.post('/logout').then(function(resp) {
+				console.debug("logout resp:", JSON.stringify(resp));
         service.currentUser = null;
         redirect(redirectTo);
       });

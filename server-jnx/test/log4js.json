@@ -1,0 +1,29 @@
+{
+  "appenders": [
+    {
+      "type": "file",
+      "filename": "test/test.log",
+      "layout" : {
+        "type" : "pattern",
+        "pattern" : "%d | %p | %c | %m"
+      }
+    },
+    { 
+      "type": "console",
+      "layout" : {
+        "type" : "pattern",
+        "pattern" : "%[%d | %p | %c |%] %m"
+      }
+    }
+  ],
+  "replaceConsole" : "false",
+	"levels": { 
+		"AuthService_test": "WARN", 
+		"console": "WARN", 
+		"PermissionContext_test": "WARN",
+		"PermissionHolder_test": "WARN",
+		"Role_test": "WARN",
+		"test": "WARN",
+		"UserServiceMock": "WARN"
+	}
+}

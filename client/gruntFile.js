@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         app: ['src/app/**/*.tpl.html'],
         common: ['src/common/**/*.tpl.html']
       },
-      less: ['src/less/stylesheet.less'], // recess:build doesn't accept ** in its file patterns
+      less: ['src/less/index.less'], // recess:build doesn't accept ** in its file patterns
       lessWatch: ['src/less/**/*.less']
     },
     clean: ['<%= distdir %>/*'],

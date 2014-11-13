@@ -31,6 +31,7 @@
 		"grunt-html2js":            "~0.1.0",
 		"grunt-karma":              "~0.5",
 		"grunt-recess":             "~0.3",
+		"karma":                    "0.9.4",
 		"karma-junit-reporter":     "0.0.2",
 		"karma-phantomjs-launcher": "0.0.2",
 		"phantomjs":                "~1.9.1-0"

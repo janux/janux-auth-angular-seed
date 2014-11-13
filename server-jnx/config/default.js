@@ -27,35 +27,19 @@ var log4jsConfig =
 
 module.exports = {
 
-	log4js: {
-		config: log4jsConfig,
-		globalLogLevel: 'INFO'
-	},
-
-	server: {
-		port: 3000,
-		staticUrl: '/static',
-		distFolder: path.resolve(__dirname, '../../client/dist')
+	serverAppContext: {
+		server: {
+			port: 9000,
+			staticUrl: '/static',
+			distFolder: path.join('..', 'client', 'dist'),
+			livereload: false
+		},
+		
+		log4js: {
+			config: log4jsConfig,
+			globalLogLevel: 'INFO'
+		}
 	}
-// 
-// 	service: {
-// 		common: {
-// 			// baseUrl: 'http://core2.jetsonsys.com:10080/rpc'
-// 			baseUrl: 'http://core1.jetsonsys.com/api',
-// 			auth: {
-// 				user: 'admin',
-// 				pass: 'gra33y'
-// 			}
-// 		},
-// 		user: {
-// 			impl: './lib/UserService',
-// 			contextPath: '/userservice'
-// 		},
-// 		contact: {
-// 			impl: './lib/ContactService',
-// 			contextPath: '/contactservice'
-// 		}
-// 	}
 };
 
 // vim: set noexpandtab ts=2 sw=2 :

@@ -5,6 +5,7 @@
  */
 var 
 	express       = require('express'),
+	livereload    = require('connect-livereload'),
 	// flash         = require('connect-flash'),
 	http          = require('http'),
 	log4js        = require('log4js')
@@ -28,7 +29,7 @@ app.configure(function(){
 	// app.set('views', appContext.server.distFolder);
 	// app.set('views', __dirname + '/views');
 	// app.set('view engine', 'jade');
-	app.use(express.logger());
+	// app.use(express.logger());
 	app.use(express.bodyParser());
 	app.use(express.cookieParser('lucy in the sky'));
 	app.use(express.cookieSession());
@@ -41,6 +42,13 @@ app.configure(function(){
 
 	// not technically necessary, we seem to be serving the favicon.ico just fine without this
 	// app.use(express.favicon(appContext.server.distFolder + '/favicon.ico'));
+	
+	log.info('livereload is:', appContext.server.livereload);
+	
+	if (appContext.server.livereload) {
+		log.info('Using livereload');
+		app.use(livereload());
+	}
 
 	app.use(passport.initialize());
 	app.use(passport.session()); // supports persistent login sessions
@@ -62,8 +70,8 @@ server.on('error', function() {
 
 server.on('listening', function() {
 	console.log("janux-auth-seed listening on port '%d' in '%s' mode", this.address().port, app.settings.env);
-	// console.log("Connected to back-end at: '%s'", appContext.service.common.baseUrl);
 });
 
 server.listen(app.get('port'));
+
 log.trace("app.routes: ", app.routes);

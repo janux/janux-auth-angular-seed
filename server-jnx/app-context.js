@@ -1,5 +1,5 @@
 var 
-	config   = require('config'),
+	config   = require('config').serverAppContext,
 	log4js   = require('log4js'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy

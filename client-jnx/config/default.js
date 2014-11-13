@@ -12,10 +12,13 @@ var cfg = {
 		lib:     'lib',
 		js:      'app',
 		partial: 'view',
-		test:    'test'
+		server:  '../server-jnx',
+		test:    'test',
+		vendor:  'vendor'
 	},
 	file: {
-		app: 'app.js'
+		app: 'app.js',
+		server: 'server.js'
 	},
 	fileset: {},
 }; 
@@ -34,8 +37,8 @@ cfg.fileset.js = path.join(cfg.dir.src, cfg.dir.js, '**','*.js');
 
 // files watched during the build
 cfg.fileset.watch = [
-	// path.join(cfg.dir.dist,'*.html'),
-	cfg.fileset.jade,
+	path.join(cfg.dir.dist,'**','*.html'),
+	// cfg.fileset.jade,
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.css'),
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.less'),
 	path.join(cfg.dir.src, cfg.dir.img,'**','*'),
@@ -86,13 +89,27 @@ cfg.jshint = {
 }
 
 // the connect or other server config
+/*
 cfg.server = {
+	exec: 'connect',
 	root: [cfg.dir.dist],
 	port: 9000,
 	host: '0.0.0.0',
 	open: false,
 	livereload: false
 };
+*/
 
+//
+// gulp-express client-side config
+cfg.server = {
+	exec: 'express',
+	file: path.join(cfg.dir.server, cfg.file.server),
+}
+
+// express server-side config
+// Load the default config from the config file in the server project;
+// this configuration also supports running 'node server.js' from the server folder
+cfg.serverAppContext = require(path.join('..', cfg.dir.server, 'config', 'default.js')).serverAppContext
 
 module.exports = cfg;

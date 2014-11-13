@@ -17,6 +17,11 @@ if (!gulp.cfg) {
 gulp.cfg.pkg = require('./package.json');
 gulp.plugins = require('gulp-load-plugins')();
 
+/*
+for (var plugin in gulp.plugins) {
+	console.log(plugin);
+}
+*/
 
 // Load all the tasks that are defined in the 'gulp' folder.  
 var taskDir  = require('require-dir')('./gulp');
@@ -47,18 +52,27 @@ gulp.task('build:clean', ['clean'], function() {
 // closing new browser windows, or reloading on every change
 //
 gulp.task('serve', ['build:clean'], function() {
-	gulp.start('connect');
+	gulp.start(gulp.cfg.server.exec);
+});
+
+gulp.task('serve-reload', function() {
+	gulp.start(gulp.cfg.server.exec + '-reload');
 });
 
 // Alias for 'serve'
 gulp.task('server',['serve']);
 
+// Alias for 'serve-reload'
+gulp.task('server-reload',['serve-reload']);
+
 //
 // Builds and runs from the dist folder only, to smoketest packaged app
 //
+/*
 gulp.task('serve:dist', ['build:clean'], function() {
 	gulp.start('connect-dist');
 });
+*/
 
 
 // Simply build by default

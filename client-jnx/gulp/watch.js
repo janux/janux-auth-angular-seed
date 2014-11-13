@@ -13,17 +13,24 @@ module.exports = function(gulp) {
 		gulp.start('watch');
 	});
 
-	gulp.task('watch',['build','connect-reload'], function () {
+	gulp.task('watch',['build', 'serve-reload'], function () {
+
+		// gulp.start('server-reload');
 
 		// Watch for changes that change during dev
-		gulp.watch(cfg.fileset.watch, {debounceDelay: 250}, function(event) {
-			// console.log('watch triggered:', event );
-			gulp.src(path.join(cfg.dir.dist,'*.html')).pipe(gulp.plugins.connect.reload());
+		gulp.watch(cfg.fileset.watch, {debounceDelay: 1000}, function(event) {
+			console.log('watch triggered:', event );
+
+			// Assuming a single page-app, always reload the index page
+			event.path = path.join(cfg.dir.dist, 'index.html');
+
+			// ensure all processing is done before reloading
+			setTimeout(function() {
+				gulp.plugins.express.notify(event);
+			},
+			250);
 		});
 
-		// gulp.watch( 'dist/**/*', function(event) {
-		//		console.log('event: ', event);
-		// });
 		
 		// Watch .less files
 		gulp.watch( cfg.fileset.lessSrc, ['styles']);
@@ -31,7 +38,6 @@ module.exports = function(gulp) {
 		gulp.watch( cfg.fileset.jade, ['jade']);
 
 		// Watch .js files
-		// gulp.watch('app/scripts/**/*.js', ['scripts']);
 		// TODO: add two entries for 'app' and 'common' folders rather than going
 		// through all the folders under 'src'
 		gulp.watch([ 

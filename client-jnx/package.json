@@ -25,7 +25,7 @@
 		"gulp":                  "^3.6.0",
 		"gulp-autoprefixer":     "^0.0.6",
 		"gulp-concat":           "^2.1.7",
-		"gulp-connect":          "^2.0.4",
+		"gulp-express":          "^0.1.0",
 		"gulp-jade":             "^0.4.2",
 		"gulp-jshint":           "^1.8.4",
 		"gulp-less":             "^1.2.2",

@@ -1,0 +1,9 @@
+.auth
+	.auth-status(ng-show='!isAuthenticated()', ng-click='login()') Login 
+		span.entypo.entypo-login
+
+	.auth-status(ng-show='isAuthenticated()', ng-click='logout()') Logout 
+		span.entypo.entypo-logout
+
+	.auth-user(ng-show='isAuthenticated()') {{currentUser.firstName}} {{currentUser.lastName}} &nbsp;
+		span.entypo.entypo-down-open

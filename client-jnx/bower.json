@@ -1,0 +1,11 @@
+{
+  "name": "janux-web-seed",
+  "version": "0.0.1-SNAPSHOT",
+  "dependencies": {
+		"angular":       "1.2.x",
+		"angular-ui-router": "~0.2.11",
+		"jquery":        "~2.1.1",
+    "normalize.css": "~3.0.0",
+    "semantic-grid": "*"
+  }
+}

@@ -1,0 +1,123 @@
+@import "variable";
+@import "mixin";
+
+.font-face('Base9_SmallCaps');
+// @import url('http://fonts.googleapis.com/css?family=Radley:400,400italic');
+
+.woff-font(OpenSans, normal, normal, @font-path, OpenSans-Regular);
+.woff-font(OpenSans, normal, italic, @font-path, OpenSans-Italic);
+.woff-font(OpenSans, bold,   normal, @font-path, OpenSans-Bold);
+.woff-font(OpenSans, bold,   italic, @font-path, OpenSans-BoldItalic);
+
+.woff-font(OpenSans, 300,    normal, @font-path, OpenSans-Light);
+.woff-font(OpenSans, 300,    italic, @font-path, OpenSans-LightItalic);
+.woff-font(OpenSans, 600,    normal, @font-path, OpenSans-SemiBold);
+.woff-font(OpenSans, 600,    italic, @font-path, OpenSans-SemiBoldItalic);
+.woff-font(OpenSans, 800,    normal, @font-path, OpenSans-ExtraBold);
+.woff-font(OpenSans, 800,    italic, @font-path, OpenSans-ExtraBoldItalic);
+
+.woff-font(DroidSerif, normal, normal, @font-path, DroidSerif-Regular);
+.woff-font(DroidSerif, normal, italic, @font-path, DroidSerif-Italic);
+.woff-font(DroidSerif, bold,   normal, @font-path, DroidSerif-Bold);
+.woff-font(DroidSerif, bold,   italic, @font-path, DroidSerif-BoldItalic);
+
+@font-sans:  'OpenSans';
+@font-serif: 'DroidSerif';
+
+
+html {
+	//
+	// causes 1 rem = 10px
+  //
+	// that is: a root em to be equal to 10px on all browsers in which:
+	//
+	// font-size: 100% yields a screen font size of 16px,
+	// on normal density displays
+	//
+	// see http://snook.ca/archives/html_and_css/font-size-with-rem
+	//
+	font-size: 62.5%;
+}
+
+body {
+	font-family: @font-sans, sans-serif;
+
+	//
+	// This yields the css line:
+	//
+	// font-size: 20px; font-size: 2rem;
+	//
+	// The first declaration provides support for browsers that do not support rem's
+	// see http://snook.ca/archives/html_and_css/font-size-with-rem
+	//
+	.rem(font-size, 16);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: @font-sans, sans-serif;
+}
+
+h1 {
+	.rem(font-size, 26);
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
+h2 {
+	.rem(font-size, 24);
+	font-weight: bold;
+}	
+
+h3 {
+	.rem(font-size, 22);
+	font-weight: 600;
+}	
+
+p, li {
+	line-height: 150%;
+	.rem(margin-bottom, 16);
+}
+
+.light {
+	font-family: @font-sans;
+	font-weight: 300;
+}
+
+.auth {
+}
+
+.auth-status {
+	font-variant: small-caps;
+	text-transform: lowercase;
+	.rem(font-size, 18);
+	.rem(letter-spacing, 1);
+	font-weight: 600;
+	color: @sageDark;
+}
+
+.auth-user {
+	.rem(font-size, 14);
+	color: @grey1;
+}
+
+nav {
+	a, a:link, a:visited, a:hover {
+		.rem(font-size, 15);
+		font-weight: 600;
+		color: white;
+	 	text-decoration: none;
+	}
+}
+
+.active {
+	text-decoration: underline;
+}
+
+
+.branding {
+	font-family: Base9_SmallCaps;
+	font-weight:normal;
+	.rem(font-size, 28);
+	.rem(letter-spacing, 2.8);
+	text-align:left;
+}

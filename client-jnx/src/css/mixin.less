@@ -1,0 +1,57 @@
+.font-face(@family, @font-weight:normal, @font-style:normal, @path:@font-path) {
+	@font-face {
+		font-family: '@{family}';
+		src: url('@{path}/@{family}.eot');
+		src:
+			url('@{path}/@{family}/@{family}.ttf')  format('truetype'),
+			url('@{path}/@{family}/@{family}.woff') format('woff'),
+			url('@{path}/@{family}/@{family}.svg')  format('svg'),
+			url('@{path}/@{family}/@{family}.eot?#iefix') format('embedded-opentype'),
+		;
+		font-weight: @font-weight;
+		font-style:  @font-style;
+	}
+}
+
+.woff-font(@family, @font-weight:normal, @font-style:normal, @font-root, @filename) {
+	@font-face {
+		font-family: @family;
+		font-weight: @font-weight;
+		font-style:  @font-style;
+		src: url('@{font-root}/@{family}/@{filename}.woff') format('woff');
+	}
+}
+
+//
+// This yields the css line:
+//
+// font-size: 20px; font-size: 2rem;
+//
+// The first declaration provides support for browsers that do not support rem's
+// see http://snook.ca/archives/html_and_css/font-size-with-rem
+//
+.rem(@attribute, @font-pixel-size, @conv-factor: 10) {
+	@{attribute}: unit(@font-pixel-size, px); 
+	@{attribute}: unit(@font-pixel-size / @conv-factor, rem);
+}
+
+.arrow(@direction, @size, @color) when (@direction = 'down') {
+	height: 0;
+	width:  0;
+	border-left:  @size solid transparent;
+	border-right: @size solid transparent;
+  border-top:   @size solid @color;
+}
+
+.debug_border(@color: black) {
+	border: solid 1px @color;
+}
+
+// 
+// Adds a 1px line of the color provided to a text style; this is intended for
+// cases where letters may be 'lost' in a background of the same color, for
+// example, white font on a light area of a photo
+//
+.text-border(@color: black) {
+	text-shadow: 1px 0 1px @color, -1px 0 1px @color, 0 1px 1px @color, 0 -1px 1px @color;
+}

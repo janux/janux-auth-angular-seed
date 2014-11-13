@@ -1,0 +1,44 @@
+@import "semantic-grid/stylesheets/less/grid.less"; // from bower
+@import "variable";
+@import "mixin";
+
+@break1: 380px;
+@break2: 768px;
+
+@media screen and (max-width: @break1) {
+	.masthead {
+		height: 2.50em;
+	}
+
+	.logo {
+		.column(2)
+	}
+
+	.logo img {
+		height: 2.5em;
+		padding: 0.25em;
+	}
+
+	.branding {
+		font-size: 1.15em;
+		.column(10);
+		.janux {
+			padding-left: .5em;
+		}
+	}
+
+	.maincolumn, .sidebar {
+		.column(12);
+		margin-bottom: 1em;
+	}
+}
+
+@media screen and (max-width: @break2) {
+	.logo, .sidebar {
+		.column(3)
+	}
+	.maincolumn, .branding {
+		.column(9)
+	}
+}
+

@@ -1,0 +1,17 @@
+This directory contains configuration files for the gulp build.  The
+build relies on the node.js 'config' package at 
+
+    project: https://github.com/lorenwest/node-config
+    docs:    http://lorenwest.github.io/node-config/latest
+
+In short, 'config' makes it possible to externalize the parameters that vary on a per-deployment
+basis (production, staging, local, etc...), so that a custom configuration can be stored along with
+the environment, and files under source-control do not have to be changed to fit an environment.
+
+If you want to change values in your local configuration, simply copy 
+
+    default.js
+to
+    development.js
+
+and override any parameters in default.js that you want to customize.

@@ -9,7 +9,7 @@ module.exports = ['security', function(security) {
 // .directive('loginToolbar', ['security', function(security) {
 //
   var directive = {
-    templateUrl: 'common/security/login/toolbar.html',
+    templateUrl: 'static/common/security/login/toolbar.html',
     restrict: 'E',
     replace:  true,
     scope:    true,

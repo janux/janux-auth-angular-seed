@@ -37,17 +37,17 @@ angular.module('MyApp',[
 		$stateProvider.state('users', {
 			// default state
 			url: '/',
-			templateUrl: 'app/user/index.html'
+			templateUrl: 'static/app/user/index.html'
 		})
 
 		.state('roles', {
 			url: '/roles',
-			templateUrl: 'app/role/index.html'
+			templateUrl: 'static/app/role/index.html'
 		})
 
 		.state('permissions', {
 			url: '/permissions',
-			templateUrl: 'app/permission/index.html'
+			templateUrl: 'static/app/permission/index.html'
 		});
 	}
 ]);

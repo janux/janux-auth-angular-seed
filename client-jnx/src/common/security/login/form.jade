@@ -17,7 +17,7 @@ form.login-form(name='form', novalidate)
 
 	.modal-footer
 		button.btn.btn-primary.login(ng-click='login()', ng-disabled='form.$invalid') Sign in
-		button.btn.clear(ng-click='clearForm') Clear
+		button.btn.clear(ng-click='clearForm()') Clear
 		button.btn.btn-warning.cancel(ng-click='cancelLogin()') Cancel
 
 

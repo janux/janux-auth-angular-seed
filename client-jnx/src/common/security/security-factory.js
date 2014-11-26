@@ -1,18 +1,30 @@
 'use strict';
 
 module.exports = 
-       ['$dialog','$http','$q', 
-function($dialog , $http , $q) {
+       ['$dialog','$http','$location','$q', 
+function($dialog , $http , $location , $q) {
+
+	function redirect(url) {
+		url = url || '/';
+		$location.path(url);
+	}
 
 	var loginDialog = null;
+
 	function openLoginDialog() {
-		if ( loginDialog ) {
+		if (loginDialog) {
 			throw new Error('Trying to open login dialog that is already open!');
 		}
 		loginDialog = $dialog.dialog();
 		//TODO-pp: the 'static' here is undesirable, should be replaced with build variable, 
 		//since this it is also dependent on the value to which we map static assets in express
 		loginDialog.open('static/common/security/login/form.html', 'LoginFormController').then(onLoginDialogClose)
+	}
+
+	function closeLoginDialog(success) {
+		if (loginDialog) {
+			loginDialog.close(success);
+		}
 	}
 
 	function onLoginDialogClose(success) {
@@ -37,13 +49,40 @@ function($dialog , $http , $q) {
 			return true;
 		},
 
+		/** 
+		 * Display the login modal
+		 */
 		showLogin: function() {
 			console.log('clicked on Login');
 			openLoginDialog();
 		},
 
-		logout: function() {
-			console.log('clicked on Logout');
+		/**
+		 * Authenticate the user with email and password
+		 */
+		login: function(email, password) {
+			var request = $http.post('/login', {email: email, password: password});
+			return request.then(function(response) {
+				console.debug("login resp:", JSON.stringify(response));
+				service.currentUser = response.data.user;
+				if ( service.isAuthenticated() ) {
+					closeLoginDialog(true);
+				}
+				return service.isAuthenticated();
+			});
+		},
+
+		cancelLogin: function() {
+			closeLoginDialog(false);
+			redirect();
+		},
+
+		logout: function(redirectTo) {
+			$http.post('/logout').then(function(resp) {
+				console.debug("logout resp:", JSON.stringify(resp));
+				service.currentUser = null;
+				redirect(redirectTo);
+			});
 		},
 
 		requestCurrentUser: function() {
@@ -58,14 +97,6 @@ function($dialog , $http , $q) {
 		},
 
 		currentUser: null,
-
-		/*
-		currentUser: { 
-			name: 'quietsky',
-			firstName: 'Philippe',
-			lastName: 'Paravicini'
-		},
-		*/
 
 		isAuthenticated: function() {
 			return !!service.currentUser;

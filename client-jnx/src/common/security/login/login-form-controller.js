@@ -41,7 +41,7 @@ function($scope , security) {
     }, function(x) {
       // If we get here then there was a problem with the login request to the server
       // $scope.authError = localizedMessages.get('login.error.serverError', { exception: x });
-      $scope.authError = 'login.error.serverError' + ' exception:' + x;
+      $scope.authError = 'login.error.serverError exception: ' + x;
     });
   };
 

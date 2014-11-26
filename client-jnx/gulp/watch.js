@@ -19,7 +19,7 @@ module.exports = function(gulp) {
 
 		// Watch for changes that change during dev
 		gulp.watch(cfg.fileset.watch, {debounceDelay: 1000}, function(event) {
-			console.log('watch triggered:', event );
+			// console.log('watch triggered:', event );
 
 			// Assuming a single page-app, always reload the index page
 			event.path = path.join(cfg.dir.dist, 'index.html');

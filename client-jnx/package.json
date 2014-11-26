@@ -41,8 +41,9 @@
 		"vinyl-source-stream":   "^1.0.0"
 	},
 	"browser": {
-		"angular":           "./vendor/angular.js",
-		"angular-ui-router": "./bower/angular-ui-router/release/angular-ui-router.js",
-		"common/security":   "./src/common/security/index.js"
+		"angular":            "./vendor/angular.js",
+		"angular-ui-router":  "./bower/angular-ui-router/release/angular-ui-router.js",
+		"ui-bootstrap-modal": "./vendor/ui-bootstrap-custom-0.1.0-SNAPSHOT.js",
+		"common/security":    "./src/common/security/index.js"
 	}
 }

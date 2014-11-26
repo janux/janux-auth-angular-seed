@@ -1,15 +1,45 @@
 'use strict';
 
-var out = ['$http','$q', 
-function(   $http,  $q) {
+module.exports = 
+       ['$dialog','$http','$q', 
+function($dialog , $http , $q) {
+
+	var loginDialog = null;
+	function openLoginDialog() {
+		if ( loginDialog ) {
+			throw new Error('Trying to open login dialog that is already open!');
+		}
+		loginDialog = $dialog.dialog();
+		//TODO-pp: the 'static' here is undesirable, should be replaced with build variable, 
+		//since this it is also dependent on the value to which we map static assets in express
+		loginDialog.open('static/common/security/login/form.html', 'LoginFormController').then(onLoginDialogClose)
+	}
+
+	function onLoginDialogClose(success) {
+		loginDialog = null;
+		if (success) {
+			console.debug("Successfully closed the dialog");
+			// queue.retryAll();
+		} else {
+			console.debug("Closed the dialog under inauspicious circumstances");
+			// redirect();
+		}
+	}
 
 	//
 	// The public API
 	//
 	var service = {
 
+		//TODO-pp: does this return a boolean or a string?
+		getLoginReason: function() {
+			// return queue.retryReason();
+			return true;
+		},
+
 		showLogin: function() {
 			console.log('clicked on Login');
+			openLoginDialog();
 		},
 
 		logout: function() {
@@ -44,5 +74,3 @@ function(   $http,  $q) {
 
 	return service;
 }];
-
-module.exports = out;

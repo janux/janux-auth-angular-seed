@@ -43,5 +43,8 @@ module.exports = function(gulp) {
 
 			.pipe(gulp.dest(cfg.dir.dist))
 			.pipe(gulp.plugins.size());
+
+		gulp.src(path.join(cfg.dir.vendor, 'bootstrap-2.1.1.css'))
+			.pipe(gulp.dest(path.join(cfg.dir.dist, cfg.dir.css)));
 	});
 };

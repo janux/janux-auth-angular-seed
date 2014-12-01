@@ -53,7 +53,6 @@ function($dialog , $http , $location , $q) {
 		 * Display the login modal
 		 */
 		showLogin: function() {
-			console.log('clicked on Login');
 			openLoginDialog();
 		},
 
@@ -63,7 +62,7 @@ function($dialog , $http , $location , $q) {
 		login: function(email, password) {
 			var request = $http.post('/login', {email: email, password: password});
 			return request.then(function(response) {
-				console.debug("login resp:", JSON.stringify(response));
+				// console.debug("login resp:", JSON.stringify(response));
 				service.currentUser = response.data.user;
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
@@ -79,7 +78,7 @@ function($dialog , $http , $location , $q) {
 
 		logout: function(redirectTo) {
 			$http.post('/logout').then(function(resp) {
-				console.debug("logout resp:", JSON.stringify(resp));
+				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;
 				redirect(redirectTo);
 			});

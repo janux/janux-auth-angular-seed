@@ -22,7 +22,7 @@ module.exports = function(gulp) {
 
 	gulp.task('browserify', function() {
 		console.log('bundling app...');
-		browserify(appFile)
+		return browserify(appFile)
 			.bundle()
 			.pipe(source(cfg.file.app))
 			.pipe(gulp.dest(cfg.dir.dist));

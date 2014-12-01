@@ -17,7 +17,8 @@ var cfg = {
 		vendor:  'vendor'
 	},
 	file: {
-		app: 'app.js',
+		app:    'app.js',
+		karma:  'karma.conf.js',
 		server: 'server.js'
 	},
 	fileset: {},

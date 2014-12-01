@@ -33,7 +33,7 @@ for (var filename in taskDir) {
 //
 // Process all assets for development
 //
-gulp.task('build', ['styles','jade','scripts','copy','browserify']);
+gulp.task('build', ['scripts','browserify','styles','jade','copy']);
 
 //
 // Does a clean dev build 
@@ -43,6 +43,29 @@ gulp.task('build', ['styles','jade','scripts','copy','browserify']);
 //
 gulp.task('build:clean', ['clean'], function() {
 	gulp.start('build');
+});
+
+// 
+// Builds, then runs tests on built files
+//
+gulp.task('test', ['build'], function() {
+	gulp.start('test:run');
+});
+
+//
+// Likewise, with a clean build
+// TODO: failing at the moment because karma cannot find app.js when it starts
+// The issue is that 'build' is nested inside 'build:clean', and so test:clean
+// does not wait for 'build' to end, but starts when 'build:clean' ends and
+// 'build' is still in course; 
+//
+gulp.task('test:clean', ['build:clean'], function() {
+	// console.log('scheduling tests...');
+
+  setTimeout(function() {
+		// console.log('running tests...');
+		gulp.start('test:run');
+	},2000);
 });
 
 

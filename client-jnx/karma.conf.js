@@ -1,6 +1,11 @@
 var cfg = require('config'),
 	path  = require('path');
 
+// replaces literal 'dist/**/*.html' = ['ng-html2js']
+// in preprocessors section further below
+var preprocessors = {};
+preprocessors[path.join(cfg.dir.dist,'**','*.html')] = ['ng-html2js'];
+
 module.exports = function(karma) {
   karma.set({
 
@@ -31,9 +36,7 @@ module.exports = function(karma) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-			path.join(cfg.dir.dist,'**','*.html'): ['ng-html2js']
-    },
+    preprocessors: preprocessors,
 
 		ngHtml2JsPreprocessor: {
 			stripPrefix:   cfg.dir.dist + path.sep,

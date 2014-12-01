@@ -10,7 +10,7 @@ module.exports = function(karma) {
   karma.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '..',
 
 
     // frameworks to use

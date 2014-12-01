@@ -13,7 +13,7 @@ module.exports = function(gulp) {
 		console.log('running tests with karma...');
 		gulp.src('dummy')
 			.pipe(gulp.plugins.karma({
-				configFile: cfg.file.karma,
+				configFile: path.join(cfg.dir.test, cfg.file.karma),
 				action:     'run'
 			})).on('error', function(err) {
 				// error interrupts processing

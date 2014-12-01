@@ -1,5 +1,8 @@
-module.exports = function(config) {
-  config.set({
+var cfg = require('config'),
+	path  = require('path');
+
+module.exports = function(karma) {
+  karma.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -13,11 +16,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser;
 		// the order of this list is important, load dependencies first
     files: [
-			'bower/jquery/dist/jquery.min.js',
-      'dist/app.js',
-			'dist/**/*.html',
-			'bower/angular-mocks/angular-mocks.js',
-      'test/**/*.spec.js'
+			path.join(cfg.dir.bower,'jquery','dist','jquery.min.js'),
+      path.join(cfg.dir.dist, cfg.file.app),
+			path.join(cfg.dir.dist,'**','*.html'),
+			path.join(cfg.dir.bower,'angular-mocks','angular-mocks.js'),
+      path.join(cfg.dir.test,'**','*.spec.js')
     ],
 
 
@@ -29,11 +32,11 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-			'dist/**/*.html': ['ng-html2js']
+			path.join(cfg.dir.dist,'**','*.html'): ['ng-html2js']
     },
 
 		ngHtml2JsPreprocessor: {
-			stripPrefix:   'dist/',
+			stripPrefix:   cfg.dir.dist + path.sep,
 			prependPrefix: 'static/',
 			moduleName:    'cachedTemplates'
 		},
@@ -42,7 +45,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['dots'],
 
 
     // web server port
@@ -54,8 +57,8 @@ module.exports = function(config) {
 
 
     // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    // possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
+    logLevel: karma.LOG_INFO,
 
 
     // enable / disable watching file and executing tests whenever any file changes

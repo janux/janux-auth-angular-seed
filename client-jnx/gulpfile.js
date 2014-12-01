@@ -33,7 +33,7 @@ for (var filename in taskDir) {
 //
 // Process all assets for development
 //
-gulp.task('build', ['scripts','browserify','styles','jade','copy']);
+gulp.task('build', ['lint','browserify','styles','jade','copy']);
 
 //
 // Does a clean dev build 

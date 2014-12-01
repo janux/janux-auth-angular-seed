@@ -11,7 +11,7 @@ var	path     = require('path'),
 module.exports = function(gulp) {
 	var cfg = gulp.cfg;
 	
-	gulp.task('scripts', function() {
+	gulp.task('lint', function() {
 		console.log('linting js files...');
 		gulp.src(cfg.fileset.js)
 			.pipe(gulp.plugins.jshint(cfg.jshint.rcfile))

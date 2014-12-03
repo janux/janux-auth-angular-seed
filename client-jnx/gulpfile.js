@@ -65,7 +65,7 @@ gulp.task('test:clean', ['build:clean'], function() {
   setTimeout(function() {
 		// console.log('running tests...');
 		gulp.start('test:run');
-	},2000);
+	},4000);
 });
 
 

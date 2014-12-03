@@ -18,15 +18,15 @@ module.exports = function(karma) {
 		frameworks: ['jasmine'],
 
 
+		//
 		// list of files / patterns to load in the browser;
 		// the order of this list is important, load dependencies first
+		//
 		files: [
-			path.join(cfg.dir.bower,'jquery','dist','jquery.min.js'),
 			path.join(cfg.dir.dist, cfg.file.app),
-			path.join(cfg.dir.dist,'**','*.html'),
 			path.join(cfg.dir.bower,'angular-mocks','angular-mocks.js'),
-			path.join(cfg.dir.test,'**','*.spec.js')
-		],
+			path.join(cfg.dir.dist,'**','*.html'),
+		].concat(cfg.fileset.test),
 
 
 		// list of files to exclude
@@ -61,6 +61,7 @@ module.exports = function(karma) {
 
 		// level of logging
 		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
+		// logLevel: karma.LOG_DEBUG,
 		logLevel: karma.LOG_INFO,
 
 
@@ -68,13 +69,29 @@ module.exports = function(karma) {
 		autoWatch: false,
 
 
-		// start these browsers
+		//
+		// Start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['PhantomJS'],
+		//
+		// PhantomJS by default, override via local config to specify a different browser
+		//
+		browsers: cfg.karma.browsers,
 
 
+		//
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: false
+		//
+		// True by default, set to false via local config when it is desirable to
+		// troubleshoot using a browser's inspector, for example:
+		//
+		// - set 'debugger' statement in source code
+		// - run 'gulp test'
+		// - open browser at port above
+		// - hit 'Debug' button
+		// - Open dev tools
+		// - refresh page
+		//
+		singleRun: cfg.karma.singleRun
 	});
 };

@@ -22,6 +22,7 @@
 	"dependencies": {},
 	"devDependencies": {
 		"browserify":               "^6.2.0",
+		"browserify-shim":          "^3.8.0",
 		"config":								    "^1.1.0",
 		"gulp":                     "^3.6.0",
 		"gulp-autoprefixer":        "^0.0.6",
@@ -39,6 +40,7 @@
 		"gulp-util":                "^2.2.14",
 		"karma":                    "^0.12.28",
 		"karma-jasmine":            "^0.3.2",
+		"karma-chrome-launcher":    "^0.1.5",
 		"karma-phantomjs-launcher": "^0.1.4",
 		"karma-ng-html2js-preprocessor": "^0.1.2",
 		"karma-spec-reporter":      "^0.0.13",
@@ -48,9 +50,20 @@
 		"vinyl-source-stream":      "^1.0.0"
 	},
 	"browser": {
-		"angular":            "./vendor/angular.js",
+		"angular":            "./bower/angular/angular.js",
 		"angular-ui-router":  "./bower/angular-ui-router/release/angular-ui-router.js",
+		"jquery":             "./bower/jquery/dist/jquery.js",
 		"ui-bootstrap-modal": "./vendor/ui-bootstrap-custom-0.1.0-SNAPSHOT.js",
 		"common/security":    "./src/common/security/index.js"
+	},
+	"browserify-shim": {
+		"jquery": "$",
+		"angular": {
+			"depends": ["jquery:jQuery"],
+			"exports": "angular"
+		}
+	},
+	"browserify": {
+		"transform": ["browserify-shim"]
 	}
 }

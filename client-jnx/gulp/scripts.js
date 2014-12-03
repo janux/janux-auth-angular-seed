@@ -20,9 +20,15 @@ module.exports = function(gulp) {
 
 	var appFile = '.' + path.sep + path.join(cfg.dir.src, cfg.dir.js, cfg.file.app);
 
+	//
+	// Uncomment to troubleshoot browserify-shim,
+	// along with setting {debug:true} further below
+	//
+	// process.env.BROWSERIFYSHIM_DIAGNOSTICS=1;
+	// 
 	gulp.task('browserify', function() {
 		console.log('bundling app...');
-		return browserify(appFile)
+		return browserify(appFile, {debug:false})
 			.bundle()
 			.pipe(source(cfg.file.app))
 			.pipe(gulp.dest(cfg.dir.dist));

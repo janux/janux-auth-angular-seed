@@ -79,6 +79,11 @@ cfg.fileset.jsLibs = [
 	path.join(cfg.dir.bower, 'angular-ui-router', 'release', 'angular-ui-router.js')
 ];
 
+// The test specs; override this locally to run a single test suite
+cfg.fileset.test = [
+	path.join(cfg.dir.test,'**','*.spec.js')
+]
+
 cfg.jade = {
 	debug:  false,
 	pretty: true
@@ -87,6 +92,11 @@ cfg.jade = {
 cfg.jshint = {
 	rcfile:   '.jshintrc',
 	reporter: 'default'
+}
+
+cfg.karma = {
+	singleRun: true,
+	browsers: ['PhantomJS']
 }
 
 // the connect or other server config

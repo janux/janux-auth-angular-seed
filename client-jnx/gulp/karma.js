@@ -4,13 +4,18 @@
 //
 
 var	path = require('path'),
-	karma  = require('browserify');
+	karma  = require('karma').server;
 
 module.exports = function(gulp) {
 	var cfg = gulp.cfg;
 	
-	gulp.task('test:run', function() {
-		console.log('running tests with karma...');
+	gulp.task('test:run', function(done) {
+		// console.log('running tests with karma... in', __dirname);
+		karma.start({
+			configFile: path.join(__dirname, '..',cfg.dir.test, cfg.file.karma),
+		}, done);
+
+		/*
 		gulp.src('dummy')
 			.pipe(gulp.plugins.karma({
 				configFile: path.join(cfg.dir.test, cfg.file.karma),
@@ -19,5 +24,6 @@ module.exports = function(gulp) {
 				// error interrupts processing
 				throw err;
 			});
+		*/
 	});
 };

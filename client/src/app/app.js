@@ -34,9 +34,14 @@ angular.module('MyApp',[
 		// State Configuration
 		//
 		
-		$stateProvider.state('users', {
+		$stateProvider.state('dashboard', {
 			// default state
 			url: '/',
+			templateUrl: 'static/app/dashboard.html'
+		})
+
+		.state('users', {
+			url: '/users',
 			templateUrl: 'static/app/user/index.html'
 		})
 

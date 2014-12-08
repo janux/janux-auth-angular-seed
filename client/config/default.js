@@ -12,7 +12,7 @@ var cfg = {
 		lib:     'lib',
 		js:      'app',
 		partial: 'view',
-		server:  '../server-jnx',
+		server:  '../server',
 		test:    'test',
 		vendor:  'vendor'
 	},

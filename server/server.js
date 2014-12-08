@@ -40,8 +40,7 @@ app.configure(function(){
 	// serve static assets from '/static' context path
 	app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
 
-	// not technically necessary, we seem to be serving the favicon.ico just fine without this
-	// app.use(express.favicon(appContext.server.distFolder + '/favicon.ico'));
+	app.use(express.favicon(appContext.server.distFolder + '/favicon.ico'));
 	
 	log.info('livereload is:', appContext.server.livereload);
 	

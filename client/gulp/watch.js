@@ -42,7 +42,7 @@ module.exports = function(gulp) {
 		// through all the folders under 'src'
 		gulp.watch([ 
 			path.join(cfg.dir.src, '**','*.js')
-		], ['scripts','browserify']);
+		], ['lint','browserify']);
 
 		// Watch image files
 		// gulp.watch('app/images/**/*', ['images']);

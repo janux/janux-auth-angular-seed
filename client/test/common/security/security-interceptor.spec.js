@@ -1,12 +1,10 @@
 describe('securityInterceptor', function() {
-	// var queue, interceptor, promise, wrappedPromise;
-	// TODO: add queue processing
-	var interceptor, promise, wrappedPromise;
+	var queue, interceptor, promise, wrappedPromise;
 
 	beforeEach(module('security'));
 
 	beforeEach(inject(function($injector) {
-		// queue			 = $injector.get('securityRetryQueue');
+		queue			     = $injector.get('securityRetryQueue');
 		interceptor		 = $injector.get('securityInterceptor');
 		wrappedPromise = {};
 		promise = {
@@ -30,8 +28,6 @@ describe('securityInterceptor', function() {
 		expect(errorHandler(httpResponse)).toBe(promise);
 	});
 
-	/*
-	// TODO: integrate queue processing
 	it('intercepts 401 error responses and adds it to the retry queue', function() {
 		var notAuthResponse = {
 			status: 401
@@ -39,8 +35,7 @@ describe('securityInterceptor', function() {
 		interceptor(promise);
 		var errorHandler = promise.catch.calls.mostRecent().args[0];
 		var newPromise	 = errorHandler(notAuthResponse);
-		// expect(queue.hasMore()).toBe(true);
-		// expect(queue.retryReason()).toBe('unauthorized-server');
+		expect(queue.hasMore()).toBe(true);
+		expect(queue.retryReason()).toBe('unauthorized-server');
 	});
-	*/
 });

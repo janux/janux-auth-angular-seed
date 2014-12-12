@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = 
-       ['$dialog','$http','$location','$q', 
-function($dialog , $http , $location , $q) {
+       ['$dialog','$http','$location','$q','securityRetryQueue', 
+function($dialog , $http , $location , $q, queue) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -31,21 +31,36 @@ function($dialog , $http , $location , $q) {
 		loginDialog = null;
 		if (success) {
 			console.debug("Successfully closed the dialog");
-			// queue.retryAll();
+			queue.retryAll();
 		} else {
 			console.debug("Closed the dialog under inauspicious circumstances");
-			// redirect();
+			redirect();
 		}
 	}
+
+	//
+	// Register a handler for when an item is added to the retry queue
+	// 
+	// The handler in question, shows the login window if queue.hasMore()
+	// Why is this necessary ?
+	//
+	queue.onItemAddedCallbacks.push(function(retryItem) {
+		if ( queue.hasMore() ) {
+			service.showLogin();
+		}
+	});
 
 	//
 	// The public API
 	//
 	var service = {
 
-		//TODO-pp: does this return a boolean or a string?
+		//
+		// Returns the 'reason' for why the auth operations fail, or 'undefined if no
+		// reasons exist
+		//
 		getLoginReason: function() {
-			// return queue.retryReason();
+			return queue.retryReason();
 			return true;
 		},
 
@@ -71,6 +86,10 @@ function($dialog , $http , $location , $q) {
 			});
 		},
 
+		//
+		// Gives up on trying to login, clears the retry queue (?)
+		// TODO-pp: if we are clearing the queue, should we not doing explicitly
+		//
 		cancelLogin: function() {
 			closeLoginDialog(false);
 			redirect();

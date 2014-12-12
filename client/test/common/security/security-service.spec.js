@@ -33,7 +33,7 @@ describe('security', function() {
 
   beforeEach(inject(function($injector) {
     service = $injector.get('security');
-    // queue   = $injector.get('securityRetryQueue');
+    queue   = $injector.get('securityRetryQueue');
   }));
 
 
@@ -56,7 +56,6 @@ describe('security', function() {
       expect(service.currentUser).toEqual(userInfo);
     });
 
-		/*
     it('calls queue.retry on a successful login', function() {
       $httpBackend.when('POST', '/login').respond(200, { user: userInfo });
       spyOn(queue, 'retryAll');
@@ -76,7 +75,6 @@ describe('security', function() {
       $httpBackend.flush();
       expect(queue.retryAll).not.toHaveBeenCalled();
     });
-		*/
 
     it('returns true to success handlers if the user authenticated', function() {
       $httpBackend.when('POST', '/login').respond(200, { user: userInfo });

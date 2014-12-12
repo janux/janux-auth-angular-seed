@@ -25,7 +25,7 @@ module.exports = function(karma) {
 		files: [
 			path.join(cfg.dir.dist, cfg.file.app),
 			path.join(cfg.dir.bower,'angular-mocks','angular-mocks.js'),
-			path.join(cfg.dir.dist,'**','*.html'),
+			{ pattern: path.join(cfg.dir.dist,'**','*.html'),  watched: true}
 		].concat(cfg.fileset.test),
 
 

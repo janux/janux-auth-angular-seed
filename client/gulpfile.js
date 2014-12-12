@@ -53,9 +53,21 @@ gulp.task('test', ['build'], function() {
 });
 
 //
+// Quick test that assumes that we have already built, 
+// and that we made incremental changes to js files;
+// in particular, this does not process less and jade files
+//
+gulp.task('test:quick', ['lint','browserify'], function() {
+	gulp.start('test:run');
+});
+
+// alias for test:quick
+gulp.task('qtest', ['test:quick']);
+
+//
 // Likewise, with a clean build
 // TODO: failing at the moment because karma cannot find app.js when it starts
-// The issue is that 'build' is nested inside 'build:clean', and so test:clean
+// The issue is that 'build' is nested inside 'build:clean', and so test:run
 // does not wait for 'build' to end, but starts when 'build:clean' ends and
 // 'build' is still in course; 
 //

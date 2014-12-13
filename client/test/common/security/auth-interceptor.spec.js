@@ -1,11 +1,11 @@
-describe('securityInterceptor', function() {
+describe('authInterceptor', function() {
 	var queue, interceptor, promise, wrappedPromise;
 
 	beforeEach(module('security'));
 
 	beforeEach(inject(function($injector) {
 		queue			     = $injector.get('securityRetryQueue');
-		interceptor		 = $injector.get('securityInterceptor');
+		interceptor		 = $injector.get('authInterceptor');
 		wrappedPromise = {};
 		promise = {
 			catch: jasmine.createSpy('catch').and.returnValue(wrappedPromise)
@@ -28,7 +28,7 @@ describe('securityInterceptor', function() {
 		expect(errorHandler(httpResponse)).toBe(promise);
 	});
 
-	it('intercepts 401 error responses and adds it to the retry queue', function() {
+	it('intercepts 401 error responses and adds operations to the retry queue', function() {
 		var notAuthResponse = {
 			status: 401
 		};

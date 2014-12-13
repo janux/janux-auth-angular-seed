@@ -33,7 +33,7 @@ describe('security', function() {
 
   beforeEach(inject(function($injector) {
     service = $injector.get('security');
-    queue   = $injector.get('securityRetryQueue');
+    queue   = $injector.get('retryQueue');
   }));
 
 

@@ -47,7 +47,7 @@ function($q , $log) {
 				try {
 					cb(retryItem);
 				} catch(e) {
-					$log.error('securityRetryQueue.push(retryItem): callback threw an error' + e);
+					$log.error('retryQueue.push(retryItem): callback threw an error' + e);
 				}
 			});
 		},

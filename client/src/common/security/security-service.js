@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = 
-       ['$dialog','$http','$location','$q','securityRetryQueue', 
+       ['$dialog','$http','$location','$q','retryQueue', 
 function($dialog , $http , $location , $q, queue) {
 
 	function redirect(url) {

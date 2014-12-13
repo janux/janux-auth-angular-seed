@@ -1,4 +1,4 @@
-describe('securityRetryQueue', function() {
+describe('retryQueue', function() {
 	var queue;
 
 	function mockRetryItem() {
@@ -8,7 +8,7 @@ describe('securityRetryQueue', function() {
 	beforeEach(module('security'));
 
 	beforeEach(inject(function($injector) {
-		queue = $injector.get('securityRetryQueue');
+		queue = $injector.get('retryQueue');
 	}));
 
 	describe('hasMore', function() {

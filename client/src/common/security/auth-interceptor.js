@@ -4,7 +4,7 @@
 // Intercepts authentication/authorization failures
 // 
 module.exports = 
-       ['$injector','$q','securityRetryQueue',
+       ['$injector','$q','retryQueue',
 function($injector,  $q , retryQueue) {
 
 	return function(promise) {

@@ -1,8 +1,9 @@
 'use strict';
 
-// The LoginFormController provides the behaviour behind a reusable form to allow users to authenticate.
+//
+// The loginController provides the behaviour behind a reusable form to allow users to authenticate.
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
-
+// 
 // TODO-pp: add localizedMessages service
 // var out = ['$scope','security','localizedMessages', 
 // function(   $scope , security , localizedMessages) {

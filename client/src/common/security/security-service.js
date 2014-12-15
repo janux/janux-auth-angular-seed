@@ -105,11 +105,13 @@ function($dialog , $http , $location , $q, queue) {
 
 		requestCurrentUser: function() {
 			if ( service.isAuthenticated() ) {
+				console.log('currentUser-cached:', service.currentUser);
 				return $q.when(service.currentUser);
 			} else {
 				return $http.get('/current-user').then(function(response) {
 					service.currentUser = response.data.user;
-					return service.currentService;
+					console.log('currentUser-served:', service.currentUser);
+					return service.currentUser;
 				});
 			}
 		},

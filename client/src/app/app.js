@@ -58,6 +58,11 @@ $urlRouterProvider) {
 			templateUrl: 'static/app/dashboard.html'
 		})
 
+		.state('logout', {
+			url: '/logout',
+			templateUrl: 'static/app/goodbye.html',
+		})
+
 		.state('users', {
 			url: '/users',
 			templateUrl: 'static/app/user/index.html',

@@ -96,6 +96,7 @@ function($dialog , $http , $location , $q, queue) {
 		},
 
 		logout: function(redirectTo) {
+			var redirectTo = redirectTo || '/logout';
 			$http.post('/logout').then(function(resp) {
 				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;

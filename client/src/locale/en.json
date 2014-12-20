@@ -1,0 +1,17 @@
+{
+	"dashboard": {
+		"header":"Dashboard"
+	},
+	"login": {
+		"msg": {
+			"enterCredentials": "Please enter your login credentials",
+			"notAuthorized":    "You are not authorized to perform this operation",
+			"notAuthenticated": "You have not logged in"
+		},
+		"error" : {
+			"invalidCredentials": "The user/password that you entered is not valid",
+			"serverError":        "Server is unavailable or returned an error",
+			"serverErrorOutput":  "Server Error: {{parm1}}"
+		}
+	}
+}

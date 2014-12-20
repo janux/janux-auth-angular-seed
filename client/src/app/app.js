@@ -1,9 +1,12 @@
 'use strict'; var angular = require('angular');
 
-require('angular-ui-router'); require('common/security');
+require('angular-ui-router');
+require('angular-translate');
+require('angular-translate-loader-static-files');
+require('common/security');
 
 
-angular.module('MyApp',[ 'ui.router', 'security' ])
+angular.module('MyApp',[ 'ui.router', 'security', 'pascalprecht.translate' ])
 
 .run([	  '$rootScope','$state','$stateParams',
 	function($rootScope , $state , $stateParams) { 
@@ -12,8 +15,16 @@ angular.module('MyApp',[ 'ui.router', 'security' ])
 	}
 ])
 
-.config([ '$stateProvider','$urlRouterProvider', function($stateProvider ,
-$urlRouterProvider) {
+.config([ '$stateProvider','$urlRouterProvider','$translateProvider',
+  function($stateProvider , $urlRouterProvider , $translateProvider) {
+
+		$translateProvider.useStaticFilesLoader({
+			prefix: 'static/locale/',
+			suffix: '.json'
+		});
+
+		$translateProvider.preferredLanguage('en');
+		$translateProvider.fallbackLanguage('en');
 
 		// redirect from 1st parm to 2nd parm
 		$urlRouterProvider.when('/c?id', '/contacts/:id');

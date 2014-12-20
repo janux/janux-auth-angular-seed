@@ -44,8 +44,9 @@ module.exports = function(gulp) {
 			path.join(cfg.dir.src, '**','*.js')
 		], ['lint','browserify']);
 
-		// Watch image files
-		// gulp.watch('app/images/**/*', ['images']);
+		// Watch assets
+		// TODO: apply this to all assets
+		gulp.watch(path.join(cfg.dir.src, cfg.dir.locale, '*.json'), ['copy']);
 		// gulp.watch( cfg.dir.img + '/**/*', ['images']);
 	});
 }

@@ -6,8 +6,7 @@ form.login-form(name='form', novalidate)
 		.alert.alert-warning(ng-show='authReason') {{authReason}}
 		.alert.alert-error(ng-show='authError') {{authError}}
 
-		.alert.alert-info
-			Please enter your login details
+		.alert.alert-info(translate='login.msg.enterCredentials')
 
 		label E-mail
 		input(name='login', ng-model='user.email', required, autofocus)

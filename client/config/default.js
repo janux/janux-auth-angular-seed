@@ -11,6 +11,7 @@ var cfg = {
 		img:     'img',
 		lib:     'lib',
 		js:      'app',
+		locale:  'locale',
 		partial: 'view',
 		server:  '../server',
 		test:    'test',
@@ -43,6 +44,7 @@ cfg.fileset.watch = [
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.css'),
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.less'),
 	path.join(cfg.dir.src, cfg.dir.img,'**','*'),
+	path.join(cfg.dir.src, cfg.dir.locale,'*.json'),
 	path.join(cfg.dir.dist, cfg.file.app)
 ]
 
@@ -52,6 +54,7 @@ cfg.fileset.assets = [
 	path.join(cfg.dir.img,'**','*.*'),
 	path.join(cfg.dir.css,'font','**','*.*'),
 	path.join(cfg.dir.css,'icon','**','*.*'),
+	path.join(cfg.dir.locale,'*.json'),
 	path.join('!**','*.less') 
 ];
 

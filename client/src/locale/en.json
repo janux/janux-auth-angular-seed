@@ -1,10 +1,20 @@
 {
+	"label": {
+		"cancel":   "Cancel",
+		"clear":    "Clear",
+		"email":    "E-mail",
+		"login":    "Sign In",
+		"logout":   "Sign Out",
+		"password": "Password",
+		"people":   "people"
+	},
 	"dashboard": {
-		"header":"Dashboard"
+		"title":"Dashboard"
 	},
 	"login": {
 		"msg": {
 			"enterCredentials": "Please enter your login credentials",
+			"goodbye":          "You have been signed out, see you soon!",
 			"notAuthorized":    "You are not authorized to perform this operation",
 			"notAuthenticated": "You have not logged in"
 		},
@@ -13,5 +23,14 @@
 			"serverError":        "Server is unavailable or returned an error",
 			"serverErrorOutput":  "Server Error: {{parm1}}"
 		}
+	},
+	"user": {
+		"title": "Users"
+	},
+	"role": {
+		"title": "Roles"
+	},
+	"permission": {
+		"title": "Permissions"
 	}
 }

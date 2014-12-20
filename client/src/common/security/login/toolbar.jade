@@ -1,8 +1,10 @@
 .auth
-	#login.auth-status(ng-show='!isAuthenticated()', ng-click='login()') Login 
+	#login.auth-status(ng-show='!isAuthenticated()', ng-click='login()')
+		span(style='margin-right: 5px', translate='label.login')
 		span.entypo.entypo-login
 
-	#logout.auth-status(ng-show='isAuthenticated()', ng-click='logout()') Logout 
+	#logout.auth-status(ng-show='isAuthenticated()', ng-click='logout()')
+		span(style='margin-right: 5px', translate='label.logout')
 		span.entypo.entypo-logout
 
 	.auth-user(ng-show='isAuthenticated()') {{currentUser.firstName}} {{currentUser.lastName}} &nbsp;

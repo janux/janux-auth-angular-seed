@@ -6,9 +6,6 @@ require('angular-translate-loader-static-files');
 // The loginController provides the behaviour behind a reusable form to allow users to authenticate.
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
 // 
-// TODO-pp: add localizedMessages service
-// var out = ['$scope','security','localizedMessages', 
-// function(   $scope , security , localizedMessages) {
 module.exports =
        ['$scope','security','$translate',
 function($scope , security , $translate) {
@@ -18,8 +15,13 @@ function($scope , security , $translate) {
   // Any error message from failing to login
   $scope.authError = null;
 
-  // The reason that we are being asked to login - for instance because we tried to access something to which we are not authorized
-  // We could do something diffent for each reason here but to keep it simple...
+	// The reason that we are being asked to login - for instance because we tried
+	// to access something to which we are not authorized We could do something
+	// different for each reason here but to keep it simple...
+	// 
+	// TODO-pp: check whether this is actually used anywhere; for the time being,
+	// it's a good example of translating multiple items at once
+	//
   $scope.authReason = null;
   if ( security.getLoginReason() ) {
 

@@ -1,6 +1,6 @@
 form.login-form(name='form', novalidate)
 	.modal-header
-		h4 Sign in
+		h4(translate='label.login')
 
 	.modal-body
 		.alert.alert-warning(ng-show='authReason') {{authReason}}
@@ -8,15 +8,15 @@ form.login-form(name='form', novalidate)
 
 		.alert.alert-info(translate='login.msg.enterCredentials')
 
-		label E-mail
+		label(translate='label.email')
 		input(name='login', ng-model='user.email', required, autofocus)
 
-		label Password
+		label(translate='label.password')
 		input(name="pass", type='password', ng-model='user.password', required)
 
 	.modal-footer
-		button.btn.btn-primary.login(ng-click='login()', ng-disabled='form.$invalid') Sign in
-		button.btn.clear(ng-click='clearForm()') Clear
-		button.btn.btn-warning.cancel(ng-click='cancelLogin()') Cancel
+		button.btn.btn-primary.login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
+		button.btn.clear(ng-click='clearForm()', translate='label.clear')
+		button.btn.btn-warning.cancel(ng-click='cancelLogin()', translate='label.cancel')
 
 

@@ -21,17 +21,17 @@ html(ng-app='MyApp')
 				.logo
 					img(src='static/img/janux-sage-256.png')
 					.branding
-						span.janux janux
-						span.people  people
+						span.janux janux 
+						span.people(translate='label.people') 
 
 				login-toolbar
 
 			nav
 				ul
-					li.first(ui-sref-active='active'): a(ui-sref='dashboard') Dashboard
-					li(ui-sref-active='active'): a(ui-sref='users') Users
-					li(ui-sref-active='active'): a(ui-sref='roles') Roles
-					li(ui-sref-active='active'): a(ui-sref='permissions') Permissions
+					li.first(ui-sref-active='active'): a(ui-sref='dashboard', translate='dashboard.title')
+					li(ui-sref-active='active'): a(ui-sref='users', translate='user.title')
+					li(ui-sref-active='active'): a(ui-sref='roles', translate='role.title')
+					li(ui-sref-active='active'): a(ui-sref='permissions', translate='permission.title')
 
 			section.maincolumn(ui-view)
 

@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = 
-       ['$dialog','$http','$location','$q','retryQueue', 
-function($dialog , $http , $location , $q, queue) {
+       ['$dialog','$http','$location','$q','retryQueue',
+function($dialog , $http , $location , $q , retryQueue) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -30,7 +30,7 @@ function($dialog , $http , $location , $q, queue) {
 	function onLoginDialogClose(success) {
 		loginDialog = null;
 		if (success) {
-			queue.retryAll();
+			retryQueue.retryAll();
 		} else {
 			redirect();
 		}
@@ -39,11 +39,11 @@ function($dialog , $http , $location , $q, queue) {
 	//
 	// Register a handler for when an item is added to the retry queue
 	// 
-	// The handler in question, shows the login window if queue.hasMore()
+	// The handler in question, shows the login window if retryQueue.hasMore()
 	// Why is this necessary ?
 	//
-	queue.onItemAddedCallbacks.push(function(retryItem) {
-		if ( queue.hasMore() ) {
+	retryQueue.onItemAddedCallbacks.push(function(retryItem) {
+		if ( retryQueue.hasMore() ) {
 			service.showLogin();
 		}
 	});
@@ -58,7 +58,7 @@ function($dialog , $http , $location , $q, queue) {
 		// reasons exist
 		//
 		getLoginReason: function() {
-			return queue.retryReason();
+			return retryQueue.retryReason();
 			return true;
 		},
 

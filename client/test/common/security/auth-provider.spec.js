@@ -4,7 +4,11 @@ describe('$authorization', function() {
 
   var userResponse, resolved;
 
-	beforeEach(module('security','cachedTemplates'));
+	beforeEach(module(
+		'cachedTemplates',
+		'pascalprecht.translate',
+		'security'
+	));
 
   beforeEach(inject(function($injector) {
 

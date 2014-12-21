@@ -2,12 +2,14 @@ describe('security', function() {
 
   var $rootScope, $http, $httpBackend, status, userInfo;
   
-  angular.module('test',[]).constant('I18N.MESSAGES', messages = {});
-
 	// The cachedTemplates module is created in karma.conf.js 
 	// via the ngHtml2JsPreprocessor, and caches all html templates 
 	// in the angular $templateCache
-  beforeEach(module('security', 'test', 'cachedTemplates'));
+  beforeEach(module(
+		'cachedTemplates',
+		'pascalprecht.translate',
+		'security' 
+	));
 
   beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$http_) {
     $rootScope   = _$rootScope_;
@@ -106,12 +108,12 @@ describe('security', function() {
       $httpBackend.flush();
     });
 
-    it('redirects to / by default', function() {
+    it('logout redirects to /logout by default', function() {
       inject(function($location) {
         spyOn($location, 'path');
         service.logout();
         $httpBackend.flush();
-        expect($location.path).toHaveBeenCalledWith('/');
+        expect($location.path).toHaveBeenCalledWith('/logout');
       });
     });
 

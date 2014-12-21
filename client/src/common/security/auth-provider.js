@@ -4,14 +4,6 @@
 
 module.exports = {
 
-  requireAdminUser: ['$authorization', function($authorization) {
-    return $authorization.requireAdminUser();
-  }],
-
-  requireAuthenticatedUser: ['$authorization', function($authorization) {
-    return $authorization.requireAuthenticatedUser();
-  }],
-
   $get: ['security', 'retryQueue', function(security, queue) {
     var service = {
 

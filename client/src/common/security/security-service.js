@@ -30,10 +30,8 @@ function($dialog , $http , $location , $q, queue) {
 	function onLoginDialogClose(success) {
 		loginDialog = null;
 		if (success) {
-			console.debug("Successfully closed the dialog");
 			queue.retryAll();
 		} else {
-			console.debug("Closed the dialog under inauspicious circumstances");
 			redirect();
 		}
 	}

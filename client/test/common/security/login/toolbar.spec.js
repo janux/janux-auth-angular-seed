@@ -1,7 +1,11 @@
 describe('login-toolbar', function() {
   var $rootScope, scope, toolbar, security;
 
-  beforeEach(module('cachedTemplates', 'security'));
+  beforeEach(module(
+		'cachedTemplates',
+		'pascalprecht.translate', 
+		'security'
+	));
 
   beforeEach(inject(function(_$rootScope_, $compile, _security_) {
     $rootScope = _$rootScope_;
@@ -34,14 +38,14 @@ describe('login-toolbar', function() {
     $rootScope.$digest();
 
 		expect(toolbar.find('#login').hasClass('ng-hide')).toBe(false);
-		expect(toolbar.find('#login').text().trim()).toBe('Login');
+		// TODO: need to figure out how to load the locale/en.json
+		expect(toolbar.find('#login').text().trim()).toBe('label.login');
 
-		// console.debug('auth-user', toolbar.find('.auth-user').attr('class'));
     expect(toolbar.find('.auth-user').hasClass('ng-hide')).toBe(true);
     expect(toolbar.find('.auth-user').text().trim()).toBe('');
 
 		expect(toolbar.find('#logout').hasClass('ng-hide')).toBe(true);
-		expect(toolbar.find('#logout').text().trim()).toBe('Logout');
+		expect(toolbar.find('#logout').text().trim()).toBe('label.logout');
   });
 
 
@@ -53,10 +57,10 @@ describe('login-toolbar', function() {
     expect(toolbar.find('.auth-user').hasClass('ng-hide')).toBe(false);
 
 		expect(toolbar.find('#logout').hasClass('ng-hide')).toBe(false);
-		expect(toolbar.find('#logout').text().trim()).toBe('Logout');
+		expect(toolbar.find('#logout').text().trim()).toBe('label.logout');
 
 		expect(toolbar.find('#login').hasClass('ng-hide')).toBe(true);
-		expect(toolbar.find('#login').text().trim()).toBe('Login');
+		expect(toolbar.find('#login').text().trim()).toBe('label.login');
   });
 
 
@@ -66,13 +70,13 @@ describe('login-toolbar', function() {
     expect(scope.logout).toHaveBeenCalled();
 
 		expect(toolbar.find('#login').hasClass('ng-hide')).toBe(false);
-		expect(toolbar.find('#login').text().trim()).toBe('Login');
+		expect(toolbar.find('#login').text().trim()).toBe('label.login');
 
     expect(toolbar.find('.auth-user').hasClass('ng-hide')).toBe(true);
     expect(toolbar.find('.auth-user').text().trim()).toBe('');
 
 		expect(toolbar.find('#logout').hasClass('ng-hide')).toBe(true);
-		expect(toolbar.find('#logout').text().trim()).toBe('Logout');
+		expect(toolbar.find('#logout').text().trim()).toBe('label.logout');
   });
 
 

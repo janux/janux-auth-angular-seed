@@ -119,6 +119,7 @@ cfg.server = {
 cfg.server = {
 	exec: 'express',
 	file: path.join(cfg.dir.server, cfg.file.server),
+	static: 'static'
 }
 
 // express server-side config

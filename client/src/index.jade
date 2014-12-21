@@ -6,20 +6,20 @@ html(ng-app='MyApp')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 
 		
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/normalize.css')
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/bootstrap-2.1.1.css')
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/typography.css')
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/util.css')
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/layout.css')
-		link(rel='stylesheet', href='static/#{cfg.dir.css}/responsive.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/normalize.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/bootstrap-2.1.1.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/typography.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/util.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/layout.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/responsive.css')
 
-		script(src='static/#{cfg.file.app}')
+		script(src='#{cfg.server.static}/#{cfg.file.app}')
 
 	body
 		.container
 			header
 				.logo
-					img(src='static/img/janux-sage-256.png')
+					img(src='#{cfg.server.static}/img/janux-sage-256.png')
 					.branding
 						span.janux janux 
 						span.people(translate='label.people') 

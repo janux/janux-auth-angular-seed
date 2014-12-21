@@ -16,7 +16,7 @@
 			"enterCredentials": "Please enter your login credentials",
 			"goodbye":          "You have been signed out, see you soon!",
 			"notAuthorized":    "You are not authorized to perform this operation",
-			"notAuthenticated": "You have not logged in"
+			"notAuthenticated": "This area requires you to be signed-in"
 		},
 		"error" : {
 			"invalidCredentials": "The user/password that you entered is not valid",

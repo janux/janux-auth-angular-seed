@@ -69,8 +69,8 @@ angular.module('MyApp',[ 'ui.router', 'security', 'pascalprecht.translate' ])
 			templateUrl: 'static/app/dashboard.html'
 		})
 
-		.state('logout', {
-			url: '/logout',
+		.state('goodbye', {
+			url: '/goodbye',
 			templateUrl: 'static/app/goodbye.html',
 		})
 

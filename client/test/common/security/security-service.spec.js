@@ -108,12 +108,12 @@ describe('security', function() {
       $httpBackend.flush();
     });
 
-    it('logout redirects to /logout by default', function() {
+    it('logout redirects to /goodbye by default', function() {
       inject(function($location) {
         spyOn($location, 'path');
         service.logout();
         $httpBackend.flush();
-        expect($location.path).toHaveBeenCalledWith('/logout');
+        expect($location.path).toHaveBeenCalledWith('/goodbye');
       });
     });
 

@@ -79,6 +79,9 @@ function($dialog , $http , $location , $q , retryQueue) {
 				service.currentUser = response.data.user;
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
+					// if we are logging in from the goodbye page, 
+					// redirect to the dashboard
+					if ($location.path() === '/goodbye') redirect('/');
 				}
 				return service.isAuthenticated();
 			});
@@ -94,7 +97,7 @@ function($dialog , $http , $location , $q , retryQueue) {
 		},
 
 		logout: function(redirectTo) {
-			var redirectTo = redirectTo || '/logout';
+			var redirectTo = redirectTo || '/goodbye';
 			$http.post('/logout').then(function(resp) {
 				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;

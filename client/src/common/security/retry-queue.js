@@ -13,7 +13,7 @@
 // function that represents the operation to be retried.
 // 
 module.exports = 
-			 ['$q','$log', 
+       ['$q','$log', 
 function($q , $log) {
 
 	var retryQueue = [];

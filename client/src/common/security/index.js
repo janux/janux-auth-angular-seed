@@ -13,6 +13,5 @@ require('angular').module('security', ['ui.bootstrap.dialog'])
 	.config(['$httpProvider', function($httpProvider) {
 		// We have to add the interceptor to the queue as a string because the interceptor 
 		// depends upon service instances that are not available in the config block.
-  	$httpProvider.responseInterceptors.push('authInterceptor');
+		$httpProvider.responseInterceptors.push('authInterceptor');
 	}]);
-

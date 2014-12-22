@@ -9,11 +9,11 @@ require('angular-translate-loader-static-files');
 module.exports =
        ['$scope','security','$translate',
 function($scope , security , $translate) {
-  // The model for this form 
-  $scope.user = {};
+	// The model for this form 
+	$scope.user = {};
 
-  // Any error message from failing to login
-  $scope.authError = null;
+	// Any error message from failing to login
+	$scope.authError = null;
 
 	// The reason that we are being asked to login - for instance because we tried
 	// to access something to which we are not authorized We could do something
@@ -22,8 +22,8 @@ function($scope , security , $translate) {
 	// TODO-pp: check whether this is actually used anywhere; for the time being,
 	// it's a good example of translating multiple items at once
 	//
-  $scope.authReason = null;
-  if ( security.getLoginReason() ) {
+	$scope.authReason = null;
+	if ( security.getLoginReason() ) {
 
 		$translate(['login.msg.notAuthorized', 'login.msg.notAuthenticated'])
 			.then( function(translated) {
@@ -31,23 +31,23 @@ function($scope , security , $translate) {
 					translated['login.msg.notAuthorized'] :
 					translated['login.msg.notAuthenticated'];
 		})
-  }
+	}
 
-  // Attempt to authenticate the user specified in the form's model
-  $scope.login = function() {
-    // Clear any previous security errors
-    $scope.authError = null;
+	// Attempt to authenticate the user specified in the form's model
+	$scope.login = function() {
+		// Clear any previous security errors
+		$scope.authError = null;
 
-    // Try to login
-    security.login($scope.user.email, $scope.user.password).then(function(loggedIn) {
-      if ( !loggedIn ) {
-        // If we get here then the login failed due to bad credentials
+		// Try to login
+		security.login($scope.user.email, $scope.user.password).then(function(loggedIn) {
+			if ( !loggedIn ) {
+				// If we get here then the login failed due to bad credentials
 				$translate('login.error.invalidCredentials').then( function(msg) {
-        	$scope.authError = msg;
+					$scope.authError = msg;
 				});
-      }
-    }, function(err) {
-      // If we get here then there was a problem with the login request to the server
+			}
+		}, function(err) {
+			// If we get here then there was a problem with the login request to the server
 			$translate('login.error.serverError').then( function(msg) {
 				$scope.authError = msg;
 			});
@@ -55,16 +55,16 @@ function($scope , security , $translate) {
 			// If we want to interpolate a variable:
 			//	
 			// $translate('login.error.serverErrorOutput', {parm1: err}).then( function(msg) {
-			// 	$scope.authError = msg;
+			//	$scope.authError = msg;
 			// });
-    });
-  };
+		});
+	};
 
-  $scope.clearForm = function() {
-    $scope.user = {};
-  };
+	$scope.clearForm = function() {
+		$scope.user = {};
+	};
 
-  $scope.cancelLogin = function() {
-    security.cancelLogin();
-  };
+	$scope.cancelLogin = function() {
+		security.cancelLogin();
+	};
 }];

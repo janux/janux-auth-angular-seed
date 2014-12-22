@@ -18,13 +18,12 @@ function($injector,  $q , retryQueue) {
 			//
 			
 			if (origResponse.status === 401) {
-				//
+
 				// The request bounced because it was not authorized - add a new request to the retryQueue
-				//
 				promise = retryQueue.pushRetryFn('unauthorized-server', function retryRequest() {
 
 					// We must use $injector to get the $http service to prevent circular dependency
-					// TODO-pp - woat??
+					// TODO-pp - waaat?
 					return $injector.get('$http')(originalResponse.config);
 				});
 			};

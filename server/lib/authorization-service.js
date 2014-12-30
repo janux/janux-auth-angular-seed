@@ -2,28 +2,28 @@
 
 var 
 	_ = require('underscore')
-	,PermissionContext = require('./PermissionContext')
+	,AuthorizationContext = require('./PermissionContext')
 	,Role = require('./Role')
 	,util = require('util')
 ;
 
-// 
-// permissionContext is a public hashmap that stores the various Permission
+//
+// authorizationContext is a public hashmap that stores the various Authorization
 // Contexts that make up the authorization scheme for an application; it is
 // spelled out in the singular so that it is more intuitive to read, for
-// example:  AuthService.permissionContext.EQUIPMENT
+// example:  AuthService.authorizationContext.EQUIPMENT
 //
-var permissionContext = exports.permissionContext = {};
+var authorizationContext = exports.authorizationContext = {};
 
 // private variable used to setup standard permission contexts to be added
-// further below via addStandardPermissionContext
+// further below via addStandardAuthorizationContext
 var standardPermContextSetup = {
 	PROPERTY: "Master Record of a Real Estate Property"
 	,EQUIPMENT:  "Equipment at a Property"
 };
 
 _.each(standardPermContextSetup, function(represents, name) {
-	addStandardPermissionContext(name, represents);
+	addStandardAuthorizationContext(name, represents);
 });
 
 
@@ -36,15 +36,15 @@ _.each(standardPermContextSetup, function(represents, name) {
 var role = exports.role = {};
 
 role.OWNER = Role.createInstance("OWNER", "The Owner of a Real Estate Property, the main end-customer")
-	.grantPermissions(["READ","UPDATE"], permissionContext.PROPERTY)
-	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], permissionContext.EQUIPMENT)
+	.grantPermissions(["READ","UPDATE"], authorizationContext.PROPERTY)
+	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], authorizationContext.EQUIPMENT)
 ;
 
 // console.log("role.OWNER:", JSON.stringify(role.OWNER));
 
 role.DEALER = Role.createInstance("DEALER", "A Dealer/Contractor who installs custom electronics at Properties")
-	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], permissionContext.PROPERTY)
-	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], permissionContext.EQUIPMENT)
+	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], authorizationContext.PROPERTY)
+	.grantPermissions(["READ","UPDATE","CREATE","TRASH"], authorizationContext.EQUIPMENT)
 ;
 
 role.ADMIN = Role.createInstance("ADMIN", "Jetson Systems Staff with all privileges");
@@ -56,7 +56,7 @@ role.ADMIN.isAlmighty = true;
 // Given a Role, return a map of the permissionsContexts in this role has been
 // granted permissions
 //
-exports.findPermissionContextsInRole = function findPermissionContextsInRole(role) {
+exports.findAuthorizationContextsInRole = function findAuthorizationContextsInRole(role) {
 	for (var key in role.permsGranted) {
 		
 	}
@@ -65,16 +65,16 @@ exports.findPermissionContextsInRole = function findPermissionContextsInRole(rol
 
 
 // 
-// Private convenience method to add Permission Context with standard permissions 
-// (READ, UPDATE, CREATE, TRASH, DELETE) to the permissionContext hashmap 
+// Private convenience method to add Authorization Context with standard permissions 
+// (READ, UPDATE, CREATE, TRASH, DELETE) to the authorizationContext hashmap 
 // of the Authorization Scheme
 //
-function addStandardPermissionContext(name, represents) {
-	var permContext = PermissionContext.createInstance(name, "Defines permissions available on a " + represents);
+function addStandardAuthorizationContext(name, represents) {
+	var authContext = AuthorizationContext.createInstance(name, "Defines permissions available on a " + represents);
 
 	["READ", "UPDATE", "CREATE", "TRASH", "DELETE"].forEach( function(bitName) { 
-		permContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
+		authContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
 	});
 
-	permissionContext[name] = permContext;
+	authorizationContext[name] = authContext;
 }

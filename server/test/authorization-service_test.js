@@ -16,7 +16,7 @@ describe('AuthService', function() {
 	// this.timeout(30000)  
 
 	describe("PROPERTY permission context", function(done) {
-		var permContext = AuthService.permissionContext.PROPERTY;
+		var permContext = AuthService.authorizationContext.PROPERTY;
 
 		it("should have proper values", function() {
 			log.debug("permContext: %j", permContext);
@@ -50,7 +50,7 @@ describe('AuthService', function() {
 	});
 
 	describe("EQUIPMENT permission context", function(done) {
-		var permContext = AuthService.permissionContext.EQUIPMENT;
+		var permContext = AuthService.authorizationContext.EQUIPMENT;
 
 		it("should have proper values", function() {
 			log.debug("permContext: %j", permContext);

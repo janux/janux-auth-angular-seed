@@ -7,12 +7,12 @@ var
 	,util = require('util')
 ;
 
-/** 
- * permissionContext is a public hashmap that stores the various Permission
- * Contexts that make up the authorization scheme for an application; it is
- * spelled out in the singular so that it is more intuitive to read, for
- * example:  AuthService.permissionContext.EQUIPMENT
- */
+// 
+// permissionContext is a public hashmap that stores the various Permission
+// Contexts that make up the authorization scheme for an application; it is
+// spelled out in the singular so that it is more intuitive to read, for
+// example:  AuthService.permissionContext.EQUIPMENT
+//
 var permissionContext = exports.permissionContext = {};
 
 // private variable used to setup standard permission contexts to be added
@@ -27,12 +27,12 @@ _.each(standardPermContextSetup, function(represents, name) {
 });
 
 
-/** 
- * role is a public hashmap that stores the various Roles
- * that make up the authorization scheme for an application; it is
- * spelled out in the singular so that it is more intuitive to read, for
- * example:  AuthService.role.ADMIN
- */
+// 
+// role is a public hashmap that stores the various Roles
+// that make up the authorization scheme for an application; it is
+// spelled out in the singular so that it is more intuitive to read, for
+// example:  AuthService.role.ADMIN
+//
 var role = exports.role = {};
 
 role.OWNER = Role.createInstance("OWNER", "The Owner of a Real Estate Property, the main end-customer")
@@ -52,10 +52,10 @@ role.ADMIN.isAlmighty = true;
 
 // console.log("role.ADMIN:", JSON.stringify(role.ADMIN));
 
-/**
- * Given a Role, return a map of the permissionsContexts in this role has been
- * granted permissions
- */
+//
+// Given a Role, return a map of the permissionsContexts in this role has been
+// granted permissions
+//
 exports.findPermissionContextsInRole = function findPermissionContextsInRole(role) {
 	for (var key in role.permsGranted) {
 		
@@ -64,11 +64,11 @@ exports.findPermissionContextsInRole = function findPermissionContextsInRole(rol
 
 
 
-/** 
- * Private convenience method to add Permission Context with standard permissions 
- * (READ, UPDATE, CREATE, TRASH, DELETE) to the permissionContext hashmap 
- * of the Authorization Scheme
- */
+// 
+// Private convenience method to add Permission Context with standard permissions 
+// (READ, UPDATE, CREATE, TRASH, DELETE) to the permissionContext hashmap 
+// of the Authorization Scheme
+//
 function addStandardPermissionContext(name, represents) {
 	var permContext = PermissionContext.createInstance(name, "Defines permissions available on a " + represents);
 

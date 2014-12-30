@@ -61,8 +61,8 @@ config.authenticate = function authenticate(req, res, next) {
 // 
 // config.propertyService = require(config.service.property.impl).singleton(propertyServiceConfig);
 //
-// // TODO: update the AuthorizationService to implement the ServiceFactory pattern
-// config.authService = require("./lib/AuthorizationService").singleton();
+// // TODO: update the authorization-service to implement the ServiceFactory pattern
+// config.authService = require("./lib/authorization-service").singleton();
 
 // uncomment to troubleshoot if log4js is not configuring properly
 // console.log("config is %j", config);

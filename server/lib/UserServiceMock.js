@@ -4,7 +4,7 @@ var
 	_     = require('underscore')
 	,log4js = require('log4js')
 	,util = require('util')
-  ,AuthService = require('./AuthorizationService')
+  ,AuthService = require('./authorization-service')
 ;
 
 var log = log4js.getLogger('UserServiceMock');

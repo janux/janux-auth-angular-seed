@@ -119,6 +119,7 @@ describe ('user-service-mock:', function() {
 	it ("should return an error if oid not found", function(done) {
 		userService.load("someFakeOid", function(err, user) {
 			err.message.should.equal("User with oid: 'someFakeOid' does not exist");
+			log.warn('The error "%s" was expected, ignore', err.message);
 			done();
 		});
 	});

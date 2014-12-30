@@ -2,4 +2,4 @@
 
 * To run server-side tests run:
 
-  $ mocha
+  $ mocha -R spec

@@ -12,14 +12,14 @@
       "type": "console",
       "layout" : {
         "type" : "pattern",
-        "pattern" : "%[%d | %p | %c |%] %m"
+        "pattern" : "%[%p | %c |%] %m"
       }
     }
   ],
   "replaceConsole" : "false",
 	"levels": { 
 		"AuthService_test": "WARN", 
-		"console": "WARN", 
+		"console": "INFO", 
 		"PermissionContext_test": "WARN",
 		"PermissionHolder_test": "WARN",
 		"Role_test": "WARN",

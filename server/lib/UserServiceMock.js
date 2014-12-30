@@ -17,24 +17,24 @@ var users = {
 		oid: 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
 		// angular-app stubbed fields
 		_id: { $oid: this.oid },
-		email: 'owner',
+		email: 'widget',
 		lastName: 'Paravicini',
 		firstName: 'Philippe',
 		password: 'test',
 		admin: true,
 		// end angular-app stubbed fields
 		account: {
-			name: 'owner',
-			password: 'test',
+			name: 'widget',
+			password: 'test1',
 			password_expire: '',
 			is_locked: false,
 			expire: '',
-			roles: [AuthService.role.OWNER]
+			roles: [AuthService.role.WIDGET_DESIGNER]
 		},
 		person: {
 			name: {
 				first: 'Chase',
-				last: 'Danford'
+				last: 'Widgeter'
 			}
 		}
 	},
@@ -42,17 +42,17 @@ var users = {
 	{
 		oid: '3d52f4bc-34a5-47fe-8f95-6a4c5f46f300',
 		account: {
-			name: 'dealer',
-			password: 'd3al3r',
+			name: 'manager',
+			password: 'test2',
 			password_expire: '',
 			is_locked: false,
 			expire: '',
-			roles: [AuthService.role.DEALER]
+			roles: [AuthService.role.MANAGER]
 		},
 		person: {
 			name: {
 				first: 'Robby',
-				last: 'Dealer'
+				last: 'Manager'
 			}
 		}
 	},

@@ -9,7 +9,7 @@ var
 var index = function(req, res) {
 		/*
 		if (req.user) { 
-			log.debug("adding user to response cookie");
+			log.debug('adding user to response cookie');
 			res.cookie('user', JSON.stringify(req.user));
 		};
 		*/

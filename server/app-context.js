@@ -35,12 +35,12 @@ config.passport = passport;
 // Apply to any resource that needs to be protected.
 // If the request is authenticated via a persistent login session, the request will proceed.
 config.authenticate = function authenticate(req, res, next) {
-	log.debug("checking authentication for request: %s", req.url);
+	log.debug('checking authentication for request: %s', req.url);
 	if (req.isAuthenticated()) {
-		log.debug("session is authenticated, user is: %j", req.user);
+		log.debug('session is authenticated, user is: %j', req.user);
 		return next();
 	}
-	log.debug("User is not authenticated, redirecting to login screen");
+	log.debug('User is not authenticated, redirecting to login screen');
 	res.redirect('/login');
 }
 
@@ -62,10 +62,10 @@ config.authenticate = function authenticate(req, res, next) {
 // config.propertyService = require(config.service.property.impl).singleton(propertyServiceConfig);
 //
 // // TODO: update the authorization-service to implement the ServiceFactory pattern
-// config.authService = require("./lib/authorization-service").singleton();
+// config.authService = require('./lib/authorization-service').singleton();
 
 // uncomment to troubleshoot if log4js is not configuring properly
-// console.log("config is %j", config);
+// console.log('config is %j', config);
 
 /**
  * This file runs after node-config is configured, and makes it possible to make programmatic changes
@@ -84,14 +84,14 @@ log4js.setGlobalLogLevel(config.log4js.globalLogLevel);
 // Watch for any changes to the customer configuration
 // test how well this works this at some point
 // config.watch(config, null, function(object, propertyName, priorValue, newValue) {
-//   console.log("Customer configuration " + propertyName + " changed from " + priorValue + " to " +
+//   console.log('Customer configuration ' + propertyName + ' changed from ' + priorValue + ' to ' +
 //   newValue);
 // });
 
-var log = log4js.getLogger("AppContext");
+var log = log4js.getLogger('AppContext');
 
-log.trace("Application Context is %j: ", config);
+log.trace('Application Context is %j: ', config);
 
 module.exports = config;
 
-log.info("Application Context created");
+log.info('Application Context created');

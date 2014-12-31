@@ -5,7 +5,7 @@ var passport = require('../app-context').passport;
 var log = require('log4js').getLogger('security');
 
 var filterUser = function(user) {
-	log.debug("user in filterUser:", user);
+	log.debug('user in filterUser:', user);
   if ( user ) {
     return {
       user : {
@@ -17,7 +17,7 @@ var filterUser = function(user) {
       }
     };
   } else {
-		log.debug("returning null user");
+		log.debug('returning null user');
     return { user: null };
   }
 };

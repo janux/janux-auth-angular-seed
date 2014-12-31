@@ -43,25 +43,12 @@ authorizationContext.USER.addPermissionBit('GRANT', util.format('Grants permissi
 //
 var role = exports.role = {};
 
-/*
-role.OWNER = Role.createInstance("OWNER", "The Owner of a Real Estate Property, the main end-customer")
-	.grantPermissions(["READ","UPDATE"], authorizationContext.WIDGET)
-	.grantPermissions(["READ","UPDATE","CREATE","DELETE"], authorizationContext.ROLE)
-;
-*/
 
 role.WIDGET_DESIGNER = Role.createInstance('WIDGET_DESIGNER', 'A person who creates and edits widget information')
 	.grantPermissions(['READ','UPDATE','CREATE','DELETE'], authorizationContext.WIDGET)
 ;
 
-// console.log("role.OWNER:", JSON.stringify(role.OWNER));
-
-/*
-role.DEALER = Role.createInstance("DEALER", "A Dealer/Contractor who installs custom electronics at Properties")
-	.grantPermissions(["READ","UPDATE","CREATE","DELETE"], authorizationContext.WIDGET)
-	.grantPermissions(["READ","UPDATE","CREATE","DELETE"], authorizationContext.AUTH_CONTEXT)
-;
-*/
+// console.log('role.OWNER:', JSON.stringify(role.OWNER));
 
 role.MANAGER = Role.createInstance('MANAGER', 'A Manager who can manage Widgets and Users')
 	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContext.WIDGET)
@@ -74,10 +61,10 @@ role.SECURITY_MANAGER = Role.createInstance('SECURITY_MANAGER', 'A Person who ca
 	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContext.USER)
 ;
 
-role.ADMIN = Role.createInstance("ADMIN", "Staff person with all privileges");
+role.ADMIN = Role.createInstance('ADMIN', 'Staff person with all privileges');
 role.ADMIN.isAlmighty = true;
 
-// console.log("role.ADMIN:", JSON.stringify(role.ADMIN));
+// console.log('role.ADMIN:', JSON.stringify(role.ADMIN));
 
 //
 // Given a Role, return a map of the permissionsContexts in this role has been
@@ -90,16 +77,15 @@ exports.findAuthorizationContextsInRole = function findAuthorizationContextsInRo
 };
 
 
-
 // 
 // Private convenience method to add Authorization Context with standard permissions 
 // (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContext hashmap 
 // of the Authorization Scheme
 //
 function addStandardAuthorizationContext(name, represents) {
-	var authContext = AuthorizationContext.createInstance(name, "Defines permissions available on a " + represents);
+	var authContext = AuthorizationContext.createInstance(name, 'Defines permissions available on a ' + represents);
 
-	["READ", "UPDATE", "CREATE", "DELETE", "PURGE"].forEach( function(bitName) { 
+	['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE'].forEach( function(bitName) { 
 		authContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
 	});
 

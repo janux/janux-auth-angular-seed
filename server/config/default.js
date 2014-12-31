@@ -6,18 +6,18 @@ var log4jsConfig =
 {
 	appenders: [
 		{ 
-			type: "file",
-			filename: "server.log",
+			type: 'file',
+			filename: 'server.log',
 			layout : {
-				type : "pattern",
-				pattern : "%d | %p | %c | %m"
+				type : 'pattern',
+				pattern : '%d | %p | %c | %m'
 			}
 		},
 		{
-			type: "console",
+			type: 'console',
 			layout: {
-				type : "pattern",
-				pattern : "%[%d | %p | %c |%] %m"
+				type : 'pattern',
+				pattern : '%[%d | %p | %c |%] %m'
 			}
 		}
 	],

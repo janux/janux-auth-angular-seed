@@ -12,7 +12,7 @@ var log = log4js.getLogger('UserServiceMock');
 // mock implementation of user storage; 
 // hold users in a hashmap, keyed by oid
 var users = {
-	"e90597ae-6450-49f5-8b72-3c0b1a6e8c4f": 
+	'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f': 
 	{
 		oid: 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
 		// angular-app stubbed fields
@@ -38,7 +38,7 @@ var users = {
 			}
 		}
 	},
-	"3d52f4bc-34a5-47fe-8f95-6a4c5f46f300":
+	'3d52f4bc-34a5-47fe-8f95-6a4c5f46f300':
 	{
 		oid: '3d52f4bc-34a5-47fe-8f95-6a4c5f46f300',
 		account: {
@@ -56,7 +56,7 @@ var users = {
 			}
 		}
 	},
-	"8a0ca988-63b0-4218-9511-1f1b03456c0c":
+	'8a0ca988-63b0-4218-9511-1f1b03456c0c':
 	{
 		oid: '8a0ca988-63b0-4218-9511-1f1b03456c0c',
 		account: {
@@ -78,12 +78,12 @@ var users = {
 
 
 exports.load = function load(oid, done) {
-	// log.debug("calling findByOid with oid: '%s'",oid);
+	// log.debug('calling findByOid with oid: '%s'',oid);
   'use strict';
 	if (users[oid]) {
 		done(null, users[oid]);
 	} else {
-		var msg = util.format("User with oid: '%s' does not exist", oid);
+		var msg = util.format('User with oid: "%s" does not exist', oid);
 		log.error(msg);
 		done(new Error(msg));
 	}
@@ -92,7 +92,7 @@ exports.load = function load(oid, done) {
 
 exports.findByAccountName = function findByAccountName(username, done) {
   'use strict';
-	log.debug("looking up account with name '%s'", username);
+	log.debug('looking up account with name "%s"', username);
 	done(null, 
 		_.find(users, function(user) { return user.account.name == username; })
 	);
@@ -111,7 +111,7 @@ exports.authenticate = function authenticate(username, password, done) {
 		} else if (_.isObject(user) && user.account.password === password) {
 			return done(null, user);
 		} else {
-			var msg = util.format("Invalid username/password supplied by '%s'", username);
+			var msg = util.format('Invalid username/password supplied by "%s"', username);
 			log.warn(msg);
 			return done(null, false, { message: msg });  // return 'false' for failure to authenticate (rather than a null user)
 		}
@@ -121,16 +121,16 @@ exports.authenticate = function authenticate(username, password, done) {
 // how to we want to call account.can() ?
 
 // - tuple of Context + Permission
-//   can("PROPERTY", "READ")
+//   can('PROPERTY', 'READ')
 //
 // - tuple of Context + Permission Array
-//   can("PROPERTY", ["READ", "UPDATE"])
-//   can({"PROPERTY": ["READ", "UPDATE"]})
+//   can('PROPERTY', ['READ', 'UPDATE'])
+//   can({'PROPERTY': ['READ', 'UPDATE']})
 //   or
-//   can(["READ","UPDATE"], "PROPERTY")
+//   can(['READ','UPDATE'], 'PROPERTY')
 //   
 // - array of tuples of [(Context + Permission) or (Context + Permission Array)]
-//   can([ {"PROPERTY":["READ","UPDATE"]} ]), 
+//   can([ {'PROPERTY':['READ','UPDATE']} ]), 
 //   or
-//   can([ [["READ","UPDATE"], "PROPERTY"], ["READ", "DEVICE"] ])
+//   can([ [['READ','UPDATE'], 'PROPERTY'], ['READ', 'DEVICE'] ])
 

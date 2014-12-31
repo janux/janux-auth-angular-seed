@@ -3,7 +3,7 @@ var
 	,expect = require('chai').expect
 	,log4js = require('log4js')
 	,should = require('should')
-	,userService = require('../lib/UserServiceMock')
+	,userService = require('../lib/user-service-mock')
   ,util   = require('util')
 ;
 

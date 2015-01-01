@@ -1,23 +1,43 @@
 'use strict';
 
 var 
-	_ = require('underscore')
-	,AuthorizationContext = require('./PermissionContext')
-	,Role = require('./Role')
-	,util = require('util')
+	_ = require('underscore'),
+	AuthorizationContext = require('./PermissionContext'),
+	Role = require('./Role'),
+	Q    = require('q'),
+	util = require('util')
 ;
 
-//
-// authorizationContext is a public hashmap that stores the various Authorization
-// Contexts that make up the authorization scheme for an application; it is
-// spelled out in the singular so that it is more intuitive to read, for
-// example:  AuthService.authorizationContext.WIDGET
-//
-var authorizationContext = exports.authorizationContext = {};
+var authorizationContexts = {}, roles = {};
 
 
+//
+// Returns a promise that resolves to a dictionary of the Authorization Contexts
+// that make up the Authorization Scheme for an application. The keys of the map
+// are the names of each AuthorizationContext.
+//
+exports.loadAuthorizationContexts = function() {
+	return Q(authorizationContexts);
+}
+
+//
+// Returns a promise that resolves to a dictionary of the Roles defined in the
+// Authorization Scheme; the Roles include references to the Authorization
+// Contexts in which they have been provided with permissions
+//
+exports.loadRoles = function() {
+	return Q(roles);
+}
+
+
+//
+// Defining the AuthorizationContexts programatically
+//
+
+//
 // private variable used to setup standard authorization contexts to be added
 // further below via addStandardAuthorizationContext
+//
 var standardAuthContextSetup = {
 	WIDGET:       'Widget that we want to track in our system',
 	USER:         'User in our system',
@@ -31,56 +51,46 @@ _.each(standardAuthContextSetup, function(represents, name) {
 
 
 //
-// Define a non-standard 'GRANT' permission to the USER Authorization context
+// Define a non-standard 'GRANT' permission in the USER AuthorizationContext
 //
-authorizationContext.USER.addPermissionBit('GRANT', util.format('Grants permission to GRANT authorizations to Users in our system'));
+authorizationContexts.USER.addPermissionBit('GRANT', util.format('Grants permission to GRANT authorizations to Users in our system'));
 
-// 
-// role is a public hashmap that stores the various Roles
-// that make up the authorization scheme for an application; it is
-// spelled out in the singular so that it is more intuitive to read, for
-// example:  AuthService.role.ADMIN
 //
-var role = exports.role = {};
-
-
-role.WIDGET_DESIGNER = Role.createInstance('WIDGET_DESIGNER', 'A person who creates and edits widget information')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'], authorizationContext.WIDGET)
+// Defining the Roles programmatically
+//
+roles.WIDGET_DESIGNER = Role.createInstance('WIDGET_DESIGNER', 'A person who creates and edits widget information')
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE'], authorizationContexts.WIDGET)
 ;
 
-// console.log('role.OWNER:', JSON.stringify(role.OWNER));
+// console.log('roles.WIDGET_DESIGNER:', JSON.stringify(roles.WIDGET_DESIGNER));
 
-role.MANAGER = Role.createInstance('MANAGER', 'A Manager who can manage Widgets and Users')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContext.WIDGET)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContext.USER)
+roles.MANAGER = Role.createInstance('MANAGER', 'A Manager who can manage Widgets and Users')
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.WIDGET)
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
 ;
 
-role.SECURITY_MANAGER = Role.createInstance('SECURITY_MANAGER', 'A Person who can manage users and the authorization schema')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContext.AUTH_CONTEXT)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContext.ROLE)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContext.USER)
+// console.log('roles.MANAGER:', JSON.stringify(roles.MANAGER));
+
+roles.SECURITY_MANAGER = Role.createInstance('SECURITY_MANAGER', 'A Person who can manage users and the authorization schema')
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.AUTH_CONTEXT)
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.ROLE)
+	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
 ;
 
-role.ADMIN = Role.createInstance('ADMIN', 'Staff person with all privileges');
-role.ADMIN.isAlmighty = true;
+roles.ADMIN = Role.createInstance('ADMIN', 'Staff person with all privileges');
+roles.ADMIN.isAlmighty = true;
 
-// console.log('role.ADMIN:', JSON.stringify(role.ADMIN));
-
-//
-// Given a Role, return a map of the permissionsContexts in this role has been
-// granted permissions
-//
-exports.findAuthorizationContextsInRole = function findAuthorizationContextsInRole(role) {
-	for (var key in role.permsGranted) {
-		
-	}
-};
+// console.log('roles.ADMIN:', JSON.stringify(roles.ADMIN));
 
 
 // 
 // Private convenience method to add Authorization Context with standard permissions 
-// (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContext hashmap 
+// (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContexts hashmap 
 // of the Authorization Scheme
+// 
+// TODO: move this to the janux-security lib, as this would be a useful
+// feature; we would need to find a way to easily override it so that library
+// users can implement their own to suit their needs
 //
 function addStandardAuthorizationContext(name, represents) {
 	var authContext = AuthorizationContext.createInstance(name, 'Defines permissions available on a ' + represents);
@@ -89,5 +99,5 @@ function addStandardAuthorizationContext(name, represents) {
 		authContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
 	});
 
-	authorizationContext[name] = authContext;
+	authorizationContexts[name] = authContext;
 }

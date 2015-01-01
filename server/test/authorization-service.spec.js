@@ -5,25 +5,34 @@ var
 	,expect = require('chai').expect
 	,should = require('chai').should()
 	,log4js = require('log4js')
-	,AuthService  = require('../lib/authorization-service')
+	,AuthService = require('../lib/authorization-service')
 ;
 
-var log = log4js.getLogger('AuthService_test');
-
+var log = log4js.getLogger('test');
 
 describe('AuthService', function() {
 	// default timeout is 2000 ms
 	// this.timeout(30000)  
+	
+	var authContexts = null;
+
+	before(function(done) {
+		AuthService.loadAuthorizationContexts()
+			.then(function(contexts) {
+				authContexts = contexts;
+				done();
+			});
+	});
 
 	describe('WIDGET permission context', function(done) {
-		var permContext = AuthService.authorizationContext.WIDGET;
 
 		it('should have proper values', function() {
-			log.debug('permContext: %j', permContext);
-			expect(permContext.name).to.equal('WIDGET');
-			expect(permContext.description).to.equal('Defines permissions available on a Widget that we want to track in our system');
+			var authContext = authContexts.WIDGET;
+			
+			expect(authContext.name).to.equal('WIDGET');
+			expect(authContext.description).to.equal('Defines permissions available on a Widget that we want to track in our system');
 
-			var perms = permContext.getPermissionBitsAsList();
+			var perms = authContext.getPermissionBitsAsList();
 			expect(perms).to.have.length(5);
 
 			perms[0].name.should.equal('READ');
@@ -50,13 +59,14 @@ describe('AuthService', function() {
 	});
 
 	describe('ROLE permission context', function(done) {
-		var permContext = AuthService.authorizationContext.ROLE;
 
 		it('should have proper values', function() {
-			log.debug('permContext: %j', permContext);
-			expect(permContext.name).to.equal('ROLE');
-			expect(permContext.description).to.equal('Defines permissions available on a Role in our system or business domain');
-			var perms = permContext.getPermissionBitsAsList();
+			var authContext = authContexts.ROLE;
+
+			log.debug('authContext: %j', authContext);
+			expect(authContext.name).to.equal('ROLE');
+			expect(authContext.description).to.equal('Defines permissions available on a Role in our system or business domain');
+			var perms = authContext.getPermissionBitsAsList();
 			expect(perms).to.have.length(5);
 
 			perms[0].name.should.equal('READ');

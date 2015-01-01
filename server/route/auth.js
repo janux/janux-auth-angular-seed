@@ -1,21 +1,30 @@
 'use strict';
 
 var 
-	log   = require('log4js').getLogger('Server'),
-	appContext = require('../app-context'),
-	auth = require('../lib/security');
+	authenticate = require('../lib/security'),
+	authorize    = require('../lib/authorization-service')
 ;
 
 module.exports = function (app) {
-	app.post('/login', auth.login);
-	app.post('/logout', auth.logout);
+	app.post('/login' , authenticate.login);
+	app.post('/logout', authenticate.logout);
 
-	app.get('/current-user', auth.sendCurrentUser);
+	app.get('/current-user', authenticate.sendCurrentUser);
 
 	app.get('/authenticated-user', function(req, res) {
-		auth.authenticationRequired(req, res, function() {
-			auth.sendCurrentUser(req, res);
+		authenticate.authenticationRequired(req, res, function() {
+			authenticate.sendCurrentUser(req, res);
 		});
 	});
 
+	/*
+	// TODO: fix this, since we are using promises
+	app.get('/authenticationContexts', function(req, res) {
+		return authorize.loadAuthorizationContexts();
+	});
+
+	app.get('/roles', function(req, res) {
+		return authorize.loadRoles();
+	});
+	*/
 };

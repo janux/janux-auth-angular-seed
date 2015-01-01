@@ -18,12 +18,11 @@
   ],
   "replaceConsole" : "false",
 	"levels": { 
-		"AuthService_test": "WARN", 
-		"console": "INFO", 
+		"console": "WARN", 
+		"test":    "WARN",
 		"PermissionContext_test": "WARN",
 		"PermissionHolder_test": "WARN",
 		"Role_test": "WARN",
-		"test": "WARN",
 		"UserServiceMock": "WARN"
 	}
 }

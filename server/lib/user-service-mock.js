@@ -9,73 +9,78 @@ var
 
 var log = log4js.getLogger('UserServiceMock');
 
-// mock implementation of user storage; 
-// hold users in a hashmap, keyed by oid
-var users = {
-	'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f': 
-	{
-		oid: 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
-		// angular-app stubbed fields
-		_id: { $oid: this.oid },
-		email: 'widget',
-		lastName: 'Paravicini',
-		firstName: 'Philippe',
-		password: 'test',
-		admin: true,
-		// end angular-app stubbed fields
-		account: {
-			name: 'widget',
-			password: 'test1',
-			password_expire: '',
-			is_locked: false,
-			expire: '',
-			roles: [AuthService.role.WIDGET_DESIGNER]
-		},
-		person: {
-			name: {
-				first: 'Chase',
-				last: 'Widgeter'
-			}
-		}
-	},
-	'3d52f4bc-34a5-47fe-8f95-6a4c5f46f300':
-	{
-		oid: '3d52f4bc-34a5-47fe-8f95-6a4c5f46f300',
-		account: {
-			name: 'manager',
-			password: 'test2',
-			password_expire: '',
-			is_locked: false,
-			expire: '',
-			roles: [AuthService.role.MANAGER]
-		},
-		person: {
-			name: {
-				first: 'Robby',
-				last: 'Manager'
-			}
-		}
-	},
-	'8a0ca988-63b0-4218-9511-1f1b03456c0c':
-	{
-		oid: '8a0ca988-63b0-4218-9511-1f1b03456c0c',
-		account: {
-			name: 'admin',
-			password: '1234567',
-			password_expire: '',
-			is_locked: false,
-			expire: '',
-			roles: [AuthService.role.ADMIN]
-		},
-		person: {
-			name: {
-				first: 'Philippe',
-				last: 'Admin'
-			}
-		}
-	}
-};
+var roles, users;
 
+AuthService.loadRoles().then(function(contexts) { 
+	roles = contexts; 
+
+	// mock implementation of user storage; 
+	// hold users in a hashmap, keyed by oid
+	users = {
+		'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f': 
+		{
+			oid: 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
+			// angular-app stubbed fields
+			_id: { $oid: this.oid },
+			email: 'widget',
+			lastName: 'Paravicini',
+			firstName: 'Philippe',
+			password: 'test',
+			admin: true,
+			// end angular-app stubbed fields
+			account: {
+				name: 'widget',
+				password: 'test1',
+				password_expire: '',
+				is_locked: false,
+				expire: '',
+				roles: [roles.WIDGET_DESIGNER]
+			},
+			person: {
+				name: {
+					first: 'Chase',
+					last: 'Widgeter'
+				}
+			}
+		},
+		'3d52f4bc-34a5-47fe-8f95-6a4c5f46f300':
+		{
+			oid: '3d52f4bc-34a5-47fe-8f95-6a4c5f46f300',
+			account: {
+				name: 'manager',
+				password: 'test2',
+				password_expire: '',
+				is_locked: false,
+				expire: '',
+				roles: [roles.MANAGER]
+			},
+			person: {
+				name: {
+					first: 'Robby',
+					last: 'Manager'
+				}
+			}
+		},
+		'8a0ca988-63b0-4218-9511-1f1b03456c0c':
+		{
+			oid: '8a0ca988-63b0-4218-9511-1f1b03456c0c',
+			account: {
+				name: 'admin',
+				password: '1234567',
+				password_expire: '',
+				is_locked: false,
+				expire: '',
+				roles: [roles.ADMIN]
+			},
+			person: {
+				name: {
+					first: 'Philippe',
+					last: 'Admin'
+				}
+			}
+		}
+	};
+});
 
 exports.load = function load(oid, done) {
 	// log.debug('calling findByOid with oid: '%s'',oid);
@@ -133,4 +138,3 @@ exports.authenticate = function authenticate(username, password, done) {
 //   can([ {'PROPERTY':['READ','UPDATE']} ]), 
 //   or
 //   can([ [['READ','UPDATE'], 'PROPERTY'], ['READ', 'DEVICE'] ])
-

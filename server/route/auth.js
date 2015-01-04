@@ -1,8 +1,8 @@
 'use strict';
 
 var 
-	authenticate = require('../lib/security'),
-	authorize    = require('../lib/authorization-service')
+	authenticate = require('../lib/authentication-handler')
+	// authorize    = require('../lib/authorization-service')
 ;
 
 module.exports = function (app) {

@@ -18,7 +18,7 @@
   ],
   "replaceConsole" : "false",
 	"levels": { 
-		"console": "WARN", 
+		"console": "INFO", 
 		"test":    "WARN",
 		"PermissionContext_test": "WARN",
 		"PermissionHolder_test": "WARN",

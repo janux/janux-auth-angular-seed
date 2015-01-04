@@ -1,9 +1,11 @@
-// var express = require('express');
 // var app = express();
 var passport = require('../app-context').passport;
 // var MongoStrategy = require('./mongo-strategy');
 var log = require('log4js').getLogger('security');
 
+//
+// Returning a angular-app friendly user, this should be removed
+//
 var filterUser = function(user) {
 	log.debug('user in filterUser:', user);
   if ( user ) {
@@ -22,12 +24,14 @@ var filterUser = function(user) {
   }
 };
 
+
 var security = {
 	/*
   initialize: function(url, apiKey, dbName, authCollection) {
     passport.use(new MongoStrategy(url, apiKey, dbName, authCollection));
   },
 	*/
+
   authenticationRequired: function(req, res, next) {
     console.log('authRequired');
     if (req.isAuthenticated()) {
@@ -36,6 +40,8 @@ var security = {
       res.json(401, filterUser(req.user));
     }
   },
+
+	/*
   adminRequired: function(req, res, next) {
     console.log('adminRequired');
     if (req.user && req.user.admin ) {
@@ -44,11 +50,14 @@ var security = {
       res.json(401, filterUser(req.user));
     }
   },
+	*/
+
   sendCurrentUser: function(req, res, next) {
 		log.debug('calling sendCurrentUser');
     res.json(200, filterUser(req.user));
     res.end();
   },
+
   login: function(req, res, next) {
 		log.debug('calling login');
 
@@ -66,6 +75,7 @@ var security = {
     return passport.authenticate('local', authenticationFailed)(req, res, next);
     // return passport.authenticate(MongoStrategy.name, authenticationFailed)(req, res, next);
   },
+
   logout: function(req, res, next) {
     req.logout();
     res.send(204);

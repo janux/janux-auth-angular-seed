@@ -70,12 +70,12 @@ function($dialog , $http , $location , $q , retryQueue) {
 		},
 
 		/**
-		 * Authenticate the user with email and password
+		 * Authenticate the user with username and password
 		 */
-		login: function(email, password) {
-			var request = $http.post('/login', {email: email, password: password});
+		login: function(username, password) {
+			var request = $http.post('/login', { username: username, password: password});
 			return request.then(function(response) {
-				// console.debug("login resp:", JSON.stringify(response));
+				console.debug("login resp:", JSON.stringify(response));
 				service.currentUser = response.data.user;
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);

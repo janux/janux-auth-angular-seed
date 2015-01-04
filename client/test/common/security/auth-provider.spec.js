@@ -18,7 +18,19 @@ describe('$authorization', function() {
 		queue          = $injector.get('retryQueue');
 		
 		userResponse = { 
-			user: { id: '1234567890', email: 'jo@bloggs.com', firstName: 'Jo', lastName: 'Bloggs'} 
+			user: { 
+				oid:       '1234567890', 
+				account: {
+					name: 'widget',
+					password: 'password',
+					passwordExpire: '',
+					isLocked: false,
+				},
+				person: { 
+					name: { first: 'Jo', last: 'Bloggs' },
+					email: 'jo@bloggs.com'
+				}
+			}
 		};
 
 		resolved = false;

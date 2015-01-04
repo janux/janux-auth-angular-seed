@@ -20,14 +20,6 @@ AuthService.loadRoles().then(function(contexts) {
 		'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f': 
 		{
 			oid: 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
-			// angular-app stubbed fields
-			_id: { $oid: this.oid },
-			email: 'widget',
-			lastName: 'Paravicini',
-			firstName: 'Philippe',
-			password: 'test',
-			admin: true,
-			// end angular-app stubbed fields
 			account: {
 				name: 'widget',
 				password: 'test1',

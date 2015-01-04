@@ -10,7 +10,10 @@ module.exports =
        ['$scope','security','$translate',
 function($scope , security , $translate) {
 	// The model for this form 
-	$scope.user = {};
+	$scope.user = {
+		account: {},
+		person:  {}
+	};
 
 	// Any error message from failing to login
 	$scope.authError = null;
@@ -39,7 +42,7 @@ function($scope , security , $translate) {
 		$scope.authError = null;
 
 		// Try to login
-		security.login($scope.user.email, $scope.user.password).then(function(loggedIn) {
+		security.login($scope.user.account.name, $scope.user.account.password).then(function(loggedIn) {
 			if ( !loggedIn ) {
 				// If we get here then the login failed due to bad credentials
 				$translate('login.error.invalidCredentials').then( function(msg) {

@@ -7,5 +7,5 @@
 		span(style='margin-right: 5px', translate='label.logout')
 		span.entypo.entypo-logout
 
-	.auth-user(ng-show='isAuthenticated()') {{currentUser.firstName}} {{currentUser.lastName}} &nbsp;
+	.auth-user(ng-show='isAuthenticated()') {{currentUser.person.name.first}} {{currentUser.person.name.last}} &nbsp;
 		span.entypo.entypo-down-open

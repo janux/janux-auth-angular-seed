@@ -50,7 +50,20 @@ describe('login-toolbar', function() {
 
 
 	it('should display current user name and logout, when authenticated', function () {
-		security.currentUser = { firstName: 'Jo', lastName: 'Bloggs'};
+		security.currentUser = { 
+			oid: '1234567890', 
+			account: {
+				name: 'widget',
+				password: 'password',
+				passwordExpire: '',
+				isLocked: false,
+			},
+			person: { 
+				name: { first: 'Jo', last: 'Bloggs' },
+				email: 'jo@bloggs.com'
+			}
+		};
+
 		$rootScope.$digest();
 
 		expect(toolbar.find('.auth-user').text().trim()).toBe('Jo Bloggs');

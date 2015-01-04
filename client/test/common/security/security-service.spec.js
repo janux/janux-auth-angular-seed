@@ -17,10 +17,17 @@ describe('security', function() {
 		$http        = _$http_;
 
 		userInfo = { 
-			id:        '1234567890', 
-			email:     'jo@bloggs.com', 
-			firstName: 'Jo', 
-			lastName:  'Bloggs'
+			oid: '1234567890', 
+			account: {
+				name: 'widget',
+				password: 'password',
+				passwordExpire: '',
+				isLocked: false,
+			},
+			person: { 
+				name: { first: 'Jo', last: 'Bloggs' },
+				email: 'jo@bloggs.com'
+			}
 		};
 
 		$httpBackend.when('GET', '/current-user').respond(200, { user: userInfo });
@@ -73,14 +80,14 @@ describe('security', function() {
 			$httpBackend.when('POST', '/login').respond(200, { user: null });
 			spyOn(queue, 'retryAll');
 			expect(queue.retryAll).not.toHaveBeenCalled();
-			service.login('email', 'password');
+			service.login('username', 'password');
 			$httpBackend.flush();
 			expect(queue.retryAll).not.toHaveBeenCalled();
 		});
 
 		it('returns true to success handlers if the user authenticated', function() {
 			$httpBackend.when('POST', '/login').respond(200, { user: userInfo });
-			service.login('email', 'password').then(function(loggedIn) {
+			service.login('username', 'password').then(function(loggedIn) {
 				expect(loggedIn).toBe(true);
 			});
 			$httpBackend.flush();
@@ -88,7 +95,7 @@ describe('security', function() {
 
 		it('returns false to success handlers if the user was not authenticated', function() {
 			$httpBackend.when('POST', '/login').respond(200, { user: undefined });
-			service.login('email', 'password').then(function(loggedIn) {
+			service.login('username', 'password').then(function(loggedIn) {
 				expect(loggedIn).toBe(false);
 			});
 			$httpBackend.flush();
@@ -155,11 +162,11 @@ describe('security', function() {
 		*/
 
 		it("should not be authenticated or admin if we clear the user", function() {
-			var userInfo = { admin: true };
+			// var userInfo = { admin: true };
 			service.currentUser = userInfo;
 			expect(service.isAuthenticated()).toBe(true);
 			// expect(service.isAdmin()).toBe(true);
-			expect(service.currentUser).toEqual(userInfo);
+			// expect(service.currentUser).toEqual(userInfo);
 
 			service.currentUser = null;
 			expect(service.isAuthenticated()).toBe(false);

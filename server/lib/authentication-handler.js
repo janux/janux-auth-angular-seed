@@ -1,28 +1,7 @@
-// var app = express();
 var passport = require('../app-context').passport;
 // var MongoStrategy = require('./mongo-strategy');
-var log = require('log4js').getLogger('security');
+var log = require('log4js').getLogger('authentication');
 
-//
-// Returning a angular-app friendly user, this should be removed
-//
-var filterUser = function(user) {
-	log.debug('user in filterUser:', user);
-  if ( user ) {
-    return {
-      user : {
-        id: user._id.$oid,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        admin: user.admin
-      }
-    };
-  } else {
-		log.debug('returning null user');
-    return { user: null };
-  }
-};
 
 
 var security = {
@@ -37,7 +16,7 @@ var security = {
     if (req.isAuthenticated()) {
       next();
     } else {
-      res.json(401, filterUser(req.user));
+      res.json(401, req.user);
     }
   },
 
@@ -47,14 +26,14 @@ var security = {
     if (req.user && req.user.admin ) {
       next();
     } else {
-      res.json(401, filterUser(req.user));
+      res.json(401, req.user);
     }
   },
 	*/
 
   sendCurrentUser: function(req, res, next) {
 		log.debug('calling sendCurrentUser');
-    res.json(200, filterUser(req.user));
+    res.json(200, req.user);
     res.end();
   },
 
@@ -69,7 +48,7 @@ var security = {
       if (!user) { return res.json( {user: null} ); }
       req.logIn(user, function(err) {
         if ( err ) { return next(err); }
-        return res.json(filterUser(user));
+        return res.json({user: user});
       });
     }
     return passport.authenticate('local', authenticationFailed)(req, res, next);

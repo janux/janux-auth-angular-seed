@@ -5,6 +5,29 @@ var
 	LocalStrategy = require('passport-local').Strategy
 ;
 
+//
+// This file runs after node-config is configured, and makes it possible to make programmatic changes
+// to the configuration after the config file has been loaded; 
+// in particular, we use it to run the log4js configuration commands below
+//
+
+// read the log4js config from node-config
+log4js.configure(config.log4js.config);
+
+// It is not possible to set the global log level via the log4js config, so we are forced to do this
+// programatically; the downside is that it is not possible at this time to change this setting
+// without restarting the server
+log4js.setGlobalLogLevel(config.log4js.globalLogLevel);
+
+// Watch for any changes to the customer configuration
+// test how well this works this at some point
+// config.watch(config, null, function(object, propertyName, priorValue, newValue) {
+//   console.log('Customer configuration ' + propertyName + ' changed from ' + priorValue + ' to ' +
+//   newValue);
+// });
+
+var log = log4js.getLogger('AppContext');
+
 // TODO: inject the userService declaratively so that we can switch between 
 // a mock local service during development, and a remote web service in production
 var userService = require('./lib/user-service-mock');
@@ -13,6 +36,7 @@ var userService = require('./lib/user-service-mock');
 // To support persistent login sessions, Passport needs to be able to 
 // serialize users into and deserialize users out of the session.
 passport.serializeUser(function(user, done) {
+	//log.debug('user in serializeUser: %j', user);
 	done(null, user.oid);
 });
 
@@ -22,9 +46,9 @@ passport.deserializeUser(function(oid,done) {
 	});
 });
 
-passport.use(new LocalStrategy( { usernameField: 'email' },
+passport.use(new LocalStrategy( { usernameField: 'username' },
 	function(username, password, done) {
-		log.debug('calling userService.authenticate from passport');
+		log.debug('calling userService.authenticate from passport with username "%s"', username);
 		return userService.authenticate(username, password, done);
 	}
 ));
@@ -67,28 +91,6 @@ config.authenticate = function authenticate(req, res, next) {
 // uncomment to troubleshoot if log4js is not configuring properly
 // console.log('config is %j', config);
 
-/**
- * This file runs after node-config is configured, and makes it possible to make programmatic changes
- * to the configuration after the config file has been loaded; 
- * in particular, we use it to run the log4js configuration commands below
- */
-
-// read the log4js config from node-config
-log4js.configure(config.log4js.config);
-
-// It is not possible to set the global log level via the log4js config, so we are forced to do this
-// programatically; the downside is that it is not possible at this time to change this setting
-// without restarting the server
-log4js.setGlobalLogLevel(config.log4js.globalLogLevel);
-
-// Watch for any changes to the customer configuration
-// test how well this works this at some point
-// config.watch(config, null, function(object, propertyName, priorValue, newValue) {
-//   console.log('Customer configuration ' + propertyName + ' changed from ' + priorValue + ' to ' +
-//   newValue);
-// });
-
-var log = log4js.getLogger('AppContext');
 
 log.trace('Application Context is %j: ', config);
 

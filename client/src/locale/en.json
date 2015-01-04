@@ -6,7 +6,8 @@
 		"login":    "Sign In",
 		"logout":   "Sign Out",
 		"password": "Password",
-		"people":   "people"
+		"people":   "people",
+		"username": "User Name"
 	},
 	"dashboard": {
 		"title":"Dashboard"

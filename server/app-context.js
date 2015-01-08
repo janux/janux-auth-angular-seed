@@ -30,7 +30,7 @@ var log = log4js.getLogger('AppContext');
 
 // TODO: inject the userService declaratively so that we can switch between 
 // a mock local service during development, and a remote web service in production
-var userService = require('./lib/user-service-mock');
+var userService = require('./src/user-service-mock');
 
 // Passport session setup
 // To support persistent login sessions, Passport needs to be able to 
@@ -86,7 +86,7 @@ config.authenticate = function authenticate(req, res, next) {
 // config.propertyService = require(config.service.property.impl).singleton(propertyServiceConfig);
 //
 // // TODO: update the authorization-service to implement the ServiceFactory pattern
-// config.authService = require('./lib/authorization-service').singleton();
+// config.authService = require('./src/authorization-service').singleton();
 
 // uncomment to troubleshoot if log4js is not configuring properly
 // console.log('config is %j', config);

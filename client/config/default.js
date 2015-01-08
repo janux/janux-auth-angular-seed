@@ -9,7 +9,6 @@ var cfg = {
 		css:     'css',
 		dist:    'dist',
 		img:     'img',
-		lib:     'lib',
 		js:      'app',
 		locale:  'locale',
 		partial: 'view',

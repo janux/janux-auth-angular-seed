@@ -4,11 +4,12 @@
 	// if we are being called from a node environment use require, 
 	// otherwise expect dependency to be in context passed (namely the window object in a browser)
 	var 
-		inNode = typeof module === "object"
-		,_ = inNode ? require('underscore') : exports._
-		,sprintf = inNode ? require('sprintf-js').sprintf : exports.sprintf
-		,PermissionHolder  = inNode ? require('./PermissionHolder')  : exports.PermissionHolder
-		,PermissionContext = inNode ? require('./PermissionContext') : exports.PermissionContext
+		inNode = (typeof module) === "object",
+		_                 = inNode ? require('underscore')          : exports._,
+		sprintf           = inNode ? require('sprintf-js').sprintf  : exports.sprintf,
+		PermissionHolder  = inNode ? require('./PermissionHolder')  : exports.PermissionHolder,
+		PermissionContext = inNode ? require('./PermissionContext') : exports.PermissionContext
+	;
 
 	function Role(aName, aDescription) {
 		
@@ -55,8 +56,8 @@
 	}
 
 })(typeof exports != "undefined" ?  exports : window.Role = {
-	_: window._  
-	,sprintf: window.sprintf 
-	,PermissionHolder:  window.PermissionHolder
-	,PermissionContext: window.PermissionContext
+	_:       window._,
+	sprintf: window.sprintf,
+	PermissionHolder:  window.PermissionHolder,
+	PermissionContext: window.PermissionContext
 });

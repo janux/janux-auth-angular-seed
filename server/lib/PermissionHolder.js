@@ -4,8 +4,8 @@
 	// if we are being called from a node environment use require, 
 	// otherwise expect dependency to be in context passed (namely the window object in a browser)
 	var 
-		inNode = typeof module === "object"
-		,_ = inNode ? require('underscore') : exports._
+		inNode = typeof module === "object",
+		_      = inNode ? require('underscore') : exports._
 	;
 
 	/**

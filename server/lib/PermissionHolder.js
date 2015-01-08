@@ -4,7 +4,7 @@
 	// if we are being called from a node environment use require, 
 	// otherwise expect dependency to be in context passed (namely the window object in a browser)
 	var 
-		inNode = typeof module === "object",
+		inNode = (typeof module) === "object",
 		_      = inNode ? require('underscore') : exports._
 	;
 
@@ -94,7 +94,16 @@
 
 		// console.log('permContext:', JSON.stringify(permContext));
 
-		var requiredPerms = permContext.getPermissionsAsNumber(perms);
+		var requiredPerms = -1;
+		try
+		{ 
+			requiredPerms = permContext.getPermissionsAsNumber(perms);
+		}
+		catch (e)
+		{
+			console.warn("WARNING: " + e );
+			return false;
+		}
 
 		// console.log('requiredPerms:', requiredPerms);
 		// console.log('permsGranted.grant:', permsGranted.grant);
@@ -104,6 +113,27 @@
 
 		return match == requiredPerms;
 	};
+
+	/**
+	 * This is the preferred manner to check for permissions, as it is the most english-readable one,
+	 * yielding a call such as:
+	 *
+	 * role.can("WRITE", DOCUMENT)
+	 * or
+	 * role.can(["UPDATE", "DELETE"], DOCUMENT)
+	 *
+	 * The first argument may be a string representing the permission, or an array of strings if
+	 * checking for multiple permissions
+	 */
+	PermissionHolder.prototype.can = function can(perms, context) {
+		if (_.isArray(perms)) {
+			return this.hasPermissions(perms, context);
+		} else if (_.isString(perms)) {
+			return this.hasPermission(perms, context);
+		} else {
+			return false;
+		}
+	}
 
 
 	PermissionHolder.prototype.toJSON = function toJSON() {

@@ -1,19 +1,19 @@
 {
 	"author": "Philippe Paravicini",
-	"name": "janux-web-seed",
-	"homepage": "https://github.com/janux/janux-web-seed",
-	"version": "0.0.1-SNAPSHOT",
+	"name": "janux-auth-seed",
+	"homepage": "https://github.com/janux/janux-auth-seed",
+	"version": "0.0.1",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:janux/janux-web-seed.git"
+		"url": "git@github.com:janux/janux-auth-seed.git"
 	},
 	"bugs": {
-		"url": "https://github.com/janux/janux-web-seed/issues"
+		"url": "https://github.com/janux/janux-auth-seed/issues"
 	},
 	"licenses": [
 		{
 			"type": "Apache 2.0",
-			"url": "https://raw.github.com/janux/janux-web-seed/master/LICENSE"
+			"url": "https://raw.github.com/janux/janux-auth-seed/master/LICENSE"
 		}
 	],
 	"engines": {

@@ -1,6 +1,14 @@
 describe('security', function() {
 
 	var $rootScope, $http, $httpBackend, status, userInfo;
+
+	function assertUser(user) {
+		expect(user.person).toEqual(userInfo.person);
+		expect(user.account.name).toEqual(userInfo.account.name);
+		expect(user.account.roles.length).toEqual(1);
+		expect(user.account.roles[0].can('READ','WIDGET')).toEqual(true);
+		expect(user.account.roles[0].can('CREATE','EQUIPMENT')).toEqual(false);
+	};
 	
 	// The cachedTemplates module is created in karma.conf.js 
 	// via the ngHtml2JsPreprocessor, and caches all html templates 
@@ -16,17 +24,77 @@ describe('security', function() {
 		$httpBackend = _$httpBackend_;
 		$http        = _$http_;
 
-		userInfo = { 
-			oid: '1234567890', 
-			account: {
-				name: 'widget',
-				password: 'password',
-				passwordExpire: '',
-				isLocked: false,
+		userInfo = {
+			'oid': 'e90597ae-6450-49f5-8b72-3c0b1a6e8c4f',
+			'person': {
+				'name': {
+					'first': 'Chase',
+					'last': 'Widgeter'
+				}
 			},
-			person: { 
-				name: { first: 'Jo', last: 'Bloggs' },
-				email: 'jo@bloggs.com'
+			'account': {
+				'name': 'widgeter',
+				'passwordExpiresOn': '',
+				'expiresOn': '',
+				'roles': [
+					{
+						'name': 'WIDGET_DESIGNER',
+						'description': 'A Widget Designer',
+						'sortOrder': 0,
+						'isEnabled': true,
+						'typeName': 'janux.security.Role',
+						'permissions': {
+							'WIDGET': {
+								'grant': 15
+							},
+							'EQUIPMENT': {
+								'grant': 3
+							}
+						},
+						'permissionContexts': [
+							{
+								'name': 'WIDGET',
+								'bit': {
+									'READ': {
+										'position': 0
+									},
+									'UPDATE': {
+										'position': 1
+									},
+									'CREATE': {
+										'position': 2
+									},
+									'DELETE': {
+										'position': 3
+									},
+									'PURGE': {
+										'position': 4
+									}
+								}
+							},
+							{
+								'name': 'EQUIPMENT',
+								'bit': {
+									'READ': {
+										'position': 0
+									},
+									'UPDATE': {
+										'position': 1
+									},
+									'CREATE': {
+										'position': 2
+									},
+									'DELETE': {
+										'position': 3
+									},
+									'PURGE': {
+										'position': 4
+									}
+								}
+							}
+						]
+					}
+				]
 			}
 		};
 
@@ -57,23 +125,24 @@ describe('security', function() {
 
 	describe('login', function() {
 
-		it('sends a http request to login the specified user', function() {
+		it('sends an http request to login the specified user', function() {
+			var user;
 			$httpBackend.when('POST', '/login').respond(200, { user: userInfo });
 			$httpBackend.expect('POST', '/login');
-			service.login('email', 'password');
+			service.login('widgeter', 'password');
 			$httpBackend.flush();
-			expect(service.currentUser).toEqual(userInfo);
+			assertUser(service.currentUser);
 		});
 
 		it('calls queue.retry on a successful login', function() {
 			$httpBackend.when('POST', '/login').respond(200, { user: userInfo });
 			spyOn(queue, 'retryAll');
 			service.showLogin();
-			service.login('email', 'password');
+			service.login('widgeter', 'password');
 			$httpBackend.flush();
 			$rootScope.$digest();
 			expect(queue.retryAll).toHaveBeenCalled();
-			expect(service.currentUser).toEqual(userInfo);
+			assertUser(service.currentUser);
 		});
 
 		it('does not call queue.retryAll after a login failure', function() {
@@ -87,7 +156,7 @@ describe('security', function() {
 
 		it('returns true to success handlers if the user authenticated', function() {
 			$httpBackend.when('POST', '/login').respond(200, { user: userInfo });
-			service.login('username', 'password').then(function(loggedIn) {
+			service.login('widgeter', 'password').then(function(loggedIn) {
 				expect(loggedIn).toBe(true);
 			});
 			$httpBackend.flush();
@@ -185,7 +254,7 @@ describe('security', function() {
 			service.requestCurrentUser().then(function(data) {
 				resolved = true;
 				expect(service.isAuthenticated()).toBe(true);
-				expect(service.currentUser).toEqual(userInfo);
+				assertUser(service.currentUser);
 			});
 			$httpBackend.flush();
 			expect(resolved).toBe(true);

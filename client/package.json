@@ -55,7 +55,9 @@
 		"angular-translate":  "./bower/angular-translate/angular-translate.js",
 		"angular-translate-loader-static-files": "./bower/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
 		"jquery":             "./bower/jquery/dist/jquery.js",
+		"lodash":             "./bower/lodash/dist/lodash.js",
 		"ui-bootstrap-modal": "./vendor/ui-bootstrap-custom-0.1.0-SNAPSHOT.js",
+		"janux-security":     "./node_modules/janux-security.js/index.js",
 		"common/security":    "./src/common/security/index.js"
 	},
 	"browserify-shim": {

@@ -1,5 +1,10 @@
 'use strict';
 
+var 
+	_    = require('lodash'),
+	Role = require('janux-security').Role
+;
+
 module.exports = 
        ['$dialog','$http','$location','$q','retryQueue',
 function($dialog , $http , $location , $q , retryQueue) {
@@ -7,6 +12,20 @@ function($dialog , $http , $location , $q , retryQueue) {
 	function redirect(url) {
 		url = url || '/';
 		$location.path(url);
+	}
+
+	//
+	// When a user is returned from the back-end, hydrate each 
+	// role json structure into a full janux Role instance
+	//
+	function hydrateRoles(user) {
+		if (user && user.account && user.account.roles) {
+			user.account.roles = _.map(user.account.roles, function(role) {
+				return Role.fromJSON(role);
+			});
+		}
+		return user;
+		// console.debug('user can READ WIDGET', service.currentUser.account.roles[0].can('READ','WIDGET'));
 	}
 
 	var loginDialog = null;
@@ -75,8 +94,9 @@ function($dialog , $http , $location , $q , retryQueue) {
 		login: function(username, password) {
 			var request = $http.post('/login', { username: username, password: password});
 			return request.then(function(response) {
-				console.debug("login resp:", JSON.stringify(response));
-				service.currentUser = response.data.user;
+				console.debug('login resp:', JSON.stringify(response));
+				service.currentUser = hydrateRoles(response.data.user);
+
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
 					// if we are logging in from the goodbye page, 
@@ -111,7 +131,7 @@ function($dialog , $http , $location , $q , retryQueue) {
 				return $q.when(service.currentUser);
 			} else {
 				return $http.get('/current-user').then(function(response) {
-					service.currentUser = response.data.user;
+					service.currentUser = hydrateRoles(response.data.user);
 					console.log('currentUser-served:', service.currentUser);
 					return service.currentUser;
 				});

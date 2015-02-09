@@ -8,6 +8,7 @@
     "angular-translate-loader-static-files": "~2.5.2",
     "angular-ui-router": "~0.2.11",
     "jquery":            "~1.11.1",
+		"lodash":            "^2.4.1",
     "normalize.css":     "~3.0.0",
     "semantic-grid":     "*"
   }

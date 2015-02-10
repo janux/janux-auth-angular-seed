@@ -2,8 +2,8 @@
 
 var 
 	_ = require('underscore'),
-	AuthorizationContext = require('janux-security.js').PermissionContext,
-	Role = require('janux-security.js').Role,
+	AuthorizationContext = require('janux-security').PermissionContext,
+	Role = require('janux-security').Role,
 	Q    = require('q'),
 	util = require('util')
 ;

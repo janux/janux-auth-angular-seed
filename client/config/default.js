@@ -12,14 +12,14 @@ var cfg = {
 		js:      'app',
 		locale:  'locale',
 		partial: 'view',
-		server:  '../server',
+		// server:  '../server',
 		test:    'test',
 		vendor:  'vendor'
 	},
 	file: {
 		app:    'app.js',
 		karma:  'karma.conf.js',
-		server: 'server.js'
+		// server: 'server.js'
 	},
 	fileset: {},
 }; 
@@ -102,28 +102,29 @@ cfg.karma = {
 }
 
 // the connect or other server config
-/*
 cfg.server = {
 	exec: 'connect',
 	root: [cfg.dir.dist],
 	port: 9000,
 	host: '0.0.0.0',
 	open: false,
-	livereload: false
+	livereload: false,
+	static: ''
 };
-*/
 
 //
 // gulp-express client-side config
+/*
 cfg.server = {
 	exec: 'express',
 	file: path.join(cfg.dir.server, cfg.file.server),
 	static: 'static'
 }
+*/
 
 // express server-side config
 // Load the default config from the config file in the server project;
 // this configuration also supports running 'node server.js' from the server folder
-cfg.serverAppContext = require(path.join('..', cfg.dir.server, 'config', 'default.js')).serverAppContext
+// cfg.serverAppContext = require(path.join('..', cfg.dir.server, 'config', 'default.js')).serverAppContext
 
 module.exports = cfg;

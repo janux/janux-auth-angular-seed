@@ -37,7 +37,8 @@ function($dialog , $http , $location , $q , retryQueue) {
 		loginDialog = $dialog.dialog();
 		//TODO-pp: the 'static' here is undesirable, should be replaced with build variable, 
 		//since this it is also dependent on the value to which we map static assets in express
-		loginDialog.open('static/common/security/login/form.html', 'loginController').then(onLoginDialogClose)
+		// loginDialog.open('static/common/security/login/form.html', 'loginController').then(onLoginDialogClose)
+		loginDialog.open('common/security/login/form.html', 'loginController').then(onLoginDialogClose)
 	}
 
 	function closeLoginDialog(success) {

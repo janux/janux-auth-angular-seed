@@ -18,8 +18,10 @@ function($rootScope , $state , $stateParams) {
 .config(['$stateProvider','$urlRouterProvider','$translateProvider',
 function( $stateProvider , $urlRouterProvider , $translateProvider) {
 
+	//TODO: add constant to handle 'static/' prefix here
 	$translateProvider.useStaticFilesLoader({
-		prefix: 'static/locale/',
+		// prefix: 'static/locale/',
+		prefix: 'locale/',
 		suffix: '.json'
 	});
 
@@ -63,32 +65,38 @@ function( $stateProvider , $urlRouterProvider , $translateProvider) {
 		}]
 	};
 	
+	// TODO: add constant for 'static/' bit below
 	$stateProvider.state('dashboard', {
 		// default state
 		url: '/',
-		templateUrl: 'static/app/dashboard.html'
+		// templateUrl: 'static/app/dashboard.html'
+		templateUrl: 'app/dashboard.html'
 	})
 
 	.state('goodbye', {
 		url: '/goodbye',
-		templateUrl: 'static/app/goodbye.html',
+		// templateUrl: 'static/app/goodbye.html',
+		templateUrl: 'app/goodbye.html',
 	})
 
 	.state('users', {
 		url: '/users',
-		templateUrl: 'static/app/user/index.html',
+		// templateUrl: 'static/app/user/index.html',
+		templateUrl: 'app/user/index.html',
 		resolve: authenticate
 	})
 
 	.state('roles', {
 		url: '/roles',
-		templateUrl: 'static/app/role/index.html',
+		// templateUrl: 'static/app/role/index.html',
+		templateUrl: 'app/role/index.html',
 		resolve: authenticate
 	})
 
 	.state('permissions', {
 		url: '/permissions',
-		templateUrl: 'static/app/permission/index.html',
+		// templateUrl: 'static/app/permission/index.html',
+		templateUrl: 'app/permission/index.html',
 		resolve: authenticate
 	});
 }]);

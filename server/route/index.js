@@ -47,6 +47,7 @@ module.exports = function(app) {
 	//
 	// alternatively, redirect any unknown url to the index page
 	// app.get('*', authenticate, index);
+	// TODO: replace this with a 404 error and page
 	//
 	app.get('*', index);
 };

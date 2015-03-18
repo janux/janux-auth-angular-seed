@@ -1,0 +1,15 @@
+{
+  "name": "jnx-api",
+  "version": "1.0.0",
+  "description": "sample janux rpc api calls",
+  "main": "''",
+  "author": "ppparavicini@janux.com",
+	"dependencies": {
+		"config":    "*",
+		"log4js":    "*",
+		"request":   "*",
+		"moment":    "*",
+		"node-uuid": "*",
+		"multitransport-jsonrpc": "*"
+	}
+}

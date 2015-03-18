@@ -20,16 +20,16 @@ module.exports = function(app) {
 
 	app.get('/', index);
 
+	// module-specific routes
+	require('./auth')(app);
+	require('./rpc-api')(app);
+
 	// partials are served by their name
 	/*
 	app.get('/partials/:name', function (req, res) {
 		res.render('partials/' + req.params.name);
 	});
 	*/
-
-	// module-specific routes
-	require('./auth')(app);
-	// require('./api' )(app);
 
 	//// application defaults
 	//

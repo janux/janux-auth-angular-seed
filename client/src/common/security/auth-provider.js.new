@@ -1,0 +1,76 @@
+'use strict';
+
+//
+// This service provides guard methods to support AngularJS routes.
+// You can add them as resolves to routes to require authorization levels
+// before allowing a route change to complete
+//
+module.exports = {
+
+	$get: ['security', 'retryQueue', function(security, queue) {
+		var service = {
+
+			//
+			// Require that there be an authenticated user
+			// (use this in a route resolve to prevent non-authenticated users from entering that route)
+			//
+			requireAuthenticatedUser: function() {
+				var promise = security.requestCurrentUser().then(function(userInfo) {
+					if ( !security.isAuthenticated() ) {
+						return queue.pushRetryFn('unauthenticated-client', service.requireAuthenticatedUser);
+					}
+				});
+				return promise;
+			},
+
+			//
+			// Use janux authorization to check for the proper authorization for an
+			// operation; 
+			// TODO: check how this would be used in the app; perhaps this is
+			// superfluous, since we would already be hiding non-authorized operations
+			// from the user, and any non-authorized operation would fail in the
+			// back-end; 
+			// Test also behavior of the app if 401 is returned to an
+			// authenticated user who attempts to access non-authorized function in
+			// back-end: again, under normal operating conditions, the app should
+			// prevent this from happening by 'hiding' such functionality
+			//
+			requireAuthorization: function(perms, authContext) {
+				var promise = security.requestCurrentUser().then(function(user) {
+					if (!user.can(perms, authContext)) {
+						return queue.pushRetryFn('unauthorized-client', service.requireAuthorization);
+					}
+				});
+			},
+
+			//
+			// TODO: as for above, would this ever be used in an app?
+			//
+			requireRole: function(roleNames) {
+				var promise = security.requestCurrentUser().then(function(user) {
+					if (!user.hasRoles(roleNames)) {
+						return queue.pushRetryFn('unauthorized-client', service.requireRole);
+					}
+				});
+			},
+
+			//
+			// Require that there be an administrator logged in
+			// (use this in a route resolve to prevent non-administrators from entering that route)
+			// TODO-pp: deprecated in favor of the more granular methods above
+			//
+			/*
+			requireAdminUser: function() {
+				var promise = security.requestCurrentUser().then(function(userInfo) {
+					if ( !security.isAdmin() ) {
+						return queue.pushRetryFn('unauthorized-client', service.requireAdminUser);
+					}
+				});
+				return promise;
+			}
+			*/
+		};
+
+		return service;
+	}]
+};

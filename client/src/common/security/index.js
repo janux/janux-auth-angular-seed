@@ -1,8 +1,8 @@
 'use strict';
 
-require('ui-bootstrap-modal');
+require('angular-bootstrap');
 
-require('angular').module('security', ['ui.bootstrap.dialog'])
+require('angular').module('security', ['ui.bootstrap'])
 	.factory(   'security',         require('./security-service.js'))
 	.factory(   'retryQueue',       require('./retry-queue.js'))
 	.provider(  '$authorization',   require('./auth-provider.js'))

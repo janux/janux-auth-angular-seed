@@ -6,8 +6,8 @@ var
 ;
 
 module.exports = 
-       ['$dialog','$http','$location','$q','retryQueue',
-function($dialog , $http , $location , $q , retryQueue) {
+       ['$modal','$http','$location','$q','retryQueue',
+function($modal , $http , $location , $q , retryQueue) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -34,10 +34,14 @@ function($dialog , $http , $location , $q , retryQueue) {
 		if (loginDialog) {
 			throw new Error('Trying to open login dialog that is already open!');
 		}
-		loginDialog = $dialog.dialog();
 		//TODO-pp: the 'static' here is undesirable, should be replaced with build variable, 
 		//since this it is also dependent on the value to which we map static assets in express
-		loginDialog.open('static/common/security/login/form.html', 'loginController').then(onLoginDialogClose)
+		loginDialog = $modal.open({
+			templateUrl: 'static/common/security/login/form.html', 
+			controller:  'loginController'
+		});
+
+		loginDialog.result.then(onLoginDialogClose);
 	}
 
 	function closeLoginDialog(success) {

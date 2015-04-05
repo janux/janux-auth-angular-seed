@@ -2,8 +2,9 @@
 	"name": "janux-auth-seed",
 	"version": "0.0.1-SNAPSHOT",
 	"dependencies": {
-		"angular":          "1.2.x",
-		"angular-mocks":    "1.2.x",
+		"angular":           "1.2.28",
+		"angular-bootstrap": "0.12.0",
+		"angular-mocks":     "1.2.x",
 		"angular-translate": "2.5.2",
 		"angular-translate-loader-static-files": "2.5.2",
 		"angular-ui-router": "0.2.11",

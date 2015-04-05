@@ -71,7 +71,8 @@ cfg.fileset.lessSrc = path.join(cfg.dir.src, cfg.dir.css, '*.less');
 
 // any css libs that need to be copied to the dist/css folder
 cfg.fileset.cssLibs = [
-	path.join(cfg.dir.bower,'normalize.css', 'normalize.css')
+	path.join(cfg.dir.bower,'normalize.css', 'normalize.css'),
+	path.join(cfg.dir.bower,'bootstrap','dist','css','bootstrap.css')
 ];
 
 // any javascript libs that need to be copied to dist/js

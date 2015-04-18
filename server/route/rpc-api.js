@@ -16,7 +16,7 @@ var jsonrpcServer = new jsonrpc.server(
 */
 
 
-var users = new jsonrpc.server(new transport(), require('../src/user-service-mock'));
+var users = new jsonrpc.server(new transport(), userService);
 
 // eventually we can declare something like this, and programmatically 
 // map all the services to an rpc middleware

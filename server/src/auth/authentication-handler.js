@@ -1,8 +1,6 @@
-var passport = require('../app-context').passport;
+var passport = require('../../app-context').passport;
 // var MongoStrategy = require('./mongo-strategy');
 var log = require('log4js').getLogger('authentication');
-
-
 
 var security = {
 	/*

@@ -5,7 +5,7 @@ var
 	,expect = require('chai').expect
 	,should = require('chai').should()
 	,log4js = require('log4js')
-	,AuthService = require('../src/authorization-service')
+	,AuthService = require('../../src/auth/authorization-service')
 ;
 
 var log = log4js.getLogger('test');

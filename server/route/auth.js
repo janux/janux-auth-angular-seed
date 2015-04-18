@@ -1,7 +1,7 @@
 'use strict';
 
 var 
-	authenticate = require('../src/authentication-handler')
+	authenticate = require('../src/auth/authentication-handler')
 	// authorize    = require('../src/authorization-service')
 ;
 

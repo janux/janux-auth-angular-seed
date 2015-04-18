@@ -1,7 +1,7 @@
 'use strict';
 
 var 
-	userService = require('../src/user-service-mock'),
+	userService = require('../src/auth/user-service-mock'),
 	jsonrpc     = require('multitransport-jsonrpc'),
 	log = require('log4js').getLogger('sandbox')
 ;

@@ -31,6 +31,11 @@ for (var filename in taskDir) {
 }
 
 //
+// Check js syntax and browserify build
+//
+gulp.task('compile', ['lint','browserify']);
+
+//
 // Process all assets for development
 //
 gulp.task('build', ['lint','browserify','styles','jade','copy']);

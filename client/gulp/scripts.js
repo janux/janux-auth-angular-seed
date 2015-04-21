@@ -4,6 +4,7 @@
 //
 
 var	path     = require('path'),
+	buffer     = require('vinyl-buffer'),
 	browserify = require('browserify'),
 	source     = require('vinyl-source-stream');
 
@@ -31,6 +32,16 @@ module.exports = function(gulp) {
 		return browserify(appFile, {debug:false})
 			.bundle()
 			.pipe(source(cfg.file.app))
+			.pipe(gulp.dest(cfg.dir.dist));
+	});
+
+	gulp.task('minify', function() {
+		console.log('minifying app...');
+		return browserify(appFile, {debug:false})
+			.bundle()
+			.pipe(source(cfg.file.app))
+			.pipe(buffer())
+			.pipe(gulp.plugins.uglify())
 			.pipe(gulp.dest(cfg.dir.dist));
 	});
 };

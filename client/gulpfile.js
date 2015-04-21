@@ -41,6 +41,11 @@ gulp.task('compile', ['lint','browserify']);
 gulp.task('build', ['lint','browserify','styles','jade','copy']);
 
 //
+// Process all assets for deployment
+//
+gulp.task('package', ['lint','minify','styles','jade','copy']);
+
+//
 // Does a clean dev build 
 //
 // this ensures that 'clean' is run before build; otherwise, 

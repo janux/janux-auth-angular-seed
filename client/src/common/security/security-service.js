@@ -38,7 +38,8 @@ function($modal , $http , $location , $q , retryQueue) {
 		//since this it is also dependent on the value to which we map static assets in express
 		loginDialog = $modal.open({
 			templateUrl: 'static/common/security/login/form.html', 
-			controller:  'loginController'
+			controller:  'loginController',
+			size: 'sm'
 		});
 
 		loginDialog.result.then(onLoginDialogClose);

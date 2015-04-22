@@ -8,11 +8,13 @@ form.login-form(name='form', novalidate)
 
 		.alert.alert-info(translate='login.msg.enterCredentials')
 
-		label(translate='label.username')
-		input(name='login', ng-model='user.account.name', required, autofocus)
+		div
+			label(translate='label.username' style='width: 33%')
+			input(name='login', ng-model='user.account.name', required, autofocus)
 
-		label(translate='label.password')
-		input(name="pass", type='password', ng-model='user.account.password', required)
+		div
+			label(translate='label.password' style='width: 33%')
+			input(name="pass", type='password', ng-model='user.account.password', required)
 
 	.modal-footer
 		button.btn.btn-primary.login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')

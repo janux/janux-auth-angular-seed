@@ -22,20 +22,6 @@ module.exports = {
 				});
 				return promise;
 			},
-
-			//
-			// Require that there be an administrator logged in
-			// (use this in a route resolve to prevent non-administrators from entering that route)
-			//
-			requireAdminUser: function() {
-				var promise = security.requestCurrentUser().then(function(userInfo) {
-					if ( !security.isAdmin() ) {
-						return queue.pushRetryFn('unauthorized-client', service.requireAdminUser);
-					}
-				});
-				return promise;
-			}
-
 		};
 
 		return service;

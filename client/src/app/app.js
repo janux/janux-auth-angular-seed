@@ -39,27 +39,27 @@ function( $stateProvider , $urlRouterProvider , $translateProvider) {
 	//
 	// This is boilerplate code that we must add to each state for which we
 	// require an authenticated user, so we define it once here rather than
-	// having to repeat it below.  Note that if the $authorization provider had
+	// having to repeat it below.  Note that if the $jnxAuth provider had
 	// been injected in this method, we would be able to use instead:
 	//
-	//   authenticate: $authorization.requireAuthenticatedUser
+	//   authenticate: $jnxAuth.requireAuthenticatedUser
 	//
 	// but angular kept throwing an error to the effect that it could not find
 	// the $authentication provider; I speculate that this is because
 	// $authenticator depends on security/retryQueue, which may not yet have
 	// been instantiated at config time of the myApp module. 
 	//
-	// In the original angular-app, the $authorization provider is injected in a
+	// In the original angular-app, the $jnxAuth provider is injected in a
 	// 'projects' module which has its own routes definition.  It would be
 	// interesting to see whether moving the definition of the states to a
 	// different module would allay this issue and make it possible to inject
-	// the $authorization provider. As an alternative, could the $authorization
+	// the $jnxAuth provider. As an alternative, could the $jnxAuth
 	// provider be rewritten so that it does not depend on the security module
 	// but raises an event that is then handled by the security module?
 	//
 	var authenticate = {
-		authenticate: ['$authorization', function($authorization) {
-			return $authorization.requireAuthenticatedUser();
+		authenticate: ['$jnxAuth', function($jnxAuth) {
+			return $jnxAuth.requireAuthenticatedUser();
 		}]
 	};
 	

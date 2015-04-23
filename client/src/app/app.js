@@ -9,10 +9,13 @@ require('common/jnxSecurity');
 
 angular.module('MyApp',[ 'ui.router', 'jnxSecurity', 'pascalprecht.translate' ])
 
-.run([  '$rootScope','$state','$stateParams',
-function($rootScope , $state , $stateParams) { 
+.run([  '$rootScope','$state','$stateParams','security',
+function($rootScope , $state , $stateParams , security) { 
 	$rootScope.$state       = $state;
 	$rootScope.$stateParams = $stateParams;
+
+	// On page reload, check to see whether the user logged in previously
+	security.requestCurrentUser();
 }])
 
 .config(['$stateProvider','$urlRouterProvider','$translateProvider',

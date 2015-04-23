@@ -32,9 +32,13 @@ app.configure(function(){
 	// app.use(express.logger());
 	app.use(express.bodyParser());
 	app.use(express.cookieParser('lucy in the sky'));
-	app.use(express.cookieSession());
+
+	// cookieSession stores the session info encrypted in the cookie client-side
+	// app.use(express.cookieSession());
+	
 	app.use(express.methodOverride());
-	// app.use(express.session( { secret: 'lucy in the sky' }));
+	app.use(express.session( { secret: 'lucy in the sky' }));
+
 	// app.use(express.static(__dirname + '/public'));
 	
 	// serve static assets from '/static' context path

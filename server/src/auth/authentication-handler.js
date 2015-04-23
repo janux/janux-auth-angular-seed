@@ -30,9 +30,10 @@ var security = {
 	*/
 
   sendCurrentUser: function(req, res, next) {
-		log.debug('calling sendCurrentUser');
-    res.json(200, req.user);
-    res.end();
+		log.debug('sendCurrentUser: %j', req.user);
+
+		// put the user in a 'user' field to keep it symmetric with the passport login
+    res.json(200, {user: req.user});
   },
 
   login: function(req, res, next) {

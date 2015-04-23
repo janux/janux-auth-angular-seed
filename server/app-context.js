@@ -36,11 +36,12 @@ var userService = require('./src/auth/user-service-mock');
 // To support persistent login sessions, Passport needs to be able to 
 // serialize users into and deserialize users out of the session.
 passport.serializeUser(function(user, done) {
-	//log.debug('user in serializeUser: %j', user);
+	// log.debug('user in serializeUser: %j', user);
 	done(null, user.oid);
 });
 
 passport.deserializeUser(function(oid,done) {
+	// log.debug('loading user with oid', oid);
 	userService.load(oid, function(err, user) {
 		done(err, user);
 	});

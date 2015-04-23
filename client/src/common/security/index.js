@@ -2,7 +2,7 @@
 
 require('angular-bootstrap');
 
-require('angular').module('security', ['ui.bootstrap'])
+require('angular').module('jnxSecurity', ['ui.bootstrap'])
 	.factory(   'security',             require('./security-service.js'))
 	.factory(   'retryQueue',           require('./retry-queue.js'))
 	.provider(  '$jnxAuth',             require('./auth-provider.js'))

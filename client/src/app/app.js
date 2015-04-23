@@ -5,9 +5,9 @@ var angular = require('angular');
 require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
-require('common/security');
+require('common/jnxSecurity');
 
-angular.module('MyApp',[ 'ui.router', 'security', 'pascalprecht.translate' ])
+angular.module('MyApp',[ 'ui.router', 'jnxSecurity', 'pascalprecht.translate' ])
 
 .run([  '$rootScope','$state','$stateParams',
 function($rootScope , $state , $stateParams) { 

@@ -16,7 +16,7 @@ describe('security', function() {
 	beforeEach(module(
 		'cachedTemplates',
 		'pascalprecht.translate',
-		'security' 
+		'jnxSecurity' 
 	));
 
 	beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$http_) {

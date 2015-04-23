@@ -5,7 +5,7 @@ describe('retryQueue', function() {
 		return jasmine.createSpyObj('retryItem', ['retry', 'cancel']);
 	}
 
-	beforeEach(module('security'));
+	beforeEach(module('jnxSecurity'));
 
 	beforeEach(inject(function($injector) {
 		queue = $injector.get('retryQueue');

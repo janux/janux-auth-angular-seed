@@ -4,7 +4,7 @@ describe('login-toolbar', function() {
 	beforeEach(module(
 		'cachedTemplates',
 		'pascalprecht.translate', 
-		'security'
+		'jnxSecurity'
 	));
 
 	beforeEach(inject(function(_$rootScope_, $compile, _security_) {

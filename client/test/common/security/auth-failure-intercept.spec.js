@@ -1,7 +1,7 @@
 describe('authFailureIntercept', function() {
 	var queue, interceptor, promise, wrappedPromise;
 
-	beforeEach(module('security'));
+	beforeEach(module('jnxSecurity'));
 
 	beforeEach(inject(function($injector) {
 		queue			     = $injector.get('retryQueue');

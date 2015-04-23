@@ -1,19 +1,19 @@
-describe('$authorization', function() {
+describe('$jnxAuth', function() {
 
-	var $rootScope, security, $authorization, queue;
+	var $rootScope, security, $jnxAuth, queue;
 
 	var userResponse, resolved;
 
 	beforeEach(module(
 		'cachedTemplates',
 		'pascalprecht.translate',
-		'security'
+		'jnxSecurity'
 	));
 
 	beforeEach(inject(function($injector) {
 
 		$rootScope     = $injector.get('$rootScope');
-		$authorization = $injector.get('$authorization');
+		$jnxAuth = $injector.get('$jnxAuth');
 		security       = $injector.get('security');
 		queue          = $injector.get('retryQueue');
 		
@@ -49,7 +49,7 @@ describe('$authorization', function() {
 
 		it('makes a GET request to current-user url', function() {
 			expect(security.isAuthenticated()).toBe(false);
-			$authorization.requireAuthenticatedUser().then(function(data) {
+			$jnxAuth.requireAuthenticatedUser().then(function(data) {
 				resolved = true;
 				expect(security.isAuthenticated()).toBe(true);
 				expect(security.currentUser).toBe(userResponse.user);
@@ -62,7 +62,7 @@ describe('$authorization', function() {
 			var resolved = false;
 			userResponse.user = null;
 			expect(queue.hasMore()).toBe(false);
-			$authorization.requireAuthenticatedUser().then(function() {
+			$jnxAuth.requireAuthenticatedUser().then(function() {
 				resolved = true;
 			});
 
@@ -73,36 +73,4 @@ describe('$authorization', function() {
 			expect(resolved).toBe(false);
 		});
 	});
-
-
-	/*
-	describe('requireAdminUser', function() {
-
-		it('returns a resolved promise if we are already an admin', function() {
-			var userInfo = {admin: true};
-			security.currentUser = userInfo;
-			expect(security.isAdmin()).toBe(true);
-			$authorization.requireAdminUser().then(function() {
-				resolved = true;
-			});
-			$rootScope.$digest();
-			expect(security.currentUser).toBe(userInfo);
-			expect(resolved).toBe(true);
-		});
-
-		it('adds a new item to the retry queue if not admin', function() {
-			expect(queue.hasMore()).toBe(false);
-			$authorization.requireAdminUser().then(function() {
-				resolved = true;
-			});
-			$rootScope.$digest();
-			expect(security.isAdmin()).toBe(false);
-			expect(queue.hasMore()).toBe(true);
-			expect(queue.retryReason()).toBe('unauthorized-client');
-			expect(resolved).toBe(false);
-		});
-
-	});
-	*/
-
 });

@@ -61,7 +61,7 @@
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./bower/lodash/dist/lodash.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
-		"common/security":    "./src/common/security/index.js"
+		"common/jnxSecurity": "./src/common/security/index.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

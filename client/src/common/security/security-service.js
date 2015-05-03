@@ -42,7 +42,11 @@ function($modal , $http , $location , $q , retryQueue) {
 			size: 'sm'
 		});
 
-		loginDialog.result.then(onLoginDialogClose);
+		loginDialog.result.then(onLoginDialogClose)
+		// handles dismissing modal dialog by clicking in backdrop
+		.catch(function() {
+			onLoginDialogClose(false);
+		});
 	}
 
 	function closeLoginDialog(success) {
@@ -56,7 +60,7 @@ function($modal , $http , $location , $q , retryQueue) {
 		if (success) {
 			retryQueue.retryAll();
 		} else {
-			redirect();
+			// redirect();
 		}
 	}
 
@@ -118,7 +122,7 @@ function($modal , $http , $location , $q , retryQueue) {
 		//
 		cancelLogin: function() {
 			closeLoginDialog(false);
-			redirect();
+			// redirect();
 		},
 
 		logout: function(redirectTo) {

@@ -18,8 +18,8 @@ function($rootScope , $state , $stateParams , security) {
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$translateProvider',
-function( $stateProvider , $urlRouterProvider , $translateProvider) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'static/locale/',
@@ -34,6 +34,9 @@ function( $stateProvider , $urlRouterProvider , $translateProvider) {
 	
 	// redirect invalid urls to the home page
 	$urlRouterProvider.otherwise('/');
+	
+	// HTML5 History API enabled
+	$locationProvider.html5Mode(true);
 
 	// 
 	// State Configuration

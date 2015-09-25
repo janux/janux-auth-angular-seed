@@ -45,6 +45,10 @@ gulp.task('build', ['lint','browserify','styles','jade','copy']);
 //
 gulp.task('package', ['lint','minify','styles','jade','copy']);
 
+gulp.task('package:clean', ['clean'], function() {
+	gulp.start('package');
+});
+
 //
 // Does a clean dev build 
 //

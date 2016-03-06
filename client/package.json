@@ -59,7 +59,7 @@
 		"angular-translate":  "./bower/angular-translate/angular-translate.js",
 		"angular-translate-loader-static-files": "./bower/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
 		"jquery":             "./bower/jquery/dist/jquery.js",
-		"lodash":             "./node_modules/lodash/dist/lodash.js",
+		"lodash":             "./node_modules/lodash/index.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
 		"common/jnxSecurity": "./src/common/security/index.js"
 	},

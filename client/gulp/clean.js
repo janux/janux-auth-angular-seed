@@ -2,14 +2,14 @@
 // Clean
 //
 var path = require('path');
+	del = require('del');
 
 module.exports = function(gulp) {
 	
 	gulp.task('clean', function () {
-		return gulp.src([
+		return del([
 			path.join(gulp.cfg.dir.dist,'*')
-		], {read: false})
-		.pipe(gulp.plugins.rimraf());
+		]);
 	});
 
 };

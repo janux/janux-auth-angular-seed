@@ -2,29 +2,6 @@
 
 var path = require('path');
 
-var log4jsConfig = 
-{
-	appenders: [
-		{ 
-			type: 'file',
-			filename: 'server.log',
-			layout : {
-				type : 'pattern',
-				pattern : '%d | %p | %c | %m'
-			}
-		},
-		{
-			type: 'console',
-			layout: {
-				type : 'pattern',
-				pattern : '%[%d | %p | %c |%] %m'
-			}
-		}
-	],
-	replaceConsole : false,
-}
-
-
 module.exports = {
 
 	serverAppContext: {
@@ -36,10 +13,8 @@ module.exports = {
 		},
 		
 		log4js: {
-			config: log4jsConfig,
+			config: require('./log4js.js'),
 			globalLogLevel: 'INFO'
 		}
 	}
 };
-
-// vim: set noexpandtab ts=2 sw=2 :

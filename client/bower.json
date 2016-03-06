@@ -10,8 +10,10 @@
 		"angular-ui-router": "0.2.11",
 		"bootstrap":         "3.3.4",
 		"jquery":            "1.11.1",
-		"lodash":            "2.4.1",
 		"normalize.css":     "3.0.0",
 		"semantic-grid":     "*"
+	},
+	"resolutions": {
+		"angular": "1.4.4",
 	}
 }

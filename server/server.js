@@ -5,6 +5,12 @@
  */
 var 
 	express       = require('express'),
+	cookieParser  = require('cookie-parser'),
+	bodyParser 	  = require('body-parser'),
+	methodOverride = require('method-override'),
+	serveFavicon  = require('serve-favicon'),
+	session  	  = require('express-session'),
+	errorHandler  = require('errorhandler'),
 	livereload    = require('connect-livereload'),
 	// flash         = require('connect-flash'),
 	http          = require('http'),
@@ -24,46 +30,50 @@ var log = log4js.getLogger('Server');
 var app = module.exports = express();
 
 // Express Configuration
-app.configure(function(){
-	app.set('port', appContext.server.port);
-	// app.set('views', appContext.server.distFolder);
-	// app.set('views', __dirname + '/views');
-	// app.set('view engine', 'jade');
-	// app.use(express.logger());
-	app.use(express.bodyParser());
-	app.use(express.cookieParser('lucy in the sky'));
+app.set('port', appContext.server.port);
+// app.set('views', appContext.server.distFolder);
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'jade');
+// app.use(express.logger());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
+app.use(cookieParser('lucy in the sky'));
 
-	// cookieSession stores the session info encrypted in the cookie client-side
-	// app.use(express.cookieSession());
-	
-	app.use(express.methodOverride());
-	app.use(express.session( { secret: 'lucy in the sky' }));
+// cookieSession stores the session info encrypted in the cookie client-side
+// app.use(express.cookieSession());
 
-	// app.use(express.static(__dirname + '/public'));
-	
-	// serve static assets from '/static' context path
-	app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
+app.use(methodOverride());
+app.use(session( {
+	secret: 'lucy in the sky',
+	resave: true,
+	saveUninitialized: true
+}));
 
-	app.use(express.favicon(appContext.server.distFolder + '/favicon.ico'));
-	
-	log.info('livereload is:', appContext.server.livereload);
-	
-	if (appContext.server.livereload) {
-		log.info('Using livereload');
-		app.use(livereload());
-	}
+// app.use(express.static(__dirname + '/public'));
 
-	app.use(passport.initialize());
-	app.use(passport.session()); // supports persistent login sessions
-	// app.use(flash()); // used to pass messages on failed login
-	app.use(app.router);
-});
+// serve static assets from '/static' context path
+app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
 
-// standard error handler, catches unhandled errors and returns a nicely formatted 500 error
-app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(serveFavicon(appContext.server.distFolder + '/favicon.ico'));
+
+log.info('livereload is:', appContext.server.livereload);
+
+if (appContext.server.livereload) {
+	log.info('Using livereload');
+	app.use(livereload());
+}
+
+app.use(passport.initialize());
+app.use(passport.session()); // supports persistent login sessions
+// app.use(flash()); // used to pass messages on failed login
 
 // route configuration, see route/index.js for details
 require('./route')(app);
+
+// standard error handler, catches unhandled errors and returns a nicely formatted 500 error
+app.use(errorHandler({ dumpExceptions: true, showStack: true }));
 
 // Start server
 var server = http.createServer(app);

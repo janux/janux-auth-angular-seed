@@ -13,7 +13,7 @@ var index = function(req, res) {
 			res.cookie('user', JSON.stringify(req.user));
 		};
 		*/
-		res.sendfile('index.html', {root: appContext.server.distFolder});
+		res.sendFile('index.html', {root: appContext.server.distFolder});
 };
 
 module.exports = function(app) {

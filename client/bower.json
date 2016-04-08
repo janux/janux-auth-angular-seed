@@ -1,19 +1,19 @@
 {
-	"name": "janux-auth-seed",
-	"version": "0.0.1-SNAPSHOT",
-	"dependencies": {
-		"angular":           "1.4.4",
-		"angular-bootstrap": "0.13.3",
-		"angular-mocks":     "1.4.x",
-		"angular-translate": "2.5.2",
-		"angular-translate-loader-static-files": "2.5.2",
-		"angular-ui-router": "0.2.11",
-		"bootstrap":         "3.3.4",
-		"jquery":            "1.11.1",
-		"normalize.css":     "3.0.0",
-		"semantic-grid":     "*"
-	},
-	"resolutions": {
-		"angular": "1.4.4",
-	}
+  "name": "janux-auth-seed",
+  "version": "0.0.1-SNAPSHOT",
+  "dependencies": {
+    "angular": "1.5.3",
+    "angular-bootstrap": "0.13.3",
+    "angular-mocks": "1.4.x",
+    "angular-translate": "2.5.2",
+    "angular-translate-loader-static-files": "2.5.2",
+    "angular-ui-router": "0.2.11",
+    "bootstrap": "3.3.4",
+    "jquery": "1.11.1",
+    "normalize.css": "3.0.0",
+    "semantic-grid": "*"
+  },
+  "resolutions": {
+    "angular": "1.5.3"
+  }
 }

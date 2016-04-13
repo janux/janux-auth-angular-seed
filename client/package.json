@@ -2,7 +2,7 @@
 	"author": "Philippe Paravicini",
 	"name": "janux-auth-seed",
 	"homepage": "https://github.com/janux/janux-auth-seed",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:janux/janux-auth-seed.git"
@@ -46,7 +46,7 @@
 		"karma-phantomjs-launcher": "0.1.4",
 		"karma-ng-html2js-preprocessor": "0.1.2",
 		"karma-spec-reporter":      "0.0.13",
-		"lodash":                   "3.10.1",
+		"lodash":                   "4.9.0",
 		"require-dir":              "0.1.0",
 		"sprintf":                  "0.1.3",
 		"vinyl-buffer":             "1.0.0",

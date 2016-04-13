@@ -6,7 +6,7 @@
 //
 module.exports = ['security', function(security) {
 	var directive = {
-		templateUrl: 'static/common/security/login/toolbar.html',
+		templateUrl: 'common/security/login/toolbar.html',
 		restrict: 'E',
 		replace:	true,
 		scope:		true,

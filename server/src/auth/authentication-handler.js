@@ -33,7 +33,7 @@ var security = {
 		log.debug('sendCurrentUser: %j', req.user);
 
 		// put the user in a 'user' field to keep it symmetric with the passport login
-    res.json(200, {user: req.user});
+    res.status(200).json({user: req.user});
   },
 
   login: function(req, res, next) {
@@ -56,7 +56,7 @@ var security = {
 
   logout: function(req, res, next) {
     req.logout();
-    res.send(204);
+    res.sendStatus(204);
   }
 };
 

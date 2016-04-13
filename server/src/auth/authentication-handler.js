@@ -56,7 +56,7 @@ var security = {
 
   logout: function(req, res, next) {
     req.logout();
-    res.send(204);
+    res.sendStatus(204);
   }
 };
 

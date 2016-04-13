@@ -22,7 +22,7 @@ function($rootScope , $state , $stateParams , security) {
 function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider) {
 
 	$translateProvider.useStaticFilesLoader({
-		prefix: 'static/locale/',
+		prefix: 'locale/',
 		suffix: '.json'
 	});
 
@@ -72,29 +72,29 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	$stateProvider.state('dashboard', {
 		// default state
 		url: '/',
-		templateUrl: 'static/app/dashboard.html'
+		templateUrl: 'app/dashboard.html'
 	})
 
 	.state('goodbye', {
 		url: '/goodbye',
-		templateUrl: 'static/app/goodbye.html',
+		templateUrl: 'app/goodbye.html',
 	})
 
 	.state('users', {
 		url: '/users',
-		templateUrl: 'static/app/user/index.html',
+		templateUrl: 'app/user/index.html',
 		resolve: authenticate
 	})
 
 	.state('roles', {
 		url: '/roles',
-		templateUrl: 'static/app/role/index.html',
+		templateUrl: 'app/role/index.html',
 		resolve: authenticate
 	})
 
 	.state('permissions', {
 		url: '/permissions',
-		templateUrl: 'static/app/permission/index.html',
+		templateUrl: 'app/permission/index.html',
 		resolve: authenticate
 	});
 }]);

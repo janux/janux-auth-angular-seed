@@ -34,10 +34,8 @@ function($modal , $http , $location , $q , retryQueue) {
 		if (loginDialog) {
 			throw new Error('Trying to open login dialog that is already open!');
 		}
-		//TODO-pp: the 'static' here is undesirable, should be replaced with build variable, 
-		//since this it is also dependent on the value to which we map static assets in express
 		loginDialog = $modal.open({
-			templateUrl: 'static/common/security/login/form.html', 
+			templateUrl: 'common/security/login/form.html', 
 			controller:  'loginController',
 			size: 'sm'
 		});

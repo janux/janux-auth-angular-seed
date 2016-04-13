@@ -3,18 +3,18 @@
 /**
  * This is the main run script that configures and starts the express server
  */
-var 
-	express       = require('express'),
-	cookieParser  = require('cookie-parser'),
-	bodyParser 	  = require('body-parser'),
+var _            = require('lodash'),
+	express        = require('express'),
+	cookieParser   = require('cookie-parser'),
+	bodyParser 	   = require('body-parser'),
 	methodOverride = require('method-override'),
-	serveFavicon  = require('serve-favicon'),
-	session  	  = require('express-session'),
-	errorHandler  = require('errorhandler'),
-	livereload    = require('connect-livereload'),
+	serveFavicon   = require('serve-favicon'),
+	session  	     = require('express-session'),
+	errorHandler   = require('errorhandler'),
+	livereload     = require('connect-livereload'),
 	// flash         = require('connect-flash'),
-	http          = require('http'),
-	log4js        = require('log4js')
+	http           = require('http'),
+	log4js         = require('log4js')
 ;
 
 var
@@ -51,10 +51,13 @@ app.use(session( {
 	saveUninitialized: true
 }));
 
-// app.use(express.static(__dirname + '/public'));
-
 // serve static assets from '/static' context path
-app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
+var staticUrl = appContext.server.staticUrl;
+if (_.isString(staticUrl) && staticUrl.length > 0 ) {
+	app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
+} else {
+	app.use(express.static(appContext.server.distFolder));
+}
 
 app.use(serveFavicon(appContext.server.distFolder + '/favicon.ico'));
 

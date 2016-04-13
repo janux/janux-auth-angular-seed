@@ -7,7 +7,7 @@ module.exports = {
 	serverAppContext: {
 		server: {
 			port: 9000,
-			staticUrl: '/static',
+			staticUrl: '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false
 		},

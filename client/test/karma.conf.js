@@ -40,7 +40,7 @@ module.exports = function(karma) {
 
 		ngHtml2JsPreprocessor: {
 			stripPrefix:	 cfg.dir.dist + path.sep,
-			prependPrefix: 'static/',
+			// prependPrefix: 'static/',
 			moduleName:		 'cachedTemplates'
 		},
 

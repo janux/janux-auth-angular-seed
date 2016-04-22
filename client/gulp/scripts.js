@@ -19,7 +19,9 @@ module.exports = function(gulp) {
 			.pipe(gulp.plugins.jshint.reporter(cfg.jshint.reporter));
 	});
 
-	var appFile = '.' + path.sep + path.join(cfg.dir.src, cfg.dir.js, cfg.file.app);
+	// using a '.' relative address breaks the 'source(appFile)' below on windows,
+	// so here we resolve the relative address to an absolute path
+	var appFile = path.join(path.resolve('.'), cfg.dir.src, cfg.dir.js, cfg.file.app);
 
 	//
 	// Uncomment to troubleshoot browserify-shim,

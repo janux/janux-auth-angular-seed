@@ -21,6 +21,15 @@ function($rootScope , $state , $stateParams , security) {
 .config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider',
 function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider) {
 
+	// This presumably speeds up angular performance by preventing ng-scope
+	// classes and other debug artifacts to be added to all elements of the DOM
+	// We should add the 'false' as a configuration value so that we can toggle in
+	// production
+	
+	// myApp.config(['$compileProvider', function ($compileProvider) {
+	// 	$compileProvider.debugInfoEnabled(false);
+	// }]);	
+
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
 		suffix: '.json'

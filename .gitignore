@@ -3,3 +3,4 @@ dist
 bower
 *.log
 .DS_Store
+.idea/

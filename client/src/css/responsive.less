@@ -2,41 +2,26 @@
 
 @break1: 380px;
 @break2: 768px;
+@break3: 992px;
+@break4: 1200px;
 
-@media screen and (max-width: @break1) {
-	.masthead {
-		height: 2.50em;
-	}
-
-	.logo {
-		.column(2)
-	}
-
-	.logo img {
-		height: 2.5em;
-		padding: 0.25em;
-	}
-
-	.branding {
-		font-size: 1.15em;
-		.column(10);
-		.janux {
-			padding-left: .5em;
-		}
-	}
-
-	.maincolumn, .sidebar {
-		.column(12);
-		margin-bottom: 1em;
-	}
+.xs-device(@rules) {
+  @media screen and (max-width: @break1) { @rules(); }
 }
 
-@media screen and (max-width: @break2) {
-	.logo, .sidebar {
-		.column(3)
-	}
-	.maincolumn, .branding {
-		.column(9)
-	}
+.small-device(@rules) {
+  @media screen and (min-width: 381px) and (max-width: 767px) { @rules(); }
+}
+
+.medium-device(@rules) {
+  @media screen and (min-width: 768px) and (max-width: 991px) { @rules(); }
+}
+
+.large-device(@rules) {
+  @media screen and (min-width: 992px) and (max-width: 1199px) { @rules(); }
+}
+
+.xl-device(@rules) {
+  @media screen and (min-width: @break4) { @rules(); }
 }
 

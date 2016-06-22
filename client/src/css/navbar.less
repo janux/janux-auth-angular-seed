@@ -30,3 +30,113 @@ nav {
   }
 
 }
+
+// Button to display the navigation bar aside
+
+.navbar-toggle-btn{
+
+  float:right;
+  .rem(margin-top, 5);
+  .rem(margin-right, 15);
+
+  display: none;
+
+  a{
+	color: @sageDark;
+  }
+
+  .glyphicon-align-justify{
+  	.rem(font-size, 22);
+	cursor: pointer;
+  }
+
+  .xs-device({.show});
+}
+
+// Aside Menu style (dropdown)
+
+.modal-open {
+  -webkit-transition:all .2s, -webkit-transform .2s;
+  transition:all .2s ease-out, -webkit-transform .2s;
+}
+
+.ng-aside .modal-content {
+  min-width: 320px;
+  margin:0;
+  background-color: @dropdown-bg;
+
+  .dropdown{
+	position: relative;
+	color: @dropdown-color;
+	left: 15%;
+	font-size: 1.8rem;
+	font-weight: bold;
+	margin: 10% 0;
+	display: block;
+
+	.dropdown-text{
+	  margin-left: 5%;
+
+	}
+  }
+}
+
+// Sidebar Menu
+
+.sidebar{
+
+  .enable-sidebar{
+	border-right: 1px solid @sidebar-border;
+	background-color: @sidebar-bg;
+	width: @sidebar-width;
+	height: 100%;
+	position: fixed;
+	clear: both;
+	overflow: visible;
+	transition: all 0.5s ease;
+	margin:0;
+
+	.dropdown-text{
+	  display:none;
+	}
+  }
+
+  .small-device({ .enable-sidebar });
+  .medium-device({ .enable-sidebar });
+  .large-device({ .enable-sidebar });
+  .xl-device({ .enable-sidebar });
+}
+
+.sidebar-nav {
+  display: none;
+
+  .enable-sidebar-nav{
+	display: inherit;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+	.glyphicon{
+	  font-size: 2.2rem;
+	  color:@sidebar-color;
+	}
+	.active{
+	  .glyphicon{
+		color: @sidebar-active-color;
+	  }
+	}
+	.sidebar-box{
+	  padding: 25px 0;
+	}
+  }
+
+  .small-device({ .enable-sidebar-nav });
+  .medium-device({ .enable-sidebar-nav });
+  .large-device({ .enable-sidebar-nav });
+  .xl-device({ .enable-sidebar-nav });
+}
+
+.sidebar-nav i {
+  display: block;
+  cursor: pointer;
+}

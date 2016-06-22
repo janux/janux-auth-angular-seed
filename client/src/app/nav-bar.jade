@@ -1,0 +1,21 @@
+// Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar
+
+.dropdown.sidebar-box(ui-sref-active="active" ui-sref='dashboard' ng-click='ok()')
+	i.glyphicon.glyphicon-dashboard(tooltip='{{"dashboard.title"|translate}}'
+	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+	span.dropdown-text {{ 'dashboard.title' | translate }}
+
+.dropdown.sidebar-box(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+	i.glyphicon.glyphicon-user(tooltip='{{"user.title"|translate}}'
+	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+	span.dropdown-text {{ 'user.title' | translate }}
+
+.dropdown.sidebar-box(ui-sref-active="active")
+	i.glyphicon.glyphicon-user(ui-sref='roles' ng-click='ok()' tooltip='{{"role.title"|translate}}'
+	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+	span.dropdown-text {{ 'role.title' | translate }}
+
+.dropdown.sidebar-box(ui-sref-active="active")
+	i.glyphicon.glyphicon-eye-open(ui-sref='permissions' ng-click='ok()' tooltip='{{"permission.title"|translate}}'
+	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+	span.dropdown-text {{ 'permission.title' | translate }}

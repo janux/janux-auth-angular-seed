@@ -10,9 +10,18 @@ html, body {
 } 
 
 .container {
-	width: 100%;
+	width: auto;
 	margin: 0 auto;
 	overflow: hidden;
+
+	.sidebar-room{
+		margin-left: @sidebar-width;
+	}
+
+	.small-device({ .sidebar-room });
+	.medium-device({ .sidebar-room });
+	.large-device({ .sidebar-room });
+	.xl-device({ .sidebar-room });
 }
 
 header {
@@ -24,7 +33,6 @@ header {
 }
 
 .logo {
-	.column(6);
 	margin-left: 0;
 	.rem(padding-top, 16);
 	.rem(padding-left, 24);
@@ -32,13 +40,14 @@ header {
 	img {
 		.rem(height, 40);
 		float: left;
+		.xs-device({ height: 2.5em; padding: 0.25em; });
 	}
 }
 
 .branding {
 	float: left;
 	.rem(margin-left, 24);
-	.rem(padding-top, 8);
+	.rem(padding-top, 1);
 
 	.janux {
 		// padding-right: .2em;
@@ -49,6 +58,12 @@ header {
 	.people {
 		color: @sageDark;
 	}
+
+	.xs-device({.hide});
+	.small-device({
+		.rem(font-size, 22);
+		.rem(padding-top, 3);
+	})
 }
 
 .auth {
@@ -61,6 +76,9 @@ header {
 	float: right;
 	.rem(margin-top, 5);
 	cursor: pointer;
+
+    .xs-device({.hide});
+    .small-device({.hide});
 }
 
 .auth-user {
@@ -74,9 +92,5 @@ header {
 	.column(12);
 }
 
-.sidebar {
-	.column(2);
-	// background-color: @grey;
-}
-
-
+.show{  display: inline;  }
+.hide{  display: none;  }

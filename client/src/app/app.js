@@ -5,9 +5,17 @@ var angular = require('angular');
 require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
+require('angular-aside');
 require('common/jnxSecurity');
+require('common/directives');
 
-angular.module('MyApp',[ 'ui.router', 'jnxSecurity', 'pascalprecht.translate' ])
+angular.module('MyApp',[
+	'ui.router',
+	'ngAside',
+	'jnxSecurity',
+	'pascalprecht.translate',
+	'commonDirectives'
+])
 
 .run([  '$rootScope','$state','$stateParams','security',
 function($rootScope , $state , $stateParams , security) { 
@@ -97,5 +105,38 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		templateUrl: 'app/permission/index.html',
 		resolve: authenticate
 	});
+}])
+
+.controller('asideMenu', ['$scope','$aside',
+function($scope, $aside) {
+
+	$scope.asideState = {
+		open: false
+	};
+	$scope.openMenu = function () {
+		$scope.asideState = {
+			open: true,
+			position: 'right'
+		};
+
+		function postClose() {
+			$scope.asideState.open = false;
+		}
+
+		$aside.open({
+			templateUrl: 'app/nav-bar.html',
+			placement: 'left',
+			size: 'lg',
+			backdrop: true,
+			controller: ['$scope','$modalInstance',function($scope, $modalInstance) {
+				$scope.ok = function() {
+					$modalInstance.close();
+				};
+				$scope.cancel = function() {
+					$modalInstance.dismiss();
+				};
+			}]
+		}).result.then(postClose, postClose);
+	};
 }]);
 

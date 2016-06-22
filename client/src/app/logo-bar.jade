@@ -1,0 +1,12 @@
+header(ng-controller='asideMenu')
+	.logo
+		img(src='#{cfg.server.static}/img/janux-sage-256.png')
+		.branding
+			span.janux janux
+			span.people(translate='label.people')
+
+	.navbar-toggle-btn
+		a(ng-click='openMenu()')
+			span.glyphicon.glyphicon-align-justify
+
+	login-toolbar

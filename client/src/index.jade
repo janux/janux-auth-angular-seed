@@ -7,26 +7,22 @@ html(ng-app='MyApp')
 
 		base(href='/')
 		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/main.css')
+		link(rel='stylesheet', href='#{cfg.server.static}/#{cfg.dir.css}/angular-aside.min.css')
 
 		script(src='#{cfg.server.static}/#{cfg.file.app}')
 
 	body
+		side-bar
+
 		.container
-			header
-				.logo
-					img(src='#{cfg.server.static}/img/janux-sage-256.png')
-					.branding
-						span.janux janux 
-						span.people(translate='label.people') 
+			logo-bar
 
-				login-toolbar
-
-			nav
-				ul
-					li.first(ui-sref-active='active'): a(ui-sref='dashboard', translate='dashboard.title')
-					li(ui-sref-active='active'): a(ui-sref='users', translate='user.title')
-					li(ui-sref-active='active'): a(ui-sref='roles', translate='role.title')
-					li(ui-sref-active='active'): a(ui-sref='permissions', translate='permission.title')
+			//nav
+			//	ul
+			//		li.first(ui-sref-active='active'): a(ui-sref='dashboard', translate='dashboard.title')
+			//		li(ui-sref-active='active'): a(ui-sref='users', translate='user.title')
+			//		li(ui-sref-active='active'): a(ui-sref='roles', translate='role.title')
+			//		li(ui-sref-active='active'): a(ui-sref='permissions', translate='permission.title')
 
 			section.maincolumn(ui-view)
 

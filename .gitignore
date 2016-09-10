@@ -3,4 +3,5 @@ dist
 bower
 *.log
 .DS_Store
-.idea/
+.idea
+janux-people.db

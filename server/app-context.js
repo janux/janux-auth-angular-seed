@@ -30,7 +30,7 @@ var log = log4js.getLogger('AppContext');
 
 // TODO: inject the userService declaratively so that we can switch between 
 // a mock local service during development, and a remote web service in production
-var userService = require('./src/auth/user-service-mock');
+var userService = require('./src/auth/user-service');
 
 // Passport session setup
 // To support persistent login sessions, Passport needs to be able to 
@@ -67,7 +67,7 @@ config.authenticate = function authenticate(req, res, next) {
 	}
 	log.debug('User is not authenticated, redirecting to login screen');
 	res.redirect('/login');
-}
+};
 
 
 // //

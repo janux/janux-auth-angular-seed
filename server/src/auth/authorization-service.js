@@ -1,6 +1,6 @@
 'use strict';
 
-var 
+var
 	_ = require('underscore'),
 	AuthorizationContext = require('janux-security').PermissionContext,
 	Role = require('janux-security').Role,
@@ -27,7 +27,11 @@ exports.loadAuthorizationContexts = function() {
 //
 exports.loadRoles = function() {
 	return Q(roles);
-}
+};
+
+exports.loadRoleByName = function(name) {
+	return Q(roles[name]);
+};
 
 
 //
@@ -83,11 +87,11 @@ roles.ADMIN.isAlmighty = true;
 // console.log('roles.ADMIN:', JSON.stringify(roles.ADMIN));
 
 
-// 
-// Private convenience method to add Authorization Context with standard permissions 
-// (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContexts hashmap 
+//
+// Private convenience method to add Authorization Context with standard permissions
+// (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContexts hashmap
 // of the Authorization Scheme
-// 
+//
 // TODO: move this to the janux-security lib, as this would be a useful
 // feature; we would need to find a way to easily override it so that library
 // users can implement their own to suit their needs
@@ -95,7 +99,7 @@ roles.ADMIN.isAlmighty = true;
 function addStandardAuthorizationContext(name, represents) {
 	var authContext = AuthorizationContext.createInstance(name, 'Defines permissions available on a ' + represents);
 
-	['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE'].forEach( function(bitName) { 
+	['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE'].forEach( function(bitName) {
 		authContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
 	});
 

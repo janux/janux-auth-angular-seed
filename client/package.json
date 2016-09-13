@@ -19,7 +19,9 @@
 	"engines": {
 		"node": ">= 0.8.4"
 	},
-	"dependencies": {},
+	"dependencies": {
+	  "janux-people": "file:../server/vendor/janux-people.js"
+	},
 	"devDependencies": {
 		"browserify":               "6.2.0",
 		"browserify-shim":          "3.8.0",
@@ -62,7 +64,10 @@
 		"lodash":             "./node_modules/lodash/index.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
 		"common/jnxSecurity": "./src/common/security/index.js",
-	    "common/directives":  "./src/common/directives.js"
+	    "common/directives":  "./src/common/directives.js",
+	  	"common/demoService": "./src/common/demo-service/index.js",
+	  	"janux-people":		  "./node_modules/janux-people.js/index.js"
+
 	},
 	"browserify-shim": {
 		"jquery": "$",

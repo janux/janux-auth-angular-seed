@@ -2,7 +2,8 @@
 
 var 
 	_    = require('lodash'),
-	Role = require('janux-security').Role
+	Role = require('janux-security').Role,
+	Person = require('janux-people').Person;
 ;
 
 module.exports = 
@@ -103,6 +104,7 @@ function($modal , $http , $location , $q , retryQueue) {
 			return request.then(function(response) {
 				console.debug('login resp:', JSON.stringify(response));
 				service.currentUser = hydrateRoles(response.data.user);
+				service.currentUser.contact = Person.fromJSON(JSON.parse(service.currentUser.contact));
 
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
@@ -139,6 +141,9 @@ function($modal , $http , $location , $q , retryQueue) {
 			} else {
 				return $http.get('/current-user').then(function(response) {
 					service.currentUser = hydrateRoles(response.data.user);
+					if(typeof response.data.user !== 'undefined'){
+						service.currentUser.contact = Person.fromJSON(JSON.parse(response.data.user.contact));
+					}
 					console.log('currentUser-served:', service.currentUser);
 					return service.currentUser;
 				});

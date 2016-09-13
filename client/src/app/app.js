@@ -8,13 +8,15 @@ require('angular-translate-loader-static-files');
 require('angular-aside');
 require('common/jnxSecurity');
 require('common/directives');
+require('common/demoService');
 
 angular.module('MyApp',[
 	'ui.router',
 	'ngAside',
 	'jnxSecurity',
 	'pascalprecht.translate',
-	'commonDirectives'
+	'commonDirectives',
+	'demoService'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security',

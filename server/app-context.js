@@ -37,12 +37,12 @@ var userService = require('./src/auth/user-service');
 // serialize users into and deserialize users out of the session.
 passport.serializeUser(function(user, done) {
 	// log.debug('user in serializeUser: %j', user);
-	done(null, user.oid);
+	done(null, user.userId);
 });
 
-passport.deserializeUser(function(oid,done) {
-	// log.debug('loading user with oid', oid);
-	userService.load(oid, function(err, user) {
+passport.deserializeUser(function(userId,done) {
+	// log.debug('loading user with userId', userId);
+	userService.load(userId, function(err, user) {
 		done(err, user);
 	});
 });

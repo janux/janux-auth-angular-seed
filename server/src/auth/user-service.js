@@ -4,7 +4,7 @@ var
 	_     = require('underscore'),
 	log4js = require('log4js'),
 	util = require('util'),
-	// md5 = require('MD5'),
+	md5 = require('MD5'),
 	AuthService = require('./authorization-service'),
 	userDAO = require('janux-people.js').UserDAO.createInstance('../server/janux-people.db'),
 	userService = require('janux-people.js').UserService.singleton(userDAO);
@@ -53,7 +53,7 @@ var service = {
 		service.findByAccountName(username, function(err, user) {
 			if (err) {
 				return done(err);
-			} else if (_.isObject(user) && user.password === password) {
+			} else if (_.isObject(user) && user.password === md5(password)) {
 				AuthService.loadRoleByName(user.role).then(function(role) {
 					user.role = role;
 					return done(null, user);

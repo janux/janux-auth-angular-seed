@@ -19,6 +19,18 @@ function( $q ,  $http){
 		},
 
 		// Load all users by user id
+		findByUsername: function(username)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'findByUsername',
+				[ username ]
+			).then(function(resp) {
+				return resp.data.result;
+			});
+		},
+
+		// Load all users by user id
 		findByUsernameMatch: function(username)
 		{
 			return $http.jsonrpc(
@@ -30,7 +42,7 @@ function( $q ,  $http){
 			});
 		},
 
-		// Add new userect
+		// Add new user
 		saveOrUpdate: function(userId, data)
 		{
 			return $http.jsonrpc(

@@ -1,1 +1,12 @@
 h1(translate='user.title')
+
+h2 Find Users:
+input(type='text' ng-model='usernameFilter')
+
+table.table.table-stripped
+	tr(ng-repeat='user in usersMatch')
+		td {{ user.username }}
+		td {{ user.contact.name.getShort() }}
+		td {{ user.role }}
+
+button(ng-click='findUsers()') Search

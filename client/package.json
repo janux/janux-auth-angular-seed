@@ -63,11 +63,12 @@
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./node_modules/lodash/index.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
-		"common/jnxSecurity": "./src/common/security/index.js",
+	  	"janux-people":		  "./node_modules/janux-people.js/index.js",
+	  	"common/jsonrpc":     "./src/common/jsonrpc.js",
+	  	"common/jnxSecurity": "./src/common/security/index.js",
 	    "common/directives":  "./src/common/directives.js",
 	  	"common/demoService": "./src/common/demo-service/index.js",
-	  	"janux-people":		  "./node_modules/janux-people.js/index.js"
-
+		"app/users":		  "./src/app/user/index.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

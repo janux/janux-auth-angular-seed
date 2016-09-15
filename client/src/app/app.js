@@ -6,17 +6,21 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('common/jsonrpc');
 require('common/jnxSecurity');
 require('common/directives');
 require('common/demoService');
+require('app/users');
 
 angular.module('MyApp',[
+	'jsonrpc',
 	'ui.router',
 	'ngAside',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'commonDirectives',
-	'demoService'
+	'demoService',
+	'appUsers'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security',
@@ -79,7 +83,18 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		}]
 	};
 	
-	$stateProvider.state('dashboard', {
+	$stateProvider
+	.state('auth-required', {
+		abstract: true,
+		template: '<ui-view/>',
+		resolve: {
+			currentUser: ['$jnxAuth', function($jnxAuth) {
+				return $jnxAuth.requireAuthenticatedUser();
+			}]
+		}
+	})
+
+	.state('dashboard', {
 		// default state
 		url: '/',
 		templateUrl: 'app/dashboard.html'
@@ -88,12 +103,6 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	.state('goodbye', {
 		url: '/goodbye',
 		templateUrl: 'app/goodbye.html',
-	})
-
-	.state('users', {
-		url: '/users',
-		templateUrl: 'app/user/index.html',
-		resolve: authenticate
 	})
 
 	.state('roles', {

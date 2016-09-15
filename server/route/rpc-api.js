@@ -1,12 +1,17 @@
 'use strict';
 
-var 
-	userService = require('../src/auth/user-service-mock'),
+var
 	jsonrpc     = require('multitransport-jsonrpc'),
 	log = require('log4js').getLogger('sandbox')
 ;
 
 var transport = jsonrpc.transports.server.middleware;
+
+var srcRoot = '../src/api/';
+
+var pathMappings = {
+	users:	'user-service'
+};
 
 /*
 var jsonrpcServer = new jsonrpc.server(
@@ -15,17 +20,9 @@ var jsonrpcServer = new jsonrpc.server(
 	});
 */
 
-
-var users = new jsonrpc.server(new transport(), userService);
-
-// eventually we can declare something like this, and programmatically 
-// map all the services to an rpc middleware
-/*
-var services = {
-	users: '../src/user-service-mock'
-}
-*/
-
-module.exports = function (app) {
-	app.use('/rpc/v1/users', users.transport.middleware);
+module.exports = function(app) {
+	for (var path in pathMappings) {
+		var resource = new jsonrpc.server(new transport(), require(srcRoot + pathMappings[path]));
+		app.use('/rpc/2.0/' + path, resource.transport.middleware);
+	}
 };

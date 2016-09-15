@@ -9,7 +9,7 @@ var
 	userDAO = require('janux-people.js').UserDAO.createInstance('../server/janux-people.db'),
 	userService = require('janux-people.js').UserService.singleton(userDAO);
 
-var log = log4js.getLogger('UserService');
+var log = log4js.getLogger('Auth UserService');
 
 var service = {
 

@@ -1,12 +1,25 @@
 h1(translate='user.title')
 
-h2 Find Users:
-input(type='text' ng-model='usernameFilter')
+p
+	form.form-inline
+		.form-group
+			label(for='username') Find:
+			input.form-control(id='username' type='text' ng-model='usernameFilter')
+			button.btn.btn-default(type='submit' ng-click='findUsers()') Search
 
-table.table.table-stripped
+table.table.table-bordered(ng-show='usersMatch.length')
+	tr
+		th Username
+		th Display Name
+		th Role
+		th Edit
+		th Delete
+
 	tr(ng-repeat='user in usersMatch')
 		td {{ user.username }}
 		td {{ user.contact.name.getShort() }}
 		td {{ user.role }}
-
-button(ng-click='findUsers()') Search
+		td.text-center
+			span.glyphicon.glyphicon-pencil
+		td.text-center
+			span.glyphicon.glyphicon-remove(ng-click='deleteUser(user.userId)')

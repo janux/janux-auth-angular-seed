@@ -1,5 +1,7 @@
 'use strict';
 
+var Person = require('janux-people').Person;
+
 module.exports =
 ['$q', '$http',
 function( $q ,  $http){
@@ -19,18 +21,6 @@ function( $q ,  $http){
 		},
 
 		// Load all users by user id
-		findByUsername: function(username)
-		{
-			return $http.jsonrpc(
-				'/rpc/2.0/users',
-				'findByUsername',
-				[ username ]
-			).then(function(resp) {
-				return resp.data.result;
-			});
-		},
-
-		// Load all users by user id
 		findByUsernameMatch: function(username)
 		{
 			return $http.jsonrpc(
@@ -38,7 +28,11 @@ function( $q ,  $http){
 				'findByUsernameMatch',
 				[ username ]
 			).then(function(resp) {
-				return resp.data.result;
+				var out = resp.data.result;
+				out.forEach(function(user, iUser){
+					out[iUser].contact = Person.fromJSON(JSON.parse(out[iUser].contact));
+				});
+				return out;
 			});
 		},
 

@@ -3,8 +3,9 @@ h1(translate='user.title')
 p
 	form.form-inline
 		.form-group
-			label(for='username') Find:
-			input.form-control(id='username' type='text' ng-model='usernameFilter')
+			label(for='username') Find by:
+			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+			input.form-control(id='username' type='text' ng-model='searchString')
 			button.btn.btn-default(type='submit' ng-click='findUsers()') Search
 
 table.table.table-bordered(ng-show='usersMatch.length')
@@ -18,7 +19,7 @@ table.table.table-bordered(ng-show='usersMatch.length')
 	tr(ng-repeat='user in usersMatch')
 		td {{ user.username }}
 		td {{ user.contact.name.getShort() }}
-		td {{ user.role }}
+		td {{ user.role.name }}
 		td.text-center
 			span.glyphicon.glyphicon-pencil
 		td.text-center

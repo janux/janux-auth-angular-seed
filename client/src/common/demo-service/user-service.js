@@ -8,6 +8,23 @@ function( $q ,  $http){
 
 	var service = {
 
+		// Find users by specifying the field and search string
+		findBy: function(field, search)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'findBy',
+				[ field, search ]
+			).then(function(resp) {
+				var out = resp.data.result;
+				console.log('findBy', field, search, out);
+				out.forEach(function(user, iUser){
+					out[iUser].contact = Person.fromJSON(JSON.parse(out[iUser].contact));
+				});
+				return out;
+			});
+		},
+
 		// Load user by id
 		findById: function(userId)
 		{

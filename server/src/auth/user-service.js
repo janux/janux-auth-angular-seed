@@ -6,8 +6,8 @@ var
 	util = require('util'),
 	md5 = require('MD5'),
 	AuthService = require('./authorization-service'),
-	userDAO = require('janux-people.js').UserDAO.createInstance('../server/janux-people.db'),
-	userService = require('janux-people.js').UserService.singleton(userDAO);
+	userDAO = require('janux-people.js').UserDAO.object('../server/janux-people.db'), // createInstance('../server/janux-people.db'),
+	demoUserService = require('janux-people.js').UserService.singleton(userDAO);
 
 var log = log4js.getLogger('Auth UserService');
 
@@ -17,7 +17,7 @@ var service = {
 		// log.debug('calling findByOid with oid: '%s'',oid);
 		'use strict';
 
-		userService.findById(oid).then( function(user){
+		demoUserService.findById(oid).then( function(user){
 			if(user){
 				done(null, user);
 			}else{
@@ -32,7 +32,7 @@ var service = {
 		'use strict';
 		log.debug('looking up account with name "%s"', username);
 
-		userService.findByUsername(username).then( function(user) {
+		demoUserService.findByUsername(username).then( function(user) {
 			if(user){
 				done(null, user);
 			}else{

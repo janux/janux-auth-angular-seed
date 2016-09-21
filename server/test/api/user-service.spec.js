@@ -11,8 +11,16 @@ log4js.configure(cfg.serverAppContext.log4js.config);
 
 describe ('user-service:', function() {
 
-	it("should return all projects for a specific user id", function(done) {
+	it("should return a user by its name", function(done) {
 		userService.findByUsername('admin', function(err, response) {
+			if (err) (log.error('error: %j', err));
+			log.info('response: %j', response);
+			done();
+		});
+	});
+
+	it("should return a user by specifying the corresponding field and its name", function(done) {
+		userService.findBy('username','admin', function(err, response) {
 			if (err) (log.error('error: %j', err));
 			log.info('response: %j', response);
 			done();

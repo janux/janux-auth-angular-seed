@@ -12,7 +12,8 @@
 		"bootstrap":         "3.3.4",
 		"jquery":            "1.11.1",
 		"normalize.css":     "3.0.0",
-		"semantic-grid":     "*"
+		"semantic-grid":     "*",
+        "js-md5": "md5#^0.4.1"
 	},
 	"resolutions": {
 		"angular": "1.5.3"

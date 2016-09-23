@@ -17,6 +17,14 @@ require('angular').module('appUsers', [
 		controller: require('./users-controller.js')
 	})
 	// Edit specific user
+	.state('users.create', {
+		url: '/users/create',
+		templateUrl: 'app/user/create-user.html',
+		parent: 'auth-required',
+		controller: require('./create-user-controller.js'),
+		resolve: {}
+	})
+	// Edit specific user
 	.state('users.edit', {
 		url: '/users/edit/{userId}',
 		templateUrl: 'app/user/edit-user.html',

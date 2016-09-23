@@ -27,4 +27,12 @@ describe ('user-service:', function() {
 		});
 	});
 
+	it("should delete a user by id", function(done) {
+		userService.deleteUser('8be24a60-3ac1-4414-abb0-b6739bbd0069', function(err, response) {
+			if (err) (log.error('error: %j', err));
+			log.info('response: %j', response);
+			done();
+		});
+	});
+
 });

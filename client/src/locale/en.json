@@ -29,6 +29,7 @@
 	"user": {
 		"title": "Users",
 	  	"editUser": "Edit user",
+	  	"createUser": "Create user",
 	  	"username": "Username",
 	  	"displayName": "Display Name",
 	  	"role": "Role",

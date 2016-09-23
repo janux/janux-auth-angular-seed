@@ -21,6 +21,9 @@ module.exports = [
 	};
 
 	$scope.deleteUser = function (userId) {
-		console.log('Delete the user', userId);
+		userService.deleteUser(userId).then(function(userDeleted) {
+			console.log('User successfully deleted', userDeleted);
+			window.history.back();
+		});
 	};
 }];

@@ -59,16 +59,37 @@ function( $q ,  $http){
 		// Add new user
 		saveOrUpdate: function(userObject)
 		{
-			userObject.contact = userObject.contact.toJSON();
+			var userObjClone = _.cloneDeep(userObject);
+
+			userObjClone.contact = userObjClone.contact.toJSON();
+
+			//
+			// If the user's role has been loaded, we ensure that only the name is stored back
+			//
+			userObjClone.roles = _.map(userObjClone.roles, function (role) {
+				return (typeof role.name !== 'undefined')?role.name:role;
+			});
 			
 			return $http.jsonrpc(
 				'/rpc/2.0/users',
 				'saveOrUpdate',
-				[ userObject ]
+				[ userObjClone ]
 			).then(function(resp) {
 				var out = resp.data.result;
 				console.log('saveOrUpdate', out);
 				return out;
+			});
+		},
+
+		// Delete user by id
+		deleteUser: function(userId)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'deleteUser',
+				[ userId ]
+			).then(function(resp) {
+				return resp.data.result;
 			});
 		}
 	};

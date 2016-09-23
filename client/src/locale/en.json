@@ -7,7 +7,8 @@
 		"logout":   "Sign Out",
 		"password": "Password",
 		"people":   "people",
-		"username": "User Name"
+		"username": "User Name",
+	  	"search":	"Search"
 	},
 	"dashboard": {
 		"title":"Dashboard"
@@ -26,7 +27,14 @@
 		}
 	},
 	"user": {
-		"title": "Users"
+		"title": "Users",
+	  	"editUser": "Edit user",
+	  	"username": "Username",
+	  	"displayName": "Display Name",
+	  	"role": "Role",
+	  	"email": "Email",
+	  	"edit": "Edit",
+	  	"delete": "Delete"
 	},
 	"role": {
 		"title": "Roles"

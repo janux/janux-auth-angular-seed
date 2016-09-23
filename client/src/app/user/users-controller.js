@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = [
-'$scope','userService', function(
- $scope , userService ) {
+'$scope','userService','$state', function(
+ $scope , userService , $state) {
 
 	$scope.usersMatch = [];
 	$scope.searchField = 'username';
@@ -14,6 +14,10 @@ module.exports = [
 		userService.findBy($scope.searchField, $scope.searchString).then(function(usersMatch) {
 			$scope.usersMatch = usersMatch;
 		});
+	};
+		
+	$scope.editUser = function(userId) {
+		$state.go('users.edit', { userId: userId });
 	};
 
 	$scope.deleteUser = function (userId) {

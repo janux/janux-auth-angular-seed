@@ -17,9 +17,10 @@ function( $q ,  $http){
 				[ field, search ]
 			).then(function(resp) {
 				var out = resp.data.result;
+				out = (typeof out.length === 'undefined')?[out]:out;
 				console.log('findBy', field, search, out);
 				out.forEach(function(user, iUser){
-					out[iUser].contact = Person.fromJSON(JSON.parse(out[iUser].contact));
+					out[iUser].contact = Person.fromJSON(out[iUser].contact);
 				});
 				return out;
 			});
@@ -33,7 +34,9 @@ function( $q ,  $http){
 				'findById',
 				[ userId ]
 			).then(function(resp) {
-				return resp.data.result;
+				var out = resp.data.result;
+				out.contact = Person.fromJSON(out.contact);
+				return out;
 			});
 		},
 
@@ -47,21 +50,25 @@ function( $q ,  $http){
 			).then(function(resp) {
 				var out = resp.data.result;
 				out.forEach(function(user, iUser){
-					out[iUser].contact = Person.fromJSON(JSON.parse(out[iUser].contact));
+					out[iUser].contact = Person.fromJSON(out[iUser].contact);
 				});
 				return out;
 			});
 		},
 
 		// Add new user
-		saveOrUpdate: function(userId, data)
+		saveOrUpdate: function(userObject)
 		{
+			userObject.contact = userObject.contact.toJSON();
+			
 			return $http.jsonrpc(
 				'/rpc/2.0/users',
 				'saveOrUpdate',
-				[ userId, data ]
+				[ userObject ]
 			).then(function(resp) {
-				return resp.data.result;
+				var out = resp.data.result;
+				console.log('saveOrUpdate', out);
+				return out;
 			});
 		}
 	};

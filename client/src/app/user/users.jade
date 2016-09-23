@@ -6,21 +6,21 @@ p
 			label(for='username') Find by:
 			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
 			input.form-control(id='username' type='text' ng-model='searchString')
-			button.btn.btn-default(type='submit' ng-click='findUsers()') Search
+			button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
 
 table.table.table-bordered(ng-show='usersMatch.length')
 	tr
-		th Username
-		th Display Name
-		th Role
-		th Edit
-		th Delete
+		th {{ 'user.username' | translate }}
+		th {{ 'user.displayName' | translate }}
+		th {{ 'user.email' | translate }}
+		th {{ 'user.edit' | translate }}
+		th {{ 'user.delete' | translate }}
 
 	tr(ng-repeat='user in usersMatch')
 		td {{ user.username }}
 		td {{ user.contact.name.getShort() }}
-		td {{ user.role.name }}
+		td {{ user.contact.getEmailAddress('work').address }}
 		td.text-center
-			span.glyphicon.glyphicon-pencil
+			span.glyphicon.glyphicon-pencil(ng-click='editUser(user.userId)')
 		td.text-center
 			span.glyphicon.glyphicon-remove(ng-click='deleteUser(user.userId)')

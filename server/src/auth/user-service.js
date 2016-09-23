@@ -2,12 +2,14 @@
 
 var
 	_     = require('underscore'),
+	Q    = require('q'),
 	log4js = require('log4js'),
 	util = require('util'),
 	md5 = require('MD5'),
 	AuthService = require('./authorization-service'),
-	userDAO = require('janux-people.js').UserDAO.object('../server/janux-people.db'), // createInstance('../server/janux-people.db'),
-	demoUserService = require('janux-people.js').UserService.singleton(userDAO);
+	// userDAO = require('janux-people.js').UserDAO.object('../server/janux-people.db'), // createInstance('../server/janux-people.db'),
+	// demoUserService = require('janux-people.js').UserService.singleton(userDAO);
+	demoUserService = require('../api/user-service');
 
 var log = log4js.getLogger('Auth UserService');
 
@@ -17,7 +19,11 @@ var service = {
 		// log.debug('calling findByOid with oid: '%s'',oid);
 		'use strict';
 
-		demoUserService.findById(oid).then( function(user){
+		demoUserService.findById(oid, function(err, user){
+			if(err){
+				throw new Error(err);
+			}
+
 			if(user){
 				done(null, user);
 			}else{
@@ -32,7 +38,7 @@ var service = {
 		'use strict';
 		log.debug('looking up account with name "%s"', username);
 
-		demoUserService.findByUsername(username).then( function(user) {
+		demoUserService.findByUsername(username, function(err, user) {
 			if(user){
 				done(null, user);
 			}else{
@@ -54,10 +60,18 @@ var service = {
 			if (err) {
 				return done(err);
 			} else if (_.isObject(user) && user.password === md5(password)) {
-				AuthService.loadRoleByName(user.role).then(function(role) {
-					user.role = role;
+
+				user.roles = _.map(user.roles, function(role){
+					return AuthService.loadRoleByName(role)
+				});
+				Q.all(user.roles).then(function(roles){
+					user.roles = roles;
 					return done(null, user);
 				});
+				// AuthService.loadRoleByName(user.role).then(function(role) {
+				// 	user.roles = role;
+				// 	return done(null, user);
+				// });
 
 			} else {
 				var msg = util.format('Invalid username/password supplied by "%s"', username);

@@ -20,8 +20,8 @@ function($modal , $http , $location , $q , retryQueue) {
 	// role json structure into a full janux Role instance
 	//
 	function hydrateRoles(user) {
-		if (user && user.account && user.account.roles) {
-			user.account.roles = _.map(user.account.roles, function(role) {
+		if (user && user.roles) {
+			user.roles = _.map(user.roles, function(role) {
 				return Role.fromJSON(role);
 			});
 		}
@@ -104,7 +104,7 @@ function($modal , $http , $location , $q , retryQueue) {
 			return request.then(function(response) {
 				console.debug('login resp:', JSON.stringify(response));
 				service.currentUser = hydrateRoles(response.data.user);
-				service.currentUser.contact = Person.fromJSON(JSON.parse(service.currentUser.contact));
+				service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
 
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
@@ -142,7 +142,7 @@ function($modal , $http , $location , $q , retryQueue) {
 				return $http.get('/current-user').then(function(response) {
 					service.currentUser = hydrateRoles(response.data.user);
 					if(typeof response.data.user !== 'undefined'){
-						service.currentUser.contact = Person.fromJSON(JSON.parse(response.data.user.contact));
+						service.currentUser.contact = Person.fromJSON(response.data.user.contact);
 					}
 					console.log('currentUser-served:', service.currentUser);
 					return service.currentUser;

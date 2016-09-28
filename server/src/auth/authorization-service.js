@@ -2,7 +2,7 @@
 
 var
 	_ = require('underscore'),
-	AuthorizationContext = require('janux-security').PermissionContext,
+	AuthorizationContext = require('janux-security').AuthorizationContext,
 	Role = require('janux-security').Role,
 	Q    = require('q'),
 	util = require('util')
@@ -57,28 +57,28 @@ _.each(standardAuthContextSetup, function(represents, name) {
 //
 // Define a non-standard 'GRANT' permission in the USER AuthorizationContext
 //
-authorizationContexts.USER.addPermissionBit('GRANT', util.format('Grants permission to GRANT authorizations to Users in our system'));
+authorizationContexts['USER'].addPermissionBit('GRANT', util.format('Grants permission to GRANT authorizations to Users in our system'));
 
 //
 // Defining the Roles programmatically
 //
 roles.WIDGET_DESIGNER = Role.createInstance('WIDGET_DESIGNER', 'A person who creates and edits widget information')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'], authorizationContexts.WIDGET)
+	.grant(['READ','UPDATE','CREATE','DELETE'], authorizationContexts.WIDGET)
 ;
 
 // console.log('roles.WIDGET_DESIGNER:', JSON.stringify(roles.WIDGET_DESIGNER));
 
 roles.MANAGER = Role.createInstance('MANAGER', 'A Manager who can manage Widgets and Users')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.WIDGET)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
+	.grant(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.WIDGET)
+	.grant(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
 ;
 
 // console.log('roles.MANAGER:', JSON.stringify(roles.MANAGER));
 
 roles.SECURITY_MANAGER = Role.createInstance('SECURITY_MANAGER', 'A Person who can manage users and the authorization schema')
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.AUTH_CONTEXT)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.ROLE)
-	.grantPermissions(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
+	.grant(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.AUTH_CONTEXT)
+	.grant(['READ','UPDATE','CREATE','DELETE'],         authorizationContexts.ROLE)
+	.grant(['READ','UPDATE','CREATE','DELETE','GRANT'], authorizationContexts.USER)
 ;
 
 roles.ADMIN = Role.createInstance('ADMIN', 'Staff person with all privileges');

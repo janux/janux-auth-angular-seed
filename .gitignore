@@ -5,3 +5,4 @@ bower
 .DS_Store
 .idea
 janux-people.db
+server/vendor/janux-*

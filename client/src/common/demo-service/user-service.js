@@ -63,12 +63,12 @@ function( $q ,  $http){
 
 			userObjClone.contact = userObjClone.contact.toJSON();
 
-			//
-			// If the user's role has been loaded, we ensure that only the name is stored back
-			//
-			userObjClone.roles = _.map(userObjClone.roles, function (role) {
-				return (typeof role.name !== 'undefined')?role.name:role;
-			});
+			// //
+			// // If the user's role has been loaded, we ensure that only the name is stored back
+			// //
+			// userObjClone.roles = _.map(userObjClone.roles, function (role) {
+			// 	return (typeof role.name !== 'undefined')?role.name:role;
+			// });
 			
 			return $http.jsonrpc(
 				'/rpc/2.0/users',

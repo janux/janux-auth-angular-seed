@@ -21,7 +21,7 @@
 	},
 	"dependencies": {
 	  "janux-people": "file:../server/vendor/janux-people.js",
-	  "janux-people": "file:../server/vendor/janux-security"
+	  "janux-security": "file:../server/vendor/janux-security"
 	},
 	"devDependencies": {
 		"browserify":               "6.2.0",

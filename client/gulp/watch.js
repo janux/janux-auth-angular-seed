@@ -35,7 +35,7 @@ module.exports = function(gulp) {
 		// Watch .less files
 		gulp.watch( cfg.fileset.lessSrc, ['styles']);
 
-		gulp.watch( cfg.fileset.jade, ['jade']);
+		gulp.watch( cfg.fileset.pug, ['pug']);
 
 		// Watch .js files
 		// TODO: add two entries for 'app' and 'common' folders rather than going

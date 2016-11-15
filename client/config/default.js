@@ -21,31 +21,31 @@ var cfg = {
 		karma:  'karma.conf.js',
 		server: 'server.js'
 	},
-	fileset: {},
+	fileset: {}
 }; 
 
-// the jade files to watch
-cfg.fileset.jade = path.join(cfg.dir.src,'**','*.jade');
+// the pug files to watch
+cfg.fileset.pug = path.join(cfg.dir.src,'**','*.pug');
 
-// the jade 'top-level' files that will be turned into html, excludes partials;
+// the pug 'top-level' files that will be turned into html, excludes partials;
 // relative to src folder
 cfg.fileset.html = [
-	path.join('**','*.jade'),
+	path.join('**','*.pug'),
 	path.join('!**',cfg.dir.partial,'*')
-]
+];
 
 cfg.fileset.js = path.join(cfg.dir.src, cfg.dir.js, '**','*.js');
 
 // files watched during the build
 cfg.fileset.watch = [
 	path.join(cfg.dir.dist,'**','*.html'),
-	// cfg.fileset.jade,
+	// cfg.fileset.pug,
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.css'),
 	path.join(cfg.dir.src, cfg.dir.css,'**','*.less'),
 	path.join(cfg.dir.src, cfg.dir.img,'**','*'),
 	path.join(cfg.dir.src, cfg.dir.locale,'*.json'),
 	path.join(cfg.dir.dist, cfg.file.app)
-]
+];
 
 // these are relative to the 'src' folder, and get copied to the dist folder
 cfg.fileset.assets = [
@@ -87,9 +87,9 @@ cfg.fileset.jsLibs = [
 // The test specs; override this locally to run a single test suite
 cfg.fileset.test = [
 	path.join(cfg.dir.test,'**','*.spec.js')
-]
+];
 
-cfg.jade = {
+cfg.pug = {
 	debug:  false,
 	pretty: true
 };
@@ -97,12 +97,12 @@ cfg.jade = {
 cfg.jshint = {
 	rcfile:   '.jshintrc',
 	reporter: 'default'
-}
+};
 
 cfg.karma = {
 	singleRun: true,
 	browsers: ['PhantomJS']
-}
+};
 
 // the connect or other server config
 /*
@@ -122,11 +122,11 @@ cfg.server = {
 	exec: 'express',
 	file: path.join(cfg.dir.server, cfg.file.server),
 	static: ''
-}
+};
 
 // express server-side config
 // Load the default config from the config file in the server project;
 // this configuration also supports running 'node server.js' from the server folder
-cfg.serverAppContext = require(path.join('..', cfg.dir.server, 'config', 'default.js')).serverAppContext
+cfg.serverAppContext = require(path.join('..', cfg.dir.server, 'config', 'default.js')).serverAppContext;
 
 module.exports = cfg;

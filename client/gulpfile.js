@@ -38,12 +38,12 @@ gulp.task('compile', ['lint','browserify']);
 //
 // Process all assets for development
 //
-gulp.task('build', ['lint','browserify','styles','jade','copy']);
+gulp.task('build', ['lint','browserify','styles','pug','copy']);
 
 //
 // Process all assets for deployment
 //
-gulp.task('package', ['lint','minify','styles','jade','copy']);
+gulp.task('package', ['lint','minify','styles','pug','copy']);
 
 gulp.task('package:clean', ['clean'], function() {
 	gulp.start('package');
@@ -69,7 +69,7 @@ gulp.task('test', ['build'], function() {
 //
 // Quick test that assumes that we have already built, 
 // and that we made incremental changes to js files;
-// in particular, this does not process less and jade files
+// in particular, this does not process less and pug files
 //
 gulp.task('test:quick', ['lint','browserify'], function() {
 	gulp.start('test:run');

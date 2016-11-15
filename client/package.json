@@ -32,7 +32,7 @@
 		"gulp-autoprefixer":        "0.0.6",
 		"gulp-concat":              "2.1.7",
 		"gulp-express":             "0.1.0",
-		"gulp-jade":                "0.4.2",
+	  	"gulp-pug":              	"3.1.0",
 		"gulp-jasmine":             "1.0.1",
 		"gulp-jshint":              "1.8.5",
 		"gulp-karma":               "0.0.4",

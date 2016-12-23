@@ -11,17 +11,17 @@ form
 		label.col-xs-2(for='last') Last name
 		input.col-xs-2.form-element(type='text' id='last' ng-model='user.contact.name.last')
 
-	.form-group.row(ng-init='email = user.contact.contactMethods.emails[0]')
+	.form-group.row
 		label.col-xs-2(for='email') Email
-		input.col-xs-3.form-element(type='text' id='email' ng-model='email.address')
+		input.col-xs-3.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
 
-	.form-group.row(ng-init='phone = user.contact.contactMethods.phoneNumbers[0]')
+	.form-group.row
 		label.col-xs-2(for='phone') Phone number
-		input.col-xs-2.form-element(type='text' id='phone' ng-model='phone.number')
+		input.col-xs-2.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')
 
 	h3: u Address
 
-	div(ng-init='address = user.contact.contactMethods.addresses[0]')
+	div(ng-init='address = user.contact.postalAddress()')
 		.form-group.row
 			label.col-xs-2(for='line1') Line 1
 			input.col-xs-2.form-element(type='text' id='line1' ng-model='address.line1')

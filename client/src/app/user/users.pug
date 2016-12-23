@@ -19,8 +19,8 @@ table.table.table-bordered(ng-show='usersMatch.length')
 
 	tr(ng-repeat='user in usersMatch')
 		td {{ user.username }}
-		td {{ user.contact.name.getShort() }}
-		td {{ user.contact.getEmailAddress('work').address }}
+		td {{ user.contact.name.shortName }}
+		td {{ user.contact.emailAddress('work').address }}
 		td.text-center
 			span.glyphicon.glyphicon-pencil(ng-click='editUser(user.userId)')
 		td.text-center

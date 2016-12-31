@@ -10,7 +10,7 @@ var transport = jsonrpc.transports.server.middleware;
 var srcRoot = '../src/api/';
 
 var pathMappings = {
-	users:	'user-service'
+	users:	'user-resource'
 };
 
 /*

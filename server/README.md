@@ -6,4 +6,8 @@
 
 * To run server-side tests run:
 
-  $ mocha -R spec
+	$ mocha -R spec
+
+* To generate test users provided by the janux people package, simply run
+
+	$ npm run generate-demo-users

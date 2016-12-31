@@ -18,7 +18,7 @@ var authorizationContexts = {}, roles = {};
 //
 exports.loadAuthorizationContexts = function() {
 	return Q(authorizationContexts);
-}
+};
 
 //
 // Returns a promise that resolves to a dictionary of the Roles defined in the

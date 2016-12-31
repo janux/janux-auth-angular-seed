@@ -1,9 +1,8 @@
 'user strict';
 
 var log4js = require('log4js'),
-	_ = require('underscore');
-	log = log4js.getLogger('UserService - client side'),
-	demoUserDAO = require('janux-people.js').UserDAO.object('../server/janux-people.db');
+	_ = require('underscore'),
+	log = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
@@ -63,10 +62,11 @@ var createInstance = function(userDAO) {
 	return new UserService();
 };
 
-// if the instance does not exist, create it
-if ( !_.isObject(userServiceInstance) ) {
-	// userServiceInstance = new UserService(aDAO);
-	userServiceInstance = createInstance(demoUserDAO);
-}
-
-module.exports = userServiceInstance;
+module.exports.create = function(UserDAO){
+	// if the instance does not exist, create it
+	if ( !_.isObject(userServiceInstance) ) {
+		// userServiceInstance = new UserService(aDAO);
+		userServiceInstance = createInstance(UserDAO);
+	}
+	return userServiceInstance;
+};

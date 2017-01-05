@@ -9,8 +9,8 @@ var transport = jsonrpc.transports.server.middleware;
 
 var srcRoot = '../src/api/';
 
-var pathMappings = {
-	users:	'user-resource'
+var services = {
+	users:	require(srcRoot + 'index').UserService
 };
 
 /*
@@ -21,8 +21,9 @@ var jsonrpcServer = new jsonrpc.server(
 */
 
 module.exports = function(app) {
-	for (var path in pathMappings) {
-		var resource = new jsonrpc.server(new transport(), require(srcRoot + pathMappings[path]));
-		app.use('/rpc/2.0/' + path, resource.transport.middleware);
+	for (var service in services) {
+		var resource = new jsonrpc.server(new transport(), services[service]);
+		app.use('/rpc/2.0/' + service, resource.transport.middleware);
+		log.info('service created', service);
 	}
 };

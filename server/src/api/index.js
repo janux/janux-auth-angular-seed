@@ -5,4 +5,4 @@ var config = require('config'),
 	UserDAO = DAOs[config.serverAppContext.userDAO],
 	UserService = require('./user-service');
 
-module.exports = UserService.create(UserDAO);
+module.exports.UserService = UserService.create(UserDAO);

@@ -7,7 +7,7 @@ var
 	util = require('util'),
 	md5 = require('MD5'),
 	AuthService = require('./authorization-service'),
-	userService = require('../api/user-resource');
+	userService = require('../api/index').UserService;
 
 var log = log4js.getLogger('Auth UserService');
 

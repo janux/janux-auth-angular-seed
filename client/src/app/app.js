@@ -11,6 +11,7 @@ require('common/jnxSecurity');
 require('common/directives');
 require('common/demoService');
 require('app/users');
+require('app/permissions');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -20,7 +21,8 @@ angular.module('MyApp',[
 	'pascalprecht.translate',
 	'commonDirectives',
 	'demoService',
-	'appUsers'
+	'appUsers',
+	'appPermissions'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security',
@@ -108,12 +110,6 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	.state('roles', {
 		url: '/roles',
 		templateUrl: 'app/role/index.html',
-		resolve: authenticate
-	})
-
-	.state('permissions', {
-		url: '/permissions',
-		templateUrl: 'app/permission/index.html',
 		resolve: authenticate
 	});
 }])

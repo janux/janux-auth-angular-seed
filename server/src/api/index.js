@@ -3,6 +3,11 @@
 var config = require('config'),
 	DAOs = require('./daos'),
 	UserDAO = DAOs[config.serverAppContext.userDAO],
-	UserService = require('./user-service');
+	AuthDAO = DAOs[config.serverAppContext.authDAO],
+	UserService = require('./user-service'),
+	AuthService = require('./authorization-service');
 
-module.exports.UserService = UserService.create(UserDAO);
+module.exports = {
+	UserService: UserService.create(UserDAO),
+	AuthService: AuthService.create(AuthDAO)
+};

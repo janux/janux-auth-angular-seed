@@ -1,0 +1,19 @@
+table.table.table-bordered
+	thead
+		tr
+			th Name
+			th Actions
+	tbody
+		tr(ng-repeat='permBit in permissionBits')
+			td {{ permBit }}
+			td
+
+
+h3 New Permission Bit
+
+form
+	.form-group
+		label(for='permBitName') Permission name:
+		input#permBitName.form-control(type='text')
+
+	button.btn.btn-default(type='submit') Create Permission

@@ -14,6 +14,7 @@ module.exports = {
 
 		mongoString: 'mongodb://authseed:b1gM0n3y@localhost/authseed',
 		userDAO: 'userDAOLoki',
+		authDAO: 'authDAO',
 
 		log4js: {
 			config: require('./log4js.js'),

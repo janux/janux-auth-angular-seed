@@ -69,7 +69,8 @@
 	  	"common/jnxSecurity": "./src/common/security/index.js",
 	    "common/directives":  "./src/common/directives.js",
 	  	"common/demoService": "./src/common/demo-service/index.js",
-		"app/users":		  "./src/app/user/index.js"
+		"app/users":		  "./src/app/user/index.js",
+	  	"app/permissions":	  "./src/app/permission/index.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

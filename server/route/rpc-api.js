@@ -7,10 +7,11 @@ var
 
 var transport = jsonrpc.transports.server.middleware;
 
-var srcRoot = '../src/api/';
+var apiRoot = '../src/api/index';
 
 var services = {
-	users:	require(srcRoot + 'index').UserService
+	users:	require( apiRoot ).UserService,
+	auth:	require( apiRoot ).AuthService
 };
 
 /*

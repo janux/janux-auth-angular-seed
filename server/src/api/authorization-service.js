@@ -1,8 +1,6 @@
 'use strict';
 
-var log4js = require('log4js'),
-	_ = require('underscore'),
-	log = log4js.getLogger('AuthService');
+var _ = require('lodash');
 
 // variable to hold the singleton instance, if used in that manner
 var authServiceInstance = undefined;
@@ -18,7 +16,7 @@ var createInstance = function(authDAO) {
 	AuthService.prototype.constructor = AuthService;
 
 	//
-	// Specific methods of auth service
+	// Specific methods of auth service (if any)
 	//
 
 	return new AuthService();

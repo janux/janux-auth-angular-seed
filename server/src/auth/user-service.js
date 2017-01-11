@@ -2,11 +2,12 @@
 
 var
 	_     = require('underscore'),
-	Q    = require('q'),
+	// Q    = require('q'),
+	Promise  = require('bluebird'),
 	log4js = require('log4js'),
 	util = require('util'),
 	md5 = require('MD5'),
-	AuthService = require('./authorization-service'),
+	AuthService = require('../api/index').AuthService, // require('./authorization-service'),
 	userService = require('../api/index').UserService;
 
 var log = log4js.getLogger('Auth UserService');
@@ -62,7 +63,7 @@ var service = {
 				user.roles = _.map(user.roles, function(role){
 					return AuthService.loadRoleByName(role)
 				});
-				Q.all(user.roles).then(function(roles){
+				Promise.all(user.roles).then(function(roles){
 					user.roles = roles;
 					return done(null, user);
 				});

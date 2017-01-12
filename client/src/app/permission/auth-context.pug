@@ -2,13 +2,16 @@ table.table.table-bordered
 	thead
 		tr
 			th Name
-			th Represents
+			th Description
 			th Actions
 	tbody
-		tr
-			td
-			td
-			td
+		tr(ng-repeat='authContext in authContexts')
+			td {{ authContext.name }}
+			td {{ authContext.description }}
+			td.text-center
+				span.glyphicon.glyphicon-edit
+				span &nbsp;|&nbsp;
+				span.glyphicon.glyphicon-remove-circle
 
 h3 New Authorization Context
 

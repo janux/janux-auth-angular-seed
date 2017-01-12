@@ -2,11 +2,14 @@ table.table.table-bordered
 	thead
 		tr
 			th Name
-			th Actions
+			th.text-center Actions
 	tbody
 		tr(ng-repeat='permBit in permissionBits')
 			td {{ permBit }}
-			td
+			td.text-center
+				span.glyphicon.glyphicon-edit
+				span &nbsp;|&nbsp;
+				span.glyphicon.glyphicon-remove-circle
 
 
 h3 New Permission Bit

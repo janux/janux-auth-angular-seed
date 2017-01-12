@@ -18,6 +18,9 @@ require('angular').module('appPermissions', [
 			resolve: {
 				permissionBits: ['authService', function(authService){
 					return authService.loadPermissionBits();
+				}],
+				authContexts: ['authService', function(authService){
+					return authService.loadAuthorizationContexts();
 				}]
 			}
 		});

@@ -47,7 +47,10 @@ function AuthDAO() {
 	var that = this;
 
 	_.each(standardAuthContextSetup, function(represents, name) {
-		that._authorizationContexts[name] = createStandardAuthorizationContext(name, represents, that._standardPermissionBits);
+		that._authorizationContexts[name] = AuthorizationContext.createInstance(
+			name, 'Defines permissions available on a ' + represents,
+			that._standardPermissionBits
+		);
 	});
 
 	//
@@ -139,21 +142,3 @@ exports.singleton = function() {
 exports.object = function() {
 	return AuthDAO;
 };
-
-//
-// Private convenience method to create Authorization Context with the permits
-// provided to the authorizationContexts hashmap of the Authorization Scheme
-//
-// TODO: move this to the janux-security lib, as this would be a useful
-// feature; we would need to find a way to easily override it so that library
-// users can implement their own to suit their needs
-//
-function createStandardAuthorizationContext(name, represents, permBits) {
-	var authContext = AuthorizationContext.createInstance(name, 'Defines permissions available on a ' + represents);
-
-	permBits.forEach( function(bitName) {
-		authContext.addPermissionBit(bitName, util.format('Grants permission to %s a %s', bitName, represents));
-	} );
-
-	return authContext;
-}

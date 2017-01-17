@@ -43,15 +43,12 @@ function AuthDAO() {
 		AUTH_CONTEXT: 'Authorization Metadata for our system or business domain'
 	};
 
-	// Make object available
-	var that = this;
-
-	_.each(standardAuthContextSetup, function(represents, name) {
-		that._authorizationContexts[name] = AuthorizationContext.createInstance(
+	_.each(standardAuthContextSetup, (function(represents, name) {
+		this._authorizationContexts[name] = AuthorizationContext.createInstance(
 			name, 'Defines permissions available on a ' + represents,
-			that._standardPermissionBits
+			this._standardPermissionBits
 		);
-	});
+	}).bind(this));
 
 	//
 	// Define a non-standard 'GRANT' permission in the USER AuthorizationContext
@@ -84,12 +81,10 @@ function AuthDAO() {
 //
 // Return a promise that resolves to and array of the standard permission bits
 //
-
 AuthDAO.prototype.loadPermissionBits = function(callback) {
-	var that = this;
-	return new Promise(function(resolve) {
-		resolve( that._standardPermissionBits );
-	}).nodeify(callback);
+	return new Promise( (function(resolve) {
+		resolve( this._standardPermissionBits );
+	}).bind(this) ).nodeify(callback);
 };
 
 //
@@ -98,10 +93,18 @@ AuthDAO.prototype.loadPermissionBits = function(callback) {
 // are the names of each AuthorizationContext.
 //
 AuthDAO.prototype.loadAuthorizationContexts = function(callback) {
-	var that = this;
-	return new Promise(function(resolve) {
-		resolve( that._authorizationContexts );
-	}).nodeify(callback);
+	return new Promise( (function(resolve) {
+		resolve( this._authorizationContexts );
+	}).bind(this) ).nodeify(callback);
+};
+
+//
+// Returns a promise that resolves to a single authorizationContext
+//
+AuthDAO.prototype.loadAuthorizationContextByName = function(name, callback) {
+	return new Promise( (function(resolve) {
+		resolve( this._authorizationContexts[name] );
+	}).bind(this) ).nodeify(callback);
 };
 
 //
@@ -110,17 +113,18 @@ AuthDAO.prototype.loadAuthorizationContexts = function(callback) {
 // Contexts in which they have been provided with permissions
 //
 AuthDAO.prototype.loadRoles = function(callback) {
-	var that = this;
-	return new Promise(function(resolve) {
-		resolve( that._roles );
-	}).nodeify(callback);
+	return new Promise( (function(resolve) {
+		resolve( this._roles );
+	}).bind(this) ).nodeify(callback);
 };
 
+//
+// Returns a promise that resolves to a single Role
+//
 AuthDAO.prototype.loadRoleByName = function(name, callback) {
-	var that = this;
-	return new Promise(function(resolve) {
-		resolve( that._roles[name] );
-	}).nodeify(callback);
+	return new Promise( (function(resolve) {
+		resolve( this._roles[name] );
+	}).bind(this) ).nodeify(callback);
 };
 
 // Returns a new instance

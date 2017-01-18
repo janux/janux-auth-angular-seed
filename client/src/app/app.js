@@ -25,10 +25,15 @@ angular.module('MyApp',[
 	'appPermissions'
 ])
 
-.run([  '$rootScope','$state','$stateParams','security',
-function($rootScope , $state , $stateParams , security) { 
+.run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
+function($rootScope , $state , $stateParams , security , $anchorScroll) {
 	$rootScope.$state       = $state;
 	$rootScope.$stateParams = $stateParams;
+
+	$rootScope.$on('$stateChangeStart', function() {
+		// When we change state we look for top to set the scroll up
+		$anchorScroll('top');
+	});
 
 	// On page reload, check to see whether the user logged in previously
 	security.requestCurrentUser();

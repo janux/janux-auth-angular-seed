@@ -1,0 +1,19 @@
+h1 Create Authorization Context
+
+form(name='authContextForm' ng-submit='createAuthContext()')
+	.form-group
+		label(for='authContextName') Name:
+		input#authContextName.form-control(type='text' ng-model='contextName' name='name' required='')
+	.form-group
+		label(for='authContextRep') Description:
+		input#authContextRep.form-control(type='text' ng-model='contextDesc' name='description' required='')
+
+	.form-group
+		label Permission Bits (select at least one):
+		table.table.table-bordered
+			tr
+				td.text-center(ng-repeat='bit in permissionBits')
+					label {{ bit }}
+						input(type='checkbox' ng-model='selPermBits[bit]' ng-true-value='true' ng-false-value='false')
+
+	button.btn.btn-success(type='submit') Create Authorization Context

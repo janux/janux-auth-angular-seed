@@ -27,8 +27,7 @@ function( $q ,  $http){
 				'/rpc/2.0/auth',
 				'loadAuthorizationContexts'
 			).then(function(resp) {
-				var out = _.values(resp.data.result);
-				return out;
+				return resp.data.result;
 			});
 		}
 	};

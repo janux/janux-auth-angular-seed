@@ -13,13 +13,5 @@ table.table.table-bordered
 				span &nbsp;|&nbsp;
 				span.glyphicon.glyphicon-remove-circle
 
-h3 New Authorization Context
-
-form
-	.form-group
-		label(for='authContextName') Name:
-		input#authContextName.form-control(type='text')
-	.form-group
-		label(for='authContextRep') Represents:
-		input#authContextRep.form-control(type='text')
-	button.btn.btn-default(type='submit') Create Context
+.text-center
+	a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Authorization Context

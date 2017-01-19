@@ -11,12 +11,5 @@ table.table.table-bordered
 				span &nbsp;|&nbsp;
 				span.glyphicon.glyphicon-remove-circle
 
-
-h3 New Permission Bit
-
-form
-	.form-group
-		label(for='permBitName') Permission name:
-		input#permBitName.form-control(type='text')
-
-	button.btn.btn-default(type='submit') Create Permission
+.text-center
+	a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Permission Bit

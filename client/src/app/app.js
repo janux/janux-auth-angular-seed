@@ -6,6 +6,7 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('common/config');
 require('common/jsonrpc');
 require('common/jnxSecurity');
 require('common/directives');
@@ -22,7 +23,8 @@ angular.module('MyApp',[
 	'commonDirectives',
 	'demoService',
 	'appUsers',
-	'appPermissions'
+	'appPermissions',
+	'config'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
@@ -101,10 +103,42 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		}
 	})
 
+	// this state is used to switch between the login & default landing state
+	.state('home', {
+		url: '/',
+
+		templateUrl: '',
+
+		resolve: {
+			currentUser: ['security', function(security) {
+				// console.debug('requestCurrentUser from home.resolve.currentUser');
+				return security.requestCurrentUser();
+			}]
+		},
+
+		controller: ['config','$scope', '$state', 'security', function(config,$scope, $state, security) {
+			if (security.isAuthenticated()) {
+				$state.go(config.defaultState);
+			} else {
+				$state.go('login');
+			}
+		}]
+	})
+
+	.state('login', {
+		url: '/login',
+		templateUrl: 'common/security/login/form.html',
+		resolve: {
+			isModal: function() { return false;}
+		},
+		controller: 'loginController'
+	})
+
 	.state('dashboard', {
 		// default state
-		url: '/',
-		templateUrl: 'app/dashboard.html'
+		url: '/dashboard',
+		templateUrl: 'app/dashboard.html',
+		resolve: authenticate
 	})
 
 	.state('goodbye', {

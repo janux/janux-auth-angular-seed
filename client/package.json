@@ -65,6 +65,7 @@
 		"md5":             	  "./bower/js-md5/src/md5.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
 	  	"janux-people":		  "./node_modules/janux-people.js/index.js",
+		"common/config":      "./src/common/config.js",
 	  	"common/jsonrpc":     "./src/common/jsonrpc.js",
 	  	"common/jnxSecurity": "./src/common/security/index.js",
 	    "common/directives":  "./src/common/directives.js",

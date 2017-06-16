@@ -1,17 +1,22 @@
-table.table.table-bordered
-	thead
-		tr
-			th Name
-			th Description
-			th Actions
-	tbody
-		tr(ng-repeat='authContext in authContexts')
-			td {{ authContext.name }}
-			td {{ authContext.description }}
-			td.text-center
-				span.glyphicon.glyphicon-edit
-				span &nbsp;|&nbsp;
-				span.glyphicon.glyphicon-remove-circle
+side-bar
 
-.text-center
-	a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Authorization Context
+.container
+	logo-bar
+
+	table.table.table-bordered
+		thead
+			tr
+				th Name
+				th Description
+				th Actions
+		tbody
+			tr(ng-repeat='authContext in authContexts')
+				td {{ authContext.name }}
+				td {{ authContext.description }}
+				td.text-center
+					span.glyphicon.glyphicon-edit
+					span &nbsp;|&nbsp;
+					span.glyphicon.glyphicon-remove-circle
+
+	.text-center
+		a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Authorization Context

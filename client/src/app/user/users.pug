@@ -1,27 +1,32 @@
-h1(translate='user.title')
-a(ui-sref='users.create') Create new user
+side-bar
 
-p
-	form.form-inline
-		.form-group
-			label(for='username') Find by:
-			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
-			input.form-control(id='username' type='text' ng-model='searchString')
-			button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+.container
+	logo-bar
 
-table.table.table-bordered(ng-show='usersMatch.length')
-	tr
-		th {{ 'user.username' | translate }}
-		th {{ 'user.displayName' | translate }}
-		th {{ 'user.email' | translate }}
-		th {{ 'user.edit' | translate }}
-		th {{ 'user.delete' | translate }}
+	h1(translate='user.title')
+	a(ui-sref='users.create') Create new user
 
-	tr(ng-repeat='user in usersMatch')
-		td {{ user.username }}
-		td {{ user.contact.name.shortName }}
-		td {{ user.contact.emailAddress('work').address }}
-		td.text-center
-			span.glyphicon.glyphicon-pencil(ng-click='editUser(user.userId)')
-		td.text-center
-			span.glyphicon.glyphicon-remove(ng-click='deleteUser(user.userId)')
+	p
+		form.form-inline
+			.form-group
+				label(for='username') Find by:
+				select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+				input.form-control(id='username' type='text' ng-model='searchString')
+				button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+
+	table.table.table-bordered(ng-show='usersMatch.length')
+		tr
+			th {{ 'user.username' | translate }}
+			th {{ 'user.displayName' | translate }}
+			th {{ 'user.email' | translate }}
+			th {{ 'user.edit' | translate }}
+			th {{ 'user.delete' | translate }}
+
+		tr(ng-repeat='user in usersMatch')
+			td {{ user.username }}
+			td {{ user.contact.name.shortName }}
+			td {{ user.contact.emailAddress('work').address }}
+			td.text-center
+				span.glyphicon.glyphicon-pencil(ng-click='editUser(user.userId)')
+			td.text-center
+				span.glyphicon.glyphicon-remove(ng-click='deleteUser(user.userId)')

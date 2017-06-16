@@ -1,12 +1,17 @@
-h1(translate='permission.title') 
+side-bar
 
-.row
-	.col-sm-4
-		h2 Permission Bits
+.container
+	logo-bar
 
-		include perm-bits
+	h1(translate='permission.title')
 
-	.col-sm-8
-		h2 Authorization Contexts
+	.row
+		.col-sm-4
+			h2 Permission Bits
 
-		include auth-context
+			include perm-bits
+
+		.col-sm-8
+			h2 Authorization Contexts
+
+			include auth-context

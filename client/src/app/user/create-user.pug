@@ -1,12 +1,17 @@
-h1(translate='user.createUser')
+side-bar
 
-form
-	.form-group.row
-		label.col-xs-2(for='username') Username
-		input.col-xs-2.form-element(type='text' id='username' ng-model='user.username')
+.container
+	logo-bar
 
-	.form-group.row
-		label.col-xs-2(for='password') Password
-		input.col-xs-2.form-element(type='password' id='password' ng-model='user.password')
+	h1(translate='user.createUser')
 
-include user-form
+	form
+		.form-group.row
+			label.col-xs-2(for='username') Username
+			input.col-xs-2.form-element(type='text' id='username' ng-model='user.username')
+
+		.form-group.row
+			label.col-xs-2(for='password') Password
+			input.col-xs-2.form-element(type='password' id='password' ng-model='user.password')
+
+	include user-form

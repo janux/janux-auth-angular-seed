@@ -7,8 +7,8 @@ require('angular-translate-loader-static-files');
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
 // 
 module.exports =
-       ['$scope','security','$translate',
-function($scope , security , $translate) {
+       ['$scope','security','$translate','$state','config',
+function($scope , security , $translate , $state , config) {
 	// The model for this form 
 	$scope.user = {
 		account: {},
@@ -38,6 +38,7 @@ function($scope , security , $translate) {
 
 	// Attempt to authenticate the user specified in the form's model
 	$scope.login = function() {
+		console.log('login controller');
 		// Clear any previous security errors
 		$scope.authError = null;
 
@@ -48,6 +49,9 @@ function($scope , security , $translate) {
 				$translate('login.error.invalidCredentials').then( function(msg) {
 					$scope.authError = msg;
 				});
+			}
+			else if ($state.current.name === 'login') {
+				$state.go(config.defaultState);
 			}
 		}, function(err) {
 			// If we get here then there was a problem with the login request to the server

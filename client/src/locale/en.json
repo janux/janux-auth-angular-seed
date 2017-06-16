@@ -3,11 +3,11 @@
 		"cancel":   "Cancel",
 		"clear":    "Clear",
 		"email":    "E-mail",
-		"login":    "Sign In",
+		"login":    "Log In",
 		"logout":   "Sign Out",
-		"password": "Password",
+		"password": "Password:",
 		"people":   "people",
-		"username": "User Name",
+		"username": "User:",
 	  	"search":	"Search"
 	},
 	"dashboard": {
@@ -24,7 +24,9 @@
 			"invalidCredentials": "The user/password that you entered is not valid",
 			"serverError":        "Server is unavailable or returned an error",
 			"serverErrorOutput":  "Server Error: {{parm1}}"
-		}
+		},
+		"forgotPass": "Forgot Password",
+		"copy": "2017 Janux Media LTD. Copyright."
 	},
 	"user": {
 		"title": "Users",

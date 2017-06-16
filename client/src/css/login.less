@@ -1,0 +1,77 @@
+.login-form {
+	background: @login-bg url('/img/janux_logo_outline.png') no-repeat;
+	height: 100%;
+}
+
+.login-body {
+	.rem(font-size, 12);
+	border: 1px solid @white;
+	color: @login-color;
+	width: 250px;
+	height: 430px;
+	padding: 0px 25px;
+	// Vertical center
+	position: relative;
+	top: 50%;
+	transform: perspective(1px) translateY(-50%);
+	// Horizontal
+	margin-left: 60%;
+
+	.brand {
+		text-align: center;
+		line-height: 25px;
+		font-weight: bold;
+		.janux {
+			.rem(font-size, 28);
+
+		}
+		.crm {
+			.rem(font-size, 43);
+		}
+		.line {
+			width:85px;
+			margin: 5px auto 15px;
+		}
+	}
+
+	input {
+		color: @black;
+	}
+
+	.logo {
+		display: block;
+		margin: 10px auto;
+	}
+
+	.login-lbl {
+		float: left;
+		width: 35%;
+		margin: 5px 0;
+	}
+
+	.login-field {
+		float: right;
+		width: 65%;
+		margin: 5px 0;
+	}
+
+	.forgot-pass {
+		display: inline-block;
+		color:  @login-color;
+		.rem(font-size, 11);
+	}
+
+	.btn-login-cnt {
+		text-align: center;
+		padding: 15px;
+	}
+
+	.line {
+		width:85px;
+	}
+
+	.copy {
+		margin: 30px 0;
+		.rem(font-size, 9);
+	}
+}

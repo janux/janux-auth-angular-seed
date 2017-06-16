@@ -1,24 +1,36 @@
 form.login-form(name='form', novalidate)
-	.modal-header
-		h4(translate='label.login')
 
-	.modal-body
+	.login-body
+
+		img.logo(src='/img/janux_logo.png')
+		.brand
+			span.janux JANUX
+		.brand
+			span.crm CRM
+		.brand
+			hr.line
+
 		.alert.alert-warning(ng-show='authReason') {{authReason}}
 		.alert.alert-error(ng-show='authError') {{authError}}
+		//.alert.alert-info(translate='login.msg.enterCredentials')
 
-		.alert.alert-info(translate='login.msg.enterCredentials')
+		.login-lbl
+			label(translate='label.username')
+		input.login-field(name='login', ng-model='user.account.name', required, autofocus)
 
-		div
-			label(translate='label.username' style='width: 33%')
-			input(name='login', ng-model='user.account.name', required, autofocus)
+		.login-lbl
+			label(translate='label.password')
+		input.login-field(name="pass", type='password', ng-model='user.account.password', required)
 
-		div
-			label(translate='label.password' style='width: 33%')
-			input(name="pass", type='password', ng-model='user.account.password', required)
+		div.text-right
+			a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
 
-	.modal-footer
-		button.btn.btn-primary.login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
-		button.btn.clear(ng-click='clearForm()', translate='label.clear')
-		button.btn.btn-warning.cancel(ng-click='cancelLogin()', translate='label.cancel')
+		.btn-login-cnt
+			button.btn.btn-login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
+
+		hr.line
+
+		div.text-center
+			.copy &copy; {{ "login.copy" | translate }}
 
 

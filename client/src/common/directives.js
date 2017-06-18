@@ -14,19 +14,16 @@ angular.module('commonDirectives',[])
 		link: function(scope, element){
 			$templateRequest('app/nav-bar.html').then(function(html){
 				var template = angular.element(html);
-				$compile(template)(scope);
-
-				var sideBar = angular.element('<div/>');
-				sideBar.addClass('sidebar');
-				$compile(sideBar)(scope);
 
 				var sideBarNav = angular.element('<div/>');
 				sideBarNav.addClass('sidebar-nav');
-				$compile(sideBarNav)(scope);
+				sideBarNav.html($compile(template)(scope));
 
-				sideBarNav.append(template);
-				sideBar.append(sideBarNav);
-				element.append(sideBar);
+				var sideBar = angular.element('<div/>');
+				sideBar.addClass('sidebar');
+				sideBar.html($compile(sideBarNav)(scope));
+
+				element.html($compile(sideBar)(scope));
 			});
 		}
 	};

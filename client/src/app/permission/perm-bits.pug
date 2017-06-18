@@ -3,18 +3,20 @@ side-bar
 .container
 	logo-bar
 
-	table.table.table-bordered
-		thead
-			tr
-				th Name
-				th.text-center Actions
-		tbody
-			tr(ng-repeat='permBit in permissionBits')
-				td {{ permBit }}
-				td.text-center
-					span.glyphicon.glyphicon-edit
-					span &nbsp;|&nbsp;
-					span.glyphicon.glyphicon-remove-circle
+	.maincolumn
 
-	.text-center
-		a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Permission Bit
+		table.table.table-bordered
+			thead
+				tr
+					th Name
+					th.text-center Actions
+			tbody
+				tr(ng-repeat='permBit in permissionBits')
+					td {{ permBit }}
+					td.text-center
+						span.glyphicon.glyphicon-edit
+						span &nbsp;|&nbsp;
+						span.glyphicon.glyphicon-remove-circle
+
+		.text-center
+			a.btn.btn-success(ui-sref='permissions.create-auth-context') Create Permission Bit

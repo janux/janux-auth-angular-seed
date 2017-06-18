@@ -1,3 +1,50 @@
+.login-toolbar {
+	background-color: @login-toolbar-bg;
+	color: @login-toolbar-color;
+	.rem(height,60);
+
+	.auth-user {
+		color: @header-color;
+		float: left;
+		padding: 5px 20px;
+		.rem(font-size, 18);
+		font-weight: bold;
+		width: 33%;
+
+		.welcome {
+			.rem(font-size, 12);
+			font-weight: normal;
+		}
+
+		.menu {
+			float:left;
+			margin: 10px 20px 0px 0px;
+		}
+	}
+
+	.current-section {
+		display: inline-block;
+		width: 50%;
+		.rem(font-size, 22);
+		padding: 10px 0;
+	}
+
+	.auth {
+		display: inline;
+		float: right;
+		margin-right: 1.38888889%;
+	}
+
+	.auth-status {
+		.rem(margin-top, 15);
+		cursor: pointer;
+		color: @header-color;
+
+		.xs-device({.hide});
+		.small-device({.hide});
+	}
+}
+
 .login-form {
 	background: @login-bg url('/img/janux_logo_outline.png') no-repeat;
 	height: 100%;

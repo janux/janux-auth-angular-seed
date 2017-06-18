@@ -54,7 +54,6 @@ nav {
 }
 
 // Aside Menu style (dropdown)
-
 .modal-open {
   -webkit-transition:all .2s, -webkit-transform .2s;
   transition:all .2s ease-out, -webkit-transform .2s;
@@ -81,12 +80,19 @@ nav {
   }
 }
 
+// Status Toolbar
+.status-toolbar {
+	background: @status-toolbar-bg;
+	border-bottom: 1px solid @status-toolbar-border;
+	.rem(height, 60);
+}
+
 // Sidebar Menu
 
 .sidebar{
 
   .enable-sidebar{
-	border-right: 1px solid @sidebar-border;
+  	border-right: 1px solid @sidebar-border;
 	background-color: @sidebar-bg;
 	width: @sidebar-width;
 	height: 100%;
@@ -95,8 +101,9 @@ nav {
 	overflow: visible;
 	transition: all 0.5s ease;
 	margin:0;
+  	.rem(margin-top, 120);
 
-	.dropdown-text{
+	  .dropdown-text{
 	  display:none;
 	}
   }
@@ -113,8 +120,8 @@ nav {
   .enable-sidebar-nav{
 	display: inherit;
 	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
+	//top: 50%;
+	//transform: translateY(-50%);
 	text-align: center;
 	.glyphicon{
 	  font-size: 2.2rem;
@@ -124,6 +131,7 @@ nav {
 	  .glyphicon{
 		color: @sidebar-active-color;
 	  }
+		background: @green1;
 	}
 	.sidebar-box{
 	  padding: 25px 0;

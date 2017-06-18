@@ -2,12 +2,13 @@ side-bar
 
 .container
 	logo-bar
+	
+	.maincolumn
+		h1 Create Permission Bit
 
-	h1 Create Permission Bit
+		form
+			.form-group
+				label(for='permBitName') Permission name:
+				input#permBitName.form-control(type='text')
 
-	form
-		.form-group
-			label(for='permBitName') Permission name:
-			input#permBitName.form-control(type='text')
-
-		button.btn.btn-success(type='submit') Create Permission
+			button.btn.btn-success(type='submit') Create Permission

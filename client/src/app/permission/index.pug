@@ -3,15 +3,16 @@ side-bar
 .container
 	logo-bar
 
-	h1(translate='permission.title')
+	.maincolumn
+		h1(translate='permission.title')
 
-	.row
-		.col-sm-4
-			h2 Permission Bits
+		.row
+			.col-sm-4
+				h2 Permission Bits
 
-			include perm-bits
+				include perm-bits
 
-		.col-sm-8
-			h2 Authorization Contexts
+			.col-sm-8
+				h2 Authorization Contexts
 
-			include auth-context
+				include auth-context

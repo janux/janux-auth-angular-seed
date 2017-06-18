@@ -3,15 +3,17 @@ side-bar
 .container
 	logo-bar
 
-	h1(translate='user.createUser')
+	.maincolumn
 
-	form
-		.form-group.row
-			label.col-xs-2(for='username') Username
-			input.col-xs-2.form-element(type='text' id='username' ng-model='user.username')
+		h1(translate='user.createUser')
 
-		.form-group.row
-			label.col-xs-2(for='password') Password
-			input.col-xs-2.form-element(type='password' id='password' ng-model='user.password')
+		form
+			.form-group.row
+				label.col-xs-2(for='username') Username
+				input.col-xs-2.form-element(type='text' id='username' ng-model='user.username')
 
-	include user-form
+			.form-group.row
+				label.col-xs-2(for='password') Password
+				input.col-xs-2.form-element(type='password' id='password' ng-model='user.password')
+
+		include user-form

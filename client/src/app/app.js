@@ -134,13 +134,6 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		controller: 'loginController'
 	})
 
-	.state('dashboard', {
-		// default state
-		url: '/dashboard',
-		templateUrl: 'app/dashboard.html',
-		resolve: authenticate
-	})
-
 	.state('goodbye', {
 		url: '/goodbye',
 		templateUrl: 'app/goodbye.html',

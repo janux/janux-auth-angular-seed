@@ -1,0 +1,30 @@
+.status-toolbar
+	.links-column
+		a(href='#') People
+		span.option-break |
+		a.active(href='#') Organizations
+
+	.search-column
+		form.form-inline
+			label Search by:
+			.checkbox
+				label
+					.jx-checkbox
+						input(type='checkbox' id='searchPeople')
+						label(for='searchPeople')
+				| People
+			.checkbox
+				label
+					.jx-checkbox
+						input(type='checkbox' id='searchUsers')
+						label(for='searchUsers')
+				| Users
+			.checkbox
+				label
+					.jx-checkbox
+						input(type='checkbox' id='searchOrgs')
+						label(for='searchOrgs')
+				| Organizations
+			.form-group
+				input(type='text' size='10')
+				img.search(src='/img/search.png')

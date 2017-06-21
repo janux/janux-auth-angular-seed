@@ -82,9 +82,45 @@ nav {
 
 // Status Toolbar
 .status-toolbar {
+	display: -webkit-flex;
+	display: flex;
+	color: @status-toolbar-color;
+	width: 100%;
+	.rem(height, @toolbar-height);
 	background: @status-toolbar-bg;
 	border-bottom: 1px solid @status-toolbar-border;
-	.rem(height, 60);
+
+	.links-column {
+		width: 40%;
+		padding: 20px 20px;
+		font-weight: bold;
+		a {
+			color: @status-toolbar-color;
+			text-decoration: none;
+			font-weight: normal;
+			padding: 0 10px;
+		}
+		a.active {
+			font-weight: bold;
+		}
+		.option-break {
+			font-size:25px; line-height:0;
+		}
+	}
+
+	.search-column {
+		width: 60%;
+		label {
+			font-weight: normal;
+			padding: 5px;
+		}
+		.form-group {
+			padding-bottom:10px;
+		}
+		.checkbox, .search, .form-group  {
+			padding-left: 8px;
+		}
+	}
 }
 
 // Sidebar Menu
@@ -96,14 +132,9 @@ nav {
 	background-color: @sidebar-bg;
 	width: @sidebar-width;
 	height: 100%;
-	position: fixed;
-	clear: both;
-	overflow: visible;
 	transition: all 0.5s ease;
 	margin:0;
-  	.rem(margin-top, 120);
-
-	  .dropdown-text{
+  	.dropdown-text{
 	  display:none;
 	}
   }

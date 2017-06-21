@@ -10,26 +10,25 @@ html, body, section {
 } 
 
 .container {
-	width: auto;
-	margin: 0 auto;
-	overflow: hidden;
+	width:100%;
+    display: -webkit-flex;
+    display: flex;
 	padding: 0;
+	min-height:~"calc(100% - "@toolbar-height~"*2)";
 }
 
 header {
-	display: inline;
-	float: left;
 	width: 100%;
 }
 
 // main column & sidebar
 .maincolumn {
 	padding:0 20px;
-	float:left;
-	width:100%;
+	width: ~"calc(100% - "@sidebar-width~")";
 
-	.sidebar-room{
-		margin-left: @sidebar-width;
+	.sidebar-room {
+		// margin-left: @sidebar-width;
+		width: 100%;
 	}
 
 	.small-device({ .sidebar-room });

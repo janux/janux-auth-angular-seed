@@ -1,48 +1,42 @@
-side-bar
+form
+	.form-group.row
+		label.col-xs-2(for='hp') Honorific prefix
+		input.col-xs-1.form-element(type='text' id='hp' ng-model='user.contact.name.honorificPrefix')
+		label.col-xs-2(for='hs') Honorific suffix
+		input.col-xs-1.form-element(type='text' id='hs' ng-model='user.contact.name.honorificSuffix')
+	.form-group.row
+		label.col-xs-2(for='name') First name
+		input.col-xs-2.form-element(type='text' id='name' ng-model='user.contact.name.first')
+	.form-group.row
+		label.col-xs-2(for='last') Last name
+		input.col-xs-2.form-element(type='text' id='last' ng-model='user.contact.name.last')
 
-.container
-	logo-bar
+	.form-group.row
+		label.col-xs-2(for='email') Email
+		input.col-xs-3.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
 
-	.maincolumn
-		form
-			.form-group.row
-				label.col-xs-2(for='hp') Honorific prefix
-				input.col-xs-1.form-element(type='text' id='hp' ng-model='user.contact.name.honorificPrefix')
-				label.col-xs-2(for='hs') Honorific suffix
-				input.col-xs-1.form-element(type='text' id='hs' ng-model='user.contact.name.honorificSuffix')
-			.form-group.row
-				label.col-xs-2(for='name') First name
-				input.col-xs-2.form-element(type='text' id='name' ng-model='user.contact.name.first')
-			.form-group.row
-				label.col-xs-2(for='last') Last name
-				input.col-xs-2.form-element(type='text' id='last' ng-model='user.contact.name.last')
+	.form-group.row
+		label.col-xs-2(for='phone') Phone number
+		input.col-xs-2.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')
 
-			.form-group.row
-				label.col-xs-2(for='email') Email
-				input.col-xs-3.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
+	h3: u Address
 
-			.form-group.row
-				label.col-xs-2(for='phone') Phone number
-				input.col-xs-2.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')
+	div(ng-init='address = user.contact.postalAddress()')
+		.form-group.row
+			label.col-xs-2(for='line1') Line 1
+			input.col-xs-2.form-element(type='text' id='line1' ng-model='address.line1')
+		.form-group.row
+			label.col-xs-2(for='line2') Line 2
+			input.col-xs-2.form-element(type='text' id='line2' ng-model='address.line2')
+		.form-group.row
+			label.col-xs-1(for='state') State
+			input.col-xs-2.form-element(type='text' id='state' ng-model='address.stateText')
+			label.col-xs-1(for='city') City
+			input.col-xs-2.form-element(type='text' id='city' ng-model='address.cityText')
+		.form-group.row
+			label.col-xs-2(for='pc') Postal Code
+			input.col-xs-1.form-element(type='text' id='pc' ng-model='address.postalCode')
 
-			h3: u Address
-
-			div(ng-init='address = user.contact.postalAddress()')
-				.form-group.row
-					label.col-xs-2(for='line1') Line 1
-					input.col-xs-2.form-element(type='text' id='line1' ng-model='address.line1')
-				.form-group.row
-					label.col-xs-2(for='line2') Line 2
-					input.col-xs-2.form-element(type='text' id='line2' ng-model='address.line2')
-				.form-group.row
-					label.col-xs-1(for='state') State
-					input.col-xs-2.form-element(type='text' id='state' ng-model='address.stateText')
-					label.col-xs-1(for='city') City
-					input.col-xs-2.form-element(type='text' id='city' ng-model='address.cityText')
-				.form-group.row
-					label.col-xs-2(for='pc') Postal Code
-					input.col-xs-1.form-element(type='text' id='pc' ng-model='address.postalCode')
-
-			p.text-center
-				button.btn.btn-danger(type='submit' ng-click='cancel()') Cancel
-				button.btn.btn-success(type='submit' ng-click='save()') Save
+	p.text-center
+		button.btn.btn-danger(type='submit' ng-click='cancel()') Cancel
+		button.btn.btn-success(type='submit' ng-click='save()') Save

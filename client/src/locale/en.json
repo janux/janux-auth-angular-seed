@@ -29,7 +29,7 @@
 		"copy": "2017 Janux Media LTD. Copyright."
 	},
 	"user": {
-		"title": "Users",
+		"title": "People & Organizations",
 	  	"editUser": "Edit user",
 	  	"createUser": "Create user",
 	  	"username": "Username",
@@ -43,6 +43,6 @@
 		"title": "Roles"
 	},
 	"permission": {
-		"title": "Permissions"
+		"title": "Authorization Schema"
 	}
 }

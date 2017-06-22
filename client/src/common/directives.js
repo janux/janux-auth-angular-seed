@@ -1,11 +1,11 @@
 angular.module('commonDirectives',[])
-	
-.directive('logoBar', function() {
-	return {
-		restrict: 'E',
-		templateUrl: 'app/logo-bar.html'
-	};
-})
+
+// .directive('logoBar', function() {
+// 	return {
+// 		restrict: 'E',
+// 		templateUrl: 'app/logo-bar.html'
+// 	};
+// })
 
 .directive('sideBar',['$templateRequest','$compile', function($templateRequest, $compile) {
 	return {

@@ -1,6 +1,8 @@
 'use strict';
 
 require('common/demoService');
+var moment = require('moment');
+var _ = require('lodash');
 
 require('angular').module('appUsers', [
 	'demoService'
@@ -12,9 +14,19 @@ require('angular').module('appUsers', [
 	// List of users
 	.state('users', {
 		url: '/users',
-		templateUrl: 'app/user/users.html',
+		templateUrl: 'app/user/index.html',
 		parent: 'auth-required',
-		controller: require('./users-controller.js')
+		controller: require('./users-controller.js'),
+		resolve: {
+			users: ['userService', function (userService) {
+				return userService.findBy('username', '').then(function(usersMatch) {
+					return  _.map(usersMatch,function(user){
+						user.cdate = moment(user.cdate).format('YYYY-MM-DD HH:mm:ss');
+						return user;
+					});
+				});
+			}]
+		}
 	})
 	// Edit specific user
 	.state('users.create', {

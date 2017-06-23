@@ -5,6 +5,17 @@ include toolbar
 	side-bar
 
 	.maincolumn
-		h1(translate='user.editUser')
 
-		include user-form
+		.title-bar
+			.title {{ 'user.editUser' | translate }}
+			.options
+				a(ng-click='cancel()')
+					img(src='/img/cancel.png')
+					| &nbsp; Cancel
+				a(ng-click='save()')
+					img(src='/img/save.png')
+					| &nbsp; Save
+		hr
+
+		.user-form
+			include user-form

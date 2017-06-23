@@ -1,13 +1,24 @@
 @import "semantic-grid/stylesheets/less/grid.less"; // from bower
+@import "layouts/users";
 
 html, body, section {
 	height: 100%;
-	background-color: @sageLight;
+	background-color: @white;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
-} 
+}
+
+hr {
+	border-top: 2px solid @grey2;
+}
+
+input[type='text'], input[type='password'] {
+	background: white;
+	border:1px solid @grey2;
+	padding:1px;
+}
 
 .container {
 	width:100%;
@@ -25,6 +36,7 @@ header {
 .maincolumn {
 	padding:0 20px;
 	width: ~"calc(100% - "@sidebar-width~")";
+	color: @grey1;
 
 	.sidebar-room {
 		// margin-left: @sidebar-width;
@@ -35,7 +47,33 @@ header {
 	.medium-device({ .sidebar-room });
 	.large-device({ .sidebar-room });
 	.xl-device({ .sidebar-room });
+
+	.title-bar {
+	    display: -webkit-flex;
+        display: flex;
+        color: @green1;
+        padding-top: 15px;
+		.title {
+			.rem(font-size, 20);
+			font-weight: bold;
+			width: 50%;
+		}
+
+		.options {
+			text-align: right;
+			width: 50%;
+			a {
+				color: @green1;
+				cursor:pointer;
+				font-weight: bold;
+				padding-left:15px;
+				text-decoration: none;
+			}
+		}
+	}
 }
 
 .show{  display: inline;  }
 .hide{  display: none;  }
+
+

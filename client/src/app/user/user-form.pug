@@ -1,42 +1,44 @@
-form
-	.form-group.row
-		label.col-xs-2(for='hp') Honorific prefix
-		input.col-xs-1.form-element(type='text' id='hp' ng-model='user.contact.name.honorificPrefix')
-		label.col-xs-2(for='hs') Honorific suffix
-		input.col-xs-1.form-element(type='text' id='hs' ng-model='user.contact.name.honorificSuffix')
-	.form-group.row
-		label.col-xs-2(for='name') First name
-		input.col-xs-2.form-element(type='text' id='name' ng-model='user.contact.name.first')
-	.form-group.row
-		label.col-xs-2(for='last') Last name
-		input.col-xs-2.form-element(type='text' id='last' ng-model='user.contact.name.last')
+.data(ng-init='address = user.contact.postalAddress()')
+	h3 Data
 
-	.form-group.row
-		label.col-xs-2(for='email') Email
-		input.col-xs-3.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
+	table
+		tr
+			td: label(for='line1') Line 1
+			td: input.form-element(type='text' id='line1' ng-model='address.line1')
+		tr
+			td: label(for='line2') Line 2
+			td: input.form-element(type='text' id='line2' ng-model='address.line2')
+		tr
+			td: label(for='state') State
+			td: input.form-element(type='text' id='state' ng-model='address.stateText')
+		tr
+			td: label(for='city') City
+			td: input.form-element(type='text' id='city' ng-model='address.cityText')
+		tr
+			td: label(for='pc') Postal Code
+			td: input.form-element(type='text' id='pc' ng-model='address.postalCode')
 
-	.form-group.row
-		label.col-xs-2(for='phone') Phone number
-		input.col-xs-2.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')
+.contact
+	h3 Contact
 
-	h3: u Address
+	table
+		tr
+			td: label(for='hp') Honorific prefix
+			td: input.form-element(type='text' id='hp' ng-model='user.contact.name.honorificPrefix')
+		tr
+			td: label(for='hs') Honorific suffix
+			td: input.form-element(type='text' id='hs' ng-model='user.contact.name.honorificSuffix')
+		tr
+			td: label(for='name') First name
+			td: input.form-element(type='text' id='name' ng-model='user.contact.name.first')
+		tr
+			td: label(for='last') Last name
+			td: input.form-element(type='text' id='last' ng-model='user.contact.name.last')
 
-	div(ng-init='address = user.contact.postalAddress()')
-		.form-group.row
-			label.col-xs-2(for='line1') Line 1
-			input.col-xs-2.form-element(type='text' id='line1' ng-model='address.line1')
-		.form-group.row
-			label.col-xs-2(for='line2') Line 2
-			input.col-xs-2.form-element(type='text' id='line2' ng-model='address.line2')
-		.form-group.row
-			label.col-xs-1(for='state') State
-			input.col-xs-2.form-element(type='text' id='state' ng-model='address.stateText')
-			label.col-xs-1(for='city') City
-			input.col-xs-2.form-element(type='text' id='city' ng-model='address.cityText')
-		.form-group.row
-			label.col-xs-2(for='pc') Postal Code
-			input.col-xs-1.form-element(type='text' id='pc' ng-model='address.postalCode')
+		tr
+			td: label(for='email') Email
+			td: input.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
 
-	p.text-center
-		button.btn.btn-danger(type='submit' ng-click='cancel()') Cancel
-		button.btn.btn-success(type='submit' ng-click='save()') Save
+		tr
+			td: label(for='phone') Phone number
+			td: input.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')

@@ -6,7 +6,8 @@
 		"login":    "Log In",
 		"logout":   "Sign Out",
 		"password": "Password:",
-		"people":   "people",
+		"people":   "People",
+		"organizations": "Organizations",
 		"username": "User:",
 	  	"search":	"Search"
 	},
@@ -33,11 +34,12 @@
 	  	"editUser": "Edit user",
 	  	"createUser": "Create user",
 	  	"username": "Username",
-	  	"displayName": "Display Name",
+	  	"displayName": "Name",
 	  	"role": "Role",
 	  	"email": "Email",
 	  	"edit": "Edit",
-	  	"delete": "Delete"
+	  	"delete": "Delete",
+		"creation": "Creation"
 	},
 	"role": {
 		"title": "Roles"

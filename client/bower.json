@@ -13,7 +13,8 @@
 		"jquery":            "1.11.1",
 		"normalize.css":     "3.0.0",
 		"semantic-grid":     "*",
-        "js-md5": "md5#^0.4.1"
+        "js-md5": 			 "md5#^0.4.1",
+		"moment": 			 "2.9.0"
 	},
 	"resolutions": {
 		"angular": "1.5.3"

@@ -4,15 +4,9 @@ include toolbar
 .container
 	side-bar
 	.maincolumn
-		h1(translate='permission.title')
 
-		.row
-			.col-sm-4
-				h2 Permission Bits
+		.title-bar
+			.title {{ 'permission.authContexts' | translate }}
+		hr
 
-				include perm-bits
-
-			.col-sm-8
-				h2 Authorization Contexts
-
-				include auth-context
+		include auth-context

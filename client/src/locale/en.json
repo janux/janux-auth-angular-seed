@@ -45,6 +45,8 @@
 		"title": "Roles"
 	},
 	"permission": {
-		"title": "Authorization Schema"
+		"title": "Authorization Schema",
+		"authContexts": "Authorization Contexts",
+		"createContext": "Create Authorization Context"
 	}
 }

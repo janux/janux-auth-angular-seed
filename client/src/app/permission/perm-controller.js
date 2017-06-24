@@ -1,10 +1,9 @@
 'use strict';
 
 module.exports = [
-'$scope','permissionBits','authContexts', function(
- $scope , permissionBits , authContexts) {
+'$scope','authContexts', function(
+ $scope , authContexts) {
 
 		$scope.authContexts =  authContexts;
-		$scope.permissionBits = permissionBits;
-
+		console.log('permissionBits', authContexts);
 }];

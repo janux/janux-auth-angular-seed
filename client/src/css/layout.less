@@ -1,5 +1,6 @@
 @import "semantic-grid/stylesheets/less/grid.less"; // from bower
 @import "layouts/users";
+@import "layouts/permission";
 
 html, body, section {
 	height: 100%;
@@ -30,6 +31,17 @@ input[type='text'], input[type='password'] {
 
 header {
 	width: 100%;
+}
+
+a.link {
+	text-decoration: none;
+
+	&.primary { color:@green2; }
+	&.secondary { color:@grey1; padding-left:10px; }
+
+	img {
+		padding-right:10px;
+	}
 }
 
 // main column & sidebar

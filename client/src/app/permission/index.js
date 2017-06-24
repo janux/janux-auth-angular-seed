@@ -2,6 +2,8 @@
 
 require('common/demoService');
 
+var _ = require('lodash');
+
 require('angular').module('appPermissions', [
 	'demoService'
 ])
@@ -16,11 +18,13 @@ require('angular').module('appPermissions', [
 			parent: 'auth-required',
 			controller: require('./perm-controller.js'),
 			resolve: {
-				permissionBits: ['authService', function(authService){
-					return authService.loadPermissionBits();
-				}],
+				// permissionBits: ['authService', function(authService){
+				// 	return authService.loadPermissionBits();
+				// }],
 				authContexts: ['authService', function(authService){
-					return authService.loadAuthorizationContexts();
+					return authService.loadAuthorizationContexts().then(function (response) {
+						return _.values(response);
+					});
 				}]
 			}
 		})
@@ -38,9 +42,9 @@ require('angular').module('appPermissions', [
 		.state('permissions.create-perm-bit', {
 			url: '/permissions/create-permission-bit',
 			templateUrl: 'app/permission/create-perm-bit.html',
-			parent: 'auth-required',
-			controller: ['$scope', function($scope){
-
-			}]
+			parent: 'auth-required'
+			// controller: ['$scope', function($scope){
+			//
+			// }]
 		});
 }]);

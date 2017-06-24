@@ -1,0 +1,72 @@
+/**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+.drag-n-drop ul[dnd-list],
+.drag-n-drop ul[dnd-list] > li {
+	position: relative;
+}
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.drag-n-drop ul[dnd-list] {
+	min-height: 42px;
+	padding-left: 0px;
+}
+
+/**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+.drag-n-drop ul[dnd-list] .dndDraggingSource {
+	display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+.drag-n-drop ul[dnd-list] .dndPlaceholder {
+	display: block;
+	background-color: @dnd-dragging-bg;
+	min-height: 42px;
+}
+
+/**
+ * The dnd-lists's child elements currently MUST have
+ * position: relative. Otherwise we can not determine
+ * whether the mouse pointer is in the upper or lower
+ * half of the element we are dragging over. In other
+ * browsers we can use event.offsetY for this.
+ */
+.drag-n-drop ul[dnd-list] li {
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	display: block;
+	padding: 1px 10px;
+	margin-bottom: -1px;
+}
+
+/**
+ * Show selected elements
+ */
+.drag-n-drop ul[dnd-list] li.selected {
+	background-color: @dnd-selected-bg;
+	color: @dnd-selected-color;
+}
+
+.drag-n-drop ul[dnd-list] li .element {
+	margin: 3px;
+	background: url('/img/drag_handle.png') no-repeat @dnd-bg;
+	background-position: 5px center;
+	border: 1px solid @dnd-border-color;
+	padding: 5px 10px 5px 25px;
+	color: @dnd-color;
+}

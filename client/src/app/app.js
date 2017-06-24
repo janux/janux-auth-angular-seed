@@ -6,6 +6,8 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('drag-and-drop-lists');
+require('drag-drop-mobile');
 require('common/config');
 require('common/jsonrpc');
 require('common/jnxSecurity');
@@ -20,6 +22,7 @@ angular.module('MyApp',[
 	'ngAside',
 	'jnxSecurity',
 	'pascalprecht.translate',
+	'dndLists',
 	'commonDirectives',
 	'demoService',
 	'appUsers',

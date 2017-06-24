@@ -64,6 +64,8 @@
 		"lodash":             "./node_modules/lodash/index.js",
 		"md5":             	  "./bower/js-md5/src/md5.js",
 		"moment":             "./bower/moment/moment.js",
+		"drag-and-drop-lists":"./bower/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js",
+		"drag-drop-mobile":   "./vendor/drag-drop-webkit-mobile/ios-drag-drop.js",
 		"janux-security":     "./node_modules/janux-security/index.js",
 	  	"janux-people":		  "./node_modules/janux-people.js/index.js",
 		"common/config":      "./src/common/config.js",

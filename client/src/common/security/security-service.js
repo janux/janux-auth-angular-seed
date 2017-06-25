@@ -7,8 +7,8 @@ var
 ;
 
 module.exports = 
-       ['$modal','$http','$location','$q','retryQueue',
-function($modal , $http , $location , $q , retryQueue) {
+       ['$modal','$http','$location','$q','retryQueue','$state',
+function($modal , $http , $location , $q , retryQueue , $state) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -93,7 +93,8 @@ function($modal , $http , $location , $q , retryQueue) {
 		 * Display the login modal
 		 */
 		showLogin: function() {
-			openLoginDialog();
+			// openLoginDialog();
+			$state.go('login');
 		},
 
 		/**

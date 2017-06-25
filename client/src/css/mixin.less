@@ -55,3 +55,14 @@
 .text-border(@color: black) {
 	text-shadow: 1px 0 1px @color, -1px 0 1px @color, 0 1px 1px @color, 0 -1px 1px @color;
 }
+
+//
+// Vertical center
+//
+.vertical-align(@position: relative) {
+	position: @position;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}

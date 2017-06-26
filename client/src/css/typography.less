@@ -21,8 +21,13 @@
 .woff-font(DroidSerif, bold,   normal, @font-path, DroidSerif-Bold);
 .woff-font(DroidSerif, bold,   italic, @font-path, DroidSerif-BoldItalic);
 
+.woff-font(AvenirNext, normal, normal, @font-path, AvenirNextLTPro-Regular);
+.woff-font(AvenirNext, bold, normal, @font-path, AvenirNextLTPro-Bold);
+.woff-font(AvenirNext, normal, italic, @font-path, AvenirNextLTPro-It);
+
 @font-sans:  'OpenSans';
 @font-serif: 'DroidSerif';
+@font-avenir: 'AvenirNext';
 
 
 html {
@@ -40,7 +45,7 @@ html {
 }
 
 body {
-	font-family: @font-sans, sans-serif;
+	font-family: @font-avenir, sans-serif;
 
 	//
 	// This yields the css line:
@@ -54,7 +59,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: @font-sans, sans-serif;
+	font-family: @font-avenir, sans-serif;
 }
 
 h1 {

@@ -110,7 +110,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	.state('home', {
 		url: '/',
 
-		templateUrl: '',
+		template: '',
 
 		resolve: {
 			currentUser: ['security', function(security) {

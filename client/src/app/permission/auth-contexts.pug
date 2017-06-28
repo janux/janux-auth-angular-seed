@@ -1,0 +1,27 @@
+.maincolumn
+
+	.drag-n-drop
+		ul(dnd-list='authContexts')
+			li.auth-context(ng-repeat='authContext in authContexts',
+			dnd-draggable='authContext',
+			dnd-moved='authContexts.splice($index, 1)',
+			dnd-effect-allowed='move')
+				.element
+					table
+						tr
+							td.name {{ authContext.name }}
+							td.bits
+								span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
+							td.options
+								img(src='/img/edit.png')
+								| &nbsp;&nbsp;
+								img(src='/img/delete.png')
+
+	.text-left
+		a.link.secondary(ui-sref='permissions.create-auth-context')
+			img(src='/img/add.png')
+			| Add Authorization Context
+		p
+			a.link.primary(ui-sref='permissions.create-display-group')
+				img(src='/img/add.png')
+				| Add Display Group

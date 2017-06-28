@@ -7,7 +7,7 @@
 		"angular-mocks":     "1.4.x",
 		"angular-translate": "2.5.2",
 		"angular-translate-loader-static-files": "2.5.2",
-		"angular-ui-router": "0.2.11",
+		"angular-ui-router": "0.2.13",
 		"angular-aside":     "1.2.x",
 		"bootstrap":         "3.3.4",
 		"jquery":            "1.11.1",

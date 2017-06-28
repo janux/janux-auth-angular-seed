@@ -1,16 +1,16 @@
 'use strict';
 
-// var _ = require('lodash');
+var _ = require('lodash');
 // var AuthorizationContext = require('janux-security').AuthorizationContext;
 
 module.exports = [
-	    '$scope','permissionBits',
-function($scope, permissionBits){
+	'$scope','authContext',
+function($scope, authContext){
 
-	console.log('permissionBits', permissionBits);
+	console.log('authContext', authContext);
 
-	$scope.permissionBits = permissionBits;
-	$scope.contextName = '';
+	$scope.permissionBits = _.keys(authContext.bit);
+	$scope.contextName = authContext.name;
 	$scope.contextDesc = '';
 	$scope.contextGroup = '';
 
@@ -24,7 +24,7 @@ function($scope, permissionBits){
 			if($scope.permissionBits.length > 0){
 				// var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, selBits);
 
-				// TODO: Implement functionality to save an authorization context
+				// TODO: Implement functionality to save an authorization context by name or id
 			}else{
 				console.error('Select at least one permission bit in order to create an authorization context');
 			}

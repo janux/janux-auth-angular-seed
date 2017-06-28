@@ -29,6 +29,18 @@ function( $q ,  $http){
 			).then(function(resp) {
 				return resp.data.result;
 			});
+		},
+
+		loadAuthorizationContextByName: function(contextName)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadAuthorizationContextByName',
+				[ contextName ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

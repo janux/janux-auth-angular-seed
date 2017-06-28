@@ -5,5 +5,5 @@ module.exports = [
  $scope , authContexts) {
 
 		$scope.authContexts =  authContexts;
-		console.log('permissionBits', authContexts);
+		console.log('authContexts', authContexts);
 }];

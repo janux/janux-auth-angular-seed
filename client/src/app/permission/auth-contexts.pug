@@ -13,7 +13,8 @@
 							td.bits
 								span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
 							td.options
-								img(src='/img/edit.png')
+								a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
+									img(src='/img/edit.png')
 								| &nbsp;&nbsp;
 								img(src='/img/delete.png')
 

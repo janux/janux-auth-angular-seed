@@ -6,8 +6,8 @@ var mongoose = require('mongoose');
 // App Data Models Definition
 //
 
-module.exports = function(app){
-	
+/*module.exports = function(app){
+
 	var users = new mongoose.Schema({
 		userId : String,
 		username : String,
@@ -20,6 +20,6 @@ module.exports = function(app){
 	},{ collection: 'users' });
 
 	app.model('users', users);
-	
+
 	return app;
-};
+};*/

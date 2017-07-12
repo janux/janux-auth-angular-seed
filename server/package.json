@@ -14,6 +14,7 @@
     "express-session": "1.13.0",
     "janux-people": "file:vendor/janux-people.js",
     "janux-security": "file:vendor/janux-security",
+    "janux-persistence": "file:vendor/janux-persistence",
     "lodash": "4.9.0",
     "log4js": "0.6.14",
     "method-override": "2.3.5",
@@ -34,6 +35,6 @@
     "should": "7.0.1"
   },
   "scripts": {
-    "generate-demo-users": "node node_modules/janux-people.js/demo/Generate.js"
+    "generate-demo-users": "node node_modules/janux-persistence/dist/util/user-generator/user-generator-script.js"
   }
 }

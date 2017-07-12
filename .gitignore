@@ -6,3 +6,5 @@ bower
 .idea
 janux-people.db
 server/vendor/janux-*
+/client/client.iml
+/server/server.iml

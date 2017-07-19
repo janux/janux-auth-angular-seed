@@ -55,7 +55,7 @@ var service = {
 
 		service.findByAccountName(username, function (err, user) {
 			if (err) {
-				return done(err);
+				return done(null, false, { message:err});
 			} else if (_.isObject(user) && user.password === md5(password)) {
 
 				user.roles = _.map(user.roles, function (role) {

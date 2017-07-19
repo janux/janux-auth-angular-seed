@@ -103,15 +103,19 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 		login: function(username, password) {
 			var request = $http.post('/login', { username: username, password: password});
 			return request.then(function(response) {
+				var user = response.data.user;
 				console.debug('login resp:', JSON.stringify(response));
-				service.currentUser = hydrateRoles(response.data.user);
-				service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
+
+				if(user){
+					service.currentUser = hydrateRoles(response.data.user);
+					service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
+				}
 
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
 					// if we are logging in from the goodbye page, 
 					// redirect to the dashboard
-					if ($location.path() === '/goodbye') redirect('/');
+					// if ($location.path() === '/goodbye') redirect('/');
 				}
 				return service.isAuthenticated();
 			});
@@ -127,11 +131,11 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 		},
 
 		logout: function(redirectTo) {
-			var redirectTo = redirectTo || '/goodbye';
+			var redirectTo = redirectTo || 'login';
 			$http.post('/logout').then(function(resp) {
 				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;
-				redirect(redirectTo);
+				$state.go(redirectTo, {goodbye:true});
 			});
 		},
 

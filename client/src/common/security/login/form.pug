@@ -11,7 +11,7 @@ form.login-form(name='form', novalidate)
 			hr.line
 
 		.alert.alert-warning(ng-show='authReason') {{authReason}}
-		.alert.alert-error(ng-show='authError') {{authError}}
+		.alert.alert-danger(ng-show='authError') {{authError}}
 		//.alert.alert-info(translate='login.msg.enterCredentials')
 
 		.login-lbl

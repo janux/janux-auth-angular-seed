@@ -7,8 +7,8 @@ require('angular-translate-loader-static-files');
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
 // 
 module.exports =
-       ['$scope','security','$translate','$state','config',
-function($scope , security , $translate , $state , config) {
+       ['$scope','security','$translate','$state','config','$stateParams',
+function($scope , security , $translate , $state , config , $stateParams) {
 	// The model for this form 
 	$scope.user = {
 		account: {},
@@ -36,6 +36,12 @@ function($scope , security , $translate , $state , config) {
 		})
 	}
 
+	if($stateParams.goodbye) {
+		$translate('login.msg.goodbye').then( function(msg) {
+			$scope.authReason = msg;
+		});
+	}
+
 	// Attempt to authenticate the user specified in the form's model
 	$scope.login = function() {
 		console.log('login controller');
@@ -48,6 +54,7 @@ function($scope , security , $translate , $state , config) {
 				// If we get here then the login failed due to bad credentials
 				$translate('login.error.invalidCredentials').then( function(msg) {
 					$scope.authError = msg;
+					$scope.authReason= null;
 				});
 			}
 			else if ($state.current.name === 'login') {
@@ -57,6 +64,7 @@ function($scope , security , $translate , $state , config) {
 			// If we get here then there was a problem with the login request to the server
 			$translate('login.error.serverError').then( function(msg) {
 				$scope.authError = msg;
+				$scope.authReason= null;
 			});
 
 			// If we want to interpolate a variable:

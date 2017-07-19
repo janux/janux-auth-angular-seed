@@ -17,7 +17,7 @@
 	"login": {
 		"msg": {
 			"enterCredentials": "Please enter your login credentials",
-			"goodbye":          "You have been signed out, see you soon!",
+			"goodbye":          "You have been signed out",
 			"notAuthorized":    "You are not authorized to perform this operation",
 			"notAuthenticated": "This area requires you to be signed-in"
 		},

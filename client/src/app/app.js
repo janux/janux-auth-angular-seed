@@ -129,17 +129,12 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	})
 
 	.state('login', {
-		url: '/login',
+		url: '/login/{goodbye}',
 		templateUrl: 'common/security/login/form.html',
 		resolve: {
 			isModal: function() { return false;}
 		},
 		controller: 'loginController'
-	})
-
-	.state('goodbye', {
-		url: '/goodbye',
-		templateUrl: 'app/goodbye.html',
 	})
 
 	.state('roles', {

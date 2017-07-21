@@ -11,7 +11,7 @@ module.exports = {
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false
 		},
-
+		//Daos to be used by the services.
 		accountDao: 'accountDaoLokijs',
 		partyDao: 'partyDaoLokijs',
 		authDAO: 'authDAO',
@@ -24,10 +24,13 @@ module.exports = {
 		// janux-persistence settings
 		db: {
 			//Default db engine to use for user generator.
+			//Because this setting is not used for the daos. Just make use
+			//the db you are going to use for user generation is the same
+			//for the daos.
 			dbEngine: "lokijs",
-			//If mongodb is chosen. You must define the connection url.
+			//If mongodb is chosen for user generation and daos, you must define the connection url.
 			mongoConnUrl: "mongodb://localhost/janux-persistence-dev",
-			//If lokijs is defined you must define the path of the file database.
+			//If lokijs is defined for user generation and daos, you must define the path of the file database.
 			lokiJsDBPath: "../server/janux-people.db"
 		}
 	}

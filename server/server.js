@@ -3,13 +3,13 @@
 /**
  * This is the main run script that configures and starts the express server
  */
-var _            = require('lodash'),
+var _              = require('lodash'),
 	express        = require('express'),
 	cookieParser   = require('cookie-parser'),
-	bodyParser 	   = require('body-parser'),
+	bodyParser     = require('body-parser'),
 	methodOverride = require('method-override'),
 	serveFavicon   = require('serve-favicon'),
-	session  	     = require('express-session'),
+	session        = require('express-session'),
 	errorHandler   = require('errorhandler'),
 	livereload     = require('connect-livereload'),
 	// flash         = require('connect-flash'),
@@ -23,9 +23,7 @@ var
 	passport     = appContext.passport
 ;
 
-var JanuxPersistence = require('janux-persistence');
-
-// Logging config is done via 'config' package in config/default.js via property config.log4js; 
+// Logging config is done via 'config' package in config/default.js via property config.log4js;
 // it is also being initialized programmatically in app-context.js
 var log = log4js.getLogger('Server');
 
@@ -47,7 +45,7 @@ app.use(cookieParser('lucy in the sky'));
 // app.use(express.cookieSession());
 
 app.use(methodOverride());
-app.use(session( {
+app.use(session({
 	secret: 'lucy in the sky',
 	resave: true,
 	saveUninitialized: true
@@ -55,7 +53,7 @@ app.use(session( {
 
 // serve static assets from '/static' context path
 var staticUrl = appContext.server.staticUrl;
-if (_.isString(staticUrl) && staticUrl.length > 0 ) {
+if (_.isString(staticUrl) && staticUrl.length > 0) {
 	app.use(appContext.server.staticUrl, express.static(appContext.server.distFolder));
 } else {
 	app.use(express.static(appContext.server.distFolder));
@@ -78,28 +76,18 @@ app.use(passport.session()); // supports persistent login sessions
 require('./route')(app);
 
 // standard error handler, catches unhandled errors and returns a nicely formatted 500 error
-app.use(errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(errorHandler({dumpExceptions: true, showStack: true}));
 
 // Start server
 var server = http.createServer(app);
-server.on('error', function() {
-	console.log("Error on express server port '%s': %j", app.get('port'), arguments); 
+server.on('error', function () {
+	console.log("Error on express server port '%s': %j", app.get('port'), arguments);
 });
 
-server.on('listening', function() {
+server.on('listening', function () {
 	console.log("janux-auth-seed listening on port '%d' in '%s' mode", this.address().port, app.settings.env);
 });
 
 server.listen(app.get('port'));
 
 log.trace('app.routes: ', app.routes);
-
-log.info("Starting janux-persistence module");
-var path = appContext.db.dbEngine === JanuxPersistence.BootstrapService.LOKIJS ? appContext.db.lokiJsDBPath : appContext.db.mongoConnUrl;
-JanuxPersistence.BootstrapService.start(appContext.db.dbEngine, path)
-	.then(function () {
-		log.info("Janux-persistence started");
-	})
-	.catch(function (err) {
-		log.error("There was an error starting janux-persistence: %j", err);
-	});

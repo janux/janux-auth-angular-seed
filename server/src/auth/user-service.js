@@ -1,16 +1,14 @@
 'user strict';
 
 var
-	_     = require('underscore'),
+	_           = require('underscore'),
 	// Q    = require('q'),
-	Promise  = require('bluebird'),
-	log4js = require('log4js'),
-	util = require('util'),
-	md5 = require('MD5'),
-	AuthService = require('../api/index').AuthService; // require('./authorization-service'),
-
-var log = log4js.getLogger('Auth UserService');
-var UserService = require('janux-persistence').UserService;
+	log4js      = require('log4js'),
+	util        = require('util'),
+	md5         = require('MD5'),
+	AuthService = require('../api/index').AuthService,
+	UserPersistenceService = require('../api/index').UserPersistenceService,
+	log         = log4js.getLogger('Auth UserService');
 
 var service = {
 
@@ -18,7 +16,7 @@ var service = {
 		// log.debug('calling findByOid with oid: '%s'',oid);
 		'use strict';
 
-		UserService.findOneByUserId(oid)
+		UserPersistenceService.findOneByUserId(oid)
 			.then(function (result) {
 				done(null, result);
 			}, function (err) {
@@ -35,7 +33,7 @@ var service = {
 		'use strict';
 		log.debug('looking up account with name "%s"', username);
 
-		UserService.findOneByUserName(username)
+		UserPersistenceService.findOneByUserName(username)
 			.then(function (result) {
 				done(null, result);
 			}, function (err) {
@@ -55,15 +53,15 @@ var service = {
 	authenticate: function authenticate(username, password, done) {
 		'use strict';
 
-		service.findByAccountName(username, function(err, user) {
+		service.findByAccountName(username, function (err, user) {
 			if (err) {
 				return done(err);
 			} else if (_.isObject(user) && user.password === md5(password)) {
 
-				user.roles = _.map(user.roles, function(role){
+				user.roles = _.map(user.roles, function (role) {
 					return AuthService.loadRoleByName(role)
 				});
-				Promise.all(user.roles).then(function(roles){
+				Promise.all(user.roles).then(function (roles) {
 					user.roles = roles;
 					return done(null, user);
 				});
@@ -75,7 +73,7 @@ var service = {
 			} else {
 				var msg = util.format('Invalid username/password supplied by "%s"', username);
 				log.warn(msg);
-				return done(null, false, { message: msg });  // return 'false' for failure to authenticate (rather than a null user)
+				return done(null, false, {message: msg});  // return 'false' for failure to authenticate (rather than a null user)
 			}
 		});
 	}

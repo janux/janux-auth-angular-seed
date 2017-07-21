@@ -12,8 +12,8 @@ module.exports = {
 			livereload: false
 		},
 
-		//mongoString: 'mongodb://authseed:b1gM0n3y@localhost/authseed',
-		//userDAO: 'userDAOLoki',
+		accountDao: 'accountDaoLokijs',
+		partyDao: 'partyDaoLokijs',
 		authDAO: 'authDAO',
 
 		log4js: {

@@ -1,84 +1,84 @@
 'user strict';
 
-var log4js = require('log4js'),
-    _ = require('underscore'),
-    lodash = require('lodash'),
-    log = log4js.getLogger('UserService');
-
-var UserServicePersistence = require('janux-persistence').UserService;
+var log4js      = require('log4js'),
+    _           = require('underscore'),
+    lodash      = require('lodash'),
+    log         = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
-
+var userServicePersistence = undefined;
 //
 // Example of user service
 //
 
-var createInstance = function (userDAO) {
+var createInstance = function (serviceReference) {
 
-    // Constructor
-    function UserService() {
-        //userDAO.call(this);
-    }
+	userServicePersistence = serviceReference;
 
-    UserService.prototype = Object.create(null);
-    UserService.prototype.constructor = UserService;
+	// Constructor
+	function UserService() {
+		//userDAO.call(this);
+	}
 
-    //
-    // Specific methods of user service
-    //
+	UserService.prototype = Object.create(null);
+	UserService.prototype.constructor = UserService;
 
-    // Find records depending on a particular field
-    UserService.prototype.findBy = function (field, search, callback) {
-        log.info("Call to findBy with field: %j ,search: %j ", field, search);
-        switch (field) {
-            case 'username':
-                return UserServicePersistence.findAllByUserNameMatch(search).asCallback(callback);
-                break;
-            case 'name':
-                return UserServicePersistence.findAllByContactNameMatch(search).asCallback(callback);
-                break;
-            case 'email':
-                return UserServicePersistence.findAllByEmail(search).asCallback(callback);
-                break;
-            case 'phone':
-                return UserServicePersistence.findAllByPhone(search).asCallback(callback);
-                break;
-        }
-    };
+	//
+	// Specific methods of user service
+	//
 
-    UserService.prototype.findById = function (userId, callback) {
-        return UserServicePersistence.findOneByUserId(userId).asCallback(callback);
-    };
+	// Find records depending on a particular field
+	UserService.prototype.findBy = function (field, search, callback) {
+		log.info("Call to findBy with field: %j ,search: %j ", field, search);
+		switch (field) {
+			case 'username':
+				return userServicePersistence.findAllByUserNameMatch(search).asCallback(callback);
+				break;
+			case 'name':
+				return userServicePersistence.findAllByContactNameMatch(search).asCallback(callback);
+				break;
+			case 'email':
+				return userServicePersistence.findAllByEmail(search).asCallback(callback);
+				break;
+			case 'phone':
+				return userServicePersistence.findAllByPhone(search).asCallback(callback);
+				break;
+		}
+	};
 
-    // Override the method to save users
-    UserService.prototype.saveOrUpdate = function (aUserObj, callback) {
+	UserService.prototype.findById = function (userId, callback) {
+		return userServicePersistence.findOneByUserId(userId).asCallback(callback);
+	};
+
+	// Override the method to save users
+	UserService.prototype.saveOrUpdate = function (aUserObj, callback) {
 
 
-        //
-        // If the user's role has been loaded, we ensure that only the name is stored back
-        //
-        // aUserObj.roles = _.map(aUserObj.roles, function (role) {
-        //     return (typeof role.name !== 'undefined') ? role.name : role;
-        // });
-        //
-        // return userDAO.prototype.saveOrUpdate.call(this, aUserObj).asCallback(callback);
-        return UserServicePersistence.saveOrUpdate(aUserObj).asCallback(callback);
+		//
+		// If the user's role has been loaded, we ensure that only the name is stored back
+		//
+		// aUserObj.roles = _.map(aUserObj.roles, function (role) {
+		//     return (typeof role.name !== 'undefined') ? role.name : role;
+		// });
+		//
+		// return userDAO.prototype.saveOrUpdate.call(this, aUserObj).asCallback(callback);
+		return userServicePersistence.saveOrUpdate(aUserObj).asCallback(callback);
 
-    };
+	};
 
-    UserService.prototype.deleteUser = function (userId, callback) {
-        return UserServicePersistence.deleteUserByUserId(userId).asCallback(callback);
-    };
+	UserService.prototype.deleteUser = function (userId, callback) {
+		return userServicePersistence.deleteUserByUserId(userId).asCallback(callback);
+	};
 
-    return new UserService();
+	return new UserService();
 };
 
 module.exports.create = function (UserDAO) {
-    // if the instance does not exist, create it
-    if (!_.isObject(userServiceInstance)) {
-        // userServiceInstance = new UserService(aDAO);
-        userServiceInstance = createInstance(UserDAO);
-    }
-    return userServiceInstance;
+	// if the instance does not exist, create it
+	if (!_.isObject(userServiceInstance)) {
+		// userServiceInstance = new UserService(aDAO);
+		userServiceInstance = createInstance(UserDAO);
+	}
+	return userServiceInstance;
 };

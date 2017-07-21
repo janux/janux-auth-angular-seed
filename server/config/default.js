@@ -23,7 +23,7 @@ module.exports = {
 
 		// janux-persistence settings
 		db: {
-			//Default db engine to use. Could be "mongodb" or "lokijs"
+			//Default db engine to use for user generator.
 			dbEngine: "lokijs",
 			//If mongodb is chosen. You must define the connection url.
 			mongoConnUrl: "mongodb://localhost/janux-persistence-dev",

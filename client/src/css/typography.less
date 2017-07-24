@@ -1,8 +1,8 @@
 @import "variable";
 @import "mixin";
 
-.font-face('Base9_SmallCaps');
-// @import url('http://fonts.googleapis.com/css?family=Radley:400,400italic');
+
+.woff-font(Base9-SmallCaps, normal, normal, @font-path, Base9-SmallCaps);
 
 .woff-font(OpenSans, normal, normal, @font-path, OpenSans-Regular);
 .woff-font(OpenSans, normal, italic, @font-path, OpenSans-Italic);
@@ -120,7 +120,7 @@ nav {
 
 
 .branding {
-	font-family: Base9_SmallCaps;
+	font-family: Base9-SmallCaps;
 	font-weight:normal;
 	.rem(font-size, 28);
 	.rem(letter-spacing, 2.8);

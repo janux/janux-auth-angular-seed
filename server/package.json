@@ -1,8 +1,7 @@
 {
-  "name": "janux-auth-seed-server",
-  "version": "0.1.02",
+  "name": "janux-demo-server",
+  "version": "0.1.00",
   "private": true,
-  "description": "Back-end to support janux auth seed angular front-end",
   "dependencies": {
     "MD5": "1.3.0",
     "bluebird": "2.9.15",

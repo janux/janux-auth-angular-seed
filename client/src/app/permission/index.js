@@ -39,8 +39,10 @@ require('angular').module('appPermissions', [
 			url: '/permissions/create-permission-bit',
 			templateUrl: 'app/permission/create-perm-bit.html',
 			parent: 'auth-required',
+			/*
 			controller: ['$scope', function($scope){
 
 			}]
+			*/
 		});
 }]);

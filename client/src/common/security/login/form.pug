@@ -4,11 +4,18 @@ form.login-form(name='form', novalidate)
 
 		img.logo(src='/img/janux_logo.png')
 		.brand
-			span.janux JANUX
+			span.janux janux
 		.brand
-			span.crm CRM
+			span.people people
 		.brand
 			hr.line
+
+		div
+			p Use one of the following user/password credentials to login:
+			ul
+				li widget/test1
+				li manager/test2
+				li admin/1234567
 
 		.alert.alert-warning(ng-show='authReason') {{authReason}}
 		.alert.alert-danger(ng-show='authError') {{authError}}
@@ -32,5 +39,3 @@ form.login-form(name='form', novalidate)
 
 		div.text-center
 			.copy &copy; {{ "login.copy" | translate }}
-
-

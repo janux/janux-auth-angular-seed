@@ -1,50 +1,3 @@
-.login-toolbar {
-	background-color: @login-toolbar-bg;
-	color: @login-toolbar-color;
-	.rem(height,@toolbar-height);
-
-	.auth-user {
-		color: @header-color;
-		float: left;
-		padding: 5px 20px;
-		.rem(font-size, 18);
-		font-weight: bold;
-		width: 33%;
-
-		.welcome {
-			.rem(font-size, 12);
-			font-weight: normal;
-		}
-
-		.menu {
-			float:left;
-			margin: 10px 20px 0px 0px;
-		}
-	}
-
-	.current-section {
-		display: inline-block;
-		width: 50%;
-		.rem(font-size, 22);
-		padding: 10px 0;
-	}
-
-	.auth {
-		display: inline;
-		float: right;
-		margin-right: 1.38888889%;
-	}
-
-	.auth-status {
-		.rem(margin-top, 15);
-		cursor: pointer;
-		color: @header-color;
-
-		.xs-device({.hide});
-		.small-device({.hide});
-	}
-}
-
 .login-form {
 	background: @login-bg url('/img/janux_logo_outline.png') no-repeat;
 	height: 100%;
@@ -55,7 +8,7 @@
 	border: 1px solid @white;
 	color: @login-color;
 	width: 250px;
-	height: 450px;
+	// height: 450px;
 	padding: 0px 25px;
 	// Vertical center
 	position: relative;
@@ -64,21 +17,27 @@
 	// Horizontal
 	margin-left: 60%;
 
+	p, li {
+		line-height: 125%;
+		.rem(margin-bottom, 3);
+	}
+
 	.brand {
 		text-align: center;
 		line-height: 30px;
 		font-weight: bold;
+		font-family: 'Base9-SmallCaps';
+		.rem(font-size, 30);
 		.janux {
-			.rem(font-size, 28);
-
+			.rem(letter-spacing, 5);
 		}
-		.crm {
-			.rem(font-size, 43);
+		.people {
+			.rem(letter-spacing, 2);
 		}
 	}
 
 	.line {
-		width:85px;
+		.rem(width, 100);
 		margin: 5px auto 15px;
 		border-top: 2px solid @green3;
 	}
@@ -89,7 +48,8 @@
 
 	.logo {
 		display: block;
-		margin: 10px auto;
+		margin: 20px auto;
+		margin: 2rem auto;
 	}
 
 	.login-lbl {
@@ -113,10 +73,6 @@
 	.btn-login-cnt {
 		text-align: center;
 		padding: 15px;
-	}
-
-	.line {
-		width:85px;
 	}
 
 	.copy {

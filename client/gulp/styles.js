@@ -11,7 +11,8 @@ module.exports = function(gulp) {
 	gulp.task('styles', function() {
 
 		var lessOpts = {
-			paths: [cfg.dir.bower] // search for imports here
+			paths: [cfg.dir.bower], // search for imports here
+			plugins: [require('less-plugin-glob')] // use ** and * in import statements
 		};
 
 		gulp.src(

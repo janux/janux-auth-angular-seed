@@ -1,6 +1,6 @@
 {
   "name": "janux-auth-seed-server",
-  "version": "0.0.2",
+  "version": "0.1.02",
   "private": true,
   "description": "Back-end to support janux auth seed angular front-end",
   "dependencies": {

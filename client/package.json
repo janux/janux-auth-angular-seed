@@ -1,8 +1,8 @@
 {
 	"author": "Philippe Paravicini",
-	"name": "janux-auth-seed",
+	"name": "janux-people-demo",
 	"homepage": "https://github.com/janux/janux-auth-seed",
-	"version": "0.0.2",
+	"version": "0.1.01",
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:janux/janux-auth-seed.git"

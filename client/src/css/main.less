@@ -22,9 +22,13 @@
 @import 'mixin';
 @import 'typography';
 @import 'layout';
-@import 'navbar';
 @import 'buttons';
 @import 'login';
 @import 'form';
 @import 'tables';
 @import 'drag-and-drop';
+
+// Layouts that are specific to a page, state or component are imported from this folder;
+// these styles should not depend on each other, as the import order is random.
+// The globbing functionality is provided by less-plugin-glob.
+@import 'layouts/*';

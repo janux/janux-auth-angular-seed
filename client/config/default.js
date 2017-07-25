@@ -68,7 +68,7 @@ cfg.fileset.less = [
 ];
 
 // all less sources, used for 'watch' task
-cfg.fileset.lessSrc = path.join(cfg.dir.src, cfg.dir.css, '*.less');
+cfg.fileset.lessSrc = path.join(cfg.dir.src, cfg.dir.css,'**','*.less');
 
 // any css libs that need to be copied to the dist/css folder
 cfg.fileset.cssLibs = [

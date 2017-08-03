@@ -36,7 +36,7 @@ nav {
 .navbar-toggle-btn{
 
   float:right;
-  .rem(margin-top, 5);
+  .rem(margin-top, 15);
   .rem(margin-right, 15);
 
   display: none;
@@ -48,9 +48,11 @@ nav {
   .glyphicon-align-justify{
   	.rem(font-size, 22);
 	cursor: pointer;
+  	color: @white;
   }
 
   .xs-device({.show});
+  .small-device({.show});
 }
 
 // Aside Menu style (dropdown)
@@ -72,10 +74,10 @@ nav {
 	font-weight: bold;
 	margin: 10% 0;
 	display: block;
+  	cursor: pointer;
 
 	.dropdown-text{
 	  margin-left: 5%;
-
 	}
   }
 }
@@ -91,7 +93,7 @@ nav {
 	border-bottom: 1px solid @status-toolbar-border;
 
 	.links-column {
-		width: 40%;
+		width: 37%;
 		padding: 20px 20px;
 		font-weight: bold;
 		a {
@@ -106,12 +108,20 @@ nav {
 		.option-break {
 			font-size:25px; line-height:0;
 		}
+
+		.small-device({
+			.rem(font-size, 14);
+		});
+		.xs-device({
+			.rem(font-size, 12);
+		});
 	}
 
 	.search-column {
-		width: 60%;
+		width: 63%;
 		text-align: right;
 		padding-right: 20px;
+		display:none;
 		.rem(font-size, 12);
 		label {
 			font-weight: normal;
@@ -123,6 +133,8 @@ nav {
 		.checkbox, .search, .form-group  {
 			padding-left: 8px;
 		}
+		.medium-device({ .show });
+		.large-device({ .show});
 	}
 }
 
@@ -142,7 +154,7 @@ nav {
 	}
   }
 
-  .small-device({ .enable-sidebar });
+  //.small-device({ .enable-sidebar });
   .medium-device({ .enable-sidebar });
   .large-device({ .enable-sidebar });
   .xl-device({ .enable-sidebar });
@@ -168,11 +180,12 @@ nav {
 		background: @green1;
 	}
 	.sidebar-box{
-	  padding: 25px 0;
+	  	padding: 25px 0;
+		img { cursor: pointer; }
 	}
   }
 
-  .small-device({ .enable-sidebar-nav });
+  //.small-device({ .enable-sidebar-nav });
   .medium-device({ .enable-sidebar-nav });
   .large-device({ .enable-sidebar-nav });
   .xl-device({ .enable-sidebar-nav });

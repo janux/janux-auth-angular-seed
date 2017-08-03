@@ -42,21 +42,39 @@ a.link {
 	}
 }
 
+.list {
+	width: 100%;
+	border-collapse: collapse;
+
+	tr:nth-of-type(odd) {
+    	background: @sageLight;
+    }
+    th {
+    	background: @grey1;
+    	color: white;
+    	font-weight: bold;
+    }
+    td, th {
+    	padding: 6px;
+    	border: 1px solid @grey2;
+    	text-align: left;
+    }
+}
+
 // main column & sidebar
 .maincolumn {
 	padding:0 20px;
-	width: ~"calc(100% - "@sidebar-width~")";
+	width: 100%;
 	color: @grey1;
 
 	.sidebar-room {
 		// margin-left: @sidebar-width;
-		width: 100%;
+		// width: ~"calc(100% - "@sidebar-width~")";
 	}
 
-	.small-device({ .sidebar-room });
-	.medium-device({ .sidebar-room });
-	.large-device({ .sidebar-room });
-	.xl-device({ .sidebar-room });
+	.medium-device({ .rem(font-size, 14); });
+	.small-device({ .rem(font-size, 12); });
+	.xs-device({ .rem(font-size, 10); });
 
 	.title-bar {
 	    display: -webkit-flex;

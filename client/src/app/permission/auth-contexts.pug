@@ -7,16 +7,17 @@
 			dnd-moved='authContexts.splice($index, 1)',
 			dnd-effect-allowed='move')
 				.element
-					table
-						tr
-							td.name {{ authContext.name }}
-							td.bits
-								span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
-							td.options
-								a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
-									img(src='/img/edit.png')
-								| &nbsp;&nbsp;
-								img(src='/img/delete.png')
+					table.context-list
+						tbody
+							tr
+								td.name {{ authContext.name }}
+								td.bits
+									span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
+								td.options
+									a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
+										img(src='/img/edit.png')
+									| &nbsp;&nbsp;
+									img(src='/img/delete.png')
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')

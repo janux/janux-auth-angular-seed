@@ -14,23 +14,24 @@ include toolbar
 					| &nbsp; Add
 		hr
 
-		table.table.table-condensed(ng-show='usersMatch.length')
-			tr
-				th {{ 'user.displayName' | translate }}
-				th {{ 'user.username' | translate }}
-				th {{ 'user.email' | translate }}
-				th {{ 'user.creation' | translate }}
-				th
-
-			tr(ng-repeat='user in usersMatch')
-				td {{ user.contact.name.shortName }}
-				td {{ user.username }}
-				td {{ user.contact.emailAddress('work').address }}
-				td {{ user.cdate }}
-				td.text-center
-					img(src='/img/edit.png' ng-click='editUser(user.userId)')
-					| &nbsp;&nbsp;&nbsp;
-					img(src='/img/delete.png' ng-click='deleteUser(user.userId)')
+		table.list.users-list(ng-show='usersMatch.length')
+			thead
+				tr
+					th {{ 'user.displayName' | translate }}
+					th {{ 'user.username' | translate }}
+					th {{ 'user.email' | translate }}
+					th {{ 'user.creation' | translate }}
+					th
+			tbody
+				tr(ng-repeat='user in usersMatch')
+					td {{ user.contact.name.shortName }}
+					td {{ user.username }}
+					td {{ user.contact.emailAddress('work').address }}
+					td {{ user.cdate }}
+					td.text-center
+						img(src='/img/edit.png' ng-click='editUser(user.userId)')
+						| &nbsp;&nbsp;&nbsp;
+						img(src='/img/delete.png' ng-click='deleteUser(user.userId)')
 
 		.users-filter
 			form.form-inline

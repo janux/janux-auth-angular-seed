@@ -10,7 +10,7 @@ var config            = require('config').serverAppContext,
 module.exports = {
 	accountDaoLokijs: DaoFactory.createAccountDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
 	partyDaoLokijs: DaoFactory.createPartyDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
-	accountDaoMongo: DaoFactory.createAccountDao(DataSourceHandler.MONGODB, config.db.mongoConnUrl),
-	partyDaoMongo: DaoFactory.createPartyDao(DataSourceHandler.MONGODB, config.db.mongoConnUrl),
+	accountDaoMongo: DaoFactory.createAccountDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
+	partyDaoMongo: DaoFactory.createPartyDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
 	authDAO: require('./authorization-dao').object()
 };

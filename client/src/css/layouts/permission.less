@@ -20,4 +20,26 @@
 
 .context-form {
 	width: 50%;
+	.small-device({ width: 70%; });
+	.xs-device({ width: 100%;});
+}
+
+.context-list {
+	.small-device({ .context-resp-table });
+	.xs-device({ .context-resp-table });
+}
+
+.context-list-labels {
+	td:nth-of-type(1):before { content: "Name"; }
+	td:nth-of-type(2):before { content: "Bits"; }
+	td:nth-of-type(3):before { content: "Options"; }
+}
+
+.context-resp-table {
+	.responsive-table;
+	.context-list-labels;
+
+	td {
+		width: auto !important;
+	}
 }

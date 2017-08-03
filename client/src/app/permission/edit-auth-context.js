@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-// var AuthorizationContext = require('janux-security').AuthorizationContext;
+// var AuthorizationContext = require('janux-authorize').AuthorizationContext;
 
 module.exports = [
 	'$scope','authContext',

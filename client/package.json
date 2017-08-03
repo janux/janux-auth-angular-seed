@@ -21,7 +21,7 @@
 	},
 	"dependencies": {
 	  "janux-people": "file:../server/vendor/janux-people.js",
-	  "janux-security": "file:../server/vendor/janux-security"
+	  "janux-authorize": "file:../server/vendor/janux-authorize"
 	},
 	"devDependencies": {
 		"browserify":               "6.2.0",
@@ -67,7 +67,7 @@
 		"moment":             "./bower/moment/moment.js",
 		"drag-and-drop-lists":"./bower/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js",
 		"drag-drop-mobile":   "./vendor/drag-drop-webkit-mobile/ios-drag-drop.js",
-		"janux-security":     "./node_modules/janux-security/index.js",
+		"janux-authorize":     "./node_modules/janux-authorize/index.js",
 	  	"janux-people":		  "./node_modules/janux-people.js/index.js",
 		"common/config":      "./src/common/config.js",
 	  	"common/jsonrpc":     "./src/common/jsonrpc.js",

@@ -10,8 +10,8 @@ var	Promise  = require('bluebird'),
 	_ = require('lodash'),
 	util = require('util'),
 	log4js = require('log4js'),
-	AuthorizationContext = require('janux-security').AuthorizationContext,
-	Role = require('janux-security').Role;
+	AuthorizationContext = require('janux-authorize').AuthorizationContext,
+	Role = require('janux-authorize').Role;
 
 var log = log4js.getLogger('Auth DAO');
 

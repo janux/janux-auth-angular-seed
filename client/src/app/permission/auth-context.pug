@@ -37,7 +37,7 @@ include toolbar
 			tr(ng-repeat='permBit in permissionBits')
 				td {{ $index+1 }}
 				td
-					input.form-control(type='text' ng-model='permissionBits[$index]' required='')
+					input.form-control(type='text' ng-model='permBit' required='')
 				td
 					span.glyphicon.glyphicon-remove-circle(ng-click='removeBit($index)')
 				//td: input.form-control(type='text' ng-model='permBit.description')

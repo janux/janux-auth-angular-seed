@@ -2,7 +2,7 @@
 
 var 
 	_    = require('lodash'),
-	Role = require('janux-security').Role,
+	Role = require('janux-authorize').Role,
 	Person = require('janux-people').Person;
 ;
 

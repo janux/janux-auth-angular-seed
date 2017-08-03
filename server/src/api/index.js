@@ -1,5 +1,5 @@
 'user strict';
-var UserPersistence = require('janux-persistence').UserService;
+var UserPersistence = require('janux-persist').UserService;
 
 var config                 = require('config'),
 	DAOs                   = require('./daos'),

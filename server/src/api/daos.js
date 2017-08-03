@@ -1,8 +1,8 @@
 'use strict';
 
 var config            = require('config').serverAppContext,
-	DataSourceHandler = require('janux-persistence').DataSourceHandler,
-	DaoFactory        = require('janux-persistence').DaoFactory;
+	DataSourceHandler = require('janux-persist').DataSourceHandler,
+	DaoFactory        = require('janux-persist').DaoFactory;
 
 // When creating a dao also creates a db connection to the database.
 // In case you want the program do not open unnecessary connections, comment the daos

@@ -2,8 +2,8 @@
 
 var
 	_ = require('underscore'),
-	AuthorizationContext = require('janux-security').AuthorizationContext,
-	Role = require('janux-security').Role,
+	AuthorizationContext = require('janux-authorize').AuthorizationContext,
+	Role = require('janux-authorize').Role,
 	Q    = require('q'),
 	util = require('util')
 ;
@@ -92,7 +92,7 @@ roles.ADMIN.isAlmighty = true;
 // (READ, UPDATE, CREATE, DELETE, PURGE) to the authorizationContexts hashmap
 // of the Authorization Scheme
 //
-// TODO: move this to the janux-security lib, as this would be a useful
+// TODO: move this to the janux-authorize lib, as this would be a useful
 // feature; we would need to find a way to easily override it so that library
 // users can implement their own to suit their needs
 //

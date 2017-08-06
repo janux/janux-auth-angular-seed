@@ -1,9 +1,9 @@
 'use strict';
 
-var Person = require('janux-people.js').Person;
-var PhoneNumber = require('janux-people.js').PhoneNumber;
-var Email = require('janux-people.js').EmailAddress;
-var PostalAddress = require('janux-people.js').PostalAddress;
+var Person = require('janux-people').Person;
+var PhoneNumber = require('janux-people').PhoneNumber;
+var Email = require('janux-people').EmailAddress;
+var PostalAddress = require('janux-people').PostalAddress;
 var md5 = require('md5');
 
 module.exports = [

@@ -23,11 +23,11 @@ form.login-form(name='form', novalidate)
 
 		.login-lbl
 			label(translate='label.username')
-		input.login-field(name='login', ng-model='user.account.name', required, autofocus)
+		input.login-field(name='login', ng-model='user.account.name', required, autofocus, novalidate='')
 
 		.login-lbl
 			label(translate='label.password')
-		input.login-field(name="pass", type='password', ng-model='user.account.password', required)
+		input.login-field(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
 
 		div.text-right
 			a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}

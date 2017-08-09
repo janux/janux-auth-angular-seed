@@ -9,6 +9,10 @@
   @media screen and (max-width: @break1) { @rules(); }
 }
 
+.small-and-down(@rules) {
+  @media screen and (max-width: 767px) { @rules(); }
+}
+
 .small-device(@rules) {
   @media screen and (min-width: 381px) and (max-width: 767px) { @rules(); }
 }

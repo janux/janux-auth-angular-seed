@@ -144,8 +144,8 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	});
 }])
 
-.controller('asideMenu', ['$scope','$aside',
-function($scope, $aside) {
+.controller('asideMenu', ['$scope','$aside','security',
+function($scope, $aside, security) {
 
 	$scope.asideState = {
 		open: false
@@ -172,6 +172,10 @@ function($scope, $aside) {
 				$scope.cancel = function() {
 					$modalInstance.dismiss();
 				};
+				$scope.logout = function(){
+					$scope.ok();
+					security.logout();
+				}
 			}]
 		}).result.then(postClose, postClose);
 	};

@@ -19,3 +19,7 @@
 	img(src='/img/autorization.png' tooltip='{{"permission.title"|translate}}'
 	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
 	span.dropdown-text {{ 'permission.title' | translate }}
+
+.dropdown.sidebar-box.hide-on-sidebar(ui-sref-active="active" ui-sref='permissions' ng-click='logout()')
+	span.entypo.entypo-logout
+	span.dropdown-text {{ 'label.logout' | translate }}

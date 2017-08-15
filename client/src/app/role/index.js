@@ -8,7 +8,7 @@ require('angular').module('appRoles', [
 
 .config(['$stateProvider', function($stateProvider)
 {
-	$stateProvider.state('permissions.roles', {
+	$stateProvider.state('permissions', {
 		url: '/permissions/roles',
 		templateUrl: 'app/role/index.html',
 		parent: 'auth-required',

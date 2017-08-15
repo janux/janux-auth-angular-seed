@@ -47,8 +47,32 @@
 }
 
 // List of roles
+.role {
+	.element {
+		table {
+			width: 100%;
 
+			td.name {
+				width: 70%;
+			}
+
+			td.options {
+				width: 10%;
+			}
+
+			td.allmighty, td.enabled {
+				width: 10%;
+				text-align: right;
+			}
+
+		}
+	}
+}
 .role-list-header {
+	.small-and-down({
+		.hide;
+	});
+
 	display: -webkit-flex;
 	display: flex;
 	background: @grey5;
@@ -72,21 +96,23 @@
 		font-weight: bold;
 	}
 
-	td.allmighty, td.enabled {
-		width: 20px !important;
-	}
-
 	td.options {
 		text-align: right;
 		img {
 			padding-left: 5px;
 		}
 	}
+
+	.glyphicon-check {
+		color: @green4;
+	}
 }
 
 .roles-list-labels {
 	td:nth-of-type(1):before { content: "Name / Description"; }
-	td:nth-of-type(2):before { content: "Options"; }
+	td:nth-of-type(2):before { content: "Is Allmighty"; }
+	td:nth-of-type(3):before { content: "Enabled"; }
+	td:nth-of-type(4):before { content: "Options"; }
 }
 
 .roles-resp-table {

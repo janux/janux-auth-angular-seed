@@ -15,6 +15,7 @@ require('common/directives');
 require('common/demoService');
 require('app/users');
 require('app/permissions');
+require('app/roles');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -27,7 +28,8 @@ angular.module('MyApp',[
 	'demoService',
 	'appUsers',
 	'appPermissions',
-	'config'
+	'config',
+	'appRoles'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
@@ -89,11 +91,11 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// provider be rewritten so that it does not depend on the security module
 	// but raises an event that is then handled by the security module?
 	//
-	var authenticate = {
-		authenticate: ['$jnxAuth', function($jnxAuth) {
-			return $jnxAuth.requireAuthenticatedUser();
-		}]
-	};
+	// var authenticate = {
+	// 	authenticate: ['$jnxAuth', function($jnxAuth) {
+	// 		return $jnxAuth.requireAuthenticatedUser();
+	// 	}]
+	// };
 	
 	$stateProvider
 	.state('auth-required', {
@@ -135,12 +137,6 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 			isModal: function() { return false;}
 		},
 		controller: 'loginController'
-	})
-
-	.state('roles', {
-		url: '/roles',
-		templateUrl: 'app/role/index.html',
-		resolve: authenticate
 	});
 }])
 
@@ -175,7 +171,7 @@ function($scope, $aside, security) {
 				$scope.logout = function(){
 					$scope.ok();
 					security.logout();
-				}
+				};
 			}]
 		}).result.then(postClose, postClose);
 	};

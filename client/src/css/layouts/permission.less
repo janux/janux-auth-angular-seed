@@ -24,6 +24,8 @@
 	.xs-device({ width: 100%;});
 }
 
+// List of authorization contexts
+
 .context-list {
 	.small-device({ .context-resp-table });
 	.xs-device({ .context-resp-table });
@@ -38,6 +40,58 @@
 .context-resp-table {
 	.responsive-table;
 	.context-list-labels;
+
+	td {
+		width: auto !important;
+	}
+}
+
+// List of roles
+
+.role-list-header {
+	display: -webkit-flex;
+	display: flex;
+	background: @grey5;
+	margin: 1px 15px;
+	font-weight: bold;
+	padding: 5px;
+	text-align: left;
+
+	.name {  width: 30%; padding-left: 45px;  }
+	.role-aggregated {  width: 40%;  }
+	.allmighty { width: 15%; }
+	.enabled { width:15%; }
+}
+
+.roles-list {
+	width: 100%;
+	.small-device({ .roles-resp-table });
+	.xs-device({ .roles-resp-table });
+
+	span.role-title {
+		font-weight: bold;
+	}
+
+	td.allmighty, td.enabled {
+		width: 20px !important;
+	}
+
+	td.options {
+		text-align: right;
+		img {
+			padding-left: 5px;
+		}
+	}
+}
+
+.roles-list-labels {
+	td:nth-of-type(1):before { content: "Name / Description"; }
+	td:nth-of-type(2):before { content: "Options"; }
+}
+
+.roles-resp-table {
+	.responsive-table;
+	.roles-list-labels;
 
 	td {
 		width: auto !important;

@@ -13,7 +13,7 @@ require('angular').module('appPermissions', [
 	$stateProvider
 		// Permissions Management
 		.state('permissions', {
-			url: '/permissions',
+			url: '/permissions/authorization-contexts',
 			templateUrl: 'app/permission/index.html',
 			parent: 'auth-required',
 			controller: require('./perm-controller.js'),

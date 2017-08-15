@@ -41,6 +41,15 @@ function( $q ,  $http){
 				console.log('resp.data.result', resp.data.result);
 				return resp.data.result;
 			});
+		},
+
+		loadRoles: function () {
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadRoles'
+			).then(function(resp) {
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

@@ -1,0 +1,32 @@
+.maincolumn
+
+	.role-list-header
+		.name Name / Description
+		.role-aggregated Role(s) Aggregated
+		.allmighty Is Allmighty?
+		.enabled Enabled?
+
+	.drag-n-drop
+		ul(dnd-list='roles')
+			li.auth-context(ng-repeat='role in roles',
+			dnd-draggable='role',
+			dnd-moved='roles.splice($index, 1)',
+			dnd-effect-allowed='move')
+				.element
+					table.roles-list
+							tr
+								td.name
+									span.role-title {{ role.name }}
+									br
+									| {{ role.description }}
+								//td.allmighty: span.entypo.entypo-check(ng-show='role.isAlmighty')
+								//td.enabled: span.entypo.entypo-check(ng-show='role.enabled')
+								td.options
+									a(ui-sref='permissions.edit-role({roleName: role.name})')
+										img(src='/img/edit.png')
+									img(src='/img/delete.png')
+
+	.text-left
+		a.link.primary(ui-sref='permissions.create-role')
+			img(src='/img/add.png')
+			| Add Role

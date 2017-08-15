@@ -1,8 +1,12 @@
-side-bar
+login-toolbar(title='permission.title')
+include ../permission/toolbar
 
 .container
-	logo-bar
-	
+	side-bar
 	.maincolumn
 
-		h1(translate='role.title')
+		.title-bar
+			.title {{ 'role.title' | translate }}
+		hr
+
+		include roles

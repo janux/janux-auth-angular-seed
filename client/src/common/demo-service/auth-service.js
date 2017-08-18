@@ -50,6 +50,16 @@ function( $q ,  $http){
 			).then(function(resp) {
 				return resp.data.result;
 			});
+		},
+
+		loadRoleByName: function (roleName) {
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadRoleByName',
+				[ roleName ]
+			).then(function(resp) {
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

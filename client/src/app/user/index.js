@@ -10,12 +10,17 @@ require('angular').module('appUsers', [
 
 .config(['$stateProvider', function($stateProvider)
 {
-	$stateProvider
 	// List of users
-	.state('users', {
-		url: '/users',
+	$stateProvider.state('users', {
+		url:'/users',
+		template: '<ui-view/>',
+		authRequired: true,
+		redirectTo: 'users.list'
+	})
+	.state('users.list', {
+		url: '/users-list',
 		templateUrl: 'app/user/index.html',
-		parent: 'auth-required',
+		authRequired: true,
 		controller: require('./users-controller.js'),
 		resolve: {
 			users: ['userService', function (userService) {
@@ -30,17 +35,17 @@ require('angular').module('appUsers', [
 	})
 	// Edit specific user
 	.state('users.create', {
-		url: '/users/create',
+		url: '/create',
 		templateUrl: 'app/user/create-user.html',
-		parent: 'auth-required',
+		authRequired: true,
 		controller: require('./create-user-controller.js'),
 		resolve: {}
 	})
 	// Edit specific user
 	.state('users.edit', {
-		url: '/users/edit/{userId}',
+		url: '/edit/{userId}',
 		templateUrl: 'app/user/edit-user.html',
-		parent: 'auth-required',
+		authRequired: true,
 		controller: require('./edit-user-controller.js'),
 		resolve: {
 			user: ['userService', '$stateParams', function(userService, $stateParams){

@@ -1,0 +1,17 @@
+login-toolbar(title='permission.title')
+include ../permission/toolbar
+
+.container
+	side-bar
+
+	.maincolumn
+		.title-bar
+			.title {{ 'permission.updatingRole' | translate }}
+			.options
+				a(ng-click='cancel()')
+					img(src='/img/cancel.png')
+					| &nbsp; Cancel
+				a(ng-click='createAuthContext()')
+					img(src='/img/save.png')
+					| &nbsp; Save
+		hr

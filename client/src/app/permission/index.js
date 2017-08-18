@@ -13,9 +13,9 @@ require('angular').module('appPermissions', [
 	$stateProvider
 		// Permissions Management
 		.state('permissions.auth-contexts', {
-			url: '/permissions/authorization-contexts',
+			url: '/auth-contexts-list',
 			templateUrl: 'app/permission/index.html',
-			parent: 'auth-required',
+			authRequired: true,
 			controller: require('./perm-controller.js'),
 			resolve: {
 				permissionBits: ['authService', function(authService){
@@ -29,9 +29,9 @@ require('angular').module('appPermissions', [
 			}
 		})
 		.state('permissions.create-auth-context', {
-			url: '/permissions/create-authorization-context',
+			url: '/create-auth-context',
 			templateUrl: 'app/permission/auth-context.html',
-			parent: 'auth-required',
+			authRequired: true,
 			resolve: {
 				permissionBits: ['authService', function(authService){
 					return authService.loadPermissionBits();
@@ -40,9 +40,9 @@ require('angular').module('appPermissions', [
 			controller: require('./create-auth-context.js')
 		})
 		.state('permissions.edit-auth-context', {
-			url: '/permissions/edit-authorization-context/{contextName}',
+			url: '/edit-auth-context/{contextName}',
 			templateUrl: 'app/permission/auth-context.html',
-			parent: 'auth-required',
+			authRequired: true,
 			resolve: {
 				authContext: ['authService','$stateParams', function(authService, $stateParams){
 					return authService.loadAuthorizationContextByName($stateParams.contextName);
@@ -51,9 +51,10 @@ require('angular').module('appPermissions', [
 			controller: require('./edit-auth-context.js')
 		})
 		.state('permissions.create-perm-bit', {
-			url: '/permissions/create-permission-bit',
+			url: '/create-permission-bit',
 			templateUrl: 'app/permission/create-perm-bit.html',
-			parent: 'auth-required'
+			authRequired: true,
+			resolve: {}
 			//
 			// TODO: Implement permission bits CRUD functionality
 			// controller: ['$scope', function($scope){

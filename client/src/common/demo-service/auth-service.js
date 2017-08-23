@@ -58,7 +58,12 @@ function( $q ,  $http){
 				'loadRoleByName',
 				[ roleName ]
 			).then(function(resp) {
-				return resp.data.result;
+				var role = resp.data.result;
+				// Index by name
+				role.authContexts = _.mapKeys(role.authContexts, function (authC) {
+					return authC.name;
+				});
+				return role;
 			});
 		}
 	};

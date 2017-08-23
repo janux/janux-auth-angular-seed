@@ -42,5 +42,18 @@ require('angular').module('appRoles', [
 			}]
 		},
 		controller: require('./role-edit-controller')
+	})
+	.state('permissions.create-role', {
+		url: '/create-role',
+		templateUrl: 'app/role/create-role.html',
+		authRequired: true,
+		resolve: {
+			authContexts: ['authService', function(authService){
+				return authService.loadAuthorizationContexts().then(function (response) {
+					return _.values(response);
+				});
+			}]
+		},
+		controller: require('./role-create-controller')
 	});
 }]);

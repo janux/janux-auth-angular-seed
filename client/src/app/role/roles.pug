@@ -1,36 +1,30 @@
-.maincolumn
+.role-list-header
+	.name Name / Description
+	.role-aggregated Role(s) Aggregated
+	.allmighty Is Allmighty?
+	.enabled Enabled?
 
-	.role-list-header
-		.name Name / Description
-		.role-aggregated Role(s) Aggregated
-		.allmighty Is Allmighty?
-		.enabled Enabled?
-
-	.drag-n-drop
-		ul(dnd-list='roles')
-			li.role(ng-repeat='role in roles',
-			dnd-draggable='role',
-			dnd-moved='roles.splice($index, 1)',
-			dnd-effect-allowed='move')
-				.element
-					table.roles-list
-							tr
-								td.name
-									span.role-title {{ role.name }}
-									br
-									| {{ role.description }}
-								td.allmighty
-									span.glyphicon.glyphicon-check(ng-show='role.isAlmighty')
-									| &nbsp;
-								td.enabled
-									span.glyphicon.glyphicon-check(ng-show='role.enabled')
-									| &nbsp;
-								td.options
-									a(ui-sref='permissions.edit-role({roleName: role.name})')
-										img(src='/img/edit.png')
-									img(src='/img/delete.png')
-
-	.text-left
-		a.link.primary(ui-sref='permissions.create-role')
-			img(src='/img/add.png')
-			| Add Role
+.drag-n-drop
+	ul(dnd-list='roles')
+		li.role(ng-repeat='role in roles',
+		dnd-draggable='role',
+		dnd-moved='roles.splice($index, 1)',
+		dnd-effect-allowed='move')
+			.element
+				table.roles-list
+						tr
+							td.name
+								span.role-title {{ role.name }}
+								br
+								| {{ role.description }}
+							td.allmighty
+								span.glyphicon.glyphicon-check(ng-show='role.isAlmighty')
+								| &nbsp;
+							td.enabled
+								span.glyphicon.glyphicon-check(ng-show='role.enabled')
+								| &nbsp;
+							td.options
+								a(ui-sref='permissions.edit-role({roleName: role.name})')
+									img(src='/img/edit.png')
+								a(ng-click='deleteRole()')
+									img( src='/img/delete.png')

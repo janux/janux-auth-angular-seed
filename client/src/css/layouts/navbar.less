@@ -198,3 +198,21 @@ nav {
   display: block;
   cursor: pointer;
 }
+
+// Standard bar attached to the bottom
+.bottom-bar {
+	color: @grey1;
+	background: @white;
+	width: ~"calc(100% - 65px)";
+	margin-top: 20px;
+	margin-left: 65px;
+	position: fixed;
+	bottom: 0;
+	padding: 10px;
+	text-align: right;
+
+	.small-and-down({
+		margin-left: 0;
+		width: 100%;
+	});
+}

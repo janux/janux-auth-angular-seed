@@ -123,3 +123,64 @@
 		width: auto !important;
 	}
 }
+
+.role-page {
+	.role-data {
+		width: 60%;
+		.small-and-down({
+			width: 100%;
+		});
+
+		.role-option{
+			padding: 5px;
+			display: -webkit-flex;
+			display: flex;
+			font-weight: bold;
+
+			.text {
+				width: 30%;
+			}
+
+			.control {
+				width: 70%;
+			}
+		}
+	}
+
+	.role-permissions {
+		.context-check-list {
+			border-collapse:separate;
+			border-spacing: 0 10px;
+			width: 100%;
+
+			.bit {
+				float:left;
+				.bit-check {
+					margin: 5px 10px 5px 5px;
+				}
+			}
+			.name {
+				font-weight: bold;
+			}
+
+			tr {
+				background: @dnd-bg 10px center;
+				border: 1px solid @dnd-border-color;
+				color: @dnd-color;
+			}
+			td {
+				padding: 5px 10px;
+				border-top: 1px solid @dnd-border-color;
+				border-bottom: 1px solid @dnd-border-color;
+			}
+
+			td:first-child {
+				border-left: 1px solid @dnd-border-color;
+			}
+
+			td:last-child {
+				border-right: 1px solid @dnd-border-color;
+			}
+		}
+	}
+}

@@ -1,0 +1,30 @@
+.role-page
+	.role-data
+		.role-option
+			.text Name:
+			.control
+				input.form-control(type='text' ng-model='role.name' required='')
+
+		.role-option
+			.text
+			.control
+				| Enabled &nbsp;
+				input(type='checkbox' ng-model='role.enabled')
+				| &nbsp;Is Allmighty
+				input(type='checkbox' ng-model='role.isAllmighty')
+
+		.role-option
+			.text Description:
+			.control
+				textarea.form-control(required='') {{ role.description }}
+
+	.role-permissions
+		table.context-check-list
+			tbody
+				tr(ng-repeat='authContext in authContexts')
+					td.name {{ authContext.name }}
+					td.bits
+						div.bit(ng-repeat='(authName, authBit) in authContext.bit')
+							| {{ authName }}
+							input.bit-check(type='checkbox'
+							ng-model='role.authContexts[authContext.name].bit[authName]')

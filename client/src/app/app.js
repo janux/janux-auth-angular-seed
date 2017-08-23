@@ -56,7 +56,7 @@ function($rootScope , $state , $stateParams , security , $anchorScroll) {
 					return $jnxAuth.requireAuthenticatedUser();
 				}]
 			});
-			console.log('toState after', toState);
+			// console.log('toState after', toState);
 		}
 
 		if (toState.redirectTo) {

@@ -9,4 +9,11 @@ include ../permission/toolbar
 			.title {{ 'role.title' | translate }}
 		hr
 
-		include roles
+		.maincolumn
+
+			include roles
+
+			.text-left
+				a.link.primary(ui-sref='permissions.create-role')
+					img(src='/img/add.png')
+					| Add Role

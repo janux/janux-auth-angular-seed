@@ -7,11 +7,17 @@ include ../permission/toolbar
 	.maincolumn
 		.title-bar
 			.title {{ 'permission.updatingRole' | translate }}
-			.options
-				a(ng-click='cancel()')
-					img(src='/img/cancel.png')
-					| &nbsp; Cancel
-				a(ng-click='createAuthContext()')
-					img(src='/img/save.png')
-					| &nbsp; Save
+			//.options
+			//	a(ng-click='cancel()')
+			//		img(src='/img/cancel.png')
+			//		| &nbsp; Cancel
+			//	a(ng-click='saveRole()')
+			//		img(src='/img/save.png')
+			//		| &nbsp; Save
 		hr
+
+		include role-form
+
+	.bottom-bar
+		button.btn.btn-ok(ng-click='saveRole()') Save
+		button.btn.btn-cancel(ng-click='cancel()') Cancel

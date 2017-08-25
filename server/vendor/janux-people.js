@@ -1,1 +1,0 @@
-../../../janux-people.js

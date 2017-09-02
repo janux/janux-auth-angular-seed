@@ -5,7 +5,7 @@ var
 	// Q    = require('q'),
 	log4js      = require('log4js'),
 	util        = require('util'),
-	md5         = require('MD5'),
+	md5         = require('md5'),
 	AuthService = require('../api/index').AuthService,
 	UserPersistenceService = require('../api/index').UserPersistenceService,
 	log         = log4js.getLogger('Auth UserService');

@@ -37,6 +37,7 @@
     "lokijs": "1.4.1"
   },
   "scripts": {
-    "generate-demo-users": "node test/util/user-generator/user-generator-script.js"
+    "generate-demo-users": "node test/util/user-generator/user-generator-script.js",
+    "generate-demo-auth": "node test/util/auth-generator/auth-generator-script.js"
   }
 }

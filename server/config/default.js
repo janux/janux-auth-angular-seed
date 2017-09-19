@@ -14,7 +14,8 @@ module.exports = {
 		//Daos to be used by the services.
 		accountDao: 'accountDaoLokijs',
 		partyDao: 'partyDaoLokijs',
-		authDAO: 'authDAO',
+		authContextDao: 'authContextDaoLokijs',
+		roleDao: 'roleDaoLokijs',
 
 		log4js: {
 			config: require('./log4js.js'),

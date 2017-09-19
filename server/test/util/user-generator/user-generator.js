@@ -21,12 +21,21 @@ var UserGenerator = (function () {
         accountDao = daoFactory.createAccountDao(dbEngine, path);
         var userService = usrService.createInstance(accountDao, partyDao);
         var usersToInsert = this.generateUserFakeData();
-        return Promise.map(usersToInsert, function (element) {
-            return userService.insert(element);
-        })
-            .then(function (insertedUsers) {
-            return Promise.resolve(insertedUsers);
-        });
+
+		var inserted = new Promise(function(resolve) {
+			// Wait for lokijs to initialize
+			setTimeout(function() {
+				var insertedUsers = Promise.map(usersToInsert, function (element) {
+						return userService.insert(element);
+					})
+					.then(function (insertedUsers) {
+						return Promise.resolve(insertedUsers);
+					});
+				resolve(insertedUsers);
+			},10);
+		});
+
+		return inserted;
     };
     
     UserGenerator.generateUserFakeData = function () {

@@ -12,5 +12,6 @@ module.exports = {
 	partyDaoLokijs: DaoFactory.createPartyDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
 	// accountDaoMongo: DaoFactory.createAccountDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
 	// partyDaoMongo: DaoFactory.createPartyDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
-	authDAO: require('./authorization-dao').object()
+	authContextDaoLokijs: DaoFactory.createAuthContextDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
+	roleDaoLokijs: DaoFactory.createRoleDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath)
 };

@@ -23,24 +23,31 @@ var AuthGenerator = (function () {
         var authContextService = AuthContextService.createInstance(authContextDao);
 		var roleService = RoleService.createInstance(roleDao);
 
-        var authDataToInsert = this.generateAuthData();
-		var promises = [];
+		var authDataToInsert = this.generateAuthData();
 
-		for(var iContext in authDataToInsert.authorizationContexts){
-			promises.push(
-				authContextService.insert(authDataToInsert.authorizationContexts[iContext].toJSON())
-			);
-		}
+		var inserted = new Promise(function(resolve) {
 
-		for(var iRole in authDataToInsert.roles){
-			promises.push(
-				roleService.insert(authDataToInsert.roles[iRole].toJSON())
-			);
-		}
+			// Wait for lokijs to initialize
+			setTimeout(function() {
+				var insertedAuth = [];
 
-		return Promise.all(promises).then(function (insertedAuth) {
-			return insertedAuth;
+				for(var iContext in authDataToInsert.authorizationContexts){
+					insertedAuth.push(
+						authContextService.insert(authDataToInsert.authorizationContexts[iContext].toJSON())
+					);
+				}
+
+				for(var iRole in authDataToInsert.roles){
+					insertedAuth.push(
+						roleService.insert(authDataToInsert.roles[iRole].toJSON())
+					);
+				}
+				resolve(Promise.all(insertedAuth));
+			},10);
 		});
+
+		return inserted;
+
     };
     
     AuthGenerator.generateAuthData = function () {

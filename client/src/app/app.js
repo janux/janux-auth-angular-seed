@@ -12,6 +12,8 @@ require('angular-material');
 require('datetimepicker');
 require('angular-animate');
 require('angular-aria');
+require('angular-local-storage');
+require('angular-jwt');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');

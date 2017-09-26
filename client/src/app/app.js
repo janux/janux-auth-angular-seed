@@ -6,6 +6,8 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('angular-local-storage');
+require('angular-jwt');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');
@@ -29,7 +31,9 @@ angular.module('MyApp',[
 	'appUsers',
 	'appPermissions',
 	'config',
-	'appRoles'
+	'appRoles',
+	'LocalStorageModule',
+	'angular-jwt'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
@@ -69,8 +73,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll) {
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider',
-function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider,localStorageServiceProvider) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
@@ -88,6 +92,8 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	
 	// HTML5 History API enabled
 	$locationProvider.html5Mode(true);
+
+	localStorageServiceProvider.setPrefix('janux-demo');
 
 	// 
 	// State Configuration

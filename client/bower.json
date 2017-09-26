@@ -16,7 +16,9 @@
         "js-md5": 			 "md5#^0.4.1",
 		"moment": 			 "2.9.0",
 		"angular-drag-and-drop-lists": "1.4.0",
-		"font-awesome":	"4.7.0"
+		"font-awesome":		 "4.7.0",
+        "angular-local-storage": "0.7.1",
+        "angular-jwt": 		 "0.1.9"
 	},
 	"resolutions": {
 		"angular": "1.5.3"

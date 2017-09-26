@@ -1,14 +1,14 @@
 'use strict';
 
-var 
+var
 	_    = require('lodash'),
 	Role = require('janux-authorize').Role,
 	Person = require('janux-people').Person;
 ;
 
-module.exports = 
-       ['$modal','$http','$location','$q','retryQueue','$state',
-function($modal , $http , $location , $q , retryQueue , $state) {
+module.exports =
+       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper',
+function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -16,7 +16,7 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 	}
 
 	//
-	// When a user is returned from the back-end, hydrate each 
+	// When a user is returned from the back-end, hydrate each
 	// role json structure into a full janux Role instance
 	//
 	function hydrateRoles(user) {
@@ -36,7 +36,7 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 			throw new Error('Trying to open login dialog that is already open!');
 		}
 		loginDialog = $modal.open({
-			templateUrl: 'common/security/login/form.html', 
+			templateUrl: 'common/security/login/form.html',
 			controller:  'loginController',
 			size: 'sm'
 		});
@@ -65,7 +65,7 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 
 	//
 	// Register a handler for when an item is added to the retry queue
-	// 
+	//
 	// The handler in question, shows the login window if retryQueue.hasMore()
 	// Why is this necessary ?
 	//
@@ -89,7 +89,7 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 			return true;
 		},
 
-		/** 
+		/**
 		 * Display the login modal
 		 */
 		showLogin: function() {
@@ -109,11 +109,14 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 				if(user){
 					service.currentUser = hydrateRoles(response.data.user);
 					service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
+					service.token = response.data.token;
+					// Save the token in local storage.
+					localStorageService.set('token', service.token);
 				}
 
 				if ( service.isAuthenticated() ) {
 					closeLoginDialog(true);
-					// if we are logging in from the goodbye page, 
+					// if we are logging in from the goodbye page,
 					// redirect to the dashboard
 					// if ($location.path() === '/goodbye') redirect('/');
 				}
@@ -135,6 +138,7 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 			$http.post('/logout').then(function(resp) {
 				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;
+				localStorageService.remove("token");
 				$state.go(redirectTo, {goodbye:true});
 			});
 		},
@@ -158,7 +162,18 @@ function($modal , $http , $location , $q , retryQueue , $state) {
 		currentUser: null,
 
 		isAuthenticated: function() {
-			return !!service.currentUser;
+			//Validate if there is a token
+			var token = localStorageService.get("token");
+			if( _.isNil(service.currentUser) && _.isNil(token)===false) {
+				if(jwtHelper.isTokenExpired(token) === false){
+					var tokenPayload = jwtHelper.decodeToken(token);
+					service.currentUser =  hydrateRoles(tokenPayload);
+					//TODO do from json to company also
+					service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
+					console.log("Token decoded");
+				}
+			}
+			return !_.isNil(service.currentUser);
 		}
 	};
 

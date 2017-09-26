@@ -8,3 +8,4 @@ janux-people.db
 server/vendor/janux-*
 /client/client.iml
 /server/server.iml
+/server/config/local.js

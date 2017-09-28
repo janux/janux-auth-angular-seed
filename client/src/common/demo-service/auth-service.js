@@ -31,6 +31,17 @@ function( $q ,  $http){
 			});
 		},
 
+		// Load available authorization contexts within their respective groups
+		loadAuthorizationContextGroups: function()
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadAuthorizationContextGroups'
+			).then(function(resp) {
+				return resp.data.result;
+			});
+		},
+
 		loadAuthorizationContextByName: function(contextName)
 		{
 			return $http.jsonrpc(

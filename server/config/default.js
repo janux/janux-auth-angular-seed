@@ -16,6 +16,9 @@ module.exports = {
 		partyDao: 'partyDaoLokijs',
 		authContextDao: 'authContextDaoLokijs',
 		roleDao: 'roleDaoLokijs',
+		groupContentDao: 'groupContentDaoLokijs',
+		groupDao: 'groupDaoLokijs',
+		groupAttributeValueDao: 'groupAttributeValueDaoLokijs',
 
 		log4js: {
 			config: require('./log4js.js'),

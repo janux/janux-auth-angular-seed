@@ -1,23 +1,42 @@
 .maincolumn
 
+	// Draggable Group list
 	.drag-n-drop
-		ul(dnd-list='authContexts')
-			li.auth-context(ng-repeat='authContext in authContexts',
-			dnd-draggable='authContext',
-			dnd-moved='authContexts.splice($index, 1)',
+		ul(dnd-list='authContextGroups')
+			li.auth-context-group(ng-repeat='authContextGroup in authContextGroups',
+			dnd-draggable='authContextGroup',
+			dnd-moved='authContextGroups.splice($index, 1)',
 			dnd-effect-allowed='move')
-				.element
-					table.context-list
+				.group-element
+					table
 						tbody
 							tr
-								td.name {{ authContext.name }}
-								td.bits
-									span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
+								td.name {{ authContextGroup.name }}
 								td.options
-									a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
+									a(ui-sref='permissions.edit-auth-context-group({authContextGroupName: authContextGroup.name})')
 										img(src='/img/edit.png')
-									| &nbsp;&nbsp;
-									img(src='/img/delete.png')
+									//| &nbsp;&nbsp;
+									//img(src='/img/delete.png')
+
+				// Draggable Authorization Context list
+				.drag-n-drop
+					ul(dnd-list='authContextGroup.values')
+						li.auth-context(ng-repeat='authContext in authContextGroup.values',
+						dnd-draggable='authContext',
+						dnd-moved='authContextGroup.values.splice($index, 1)',
+						dnd-effect-allowed='move')
+							.element
+								table.context-list
+									tbody
+										tr
+											td.name {{ authContext.name }}
+											td.bits
+												span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
+											td.options
+												a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
+													img(src='/img/edit.png')
+												| &nbsp;&nbsp;
+												img(src='/img/delete.png')
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')

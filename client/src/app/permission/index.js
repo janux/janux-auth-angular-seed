@@ -1,8 +1,8 @@
 'use strict';
 
 require('common/demoService');
-
-var _ = require('lodash');
+//
+// var _ = require('lodash');
 
 require('angular').module('appPermissions', [
 	'demoService'
@@ -21,10 +21,8 @@ require('angular').module('appPermissions', [
 				permissionBits: ['authService', function(authService){
 					return authService.loadPermissionBits();
 				}],
-				authContexts: ['authService', function(authService){
-					return authService.loadAuthorizationContexts().then(function (response) {
-						return _.values(response);
-					});
+				authContextGroups: ['authService', function(authService){
+					return authService.loadAuthorizationContextGroups();
 				}]
 			}
 		})

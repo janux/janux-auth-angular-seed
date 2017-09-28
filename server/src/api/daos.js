@@ -13,5 +13,8 @@ module.exports = {
 	// accountDaoMongo: DaoFactory.createAccountDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
 	// partyDaoMongo: DaoFactory.createPartyDao(DataSourceHandler.MONGOOSE, config.db.mongoConnUrl),
 	authContextDaoLokijs: DaoFactory.createAuthContextDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
-	roleDaoLokijs: DaoFactory.createRoleDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath)
+	roleDaoLokijs: DaoFactory.createRoleDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
+	groupContentDaoLokijs: DaoFactory.createGroupContentDao(DataSourceHandler.LOKIJS,config.db.lokiJsDBPath),
+	groupDaoLokijs: DaoFactory.createGroupDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath),
+	groupAttributeValueDaoLokijs: DaoFactory.createGroupAttributesDao(DataSourceHandler.LOKIJS, config.db.lokiJsDBPath)
 };

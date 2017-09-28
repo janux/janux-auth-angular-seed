@@ -6,11 +6,15 @@ var Promise = require('bluebird');
 // variable to hold the singleton instance, if used in that manner
 var authServiceInstance = undefined;
 var authContextServicePersistence = undefined;
+var authContextGroupServicePersistence = undefined;
 var roleServicePersistence = undefined;
 
-var createInstance = function(authContextServiceReference, roleServiceReference) {
+var createInstance = function(authContextServiceReference,
+							  authContextGroupServiceReference,
+							  roleServiceReference) {
 
 	authContextServicePersistence = authContextServiceReference;
+	authContextGroupServicePersistence = authContextGroupServiceReference;
 	roleServicePersistence = roleServiceReference;
 
 	// Constructor
@@ -37,6 +41,15 @@ var createInstance = function(authContextServiceReference, roleServiceReference)
 	AuthService.prototype.loadAuthorizationContexts = function(callback) {
 
 		return authContextServicePersistence.findAll().asCallback(callback);
+	};
+
+
+	//
+	// Returns a dictionary of the Authorization Contexts within their respective groups
+	//
+	AuthService.prototype.loadAuthorizationContextGroups = function(callback) {
+
+		return authContextGroupServicePersistence.findAll().asCallback(callback);
 	};
 
 	//
@@ -68,11 +81,11 @@ var createInstance = function(authContextServiceReference, roleServiceReference)
 	return new AuthService();
 };
 
-module.exports.create = function(authContextPersist, rolePersist){
+module.exports.create = function(authContextPersist, authContextGroupPersist, rolePersist){
 	// if the instance does not exist, create it
 	if ( !_.isObject(authServiceInstance) ) {
 		// authServiceInstance = new AuthService(aDAO);
-		authServiceInstance = createInstance(authContextPersist, rolePersist);
+		authServiceInstance = createInstance(authContextPersist, authContextGroupPersist, rolePersist);
 	}
 	return authServiceInstance;
 };

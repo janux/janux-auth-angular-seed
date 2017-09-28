@@ -9,6 +9,9 @@ var Role = require('janux-authorize').Role;
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
 var daoFactory = require('janux-persist').DaoFactory;
 var AuthContextService = require('janux-persist').AuthContextService;
+var AuthContextGroupService = require('janux-persist').AuthContextGroupServiceImpl;
+var GroupService = require('janux-persist').GroupServiceImpl;
+var GroupImpl = require('janux-persist').GroupImpl;
 var RoleService = require('janux-persist').RoleService;
 
 var AuthGenerator = (function () {
@@ -20,7 +23,12 @@ var AuthGenerator = (function () {
         
         var authContextDao = daoFactory.createAuthContextDao(dbEngine, path);
         var roleDao = daoFactory.createRoleDao(dbEngine, path);
-        var authContextService = AuthContextService.createInstance(authContextDao);
+		var groupContentDao = daoFactory.createGroupContentDao(dbEngine, path);
+		var groupDao = daoFactory.createGroupDao(dbEngine, path);
+		var groupAttributeValueDao = daoFactory.createGroupAttributesDao(dbEngine, path);
+		var groupService = new GroupService(groupDao, groupContentDao, groupAttributeValueDao);
+		var authContextService = AuthContextService.createInstance(authContextDao);
+		var authContextGroupService = new AuthContextGroupService(authContextService, groupService);
 		var roleService = RoleService.createInstance(roleDao);
 
 		var authDataToInsert = this.generateAuthData();
@@ -29,20 +37,45 @@ var AuthGenerator = (function () {
 
 			// Wait for lokijs to initialize
 			setTimeout(function() {
-				var insertedAuth = [];
+				var authContextToInsert = [],
+					roleToInsert = [];
 
 				for(var iContext in authDataToInsert.authorizationContexts){
-					insertedAuth.push(
+					authContextToInsert.push(
 						authContextService.insert(authDataToInsert.authorizationContexts[iContext].toJSON())
 					);
 				}
 
 				for(var iRole in authDataToInsert.roles){
-					insertedAuth.push(
+					roleToInsert.push(
 						roleService.insert(authDataToInsert.roles[iRole].toJSON())
 					);
 				}
-				resolve(Promise.all(insertedAuth));
+
+				return Promise.all(authContextToInsert).then(function (insertedAuthContext) {
+					// Create Authorization context group
+					var groupToInsert = [];
+					var iContext = [[0,1],[2,3]];
+
+					for(var iACGroup in authDataToInsert.authContextGroup) {
+						var group = new GroupImpl();
+						group.name = authDataToInsert.authContextGroup[iACGroup].name;
+						group.description = authDataToInsert.authContextGroup[iACGroup].description;
+						group.code = authDataToInsert.authContextGroup[iACGroup].code;
+						group.attributes = {parent: "root"};
+						group.values = [
+							insertedAuthContext[iContext[iACGroup][0]],
+							insertedAuthContext[iContext[iACGroup][1]]
+						];
+						groupToInsert.push( authContextGroupService.insert(group) );
+					}
+
+					return Promise.all(groupToInsert).then(function () {
+						return Promise.all(roleToInsert).then(function (insertedRole) {
+							resolve(insertedAuthContext.concat(insertedRole));
+						});
+					});
+				});
 			},10);
 		});
 
@@ -59,6 +92,19 @@ var AuthGenerator = (function () {
 		// Defining the AuthorizationContexts programatically
 		//
 		authData.authorizationContexts = {};
+
+		authData.authContextGroup = [
+			{
+				name: 'People',
+				description: 'Grouping authorization contexts related to people',
+				code: 'PEOPLE'
+			},
+			{
+				name: 'Security',
+				description: 'Grouping authorization contexts related to security',
+				code: 'SECURITY'
+			}
+		];
 
 		var standardPermissionBits = ['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE'];
 

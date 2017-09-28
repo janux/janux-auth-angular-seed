@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = [
-'$scope','authContexts', function(
- $scope , authContexts) {
+'$scope','authContextGroups', function(
+ $scope , authContextGroups) {
 
-		$scope.authContexts =  authContexts;
-		console.log('authContexts', authContexts);
+		$scope.authContextGroups = authContextGroups;
+		console.log('authContextGroups', authContextGroups);
 }];

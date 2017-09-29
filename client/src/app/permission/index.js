@@ -33,30 +33,43 @@ require('angular').module('appPermissions', [
 			resolve: {
 				permissionBits: ['authService', function(authService){
 					return authService.loadPermissionBits();
+				}],
+				groupsList: ['authService', function (authService) {
+					return authService.loadAuthorizationContextGroupsList();
 				}]
 			},
 			controller: require('./create-auth-context.js')
 		})
 		.state('permissions.edit-auth-context', {
-			url: '/edit-auth-context/{contextName}',
+			url: '/edit-auth-context/{contextGroupCode}/{contextName}',
 			templateUrl: 'app/permission/auth-context.html',
 			authRequired: true,
 			resolve: {
 				authContext: ['authService','$stateParams', function(authService, $stateParams){
 					return authService.loadAuthorizationContextByName($stateParams.contextName);
+				}],
+				groupsList: ['authService', function (authService) {
+					return authService.loadAuthorizationContextGroupsList();
 				}]
 			},
 			controller: require('./edit-auth-context.js')
 		})
-		.state('permissions.create-perm-bit', {
-			url: '/create-permission-bit',
-			templateUrl: 'app/permission/create-perm-bit.html',
+		.state('permissions.create-auth-context-group', {
+			url: '/create-auth-context-group',
+			templateUrl: 'app/permission/auth-context-group.html',
 			authRequired: true,
-			resolve: {}
-			//
-			// TODO: Implement permission bits CRUD functionality
-			// controller: ['$scope', function($scope){
-			//
-			// }]
+			resolve: {},
+			controller: require('./create-auth-context-group.js')
+		})
+		.state('permissions.edit-auth-context-group', {
+			url: '/edit-auth-context-group/{authContextGroupCode}',
+			templateUrl: 'app/permission/auth-context-group.html',
+			authRequired: true,
+			resolve: {
+				group: ['authService','$stateParams', function (authService, $stateParams) {
+					return authService.loadAuthorizationContextGroup($stateParams.authContextGroupCode);
+				}]
+			},
+			controller: require('./edit-auth-context-group.js')
 		});
 }]);

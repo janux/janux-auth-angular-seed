@@ -13,7 +13,7 @@
 							tr
 								td.name {{ authContextGroup.name }}
 								td.options
-									a(ui-sref='permissions.edit-auth-context-group({authContextGroupName: authContextGroup.name})')
+									a(ui-sref='permissions.edit-auth-context-group({authContextGroupCode: authContextGroup.code})')
 										img(src='/img/edit.png')
 									//| &nbsp;&nbsp;
 									//img(src='/img/delete.png')
@@ -33,16 +33,16 @@
 											td.bits
 												span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
 											td.options
-												a(ui-sref='permissions.edit-auth-context({contextName: authContext.name})')
+												a(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
 													img(src='/img/edit.png')
 												| &nbsp;&nbsp;
-												img(src='/img/delete.png')
+												img(src='/img/delete.png' ng-click='deleteAuthContext(authContextGroup.code, authContext.name)')
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')
 			img(src='/img/add.png')
 			| Add Authorization Context
 		p
-			a.link.primary(ui-sref='permissions.create-display-group')
+			a.link.primary(ui-sref='permissions.create-auth-context-group')
 				img(src='/img/add.png')
 				| Add Display Group

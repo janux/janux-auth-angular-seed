@@ -1,0 +1,30 @@
+login-toolbar(title='permission.title')
+include toolbar
+
+.container
+	side-bar
+
+	.maincolumn
+		.title-bar
+			.title {{ 'permission.authContextGroup' | translate }}
+			.options
+				a(ng-click='cancel()')
+					img(src='/img/cancel.png')
+					| &nbsp; Cancel
+				a(ng-click='saveAuthContextGroup()')
+					img(src='/img/save.png')
+					| &nbsp; Save
+		hr
+
+		form(name='authContextGroupForm')
+
+			table.table.context-form
+				tr
+					td: label(for='authContextGroupName') Name:
+					td: input#authContextGroupName.form-control(type='text' ng-model='contextGroupName' name='name' required='')
+				tr
+					td: label(for='authContextGroupCode') Code:
+					td: input#authContextGroupCode.form-control(type='text' ng-model='contextGroupCode' name='code' required='')
+				tr
+					td: label(for='authContextGroupDesc') Description:
+					td: input#authContextGroupDesc.form-control(type='text' ng-model='contextGroupDesc' name='description' required='')

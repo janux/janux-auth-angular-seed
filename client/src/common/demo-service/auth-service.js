@@ -42,12 +42,95 @@ function( $q ,  $http){
 			});
 		},
 
+		// Load authorization contexts groups list
+		loadAuthorizationContextGroupsList: function()
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadAuthorizationContextGroupsList'
+			).then(function(resp) {
+				return resp.data.result;
+			});
+		},
+
 		loadAuthorizationContextByName: function(contextName)
 		{
 			return $http.jsonrpc(
 				'/rpc/2.0/auth',
 				'loadAuthorizationContextByName',
 				[ contextName ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		insertAuthorizationContext: function(contextGroupCode, contextObject)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'insertAuthorizationContext',
+				[ contextGroupCode, contextObject ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		updateAuthorizationContext: function(name, contextGroupCode, modifiedContext)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'updateAuthorizationContext',
+				[ name, contextGroupCode, modifiedContext ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		deleteAuthorizationContextByName: function(groupCode, contextName)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'deleteAuthorizationContextByName',
+				[ groupCode, contextName ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		loadAuthorizationContextGroup: function(contextGroupCode)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'loadAuthorizationContextGroup',
+				[ contextGroupCode ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		insertAuthorizationContextGroup: function(contextGroupObject)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'insertAuthorizationContextGroup',
+				[ contextGroupObject ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		updateAuthorizationContextGroup: function(code, contextGroupObject)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/auth',
+				'updateAuthorizationContextGroup',
+				[ code, contextGroupObject ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
 				return resp.data.result;

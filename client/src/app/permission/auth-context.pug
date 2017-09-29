@@ -11,7 +11,7 @@ include toolbar
 				a(ng-click='cancel()')
 					img(src='/img/cancel.png')
 					| &nbsp; Cancel
-				a(ng-click='createAuthContext()')
+				a(ng-click='saveAuthContext()')
 					img(src='/img/save.png')
 					| &nbsp; Save
 		hr
@@ -27,7 +27,7 @@ include toolbar
 					td: input#authContextRep.form-control(type='text' ng-model='contextDesc' name='description' required='')
 				tr
 					td: label(for='authContextGroup') Display Group:
-					td: select#authContextGroup.form-control(ng-model='contextGroup' required='')
+					td: select#authContextGroup.form-control(ng-model='contextGroupCode' ng-options='group.code as group.name for group in groupsList' required='')
 
 		table.table.table-condensed.context-form
 			tr
@@ -37,7 +37,7 @@ include toolbar
 			tr(ng-repeat='permBit in permissionBits')
 				td {{ $index+1 }}
 				td
-					input.form-control(type='text' ng-model='permBit' required='')
+					input.form-control(type='text' ng-model='permissionBits[$index]' required='')
 				td
 					span.glyphicon.glyphicon-remove-circle(ng-click='removeBit($index)')
 				//td: input.form-control(type='text' ng-model='permBit.description')

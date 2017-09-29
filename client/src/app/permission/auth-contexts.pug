@@ -36,7 +36,7 @@
 												a(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
 													img(src='/img/edit.png')
 												| &nbsp;&nbsp;
-												img(src='/img/delete.png' ng-click='deleteAuthContext(authContextGroup.code, authContext.name)')
+												img(src='/img/delete.png' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')

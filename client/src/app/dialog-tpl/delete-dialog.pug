@@ -1,0 +1,7 @@
+.modal-body
+	h4 Are you sure to delete the {{ targetDescr }}?
+
+.modal-footer
+
+	button.btn.btn-ok(ng-click='ok()') {{ 'label.yes' | translate }}
+	button.btn.btn-cancel(ng-click='cancel()') {{ 'label.no' | translate }}

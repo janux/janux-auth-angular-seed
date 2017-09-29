@@ -1,5 +1,7 @@
 {
 	"label": {
+		"no": 		"No",
+		"yes": 		"Yes",
 		"cancel":   "Cancel",
 		"clear":    "Clear",
 		"email":    "E-mail",

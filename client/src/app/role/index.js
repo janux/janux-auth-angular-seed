@@ -21,8 +21,8 @@ require('angular').module('appRoles', [
 		templateUrl: 'app/role/index.html',
 		authRequired: true,
 		resolve: {
-			roles: ['authService', function(authService) {
-				return authService.loadRoles();
+			roles: ['roleService', function(roleService) {
+				return roleService.findAll();
 			}]
 		},
 		controller: require('./roles-controller')
@@ -32,13 +32,13 @@ require('angular').module('appRoles', [
 		templateUrl: 'app/role/edit-role.html',
 		authRequired: true,
 		resolve: {
-			authContexts: ['authService', function(authService){
-				return authService.loadAuthorizationContexts().then(function (response) {
+			authContexts: ['authContextService', function(authContextService){
+				return authContextService.findAll().then(function (response) {
 					return _.values(response);
 				});
 			}],
-			role: ['authService','$stateParams', function(authService, $stateParams) {
-				return authService.loadRoleByName($stateParams.roleName);
+			role: ['roleService','$stateParams', function(roleService, $stateParams) {
+				return roleService.findOneByName($stateParams.roleName);
 			}]
 		},
 		controller: require('./role-edit-controller')
@@ -48,8 +48,8 @@ require('angular').module('appRoles', [
 		templateUrl: 'app/role/create-role.html',
 		authRequired: true,
 		resolve: {
-			authContexts: ['authService', function(authService){
-				return authService.loadAuthorizationContexts().then(function (response) {
+			authContexts: ['authContextService', function(authContextService){
+				return authContextService.findAll().then(function (response) {
 					return _.values(response);
 				});
 			}]

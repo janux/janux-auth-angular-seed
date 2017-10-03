@@ -9,6 +9,10 @@ module.exports = [
 		}
 	}
 
+	$scope.cancel = function () {
+		window.history.back();
+	};
+
 	$scope.role = role;
 	$scope.authContexts = authContexts;
 

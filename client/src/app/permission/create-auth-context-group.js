@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = [
-'$scope','authService','$state', function(
- $scope , authService , $state) {
+'$scope','authContextService','$state', function(
+ $scope , authContextService , $state) {
 
 	$scope.contextGroupName = '';
 	$scope.contextGroupCode = '';
@@ -21,7 +21,7 @@ module.exports = [
 				description: $scope.contextGroupDesc
 			};
 
-			authService.insertAuthorizationContextGroup(group)
+			authContextService.insertGroup(group)
 				.then(function () {
 					$state.go('permissions.auth-contexts');
 				});

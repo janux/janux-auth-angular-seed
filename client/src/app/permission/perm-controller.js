@@ -1,20 +1,20 @@
 'use strict';
 
 module.exports = [
-'$scope','authContextGroups','authService','$state','$modal', function(
- $scope , authContextGroups , authService , $state , $modal) {
+'$scope','authContextGroups','authContextService','$state','$modal', function(
+ $scope , authContextGroups , authContextService , $state , $modal) {
 
 	$scope.authContextGroups = authContextGroups;
 	// console.log('authContextGroups', authContextGroups);
 
 	var deleteAuthContext = function (groupCode, name) {
-		return 	authService.deleteAuthorizationContextByName(groupCode, name)
+		return 	authContextService.deleteByName(groupCode, name)
 			.then(function () {
 				$state.go($state.current, {}, {reload: true});
 			});
 	};
 
-	var deleteWidgetCtrl = ['$scope','$modalInstance', 'data',
+	var deleteContextCtrl = ['$scope','$modalInstance', 'data',
 					function($scope , $modalInstance, data) {
 		$scope.targetDescr = 'Authorization Context: '+data.name;
 
@@ -31,7 +31,7 @@ module.exports = [
 	$scope.openDeleteAuthContextDialog = function(groupCode, name){
 		$modal.open({
 			templateUrl: 'app/dialog-tpl/delete-dialog.html',
-			controller: deleteWidgetCtrl,
+			controller: deleteContextCtrl,
 			size: 'md',
 			resolve: {
 				data: function () {

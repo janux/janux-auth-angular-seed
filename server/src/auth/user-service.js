@@ -6,7 +6,7 @@ var
 	log4js      = require('log4js'),
 	util        = require('util'),
 	md5         = require('md5'),
-	AuthService = require('../api/index').AuthService,
+	RoleService = require('../api/index').RoleService,
 	UserPersistenceService = require('../api/index').UserPersistenceService,
 	log         = log4js.getLogger('Auth UserService');
 
@@ -59,13 +59,13 @@ var service = {
 			} else if (_.isObject(user) && user.password === md5(password)) {
 
 				user.roles = _.map(user.roles, function (role) {
-					return AuthService.loadRoleByName(role)
+					return RoleService.findOneByName(role)
 				});
 				Promise.all(user.roles).then(function (roles) {
 					user.roles = roles;
 					return done(null, user);
 				});
-				// AuthService.loadRoleByName(user.role).then(function(role) {
+				// RoleService.findOneByName(user.role).then(function(role) {
 				// 	user.roles = role;
 				// 	return done(null, user);
 				// });

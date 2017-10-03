@@ -4,8 +4,8 @@
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
 
 module.exports = [
-	    '$scope','permissionBits','groupsList','authService','$state',
-function($scope , permissionBits , groupsList , authService , $state){
+	    '$scope','permissionBits','groupsList','authContextService','$state',
+function($scope , permissionBits , groupsList , authContextService , $state){
 
 	// console.log('permissionBits', permissionBits);
 	// console.log('groupsList', groupsList);
@@ -25,7 +25,7 @@ function($scope , permissionBits , groupsList , authService , $state){
 			if($scope.permissionBits.length > 0){
 				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, $scope.permissionBits);
 
-				authService.insertAuthorizationContext($scope.contextGroupCode, authContext.toJSON())
+				authContextService.insert($scope.contextGroupCode, authContext.toJSON())
 					.then(function () {
 						$state.go('permissions.auth-contexts');
 					});

@@ -12,7 +12,7 @@ function( $q ,  $http){
 		loadPermissionBits: function()
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
+				'/rpc/2.0/authContext',
 				'loadPermissionBits'
 			).then(function(resp) {
 				var out = resp.data.result;
@@ -20,44 +20,44 @@ function( $q ,  $http){
 			});
 		},
 
-		// Load available authorization contexts
-		loadAuthorizationContexts: function()
+		// Load available authContextorization contexts
+		findAll: function()
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadAuthorizationContexts'
+				'/rpc/2.0/authContext',
+				'findAll'
 			).then(function(resp) {
 				return resp.data.result;
 			});
 		},
 
-		// Load available authorization contexts within their respective groups
-		loadAuthorizationContextGroups: function()
+		// Load available authContextorization contexts within their respective groups
+		findGroups: function()
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadAuthorizationContextGroups'
+				'/rpc/2.0/authContext',
+				'findGroups'
 			).then(function(resp) {
 				return resp.data.result;
 			});
 		},
 
-		// Load authorization contexts groups list
-		loadAuthorizationContextGroupsList: function()
+		// Load authContextorization contexts groups list
+		findGroupsList: function()
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadAuthorizationContextGroupsList'
+				'/rpc/2.0/authContext',
+				'findGroupsList'
 			).then(function(resp) {
 				return resp.data.result;
 			});
 		},
 
-		loadAuthorizationContextByName: function(contextName)
+		findOneByName: function(contextName)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadAuthorizationContextByName',
+				'/rpc/2.0/authContext',
+				'findOneByName',
 				[ contextName ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -65,11 +65,11 @@ function( $q ,  $http){
 			});
 		},
 
-		insertAuthorizationContext: function(contextGroupCode, contextObject)
+		insert: function(contextGroupCode, contextObject)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'insertAuthorizationContext',
+				'/rpc/2.0/authContext',
+				'insert',
 				[ contextGroupCode, contextObject ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -77,11 +77,11 @@ function( $q ,  $http){
 			});
 		},
 
-		updateAuthorizationContext: function(name, contextGroupCode, modifiedContext)
+		update: function(name, contextGroupCode, modifiedContext)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'updateAuthorizationContext',
+				'/rpc/2.0/authContext',
+				'update',
 				[ name, contextGroupCode, modifiedContext ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -89,11 +89,11 @@ function( $q ,  $http){
 			});
 		},
 
-		deleteAuthorizationContextByName: function(groupCode, contextName)
+		deleteByName: function(groupCode, contextName)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'deleteAuthorizationContextByName',
+				'/rpc/2.0/authContext',
+				'deleteByName',
 				[ groupCode, contextName ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -101,11 +101,11 @@ function( $q ,  $http){
 			});
 		},
 
-		loadAuthorizationContextGroup: function(contextGroupCode)
+		findGroupByCode: function(contextGroupCode)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadAuthorizationContextGroup',
+				'/rpc/2.0/authContext',
+				'findGroupByCode',
 				[ contextGroupCode ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -113,11 +113,11 @@ function( $q ,  $http){
 			});
 		},
 
-		insertAuthorizationContextGroup: function(contextGroupObject)
+		insertGroup: function(contextGroupObject)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'insertAuthorizationContextGroup',
+				'/rpc/2.0/authContext',
+				'insertGroup',
 				[ contextGroupObject ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
@@ -125,39 +125,15 @@ function( $q ,  $http){
 			});
 		},
 
-		updateAuthorizationContextGroup: function(code, contextGroupObject)
+		updateGroup: function(code, contextGroupObject)
 		{
 			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'updateAuthorizationContextGroup',
+				'/rpc/2.0/authContext',
+				'updateGroup',
 				[ code, contextGroupObject ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
 				return resp.data.result;
-			});
-		},
-
-		loadRoles: function () {
-			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadRoles'
-			).then(function(resp) {
-				return resp.data.result;
-			});
-		},
-
-		loadRoleByName: function (roleName) {
-			return $http.jsonrpc(
-				'/rpc/2.0/auth',
-				'loadRoleByName',
-				[ roleName ]
-			).then(function(resp) {
-				var role = resp.data.result;
-				// Index by name
-				role.authContexts = _.mapKeys(role.authContexts, function (authC) {
-					return authC.name;
-				});
-				return role;
 			});
 		}
 	};

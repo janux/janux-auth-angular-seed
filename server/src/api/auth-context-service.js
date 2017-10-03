@@ -5,63 +5,60 @@ var Promise = require('bluebird');
 var GroupImpl = require('janux-persist').GroupImpl;
 
 var log4js      = require('log4js'),
-	log         = log4js.getLogger('AuthService');
+	log         = log4js.getLogger('AuthContextService');
 
 // variable to hold the singleton instance, if used in that manner
-var authServiceInstance = undefined;
+var authContextServiceInstance = undefined;
 var authContextServicePersistence = undefined;
 var authContextGroupServicePersistence = undefined;
-var roleServicePersistence = undefined;
 
 var createInstance = function(authContextServiceReference,
-							  authContextGroupServiceReference,
-							  roleServiceReference) {
+							  authContextGroupServiceReference) {
 
 	authContextServicePersistence = authContextServiceReference;
 	authContextGroupServicePersistence = authContextGroupServiceReference;
-	roleServicePersistence = roleServiceReference;
 
 	// Constructor
-	function AuthService() {
+	function AuthContextService() {
 		// authDAO.call(this);
 	}
 
-	AuthService.prototype = Object.create(null);
-	AuthService.prototype.constructor = AuthService;
+	AuthContextService.prototype = Object.create(null);
+	AuthContextService.prototype.constructor = AuthContextService;
 
 	//
 	// Return a promise that resolves to and array of the standard permission bits
 	// TODO: Temporary solution, instead of this method we need to implement the
 	// templates to create authorization contexts
 	//
-	AuthService.prototype.loadPermissionBits = function(callback) {
+	AuthContextService.prototype.loadPermissionBits = function(callback) {
 
 		return Promise.resolve(['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE']).asCallback(callback);
 	};
 
 	//
-	// Returns a promise that resolves to a dictionary of the Authorization Contexts
-	// that make up the Authorization Scheme for an application. The keys of the map
-	// are the names of each AuthorizationContext.
+	// Returns a promise that resolves to a dictionary of the AuthContextorization Contexts
+	// that make up the AuthContextorization Scheme for an application. The keys of the map
+	// are the names of each AuthContextorizationContext.
 	//
-	AuthService.prototype.loadAuthorizationContexts = function(callback) {
+	AuthContextService.prototype.findAll = function(callback) {
 
 		return authContextServicePersistence.findAll().asCallback(callback);
 	};
 
 
 	//
-	// Returns Array of the Authorization Context Groups
+	// Returns Array of the AuthContextorization Context Groups
 	//
-	AuthService.prototype.loadAuthorizationContextGroups = function(callback) {
+	AuthContextService.prototype.findGroups = function(callback) {
 
 		return authContextGroupServicePersistence.findAll().asCallback(callback);
 	};
 
 	//
-	// Returns a dictionary of the Authorization Contexts within their respective groups
+	// Returns a dictionary of the AuthContextorization Contexts within their respective groups
 	//
-	AuthService.prototype.loadAuthorizationContextGroupsList = function(callback) {
+	AuthContextService.prototype.findGroupsList = function(callback) {
 
 		return authContextGroupServicePersistence.findGroupProperties().asCallback(callback);
 	};
@@ -69,7 +66,7 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Returns a promise that resolves to a single authorizationContext
 	//
-	AuthService.prototype.loadAuthorizationContextByName = function(name, callback) {
+	AuthContextService.prototype.findOneByName = function(name, callback) {
 
 		return authContextServicePersistence.findOneByName(name).then(function (result) {
 			return result.toJSON();
@@ -79,14 +76,14 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Insert an authorization context in their respective group
 	//
-	AuthService.prototype.insertAuthorizationContext = function(authContextGroupCode, authContext, callback) {
+	AuthContextService.prototype.insert = function(authContextGroupCode, authContext, callback) {
 
-		// Insert the Authorization Context
+		// Insert the AuthContextorization Context
 		return authContextServicePersistence.insert(authContext)
-			.then(function (insertedAuthContext) {
+			.then(function (insertedAuthContextContext) {
 				// Add the authorization context reference to the corresponding group
 				return authContextGroupServicePersistence.addItem(
-					authContextGroupCode, insertedAuthContext
+					authContextGroupCode, insertedAuthContextContext
 				).asCallback(callback);
 			});
 	};
@@ -94,7 +91,7 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Insert an authorization context in their respective group
 	//
-	AuthService.prototype.updateAuthorizationContext = function(name, groupCode, authContextObject, callback) {
+	AuthContextService.prototype.update = function(name, groupCode, authContextObject, callback) {
 
 		return authContextServicePersistence.findOneByName(name)
 			.then(function (authContext) {
@@ -118,9 +115,9 @@ var createInstance = function(authContextServiceReference,
 	};
 
 	//
-	// Delete one Authorization Context By Name, and delete the reference in the corresponding group
+	// Delete one AuthContextorization Context By Name, and delete the reference in the corresponding group
 	//
-	AuthService.prototype.deleteAuthorizationContextByName = function(groupCode, name, callback) {
+	AuthContextService.prototype.deleteByName = function(groupCode, name, callback) {
 
 		return authContextServicePersistence.findOneByName(name)
 			.then(function (authContext) {
@@ -134,7 +131,7 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Insert one authorization context group
 	//
-	AuthService.prototype.insertAuthorizationContextGroup = function(groupObject, callback) {
+	AuthContextService.prototype.insertGroup = function(groupObject, callback) {
 
 		var group = new GroupImpl();
 		group.name = groupObject.name;
@@ -143,21 +140,21 @@ var createInstance = function(authContextServiceReference,
 		group.attributes = {};
 		group.values = [];
 
-		// Insert the Authorization Context Group
+		// Insert the AuthContextorization Context Group
 		return authContextGroupServicePersistence.insert(group).asCallback(callback);
 	};
 
 	//
 	// Update one authorization context group
 	//
-	AuthService.prototype.updateAuthorizationContextGroup = function(code, groupObject, callback) {
+	AuthContextService.prototype.updateGroup = function(code, groupObject, callback) {
 
 		return authContextGroupServicePersistence.findOne(code).then(function (group) {
 			group.name = groupObject.name;
 			group.code = groupObject.code;
 			group.description = groupObject.description;
 
-			// Update the Authorization Context Group
+			// Update the AuthContextorization Context Group
 			return authContextGroupServicePersistence.update(group).asCallback(callback);
 		});
 	};
@@ -165,7 +162,7 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Load one authorization context group
 	//
-	AuthService.prototype.loadAuthorizationContextGroup = function(groupCode, callback) {
+	AuthContextService.prototype.findGroupByCode = function(groupCode, callback) {
 
 		return authContextGroupServicePersistence.findOne(groupCode).asCallback(callback);
 	};
@@ -173,7 +170,7 @@ var createInstance = function(authContextServiceReference,
 	//
 	// Insert one authorization context group
 	//
-	AuthService.prototype.insertAuthorizationContextGroup = function(groupObject, callback) {
+	AuthContextService.prototype.insertGroup = function(groupObject, callback) {
 
 		var group = new GroupImpl();
 		group.name = groupObject.name;
@@ -182,36 +179,18 @@ var createInstance = function(authContextServiceReference,
 		group.attributes = {};
 		group.values = [];
 
-		// Insert the Authorization Context Group
+		// Insert the AuthContextorization Context Group
 		return authContextGroupServicePersistence.insert(group).asCallback(callback);
 	};
 
-	//
-	// Returns a promise that resolves to a dictionary of the Roles defined in the
-	// Authorization Scheme; the Roles include references to the Authorization
-	// Contexts in which they have been provided with permissions
-	//
-	AuthService.prototype.loadRoles = function(callback) {
-
-		return roleServicePersistence.findAll().asCallback(callback);
-	};
-
-	//
-	// Returns a promise that resolves to a single Role
-	//
-	AuthService.prototype.loadRoleByName = function(name, callback) {
-
-		return roleServicePersistence.findOneByName(name).asCallback(callback);
-	};
-
-	return new AuthService();
+	return new AuthContextService();
 };
 
-module.exports.create = function(authContextPersist, authContextGroupPersist, rolePersist){
+module.exports.create = function(authContextPersist, authContextGroupPersist){
 	// if the instance does not exist, create it
-	if ( !_.isObject(authServiceInstance) ) {
-		// authServiceInstance = new AuthService(aDAO);
-		authServiceInstance = createInstance(authContextPersist, authContextGroupPersist, rolePersist);
+	if ( !_.isObject(authContextServiceInstance) ) {
+		// authContextServiceInstance = new AuthContextService(aDAO);
+		authContextServiceInstance = createInstance(authContextPersist, authContextGroupPersist);
 	}
-	return authServiceInstance;
+	return authContextServiceInstance;
 };

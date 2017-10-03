@@ -18,11 +18,11 @@ require('angular').module('appPermissions', [
 			authRequired: true,
 			controller: require('./perm-controller.js'),
 			resolve: {
-				permissionBits: ['authService', function(authService){
-					return authService.loadPermissionBits();
+				permissionBits: ['authContextService', function(authContextService){
+					return authContextService.loadPermissionBits();
 				}],
-				authContextGroups: ['authService', function(authService){
-					return authService.loadAuthorizationContextGroups();
+				authContextGroups: ['authContextService', function(authContextService){
+					return authContextService.findGroups();
 				}]
 			}
 		})
@@ -31,11 +31,11 @@ require('angular').module('appPermissions', [
 			templateUrl: 'app/permission/auth-context.html',
 			authRequired: true,
 			resolve: {
-				permissionBits: ['authService', function(authService){
-					return authService.loadPermissionBits();
+				permissionBits: ['authContextService', function(authContextService){
+					return authContextService.loadPermissionBits();
 				}],
-				groupsList: ['authService', function (authService) {
-					return authService.loadAuthorizationContextGroupsList();
+				groupsList: ['authContextService', function (authContextService) {
+					return authContextService.findGroupsList();
 				}]
 			},
 			controller: require('./create-auth-context.js')
@@ -45,11 +45,11 @@ require('angular').module('appPermissions', [
 			templateUrl: 'app/permission/auth-context.html',
 			authRequired: true,
 			resolve: {
-				authContext: ['authService','$stateParams', function(authService, $stateParams){
-					return authService.loadAuthorizationContextByName($stateParams.contextName);
+				authContext: ['authContextService','$stateParams', function(authContextService, $stateParams){
+					return authContextService.findOneByName($stateParams.contextName);
 				}],
-				groupsList: ['authService', function (authService) {
-					return authService.loadAuthorizationContextGroupsList();
+				groupsList: ['authContextService', function (authContextService) {
+					return authContextService.findGroupsList();
 				}]
 			},
 			controller: require('./edit-auth-context.js')
@@ -66,8 +66,8 @@ require('angular').module('appPermissions', [
 			templateUrl: 'app/permission/auth-context-group.html',
 			authRequired: true,
 			resolve: {
-				group: ['authService','$stateParams', function (authService, $stateParams) {
-					return authService.loadAuthorizationContextGroup($stateParams.authContextGroupCode);
+				group: ['authContextService','$stateParams', function (authContextService, $stateParams) {
+					return authContextService.findGroupByCode($stateParams.authContextGroupCode);
 				}]
 			},
 			controller: require('./edit-auth-context-group.js')

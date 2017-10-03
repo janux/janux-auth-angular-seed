@@ -21,10 +21,12 @@ var config                 = require('config'),
 	AuthContextGroupPersistService = new AuthContextGroupService(AuthContextPersistService,GroupPersistService),
 	RolePersistService 	   = RolePersistence.createInstance(RoleDAO),
 	UserService            = require('./user-service'),
-	AuthService            = require('./authorization-service');
+	AuthContextService 	   = require('./auth-context-service'),
+	RoleService			   = require('./role-service');
 
 module.exports = {
 	UserService: UserService.create(UserPersistenceService),
-	AuthService: AuthService.create(AuthContextPersistService,AuthContextGroupPersistService, RolePersistService),
+	AuthContextService: AuthContextService.create(AuthContextPersistService,AuthContextGroupPersistService),
+	RoleService: RoleService.create(RolePersistService),
 	UserPersistenceService: UserPersistenceService
 };

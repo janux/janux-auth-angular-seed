@@ -1,13 +1,17 @@
 'use strict';
 
 module.exports = [
-	'$scope', 'authContexts', function($scope, authContexts) {
+'$scope', 'authContexts', function($scope, authContexts) {
 
-		$scope.authContexts = authContexts;
+	$scope.authContexts = authContexts;
 
-		console.log('Authoization Contexts', authContexts);
+	$scope.cancel = function () {
+		window.history.back();
+	};
 
-		$scope.createRole = function () {
-			// TODO: Implement functionality to create a role
-		};
-	}];
+	console.log('Authoization Contexts', authContexts);
+
+	$scope.createRole = function () {
+		// TODO: Implement functionality to create a role
+	};
+}];

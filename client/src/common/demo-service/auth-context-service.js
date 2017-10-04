@@ -135,6 +135,18 @@ function( $q ,  $http){
 				console.log('resp.data.result', resp.data.result);
 				return resp.data.result;
 			});
+		},
+
+		removeGroup: function(code)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/authContext',
+				'removeGroup',
+				[ code ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

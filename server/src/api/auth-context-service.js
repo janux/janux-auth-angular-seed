@@ -183,6 +183,15 @@ var createInstance = function(authContextServiceReference,
 		return authContextGroupServicePersistence.insert(group).asCallback(callback);
 	};
 
+	//
+	// Delete one authorization context group by code
+	//
+	AuthContextService.prototype.removeGroup = function(groupCode, callback) {
+
+		// Remove the AuthContextorization Context Group
+		return authContextGroupServicePersistence.remove(groupCode).asCallback(callback);
+	};
+
 	return new AuthContextService();
 };
 

@@ -15,8 +15,9 @@
 								td.options
 									a(ui-sref='permissions.edit-auth-context-group({authContextGroupCode: authContextGroup.code})')
 										img(src='/img/edit.png')
-									//| &nbsp;&nbsp;
-									//img(src='/img/delete.png')
+									| &nbsp;&nbsp;
+									a(href='#' ng-click='openDeleteAuthContextGroupDialog(authContextGroup)')
+										img(src='/img/delete.png')
 
 				// Draggable Authorization Context list
 				.drag-n-drop
@@ -36,7 +37,8 @@
 												a(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
 													img(src='/img/edit.png')
 												| &nbsp;&nbsp;
-												img(src='/img/delete.png' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
+												a(href='#' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
+													img(src='/img/delete.png')
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')

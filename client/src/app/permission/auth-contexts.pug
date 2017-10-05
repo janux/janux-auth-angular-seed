@@ -36,9 +36,14 @@
 											td.options
 												a(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
 													img(src='/img/edit.png')
+
 												| &nbsp;&nbsp;
 												a(href='#' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
 													img(src='/img/delete.png')
+
+												| &nbsp;
+												a(ui-sref='permissions.copy-auth-context({copyFromContext: authContext.name})')
+													span.entypo.entypo-docs
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')

@@ -4,17 +4,17 @@
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
 
 module.exports = [
-	    '$scope','permissionBits','groupsList','authContextService','$state',
-function($scope , permissionBits , groupsList , authContextService , $state){
+	    '$scope','groupsList','authContextService','$state',
+function($scope , groupsList , authContextService , $state){
 
-	// console.log('permissionBits', permissionBits);
 	// console.log('groupsList', groupsList);
 
-	$scope.permissionBits = permissionBits;
+	$scope.permissionBits = [''];
 	$scope.contextName = '';
 	$scope.contextDesc = '';
 	$scope.contextGroupCode = groupsList[0].code;
 	$scope.groupsList = groupsList;
+	$scope.creating = true;
 
 	$scope.cancel = function () {
 		window.history.back();

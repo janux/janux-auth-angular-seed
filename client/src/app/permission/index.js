@@ -31,14 +31,25 @@ require('angular').module('appPermissions', [
 			templateUrl: 'app/permission/auth-context.html',
 			authRequired: true,
 			resolve: {
-				permissionBits: ['authContextService', function(authContextService){
-					return authContextService.loadPermissionBits();
+				groupsList: ['authContextService', function (authContextService) {
+					return authContextService.findGroupsList();
+				}]
+			},
+			controller: require('./create-auth-context')
+		})
+		.state('permissions.copy-auth-context', {
+			url: '/copy-auth-context/{copyFromContext}',
+			templateUrl: 'app/permission/auth-context.html',
+			authRequired: true,
+			resolve: {
+				authContext: ['authContextService','$stateParams', function(authContextService, $stateParams){
+					return authContextService.findOneByName($stateParams.copyFromContext);
 				}],
 				groupsList: ['authContextService', function (authContextService) {
 					return authContextService.findGroupsList();
 				}]
 			},
-			controller: require('./create-auth-context.js')
+			controller: require('./edit-auth-context')
 		})
 		.state('permissions.edit-auth-context', {
 			url: '/edit-auth-context/{contextGroupCode}/{contextName}',
@@ -52,7 +63,7 @@ require('angular').module('appPermissions', [
 					return authContextService.findGroupsList();
 				}]
 			},
-			controller: require('./edit-auth-context.js')
+			controller: require('./edit-auth-context')
 		})
 		.state('permissions.create-auth-context-group', {
 			url: '/create-auth-context-group',
@@ -70,6 +81,6 @@ require('angular').module('appPermissions', [
 					return authContextService.findGroupByCode($stateParams.authContextGroupCode);
 				}]
 			},
-			controller: require('./edit-auth-context-group.js')
+			controller: require('./edit-auth-context-group')
 		});
 }]);

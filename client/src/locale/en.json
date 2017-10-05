@@ -51,6 +51,8 @@
 		"title": "Authorization Schema",
 		"authContexts": "Authorization Contexts",
 		"createContext": "Create Authorization Context",
+		"editContext": "Edit Authorization Context",
+		"copyContext": "Create Authorization Context from ",
 		"updatingRole": "Updating Role:",
 		"createRole": "Create Role:",
 		"authContextGroup": "Authorization Context Group"

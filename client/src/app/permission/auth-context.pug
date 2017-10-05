@@ -6,7 +6,9 @@ include toolbar
 
 	.maincolumn
 		.title-bar
-			.title {{ 'permission.createContext' | translate }}
+			.title(ng-show='creating') {{ 'permission.createContext' | translate }}
+			.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
+			.title(ng-show='editing') {{ 'permission.editContext' | translate }}
 			.options
 				a(ng-click='cancel()')
 					img(src='/img/cancel.png')

@@ -40,6 +40,45 @@ var createInstance = function(roleServiceReference) {
 		return roleServicePersistence.findOneByName(name).asCallback(callback);
 	};
 
+	//
+	// Insert a role
+	//
+	RoleService.prototype.insert = function(role, callback) {
+
+		// Insert the Role
+		return roleServicePersistence.insert(role).asCallback(callback);
+	};
+
+	//
+	// Update a role
+	//
+	RoleService.prototype.update = function(name, roleObject, callback) {
+
+		return roleServicePersistence.findOneByName(name)
+			.then(function (role) {
+				// Ensure that only the name, description, and bit list fields are updated
+				var roleToUpdate = role.toJSON();
+
+				roleToUpdate.id = role.id;
+				roleToUpdate.name = roleObject.name;
+				roleToUpdate.description = roleObject.description;
+				roleToUpdate.authContexts = roleObject.authContexts;
+				roleToUpdate.permissions = roleObject.permissions;
+
+				// log.info("Update role %j ",roleToUpdate);
+				// Save the role
+				return roleServicePersistence.update(roleToUpdate).asCallback(callback);
+			});
+	};
+
+	//
+	// Delete one role by name
+	//
+	RoleService.prototype.deleteByName = function(name, callback) {
+
+		return roleServicePersistence.deleteByName(name).asCallback(callback);
+	};
+
 	return new RoleService();
 };
 

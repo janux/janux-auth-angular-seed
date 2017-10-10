@@ -1,6 +1,6 @@
 'use strict';
 
-var  _ = require('lodash');
+// var  _ = require('lodash');
 
 require('common/demoService');
 
@@ -32,10 +32,8 @@ require('angular').module('appRoles', [
 		templateUrl: 'app/role/edit-role.html',
 		authRequired: true,
 		resolve: {
-			authContexts: ['authContextService', function(authContextService){
-				return authContextService.findAll().then(function (response) {
-					return _.values(response);
-				});
+			authContextGroups: ['authContextService', function(authContextService){
+				return authContextService.findGroups();
 			}],
 			role: ['roleService','$stateParams', function(roleService, $stateParams) {
 				return roleService.findOneByName($stateParams.roleName);
@@ -48,10 +46,8 @@ require('angular').module('appRoles', [
 		templateUrl: 'app/role/create-role.html',
 		authRequired: true,
 		resolve: {
-			authContexts: ['authContextService', function(authContextService){
-				return authContextService.findAll().then(function (response) {
-					return _.values(response);
-				});
+			authContextGroups: ['authContextService', function(authContextService){
+				return authContextService.findGroups();
 			}]
 		},
 		controller: require('./role-create-controller')

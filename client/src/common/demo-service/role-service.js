@@ -30,6 +30,42 @@ function( $q ,  $http){
 				});
 				return role;
 			});
+		},
+
+		insert: function(roleObject)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/role',
+				'insert',
+				[ roleObject ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		update: function(name, modifiedRole)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/role',
+				'update',
+				[ name, modifiedRole ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		deleteByName: function(roleName)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/role',
+				'deleteByName',
+				[ roleName ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

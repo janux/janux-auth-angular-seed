@@ -26,5 +26,5 @@
 							td.options
 								a(ui-sref='permissions.edit-role({roleName: role.name})')
 									img(src='/img/edit.png')
-								a(ng-click='deleteRole()')
+								a(ng-click='openDeleteRoleDialog(role.name)')
 									img( src='/img/delete.png')

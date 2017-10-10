@@ -18,9 +18,6 @@ require('angular').module('appPermissions', [
 			authRequired: true,
 			controller: require('./perm-controller.js'),
 			resolve: {
-				permissionBits: ['authContextService', function(authContextService){
-					return authContextService.loadPermissionBits();
-				}],
 				authContextGroups: ['authContextService', function(authContextService){
 					return authContextService.findGroups();
 				}]

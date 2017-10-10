@@ -27,16 +27,6 @@ var createInstance = function(authContextServiceReference,
 	AuthContextService.prototype.constructor = AuthContextService;
 
 	//
-	// Return a promise that resolves to and array of the standard permission bits
-	// TODO: Temporary solution, instead of this method we need to implement the
-	// templates to create authorization contexts
-	//
-	AuthContextService.prototype.loadPermissionBits = function(callback) {
-
-		return Promise.resolve(['READ', 'UPDATE', 'CREATE', 'DELETE', 'PURGE']).asCallback(callback);
-	};
-
-	//
 	// Returns a promise that resolves to a dictionary of the AuthContextorization Contexts
 	// that make up the AuthContextorization Scheme for an application. The keys of the map
 	// are the names of each AuthContextorizationContext.

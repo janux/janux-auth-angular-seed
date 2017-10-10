@@ -10,18 +10,20 @@
 			.control
 				| Enabled &nbsp;
 				input(type='checkbox' ng-model='role.enabled')
-				| &nbsp;Is Allmighty
-				input(type='checkbox' ng-model='role.isAllmighty')
+				| &nbsp;Is Almighty
+				input(type='checkbox' ng-model='role.isAlmighty')
 
 		.role-option
 			.text Description:
 			.control
-				textarea.form-control(required='') {{ role.description }}
+				textarea.form-control(required='' ng-model='role.description') {{ role.description }}
 
-	.role-permissions
+
+	.role-permissions(ng-repeat='authContextGroup in authContextGroups')
+		.group-element {{ authContextGroup.name }}
 		table.context-check-list
 			tbody
-				tr(ng-repeat='authContext in authContexts')
+				tr(ng-repeat='authContext in authContextGroup.values')
 					td.name {{ authContext.name }}
 					td.bits
 						div.bit(ng-repeat='(authName, authBit) in authContext.bit')

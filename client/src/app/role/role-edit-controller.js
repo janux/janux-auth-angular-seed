@@ -51,7 +51,9 @@ module.exports = [
 			// Get granted bits list
 			var grantedBits = [];
 			for (var grantedBit in _.values($scope.role.authContexts[contextName])[0]) {
-				grantedBits.push(grantedBit);
+				if (_.values($scope.role.authContexts[contextName])[0][grantedBit]) {
+					grantedBits.push(grantedBit);
+				}
 			}
 
 			roleToSave.grant(grantedBits, givenContext);

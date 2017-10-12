@@ -31,7 +31,7 @@ include toolbar
 					td.text-center
 						img(src='/img/edit.png' ng-click='editUser(user.userId)')
 						| &nbsp;&nbsp;&nbsp;
-						img(src='/img/delete.png' ng-click='deleteUser(user.userId)')
+						img(src='/img/delete.png' ng-click='openDeleteAuthContextDialog(user)')
 
 		.users-filter
 			form.form-inline

@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = [
-'$scope','userService','$state','users', function(
- $scope , userService , $state , users) {
+'$scope','userService','$state','users','$modal', function(
+ $scope , userService , $state , users , $modal) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
@@ -27,10 +27,37 @@ module.exports = [
 		$state.go('users.edit', { userId: userId });
 	};
 
-	$scope.deleteUser = function (userId) {
+	var deleteUser = function (userId) {
 		userService.deleteUser(userId).then(function(userDeleted) {
 			console.log('User successfully deleted', userDeleted);
-			window.history.back();
+			$state.go($state.current, {}, {reload: true});
+		});
+	};
+
+	var deleteUserCtrl = ['$scope','$modalInstance', 'data',
+		function($scope , $modalInstance, data) {
+			$scope.targetDescr = 'User: '+data.username;
+
+			$scope.ok = function() {
+				deleteUser(data.userId);
+				$modalInstance.close();
+			};
+
+			$scope.cancel = function() {
+				$modalInstance.dismiss();
+			};
+		}];
+
+	$scope.openDeleteAuthContextDialog = function(user){
+		$modal.open({
+			templateUrl: 'app/dialog-tpl/delete-dialog.html',
+			controller: deleteUserCtrl,
+			size: 'md',
+			resolve: {
+				data: function () {
+					return user;
+				}
+			}
 		});
 	};
 }];

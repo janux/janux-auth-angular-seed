@@ -7,10 +7,26 @@ var _ = require('lodash');
  * jsonrpc method that can be used to send jsonrpc requests in a manner
  * consisted with the normal $http interface
  */
-require('angular').module('jsonrpc', ['LocalStorageModule']).config(['$provide',
-	function ($provide) {
+require('angular').module('jsonrpc', ['LocalStorageModule']).config(['$provide', "$httpProvider",
+
+
+	function ($provide, $httpProvider) {
+
+		$provide.factory('jsonRPC2Interceptor', ['$q', "$rootScope", function ($q, $rootScope) {
+			return {
+				'responseError': function (rejection) {
+
+					if (rejection.status === 401 && rejection.data === 'invalid token...') {
+						console.log("Broadcasting invalid token");
+						$rootScope.$broadcast('jsonrpc', 'INVALID_TOKEN');
+					}
+					return $q.reject(rejection);
+				}
+			};
+		}]);
+
 		// console.log('enhancing $http');
-		return $provide.decorator('$http', ['$delegate', 'localStorageService', function ($delegate, localStorageService) {
+		$provide.decorator('$http', ['$delegate', 'localStorageService', function ($delegate, localStorageService) {
 
 			$delegate.jsonrpc = function (url, method, parameters, config) {
 				var token = localStorageService.get("token");
@@ -32,5 +48,8 @@ require('angular').module('jsonrpc', ['LocalStorageModule']).config(['$provide',
 
 			return $delegate;
 		}]);
+
+		$httpProvider.interceptors.push('jsonRPC2Interceptor');
+
 	}
 ]);

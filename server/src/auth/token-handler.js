@@ -3,7 +3,7 @@
  * Created by ernesto on 9/22/17.
  */
 'use strict';
-const SECRET = 'jules cyril value main qg gyp why latex 8 hunk 1975 222 ql damon tc farad ton order dwight tibia blotch font care romp xd weep kapok owl rip';
+const SECRET = 'jules cyril value main qg gyp why latex bla wefwe';
 //const TOKEN_TIME = 120 * 60; // in seconds
 
 const jwt = require('jsonwebtoken');

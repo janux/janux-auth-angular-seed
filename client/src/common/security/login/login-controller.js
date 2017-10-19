@@ -37,9 +37,21 @@ function($scope , security , $translate , $state , config , $stateParams) {
 	}
 
 	if($stateParams.goodbye) {
-		$translate('login.msg.goodbye').then( function(msg) {
-			$scope.authReason = msg;
-		});
+
+		if($stateParams.goodbye==="TRUE"){
+			$translate('login.msg.goodbye').then( function(msg) {
+				$scope.authReason = msg;
+			});
+		}
+
+		if($stateParams.goodbye==="FORCED_LOGOUT"){
+			$translate('login.msg.forcedLogout').then( function(msg) {
+				$scope.authReason = msg;
+			});
+		}
+
+
+
 	}
 
 	// Attempt to authenticate the user specified in the form's model

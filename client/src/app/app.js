@@ -73,7 +73,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll) {
 		console.log('Catching ' + data);
 		if(data === 'INVALID_TOKEN'){
 			//There was a json rpc post and the server reject the token we send ( for whatever reason).
-			$state.go('login', {goodbye:true});
+			security.forceLogout();
+			$state.go('login', {goodbye:'FORCED_LOGOUT'});
 			//We need to go to login.
 		}
 	});

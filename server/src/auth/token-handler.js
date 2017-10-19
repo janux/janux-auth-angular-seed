@@ -3,7 +3,7 @@
  * Created by ernesto on 9/22/17.
  */
 'use strict';
-const SECRET = 'jules cyril value main qg gyp why latex bla wefwe';
+const SECRET = 'jules cyril value main why latex';
 //const TOKEN_TIME = 120 * 60; // in seconds
 
 const jwt = require('jsonwebtoken');

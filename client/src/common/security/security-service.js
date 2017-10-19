@@ -139,8 +139,13 @@ function($modal , $http , $location , $q , retryQueue , $state, localStorageServ
 				// console.debug("logout resp:", JSON.stringify(resp));
 				service.currentUser = null;
 				localStorageService.remove("token");
-				$state.go(redirectTo, {goodbye:true});
+				$state.go(redirectTo, {goodbye:"TRUE"});
 			});
+		},
+
+		forceLogout: function () {
+			service.currentUser = null;
+			localStorageService.remove("token");
 		},
 
 		requestCurrentUser: function() {

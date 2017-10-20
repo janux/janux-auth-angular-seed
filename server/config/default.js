@@ -12,13 +12,13 @@ module.exports = {
 			livereload: false
 		},
 		//Daos to be used by the services.
-		accountDao: 'accountDaoLokijs',
-		partyDao: 'partyDaoLokijs',
-		authContextDao: 'authContextDaoLokijs',
-		roleDao: 'roleDaoLokijs',
-		groupContentDao: 'groupContentDaoLokijs',
-		groupDao: 'groupDaoLokijs',
-		groupAttributeValueDao: 'groupAttributeValueDaoLokijs',
+		accountDao: 'accountDao',
+		partyDao: 'partyDao',
+		authContextDao: 'authContextDao',
+		roleDao: 'roleDao',
+		groupContentDao: 'groupContentDao',
+		groupDao: 'groupDao',
+		groupAttributeValueDao: 'groupAttributeValueDao',
 
 		log4js: {
 			config: require('./log4js.js'),

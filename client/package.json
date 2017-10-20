@@ -20,8 +20,8 @@
 		"node": ">= 0.8.4"
 	},
 	"dependencies": {
-	  "janux-people": "file:../server/vendor/janux-people.js",
-	  "janux-authorize": "file:../server/vendor/janux-authorize.js"
+		"janux-people": "file:../server/vendor/janux-people.js",
+		"janux-authorize": "file:../server/vendor/janux-authorize.js"
 	},
 	"devDependencies": {
 		"browserify":               "6.2.0",
@@ -82,14 +82,18 @@
 	"browserify-shim": {
 		"jquery": "$",
 		"angular": {
-			"depends": ["jquery:jQuery"],
+			"depends": [
+				"jquery:jQuery"
+			],
 			"exports": "angular"
 		}
 	},
 	"browserify": {
-		"transform": ["browserify-shim"]
+		"transform": [
+			"browserify-shim"
+		]
 	},
 	"scripts": {
-	  "postinstall":"bower install"
+		"postinstall": "bower install"
 	}
 }

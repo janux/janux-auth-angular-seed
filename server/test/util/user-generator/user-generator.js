@@ -5,20 +5,40 @@ var md5 = require("md5");
 var log = require('log4js');
 
 var partyValidator = require('janux-persist').PartyValidator;
+var EntityPropertiesImpl = require('janux-persist').EntityPropertiesImpl;
+var DataSourceHandler = require('janux-persist').DataSourceHandler;
+var DaoSettings = require('janux-persist').DaoSettings;
+var PartyMongooseSchema = require('janux-persist').PartyMongooseSchema;
+var AccountMongooseDbSchema = require('janux-persist').AccountMongooseDbSchema;
+var PartyDaoMongooseImpl = require('janux-persist').PartyDaoMongooseImpl;
+var AccountDaoMongooseImpl = require('janux-persist').AccountDaoMongooseImpl;
+var PartyDaoLokiJsImpl = require('janux-persist').PartyDaoLokiJsImpl;
+var AccountDaoLokiJsImpl = require('janux-persist').AccountDaoLokiJsImpl;
 var daoFactory = require('janux-persist').DaoFactory;
 var usrService = require('janux-persist').UserService;
 var userGenerator = require("./users-generator");
 
+const PARTY_DEFAULT_COLLECTION_NAME            = 'contact',
+	  ACCOUNT_DEFAULT_COLLECTION_NAME          = 'account';
+
 var UserGenerator = (function () {
-    
+
     function UserGenerator() {}
-    
+
     UserGenerator.generateUserDateInTheDatabase = function (dbEngine, path) {
         this._log.debug("Call to generateUserDateInTheDatabase");
         var partyDao;
         var accountDao;
-        partyDao = daoFactory.createPartyDao(dbEngine, path);
-        accountDao = daoFactory.createAccountDao(dbEngine, path);
+		if (dbEngine === DataSourceHandler.MONGOOSE) {
+			partyDao = daoFactory.subscribeDao(new DaoSettings(dbEngine, path, PARTY_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), PartyMongooseSchema), PartyDaoMongooseImpl);
+			accountDao = daoFactory.subscribeDao(new DaoSettings(dbEngine, path, ACCOUNT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), AccountMongooseDbSchema), AccountDaoMongooseImpl);
+		} else if (dbEngine === DataSourceHandler.LOKIJS) {
+			partyDao = daoFactory.subscribeDao(new DaoSettings(dbEngine, path, PARTY_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), PartyDaoLokiJsImpl);
+			accountDao = daoFactory.subscribeDao(new DaoSettings(dbEngine, path, ACCOUNT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), AccountDaoLokiJsImpl);
+		}
+
+        // partyDao = daoFactory.createPartyDao(dbEngine, path);
+        // accountDao = daoFactory.createAccountDao(dbEngine, path);
         var userService = usrService.createInstance(accountDao, partyDao);
         var usersToInsert = this.generateUserFakeData();
 
@@ -37,7 +57,7 @@ var UserGenerator = (function () {
 
 		return inserted;
     };
-    
+
     UserGenerator.generateUserFakeData = function () {
         this._log.debug("Call to generateUserFakeData");
         var UsersGenerator = userGenerator.UsersGenerator;
@@ -71,9 +91,9 @@ var UserGenerator = (function () {
         this._log.debug("Returning %j", users);
         return users;
     };
-    
+
     UserGenerator._log = log.getLogger('UserGenerator');
-    
+
     return UserGenerator;
 }());
 

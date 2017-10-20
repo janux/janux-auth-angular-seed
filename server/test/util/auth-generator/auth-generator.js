@@ -4,28 +4,71 @@ var Promise = require("bluebird");
 var log = require('log4js');
 var util = require('util');
 var _ = require('lodash');
+var AuthContextMongooseDbSchema = require("janux-persist").AuthContextMongooseDbSchema;
+var RoleMongooseDbSchema = require("janux-persist").RoleMongooseDbSchema;
+var GroupMongooseSchema = require("janux-persist").GroupMongooseSchema;
+var GroupContentMongooseSchema = require("janux-persist").GroupContentMongooseSchema;
+var GroupAttributeValueMongooseSchema = require("janux-persist").GroupAttributeValueMongooseSchema;
+var AuthContextDaoMongooseImpl = require("janux-persist").AuthContextDaoMongooseImpl;
+var RoleDaoLokiJsImpl = require("janux-persist").RoleDaoLokiJsImpl;
+var AuthContextDaoLokiJsImpl = require("janux-persist").AuthContextDaoLokiJsImpl;
+var RoleDaoMongooseImpl = require("janux-persist").RoleDaoMongooseImpl;
+var GroupDao = require("janux-persist").GroupDao;
+var GroupContentDao = require("janux-persist").GroupContentDao;
+var GroupAttributeValueDao = require("janux-persist").GroupAttributeValueDao;
 
 var Role = require('janux-authorize').Role;
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
-var daoFactory = require('janux-persist').DaoFactory;
+var DaoFactory = require('janux-persist').DaoFactory;
+var DaoSettings = require('janux-persist').DaoSettings;
+var EntityPropertiesImpl = require('janux-persist').EntityPropertiesImpl;
+var DataSourceHandler = require('janux-persist').DataSourceHandler;
 var AuthContextService = require('janux-persist').AuthContextService;
 var AuthContextGroupService = require('janux-persist').AuthContextGroupServiceImpl;
 var GroupService = require('janux-persist').GroupServiceImpl;
 var GroupImpl = require('janux-persist').GroupImpl;
 var RoleService = require('janux-persist').RoleService;
 
+const AUTHCONTEXT_DEFAULT_COLLECTION_NAME      = 'authcontext',
+	  ROLE_DEFAULT_COLLECTION_NAME             = 'role',
+	  GROUP_DEFAULT_COLLECTION_NAME            = 'group',
+	  GROUP_CONTENT_DEFAULT_COLLECTION_NAME    = 'groupContent',
+	  GROUP_ATTRIBUTES_DEFAULT_COLLECTION_NAME = "groupAttribute";
+
 var AuthGenerator = (function () {
-    
+
     function AuthGenerator() {}
-    
+
     AuthGenerator.generateAuthDataInTheDatabase = function (dbEngine, path) {
         this._log.debug("Call to generateAuthDataInTheDatabase");
-        
-        var authContextDao = daoFactory.createAuthContextDao(dbEngine, path);
-        var roleDao = daoFactory.createRoleDao(dbEngine, path);
-		var groupContentDao = daoFactory.createGroupContentDao(dbEngine, path);
-		var groupDao = daoFactory.createGroupDao(dbEngine, path);
-		var groupAttributeValueDao = daoFactory.createGroupAttributesDao(dbEngine, path);
+
+		var authContextDao;
+		var roleDao;
+		var groupContentDao;
+		var groupDao;
+		var groupAttributeValueDao;
+
+		if (dbEngine === DataSourceHandler.MONGOOSE) {
+			authContextDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, AUTHCONTEXT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), AuthContextMongooseDbSchema), AuthContextDaoMongooseImpl);
+			roleDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, ROLE_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), RoleMongooseDbSchema), RoleDaoMongooseImpl);
+			groupDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), GroupMongooseSchema), GroupDao);
+			groupContentDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_CONTENT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), GroupContentMongooseSchema), GroupContentDao);
+			groupAttributeValueDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_ATTRIBUTES_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), GroupAttributeValueMongooseSchema), GroupAttributeValueDao);
+		} else if (dbEngine === DataSourceHandler.LOKIJS) {
+			authContextDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, AUTHCONTEXT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), AuthContextDaoLokiJsImpl);
+			roleDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, ROLE_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), RoleDaoLokiJsImpl);
+			groupContentDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_CONTENT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), GroupContentDao);
+			groupDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), GroupDao);
+			groupAttributeValueDao = DaoFactory.subscribeDao(new DaoSettings(dbEngine, path, GROUP_ATTRIBUTES_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), GroupAttributeValueDao);
+		}
+
+
+		// authContextDao = daoFactory.createAuthContextDao(dbEngine, path);
+		// roleDao = daoFactory.createRoleDao(dbEngine, path);
+		// groupContentDao = daoFactory.createGroupContentDao(dbEngine, path);
+		// groupDao = daoFactory.createGroupDao(dbEngine, path);
+		// groupAttributeValueDao = daoFactory.createGroupAttributesDao(dbEngine, path);
+
 		var groupService = new GroupService(groupDao, groupContentDao, groupAttributeValueDao);
 		var authContextService = AuthContextService.createInstance(authContextDao);
 		var authContextGroupService = new AuthContextGroupService(authContextService, groupService);
@@ -82,7 +125,7 @@ var AuthGenerator = (function () {
 		return inserted;
 
     };
-    
+
     AuthGenerator.generateAuthData = function () {
         this._log.debug("Call to generateAuthData");
 
@@ -164,7 +207,7 @@ var AuthGenerator = (function () {
     };
 
     AuthGenerator._log = log.getLogger('AuthGenerator');
-    
+
     return AuthGenerator;
 }());
 

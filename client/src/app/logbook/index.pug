@@ -1,0 +1,22 @@
+login-toolbar(title='permission.title')
+include toolbar
+
+.container
+	side-bar
+	.maincolumn.logbook
+
+		.title-bar
+			.title Bitácora
+		hr
+
+		.add-form
+			.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
+			.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
+			.element: md-datepicker(ng-model='lbRow.start' md-placeholder="Inicio")
+			.element: md-datepicker(ng-model='lbRow.end' md-placeholder="Termino")
+			.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
+			.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
+			.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')
+			.element: button.btn.btn-success(ng-click='addRow()'): span.glyphicon.glyphicon-floppy-disk
+
+		.driver-log-grid(ag-grid="gridOptions" class="ag-fresh")

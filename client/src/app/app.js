@@ -6,6 +6,9 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('angular-material');
+require('angular-animate');
+require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
 require('drag-and-drop-lists');
@@ -18,11 +21,13 @@ require('common/demoService');
 require('app/users');
 require('app/permissions');
 require('app/roles');
+require('app/logbook');
 
 angular.module('MyApp',[
 	'jsonrpc',
 	'ui.router',
 	'ngAside',
+	'ngMaterial',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',
@@ -32,6 +37,7 @@ angular.module('MyApp',[
 	'appPermissions',
 	'config',
 	'appRoles',
+	'appLogBook',
 	'LocalStorageModule',
 	'angular-jwt'
 ])

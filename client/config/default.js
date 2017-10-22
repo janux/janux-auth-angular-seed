@@ -74,7 +74,12 @@ cfg.fileset.lessSrc = path.join(cfg.dir.src, cfg.dir.css,'**','*.less');
 cfg.fileset.cssLibs = [
 	// path.join(cfg.dir.bower,'normalize.css', 'normalize.css'),
 	// path.join(cfg.dir.bower,'bootstrap','dist','css','bootstrap.css'),
-	path.join(cfg.dir.bower,'angular-aside','dist','css','angular-aside.min.css')
+	path.join(cfg.dir.bower,'angular-aside','dist','css','angular-aside.min.css'),
+	path.join(cfg.dir.bower,'angular-ui-grid','ui-grid.css'),
+	path.join(cfg.dir.bower,'ag-grid','dist','styles','ag-grid.css'),
+	path.join(cfg.dir.bower,'ag-grid','dist','styles','theme-fresh.css'),
+	path.join(cfg.dir.bower,'ag-grid','dist','styles','ag-theme-material.css'),
+	path.join(cfg.dir.bower,'angular-material','angular-material.min.css')
 ];
 
 // any javascript libs that need to be copied to dist/js

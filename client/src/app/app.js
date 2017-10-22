@@ -12,6 +12,9 @@ require('angular-animate');
 require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
+require('angular-material');
+require('angular-animate');
+require('angular-aria');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');
@@ -43,6 +46,8 @@ angular.module('MyApp',[
 	'appStaff',
 	'appPermissions',
 	'config',
+	'appRoles',
+	'appLogBook',
 	'appRoles',
 	'LocalStorageModule',
 	'angular-jwt',

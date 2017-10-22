@@ -57,9 +57,6 @@
 		"yargs": "10.0.3"
 	},
 	"browser": {
-		"datetimepicker": "./bower/ng-material-datetimepicker/js/angular-material-datetimepicker.js",
-		"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
-		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
 		"angular":            "./bower/angular/angular.js",
 		"angular-bootstrap":  "./bower/angular-bootstrap/ui-bootstrap-tpls.js",
 		"angular-ui-router":  "./bower/angular-ui-router/release/angular-ui-router.js",
@@ -70,6 +67,8 @@
 		"angular-aria":		  "./bower/angular-aria/angular-aria.min.js",
 		"angular-translate":  "./bower/angular-translate/angular-translate.js",
 		"angular-translate-loader-static-files": "./bower/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
+	  	"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
+	  	"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
 	  	"angular-aside":      "./bower/angular-aside/dist/js/angular-aside.min.js",
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./node_modules/lodash/index.js",
@@ -91,7 +90,8 @@
 		"app/roles":	  	  "./src/app/role/index.js",
 		"app/logbook":		  "./src/app/logbook/index.js",
 		"app/staff": 		  "./src/app/staff/index.js",
-		"app/driver-logbook": "./src/app/driver-logbook/index.js"
+		"app/driver-logbook": "./src/app/driver-logbook/index.js",
+		"common/agGridComponents": "./src/common/ag-grid-components/index.js",
 	},
 	"browserify-shim": {
 		"jquery": "$",

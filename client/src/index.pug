@@ -15,7 +15,6 @@ html(ng-app='MyApp')
 		link(rel='stylesheet', href=cfg.server.static + '/' + cfg.dir.css + '/material-datetimepicker.css')
 
 		script(src=cfg.server.static+'/'+cfg.file.app+'?'+cfg.build.timestamp)
-
 	body
 		section(ui-view id='wrapper' ng-controller='sidebarCtrl')
 

@@ -69,8 +69,6 @@
 	  	"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
 	  	"angular-jwt":        "./bower/angular-jwt/dist/angular-jwt.js",
 		"angular-translate-loader-static-files": "./bower/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
-	  	"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
-	  	"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
 	  	"angular-aside":      "./bower/angular-aside/dist/js/angular-aside.min.js",
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./node_modules/lodash/index.js",

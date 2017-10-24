@@ -2,8 +2,7 @@
 
 var moment = require('moment');
 var records = require('./mock-data');
-
-// var agGridComp = require('common/agGridComponents');
+var agGridComp = require('common/agGridComponents');
 
 module.exports = ['$scope', function($scope) {
 
@@ -54,7 +53,9 @@ module.exports = ['$scope', function($scope) {
 			headerCheckboxSelection: true,
 			headerCheckboxSelectionFilteredOnly: true,
 			checkboxSelection: true,
-			headerComponentParams : { menuIcon: 'fa-external-link'}
+			headerComponentParams : { menuIcon: 'fa-external-link'},
+			cellEditor: agGridComp.rowActions,
+			editable: true
 		}
 	];
 
@@ -66,11 +67,15 @@ module.exports = ['$scope', function($scope) {
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',
-		onRowEditingStarted: function () {
-			// Nothing to do yet
-		},
-		onGridReady: function () {
+		onGridReady: function (){
 			$scope.gridOptions.api.sizeColumnsToFit();
+		},
+		onRowEditingStarted: function (rowObj) {
+			// Nothing to do yet
+			console.log('Row edition started', rowObj);
+		},
+		onRowValueChanged: function(rowObj) {
+			console.log('Row data changed', rowObj);
 		}
 	};
 

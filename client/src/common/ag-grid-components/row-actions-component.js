@@ -8,15 +8,26 @@ function RowActions () {}
 // gets called once before the renderer is used
 RowActions.prototype.init = function(params) {
 
-	// create the cell
+	var templateLocation = 'common/ag-grid-components/templates/row-actions.html';
+
 	this.actions = document.createElement('div');
 	this.actions.onclick = params.stopEditing;
-	this.actions.innerHTML = '<button class="btn btn-success">' +
-		'	<span class="glyphicon glyphicon-floppy-disk"></span>' +
-		'</button>' +
-		'<button class="btn btn-success">' +
-		'	<span class="glyphicon glyphicon-remove"></span>' +
-		'</button>';
+
+	var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	xhr.open('get', templateLocation , true);
+	xhr.onreadystatechange = function(that) {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			that.actions.innerHTML = xhr.responseText;
+		}
+	}.bind(null,this);
+	xhr.send();
+
+	// this.actions.innerHTML = '<button class="btn btn-success">' +
+	// 	'	<span class="glyphicon glyphicon-floppy-disk"></span>' +
+	// 	'</button>' +
+	// 	'<button class="btn btn-success">' +
+	// 	'	<span class="glyphicon glyphicon-remove"></span>' +
+	// 	'</button>';
 };
 
 // gets called once when grid ready to insert the element

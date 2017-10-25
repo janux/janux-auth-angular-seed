@@ -18,6 +18,7 @@ module.exports = ['$scope', function($scope) {
 
 	$scope.date = new Date();
 
+	// Add new record
 	$scope.addRow = function() {
 		console.log('$scope.lbRow', $scope.lbRow);
 		var start = moment($scope.lbRow.start);
@@ -34,6 +35,12 @@ module.exports = ['$scope', function($scope) {
 			Location: $scope.lbRow.location,
 			Absence: $scope.lbRow.absence
 		}]});
+	};
+
+	// Remove selected records
+	$scope.removeSelected = function() {
+		var selectedData = $scope.gridOptions.api.getSelectedRows();
+		$scope.gridOptions.api.updateRowData({remove: selectedData});
 	};
 
 	//
@@ -67,6 +74,7 @@ module.exports = ['$scope', function($scope) {
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',
+		animateRows: true,
 		onGridReady: function (){
 			$scope.gridOptions.api.sizeColumnsToFit();
 		},

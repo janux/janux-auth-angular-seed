@@ -1,38 +1,39 @@
 'use strict';
 
+var moment = require('moment');
+
 // function to act as a class
 function Datepicker () {}
 
+// Static date format string
+Datepicker.formatString = 'MM/DD/YY';
+
 // gets called once before the renderer is used
 Datepicker.prototype.init = function(params) {
-	// create the cell
-	params.$scope.date = $scope.date;
-	this.eInput = document.createElement('md-datepicker');
-	// this.eInput.ngModel = 'date';
-	this.eInput.setAttribute('ng-model', 'date');
-	// this.eInput = '<md-datepicker ng-model="date" md-placeholder="Enter date" />';
-	// this.eInput.value = params.value;
 
-	// https://jqueryui.com/datepicker/
-	// $(this.eInput).datepicker({
-	// 	dateFormat: 'dd/mm/yy'
-	// });
+	// Assign value to row scope
+	this.model = 'date'+params.column.colId;
+	params.$scope[this.model] = new Date(params.value);
+	this.rowScope = params.$scope;
+	// Create angular material date picker
+	this.datePicker = document.createElement('md-datepicker');
+	this.datePicker.setAttribute('ng-model', this.model);
 };
 
 // gets called once when grid ready to insert the element
 Datepicker.prototype.getGui = function() {
-	return this.eInput;
+	return this.datePicker;
 };
 
 // focus and select can be done after the gui is attached
 Datepicker.prototype.afterGuiAttached = function() {
-	this.eInput.focus();
-	this.eInput.select();
+
 };
 
 // returns the new value after editing
 Datepicker.prototype.getValue = function() {
-	return this.eInput.value;
+	var out = moment(this.rowScope[this.model]).format(Datepicker.formatString);
+	return out;
 };
 
 // any cleanup we need to be done here

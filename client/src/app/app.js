@@ -13,6 +13,7 @@ require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
 require('angular-material');
+require('datetimepicker');
 require('angular-animate');
 require('angular-aria');
 require('drag-and-drop-lists');

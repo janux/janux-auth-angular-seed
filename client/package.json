@@ -60,6 +60,7 @@
 		"angular-ui-router":  "./bower/angular-ui-router/release/angular-ui-router.js",
 		"ag-grid":			  "./bower/ag-grid/dist/ag-grid.noStyle.js",
 		"angular-material":	  "./bower/angular-material/angular-material.min.js",
+		"datetimepicker": "./bower/ng-material-datetimepicker/js/angular-material-datetimepicker.js",
 		"angular-animate":	  "./bower/angular-animate/angular-animate.min.js",
 		"angular-aria":		  "./bower/angular-aria/angular-aria.min.js",
 		"angular-translate":  "./bower/angular-translate/angular-translate.js",
@@ -91,6 +92,10 @@
 				"jquery:jQuery"
 			],
 			"exports": "angular"
+		},
+		"datetimepicker": {
+			"depends": ["moment:moment"],
+			"exports": "datetimepicker"
 		}
 	},
 	"browserify": {

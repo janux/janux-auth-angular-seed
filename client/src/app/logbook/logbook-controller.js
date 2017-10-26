@@ -6,6 +6,8 @@ var agGridComp = require('common/agGridComponents');
 
 module.exports = ['$scope', function($scope) {
 
+	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+
 	$scope.lbRow = {
 		personal: '',
 		service: '',
@@ -20,7 +22,6 @@ module.exports = ['$scope', function($scope) {
 
 	// Add new record
 	$scope.addRow = function() {
-		console.log('$scope.lbRow', $scope.lbRow);
 		var start = moment($scope.lbRow.start);
 		var end = moment($scope.lbRow.end);
 		var duration = end.diff(start, 'hours')+' hrs.';
@@ -28,8 +29,8 @@ module.exports = ['$scope', function($scope) {
 		$scope.gridOptions.api.updateRowData({add:[{
 			Personal: $scope.lbRow.personal,
 			Service: $scope.lbRow.service,
-			Start: start.format('DD/MM/YY hh:mm:ss a'),
-			End: end.format('DD/MM/YY hh:mm:ss a'),
+			Start: start.format(dateTimeFormatString),
+			End: end.format(dateTimeFormatString),
 			Duration: duration,
 			Provider: $scope.lbRow.provider,
 			Location: $scope.lbRow.location,
@@ -48,21 +49,35 @@ module.exports = ['$scope', function($scope) {
 	//
 
 	var columnDefs = [
-		{headerName: 'Personal', field: 'Personal', editable: true},
-		{headerName: 'Servicio', field: 'Service', editable: true},
-		{headerName: 'Inicio', field: 'Start', editable: true, filter:'date'},
-		{headerName: 'Termino', field: 'End', editable: true, filter:'date'},
-		{headerName: 'Duración', field: 'Duration', editable: true},
-		{headerName: 'Proveedor', field: 'Provider', editable: true},
-		{headerName: 'Ubicación', field: 'Location', editable: true},
-		{headerName: 'Falta', field: 'Absence', editable: true},
-		{headerName: '',
+		{ headerName: 'Personal', field: 'Personal', editable: true },
+		{ headerName: 'Servicio', field: 'Service', editable: true },
+		{
+			headerName: 'Inicio',
+			field: 'Start',
+			editable: true,
+			filter:'date',
+			cellEditor:agGridComp.dateTimeCellEditor
+		},
+		{
+			headerName: 'Termino',
+			field: 'End',
+			editable: true,
+			filter:'date',
+			cellEditor:agGridComp.dateTimeCellEditor
+		},
+		{ headerName: 'Duración', field: 'Duration', editable: true },
+		{ headerName: 'Proveedor', field: 'Provider', editable: true },
+		{ headerName: 'Ubicación', field: 'Location', editable: true },
+		{ headerName: 'Falta', field: 'Absence', editable: true },
+		{
+			headerName: '',
 			headerCheckboxSelection: true,
 			headerCheckboxSelectionFilteredOnly: true,
 			checkboxSelection: true,
 			headerComponentParams : { menuIcon: 'fa-external-link'},
 			cellEditor: agGridComp.rowActions,
-			editable: true
+			editable: true,
+			field: 'Selected'	// field needed to avoid ag-grid warning
 		}
 	];
 

@@ -14,8 +14,12 @@ include toolbar
 		.add-form
 			.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
 			.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
-			.element: md-datepicker(ng-model='lbRow.start' md-placeholder="Inicio")
-			.element: md-datepicker(ng-model='lbRow.end' md-placeholder="Termino")
+			.element
+				input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Inicio"
+				show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.start' type="text" format="MM/DD/YY hh:mm a")
+			.element
+				input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Termino"
+				show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.end' type="text" format="MM/DD/YY hh:mm a")
 			.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
 			.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
 			.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')

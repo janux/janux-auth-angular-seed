@@ -9,6 +9,7 @@ require('angular-aside');
 require('angular-local-storage');
 require('angular-jwt');
 require('angular-material');
+require('datetimepicker');
 require('angular-animate');
 require('angular-aria');
 require('drag-and-drop-lists');
@@ -28,6 +29,7 @@ angular.module('MyApp',[
 	'ui.router',
 	'ngAside',
 	'ngMaterial',
+	'ngMaterialDatePicker',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',

@@ -7,6 +7,7 @@ require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
 require('angular-material');
+require('datetimepicker');
 require('angular-animate');
 require('angular-aria');
 require('angular-local-storage');
@@ -28,6 +29,7 @@ angular.module('MyApp',[
 	'ui.router',
 	'ngAside',
 	'ngMaterial',
+	'ngMaterialDatePicker',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',

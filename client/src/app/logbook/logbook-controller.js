@@ -6,6 +6,11 @@ var agGridComp = require('common/agGridComponents');
 
 module.exports = ['$scope', function($scope) {
 
+	// Mock data
+	records.forEach(function (elem, iElem) {
+		records[iElem+3] = elem;
+	});
+
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
 	$scope.lbRow = {
@@ -90,6 +95,7 @@ module.exports = ['$scope', function($scope) {
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',
 		animateRows: true,
+		rowHeight: 50,
 		onGridReady: function (){
 			$scope.gridOptions.api.sizeColumnsToFit();
 		},

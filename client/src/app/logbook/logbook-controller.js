@@ -72,7 +72,17 @@ module.exports = ['$scope', function($scope) {
 		},
 		{ headerName: 'Duración', field: 'Duration', editable: true },
 		{ headerName: 'Proveedor', field: 'Provider', editable: true },
-		{ headerName: 'Ubicación', field: 'Location', editable: true },
+		{
+			headerName: 'Ubicación',
+			field: 'Location',
+			editable: true,
+			cellEditor: 'largeText',
+			cellEditorParams: {
+				maxLength: '300',
+				cols: '50',
+				rows: '6'
+			}
+		},
 		{ headerName: 'Falta', field: 'Absence', editable: true },
 		{
 			headerName: '',

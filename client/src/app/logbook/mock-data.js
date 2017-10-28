@@ -9,7 +9,11 @@ module.exports = [
 		Duration: '1 hrs.',
 		Provider: 'Glarus',
 		Location: '',
-		Absense: 'D'
+		Absense: 'D',
+		Object: {
+			a: 'A',
+			b: 'B'
+		}
 	},
 	{
 		Personal: 'Hernandez, Gilberto',
@@ -19,7 +23,11 @@ module.exports = [
 		Duration: '5 hrs.',
 		Provider: 'Glarus',
 		Location: '',
-		Absense: 'D'
+		Absense: 'D',
+		Object: {
+			a: 'A',
+			b: 'B'
+		}
 	},
 	{
 		Personal: 'Martin, Perez',
@@ -29,6 +37,10 @@ module.exports = [
 		Duration: '1 hrs.',
 		Provider: 'Glarus',
 		Location: '',
-		Absense: 'D'
+		Absense: 'D',
+		Object: {
+			a: 'A',
+			b: 'B'
+		}
 	}
 ];

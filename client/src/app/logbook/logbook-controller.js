@@ -76,12 +76,19 @@ module.exports = ['$scope', function($scope) {
 			headerName: 'Ubicación',
 			field: 'Location',
 			editable: true,
-			cellEditor: 'largeText',
-			cellEditorParams: {
-				maxLength: '300',
-				cols: '50',
-				rows: '6'
-			}
+			// cellEditor: 'largeText',
+			// cellEditorParams: {
+			// 	maxLength: '300',
+			// 	cols: '50',
+			// 	rows: '6'
+			// }
+		},
+		{
+			headerName: 'Object',
+			field: 'Object',
+			editable: true,
+			cellRenderer:agGridComp.objectCellRenderer,
+			cellEditor: agGridComp.objectCellEditor
 		},
 		{ headerName: 'Falta', field: 'Absence', editable: true },
 		{
@@ -100,7 +107,7 @@ module.exports = ['$scope', function($scope) {
 		columnDefs: columnDefs,
 		rowData: records,
 		enableFilter: true,
-		editType: 'fullRow',
+		// editType: 'fullRow',
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',

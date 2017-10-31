@@ -1,12 +1,13 @@
 login-toolbar(title='permission.title')
-include toolbar
+//include toolbar
 
-.container
+.sd-page-container
 	side-bar
-	.maincolumn
+	.sd-page-content-wrapper
+		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
 
-		.title-bar
-			.title {{ 'permission.authContexts' | translate }}
-		hr
+			.title-bar
+				.title {{ 'permission.authContexts' | translate }}
+			hr
 
-		include auth-contexts
+			include auth-contexts

@@ -199,17 +199,25 @@ nav {
   cursor: pointer;
 }
 
+
 // Standard bar attached to the bottom
 .bottom-bar {
 	color: @grey1;
 	background: @white;
-	width: ~"calc(100% - 65px)";
+	width: ~"calc(100% - 235px)";
+	float: right;
 	margin-top: 20px;
-	margin-left: 65px;
+	//margin-left: 65px;
+	margin-bottom: 30px;
 	position: fixed;
 	bottom: 0;
+	left: 235px;
 	padding: 10px;
 	text-align: right;
+
+	.medium-device({ width: ~"calc(100% - 80px)"; left: 80px });
+	.small-device ({ width: 100%; left: 0 });
+	.smallest-device({ width: 100%; left: 0 });
 
 	.small-and-down({
 		margin-left: 0;

@@ -1,25 +1,64 @@
-// Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar
+.sd-page-sidebar-wrapper(ng-controller='toggleMenu')
+      .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
+        ul.sd-page-sidebar-menu
+          li
+            a(ng-click='toggledMenu()')
+              span.fa.fa-bars.fa-lg.glyphicon-align-justify 
+              .btn-text
+          li
+            a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+              span.fa.fa-users.fa-lg 
+              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
+            ul(ng-hide='isCollapsed') 
+              li
+                a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Users
+              li
+                a
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Staff
+              li
+                a
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Clients
+          li
+            a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+              span.fa.fa-sitemap.fa-lg 
+              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
+            ul(ng-hide='isCollapsed') 
+                li
+                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                    span.fa.fa-angle-right
+                    | &nbsp;&nbsp; Roles
+                li
+                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                    span.fa.fa-angle-right
+                    | &nbsp;&nbsp; Authorizations
 
-//.dropdown.sidebar-box(ui-sref-active="active" ui-sref='dashboard' ng-click='ok()')
-//	i.glyphicon.glyphicon-dashboard(tooltip='{{"dashboard.title"|translate}}'
-//	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//	span.dropdown-text {{ 'dashboard.title' | translate }}
 
-.dropdown.sidebar-box(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-	img(src='/img/people_organization.png' tooltip='{{"user.title"|translate}}'
-	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-	span.dropdown-text {{ 'user.title' | translate }}
+//- // Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar
 
-//.dropdown.sidebar-box(ui-sref-active="active" ui-sref='roles' ng-click='ok()')
-//	i.glyphicon.glyphicon-user(tooltip='{{"role.title"|translate}}'
-//	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//	span.dropdown-text {{ 'role.title' | translate }}
+//- //.dropdown.sidebar-box(ui-sref-active="active" ui-sref='dashboard' ng-click='ok()')
+//- //	i.glyphicon.glyphicon-dashboard(tooltip='{{"dashboard.title"|translate}}'
+//- //	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+//- //	span.dropdown-text {{ 'dashboard.title' | translate }}
 
-.dropdown.sidebar-box(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-	img(src='/img/autorization.png' tooltip='{{"permission.title"|translate}}'
-	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-	span.dropdown-text {{ 'permission.title' | translate }}
+//- .dropdown.sidebar-box(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+//- 	img(src='/img/people_organization.png' tooltip='{{"user.title"|translate}}'
+//- 	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+//- 	span.dropdown-text {{ 'user.title' | translate }}
 
-.dropdown.sidebar-box.hide-on-sidebar(ui-sref-active="active" ng-click='logout()')
-	span.entypo.entypo-logout
-	span.dropdown-text {{ 'label.logout' | translate }}
+//- //.dropdown.sidebar-box(ui-sref-active="active" ui-sref='roles' ng-click='ok()')
+//- //	i.glyphicon.glyphicon-user(tooltip='{{"role.title"|translate}}'
+//- //	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+//- //	span.dropdown-text {{ 'role.title' | translate }}
+
+//- .dropdown.sidebar-box(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+//- 	img(src='/img/autorization.png' tooltip='{{"permission.title"|translate}}'
+//- 	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+//- 	span.dropdown-text {{ 'permission.title' | translate }}
+
+//- .dropdown.sidebar-box.hide-on-sidebar(ui-sref-active="active" ng-click='logout()')
+//- 	span.entypo.entypo-logout
+//- 	span.dropdown-text {{ 'label.logout' | translate }}

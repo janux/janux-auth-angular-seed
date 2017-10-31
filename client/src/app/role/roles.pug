@@ -18,13 +18,13 @@
 								br
 								| {{ role.description }}
 							td.allmighty
-								span.glyphicon.glyphicon-check(ng-show='role.isAlmighty')
+								span.fa.fa-check-square(ng-show='role.isAlmighty')
 								| &nbsp;
 							td.enabled
-								span.glyphicon.glyphicon-check(ng-show='role.enabled')
+								span.fa.fa-check-square(ng-show='role.enabled')
 								| &nbsp;
 							td.options
-								a(ui-sref='permissions.edit-role({roleName: role.name})')
-									img(src='/img/edit.png')
-								a(ng-click='openDeleteRoleDialog(role.name)')
-									img( src='/img/delete.png')
+								a.action-button(ui-sref='permissions.edit-role({roleName: role.name})')
+									span.fa.fa-pencil.fa-lg 
+								a.action-button(ng-click='openDeleteRoleDialog(role.name)')
+									span.fa.fa-trash.fa-lg 

@@ -29,6 +29,13 @@ angular.module('commonDirectives',[])
 	};
 }])
 
+.directive('footerJanux', function() {
+	return{
+		restrict:'E',
+		templateUrl: 'app/footer.html'
+	};
+})
+
 //
 // It can be used instead of ng-click when the element is within ng-repeat,
 // usually ng-click fails in this context in iOS

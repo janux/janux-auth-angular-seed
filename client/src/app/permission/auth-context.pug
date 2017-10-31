@@ -1,60 +1,62 @@
 login-toolbar(title='permission.title')
-include toolbar
+//include toolbar
 
-.container
+.sd-page-container
 	side-bar
 
-	.maincolumn
-		.title-bar
-			.title(ng-show='creating') {{ 'permission.createContext' | translate }}
-			.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
-			.title(ng-show='editing') {{ 'permission.editContext' | translate }}
-			.options
-				a(ng-click='cancel()')
-					img(src='/img/cancel.png')
-					| &nbsp; Cancel
-				a(ng-click='saveAuthContext()')
-					img(src='/img/save.png')
-					| &nbsp; Save
-		hr
+	.sd-page-content-wrapper
+		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+			.title-bar
+				.title(ng-show='creating') {{ 'permission.createContext' | translate }}
+				.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
+				.title(ng-show='editing') {{ 'permission.editContext' | translate }}
+				.options
+					a(style="margin-right:5px" ng-click='cancel()')
+						span.fa.fa-times.fa-lg 
+						| &nbsp; Cancel
+					a(ng-click='saveAuthContext()')
+						span.fa.fa-hdd-o.fa-lg 
+						| &nbsp; Save
+			hr
 
-		form(name='authContextForm')
+			form(name='authContextForm')
 
-			table.table.context-form
+				table.table.context-form
+					tr
+						td: label(for='authContextName') Name:
+						td: input#authContextName.form-control(type='text' ng-model='contextName' name='name' required='')
+					tr
+						td: label(for='authContextRep') Description:
+						td: input#authContextRep.form-control(type='text' ng-model='contextDesc' name='description' required='')
+					tr
+						td: label(for='authContextGroup') Display Group:
+						td: select#authContextGroup.form-control(ng-model='contextGroupCode' ng-options='group.code as group.name for group in groupsList' required='')
+
+			table.table.table-condensed.context-form
 				tr
-					td: label(for='authContextName') Name:
-					td: input#authContextName.form-control(type='text' ng-model='contextName' name='name' required='')
-				tr
-					td: label(for='authContextRep') Description:
-					td: input#authContextRep.form-control(type='text' ng-model='contextDesc' name='description' required='')
-				tr
-					td: label(for='authContextGroup') Display Group:
-					td: select#authContextGroup.form-control(ng-model='contextGroupCode' ng-options='group.code as group.name for group in groupsList' required='')
+					th #
+					th Permission Bit
+					td
+				tr(ng-repeat='permBit in permissionBits')
+					td {{ $index+1 }}
+					td
+						input.form-control(type='text' ng-model='permissionBits[$index]' required='')
+					td
+						span.glyphicon.glyphicon-remove-circle(ng-click='removeBit($index)')
+					//td: input.form-control(type='text' ng-model='permBit.description')
 
-		table.table.table-condensed.context-form
-			tr
-				th #
-				th Permission Bit
-				td
-			tr(ng-repeat='permBit in permissionBits')
-				td {{ $index+1 }}
-				td
-					input.form-control(type='text' ng-model='permissionBits[$index]' required='')
-				td
-					span.glyphicon.glyphicon-remove-circle(ng-click='removeBit($index)')
-				//td: input.form-control(type='text' ng-model='permBit.description')
+			.text-right
+				a.link.primary(ng-click='addPermissionBit()')
+					span.fa.fa-plus.fa-lg 
+					| &nbsp; Add Permission Bit
 
-		.text-right
-			a.link.primary(ng-click='addPermissionBit()')
-				img(src='/img/add.png')
-				| Add Permission Bit
+			//.form-group
+			//	label Permission Bits (select at least one):
+			//	table.table.table-bordered
+			//		tr
+			//			td.text-center(ng-repeat='bit in permissionBits')
+			//				label {{ bit }}
+			//					input(type='checkbox' ng-model='selPermBits[bit]' ng-true-value='true' ng-false-value='false')
 
-		//.form-group
-		//	label Permission Bits (select at least one):
-		//	table.table.table-bordered
-		//		tr
-		//			td.text-center(ng-repeat='bit in permissionBits')
-		//				label {{ bit }}
-		//					input(type='checkbox' ng-model='selPermBits[bit]' ng-true-value='true' ng-false-value='false')
-
-		//button.btn.btn-success(type='submit') Create Authorization Context
+			//button.btn.btn-success(type='submit') Create Authorization Context
+footer-Janux

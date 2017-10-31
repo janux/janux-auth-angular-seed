@@ -17,6 +17,10 @@
   @media screen and (min-width: 381px) and (max-width: 767px) { @rules(); }
 }
 
+.smallest-device(@rules) {
+  @media screen and (min-width: 150px) and (max-width: 380px) { @rules(); }
+}
+
 .medium-device(@rules) {
   @media screen and (min-width: 768px) and (max-width: 991px) { @rules(); }
 }

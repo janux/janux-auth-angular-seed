@@ -9,15 +9,60 @@
 }
 
 .user-form {
-	background: @grey3;
-	padding: 10px;
+	padding: 20px;
+	border:1px dotted @grey1;
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 
-	.data, .contact {
-		width: 50%;
+	.label-form{
+		margin-top: 10px;
+		width:25%;
+		display:inline-block;
+		font-size: 13px;
+		.small-device({ width: 100%; margin-top: 10px});
+		.smallest-device({ width: 100%; margin-top: 10px});
+		.medium-device({width: 100%; margin-top: 10px; font-size: 13px;});
+		&:after{
+			content: ':';
+		}
+		label{
+			font-weight: normal;
+			color: @green2;
+		}
+	}
+	.textbox-form{
+		margin-top: 10px;
+		width:70%;
+		display:inline-block;
+		.small-device({ width: 100%; margin-top: 0px});
+		.smallest-device({ width: 100%; margin-top: 0px});
+		.medium-device({width: 100%; margin-top: 10px;});
+	}
+	.label-disp{
+		width: 12%;
+		.small-device({ width: 100%; margin-top: 10px});
+		.smallest-device({ width: 100%; margin-top: 10px});
+		.medium-device({width: 100%; margin-top: 10px; font-size: 13px;});
+	}
+	.textbox-disp{
+		width: 86%;
+		.small-device({ width: 100%; margin-top: 0px});
+		.smallest-device({ width: 100%; margin-top: 0px});
+		.medium-device({width: 100%; margin-top: 10px;});
+	}
+
+	.data {
+		width: 45%;
+		padding: 15px 0px;
+		.small-device({ width: 100%; });
+		.medium-device({ padding-right: 10px; });
+		.xs-device({ width: 100%; });
+	}
+	.contact {
+		width: 55%;
+		padding: 15px 0px;
 		.small-device({ width: 100%; });
 		.xs-device({ width: 100%; });
 	}
@@ -32,11 +77,12 @@
 }
 
 .users-list {
-	.small-and-down({ .usr-resp-table });
+	.small-device({ .usr-resp-table });
+	.xs-device({ .usr-resp-table });
 }
 
 .users-list-labels {
-	td:nth-of-type(1):before { content: "Name"; }
+	td:nth-of-type(1):before { content: "Name";}
 	td:nth-of-type(2):before { content: "Username"; }
 	td:nth-of-type(3):before { content: "Email"; }
 	td:nth-of-type(4):before { content: "Creation"; }
@@ -45,4 +91,7 @@
 .usr-resp-table {
 	.responsive-table;
 	.users-list-labels;
+}
+.modal-body h4{
+	color: @black;
 }

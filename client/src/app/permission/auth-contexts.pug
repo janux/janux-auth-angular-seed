@@ -1,4 +1,4 @@
-.maincolumn
+.sd-page-content-wrapper
 
 	// Draggable Group list
 	.drag-n-drop
@@ -13,11 +13,11 @@
 							tr
 								td.name {{ authContextGroup.name }}
 								td.options
-									a(ui-sref='permissions.edit-auth-context-group({authContextGroupCode: authContextGroup.code})')
-										img(src='/img/edit.png')
+									a.action-button(ui-sref='permissions.edit-auth-context-group({authContextGroupCode: authContextGroup.code})')
+										span.fa.fa-pencil.fa-lg 
 									| &nbsp;&nbsp;
-									a(href='#' ng-click='openDeleteAuthContextGroupDialog(authContextGroup)')
-										img(src='/img/delete.png')
+									a.action-button(href='#' ng-click='openDeleteAuthContextGroupDialog(authContextGroup)')
+										span.fa.fa-trash.fa-lg 
 
 				// Draggable Authorization Context list
 				.drag-n-drop
@@ -34,22 +34,23 @@
 											td.bits
 												span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
 											td.options
-												a(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
-													img(src='/img/edit.png')
+												a.action-button(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
+													span.fa.fa-pencil.fa-lg 
 
 												| &nbsp;&nbsp;
-												a(href='#' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
-													img(src='/img/delete.png')
+												a.action-button(href='#' ng-click='openDeleteAuthContextDialog(authContextGroup.code, authContext.name)')
+													span.fa.fa-trash.fa-lg 
 
 												| &nbsp;
-												a(ui-sref='permissions.copy-auth-context({copyFromContext: authContext.name})')
-													span.entypo.entypo-docs
+												a.action-button(ui-sref='permissions.copy-auth-context({copyFromContext: authContext.name})')
+													span.fa.fa-files-o.fa-lg 
 
 	.text-left
 		a.link.secondary(ui-sref='permissions.create-auth-context')
-			img(src='/img/add.png')
-			| Add Authorization Context
+			span.fa.fa-plus.fa-lg 
+			| &nbsp; Add Authorization Context
 		p
 			a.link.primary(ui-sref='permissions.create-auth-context-group')
-				img(src='/img/add.png')
-				| Add Display Group
+				span.fa.fa-plus.fa-lg
+				| &nbsp; Add Display Group
+footer-Janux

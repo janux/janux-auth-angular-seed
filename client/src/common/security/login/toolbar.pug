@@ -1,25 +1,43 @@
-header(ng-controller='asideMenu')
-	.login-toolbar
+.sd-page-header(ng-controller='asideMenu')
+    .sd-page-logo(ng-class="{'toggleMenu': isCollapsed}")
+      a(href='../')
+        img.sd-logo-default(src='/img/janux_logo.png', alt='Janux')
+    .sd-page-breadcrum
+      | {{ title | translate }}
+    .sd-top-menu
+      ul
+        li
+          a.sd-name(href='#') {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}}
+        li
+          a(ng-show='isAuthenticated()', ng-click='logout()')
+            i.fa.fa-sign-out.fa-lg
 
-		.auth-user(ng-show='isAuthenticated()')
-			.menu
-				span.entypo.entypo-dot-3
+    .navbar-toggle-btn
+       a(ng-click='openMenu()')
+         span.fa.fa-bars.fa-lg.glyphicon-align-justify
 
-			| {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}} &nbsp;
-			br
-			span.welcome Welcome
+//- header(ng-controller='asideMenu')
+//- 	.login-toolbar
 
-		.current-section {{ title | translate }}
+//- 		.auth-user(ng-show='isAuthenticated()')
+//- 			.menu
+//- 				span.entypo.entypo-dot-3
 
-		.navbar-toggle-btn
-			a(ng-click='openMenu()')
-				span.glyphicon.glyphicon-align-justify
+//- 			| {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}} &nbsp;
+//- 			br
+//- 			span.welcome Welcome
 
-		.auth
-			#login.auth-status(ng-show='!isAuthenticated()', ng-click='login()')
-				span(style='margin-right: 5px', translate='label.login')
-				span.entypo.entypo-login
+//- 		.current-section {{ title | translate }}
 
-			#logout.auth-status(ng-show='isAuthenticated()', ng-click='logout()')
-				//span(style='margin-right: 5px', translate='label.logout')
-				span.entypo.entypo-logout
+//- 		.navbar-toggle-btn
+//- 			a(ng-click='openMenu()')
+//- 				span.glyphicon.glyphicon-align-justify
+
+//- 		.auth
+//- 			#login.auth-status(ng-show='!isAuthenticated()', ng-click='login()')
+//- 				span(style='margin-right: 5px', translate='label.login')
+//- 				span.entypo.entypo-login
+
+//- 			#logout.auth-status(ng-show='isAuthenticated()', ng-click='logout()')
+//- 				//span(style='margin-right: 5px', translate='label.logout')
+//- 				span.entypo.entypo-logout

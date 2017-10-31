@@ -1,29 +1,37 @@
 login-toolbar(title='user.title')
-include toolbar
+//include toolbar
 
-.container
+.sd-page-container
 	side-bar
 
-	.maincolumn
+	.sd-page-content-wrapper
+		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
 
-		.title-bar
-			.title {{ 'user.createUser' | translate }}
-			.options
-				a(ng-click='cancel()')
-					img(src='/img/cancel.png')
-					| &nbsp; Cancel
-				a(ng-click='save()')
-					img(src='/img/save.png')
-					| &nbsp; Save
-		hr
+			.title-bar
+				.title {{ 'user.createUser' | translate }}
+				.options
+					a(style="margin-right:5px" ng-click='cancel()')
+						span.fa.fa-times.fa-lg 
+						| &nbsp; Cancel
+					a(ng-click='save()')
+						span.fa.fa-hdd-o.fa-lg 
+						| &nbsp; Save
+			hr
 
-		.user-form
-			table
-				tr
-					td: label(for='username') Username
-					td: input.form-element(type='text' id='username' ng-model='user.username')
-				tr
-					td: label(for='password') Password
-					td: input.form-element(type='password' id='password' ng-model='user.password')
+			.user-form
+				.label-form.label-disp
+					label(for='username') Username
+					
+				.textbox-form.textbox-disp
+					input.form-element(type='text' id='username' ng-model='user.username')
+					
+				.label-form.label-disp
+					label(for='password') Password
+							
+				.textbox-form.textbox-disp
+					input.form-element(type='password' id='password' ng-model='user.password')
+					
 
-			include user-form
+				include user-form
+
+footer-Janux

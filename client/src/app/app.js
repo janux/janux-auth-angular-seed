@@ -163,6 +163,13 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	});
 }])
 
+.controller('toggleMenu', ['$rootScope', 
+function ($rootScope) {
+  	$rootScope.toggledMenu = function() {
+    	$rootScope.isCollapsed = !$rootScope.isCollapsed;
+  	};  
+}])
+
 .controller('asideMenu', ['$scope','$aside','security',
 function($scope, $aside, security) {
 
@@ -199,4 +206,5 @@ function($scope, $aside, security) {
 		}).result.then(postClose, postClose);
 	};
 }]);
+
 

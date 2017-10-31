@@ -15,7 +15,8 @@
 		"semantic-grid":     "*",
         "js-md5": 			 "md5#^0.4.1",
 		"moment": 			 "2.9.0",
-		"angular-drag-and-drop-lists": "1.4.0"
+		"angular-drag-and-drop-lists": "1.4.0",
+		"font-awesome":	"4.7.0"
 	},
 	"resolutions": {
 		"angular": "1.5.3"

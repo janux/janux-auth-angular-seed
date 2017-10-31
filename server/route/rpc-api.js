@@ -12,7 +12,8 @@ var apiRoot = '../src/api/index';
 var services = {
 	users:	require( apiRoot ).UserService,
 	authContext:	require( apiRoot ).AuthContextService,
-	role: require( apiRoot ).RoleService
+	role: require( apiRoot ).RoleService,
+	operation: require(apiRoot).OperationService
 };
 
 /*

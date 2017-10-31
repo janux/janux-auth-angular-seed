@@ -4,11 +4,11 @@ var moment = require('moment');
 var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', function($scope) {
+module.exports = ['$scope', 'operationService', function ($scope, operationService) {
 
 	// Mock data
 	records.forEach(function (elem, iElem) {
-		records[iElem+3] = elem;
+		records[iElem + 3] = elem;
 	});
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -26,25 +26,27 @@ module.exports = ['$scope', function($scope) {
 	$scope.date = new Date();
 
 	// Add new record
-	$scope.addRow = function() {
+	$scope.addRow = function () {
 		var start = moment($scope.lbRow.start);
 		var end = moment($scope.lbRow.end);
-		var duration = end.diff(start, 'hours')+' hrs.';
+		var duration = end.diff(start, 'hours') + ' hrs.';
 
-		$scope.gridOptions.api.updateRowData({add:[{
-			Personal: $scope.lbRow.personal,
-			Service: $scope.lbRow.service,
-			Start: start.format(dateTimeFormatString),
-			End: end.format(dateTimeFormatString),
-			Duration: duration,
-			Provider: $scope.lbRow.provider,
-			Location: $scope.lbRow.location,
-			Absence: $scope.lbRow.absence
-		}]});
+		$scope.gridOptions.api.updateRowData({
+			add: [{
+				Personal: $scope.lbRow.personal,
+				Service: $scope.lbRow.service,
+				Start: start.format(dateTimeFormatString),
+				End: end.format(dateTimeFormatString),
+				Duration: duration,
+				Provider: $scope.lbRow.provider,
+				Location: $scope.lbRow.location,
+				Absence: $scope.lbRow.absence
+			}]
+		});
 	};
 
 	// Remove selected records
-	$scope.removeSelected = function() {
+	$scope.removeSelected = function () {
 		var selectedData = $scope.gridOptions.api.getSelectedRows();
 		$scope.gridOptions.api.updateRowData({remove: selectedData});
 	};
@@ -54,24 +56,24 @@ module.exports = ['$scope', function($scope) {
 	//
 
 	var columnDefs = [
-		{ headerName: 'Personal', field: 'Personal', editable: true },
-		{ headerName: 'Servicio', field: 'Service', editable: true },
+		{headerName: 'Personal', field: 'Personal', editable: true},
+		{headerName: 'Servicio', field: 'Service', editable: true},
 		{
 			headerName: 'Inicio',
 			field: 'Start',
 			editable: true,
-			filter:'date',
-			cellEditor:agGridComp.dateTimeCellEditor
+			filter: 'date',
+			cellEditor: agGridComp.dateTimeCellEditor
 		},
 		{
 			headerName: 'Termino',
 			field: 'End',
 			editable: true,
-			filter:'date',
-			cellEditor:agGridComp.dateTimeCellEditor
+			filter: 'date',
+			cellEditor: agGridComp.dateTimeCellEditor
 		},
-		{ headerName: 'Duración', field: 'Duration', editable: true },
-		{ headerName: 'Proveedor', field: 'Provider', editable: true },
+		{headerName: 'Duración', field: 'Duration', editable: true},
+		{headerName: 'Proveedor', field: 'Provider', editable: true},
 		{
 			headerName: 'Ubicación',
 			field: 'Location',
@@ -91,13 +93,13 @@ module.exports = ['$scope', function($scope) {
 		// 	cellRenderer:agGridComp.objectCellRenderer,
 		// 	cellEditor: agGridComp.objectCellEditor
 		// },
-		{ headerName: 'Falta', field: 'Absence', editable: true },
+		{headerName: 'Falta', field: 'Absence', editable: true},
 		{
 			headerName: '',
 			headerCheckboxSelection: true,
 			headerCheckboxSelectionFilteredOnly: true,
 			checkboxSelection: true,
-			headerComponentParams : { menuIcon: 'fa-external-link'},
+			headerComponentParams: {menuIcon: 'fa-external-link'},
 			cellEditor: agGridComp.rowActions,
 			editable: true,
 			field: 'Selected'	// field needed to avoid ag-grid warning
@@ -114,18 +116,28 @@ module.exports = ['$scope', function($scope) {
 		rowSelection: 'multiple',
 		animateRows: true,
 		rowHeight: 50,
-		onGridReady: function (){
+		onGridReady: function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
 		},
 		onRowEditingStarted: function (rowObj) {
 			// Nothing to do yet
 			console.log('Row edition started', rowObj);
 		},
-		onRowValueChanged: function(rowObj) {
+		onRowValueChanged: function (rowObj) {
 			console.log('Row data changed', rowObj);
 		}
 	};
 
+
+	$scope.init = function () {
+		operationService.findAll()
+			.then(function (result) {
+				console.log(JSON.stringify(result));
+				console.log('yahoooo');
+			});
+	};
+
+	$scope.init();
 	//
 	// End of AG-Grid
 	//

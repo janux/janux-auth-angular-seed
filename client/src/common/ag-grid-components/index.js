@@ -7,6 +7,7 @@ module.exports = {
 	dateCellEditor: 	require('./date-cell-editor'),
 	dateTimeCellEditor: require('./datetime-cell-editor'),
 	rowActions: 		require('./row-actions-component'),
+	largeTextCellEditor: require('./large-text-cell-editor'),
 
 	// Custom Cell Renderer
 	simpleCellRenderer: require('./simple-cell-renderer'),

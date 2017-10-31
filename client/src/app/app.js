@@ -18,6 +18,7 @@ require('common/config');
 require('common/jsonrpc');
 require('common/jnxSecurity');
 require('common/directives');
+require('common/ag-grid-directives');
 require('common/demoService');
 require('app/users');
 require('app/permissions');
@@ -35,6 +36,7 @@ angular.module('MyApp',[
 	'pascalprecht.translate',
 	'dndLists',
 	'commonDirectives',
+	'agGridDirectives',
 	'demoService',
 	'appUsers',
 	'appStaff',

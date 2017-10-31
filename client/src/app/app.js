@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; 
 
 var angular = require('angular');
 
@@ -24,6 +24,7 @@ require('app/users');
 require('app/permissions');
 require('app/roles');
 require('app/logbook');
+require('app/driver-logbook');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -41,7 +42,8 @@ angular.module('MyApp',[
 	'appPermissions',
 	'config',
 	'appRoles',
-	'appLogBook'
+	'appLogBook',
+    'appDriverLogbook',
 	'appRoles',
 	'LocalStorageModule',
 	'angular-jwt'
@@ -107,10 +109,10 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');
-
+	
 	// redirect invalid urls to the home page
 	$urlRouterProvider.otherwise('/');
-
+	
 	// HTML5 History API enabled
 	$locationProvider.html5Mode(true);
 
@@ -119,7 +121,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	//
 	// State Configuration
 	//
-
+	
 	//
 	// This is boilerplate code that we must add to each state for which we
 	// require an authenticated user, so we define it once here rather than
@@ -131,7 +133,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// but angular kept throwing an error to the effect that it could not find
 	// the $authentication provider; I speculate that this is because
 	// $authenticator depends on security/retryQueue, which may not yet have
-	// been instantiated at config time of the myApp module.
+	// been instantiated at config time of the myApp module. 
 	//
 	// In the original angular-app, the $jnxAuth provider is injected in a
 	// 'projects' module which has its own routes definition.  It would be
@@ -146,7 +148,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// 		return $jnxAuth.requireAuthenticatedUser();
 	// 	}]
 	// };
-
+	
 	$stateProvider
 	// .state('auth-required', {
 	// 	abstract: true,

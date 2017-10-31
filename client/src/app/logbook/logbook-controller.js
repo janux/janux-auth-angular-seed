@@ -2,7 +2,7 @@
 
 var moment = require('moment');
 var records = require('./mock-data');
-var agGridComp = require('common/agGridComponents');
+var agGridComp = require('common/ag-grid-components');
 
 module.exports = ['$scope', function($scope) {
 
@@ -76,6 +76,7 @@ module.exports = ['$scope', function($scope) {
 			headerName: 'Ubicación',
 			field: 'Location',
 			editable: true,
+			cellEditor: agGridComp.largeTextCellEditor
 			// cellEditor: 'largeText',
 			// cellEditorParams: {
 			// 	maxLength: '300',
@@ -83,13 +84,13 @@ module.exports = ['$scope', function($scope) {
 			// 	rows: '6'
 			// }
 		},
-		{
-			headerName: 'Object',
-			field: 'Object',
-			editable: true,
-			cellRenderer:agGridComp.objectCellRenderer,
-			cellEditor: agGridComp.objectCellEditor
-		},
+		// {
+		// 	headerName: 'Object',
+		// 	field: 'Object',
+		// 	editable: true,
+		// 	cellRenderer:agGridComp.objectCellRenderer,
+		// 	cellEditor: agGridComp.objectCellEditor
+		// },
 		{ headerName: 'Falta', field: 'Absence', editable: true },
 		{
 			headerName: '',
@@ -107,7 +108,7 @@ module.exports = ['$scope', function($scope) {
 		columnDefs: columnDefs,
 		rowData: records,
 		enableFilter: true,
-		// editType: 'fullRow',
+		editType: 'fullRow',
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',

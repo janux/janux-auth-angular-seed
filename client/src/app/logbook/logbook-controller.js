@@ -150,7 +150,7 @@ module.exports = ['$scope','$q','$timeout', function($scope, $q, $timeout) {
 		columnDefs: columnDefs,
 		rowData: records.timeEntries,
 		enableFilter: true,
-		// editType: 'fullRow',
+		editType: 'fullRow',
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',

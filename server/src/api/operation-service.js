@@ -28,8 +28,9 @@ var createInstance = function (operationServiceReference) {
 	// a big date interval.
 	// TODO: Improve find methods.
 	OperationService.prototype.findAll = function (callback) {
-		var initDate = new moment().subtract(5, 'months').toDate();
-		var endDate = new moment().toDate();
+		var initDate = new moment().toDate();
+		var endDate = new moment().subtract(5, 'months').toDate();
+		log.debug("Call to findAll with initDate %j, endDate %j", initDate, endDate);
 		return operationServiceReference.findByDateBetween(initDate, endDate).asCallback(callback);
 	};
 

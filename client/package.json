@@ -90,7 +90,8 @@
 	  	"app/permissions":	  "./src/app/permission/index.js",
 		"app/roles":	  	  "./src/app/role/index.js",
 		"app/logbook":		  "./src/app/logbook/index.js",
-		"app/staff": 		  "./src/app/staff/index.js"
+		"app/staff": 		  "./src/app/staff/index.js",
+		"app/driver-logbook": "./src/app/driver-logbook/index.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

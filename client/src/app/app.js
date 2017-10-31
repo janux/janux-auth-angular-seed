@@ -25,6 +25,7 @@ require('app/permissions');
 require('app/roles');
 require('app/staff');
 require('app/logbook');
+require('app/driver-logbook');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -45,7 +46,8 @@ angular.module('MyApp',[
 	'appRoles',
 	'LocalStorageModule',
 	'angular-jwt',
-	'appLogBook'
+	'appLogBook',
+	'appDriverLogbook'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',

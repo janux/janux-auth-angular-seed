@@ -108,7 +108,7 @@ module.exports = ['$scope', function($scope) {
 		columnDefs: columnDefs,
 		rowData: records,
 		enableFilter: true,
-		// editType: 'fullRow',
+		editType: 'fullRow',
 		angularCompileRows: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',

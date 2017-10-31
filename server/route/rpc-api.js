@@ -15,7 +15,8 @@ var services = {
 	authContext:	require( apiRoot ).AuthContextService,
 	role: require( apiRoot ).RoleService,
 	partyService: require(apiRoot).PartyService,
-	timeEntry: require(apiRoot).TimeEntryService
+	timeEntry: require(apiRoot).TimeEntryService,
+	operation: require(apiRoot).OperationService
 };
 
 /*
@@ -33,10 +34,10 @@ var jsonrpcServer = new jsonrpc.server(
 	}
 };*/
 
-module.exports = function (app) {
+module.exports = function(app) {
 	for (var service in services) {
 		var resource = new jsonrpc.server(new transport(), services[service]);
-		app.use('/rpc/2.0/' + service, tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, resource.transport.middleware);
+		app.use('/rpc/2.0/' + service, resource.transport.middleware);
 		log.info('service created', service);
 	}
 };

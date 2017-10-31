@@ -34,10 +34,10 @@ var jsonrpcServer = new jsonrpc.server(
 	}
 };*/
 
-module.exports = function(app) {
+module.exports = function (app) {
 	for (var service in services) {
 		var resource = new jsonrpc.server(new transport(), services[service]);
-		app.use('/rpc/2.0/' + service, resource.transport.middleware);
+		app.use('/rpc/2.0/' + service, tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, resource.transport.middleware);
 		log.info('service created', service);
 	}
 };

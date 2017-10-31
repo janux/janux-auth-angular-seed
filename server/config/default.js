@@ -41,7 +41,7 @@ module.exports = {
 			//Because this setting is not used for the daos. Just make use
 			//the db you are going to use for user generation is the same
 			//for the daos.
-			dbEngine: "lokijs",
+			dbEngine: "mongoose",
 			//If mongodb is chosen for user generation and daos, you must define the connection url.
 			mongoConnUrl: "mongodb://localhost/janux-persist-dev",
 			//If lokijs is defined for user generation and daos, you must define the path of the file database.

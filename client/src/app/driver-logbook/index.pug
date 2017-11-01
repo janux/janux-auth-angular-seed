@@ -1,30 +1,26 @@
 login-toolbar(title='permission.title')
-include toolbar
 
-.container
+.sd-page-container
 	side-bar
-	.maincolumn.logbook
+	.sd-page-content-wrapper
+		.sd-page-content.logbook(ng-class="{'toggleMenu-sd-content': isCollapsed}")
 
-		.title-bar
-			.title Bitácora
-			.options
-				a(ng-click='removeSelected()') &nbsp; Remove selected
-		hr
+			.title-bar
+				.title Bitácora
+			hr
 
-		.add-form
-			.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
-			.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
-			.element
-				input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Inicio"
-				show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.start' type="text" format="MM/DD/YY hh:mm a")
-			.element
-				input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Termino"
-				show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.end' type="text" format="MM/DD/YY hh:mm a")
-			.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
-			.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
-			.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')
-			.element: button.btn.btn-success(ng-click='addRow()'): span.glyphicon.glyphicon-floppy-disk
+			.add-form
+				.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
+				.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
+				.element
+					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Inicio"
+					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.start' type="text" format="MM/DD/YY hh:mm a")
+				.element
+					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Termino"
+					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.end' type="text" format="MM/DD/YY hh:mm a")
+				.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
+				.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
+				.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')
+				.element: button.btn.btn-success(ng-click='addRow()'): span.glyphicon.glyphicon-floppy-disk
 
-
-		//div(style="width:100%; height:100%;margin-right:10%; background:red; overflow:hidden;")
-		.driver-log-grid(ag-grid="gridOptions" class="ag-fresh")
+			.driver-log-grid.ag-fresh(ag-grid="gridOptions")

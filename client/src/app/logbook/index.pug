@@ -3,24 +3,67 @@ login-toolbar(title='permission.title')
 .sd-page-container
 	side-bar
 	.sd-page-content-wrapper
-		.sd-page-content.logbook(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+		.sd-page-content.logbook(ng-class='{'toggleMenu-sd-content': isCollapsed}')
 
 			.title-bar
 				.title Bitácora
 			hr
 
 			.add-form
-				.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
-				.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
 				.element
-					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Inicio"
-					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.start' type="text" format="MM/DD/YY hh:mm a")
-				.element
-					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Termino"
-					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.end' type="text" format="MM/DD/YY hh:mm a")
-				.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
-				.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
-				.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')
-				.element: button.btn.btn-success(ng-click='addRow()'): span.glyphicon.glyphicon-floppy-disk
+					md-autocomplete(md-no-cache='false',
+					md-items='item in personalSearch(lbSearch.personal)',
+					md-selected-item='lbRow.personal',
+					md-search-text-change='personalSearchTextChange(lbSearch.personal)',
+					md-search-text='lbSearch.personal',
+					md-selected-item-change='personalSelectedItemChange(item)',
+					md-item-text='item.display',
+					md-min-length='0',
+					md-floating-label='Personal',
+					style='width:50px')
+						md-item-template
+							span(md-highlight-text='lbSearch.personal', md-highlight-flags='^i') {{item.display}}
 
-			.driver-log-grid.ag-fresh(ag-grid="gridOptions")
+				.element
+					md-input-container
+						label Servicio
+						input(ng-model='lbRow.service')
+				.element
+					md-input-container
+						label Inicio
+						input(mdc-datetime-picker='' 
+						date='true' 
+						time='true' 
+						show-todays-date='' 
+						minutes='true' 
+						show-icon='false'
+						format='MM/DD/YY hh:mm a'
+						ng-model='lbRow.start' type='text')
+				.element
+					md-input-container
+						label Termino
+						input(mdc-datetime-picker=''
+						date='true'
+						time='true'
+						show-todays-date=''
+						minutes='true'
+						show-icon='false'
+						format='MM/DD/YY hh:mm a'
+						ng-model='lbRow.end' type='text')
+				.element
+					md-input-container
+						label Proveedor
+						input(ng-model='lbRow.provider')
+				.element
+					md-input-container
+						label Ubicación
+						input(ng-model='lbRow.location')
+				.element
+					md-input-container
+						label Falta
+						input(ng-model='lbRow.absence')
+				.save
+					button.btn.btn-success(ng-click='addRow()')
+						span.glyphicon.glyphicon-floppy-disk
+
+			.driver-log-grid.ag-fresh(ag-grid='gridOptions')

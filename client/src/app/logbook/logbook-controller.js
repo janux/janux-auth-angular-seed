@@ -1,18 +1,55 @@
 'use strict';
 
+var angular = require('angular');
 var moment = require('moment');
 var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', function($scope) {
+module.exports = ['$scope','$q','$timeout', function($scope, $q, $timeout) {
 
 	// Mock data
-	records.forEach(function (elem, iElem) {
-		records[iElem+3] = elem;
+	records.timeEntries.forEach(function (elem, iElem) {
+		records.timeEntries[iElem+3] = elem;
 	});
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
+	// Models for search autocomplete
+	$scope.lbSearch = {
+		personal: ''
+	};
+
+	$scope.personalSearchTextChange = function(text) {
+		console.info('Text changed to ' + text);
+	};
+
+	$scope.personalSelectedItemChange = function(item) {
+		console.info('Item changed to ' + JSON.stringify(item));
+	};
+
+	function createFilterFor(query) {
+		var lowercaseQuery = angular.lowercase(query);
+
+		return function filterFn(name) {
+			var index = name.value.toLowerCase().indexOf(lowercaseQuery);
+			console.log('index',index, name, lowercaseQuery);
+			return (index === 0);
+		};
+	}
+
+	var personal = records.personal;
+
+	$scope.personalSearch = function(query) {
+		var results = query ? personal.filter( createFilterFor(query) ) : personal;
+		var deferred;
+		deferred = $q.defer();
+		// Simulate server delay
+		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+		return deferred.promise;
+	};
+
+
+	// Models
 	$scope.lbRow = {
 		personal: '',
 		service: '',
@@ -106,7 +143,7 @@ module.exports = ['$scope', function($scope) {
 
 	$scope.gridOptions = {
 		columnDefs: columnDefs,
-		rowData: records,
+		rowData: records.timeEntries,
 		enableFilter: true,
 		editType: 'fullRow',
 		angularCompileRows: true,

@@ -18,8 +18,8 @@ module.exports = ['$scope','$q','$timeout', function($scope, $q, $timeout) {
 	});
 
 	// Mock data
-	records.forEach(function (elem, iElem) {
-		records[iElem+3] = elem;
+	records.timeEntries.forEach(function (elem, iElem) {
+		records.timeEntries[iElem+3] = elem;
 	});
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;

@@ -5,6 +5,9 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
+var Person = require('janux-people').Person;
+
 
 module.exports =
 	['$q', '$http',
@@ -21,9 +24,31 @@ module.exports =
 				},
 
 				// Map an operation record to a easy-to show ag-grid row
-				mapData: function (record) {
-					record = _.cloneDeep(record);
-					return record;
+				mapTimeEntryData: function (record) {
+					var result = [];
+					for (var i = 0; i < record.length; i++) {
+						var operation = record[i];
+						for (var j = 0; j < operation.schedule.length; j++) {
+							var timeEntry = operation.schedule[j];
+							var staff = Person.fromJSON(timeEntry.resources[0].resource);
+							var begin = moment(timeEntry.begin);
+							var end = moment(timeEntry.end);
+							var durationMoment = moment.duration(end.diff(begin));
+							var duration = durationMoment.get("hours") + ":" + durationMoment.get("minutes");
+							result.push({
+								client: operation.client.name,
+								id: timeEntry.id,
+								name: operation.name,
+								person: staff.name.longName,
+								begin: begin.toDate(),
+								end: end.toDate(),
+								duration: duration,
+								comment: timeEntry.comment,
+								absence: ""
+							});
+						}
+					}
+					return result;
 				}
 			};
 			return service;

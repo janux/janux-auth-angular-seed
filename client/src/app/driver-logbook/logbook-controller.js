@@ -1,15 +1,10 @@
 'use strict';
 
 var moment = require('moment');
-var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
 module.exports = ['$scope', 'operationService', function ($scope, operationService) {
 
-	// Mock data
-	records.forEach(function (elem, iElem) {
-		records[iElem + 3] = elem;
-	});
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
@@ -56,28 +51,28 @@ module.exports = ['$scope', 'operationService', function ($scope, operationServi
 	//
 
 	var columnDefs = [
-		{headerName: 'Personal', field: 'Personal', editable: true},
-		{headerName: 'Servicio', field: 'Service', editable: true},
+		{headerName: 'Personal', field: 'person', editable: false},
+		{headerName: 'Cliente', field: 'client', editable: false},
+		{headerName: 'Servicio', field: 'name', editable: false},
 		{
 			headerName: 'Inicio',
-			field: 'Start',
+			field: 'begin',
 			editable: true,
 			filter: 'date',
 			cellEditor: agGridComp.dateTimeCellEditor
 		},
 		{
 			headerName: 'Termino',
-			field: 'End',
+			field: 'end',
 			editable: true,
 			filter: 'date',
 			cellEditor: agGridComp.dateTimeCellEditor
 		},
-		{headerName: 'Duración', field: 'Duration', editable: true},
-		{headerName: 'Proveedor', field: 'Provider', editable: true},
+		{headerName: 'Duración', field: 'duration', editable: false},
 		{
 			headerName: 'Ubicación',
-			field: 'Location',
-			editable: true,
+			field: 'comment',
+			editable: false,
 			cellEditor: agGridComp.largeTextCellEditor
 			// cellEditor: 'largeText',
 			// cellEditorParams: {
@@ -93,7 +88,7 @@ module.exports = ['$scope', 'operationService', function ($scope, operationServi
 		// 	cellRenderer:agGridComp.objectCellRenderer,
 		// 	cellEditor: agGridComp.objectCellEditor
 		// },
-		{headerName: 'Falta', field: 'Absence', editable: true},
+		{headerName: 'Falta', field: 'absence', editable: true},
 		{
 			headerName: '',
 			headerCheckboxSelection: true,
@@ -101,21 +96,23 @@ module.exports = ['$scope', 'operationService', function ($scope, operationServi
 			checkboxSelection: true,
 			headerComponentParams: {menuIcon: 'fa-external-link'},
 			cellEditor: agGridComp.rowActions,
-			editable: true,
+			editable: false,
 			field: 'Selected'	// field needed to avoid ag-grid warning
 		}
 	];
 
 	$scope.gridOptions = {
 		columnDefs: columnDefs,
-		rowData: records,
+		rowData: [],
 		enableFilter: true,
 		editType: 'fullRow',
 		angularCompileRows: true,
+		enableColResize: true,
 		suppressRowClickSelection: true,
 		rowSelection: 'multiple',
 		animateRows: true,
 		rowHeight: 50,
+		enableSorting: true,
 		onGridReady: function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
 		},
@@ -132,8 +129,10 @@ module.exports = ['$scope', 'operationService', function ($scope, operationServi
 	$scope.init = function () {
 		operationService.findAll()
 			.then(function (result) {
-				console.log(JSON.stringify(result));
-				console.log('yahoooo');
+				// console.log(JSON.stringify(result));
+				var agGridRecords = operationService.mapTimeEntryData(result);
+				//Now put the ag-grid ready records to the ui.
+				$scope.gridOptions.api.setRowData(agGridRecords);
 			});
 	};
 

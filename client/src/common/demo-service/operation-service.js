@@ -43,8 +43,8 @@ module.exports =
 								begin: begin.toDate(),
 								end: end.toDate(),
 								duration: duration,
-								comment: timeEntry.comment,
-								absence: ""
+								absence: timeEntry.resources[0].absence,
+								comment: timeEntry.comment
 							});
 						}
 					}

@@ -27,11 +27,14 @@ html, body, section{
 	background-color: @white;
 	color: @black;
 	overflow: hidden;
-	.medium-device({ margin-left: 80px; });
+	//.medium-device({ margin-left: 80px; });
 	.small-device({ margin-left: 0px; });
 	.xs-device({ margin-left: 0px; });
 }
 
+.sd-page-sidebar.mobile {
+	width: 100%;
+}
 .sd-page-sidebar {
 	background-color: @grey1;
 	border-top: 1px solid @grey2;
@@ -39,7 +42,7 @@ html, body, section{
 	float: left;
 	position: absolute;
 	margin-right: -100%;
-	.medium-device({ width: 80px; });
+	//.medium-device({ width: 80px; });
 	.small-device({ width: 100px; });
 	//.xs-device({ display: none; });
 }
@@ -76,19 +79,21 @@ html, body, section{
 				padding: 5px 60px;
 				border: none;
 			}
-			.medium-device({ display: none;});
+			//.medium-device({ display: none;});
 		}
 	}
 }
 .btn-text{
 	display: inline-block; 
-	.medium-device({ display: none;});
+	//.medium-device({ display: none;});
 }
 .toggleMenu {
   width: 80px !important;
 }
 .toggleMenu-sd-content {
   margin-left: 80px !important;
+  .small-device({ margin-left: 0px !important; });
+  .smallest-device({ margin-left: 0px !important; });
 }
 .sd-page-footer {
 	position: fixed;

@@ -1,0 +1,33 @@
+.sd-page-sidebar-wrapper
+      .sd-page-sidebar.mobile
+        ul.sd-page-sidebar-menu
+          li
+            a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+              span.fa.fa-users.fa-lg 
+              .btn-text &nbsp;&nbsp;{{ 'user.title' | translate }}
+            ul 
+              li
+                a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Users
+              li
+                a
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Staff
+              li
+                a
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; Clients
+          li
+            a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+              span.fa.fa-sitemap.fa-lg 
+              .btn-text &nbsp;&nbsp;{{ 'permission.title' | translate }}
+            ul
+                li
+                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                    span.fa.fa-angle-right
+                    | &nbsp;&nbsp; Roles
+                li
+                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                    span.fa.fa-angle-right
+                    | &nbsp;&nbsp; Authorizations

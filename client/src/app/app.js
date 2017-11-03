@@ -187,7 +187,7 @@ function($scope, $aside, security) {
 		}
 
 		$aside.open({
-			templateUrl: 'app/nav-bar.html',
+			templateUrl: 'app/nav-bar-mobile.html',
 			placement: 'left',
 			size: 'lg',
 			backdrop: true,

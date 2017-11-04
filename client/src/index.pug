@@ -6,10 +6,10 @@ html(ng-app='MyApp')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 
 		base(href='/')
-		link(rel='stylesheet', href=cfg.server.static+'/'+cfg.dir.css+'/main.css')
+		link(rel='stylesheet', href=cfg.server.static+'/'+cfg.dir.css+'/main.css?'+cfg.build.timestamp)
 		link(rel='stylesheet', href=cfg.server.static+'/'+cfg.dir.css+'/angular-aside.min.css')
 
-		script(src=cfg.server.static+'/'+cfg.file.app)
+		script(src=cfg.server.static+'/'+cfg.file.app+'?'+cfg.build.timestamp)
 
 	body
 		#top

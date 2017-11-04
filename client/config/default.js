@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+var now = require('moment')();
 
 var cfg = {
 	dir: {
@@ -21,7 +22,12 @@ var cfg = {
 		karma:  'karma.conf.js',
 		server: 'server.js'
 	},
-	fileset: {}
+	fileset: {},
+	build: {
+		// appended via query string to app.js and main.css
+		// to force browser reload of new version
+		timestamp: now.format('YYYYMMDDHHmm')
+	}
 }; 
 
 // the pug files to watch

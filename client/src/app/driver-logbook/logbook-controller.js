@@ -1,15 +1,57 @@
 'use strict';
 
+var angular = require('angular');
 var moment = require('moment');
+var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService', function ($scope, operationService) {
+module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope, operationService, $q, $timeout) {
 
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
+	// Mock persons
+	var persons = records.persons;
+
+	// Models used when entering the search query for the autocomplete fields
+	$scope.lbSearch = {
+		person: ''
+	};
+
+	// Runs every time the text in the field to find the staff member changes
+	// $scope.personSearchTextChange = function(text) {
+	// 	console.info('Text changed to ' + text);
+	// };
+
+	// Run only when a valid person is selected or the field ends empty
+	$scope.personSelectedItemChange = function(item) {
+		if(typeof item !== 'undefined') {
+			// This item should contain the selected person
+			console.info('Item changed to ' + JSON.stringify(item));
+			// TODO: assign the selected person
+		} else {
+			// This means that the entered search text is empty or doesn't match any staff member
+		}
+	};
+
+	function createFilterFor(query) {
+		return function filterFn(person) {
+			var index = person.displayName.toLowerCase().indexOf(angular.lowercase(query));
+			return (index === 0);
+		};
+	}
+
+	$scope.personSearch = function(query) {
+		var results = query ? persons.filter( createFilterFor(query) ) : persons;
+		var deferred;
+		deferred = $q.defer();
+		// Simulate server delay
+		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+		return deferred.promise;
+	};
+
 	$scope.lbRow = {
-		personal: '',
+		person: '',
 		service: '',
 		start: '',
 		end: '',
@@ -28,14 +70,14 @@ module.exports = ['$scope', 'operationService', function ($scope, operationServi
 
 		$scope.gridOptions.api.updateRowData({
 			add: [{
-				Personal: $scope.lbRow.personal,
-				Service: $scope.lbRow.service,
-				Start: start.format(dateTimeFormatString),
-				End: end.format(dateTimeFormatString),
-				Duration: duration,
-				Provider: $scope.lbRow.provider,
-				Location: $scope.lbRow.location,
-				Absence: $scope.lbRow.absence
+				person: $scope.lbRow.person.displayName,
+				client: '',
+				name: $scope.lbRow.service,
+				begin: start.format(dateTimeFormatString),
+				end: end.format(dateTimeFormatString),
+				duration: duration,
+				comment: $scope.lbRow.location,
+				absence: $scope.lbRow.absence
 			}]
 		});
 	};

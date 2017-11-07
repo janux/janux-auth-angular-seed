@@ -19,6 +19,10 @@
                   span.fa.fa-angle-right
                   | &nbsp;&nbsp; Clients
           li
+            a(ui-sref-active="active" ui-sref='driver-logbook' ng-click='ok()')
+              span.fa.fa-archive.fa-lg
+              .btn-text &nbsp;&nbsp;{{ 'operations.title' | translate }}
+          li
             a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
               span.fa.fa-sitemap.fa-lg 
               .btn-text &nbsp;&nbsp;{{ 'permission.title' | translate }}

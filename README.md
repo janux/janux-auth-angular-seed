@@ -17,8 +17,8 @@ This project is still under construction.  If you are interested in learning mor
 email to pparavicini@janux.org, and come back soon.
 
 
-**Intalation.**
+**How to install the project.**
 
 This project depends on janux-persist , janux-people and janux-authorize. You need to provide the references inside the directory `server/vendor`.
 
-Then, you just need to call `npm install` in the project root directory. This commands prepare the project for both server and client.
+Then, you just need to call `npm install` in the project root directory. This command prepare the project for both the server module and client module.

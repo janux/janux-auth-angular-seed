@@ -15,3 +15,10 @@ source code of the UI.
 
 This project is still under construction.  If you are interested in learning more, please send an
 email to pparavicini@janux.org, and come back soon.
+
+
+**Intalation.**
+
+This project depends on janux-persist , janux-people and janux-authorize. You need to provide the references inside the directory `server/vendor`.
+
+Then, you just need to call `npm install` in the project root directory. This commands prepare the project for both server and client.

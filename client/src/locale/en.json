@@ -57,5 +57,8 @@
 		"updatingRole": "Updating Role:",
 		"createRole": "Create Role:",
 		"authContextGroup": "Authorization Context Group"
+	},
+	"operations": {
+		"title": "Operations"
 	}
 }

@@ -10,17 +10,60 @@ login-toolbar(title='permission.title')
 			hr
 
 			.add-form
-				.element: input(type='text' ng-model='lbRow.personal' placeholder='Personal')
-				.element: input(type='text' ng-model='lbRow.service' placeholder='Servicio')
 				.element
-					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Inicio"
-					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.start' type="text" format="MM/DD/YY hh:mm a")
+					md-autocomplete(md-no-cache='false',
+					md-items='item in personSearch(lbSearch.person)',
+					md-selected-item='lbRow.person',
+					md-search-text-change='personSearchTextChange(lbSearch.person)',
+					md-search-text='lbSearch.person',
+					md-selected-item-change='personSelectedItemChange(item)',
+					md-item-text='item.displayName',
+					md-min-length='0',
+					md-floating-label='Personal',
+					style='width:50px')
+						md-item-template
+							span(md-highlight-text='lbSearch.person', md-highlight-flags='^i') {{item.displayName}}
+
 				.element
-					input.dtp-no-msclear.dtp-input.md-input(mdc-datetime-picker="" date="true" time="true" placeholder="Termino"
-					show-todays-date="" minutes="true" show-icon="false" ng-model='lbRow.end' type="text" format="MM/DD/YY hh:mm a")
-				.element: input(type='text' ng-model='lbRow.provider' placeholder='Proveedor')
-				.element: input(type='text' ng-model='lbRow.location' placeholder='Ubicación')
-				.element: input(type='text' ng-model='lbRow.absence' placeholder='Falta')
-				.element: button.btn.btn-success(ng-click='addRow()'): span.glyphicon.glyphicon-floppy-disk
+					md-input-container
+						label Servicio
+						input(ng-model='lbRow.service')
+				.element
+					md-input-container
+						label Inicio
+						input(mdc-datetime-picker=''
+						date='true'
+						time='true'
+						show-todays-date=''
+						minutes='true'
+						show-icon='false'
+						format='MM/DD/YY hh:mm a'
+						ng-model='lbRow.start' type='text')
+				.element
+					md-input-container
+						label Termino
+						input(mdc-datetime-picker=''
+						date='true'
+						time='true'
+						show-todays-date=''
+						minutes='true'
+						show-icon='false'
+						format='MM/DD/YY hh:mm a'
+						ng-model='lbRow.end' type='text')
+				.element
+					md-input-container
+						label Proveedor
+						input(ng-model='lbRow.provider')
+				.element
+					md-input-container
+						label Ubicación
+						input(ng-model='lbRow.location')
+				.element
+					md-input-container
+						label Falta
+						input(ng-model='lbRow.absence')
+				.save
+					button.btn.btn-success(ng-click='addRow()')
+						span.glyphicon.glyphicon-floppy-disk
 
 			.driver-log-grid.ag-fresh(ag-grid="gridOptions")

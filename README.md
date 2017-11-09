@@ -1,9 +1,9 @@
-# Janux Authorization Angular Seed
+**Janux Authorization Angular Seed**
 
-This is was initially based on the 
-[angular-app project](https://github.com/angular-app/angular-app). That project was simplified to 
-focus solely on providing Authentication and Authorization functionality based on the 
-[Janux Security](https://github.com/janux/janux-security.js) library.
+This is was initially based on the
+https://github.com/angular-app/angular-app[angular-app project]. That project was simplified to
+focus solely on providing Authentication and Authorization functionality based on the
+https://github.com/janux/janux-security.js[Janux Security] library.
 
 The Janux Service library includes a flexible permission-based scheme that makes it possible to
 declare in the configuration of an application the permissions that are available to a user, and to
@@ -13,12 +13,79 @@ The main advantage of this approach is that new Roles can be added, or existing 
 redefined via configuration, without having to modify the business logic of the application or the
 source code of the UI.
 
-This project is still under construction.  If you are interested in learning more, please send an
-email to pparavicini@janux.org, and come back soon.
+This project is still under construction. If you are interested in learning more, please send an
+email to link:mailto:&#112;p&#97;&#x72;&#x61;&#x76;&#x69;&#99;&#x69;&#x6e;i&#64;&#x6a;&#97;n&#117;&#120;&#46;o&#114;g[&#112;p&#97;&#x72;&#x61;&#x76;&#x69;&#99;&#x69;&#x6e;i&#64;&#x6a;&#97;n&#117;&#120;&#46;o&#114;g], and come back soon.
 
+**Requirements**
+
+1.- Git.
+
+2.- Node latest stable version.
+
+3.- Bower and gulp installed globally.
+
+4.- Optional: A running mongo database.
+
+`npm install -g gulp`
+
+`npm install -g bower`
+
+This project depends on janux-persist , janux-people and janux-authorize. You need do the following.
+
+*1.- Install janux-people.*
+
+a.- Get janux-people at 'https://github.com/janux/janux-people.js.git'
+
+b.- Checkout branch dev (`git fetch && git checkout dev`).
+
+c.- Run 'npm install' and then run 'gulp'
+
+*2.- Install janux-authorize.*
+
+a.- Get janux-authorize at 'https://github.com/janux/janux-authorize.js.git'''.
+
+b.- Checkout branch develop (`git fetch && git checkout develop`)
+
+c.- Run 'npm install' and then run 'gulp'
+
+*3.- Install janux-persist.*
+
+a.- Get janux-persist at 'https://github.com/janux/janux-persist.js.git'.
+
+b.- Checkout branch dev (`git fetch && git checkout dev`)
+
+c.- Create vendor directory (`mkdir -p $JANUX_PERSIST/vendor`)
+
+d.- Create symlinks of janux-people and janux-authorize. Inside the vendor directory execute ...
+
+`ln -s $PATH_JANUX_PEOPLE && ln -s $PATH_JANUX_AUTHORIZE`
+
+For windows users you need to modify package.json and replace the path of janux-people and janux-persist with the correct paths.
+
+e.-Run `npm install`
 
 **How to install the project.**
 
-This project depends on janux-persist , janux-people and janux-authorize. You need to provide the references inside the directory `server/vendor`.
+a.- Get the project at 'https://github.com/janux/janux-authorize.js.git'.
 
-Then, you just need to call `npm install` in the project root directory. This command prepare the project for both the server module and client module.
+b.- Switch to branch develop ('git fetch && git checkout develop').
+
+c.-  Create symlinks of janux-people, janux-authorize and janux-persist. Inside the server/vendor directory execute ...
+
+`ln -s $PATH_JANUX_PEOPLE && ln -s $PATH_JANUX_AUTHORIZE $$ ln -s $PATH_JANUX-PERSIST`
+
+For windows users you need to modify server/package.json and replace the path of janux-people and janux-persist with the correct paths.
+
+d.- At the root of the directory run `npm install`.
+
+**How to run the project.**
+
+Run the following tasks.
+
+1.- Create users sample data by running `npm run generate-demo-users`
+
+2.- Create auth-context sample data by running `npm run generate-demo-auth`\
+
+3.- Execute `npm run watch`.
+
+At this moment there is a server running at http://localhost:9000.

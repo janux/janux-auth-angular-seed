@@ -1,9 +1,9 @@
-**Janux Authorization Angular Seed**
+# Janux Authorization Angular Seed
 
-This is was initially based on the
-https://github.com/angular-app/angular-app[angular-app project]. That project was simplified to
-focus solely on providing Authentication and Authorization functionality based on the
-https://github.com/janux/janux-security.js[Janux Security] library.
+This is was initially based on the 
+[angular-app project](https://github.com/angular-app/angular-app). That project was simplified to 
+focus solely on providing Authentication and Authorization functionality based on the 
+[Janux Authorize](https://github.com/janux/janux-authorize.js.git) library.
 
 The Janux Service library includes a flexible permission-based scheme that makes it possible to
 declare in the configuration of an application the permissions that are available to a user, and to
@@ -13,8 +13,8 @@ The main advantage of this approach is that new Roles can be added, or existing 
 redefined via configuration, without having to modify the business logic of the application or the
 source code of the UI.
 
-This project is still under construction. If you are interested in learning more, please send an
-email to link:mailto:&#112;p&#97;&#x72;&#x61;&#x76;&#x69;&#99;&#x69;&#x6e;i&#64;&#x6a;&#97;n&#117;&#120;&#46;o&#114;g[&#112;p&#97;&#x72;&#x61;&#x76;&#x69;&#99;&#x69;&#x6e;i&#64;&#x6a;&#97;n&#117;&#120;&#46;o&#114;g], and come back soon.
+This project is still under construction.  If you are interested in learning more, please send an
+email to pparavicini@janux.org, and come back soon.
 
 **Requirements**
 
@@ -42,7 +42,7 @@ c.- Run 'npm install' and then run 'gulp'
 
 *2.- Install janux-authorize.*
 
-a.- Get janux-authorize at 'https://github.com/janux/janux-authorize.js.git'''.
+a.- Get janux-authorize at 'https://github.com/janux/janux-authorize.js.git'.
 
 b.- Checkout branch develop (`git fetch && git checkout develop`)
 

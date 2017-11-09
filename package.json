@@ -1,0 +1,25 @@
+{
+  "name": "janux-auth-angular-seed",
+  "version": "0.0.1",
+  "description": "This is the janux-auth-angular-seed project. It is working POC using janux-people, janux-authorize and janux-persist.",
+  "scripts": {
+	"test": "echo \"Error: no test specified\" && exit 1",
+	"postinstall": "npm run install-server && npm run install-client && npm run install-client && npm run build",
+	"install-client": "npm install --prefix  ./client",
+	"install-server": "npm install --prefix ./server",
+	"build": "./client/node_modules/gulp/bin/gulp.js --cwd ./client build",
+	"watch": "./client/node_modules/gulp/bin/gulp.js --cwd ./client watch",
+	"generate-demo-users": "npm run generate-demo-users --prefix ./server",
+	"generate-demo-auth": "npm run generate-demo-auth --prefix ./server"
+  },
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/janux/janux-auth-angular-seed.git"
+  },
+  "keywords": [
+	"janux"
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/janux/janux-auth-angular-seed#readme"
+}

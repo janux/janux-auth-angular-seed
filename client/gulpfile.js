@@ -40,6 +40,12 @@ gulp.task('compile', ['lint','browserify']);
 //
 gulp.task('build', ['lint','browserify','styles','pug','copy']);
 
+
+//
+// Process all assets for development
+//
+gulp.task('buildForProd', ['lint','browserify','styles','pugThrowError','copy']);
+
 //
 // Process all assets for deployment
 //

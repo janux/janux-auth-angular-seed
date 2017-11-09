@@ -7,7 +7,7 @@
   "postinstall": "npm run install-server && npm run install-client && npm run install-client && npm run build",
   "install-client": "npm install --prefix  ./client",
   "install-server": "npm install --prefix ./server",
-  "build": "./client/node_modules/gulp/bin/gulp.js --cwd ./client build",
+  "build": "./client/node_modules/gulp/bin/gulp.js --cwd ./client buildForProd",
   "watch": "./client/node_modules/gulp/bin/gulp.js --cwd ./client watch",
   "generate-demo-users": "npm run generate-demo-users --prefix ./server",
   "generate-demo-auth": "npm run generate-demo-auth --prefix ./server"

@@ -1,40 +1,41 @@
 .sd-page-sidebar-wrapper(ng-controller='toggleMenu')
-      .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
-        ul.sd-page-sidebar-menu
-          li
-            a(ng-click='toggledMenu()')
-              span.fa.fa-bars.fa-lg.glyphicon-align-justify 
-              .btn-text
+  .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
+
+    ul.sd-page-sidebar-menu
+      li
+        a(ng-click='toggledMenu()')
+          span.fa.fa-bars.fa-lg.glyphicon-align-justify 
+          .btn-text
+      li
+        a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+          span.fa.fa-users.fa-lg 
+          .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
+        ul(ng-hide='isCollapsed') 
           li
             a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-              span.fa.fa-users.fa-lg 
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
-            ul(ng-hide='isCollapsed') 
-              li
-                a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Users
-              li
-                a
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Staff
-              li
-                a
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Clients
+              span.fa.fa-angle-right
+              | &nbsp;&nbsp; Users
           li
-            a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-              span.fa.fa-sitemap.fa-lg 
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
-            ul(ng-hide='isCollapsed') 
-                li
-                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-                    span.fa.fa-angle-right
-                    | &nbsp;&nbsp; Roles
-                li
-                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
-                    span.fa.fa-angle-right
-                    | &nbsp;&nbsp; Authorizations
+            a.active(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+              span.fa.fa-angle-right
+              | &nbsp;&nbsp; Staff
+          li
+            a
+              span.fa.fa-angle-right
+              | &nbsp;&nbsp; Clients
+      li
+        a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+          span.fa.fa-sitemap.fa-lg 
+          .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
+        ul(ng-hide='isCollapsed') 
+            li
+              a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                span.fa.fa-angle-right
+                | &nbsp;&nbsp; Roles
+            li
+              a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                span.fa.fa-angle-right
+                | &nbsp;&nbsp; Authorizations
 
 
 //- // Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar

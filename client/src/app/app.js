@@ -18,6 +18,7 @@ require('common/demoService');
 require('app/users');
 require('app/permissions');
 require('app/roles');
+require('app/staff');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -29,6 +30,7 @@ angular.module('MyApp',[
 	'commonDirectives',
 	'demoService',
 	'appUsers',
+	'appStaff',
 	'appPermissions',
 	'config',
 	'appRoles',

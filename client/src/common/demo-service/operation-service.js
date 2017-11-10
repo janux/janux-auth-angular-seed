@@ -39,7 +39,7 @@ module.exports =
 								client: operation.client.name,
 								id: timeEntry.id,
 								name: operation.name,
-								person: staff.name.longName,
+								staff: staff.name.longName,
 								begin: begin.toDate(),
 								end: end.toDate(),
 								duration: duration,

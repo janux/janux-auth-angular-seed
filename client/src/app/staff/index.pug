@@ -4,7 +4,9 @@ login-toolbar(title='user.title')
 	side-bar
 	.sd-page-content-wrapper
 		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
-			md-toolbar.md-theme-indigo
-				.md-toolbar-tools
-					h2(flex md-truncate)
-					| Toolbar with Disabled/Enabled Icon Buttons
+			md-toolbar.md-hue-2(style="background:#ff0000")
+				div.md-toolbar-tools
+					md-button(aria-label="Back" style="background:pink")
+						| Back
+					md-truncate
+						| Toolbar with Disabled/Enabled Icon Buttons

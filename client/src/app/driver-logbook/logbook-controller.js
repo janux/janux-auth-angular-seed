@@ -2,6 +2,7 @@
 
 var angular = require('angular');
 var moment = require('moment');
+var _ = require('lodash');
 var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
@@ -10,23 +11,33 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
-	// Mock persons
-	var persons = records.persons;
+	// Mock staff
+	var staff = records.staff;
+	// Mock operations
+	var operations = records.operations;
+	// Mock clients
+	var clients = records.clients;
+	// // Mock providers
+	// var providers = records.providers;
 
 	// Models used when entering the search query for the autocomplete fields
 	$scope.lbSearch = {
-		person: ''
+		staff: '',
+		operation: '',
+		provider: ''
 	};
 
 	// Runs every time the text in the field to find the staff member changes
-	// $scope.personSearchTextChange = function(text) {
+	// $scope.staffSearchTextChange = function(text) {
 	// 	console.info('Text changed to ' + text);
 	// };
 
-	// Run only when a valid person is selected or the field ends empty
-	$scope.personSelectedItemChange = function(item) {
+	//
+	// Staff autocomplete
+	//
+	$scope.staffSelectedItemChange = function(item) {
 		if(typeof item !== 'undefined') {
-			// This item should contain the selected person
+			// This item should contain the selected staff member
 			console.info('Item changed to ' + JSON.stringify(item));
 			// TODO: assign the selected person
 		} else {
@@ -34,15 +45,15 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 		}
 	};
 
-	function createFilterFor(query) {
-		return function filterFn(person) {
-			var index = person.displayName.toLowerCase().indexOf(angular.lowercase(query));
+	function createFilterForStaff(query) {
+		return function filterFn(staff) {
+			var index = staff.displayName.toLowerCase().indexOf(angular.lowercase(query));
 			return (index === 0);
 		};
 	}
 
-	$scope.personSearch = function(query) {
-		var results = query ? persons.filter( createFilterFor(query) ) : persons;
+	$scope.staffSearch = function(query) {
+		var results = query ? staff.filter( createFilterForStaff(query) ) : staff;
 		var deferred;
 		deferred = $q.defer();
 		// Simulate server delay
@@ -50,15 +61,76 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 		return deferred.promise;
 	};
 
-	$scope.lbRow = {
-		person: '',
-		service: '',
-		start: '',
-		end: '',
-		provider: '',
-		location: '',
-		absence: ''
+	//
+	// Operation autocomplete
+	//
+	$scope.opsSelectedItemChange = function(item) {
+		if(typeof item !== 'undefined') {
+			// This item should contain the selected operation
+			console.info('Item changed to ' + JSON.stringify(item));
+			// TODO: assign the selected person
+		} else {
+			// This means that the entered search text is empty or doesn't match any operation
+		}
 	};
+
+	function createFilterForOps(query) {
+		return function filterFn(operation) {
+			var index = operation.name.toLowerCase().indexOf(angular.lowercase(query));
+			return (index === 0);
+		};
+	}
+
+	$scope.opsSearch = function(query) {
+		var results = query ? operations.filter( createFilterForOps(query) ) : operations;
+		var deferred;
+		deferred = $q.defer();
+		// Simulate server delay
+		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+		return deferred.promise;
+	};
+
+	//
+	// Provider autocomplete
+	//
+	// $scope.providerSelectedItemChange = function(item) {
+	// 	if(typeof item !== 'undefined') {
+	// 		// This item should contain the selected provider
+	// 		console.info('Item changed to ' + JSON.stringify(item));
+	// 		// TODO: assign the selected person
+	// 	} else {
+	// 		// This means that the entered search text is empty or doesn't match any provider
+	// 	}
+	// };
+	//
+	// function createFilterForProvider(query) {
+	// 	return function filterFn(provider) {
+	// 		var index = provider.name.toLowerCase().indexOf(angular.lowercase(query));
+	// 		return (index === 0);
+	// 	};
+	// }
+	//
+	// $scope.providerSearch = function(query) {
+	// 	var results = query ? providers.filter( createFilterForProvider(query) ) : providers;
+	// 	var deferred;
+	// 	deferred = $q.defer();
+	// 	// Simulate server delay
+	// 	$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+	// 	return deferred.promise;
+	// };
+
+	var initRowModel = function () {
+		$scope.lbRow = {
+			staff: '',
+			operation: '',
+			start: '',
+			end: '',
+			provider: '',
+			location: '',
+			absence: ''
+		};
+	};
+	initRowModel();
 
 	$scope.date = new Date();
 
@@ -70,9 +142,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 
 		$scope.gridOptions.api.updateRowData({
 			add: [{
-				person: $scope.lbRow.person.displayName,
-				client: '',
-				name: $scope.lbRow.service,
+				staff: $scope.lbRow.staff.displayName,
+				client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
+				name: $scope.lbRow.operation.name,
 				begin: start.format(dateTimeFormatString),
 				end: end.format(dateTimeFormatString),
 				duration: duration,
@@ -80,6 +152,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 				absence: $scope.lbRow.absence
 			}]
 		});
+		initRowModel();
 	};
 
 	// Remove selected records
@@ -93,7 +166,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 	//
 
 	var columnDefs = [
-		{headerName: 'Personal', field: 'person', editable: false},
+		{headerName: 'Personal', field: 'staff', editable: false},
 		{headerName: 'Cliente', field: 'client', editable: false},
 		{headerName: 'Servicio', field: 'name', editable: false},
 		{
@@ -164,6 +237,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 		},
 		onRowValueChanged: function (rowObj) {
 			console.log('Row data changed', rowObj);
+		},
+		components:{
+			dateComponent: agGridComp.dateFilter
 		}
 	};
 

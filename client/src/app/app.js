@@ -6,6 +6,10 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('angular-material');
+require('datetimepicker');
+require('angular-animate');
+require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
 require('drag-and-drop-lists');
@@ -24,6 +28,8 @@ angular.module('MyApp',[
 	'jsonrpc',
 	'ui.router',
 	'ngAside',
+	'ngMaterial',
+	'ngMaterialDatePicker',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',
@@ -179,6 +185,14 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		},
 		controller: 'loginController'
 	});
+}])
+
+.controller('AppCtrl', ['$scope', 
+function ($scope) {
+  	$scope.currentNavItem = 'page1';
+  	$scope.goto=function(page){
+  		console.log("Goto "+ page);
+  	};
 }])
 
 .controller('toggleMenu', ['$rootScope', 

@@ -80,7 +80,8 @@
 		"common/demoService": "./src/common/demo-service/index.js",
 		"app/users": "./src/app/user/index.js",
 		"app/permissions": "./src/app/permission/index.js",
-		"app/roles": "./src/app/role/index.js"
+		"app/roles": "./src/app/role/index.js",
+		"app/staff": "./src/app/staff/index.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

@@ -3,10 +3,25 @@ login-toolbar(title='user.title')
 .sd-page-container
 	side-bar
 	.sd-page-content-wrapper
-		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
-			md-toolbar.md-hue-2(style="background:#ff0000")
-				div.md-toolbar-tools
-					md-button(aria-label="Back" style="background:pink")
-						| Back
-					md-truncate
-						| Toolbar with Disabled/Enabled Icon Buttons
+		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}" ng-controller="AppCtrl")
+			md-toolbar
+				.md-toolbar-tools
+					h1 Staff
+			md-toolbar(style="background:none; color:black")
+				.md-toolbar-tools
+					h4 Gilberto Márquez Díaz de Sandi
+			md-toolbar
+				.md-toolbar-tools
+					md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+						md-nav-item(md-nav-click="goto('page1')" name="page1")
+							| GENERAL DATA
+						md-nav-item(md-nav-click="goto('page2')" name="page2")
+							| HUMAN RESOURSES
+						md-nav-item(md-nav-click="goto('page3')" name="page3")
+							| PAYROLL LOGBOOK
+			md-content(layout-padding)
+				p 
+					| Contenido
+					br
+					span {{currentNavItem}}
+footer-Janux

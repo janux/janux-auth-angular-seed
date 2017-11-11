@@ -238,9 +238,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 		onRowValueChanged: function (rowObj) {
 			console.log('Row data changed', rowObj);
 		},
-		components:{
-			dateComponent: agGridComp.dateFilter
-		}
+		// components:{
+		// 	dateComponent: agGridComp.dateFilter
+		// }
 	};
 
 	$scope.init = function () {

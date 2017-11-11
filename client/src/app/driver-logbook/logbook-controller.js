@@ -211,8 +211,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 			checkboxSelection: true,
 			headerComponentParams: {menuIcon: 'fa-external-link'},
 			cellEditor: agGridComp.rowActions,
-			editable: false,
-			field: 'Selected'	// field needed to avoid ag-grid warning
+			editable: true,
+			field: 'selected'	// field needed to avoid ag-grid warning
 		}
 	];
 
@@ -242,7 +242,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 			dateComponent: agGridComp.dateFilter
 		}
 	};
-
 
 	$scope.init = function () {
 		operationService.findAll()

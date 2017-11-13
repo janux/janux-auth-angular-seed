@@ -44,7 +44,6 @@ angular.module('MyApp',[
 	'appRoles',
 	'appLogBook',
     'appDriverLogbook',
-	'appRoles',
 	'LocalStorageModule',
 	'angular-jwt'
 ])

@@ -15,7 +15,7 @@
 		"normalize.css":     "3.0.0",
 		"semantic-grid":     "*",
         "js-md5": 			 "md5#^0.4.1",
-		"moment": 			 "2.9.0",
+		"moment": 			 "2.19.1",
 		"angular-drag-and-drop-lists": "1.4.0",
 	  	"angular-local-storage": "0.7.1",
 	  	"angular-jwt": 		 "0.1.9",

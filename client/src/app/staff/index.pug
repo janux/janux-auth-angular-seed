@@ -6,22 +6,73 @@ login-toolbar(title='user.title')
 		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}" ng-controller="AppCtrl")
 			md-toolbar
 				.md-toolbar-tools
-					h1 Staff
-			md-toolbar(style="background:none; color:black")
-				.md-toolbar-tools
-					h4 Gilberto Márquez Díaz de Sandi
-			md-toolbar
-				.md-toolbar-tools
-					md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
-						md-nav-item(md-nav-click="goto('page1')" name="page1")
-							| GENERAL DATA
-						md-nav-item(md-nav-click="goto('page2')" name="page2")
-							| HUMAN RESOURSES
-						md-nav-item(md-nav-click="goto('page3')" name="page3")
-							| PAYROLL LOGBOOK
-			md-content(layout-padding)
-				p 
-					| Contenido
-					br
-					span {{currentNavItem}}
+					md-truncate
+						| Staff
+					span(flex)
+
+					md-button.md-icon-button(aria-label="Grid")
+						md-icon.fa.fa-table.fa-lg
+
+					md-button.md-icon-button(aria-label="Upload")
+						md-icon.fa.fa-upload.fa-lg
+
+			md-content(style="background:none; color:black; margin:15px 20px 15px 20px")
+				h4 Gilberto Márquez Díaz de Sandi
+			
+			md-content(style="margin:0 20px 0 20px")
+				md-toolbar
+					.md-toolbar-tools
+						md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+							md-nav-item(md-nav-click="goto('page1')" name="page1")
+								| GENERAL
+							md-nav-item(md-nav-click="goto('page2')" name="page2")
+								| HUMAN RESOURSES
+							md-nav-item(md-nav-click="goto('page3')" name="page3")
+								| PAYROLL LOGBOOK
+						
+						span(flex)
+						
+						md-button.md-icon-button(aria-label="Trash")
+							md-icon.fa.fa-trash.fa-lg
+
+						md-button.md-icon-button(aria-label="Save")
+							md-icon.fa.fa-check.fa-lg
+
+						md-button.md-icon-button(aria-label="Cancel")
+							md-icon.fa.fa-times.fa-lg
+
+				md-content(layout-padding)
+					.col-sm-7
+						p(style="display:table; background:#ff0000; padding:10px; color:white")
+							| Employee
+						div.an-material
+							md-input-container.full
+								label Last Name
+								input(ng-model='user.title')
+								div.hint Write your Last Name
+
+							md-input-container.full
+								label Second Name
+								input(ng-model='user.title')
+								div.hint Write your Second Name
+
+							md-input-container.full
+								label Primary Name
+								input(ng-model='user.title')
+								div.hint Write your Primary Name
+
+					.col-sm-5
+						p(style="display:table; background:#ff0000; padding:10px; color:white")
+							| Job
+						div.an-material
+							md-input-container.full
+								label Puesto
+								input(ng-model='job.title')
+								div.hint Write your Job Title
+
+							md-input-container.full
+								label Area
+								input(ng-model='job.title')
+								div.hint Write your Area
+
 footer-Janux

@@ -1,20 +1,39 @@
-.sd-page-header(ng-controller='asideMenu')
+md-toolbar(ng-controller='asideMenu')
+  .md-toolbar-tools.sd-page-header
     .sd-page-logo(ng-class="{'toggleMenu': isCollapsed}")
       a(href='../')
         img.sd-logo-default(src='/img/janux_logo.png', alt='Janux')
-    .sd-page-breadcrum
+    
+    md-truncate.sd-page-breadcrum
       | {{ title | translate }}
+    
+    span(flex)
     .sd-top-menu
-      ul
-        li
-          a.sd-name(href='#') {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}}
-        li
-          a(ng-show='isAuthenticated()', ng-click='logout()')
-            i.fa.fa-sign-out.fa-lg
+      md-button
+        span.sd-name| {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}}
+      md-button.md-icon-button(aria-label='Logout', ng-sshow='isAuthenticated()', ng-click='logout()')
+        md-icon.fa.fa-sign-out.fa-lg
+          
+      md-button.md-icon-button.navbar-toggle-btn(aria-label='Menu', ng-click='openMenu()')
+        md-icon.fa.fa-bars.fa-lg
 
-    .navbar-toggle-btn
-       a(ng-click='openMenu()')
-         span.fa.fa-bars.fa-lg.glyphicon-align-justify
+//- .sd-page-header(ng-controller='asideMenu')
+//-     .sd-page-logo(ng-class="{'toggleMenu': isCollapsed}")
+//-       a(href='../')
+//-         img.sd-logo-default(src='/img/janux_logo.png', alt='Janux')
+//-     .sd-page-breadcrum
+//-       | {{ title | translate }}
+//-     .sd-top-menu
+//-       ul
+//-         li
+//-           a.sd-name(href='#') {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}}
+//-         li
+//-           a(ng-show='isAuthenticated()', ng-click='logout()')
+//-             i.fa.fa-sign-out.fa-lg
+
+//-     .navbar-toggle-btn
+//-        a(ng-click='openMenu()')
+//-          span.fa.fa-bars.fa-lg.glyphicon-align-justify
 
 //- header(ng-controller='asideMenu')
 //- 	.login-toolbar

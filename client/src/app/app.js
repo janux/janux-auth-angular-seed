@@ -191,7 +191,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 function ($scope) {
   	$scope.currentNavItem = 'page1';
   	$scope.goto=function(page){
-  		console.log("Goto "+ page);
+  		console.log('Goto' + page);
   	};
 }])
 

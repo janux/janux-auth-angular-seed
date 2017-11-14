@@ -6,8 +6,7 @@ var _ = require('lodash');
 var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope, operationService, $q, $timeout) {
-
+module.exports = ['$scope', 'operationService','$q','$timeout','$modal', function ($scope, operationService, $q, $timeout, $modal) {
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
@@ -25,6 +24,21 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 		staff: '',
 		operation: '',
 		provider: ''
+	};
+
+	var infoDialog = function(message){
+		$modal.open({
+			templateUrl: 'app/dialog-tpl/info-dialog.html',
+			controller: ['$scope','$modalInstance',
+				function($scope , $modalInstance) {
+					$scope.message= message;
+
+					$scope.ok = function() {
+						$modalInstance.close();
+					};
+				}],
+			size: 'md'
+		});
 	};
 
 	// Runs every time the text in the field to find the staff member changes
@@ -136,23 +150,41 @@ module.exports = ['$scope', 'operationService','$q','$timeout', function ($scope
 
 	// Add new record
 	$scope.addRow = function () {
-		var start = moment($scope.lbRow.start);
-		var end = moment($scope.lbRow.end);
-		var duration = end.diff(start, 'hours') + ' hrs.';
+		// Selected person
+		if(!!$scope.lbRow.staff){
+			if(!!$scope.lbRow.operation){
+				if(!!$scope.driverTimeSheet.$valid){
+					var start = moment($scope.lbRow.start);
+					var end = moment($scope.lbRow.end);
+					var duration = end.diff(start, 'hours') + ' hrs.';
 
-		$scope.gridOptions.api.updateRowData({
-			add: [{
-				staff: $scope.lbRow.staff.displayName,
-				client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
-				name: $scope.lbRow.operation.name,
-				begin: start.format(dateTimeFormatString),
-				end: end.format(dateTimeFormatString),
-				duration: duration,
-				comment: $scope.lbRow.location,
-				absence: $scope.lbRow.absence
-			}]
-		});
-		initRowModel();
+					$scope.gridOptions.api.updateRowData({
+						add: [{
+							staff: $scope.lbRow.staff.displayName,
+							client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
+							name: $scope.lbRow.operation.name,
+							begin: start.format(dateTimeFormatString),
+							end: end.format(dateTimeFormatString),
+							duration: duration,
+							comment: $scope.lbRow.location,
+							absence: $scope.lbRow.absence
+						}]
+					});
+
+					// Wait before performing the form reset
+					$timeout(function(){
+						initRowModel();
+						$scope.driverTimeSheet.$setUntouched(true);
+						$scope.driverTimeSheet.$setPristine(true);
+					},10);
+
+				}
+			} else {
+				infoDialog('Invalid operation selected');
+			}
+		} else {
+			infoDialog('Invalid staff member selected');
+		}
 	};
 
 	// Remove selected records

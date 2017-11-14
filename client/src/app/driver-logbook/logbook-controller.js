@@ -176,6 +176,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal', functio
 						initRowModel();
 						$scope.driverTimeSheet.$setUntouched(true);
 						$scope.driverTimeSheet.$setPristine(true);
+						// Go to last page
+						$scope.gridOptions.api.paginationGoToLastPage();
 					},10);
 
 				}
@@ -260,6 +262,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal', functio
 		animateRows: true,
 		rowHeight: 50,
 		enableSorting: true,
+		pagination:true,
+		paginationAutoPageSize:true,
 		onGridReady: function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
 		},

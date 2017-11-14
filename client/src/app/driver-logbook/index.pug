@@ -9,7 +9,7 @@ login-toolbar(title='permission.title')
 				.title Bitácora
 			hr
 
-			.add-form
+			form(name='driverTimeSheet').add-form
 				.element
 					md-autocomplete(md-no-cache='false',
 					md-items='item in staffSearch(lbSearch.staff)',
@@ -46,7 +46,7 @@ login-toolbar(title='permission.title')
 						minutes='true'
 						show-icon='false'
 						format='MM/DD/YY hh:mm a'
-						ng-model='lbRow.start' type='text')
+						ng-model='lbRow.start' type='text' required='')
 				.element
 					md-input-container
 						label Termino
@@ -57,7 +57,7 @@ login-toolbar(title='permission.title')
 						minutes='true'
 						show-icon='false'
 						format='MM/DD/YY hh:mm a'
-						ng-model='lbRow.end' type='text')
+						ng-model='lbRow.end' type='text' required='')
 
 				//.element
 				//	md-autocomplete(md-no-cache='false',

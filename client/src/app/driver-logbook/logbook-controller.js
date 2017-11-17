@@ -160,14 +160,14 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		if(!!$scope.lbRow.staff){
 			if(!!$scope.lbRow.operation){
 				if(!!$scope.driverTimeSheet.$valid){
-					var start = moment($scope.lbRow.start).format(dateTimeFormatString);
+					var begin = moment($scope.lbRow.start);
 					var end = '';
 					var duration = '';
 
 					if($scope.lbRow.end !==''){
 						end = moment($scope.lbRow.end);
-						duration = end.diff(start, 'hours');
-						end = end.format(dateTimeFormatString);
+						var durationMoment = moment.duration(end.diff(begin));
+						duration = durationMoment.get('hours') + ':' + durationMoment.get('minutes');
 					}
 
 					$scope.gridOptions.api.updateRowData({
@@ -175,8 +175,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 							staff: $scope.lbRow.staff.displayName,
 							client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
 							name: $scope.lbRow.operation.name,
-							begin: start,
-							end: end,
+							begin: begin.format(dateTimeFormatString),
+							end: end.format(dateTimeFormatString),
 							duration: duration,
 							comment: $scope.lbRow.location,
 							absence: $scope.lbRow.absence

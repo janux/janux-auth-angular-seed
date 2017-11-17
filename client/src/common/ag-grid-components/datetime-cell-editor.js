@@ -6,14 +6,16 @@ var moment = require('moment');
 function DateTimepicker () {}
 
 // Static date format string
-DateTimepicker.formatString = 'MM/DD/YY hh:mm a';
+DateTimepicker.formatString = 'YYYY-MM-DD HH:mm';
 
 // gets called once before the renderer is used
 DateTimepicker.prototype.init = function(params) {
 
+	var date = (params.value)?new Date(params.value):moment().format(DateTimepicker.formatString);
+
 	// Assign value to row scope
 	this.model = 'date'+params.column.colId;
-	params.$scope[this.model] = new Date(params.value);
+	params.$scope[this.model] = date;
 	this.rowScope = params.$scope;
 
 	// Create angular material datetime picker
@@ -23,7 +25,10 @@ DateTimepicker.prototype.init = function(params) {
 	this.datetimePicker.setAttribute('time', 'true');
 	this.datetimePicker.setAttribute('minutes', 'true');
 	this.datetimePicker.setAttribute('format', DateTimepicker.formatString);
+	this.datetimePicker.setAttribute('show-icon', 'true');
 	this.datetimePicker.setAttribute('type', 'text');
+	this.datetimePicker.setAttribute('class', 'jnx-datetime-picker');
+	this.datetimePicker.setAttribute('edit-input', 'true');
 	this.datetimePicker.setAttribute('ng-model', this.model);
 };
 

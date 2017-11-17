@@ -7,6 +7,8 @@
 var _ = require('lodash');
 var moment = require('moment');
 var Person = require('janux-people').Person;
+var agGridComp = require('common/ag-grid-components');
+var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
 
 module.exports =
@@ -40,8 +42,8 @@ module.exports =
 								id: timeEntry.id,
 								name: operation.name,
 								staff: staff.name.longName,
-								begin: begin.toDate(),
-								end: end.toDate(),
+								begin: begin.format(dateTimeFormatString),
+								end: end.format(dateTimeFormatString),
 								duration: duration,
 								absence: timeEntry.resources[0].absence,
 								comment: timeEntry.comment

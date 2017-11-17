@@ -6,7 +6,8 @@ var _ = require('lodash');
 var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService','$q','$timeout','$modal', function ($scope, operationService, $q, $timeout, $modal) {
+module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval',
+	function ($scope, operationService, $q, $timeout, $modal, $interval) {
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
@@ -18,6 +19,25 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal', functio
 	var clients = records.clients;
 	// // Mock providers
 	// var providers = records.providers;
+
+	var initRowModel = function () {
+		$scope.lbRow = {
+			staff: '',
+			operation: '',
+			start: moment().format(dateTimeFormatString),
+			end: '',
+			provider: '',
+			location: '',
+			absence: ''
+		};
+	};
+	initRowModel();
+
+	var refreshStartServiceTime = 60*1000;	// 1 minute
+	// Refresh start time
+	$interval(function () {
+		$scope.lbRow.start = moment().format(dateTimeFormatString);
+	},refreshStartServiceTime);
 
 	// Models used when entering the search query for the autocomplete fields
 	$scope.lbSearch = {
@@ -61,18 +81,19 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal', functio
 
 	function createFilterForStaff(query) {
 		return function filterFn(staff) {
-			var index = staff.displayName.toLowerCase().indexOf(angular.lowercase(query));
+			var name = staff.name.last+' '+staff.name.first;
+			var index = name.toLowerCase().indexOf(angular.lowercase(query));
 			return (index === 0);
 		};
 	}
 
 	$scope.staffSearch = function(query) {
 		var results = query ? staff.filter( createFilterForStaff(query) ) : staff;
-		var deferred;
-		deferred = $q.defer();
+		// var deferred = $q.defer();
 		// Simulate server delay
-		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-		return deferred.promise;
+		// $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+		// return deferred.promise;
+		return results;
 	};
 
 	//
@@ -133,38 +154,29 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal', functio
 	// 	return deferred.promise;
 	// };
 
-	var initRowModel = function () {
-		$scope.lbRow = {
-			staff: '',
-			operation: '',
-			start: '',
-			end: '',
-			provider: '',
-			location: '',
-			absence: ''
-		};
-	};
-	initRowModel();
-
-	$scope.date = new Date();
-
 	// Add new record
 	$scope.addRow = function () {
 		// Selected person
 		if(!!$scope.lbRow.staff){
 			if(!!$scope.lbRow.operation){
 				if(!!$scope.driverTimeSheet.$valid){
-					var start = moment($scope.lbRow.start);
-					var end = moment($scope.lbRow.end);
-					var duration = end.diff(start, 'hours') + ' hrs.';
+					var start = moment($scope.lbRow.start).format(dateTimeFormatString);
+					var end = '';
+					var duration = '';
+
+					if($scope.lbRow.end !==''){
+						end = moment($scope.lbRow.end);
+						duration = end.diff(start, 'hours');
+						end = end.format(dateTimeFormatString);
+					}
 
 					$scope.gridOptions.api.updateRowData({
 						add: [{
 							staff: $scope.lbRow.staff.displayName,
 							client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
 							name: $scope.lbRow.operation.name,
-							begin: start.format(dateTimeFormatString),
-							end: end.format(dateTimeFormatString),
+							begin: start,
+							end: end,
 							duration: duration,
 							comment: $scope.lbRow.location,
 							absence: $scope.lbRow.absence

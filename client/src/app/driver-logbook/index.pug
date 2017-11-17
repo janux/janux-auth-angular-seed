@@ -12,7 +12,7 @@ login-toolbar(title='permission.title')
 			form(name='driverTimeSheet').add-form
 				.element
 					md-autocomplete(md-no-cache='false',
-					md-items='item in staffSearch(lbSearch.staff)',
+					md-items="item in staffSearch(lbSearch.staff) | orderBy:'displayName'",
 					md-selected-item='lbRow.staff',
 					md-search-text-change='staffSearchTextChange(lbSearch.staff)',
 					md-search-text='lbSearch.staff',
@@ -21,7 +21,7 @@ login-toolbar(title='permission.title')
 					md-min-length='0',
 					md-floating-label='Personal')
 						md-item-template
-							span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.displayName}}
+							span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
 
 				.element
 					md-autocomplete(md-no-cache='false',
@@ -37,27 +37,31 @@ login-toolbar(title='permission.title')
 							span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
 
 				.element
-					md-input-container
+					md-input-container.jnx-datetime-picker
 						label Inicio
 						input(mdc-datetime-picker=''
 						date='true'
 						time='true'
 						show-todays-date=''
 						minutes='true'
-						show-icon='false'
-						format='MM/DD/YY hh:mm a'
+						format='YYYY-MM-DD HH:mm'
+						edit-input='true'
+						click-outside-to-close='true'
+						show-icon='true'
 						ng-model='lbRow.start' type='text' required='')
 				.element
-					md-input-container
+					md-input-container.jnx-datetime-picker
 						label Termino
 						input(mdc-datetime-picker=''
 						date='true'
 						time='true'
 						show-todays-date=''
 						minutes='true'
-						show-icon='false'
-						format='MM/DD/YY hh:mm a'
-						ng-model='lbRow.end' type='text' required='')
+						format='YYYY-MM-DD HH:mm'
+						edit-input='true'
+						click-outside-to-close='true'
+						show-icon='true'
+						ng-model='lbRow.end' type='text')
 
 				//.element
 				//	md-autocomplete(md-no-cache='false',

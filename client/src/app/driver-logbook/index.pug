@@ -81,10 +81,14 @@ login-toolbar(title='permission.title')
 					md-input-container
 						label Ubicación
 						input(ng-model='lbRow.location')
+
 				.element
 					md-input-container
 						label Falta
-						input(ng-model='lbRow.absence')
+						md-select(ng-model='lbRow.absence')
+							md-option(value='')
+							md-option(value='Ausencia') Ausencia
+
 				.save
 					button.btn.btn-success(ng-click='addRow()')
 						span.glyphicon.glyphicon-floppy-disk

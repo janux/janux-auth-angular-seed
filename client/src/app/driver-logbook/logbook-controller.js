@@ -168,6 +168,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 						end = moment($scope.lbRow.end);
 						var durationMoment = moment.duration(end.diff(begin));
 						duration = durationMoment.get('hours') + ':' + durationMoment.get('minutes');
+						end = end.format(dateTimeFormatString);
 					}
 
 					$scope.gridOptions.api.updateRowData({
@@ -176,7 +177,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 							client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
 							name: $scope.lbRow.operation.name,
 							begin: begin.format(dateTimeFormatString),
-							end: end.format(dateTimeFormatString),
+							end: end,
 							duration: duration,
 							comment: $scope.lbRow.location,
 							absence: $scope.lbRow.absence

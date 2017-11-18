@@ -214,8 +214,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 
 	var columnDefs = [
 		{headerName: 'Personal', field: 'staff', editable: false},
-		{headerName: 'Cliente', field: 'client', editable: false},
 		{headerName: 'Servicio', field: 'name', editable: false},
+		{headerName: 'Cliente', field: 'client', editable: false},
 		{
 			headerName: 'Inicio',
 			field: 'begin',

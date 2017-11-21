@@ -16,6 +16,7 @@ var services = {
 	role: require( apiRoot ).RoleService,
 	operation: require(apiRoot).OperationService,
 	partyService: require(apiRoot).PartyService
+	timeEntry: require(apiRoot).TimeEntryService
 };
 
 /*

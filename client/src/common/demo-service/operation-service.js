@@ -25,6 +25,15 @@ module.exports =
 					});
 				},
 
+				findAllWithoutTimeEntry: function () {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findAllWithoutTimeEntry'
+					).then(function (resp) {
+						return resp.data.result;
+					});
+				},
+
 				// Map an operation record to a easy-to show ag-grid row
 				mapTimeEntryData: function (record) {
 					var result = [];

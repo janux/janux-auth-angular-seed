@@ -40,7 +40,8 @@ var config                         = require('config'),
 	UserService                    = require('./user-service'),
 	AuthContextService             = require('./auth-context-service'),
 	RoleService                    = require('./role-service'),
-	OperationService               = require('./operation-service');
+	OperationService               = require('./operation-service'),
+	TimeEntryService               = require('./time-entry-service');
 
 
 module.exports = {
@@ -48,5 +49,6 @@ module.exports = {
 	AuthContextService: AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
 	RoleService: RoleService.create(RolePersistService),
 	UserPersistenceService: UserPersistenceService,
-	OperationService: OperationService.create(OperationPersistService)
+	OperationService: OperationService.create(OperationPersistService),
+	TimeEntryService:  TimeEntryService.create(TimeEntryPersistService)
 };

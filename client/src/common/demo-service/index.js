@@ -6,6 +6,7 @@ require('angular').module('demoService', [])
 .factory('authContextService', require('./auth-context-service.js'))
 .factory('roleService', require('./role-service.js'))
 .factory('operationService',require('./operation-service'))
+.factory('timeEntryService',require('./time-entry-service'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

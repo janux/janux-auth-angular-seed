@@ -9,3 +9,4 @@ server/vendor/janux-*
 /client/client.iml
 /server/server.iml
 /server/config/local.js
+/janux-auth-angular-seed.iml

@@ -33,6 +33,11 @@ var createInstance = function (operationServiceReference) {
 		return operationServiceReference.findByDateBetween(initDate, endDate).asCallback(callback);
 	};
 
+
+    OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
+        return operationServiceReference.findAllWithoutTimeEntry().asCallback(callback);
+    };
+
 	return new OperationService();
 };
 

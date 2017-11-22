@@ -49,7 +49,7 @@ const VehicleDao            = require("glarus-services").VehicleDao,
 	  ResourceDao           = require("glarus-services").ResourceDao,
 	  CurrentResourceDao    = require("glarus-services").CurrentResourceDao,
 	  TimeEntryAttributeDao = require("glarus-services").TimeEntryAttributeDao,
-	  TimeEntryResourceDao  = require("glarus-services").TimeEntryResouceDao;
+	  TimeEntryResourceDao  = require("glarus-services").TimeEntryResourceDao;
 
 
 const VehicleMongooseSchema            = require("glarus-services").VehicleMongooseSchema,

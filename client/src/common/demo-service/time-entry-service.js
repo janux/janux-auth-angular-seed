@@ -15,7 +15,7 @@ module.exports =
                         '/rpc/2.0/timeEntry',
                         'insert',
                         [timeEntry]
-                    ).then(function (resp) {
+                    ).then( function (resp) {
                         return resp.data.result;
                     });
                 }

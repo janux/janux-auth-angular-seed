@@ -45,10 +45,10 @@ var config                         = require('config'),
 
 
 module.exports = {
-	UserService: UserService.create(UserPersistenceService),
-	AuthContextService: AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
-	RoleService: RoleService.create(RolePersistService),
+	UserService           : UserService.create(UserPersistenceService),
+	AuthContextService    : AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
+	RoleService           : RoleService.create(RolePersistService),
 	UserPersistenceService: UserPersistenceService,
-	OperationService: OperationService.create(OperationPersistService),
-	TimeEntryService:  TimeEntryService.create(TimeEntryPersistService)
+	OperationService      : OperationService.create(OperationPersistService),
+	TimeEntryService      : TimeEntryService.create(TimeEntryPersistService)
 };

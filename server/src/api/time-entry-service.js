@@ -2,12 +2,10 @@
  * Project janux-auth-angular-seed
  * Created by ernesto on 11/21/17.
  */
-var _ = require('lodash');
-var moment = require('moment');
-
-
-var log4js = require('log4js'),
-	log = log4js.getLogger('time-entry-service');
+var _       = require('lodash'),
+	fixDate = require('../util/fix-date'),
+	log4js  = require('log4js');
+log = log4js.getLogger('time-entry-service');
 
 
 var timeEntryServiceInstance = undefined;
@@ -25,17 +23,24 @@ var createInstance = function (timeEntryServiceReference) {
 	TimeEntryService.prototype.insert = function (timeEntry, callback) {
 		//We need to convert begin and end to proper dates.
 		log.debug("Call to insert with timeEntry: %j", timeEntry);
-		if (_.isNil(timeEntry.begin) === false) {
-			var begin = moment(timeEntry.begin);
-			timeEntry.begin = begin.isValid() ? begin.toDate() : "invalid";
-		}
 
-		if (_.isNil(timeEntry.end) === false) {
-			var end = moment(timeEntry.end);
-			timeEntry.end = end.isValid() ? end.toDate() : "invalid";
-		}
+		timeEntry.begin = fixDate(timeEntry.begin);
+		timeEntry.end = fixDate(timeEntry.end);
+		timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
+		timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
 
 		return timeEntryServiceReferenceInstance.insert(timeEntry).asCallback(callback);
+	};
+
+	TimeEntryService.prototype.update = function (timeEntry, callback) {
+		log.debug("Call to update with timeEntry: %j", timeEntry);
+
+		timeEntry.begin = fixDate(timeEntry.begin);
+		timeEntry.end = fixDate(timeEntry.end);
+		timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
+		timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
+
+		return timeEntryServiceReferenceInstance.update(timeEntry).asCallback(callback);
 	};
 
 	return new TimeEntryService();

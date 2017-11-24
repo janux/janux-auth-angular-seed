@@ -2,11 +2,11 @@
  * Project janux-auth-angular-seed
  * Created by ernesto on 11/23/17.
  */
-var log4js   = require('log4js'),
-	_        = require('lodash'),
+var log4js  = require('log4js'),
+	_       = require('lodash'),
 	Promise = require('bluebird'),
-	log      = log4js.getLogger('PartyService'),
-	fixDate  = require('../util/fix-date');
+	log     = log4js.getLogger('PartyService'),
+	fixDate = require('../util/fix-date').fixDate;
 
 
 // variable to hold the singleton instance, if used in that manner
@@ -122,7 +122,10 @@ var createInstance = function (serviceReference) {
 		log.debug("Call to insert with party %j", party);
 		var object = fixDates(party);
 		object = partyServiceImpl.fromJSON(object);
-		return partyServiceImpl.insert(object).asCallback(callback);
+		return partyServiceImpl.insert(object)
+			.then(function (result) {
+				return Promise.resolve(partyServiceImpl.toJSON(result)).asCallback(callback);
+			});
 	};
 
 	/**

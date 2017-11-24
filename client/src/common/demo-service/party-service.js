@@ -10,8 +10,8 @@ var _ = require('lodash');
 
 
 module.exports =
-	['$q', '$http', 'dateUtilService',
-		function ($q, $http, dateUtilService) {
+	['$q', '$http', 'dateUtilService', '$log',
+		function ($q, $http, dateUtilService, $log) {
 
 			/**
 			 * Convert a json object to a PartyAbstract instance.
@@ -21,8 +21,12 @@ module.exports =
 				var contact;
 				if (object.typeName = "PersonImpl") {
 					contact = Person.fromJSON(object);
-				} else {
+				} else if (object.typeName = "OrganizationImpl") {
 					contact = Organization.fromJSON(object);
+				} else {
+					$log.error("No implementation for typeName " + object.typeName + " returning undefined");
+					//Let it crash.
+					return undefined;
 				}
 				contact.id = object.id;
 				contact.dateCreated = dateUtilService.stringToDate(object.dateCreated);
@@ -52,6 +56,7 @@ module.exports =
 				 * @param id
 				 */
 				findOne: function (id) {
+					$log.debug("Call to findOnd with " + id);
 					return $http.jsonrpc(
 						'/rpc/2.0/partyService',
 						'findOne',
@@ -156,7 +161,7 @@ module.exports =
 				 * @param party
 				 */
 				insert: function (party) {
-
+					$log.debug("Call to insert with " + JSON.stringify(party));
 					var objectToSend = toJSON(party);
 
 					return $http.jsonrpc(

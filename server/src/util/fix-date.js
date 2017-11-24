@@ -3,8 +3,8 @@
  * Created by ernesto on 11/23/17.
  */
 
-var _      = require('lodash'),
-	moment = require('moment');
+var _ = require('lodash');
+var moment = require('moment');
 /**
  * Return undefined if the object is null or undefined.
  * Return a valid date. Otherwise return a 'invalid' string.
@@ -13,8 +13,8 @@ var _      = require('lodash'),
  */
 var fixDate = function (object) {
 	if (_.isNil(object) === false) {
-		var moment = moment(object);
-		return moment.isValid() ? moment.toDate() : "invalid";
+		var date = moment(object);
+		return date.isValid() ? date.toDate() : "invalid";
 	} else {
 		return undefined;
 	}

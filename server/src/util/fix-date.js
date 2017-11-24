@@ -20,4 +20,4 @@ var fixDate = function (object) {
 	}
 };
 
-module.exports.fixDate = fixDate;
+module.exports = fixDate;

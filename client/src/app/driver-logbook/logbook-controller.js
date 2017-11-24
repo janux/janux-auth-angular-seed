@@ -3,20 +3,23 @@
 var angular = require('angular');
 var moment = require('moment');
 var _ = require('lodash');
-var records = require('./mock-data');
+// var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval',
-	function ($scope, operationService, $q, $timeout, $modal, $interval) {
+module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval','operations','timeEntryService',
+	function ($scope, operationService, $q, $timeout, $modal, $interval, operations, timeEntryService) {
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
+	console.log('Operations', operations);
+
+	var operationDrivers = [];
 	// Mock staff
-	var staff = records.staff;
+	// var staff = records.staff;
 	// Mock operations
-	var operations = records.operations;
+	// var operations = records.operations;
 	// Mock clients
-	var clients = records.clients;
+	// var clients = records.clients;
 	// // Mock providers
 	// var providers = records.providers;
 
@@ -80,20 +83,16 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	};
 
 	function createFilterForStaff(query) {
-		return function filterFn(staff) {
-			var name = staff.name.last+' '+staff.name.first;
+		return function filterFn(operationDriver) {
+			var driver = operationDriver.resource;
+			var name = driver.name.last+' '+driver.name.first;
 			var index = name.toLowerCase().indexOf(angular.lowercase(query));
 			return (index === 0);
 		};
 	}
 
 	$scope.staffSearch = function(query) {
-		var results = query ? staff.filter( createFilterForStaff(query) ) : staff;
-		// var deferred = $q.defer();
-		// Simulate server delay
-		// $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-		// return deferred.promise;
-		return results;
+		return query ? operationDrivers.filter( createFilterForStaff(query) ) : operationDrivers;
 	};
 
 	//
@@ -102,8 +101,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	$scope.opsSelectedItemChange = function(item) {
 		if(typeof item !== 'undefined') {
 			// This item should contain the selected operation
-			console.info('Item changed to ' + JSON.stringify(item));
-			// TODO: assign the selected person
+			// console.info('Item changed to ' + JSON.stringify(item));
+			operationDrivers = _.uniqBy(item.currentResources, 'resource.id');
+			$scope.lbRow.staff = operationDrivers[0];
 		} else {
 			// This means that the entered search text is empty or doesn't match any operation
 		}
@@ -117,12 +117,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	}
 
 	$scope.opsSearch = function(query) {
-		var results = query ? operations.filter( createFilterForOps(query) ) : operations;
-		var deferred;
-		deferred = $q.defer();
-		// Simulate server delay
-		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-		return deferred.promise;
+		return query ? operations.filter( createFilterForOps(query) ) : operations;
 	};
 
 	//
@@ -161,38 +156,40 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			if(!!$scope.lbRow.operation){
 				if(!!$scope.driverTimeSheet.$valid){
 					var begin = moment($scope.lbRow.start);
-					var end = '';
-					var duration = '';
+					var end = '', endToInsert;
 
 					if($scope.lbRow.end !==''){
 						end = moment($scope.lbRow.end);
-						var durationMoment = moment.duration(end.diff(begin));
-						duration = durationMoment.get('hours') + ':' + durationMoment.get('minutes');
-						end = end.format(dateTimeFormatString);
+						endToInsert = end.toDate();
 					}
 
-					$scope.gridOptions.api.updateRowData({
-						add: [{
-							staff: $scope.lbRow.staff.displayName,
-							client: _.find(clients, {id: $scope.lbRow.operation.idClient}).name,
-							name: $scope.lbRow.operation.name,
-							begin: begin.format(dateTimeFormatString),
-							end: end,
-							duration: duration,
-							comment: $scope.lbRow.location,
-							absence: $scope.lbRow.absence
-						}]
+					var timeEngtryToInsert = {
+						'resources': [ $scope.lbRow.staff ],
+						'principals': [],
+						'attributes': [],
+						'type': 'DRIVER',
+						'comment': 'updatedComment',
+						'begin': begin.toDate(),
+						'end': endToInsert,
+						'billable': true,
+						'idOperation': $scope.lbRow.operation.id
+					};
+
+					// Absence
+					timeEngtryToInsert.resources.absence = $scope.lbRow.absence;
+
+					timeEntryService.insert(timeEngtryToInsert).then(function(){
+						$scope.init();
+
+						// Wait before performing the form reset
+						$timeout(function(){
+							initRowModel();
+							$scope.driverTimeSheet.$setUntouched(true);
+							$scope.driverTimeSheet.$setPristine(true);
+							// Go to last page
+							$scope.gridOptions.api.paginationGoToLastPage();
+						},10);
 					});
-
-					// Wait before performing the form reset
-					$timeout(function(){
-						initRowModel();
-						$scope.driverTimeSheet.$setUntouched(true);
-						$scope.driverTimeSheet.$setPristine(true);
-						// Go to last page
-						$scope.gridOptions.api.paginationGoToLastPage();
-					},10);
-
 				}
 			} else {
 				infoDialog('Invalid operation selected');
@@ -215,7 +212,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	var columnDefs = [
 		{headerName: 'Personal', field: 'staff', editable: false},
 		{headerName: 'Servicio', field: 'name', editable: false},
-		{headerName: 'Cliente', field: 'client', editable: false},
+		// {headerName: 'Cliente', field: 'client', editable: false},
 		{
 			headerName: 'Inicio',
 			field: 'begin',

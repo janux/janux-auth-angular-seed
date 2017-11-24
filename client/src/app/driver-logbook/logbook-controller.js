@@ -28,7 +28,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			staff: '',
 			operation: '',
 			start: moment().format(dateTimeFormatString),
-			end: '',
+			end: undefined,
 			provider: '',
 			location: '',
 			absence: ''
@@ -158,9 +158,14 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					var begin = moment($scope.lbRow.start);
 					var end = '', endToInsert;
 
-					if($scope.lbRow.end !==''){
+					if(_.isNil($scope.lbRow.end) === false){
 						end = moment($scope.lbRow.end);
 						endToInsert = end.toDate();
+
+						if(begin > end) {
+							infoDialog('End date should be higher than begin date');
+							return;
+						}
 					}
 
 					var timeEngtryToInsert = {
@@ -168,7 +173,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 						'principals': [],
 						'attributes': [],
 						'type': 'DRIVER',
-						'comment': 'updatedComment',
+						'comment': $scope.lbRow.location,
 						'begin': begin.toDate(),
 						'end': endToInsert,
 						'billable': true,
@@ -176,7 +181,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					};
 
 					// Absence
-					timeEngtryToInsert.resources.absence = $scope.lbRow.absence;
+					timeEngtryToInsert.resources[0].absence = $scope.lbRow.absence;
 
 					timeEntryService.insert(timeEngtryToInsert).then(function(){
 						$scope.init();
@@ -187,7 +192,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 							$scope.driverTimeSheet.$setUntouched(true);
 							$scope.driverTimeSheet.$setPristine(true);
 							// Go to last page
-							$scope.gridOptions.api.paginationGoToLastPage();
+							// $scope.gridOptions.api.paginationGoToLastPage();
 						},10);
 					});
 				}
@@ -212,7 +217,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	var columnDefs = [
 		{headerName: 'Personal', field: 'staff', editable: false},
 		{headerName: 'Servicio', field: 'name', editable: false},
-		// {headerName: 'Cliente', field: 'client', editable: false},
+		{headerName: 'Cliente', field: 'client', editable: false},
 		{
 			headerName: 'Inicio',
 			field: 'begin',

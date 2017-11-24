@@ -13,11 +13,11 @@ var _      = require('lodash'),
  */
 var fixDate = function (object) {
 	if (_.isNil(object) === false) {
-		var moment = moment(object);
-		return moment.isValid() ? moment.toDate() : "invalid";
+		var momentt = moment(object);
+		return momentt.isValid() ? momentt.toDate() : "invalid";
 	} else {
 		return undefined;
 	}
 };
 
-module.exports.fixDate = fixDate;
+module.exports = fixDate;

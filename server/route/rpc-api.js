@@ -11,9 +11,10 @@ var transport = jsonrpc.transports.server.middleware;
 var apiRoot = '../src/api/index';
 
 var services = {
-	users:	require( apiRoot ).UserService,
-	authContext:	require( apiRoot ).AuthContextService,
-	role: require( apiRoot ).RoleService
+	users       : require(apiRoot).UserService,
+	authContext : require(apiRoot).AuthContextService,
+	role        : require(apiRoot).RoleService,
+	partyService: require(apiRoot).PartyService
 };
 
 /*

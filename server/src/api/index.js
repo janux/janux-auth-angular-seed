@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 var UserPersistence         = require('janux-persist').UserService,
 	PartyServiceImpl        = require('janux-persist').PartyServiceImpl,
 	AuthContextPersistence  = require('janux-persist').AuthContextService,
@@ -24,11 +24,13 @@ var config                         = require('config'),
 	RolePersistService             = RolePersistence.createInstance(RoleDAO),
 	UserService                    = require('./user-service'),
 	AuthContextService             = require('./auth-context-service'),
-	RoleService                    = require('./role-service');
+	RoleService                    = require('./role-service'),
+	PartyService                   = require('./party-service');
 
 module.exports = {
 	UserService           : UserService.create(UserPersistenceService),
 	AuthContextService    : AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
 	RoleService           : RoleService.create(RolePersistService),
-	UserPersistenceService: UserPersistenceService
+	UserPersistenceService: UserPersistenceService,
+	PartyService          : PartyService.create(PartyPersistenceService)
 };

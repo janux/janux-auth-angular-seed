@@ -19,6 +19,21 @@ require('angular').module('appStaff', [
 	.state('staff.list', {
 		url: '/staff-list',
 		templateUrl: 'app/staff/index.html',
-		authRequired: true
+		authRequired: true,
+		controller: require('./staff-controller.js'),
+		resolve: {
+			staff: ['staffService', function (staffService) {
+				return staffService.findAll();
+			}]
+		}
+	})
+
+	// Create Staff Member
+	.state('staff.create', {
+		url: '/staff-create',
+		templateUrl: 'app/staff/create-staff.html',
+		authRequired: true,
+		//controller: require('./create-user-controller.js'),
+		resolve: {}
 	});
 }]);

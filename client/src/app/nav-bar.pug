@@ -1,41 +1,108 @@
-.sd-page-sidebar-wrapper(ng-controller='toggleMenu')
-  .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
+.sidebar-wrapper(ng-class="{'noneStyle' : noneStyle}" ng-mouseleave="subMenu = false; subMenuData = false")
+  ul.sidebar-nav
+    li
+      a(href="#" ng-click="toggleStyle()") 
+        i.fa.fa-bars
+        span
+          | &nbsp;
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = true; subMenuData = false")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-users(ng-click="subMenu = !subMenu")
+              span.down(ng-click="subMenu=true")
+                | {{ 'user.title' | translate }}
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenu && !noneStyle")
+              ul
+                li
+                  a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                    | Users
+                li
+                  a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                    | Staff
+                li
+                  a(href="#")
+                    | Clients
+          .accordion-toggle(ng-show="subMenu && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                    | Users
+                li
+                  a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                    | Staff
+                li
+                  a(href="#")
+                    | Clients
 
-    ul.sd-page-sidebar-menu
-      li
-        a(ng-click='toggledMenu()')
-          span.fa.fa-bars.fa-lg.glyphicon-align-justify 
-          .btn-text
-      li
-        a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-          span.fa.fa-users.fa-lg 
-          .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
-        ul(ng-hide='isCollapsed') 
-          li
-            a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-              span.fa.fa-angle-right
-              | &nbsp;&nbsp; Users
-          li
-            a.active(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
-              span.fa.fa-angle-right
-              | &nbsp;&nbsp; Staff
-          li
-            a
-              span.fa.fa-angle-right
-              | &nbsp;&nbsp; Clients
-      li
-        a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-          span.fa.fa-sitemap.fa-lg 
-          .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
-        ul(ng-hide='isCollapsed') 
-            li
-              a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-                span.fa.fa-angle-right
-                | &nbsp;&nbsp; Roles
-            li
-              a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
-                span.fa.fa-angle-right
-                | &nbsp;&nbsp; Authorizations
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-sitemap(ng-click="subMenuData = !subMenuData")
+              span.down(ng-click="subMenuData=true")
+                | {{ 'permission.title' | translate }}
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenuData && !noneStyle")
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                    | Roles
+                li
+                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                    | Authorizations
+          .accordion-toggle(ng-show="subMenuData && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                    | Roles
+                li
+                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                    | Authorizations
+
+//- .sd-page-sidebar-wrapper(ng-controller='toggleMenu')
+//-   .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
+
+//-     ul.sd-page-sidebar-menu
+//-       li
+//-         a(ng-click='toggledMenu()')
+//-           span.fa.fa-bars.fa-lg.glyphicon-align-justify 
+//-           .btn-text
+//-       li
+//-         a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+//-           span.fa.fa-users.fa-lg 
+//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
+//-         ul(ng-hide='isCollapsed') 
+//-           li
+//-             a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Users
+//-           li
+//-             a.active(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Staff
+//-           li
+//-             a
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Clients
+//-       li
+//-         a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+//-           span.fa.fa-sitemap.fa-lg 
+//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
+//-         ul(ng-hide='isCollapsed') 
+//-             li
+//-               a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+//-                 span.fa.fa-angle-right
+//-                 | &nbsp;&nbsp; Roles
+//-             li
+//-               a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+//-                 span.fa.fa-angle-right
+//-                 | &nbsp;&nbsp; Authorizations
 
 
 //- // Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar

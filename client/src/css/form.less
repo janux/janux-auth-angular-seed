@@ -2,6 +2,7 @@ md-toolbar.form-mid-toolbar{
 	background: @grey2;
 	color: @green1;
 	border-top:1px solid @grey2;
+	z-index: 0;
 }
 md-toolbar.form-mid-toolbar{
 	button.md-accent {
@@ -11,10 +12,24 @@ md-toolbar.form-mid-toolbar{
 		background: @white;
 	}
 }
+.md-button.trash,.md-button.save,.md-button.cancel{
+	border-radius: 20% !important;
+	box-shadow: 2px 2px 3px @grey1;
+}
+.md-button.trash{
+	background: #706e6e;
+}
+.md-button.save{
+	background: @green2;
+}
+.md-button.cancel{
+	background: #d0021b;
+}
 md-toolbar.form-root-toolbar{
 	background: @grey3;
 	color: @green1;
-	border-top:1px solid @grey2;
+	
+	z-index: 0;
 }
 .md-toolbar-tools.form-toolbar .md-button{
 	color: @white;
@@ -41,14 +56,31 @@ md-toolbar.form-root-toolbar{
 	}
     .full{
     	width: 100%;
+    	.ng-pristine{
+			border-color: #dcdcdc !important;
+		}
+
     }
 }
+
 .form-section{
 	display:table; 
 	background:@green2; 
 	padding:10px; 
 	color:white;
 }
+.staff-form{
+	overflow: hidden;
+	md-checkbox{
+		margin-top: -20px;
+		.md-label{
+			padding-top: 40px;
+			font-size: 11px;
+			margin-left: 0px !important;
+		}
+	}
+}
+
 .jx-checkbox {
 	width: 20px;
 	position: relative;
@@ -100,4 +132,16 @@ md-toolbar.form-root-toolbar{
 
 .ng-pristine {
 	border-color: inherit  !important;
+}
+.spacing-bottom{
+	padding-bottom:30px;
+}
+
+.staff-name{
+	background:none; 
+	color:black; 
+	margin:15px 20px 15px 20px;
+}
+.spacing-ls{
+	margin:0 20px 0 20px;
 }

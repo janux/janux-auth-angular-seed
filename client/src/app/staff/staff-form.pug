@@ -1,0 +1,216 @@
+md-content.staff-form(layout-padding)
+	.row
+		.col-sm-6
+			p.form-section
+				| {{ 'staff.employeeTitle' | translate}}
+			div.an-material
+				md-input-container.full
+					label {{ 'staff.name' | translate}}
+					input(ng-model='user.title')
+
+				md-input-container.full
+					label {{ 'staff.maternalName' | translate}}
+					input(ng-model='user.title')
+
+				md-input-container.full
+					label {{ 'staff.lastName' | translate}}
+					input(ng-model='user.title')
+
+		.col-sm-6
+			p.form-section
+				| {{ 'staff.jobTitle' | translate}}
+			div.an-material
+				md-input-container.full
+					label Job Title
+					input(ng-model='job.title')
+
+				md-input-container.full
+					label Area
+					input(ng-model='job.title')
+	.row
+		.col-sm-6
+			p.form-section
+				| {{ 'staff.addressesTitle' | translate}}
+			.row
+				.col-sm-4.an-material
+					md-input-container.full
+						label Tipo
+						md-select(ng-model="tipo.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label Country
+						md-select(ng-model="tipo.title")
+							md-option
+								| México
+				.col-sm-2(style="padding-top:20px")
+						md-checkbox(aria-label="Fiscal")
+							| Fiscal
+				.col-sm-2(style="padding-top:10px")
+						md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			.row
+				.col-sm-7.an-material
+					md-input-container.full
+						label Calle
+						input(ng-model='type.calle')
+				.col-sm-5.an-material
+					md-input-container.full
+						label Colonia
+						input(ng-model='colonia.title')
+			.row
+				.col-sm-4.an-material
+					md-input-container.full
+						label Ciudad
+						md-select(ng-model="ciudad.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label Estado
+						md-select(ng-model="estado.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label C.P.
+						input(ng-model='cp.title')
+			md-divider(style="padding-bottom:10px; border-top:2px solid #707946")
+			.row
+				.col-sm-4.an-material
+					md-input-container.full
+						label Tipo
+						md-select(ng-model="tipo.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label Country
+						md-select(ng-model="tipo.title")
+							md-option
+								| México
+				.col-sm-2(style="padding-top:20px")
+						md-checkbox(aria-label="Fiscal")
+							| Fiscal
+				.col-sm-2(style="padding-top:10px")
+						md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			.row
+				.col-sm-12.an-material
+					md-input-container.full
+						label Street 1
+						input(ng-model='type.calle')
+			.row
+				.col-sm-12.an-material
+					md-input-container.full
+						label Street 2
+						input(ng-model='type.calle')
+			.row
+				.col-sm-12.an-material
+					md-input-container.full
+						label Street 3
+						input(ng-model='type.calle')
+			.row
+				.col-sm-4.an-material
+					md-input-container.full
+						label City
+						md-select(ng-model="ciudad.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label State
+						md-select(ng-model="estado.title")
+							md-option
+								| ------
+				.col-sm-4.an-material
+					md-input-container.full
+						label Zip code
+						input(ng-model='cp.title')
+			.row
+				.col-sm-12
+					md-divider(style="padding-bottom:10px; border-top:2px solid #707946")
+					md-button.md-icon-button(aria-label="Trash" style="background:#707946;border-radius:20%; float:right")
+							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
+
+		.col-sm-6
+			p.form-section
+				| {{ 'staff.phonesTitle' | translate}}
+			.row(style="padding-left:20px")
+				.col-sm-2.an-material.nopadding
+					md-input-container.full
+						label Tipo
+						md-select(ng-model="cel.title")
+							md-option
+								| ------
+				.col-sm-2.an-material.nopadding
+					md-input-container.full
+						label Código
+						md-select(ng-model="codigo.title")
+							md-option
+								| ------
+				.col-sm-1.an-material.nopadding
+					md-input-container.full
+						label Area
+						input(ng-model='cp.title')
+				.col-sm-2.an-material.nopadding
+					md-input-container.full
+						label Número
+						input(ng-model='cp.title')
+				.col-sm-1.an-material.nopadding
+					md-input-container.full
+						label Ext
+						input(ng-model='cp.title')
+				.col-sm-1(style="padding-top:10px")
+						md-checkbox(aria-label="SMS")
+							| SMS
+				.col-sm-1(style="padding-top:10px")
+						md-checkbox(aria-label="WSP")
+							| WPS
+				.col-sm-2(style="padding-top:10px")
+						md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+
+			.row
+				.col-sm-12
+					md-divider(style="padding-bottom:10px; border-top:2px solid #707946")
+					md-button.md-icon-button(aria-label="Trash" style="background:#707946;border-radius:20%; float:right")
+							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
+
+		.col-sm-6
+			p.form-section
+				| {{ 'staff.mailsTitle' | translate}}
+			.row
+				.col-sm-3.an-material
+					md-input-container.full
+						label Type
+						md-select(ng-model="cel.title")
+							md-option
+								| ------
+				.col-sm-7.an-material
+					md-input-container.full
+						label Mail
+						input(ng-model="codigo.title")
+				.col-sm-2(style="padding-top:10px")
+						md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			.row
+				.col-sm-3.an-material
+					md-input-container.full
+						label Type
+						md-select(ng-model="cel.title")
+							md-option
+								| ------
+				.col-sm-7.an-material
+					md-input-container.full
+						label Mail
+						input(ng-model="codigo.title")
+				.col-sm-2(style="padding-top:10px")
+						md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			.row
+				.col-sm-12
+					md-divider(style="padding-bottom:10px; border-top:2px solid #707946")
+					md-button.md-icon-button(aria-label="Trash" style="background:#707946;border-radius:20%; float:right")
+							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")

@@ -17,7 +17,6 @@ html(ng-app='MyApp')
 		script(src=cfg.server.static+'/'+cfg.file.app+'?'+cfg.build.timestamp)
 
 	body
-		#top
-		section(ui-view)
+		section(ui-view id='wrapper' ng-controller='sidebarCtrl')
 
 // vim: set fo=rq wrap:

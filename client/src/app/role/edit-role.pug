@@ -1,19 +1,19 @@
 login-toolbar(title='permission.title')
-//include ../permission/toolbar
 
-.sd-page-container
-	side-bar
+side-bar
 
-	.sd-page-content-wrapper
-		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
-			.title-bar
-				.title {{ 'permission.updatingRole' | translate }}
-			hr
+.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid
+		.row
+			.col-lg-12
+				.title-bar
+					.title {{ 'permission.updatingRole' | translate }}
+				hr
 
-			include role-form
+				include role-form
 
-		.bottom-bar
-			button.btn.btn-ok(ng-click='saveRole()') Save
-			button.btn.btn-cancel(ng-click='cancel()') Cancel
+			.bottom-bar
+				button.btn.btn-ok(ng-click='saveRole()') Save
+				button.btn.btn-cancel(ng-click='cancel()') Cancel
 
 footer-Janux

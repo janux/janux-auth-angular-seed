@@ -195,11 +195,26 @@ function ($scope) {
   	};
 }])
 
-.controller('toggleMenu', ['$rootScope', 
+
+.controller('sidebarCtrl', ['$rootScope', 
 function ($rootScope) {
-  	$rootScope.toggledMenu = function() {
-    	$rootScope.isCollapsed = !$rootScope.isCollapsed;
-  	};  
+	$rootScope.noneStyle = true;
+	$rootScope.bodyCon = false;
+	$rootScope.sasd = 'asd';
+    
+    
+	//Toggle the styles
+	$rootScope.toggleStyle = function () {
+		//If they are true, they will become false 
+		//and false will become true
+		$rootScope.bodyCon = !$rootScope.bodyCon;
+		$rootScope.noneStyle = !$rootScope.noneStyle;
+	};
+	//add class to search box
+	$rootScope.openSearch = false;
+	$rootScope.searchToggle = function () {
+    	$rootScope.openSearch = !$rootScope.openSearch;
+	};  
 }])
 
 .controller('asideMenu', ['$scope','$aside','security',

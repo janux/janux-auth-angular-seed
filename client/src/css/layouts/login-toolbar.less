@@ -5,17 +5,25 @@
 }
 .sd-page-header {
 	background: @green1;
+	position: fixed;
 }
 .sd-page-logo {
 	float: left;
 	display: block;
-	width: 235px;
+	width: @sidebar-width;
 	//height: 70px;
 	//padding-left: 20px;
 	padding-right: 20px;
-	.medium-device({ width: 80px; });
-	.small-device({ width: 80px; });
-	.xs-device({ width: 80px; });
+	.small-device({ width: @sidebar-width; });
+	.xs-device({ width: @sidebar-width; });
+}
+.sd-page-logo-collapsed {
+	float: left;
+	display: block;
+	width: @sidebar-width-full;
+	padding-right: 20px;
+	.small-device({ width: @sidebar-width; });
+	.xs-device({ width: @sidebar-width; });
 }
 .sd-logo-default {
 	margin: 0;

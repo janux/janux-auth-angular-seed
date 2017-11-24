@@ -1,45 +1,46 @@
 login-toolbar(title='user.title')
 
-.sd-page-container
-	side-bar
+side-bar
 
-	.sd-page-content-wrapper
-		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid
+		.row
+			.col-lg-12
 
-			.title-bar
-				.title {{ 'label.people' | translate }}
-				.options
-					a(ui-sref='users.create')
-						span.fa.fa-plus-circle.fa-lg 
-						| &nbsp; Add
-			hr
+				.title-bar
+					.title {{ 'label.people' | translate }}
+					.options
+						a(ui-sref='users.create')
+							span.fa.fa-plus-circle.fa-lg 
+							| &nbsp; Add
+				hr
 
-			table.list.users-list(ng-show='usersMatch.length')
-				thead
-					tr
-						th {{ 'user.displayName' | translate }}
-						th {{ 'user.username' | translate }}
-						th {{ 'user.email' | translate }}
-						th {{ 'user.creation' | translate }}
-						th
-				tbody
-					tr(ng-repeat='user in usersMatch')
-						td {{ user.contact.name.shortName }}
-						td {{ user.username }}
-						td {{ user.contact.emailAddress('work').address }}
-						td {{ user.cdate }}
-						td.text-center
-							a.action-button(ng-click='editUser(user.userId)')
-								span.fa.fa-pencil.fa-lg 
-							a.action-button(ng-click='openDeleteAuthContextDialog(user)')
-								span.fa.fa-trash.fa-lg 
+				table.list.users-list(ng-show='usersMatch.length')
+					thead
+						tr
+							th {{ 'user.displayName' | translate }}
+							th {{ 'user.username' | translate }}
+							th {{ 'user.email' | translate }}
+							th {{ 'user.creation' | translate }}
+							th
+					tbody
+						tr(ng-repeat='user in usersMatch')
+							td {{ user.contact.name.shortName }}
+							td {{ user.username }}
+							td {{ user.contact.emailAddress('work').address }}
+							td {{ user.cdate }}
+							td.text-center
+								a.action-button(ng-click='editUser(user.userId)')
+									span.fa.fa-pencil.fa-lg 
+								a.action-button(ng-click='openDeleteAuthContextDialog(user)')
+									span.fa.fa-trash.fa-lg 
 
-			.users-filter
-				form.form-inline
-					.form-group
-						label(for='username') Find by:
-						select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
-						input.form-control(id='username' type='text' ng-model='searchString')
-						button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+				.users-filter
+					form.form-inline
+						.form-group
+							label(for='username') Find by:
+							select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+							input.form-control(id='username' type='text' ng-model='searchString')
+							button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
 
 footer-Janux

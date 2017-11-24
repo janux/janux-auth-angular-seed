@@ -1,21 +1,22 @@
 login-toolbar(title='permission.title')
-//include ../permission/toolbar
 
-.sd-page-container
-	side-bar
-	.sd-page-content-wrapper
-		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+side-bar
 
-			.title-bar
-				.title {{ 'role.title' | translate }}
-			hr
+.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid
+		.row
+			.col-lg-12
 
-			.maincolumn
+				.title-bar
+					.title {{ 'role.title' | translate }}
+				hr
 
-				include roles
+				.maincolumn
 
-				.text-left
-					a.link.primary(ui-sref='permissions.create-role')
-						span.fa.fa-plus.fa-lg 
-						| &nbsp;Add Role
+					include roles
+
+					.text-left
+						a.link.primary(ui-sref='permissions.create-role')
+							span.fa.fa-plus.fa-lg 
+							| &nbsp;Add Role
 footer-Janux

@@ -4,6 +4,7 @@
   "private": true,
   "description": "Back-end to support janux auth seed angular front-end",
   "dependencies": {
+    "md5": "2.2.1",
     "bluebird": "2.9.15",
     "body-parser": "1.15.0",
     "config": "1.3.0",
@@ -14,14 +15,14 @@
     "express-jwt": "^5.3.0",
     "express-session": "1.13.0",
     "glarus-services": "file:vendor/glarus-services",
-	"janux-authorize": "file:vendor/janux-authorize.js",
     "janux-people": "file:vendor/janux-people.js",
     "janux-persist": "file:vendor/janux-persist.js",
-	"jsonwebtoken": "8.0.1",
+    "janux-authorize": "file:vendor/janux-authorize.js",
+    "jsonwebtoken": "8.0.1",
     "lodash": "4.9.0",
     "log4js": "0.6.14",
-    "md5": "2.2.1",
     "method-override": "2.3.5",
+    "moment": "2.19.1",
     "mongodb": "2.1.18",
     "mongoose": "4.4.14",
     "multitransport-jsonrpc": "0.8.3",
@@ -30,8 +31,7 @@
     "q": "1.1.2",
     "serve-favicon": "2.3.0",
     "sprintf": "0.1.3",
-    "underscore": "1.7.0",
-    "moment": "2.19.1"
+    "underscore": "1.7.0"
   },
   "devDependencies": {
     "mocha": "2.1.0",

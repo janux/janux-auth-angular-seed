@@ -12,11 +12,6 @@ module.exports = ['$scope','$q','$timeout', function($scope, $q, $timeout) {
 		records.timeEntries[iElem+3] = elem;
 	});
 
-	// Mock data
-	records.forEach(function (elem, iElem) {
-		records[iElem+3] = elem;
-	});
-
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
 	// Models for search autocomplete

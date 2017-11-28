@@ -6,10 +6,6 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
-require('angular-material');
-require('datetimepicker');
-require('angular-animate');
-require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
 require('angular-material');
@@ -51,9 +47,7 @@ angular.module('MyApp',[
 	'appLogBook',
     'appDriverLogbook',
 	'LocalStorageModule',
-	'angular-jwt',
-	'appLogBook',
-	'appDriverLogbook'
+	'angular-jwt'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',

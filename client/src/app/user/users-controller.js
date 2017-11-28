@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = [
-'$scope','userService', 'partyService','$state','users','$modal', function(
- $scope , userService , partyService, $state , users , $modal) {
+'$scope','userService','$state','users','$modal', function(
+ $scope , userService , $state , users , $modal) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
@@ -21,11 +21,6 @@ module.exports = [
 			});
 			console.log('$scope.usersMatch', $scope.usersMatch);
 		});
-
-		partyService.findPeople()
-			.then(function (result) {
-				console.log(JSON.stringify(result));
-			});
 	};
 
 	$scope.editUser = function(userId) {

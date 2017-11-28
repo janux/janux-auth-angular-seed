@@ -33,8 +33,8 @@ var config                         = require('config'),
 	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyDao, VehicleDao, CurrentResourceDao),
 	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyDao, VehicleDao),
 	// End glarus services implementations.
-	UserPersistenceService         = UserPersistence.createInstance(AccountDao, PartyDao),
 	PartyPersistenceService        = new PartyServiceImpl(PartyDao),
+	UserPersistenceService         = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
 	GroupPersistService            = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
 	AuthContextPersistService      = AuthContextPersistence.createInstance(AuthContextDAO),
 	AuthContextGroupPersistService = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
@@ -43,6 +43,7 @@ var config                         = require('config'),
 	AuthContextService             = require('./auth-context-service'),
 	RoleService                    = require('./role-service'),
 	OperationService               = require('./operation-service'),
+	PartyService                   = require('./party-service'),
 	TimeEntryService               = require('./time-entry-service');
 
 

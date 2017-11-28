@@ -27,6 +27,15 @@ module.exports =
 					).then(function (resp) {
 						return resp.data.result;
 					});
+				},
+				removeByIds: function (ids) {
+					return $http.jsonrpc(
+						'/rpc/2.0/timeEntry',
+						'removeByIds',
+						[ids]
+					).then(function (resp) {
+						return resp.data.result;
+					});
 				}
 			};
 			return service;

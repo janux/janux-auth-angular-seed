@@ -18,6 +18,7 @@ var config                         = require('config'),
 	GroupContentDao                = DAOs[appContext.groupContentDao],
 	GroupDao                       = DAOs[appContext.groupDao],
 	GroupAttributeValueDao         = DAOs[appContext.groupAttributeValueDao],
+	PartyPersistenceService        = new PartyServiceImpl(PartyDao),
 	// Begin glarus services DAOs.
 	VehicleDao                     = DAOs[appContext.vehicleDao],
 	TimeEntryPrincipalDao          = DAOs[appContext.timeEntryPrincipalDao],
@@ -27,13 +28,14 @@ var config                         = require('config'),
 	CurrentResourceDao             = DAOs[appContext.currentResourceDao],
 	TimeEntryAttributeDao          = DAOs[appContext.timeEntryAttributeDao],
 	TimeEntryResourceDao           = DAOs[appContext.timeEntryResourceDao],
+
 	// End glarus services DAOs.
 
 	// Begin glarus services implementations.
-	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyDao, VehicleDao, CurrentResourceDao),
-	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyDao, VehicleDao),
+	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyPersistenceService, VehicleDao, CurrentResourceDao),
+	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyPersistenceService, VehicleDao),
 	// End glarus services implementations.
-	PartyPersistenceService        = new PartyServiceImpl(PartyDao),
+
 	UserPersistenceService         = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
 	GroupPersistService            = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
 	AuthContextPersistService      = AuthContextPersistence.createInstance(AuthContextDAO),

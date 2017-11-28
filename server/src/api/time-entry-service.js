@@ -43,6 +43,11 @@ var createInstance = function (timeEntryServiceReference) {
 		return timeEntryServiceReferenceInstance.update(timeEntry).asCallback(callback);
 	};
 
+	TimeEntryService.prototype.removeByIds = function (ids, callback) {
+		log.debug("Call to removeByIds with ids: %j", ids);
+		return timeEntryServiceReferenceInstance.removeByIds(ids).asCallback(callback);
+	};
+
 	return new TimeEntryService();
 };
 

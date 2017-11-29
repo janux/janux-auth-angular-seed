@@ -12,19 +12,6 @@ login-toolbar(title='permission.title')
 			form(name='driverTimeSheet').add-form
 				.element
 					md-autocomplete(md-no-cache='false',
-					md-items='item in opsSearch(lbSearch.operation)',
-					md-selected-item='lbRow.operation',
-					md-search-text-change='opsSearchTextChange(lbSearch.operation)',
-					md-search-text='lbSearch.operation',
-					md-selected-item-change='opsSelectedItemChange(item)',
-					md-item-text='item.name',
-					md-min-length='0',
-					md-floating-label='Servicio')
-						md-item-template
-							span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
-
-				.element
-					md-autocomplete(md-no-cache='false',
 					md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.displayName'",
 					md-selected-item='lbRow.staff',
 					md-search-text-change='staffSearchTextChange(lbSearch.staff)',
@@ -35,6 +22,19 @@ login-toolbar(title='permission.title')
 					md-floating-label='Personal')
 						md-item-template
 							span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+
+				.element
+					md-autocomplete(md-no-cache='false',
+					md-items='item in opsSearch(lbSearch.operation)',
+					md-selected-item='lbRow.operation',
+					md-search-text-change='opsSearchTextChange(lbSearch.operation)',
+					md-search-text='lbSearch.operation',
+					md-selected-item-change='opsSelectedItemChange(item)',
+					md-item-text='item.name',
+					md-min-length='0',
+					md-floating-label='Servicio')
+						md-item-template
+							span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
 
 				.element
 					md-input-container.jnx-datetime-picker

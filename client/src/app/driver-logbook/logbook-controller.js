@@ -6,22 +6,15 @@ var _ = require('lodash');
 // var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval','operations','timeEntryService',
-	function ($scope, operationService, $q, $timeout, $modal, $interval, operations, timeEntryService) {
+module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
+	function ($scope, operationService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService) {
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 
-	console.log('Operations', operations);
+	console.log('Operations', driversAndOps);
 
-	var operationDrivers = [];
-	// Mock staff
-	// var staff = records.staff;
-	// Mock operations
-	// var operations = records.operations;
-	// Mock clients
-	// var clients = records.clients;
-	// // Mock providers
-	// var providers = records.providers;
+	var operationDrivers = driversAndOps.drivers;
+	var operations = driversAndOps.operations;
 
 	var initRowModel = function () {
 		$scope.lbRow = {
@@ -77,6 +70,10 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			// This item should contain the selected staff member
 			console.info('Item changed to ' + JSON.stringify(item));
 			// TODO: assign the selected person
+			operations = _.filter(operations, {id:item.opId});
+			console.log('operations', operations);
+			$scope.lbRow.operation = operations[0];
+
 		} else {
 			// This means that the entered search text is empty or doesn't match any staff member
 		}
@@ -102,8 +99,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		if(typeof item !== 'undefined') {
 			// This item should contain the selected operation
 			// console.info('Item changed to ' + JSON.stringify(item));
-			operationDrivers = _.uniqBy(item.currentResources, 'resource.id');
-			$scope.lbRow.staff = operationDrivers[0];
 		} else {
 			// This means that the entered search text is empty or doesn't match any operation
 		}
@@ -119,35 +114,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	$scope.opsSearch = function(query) {
 		return query ? operations.filter( createFilterForOps(query) ) : operations;
 	};
-
-	//
-	// Provider autocomplete
-	//
-	// $scope.providerSelectedItemChange = function(item) {
-	// 	if(typeof item !== 'undefined') {
-	// 		// This item should contain the selected provider
-	// 		console.info('Item changed to ' + JSON.stringify(item));
-	// 		// TODO: assign the selected person
-	// 	} else {
-	// 		// This means that the entered search text is empty or doesn't match any provider
-	// 	}
-	// };
-	//
-	// function createFilterForProvider(query) {
-	// 	return function filterFn(provider) {
-	// 		var index = provider.name.toLowerCase().indexOf(angular.lowercase(query));
-	// 		return (index === 0);
-	// 	};
-	// }
-	//
-	// $scope.providerSearch = function(query) {
-	// 	var results = query ? providers.filter( createFilterForProvider(query) ) : providers;
-	// 	var deferred;
-	// 	deferred = $q.defer();
-	// 	// Simulate server delay
-	// 	$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-	// 	return deferred.promise;
-	// };
 
 	// Add new record
 	$scope.addRow = function () {
@@ -197,6 +163,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					});
 				}
 			} else {
+				console.log('$scope.lbRow.operation', $scope.lbRow.operation);
 				infoDialog('Invalid operation selected');
 			}
 		} else {

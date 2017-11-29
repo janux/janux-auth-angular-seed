@@ -29,8 +29,8 @@ side-bar
 							td {{ staff.name.first }}
 							td {{ staff.name.middle }}
 							td {{ staff.name.last }}
-							td {{ staff.email }}
-							td {{ staff.phone }}
+							td {{ staff.emailAddress('work').address }}
+							td {{ staff.phoneNumber('work').number }}
 							td.text-center
 								a.action-button
 									span.fa.fa-pencil.fa-lg 

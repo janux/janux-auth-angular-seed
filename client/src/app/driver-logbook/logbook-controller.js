@@ -223,7 +223,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			field: 'begin',
 			editable: true,
 			filter: 'date',
-			cellEditor: agGridComp.dateTimeCellEditor
+			cellEditor: agGridComp.dateTimeCellEditor,
+			sort: 'desc'
 		},
 		{
 			headerName: 'Termino',

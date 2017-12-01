@@ -9,7 +9,8 @@ var moment = require('moment');
 var Person = require('janux-people').Person;
 var agGridComp = require('common/ag-grid-components');
 var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-
+var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
+var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
 	['$q', '$http',
@@ -52,7 +53,10 @@ module.exports =
 								name: operation.name,
 								staff: staff.name.longName,
 								begin: begin.format(dateTimeFormatString),
+								beginOnlyHour:begin.format(formatStringOnlyHour),
+								beginOnlyDate:begin.format(formatStringOnlyDate),
 								end: end.format(dateTimeFormatString),
+								endOnlyHour:end.format(formatStringOnlyHour),
 								duration: duration,
 								absence: timeEntry.resources[0].absence,
 								comment: timeEntry.comment

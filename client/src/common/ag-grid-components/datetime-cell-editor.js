@@ -8,6 +8,12 @@ function DateTimepicker () {}
 // Static date format string
 DateTimepicker.formatString = 'YYYY-MM-DD HH:mm';
 
+//Format string for only hours.
+DateTimepicker.formatStringOnlyHour = 'HH:mm';
+
+//Format string for only date.
+DateTimepicker.formatStringOnlyDate = 'YYYY-MM-DD';
+
 // gets called once before the renderer is used
 DateTimepicker.prototype.init = function(params) {
 

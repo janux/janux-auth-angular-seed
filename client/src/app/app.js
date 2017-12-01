@@ -107,6 +107,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 
 	$translateProvider.preferredLanguage('en');
 	$translateProvider.fallbackLanguage('en');
+	$translateProvider.useSanitizeValueStrategy('escape');
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');

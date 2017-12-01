@@ -48,7 +48,9 @@ login-toolbar(title='permission.title')
 						edit-input='true'
 						click-outside-to-close='true'
 						show-icon='true'
-						ng-model='lbRow.start' type='text' required='')
+						ng-model='lbRow.start'
+						ng-model-options="{ debounce: 1000 }"
+						type='text' required='')
 				.element
 					md-input-container.jnx-datetime-picker
 						label Termino
@@ -61,7 +63,9 @@ login-toolbar(title='permission.title')
 						edit-input='true'
 						click-outside-to-close='true'
 						show-icon='true'
-						ng-model='lbRow.end' type='text')
+						ng-model='lbRow.end'
+						ng-model-options="{ debounce: 1000 }"
+						type='text')
 
 				//.element
 				//	md-autocomplete(md-no-cache='false',

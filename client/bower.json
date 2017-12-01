@@ -2,12 +2,12 @@
 	"name": "janux-auth-seed",
 	"version": "0.0.1-SNAPSHOT",
 	"dependencies": {
-		"angular":           "1.5.3",
+		"angular":           "1.6.1",
 		"angular-bootstrap": "0.13.3",
 		"angular-mocks":     "1.4.x",
-		"angular-translate": "2.5.2",
-		"angular-translate-loader-static-files": "2.5.2",
-		"angular-ui-router": "0.2.15",
+		"angular-translate": "2.8.0",
+		"angular-translate-loader-static-files": "2.8.0",
+		"angular-ui-router": "0.3.2",
 		"ag-grid": 			 "13.3.1",
 		"angular-aside":     "1.2.x",
 		"bootstrap":         "3.3.4",
@@ -21,11 +21,11 @@
 	  	"angular-jwt": 		 "0.1.9",
 		"font-awesome":		 "4.7.0",
 		"angular-material":	 "1.1.5",
-		"angular-animate":	 "1.5.3",
-		"angular-aria":	 	 "1.5.3",
+		"angular-animate":	 "1.6.1",
+		"angular-aria":	 	 "1.6.1",
 		"ng-material-datetimepicker": "1.9.6"
 	},
 	"resolutions": {
-		"angular": "1.5.3"
+		"angular": "1.6.1"
 	}
 }

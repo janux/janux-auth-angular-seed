@@ -115,6 +115,32 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		return query ? operations.filter( createFilterForOps(query) ) : operations;
 	};
 
+
+	/*$scope.export = function () {
+		var params = {
+			skipHeader: false,
+			columnGroups: false,
+			skipFooters: false,
+			skipGroups: false,
+			skipPinnedTop: true,
+			skipPinnedBottom: true,
+			allColumns: true,
+			onlySelected: false,
+			suppressQuotes: true,
+			fileName: 'export.csv',
+			columnSeparator: ',',
+			processCellCallback : function(params) {
+				if (params.value ) {
+					return '"' +  params.value + '"';
+				} else {
+					return params.value;
+				}
+			}
+		};
+
+		$scope.gridOptions.api.exportDataAsCsv(params);
+	};*/
+
 	// Add new record
 	$scope.addRow = function () {
 		// Selected person

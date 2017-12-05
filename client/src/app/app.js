@@ -200,8 +200,7 @@ function ($scope) {
 function ($rootScope) {
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
-	$rootScope.sasd = 'asd';
-    
+	$rootScope.menu1 = false;
     
 	//Toggle the styles
 	$rootScope.toggleStyle = function () {
@@ -215,6 +214,15 @@ function ($rootScope) {
 	$rootScope.searchToggle = function () {
     	$rootScope.openSearch = !$rootScope.openSearch;
 	};  
+
+	$rootScope.toggleSubmenu = function () {
+		$rootScope.menu1 = !$rootScope.menu1;
+	};
+
+	$rootScope.toggleSubmenu2 = function () {
+		$rootScope.menu2 = !$rootScope.menu2;
+	};
+
 }])
 
 .controller('asideMenu', ['$scope','$aside','security',

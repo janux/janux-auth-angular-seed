@@ -14,7 +14,8 @@ var services = {
 	users       : require(apiRoot).UserService,
 	authContext : require(apiRoot).AuthContextService,
 	role        : require(apiRoot).RoleService,
-	partyService: require(apiRoot).PartyService
+	partyService: require(apiRoot).PartyService,
+	partyGroupService:require(apiRoot).PartyGroupService
 };
 
 /*

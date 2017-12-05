@@ -4,7 +4,8 @@ var UserPersistence         = require('janux-persist').UserService,
 	AuthContextPersistence  = require('janux-persist').AuthContextService,
 	AuthContextGroupService = require('janux-persist').AuthContextGroupServiceImpl,
 	RolePersistence         = require('janux-persist').RoleService,
-	GroupService            = require('janux-persist').GroupServiceImpl;
+	GroupService            = require('janux-persist').GroupServiceImpl,
+	PartyGroupServiceImpl   = require('janux-persist').PartyGroupServiceImpl;
 
 var config                         = require('config'),
 	appContext                     = config.serverAppContext,
@@ -22,9 +23,11 @@ var config                         = require('config'),
 	AuthContextPersistService      = AuthContextPersistence.createInstance(AuthContextDAO),
 	AuthContextGroupPersistService = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
 	RolePersistService             = RolePersistence.createInstance(RoleDAO),
+	PartyGroupPersistService       = new PartyGroupServiceImpl(PartyPersistenceService, GroupPersistService),
 	UserService                    = require('./user-service'),
 	AuthContextService             = require('./auth-context-service'),
 	RoleService                    = require('./role-service'),
+	PartyGroupService              = require('./party-group-service'),
 	PartyService                   = require('./party-service');
 
 module.exports = {
@@ -32,5 +35,6 @@ module.exports = {
 	AuthContextService    : AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
 	RoleService           : RoleService.create(RolePersistService),
 	UserPersistenceService: UserPersistenceService,
-	PartyService          : PartyService.create(PartyPersistenceService)
+	PartyService          : PartyService.create(PartyPersistenceService),
+	PartyGroupService     : PartyGroupService.create(PartyGroupPersistService)
 };

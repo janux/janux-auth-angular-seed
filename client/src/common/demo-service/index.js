@@ -8,6 +8,7 @@ require('angular').module('demoService', [])
 .factory('staffService', require('./staff-mock-service.js'))
 .factory('partyService', require('./party-service'))
 .factory('dateUtilService', require('./date-util-service'))
+.factory('partyGroupService', require('./party-group-service'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

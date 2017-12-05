@@ -17,7 +17,7 @@ module.exports =
 			 * Convert a json object to a PartyAbstract instance.
 			 * @param object
 			 */
-			function fromJSON(object) {
+			function fromJSONMethod(object) {
 				var contact;
 				if (object.typeName = "PersonImpl") {
 					contact = Person.fromJSON(object);
@@ -38,7 +38,7 @@ module.exports =
 			 * Convert a PartyAbstract instance to a JSON object.
 			 * @param object
 			 */
-			function toJSON(object) {
+			function toJSONMethod(object) {
 				var id = object.id;
 				var typeName = object.typeName;
 				var contact = object.toJSON();
@@ -63,7 +63,7 @@ module.exports =
 						[id]
 					).then(function (resp) {
 						var contact = resp.data.result;
-						contact = fromJSON(contact);
+						contact = fromJSONMethod(contact);
 						return contact;
 					});
 				},
@@ -80,7 +80,7 @@ module.exports =
 					).then(function (resp) {
 						var contacts = resp.data.result;
 						contacts = _.map(contacts, function (o) {
-							return fromJSON(o);
+							return fromJSONMethod(o);
 						});
 						return contacts;
 					});
@@ -98,7 +98,7 @@ module.exports =
 					).then(function (resp) {
 						var contacts = resp.data.result;
 						contacts = _.map(contacts, function (o) {
-							return fromJSON(o);
+							return fromJSONMethod(o);
 						});
 						return contacts;
 					});
@@ -116,7 +116,7 @@ module.exports =
 					).then(function (resp) {
 						var contacts = resp.data.result;
 						contacts = _.map(contacts, function (o) {
-							return fromJSON(o);
+							return fromJSONMethod(o);
 						});
 						return contacts;
 					});
@@ -133,7 +133,7 @@ module.exports =
 					).then(function (resp) {
 						var contacts = resp.data.result;
 						contacts = _.map(contacts, function (o) {
-							return fromJSON(o);
+							return fromJSONMethod(o);
 						});
 						return contacts;
 					});
@@ -150,7 +150,7 @@ module.exports =
 					).then(function (resp) {
 						var contacts = resp.data.result;
 						contacts = _.map(contacts, function (o) {
-							return fromJSON(o);
+							return fromJSONMethod(o);
 						});
 						return contacts;
 					});
@@ -162,7 +162,7 @@ module.exports =
 				 */
 				insert: function (party) {
 					$log.debug("Call to insert with " + JSON.stringify(party));
-					var objectToSend = toJSON(party);
+					var objectToSend = toJSONMethod(party);
 
 					return $http.jsonrpc(
 						'/rpc/2.0/partyService',
@@ -170,7 +170,7 @@ module.exports =
 						[objectToSend]
 					).then(function (resp) {
 						var contact = resp.data.result;
-						contact = fromJSON(contact);
+						contact = fromJSONMethod(contact);
 						return contact;
 					});
 				},
@@ -180,16 +180,24 @@ module.exports =
 				 * @param party
 				 */
 				update: function (party) {
-					var objectToSend = toJSON(party);
+					var objectToSend = toJSONMethod(party);
 					return $http.jsonrpc(
 						'/rpc/2.0/partyService',
 						'update',
 						[objectToSend]
 					).then(function (resp) {
 						var contact = resp.data.result;
-						contact = fromJSON(contact);
+						contact = fromJSONMethod(contact);
 						return contact;
 					});
+				},
+
+				toJSON: function (object) {
+					return toJSONMethod(object);
+				},
+
+				fromJSON: function (object) {
+					return fromJSONMethod(object);
 				}
 			};
 			return service;

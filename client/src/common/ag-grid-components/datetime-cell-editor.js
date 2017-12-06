@@ -36,6 +36,7 @@ DateTimepicker.prototype.init = function(params) {
 	this.datetimePicker.setAttribute('class', 'jnx-datetime-picker');
 	this.datetimePicker.setAttribute('edit-input', 'true');
 	this.datetimePicker.setAttribute('ng-model', this.model);
+	this.datetimePicker.setAttribute('ng-model-options', '{ debounce: 1000 }');
 };
 
 // gets called once when grid ready to insert the element

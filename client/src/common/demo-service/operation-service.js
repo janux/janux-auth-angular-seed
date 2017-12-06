@@ -6,7 +6,6 @@
 
 var _ = require('lodash');
 var moment = require('moment');
-var Person = require('janux-people').Person;
 var agGridComp = require('common/ag-grid-components');
 var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
@@ -42,21 +41,29 @@ module.exports =
 						var operation = record[i];
 						for (var j = 0; j < operation.schedule.length; j++) {
 							var timeEntry = operation.schedule[j];
-							var staff = Person.fromJSON(timeEntry.resources[0].resource);
 							var begin = moment(timeEntry.begin);
-							var end = moment(timeEntry.end);
-							var durationMoment = moment.duration(end.diff(begin));
-							var duration = durationMoment.get("hours") + ":" + durationMoment.get("minutes");
+
+							var duration = '0:0';
+							var end = '', endOnlyHour = '';
+
+							if(typeof timeEntry.end !== 'undefined') {
+								end = moment(timeEntry.end);
+								var durationMoment = moment.duration(end.diff(begin));
+								duration = durationMoment.get("hours") + ":" + durationMoment.get("minutes");
+								endOnlyHour = end.format(formatStringOnlyHour);
+								end = end.format(dateTimeFormatString);
+							}
+
 							result.push({
 								client: operation.client.name,
 								id: timeEntry.id,
-								name: operation.name,
-								staff: staff.name.longName,
+								operation: operation,
+								staff: timeEntry.resources[0],
 								begin: begin.format(dateTimeFormatString),
 								beginOnlyHour:begin.format(formatStringOnlyHour),
 								beginOnlyDate:begin.format(formatStringOnlyDate),
-								end: end.format(dateTimeFormatString),
-								endOnlyHour:end.format(formatStringOnlyHour),
+								endOnlyHour: endOnlyHour,
+								end: end,
 								duration: duration,
 								absence: timeEntry.resources[0].absence,
 								comment: timeEntry.comment

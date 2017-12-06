@@ -20,6 +20,8 @@ require('angular').module('appDriverLogbook', [
 		resolve: {
 			driversAndOps: ['operationService', function (operationService) {
 				return operationService.findAllWithoutTimeEntry().then(function(ops) {
+
+					// TODO: Move this logic to operation service method
 					var drivers = [];
 					var operations = [];
 					ops.forEach(function (op) {

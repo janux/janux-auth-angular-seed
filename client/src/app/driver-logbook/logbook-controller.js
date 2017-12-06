@@ -9,10 +9,9 @@ var agGridComp = require('common/ag-grid-components');
 module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
 	function ($scope, operationService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService) {
 
+	$scope.driversAndOps = driversAndOps;
+
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-
-	console.log('Operations', driversAndOps);
-
 	var operationDrivers = driversAndOps.drivers;
 	var operations = driversAndOps.operations;
 
@@ -69,10 +68,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		if(typeof item !== 'undefined') {
 			// This item should contain the selected staff member
 			console.info('Item changed to ' + JSON.stringify(item));
-			// TODO: assign the selected person
-			operations = _.filter(operations, {id:item.opId});
-			console.log('operations', operations);
-			$scope.lbRow.operation = operations[0];
+			var staffOperations = _.filter(operations, {id:item.opId});
+			console.log('Selected staff operations', staffOperations);
+			$scope.lbRow.operation = staffOperations[0];
 
 		} else {
 			// This means that the entered search text is empty or doesn't match any staff member
@@ -189,7 +187,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					});
 				}
 			} else {
-				console.log('$scope.lbRow.operation', $scope.lbRow.operation);
 				infoDialog('Invalid operation selected');
 			}
 		} else {
@@ -208,8 +205,20 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	//
 
 	var columnDefs = [
-		{headerName: 'Personal', field: 'staff', editable: false},
-		{headerName: 'Servicio', field: 'name', editable: false},
+		{
+			headerName: 'Personal',
+			field: 'staff',
+			editable: true,
+			cellRenderer: agGridComp.staffCellRenderer,
+			cellEditor: agGridComp.autocompleteStaffCellEditor
+		},
+		{
+			headerName: 'Servicio',
+			field: 'operation',
+			editable: true,
+			cellRenderer: agGridComp.operationCellRenderer,
+			cellEditor: agGridComp.autocompleteOpCellEditor
+		},
 		{headerName: 'Cliente', field: 'client', editable: false},
 		{
 			headerName: 'Inicio',
@@ -230,7 +239,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		{
 			headerName: 'Ubicación',
 			field: 'comment',
-			editable: false,
+			editable: true,
 			cellEditor: agGridComp.largeTextCellEditor
 			// cellEditor: 'largeText',
 			// cellEditorParams: {
@@ -246,7 +255,12 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		// 	cellRenderer:agGridComp.objectCellRenderer,
 		// 	cellEditor: agGridComp.objectCellEditor
 		// },
-		{headerName: 'Falta', field: 'absence', editable: true},
+		{
+			headerName: 'Falta',
+			field: 'absence',
+			editable: true,
+			cellEditor: agGridComp.absenceCellEditor
+		},
 		{
 			headerName: '',
 			headerCheckboxSelection: true,
@@ -282,7 +296,39 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		},
 		onRowValueChanged: function (rowObj) {
 			console.log('Row data changed', rowObj);
-		},
+
+			var endToUpdate;
+
+			if(rowObj.data.end) {
+				endToUpdate = moment(rowObj.data.end).toDate();
+			}
+
+			// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
+			var resource = _.clone(rowObj.data.staff);
+			delete resource.opId;
+
+			var timeEngtryToUpdate = {
+				'id': rowObj.data.id,
+				'resources': [ resource ],
+				'principals': [],
+				'attributes': [],
+				'type': 'DRIVER',
+				'comment': rowObj.data.comment,
+				'begin': moment(rowObj.data.begin).toDate(),
+				'end': endToUpdate,
+				'billable': true,
+				'idOperation': rowObj.data.operation.id
+			};
+
+			timeEngtryToUpdate.resources[0].absence = rowObj.data.absence;
+
+			console.log('timeEngtryToUpdate', timeEngtryToUpdate);
+
+			timeEntryService.update(timeEngtryToUpdate).then(function(){
+				$scope.init();
+				// infoDialog('Time entry successfully updated');
+			});
+		}
 		// components:{
 		// 	dateComponent: agGridComp.dateFilter
 		// }

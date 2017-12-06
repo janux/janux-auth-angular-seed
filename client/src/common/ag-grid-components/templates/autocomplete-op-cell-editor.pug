@@ -1,0 +1,11 @@
+md-autocomplete(md-no-cache='false',
+md-items='item in agGridOpsSearch(valueAutoOp)',
+md-selected-item='autoOpSelectedItem',
+md-search-text-change='opsSearchTextChange(valueAutoOp)',
+md-search-text='valueAutoOp',
+md-selected-item-change='agGridOpsSelectedItemChange(item)',
+md-item-text='item.name',
+md-min-length='0',
+md-floating-label='Servicio')
+	md-item-template
+		span(md-highlight-text='valueAutoOp', md-highlight-flags='^i') {{item.name}}

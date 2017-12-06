@@ -1,0 +1,10 @@
+md-autocomplete(md-no-cache='false',
+md-items="item in agGridStaffSearch(valueAutoStaff) | orderBy:'resource.displayName'",
+md-selected-item='autoStaffSelectedItem',
+md-search-text='valueAutoStaff',
+md-selected-item-change='agGridStaffSelectedItemChange(item)',
+md-item-text='item.resource.name.last+" "+item.resource.name.first',
+md-min-length='0',
+md-floating-label='Personal')
+	md-item-template
+		span(md-highlight-text='valueAutoStaff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}

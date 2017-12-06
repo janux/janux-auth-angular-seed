@@ -59,6 +59,10 @@
 		"authContextGroup": "Authorization Context Group"
 	},
 	"operations": {
-		"title": "Operations"
+		"title": "Operations",
+		"drivers": "Drivers",
+		"specials": "Specials",
+		"guards": "Guards",
+		"services": "Services"
 	}
 }

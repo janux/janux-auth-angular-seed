@@ -8,7 +8,7 @@
           li
             a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
               span.fa.fa-users.fa-lg 
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
+              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp; People & Organizations
             ul(ng-hide='isCollapsed') 
               li
                 a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
@@ -26,6 +26,23 @@
             a(ui-sref-active="active" ui-sref='driver-logbook' ng-click='ok()')
               span.fa.fa-archive.fa-lg
               .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp; {{ 'operations.title' | translate }}
+            ul(ng-hide='isCollapsed')
+              li
+                a(ui-sref-active="active" ui-sref='driver-logbook' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; {{ 'operations.drivers' | translate }}
+              li
+                a(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; {{ 'operations.specials' | translate }}
+              li
+                a(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; {{ 'operations.guards' | translate }}
+              li
+                a(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
+                  span.fa.fa-angle-right
+                  | &nbsp;&nbsp; {{ 'operations.services' | translate }}
 
           li
             a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')

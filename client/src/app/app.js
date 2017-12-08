@@ -236,10 +236,10 @@ function($scope){
 	    $scope.itemAddress=newItemNo;
 	};
 
-	$scope.removeAddress = function() {
-	    var lastItem = $scope.addresses.length-1;
-	    $scope.addresses.splice(lastItem);
-	    $scope.lastAddress=lastItem;
+	$scope.removeAddress = function(z) {
+	    //var lastItem = $scope.addresses.length-1;
+	    $scope.addresses.splice(z,1);
+	    //$scope.lastAddress=lastItem;
 	};
 
 }])
@@ -255,10 +255,10 @@ function($scope){
 	    $scope.itemPhone=newItemNo;
 	};
 
-	$scope.removePhone = function() {
-	    var lastItem = $scope.phones.length-1;
-	    $scope.phones.splice(lastItem);
-	    $scope.lastPhone=lastItem;
+	$scope.removePhone = function(z) {
+	    //var lastItem = $scope.phones.length-1;
+	    $scope.phones.splice(z,1);
+	    //$scope.lastPhone=lastItem;
 	};
 
 }])
@@ -274,10 +274,10 @@ function($scope){
 	    $scope.itemMail=newItemNo;
 	};
 
-	$scope.removeMail = function() {
-	    var lastItem = $scope.mails.length-1;
-	    $scope.mails.splice(lastItem);
-	    $scope.lastMail=lastItem;
+	$scope.removeMail = function(z) {
+	    //var lastItem = $scope.mails.length-1;
+	    $scope.mails.splice(z,1);
+	    //$scope.lastMail=lastItem;
 	};
 
 }])

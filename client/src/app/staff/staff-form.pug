@@ -139,7 +139,7 @@ md-content.staff-form(layout-padding)
 				.col-sm-12
 					md-divider.divider-line(ng-show="lastAddress==0")
 
-					fieldset(data-ng-repeat="address in addresses")
+					fieldset(data-ng-repeat="address in addresses track by $index")
 						.row
 							.col-sm-4.an-material
 								md-input-container.full
@@ -153,7 +153,7 @@ md-content.staff-form(layout-padding)
 									md-checkbox(aria-label="Fiscal" ng-model="address.fiscal")
 										| {{ 'staff.fiscal' | translate}}
 							.col-sm-2(style="padding-top:10px")
-									md-button.md-icon-button.trash-btn(aria-label="Trash" ng-show="$last" ng-click="removeAddress()")
+									md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeAddress($index)")
 										md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 						.row
 							.col-sm-12.an-material
@@ -199,7 +199,7 @@ md-content.staff-form(layout-padding)
 			p.form-section
 				| {{ 'staff.phonesTitle' | translate}}
 			.row(style="padding-left:20px" ng-controller="PhoneCtrl")
-				fieldset(data-ng-repeat="phone in phones")
+				fieldset(data-ng-repeat="phone in phones track by $index")
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.type' | translate}}
@@ -227,7 +227,7 @@ md-content.staff-form(layout-padding)
 							md-checkbox(aria-label="WSP" ng-model='phone.wsp')
 								| {{ 'staff.wps' | translate}}
 					.col-sm-2(style="padding-top:10px")
-							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-show="$last" ng-click="removePhone()")
+							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removePhone($index)")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
 				.row
@@ -242,7 +242,7 @@ md-content.staff-form(layout-padding)
 			p.form-section
 				| {{ 'staff.mailsTitle' | translate}}
 			.row( ng-controller="MailCtrl")
-				fieldset(data-ng-repeat="mail in mails")
+				fieldset(data-ng-repeat="mail in mails track by $index")
 					.col-sm-3.an-material
 						md-input-container.full
 							label {{ 'staff.type' | translate}}
@@ -252,7 +252,7 @@ md-content.staff-form(layout-padding)
 							label {{ 'staff.email' | translate}}
 							input(ng-model="mail.mail")
 					.col-sm-2(style="padding-top:10px")
-							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-show="$last" ng-click="removeMail()")
+							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
 				.row

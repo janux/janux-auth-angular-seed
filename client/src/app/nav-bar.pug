@@ -17,7 +17,7 @@
             .accordion-inner(ng-show="subMenu && !noneStyle")
               ul
                 li
-                  a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='users' ng-click='ok()')
                     | Users
                 li
                   a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
@@ -50,7 +50,7 @@
             .accordion-inner(ng-show="subMenuData && !noneStyle")
               ul
                 li
-                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
                     | Roles
                 li
                   a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
@@ -59,7 +59,7 @@
             .accordion-inner
               ul
                 li
-                  a.submenu-left(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
                     | Roles
                 li
                   a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')

@@ -33,7 +33,9 @@ angular.module('agGridDirectives',[])
 		scope:false,
 		templateUrl: 'common/ag-grid-components/templates/autocomplete-staff-cell-editor.html',
 		controller: ['$scope','$attrs', function($scope,$attrs) {
+			var resource = $scope[$attrs.selectedValueModel].resource;
 			$scope.valueAutoStaff = ''; // $scope[$attrs.selectedValueModel];
+			$scope.valueAutoStaffPlaceholder = resource.name.last+' '+resource.name.first;
 			$scope.autoStaffSelectedItem = '';
 			// $scope.driversAndOps comes form parent controller
 			$scope.agGridOperationDrivers = $scope.driversAndOps.drivers;
@@ -81,10 +83,13 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/autocomplete-op-cell-editor.html',
 		controller: ['$scope','$attrs', function($scope,$attrs) {
 
+			var operation = $scope[$attrs.selectedValueModel];
+
 			// $scope.driversAndOps comes form parent controller
 			$scope.agGridOperations = $scope.driversAndOps.operations;
 
 			$scope.valueAutoOp = ''; // $scope[$attrs.selectedValueModel];
+			$scope.valueAutoOpPlaceholder = operation.name;
 			$scope.autoOpSelectedItem = '';
 
 			//
@@ -119,8 +124,31 @@ angular.module('agGridDirectives',[])
 				$scope.autoOpSelectedItem = staffOperations[0];
 				$scope[$attrs.selectedValueModel] = staffOperations[0].name;
 				console.log('Staff assigned operations', staffOperations);
+
+				$scope.$broadcast('agGridClientUpdate', staffOperations[0].client);
 			});
 		}]
+	}
+}])
+.directive('agGridClientUpdater', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/client-cell-updater.html'
+	}
+}])
+.directive('agGridDurationUpdater', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/duration-cell-updater.html'
+	}
+}])
+.directive('agGridCommentEditor', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/comment-cell-editor.html'
 	}
 }])
 .directive('agGridAbsence', [ function() {

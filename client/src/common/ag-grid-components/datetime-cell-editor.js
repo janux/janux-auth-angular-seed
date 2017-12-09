@@ -18,10 +18,19 @@ DateTimepicker.formatStringOnlyDate = 'YYYY-MM-DD';
 DateTimepicker.prototype.init = function(params) {
 
 	var date = (params.value)?new Date(params.value):moment().format(DateTimepicker.formatString);
+	var onBlurMethodName = 'datetime'+params.column.colId+'CellEditorBlur';
 
 	// Assign value to row scope
-	this.model = 'date'+params.column.colId;
+	this.model = 'agGridDate'+params.column.colId;
 	params.$scope[this.model] = date;
+	params.$scope[onBlurMethodName] = (function () {
+		params.$scope.$broadcast('agGridDatetimeCellChange',
+			{
+				begin: params.$scope.agGridDatebegin,
+				end: params.$scope.agGridDateend
+			});
+	}).bind(params);
+
 	this.rowScope = params.$scope;
 
 	// Create angular material datetime picker
@@ -36,6 +45,7 @@ DateTimepicker.prototype.init = function(params) {
 	this.datetimePicker.setAttribute('class', 'jnx-datetime-picker');
 	this.datetimePicker.setAttribute('edit-input', 'true');
 	this.datetimePicker.setAttribute('ng-model', this.model);
+	this.datetimePicker.setAttribute('ng-change', onBlurMethodName+'()');
 	this.datetimePicker.setAttribute('ng-model-options', '{ debounce: 1000 }');
 };
 

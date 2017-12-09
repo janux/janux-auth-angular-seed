@@ -6,6 +6,6 @@ md-search-text='valueAutoOp',
 md-selected-item-change='agGridOpsSelectedItemChange(item)',
 md-item-text='item.name',
 md-min-length='0',
-md-floating-label='Servicio')
+ng-attr-placeholder="{{ valueAutoOpPlaceholder }}")
 	md-item-template
 		span(md-highlight-text='valueAutoOp', md-highlight-flags='^i') {{item.name}}

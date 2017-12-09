@@ -1,4 +1,4 @@
-.logbook {
+.time-sheet {
 
 	.add-form {
 		display: -webkit-flex;
@@ -59,4 +59,19 @@
 		text-align: center;
 		padding-top: 5px;
 	}
+
+	md-autocomplete, input {
+		background: transparent;
+	}
+
+	md-autocomplete input:not(.md-input) {
+		padding: 0 1px;
+	}
+}
+
+/* if you want to highlight the editing row, you can make use of the ag-row-editing
+class, it gets put onto the row that is currently in edit mode. */
+.ag-row-editing {
+	background-color: @ag-grid-row-editing-background !important;
+	color: @ag-grid-row-editing-color  !important;
 }

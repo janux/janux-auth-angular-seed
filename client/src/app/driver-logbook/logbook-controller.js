@@ -203,7 +203,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	//
 	// AG-Grid
 	//
-
 	var columnDefs = [
 		{
 			headerName: 'Personal',
@@ -219,7 +218,12 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			cellRenderer: agGridComp.operationCellRenderer,
 			cellEditor: agGridComp.autocompleteOpCellEditor
 		},
-		{headerName: 'Cliente', field: 'client', editable: false},
+		{
+			headerName: 'Cliente',
+			field: 'client',
+			editable: true,
+			cellEditor: agGridComp.clientCellUpdater
+		},
 		{
 			headerName: 'Inicio',
 			field: 'begin',
@@ -235,12 +239,17 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			filter: 'date',
 			cellEditor: agGridComp.dateTimeCellEditor
 		},
-		{headerName: 'Duración', field: 'duration', editable: false},
+		{
+			headerName: 'Duración',
+			field: 'duration',
+			editable: true,
+			cellEditor: agGridComp.durationCellUpdater
+		},
 		{
 			headerName: 'Ubicación',
 			field: 'comment',
 			editable: true,
-			cellEditor: agGridComp.largeTextCellEditor
+			cellEditor: agGridComp.commentCellEditor
 			// cellEditor: 'largeText',
 			// cellEditorParams: {
 			// 	maxLength: '300',
@@ -259,7 +268,19 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			headerName: 'Falta',
 			field: 'absence',
 			editable: true,
-			cellEditor: agGridComp.absenceCellEditor
+			cellEditor: agGridComp.absenceCellEditor,
+			valueFormatter: function (params) {
+				var val = '';
+				switch(params.value){
+					case 'D': val='Descanso'; break;
+					case 'V': val='Vacaciones'; break;
+					case 'PS': val='No se encuentra principal'; break;
+					case 'F': val='Falta'; break;
+					case 'PC': val='PC'; break;
+					case 'I': val='I'; break;
+				}
+				return val;
+			}
 		},
 		{
 			headerName: '',
@@ -303,8 +324,8 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 				endToUpdate = moment(rowObj.data.end).toDate();
 			}
 
-			// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 			var resource = _.clone(rowObj.data.staff);
+			// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 			delete resource.opId;
 
 			var timeEngtryToUpdate = {
@@ -321,8 +342,6 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			};
 
 			timeEngtryToUpdate.resources[0].absence = rowObj.data.absence;
-
-			console.log('timeEngtryToUpdate', timeEngtryToUpdate);
 
 			timeEntryService.update(timeEngtryToUpdate).then(function(){
 				$scope.init();

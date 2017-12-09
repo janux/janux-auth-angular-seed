@@ -3,7 +3,7 @@ login-toolbar(title='permission.title')
 .sd-page-container
 	side-bar
 	.sd-page-content-wrapper
-		.sd-page-content.logbook(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+		.sd-page-content.time-sheet(ng-class="{'toggleMenu-sd-content': isCollapsed}")
 
 			.title-bar
 				.title Bitácora de Choferes
@@ -12,7 +12,7 @@ login-toolbar(title='permission.title')
 			form(name='driverTimeSheet').add-form
 				.element
 					md-autocomplete(md-no-cache='false',
-					md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.displayName'",
+					md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
 					md-selected-item='lbRow.staff',
 					md-search-text-change='staffSearchTextChange(lbSearch.staff)',
 					md-search-text='lbSearch.staff',

@@ -135,7 +135,7 @@ md-content.staff-form(layout-padding)
 			//- 				md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
 
 			//- ADDRESSES ROW
-			.row(ng-controller="AddressCtrl")
+			.row
 				.col-sm-12
 					md-divider.divider-line(ng-show="lastAddress==0")
 
@@ -159,30 +159,30 @@ md-content.staff-form(layout-padding)
 							.col-sm-12.an-material
 								md-input-container.full
 									label {{ 'staff.street1' | translate}}
-									input(ng-model='address.street1')
+									input(ng-model='address.line1')
 						.row
 							.col-sm-12.an-material
 								md-input-container.full
 									label {{ 'staff.street2' | translate}}
-									input(ng-model='address.street2')
-						.row
-							.col-sm-12.an-material
-								md-input-container.full
-									label {{ 'staff.street3' | translate}}
-									input(ng-model='address.street3')
+									input(ng-model='address.line2')
+						//- .row
+						//- 	.col-sm-12.an-material
+						//- 		md-input-container.full
+						//- 			label {{ 'staff.street3' | translate}}
+						//- 			input(ng-model='address.street3')
 						.row
 							.col-sm-4.an-material
 								md-input-container.full
 									label {{ 'staff.city' | translate}}
-									input(ng-model="address.city")
+									input(ng-model="address.cityText")
 							.col-sm-4.an-material
 								md-input-container.full
 									label {{ 'staff.state' | translate}}
-									input(ng-model="address.state")
+									input(ng-model="address.stateText")
 							.col-sm-4.an-material
 								md-input-container.full
 									label {{ 'staff.zip' | translate}}
-									input(ng-model='address.zip')
+									input(ng-model='address.postalCode')
 
 						
 						md-divider.divider-line
@@ -198,7 +198,7 @@ md-content.staff-form(layout-padding)
 		.col-sm-6
 			p.form-section
 				| {{ 'staff.phonesTitle' | translate}}
-			.row(style="padding-left:20px" ng-controller="PhoneCtrl")
+			.row(style="padding-left:20px")
 				fieldset(data-ng-repeat="phone in phones track by $index")
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
@@ -207,11 +207,11 @@ md-content.staff-form(layout-padding)
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.code' | translate}}
-							input(ng-model="phone.code")
+							input(ng-model="phone._countryCode")
 					.col-sm-1.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.area' | translate}}
-							input(ng-model='phone.area')
+							input(ng-model='phone._areaCode')
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.number' | translate}}
@@ -241,16 +241,16 @@ md-content.staff-form(layout-padding)
 		.col-sm-6
 			p.form-section
 				| {{ 'staff.mailsTitle' | translate}}
-			.row( ng-controller="MailCtrl")
-				fieldset(data-ng-repeat="mail in mails track by $index")
+			.row
+				fieldset(data-ng-repeat="email in emails track by $index")
 					.col-sm-3.an-material
 						md-input-container.full
 							label {{ 'staff.type' | translate}}
-							input(ng-model="mail.type")
+							input(ng-model="email.type")
 					.col-sm-7.an-material
 						md-input-container.full
 							label {{ 'staff.email' | translate}}
-							input(ng-model="mail.mail")
+							input(ng-model="email.address")
 					.col-sm-2(style="padding-top:10px")
 							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")

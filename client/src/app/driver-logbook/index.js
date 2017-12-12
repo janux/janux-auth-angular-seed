@@ -18,13 +18,13 @@ require('angular').module('appDriverLogbook', [
 		templateUrl: 'app/driver-logbook/index.html',
 		authRequired: true,
 		resolve: {
-			driversAndOps: ['operationService', function (operationService) {
-				return operationService.findAllWithoutTimeEntry().then(function(ops) {
+			driversAndOps: ['operationService', 'resourceService', function (operationService, resourceService) {
+				return operationService.findAllWithoutTimeEntry().then(function(result) {
 
 					// TODO: Move this logic to operation service method
-					var drivers = [];
+					var driversAssignedToOperations = [];
 					var operations = [];
-					ops.forEach(function (op) {
+					result.forEach(function (op) {
 						var tmpRes = _.filter(op.currentResources, {type:'DRIVER'});
 
 						// If the operation has at least one driver
@@ -35,15 +35,24 @@ require('angular').module('appDriverLogbook', [
 
 							var opWithOutRes = _.clone(op);
 							delete opWithOutRes.currentResources;
-							drivers = drivers.concat(tmpRes);
+							driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
 							operations = operations.concat(opWithOutRes);
 						}
 					});
 
-					return {
-						drivers: drivers,
-						operations: operations
-					};
+					return resourceService.findAvailableResources().then(function (result) {
+
+						// Filter only drivers.
+						result = _.filter(result, function (o) {
+							return o.type === 'DRIVER';
+						});
+
+						return {
+							driversAssignedToOperations : driversAssignedToOperations,
+							drivers : result,
+							operations : operations
+						};
+					});
 				});
 			}]
 		},

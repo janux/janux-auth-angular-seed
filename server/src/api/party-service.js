@@ -2,11 +2,12 @@
  * Project janux-auth-angular-seed
  * Created by ernesto on 11/23/17.
  */
-var log4js  = require('log4js'),
-	_       = require('lodash'),
-	Promise = require('bluebird'),
-	log     = log4js.getLogger('PartyService'),
-	fixDate = require('../util/fix-date').fixDate;
+var log4js           = require('log4js'),
+	_                = require('lodash'),
+	Promise          = require('bluebird'),
+	PartyServiceImplClass = require('janux-persist').PartyServiceImpl,
+	log              = log4js.getLogger('PartyService'),
+	fixDate          = require('../util/fix-date').fixDate;
 
 
 // variable to hold the singleton instance, if used in that manner
@@ -31,7 +32,7 @@ var createInstance = function (serviceReference) {
 
 	function toJSONMany(records) {
 		return _.map(records, function (o) {
-			return partyServiceImpl.toJSON(o);
+			return PartyServiceImplClass.toJSON(o);
 		})
 	}
 
@@ -95,7 +96,7 @@ var createInstance = function (serviceReference) {
 		log.debug("Call to findOne with id: %j", id);
 		return partyServiceImpl.findOne(id)
 			.then(function (result) {
-				return Promise.resolve(partyServiceImpl.toJSON(result)).asCallback(callback);
+				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
 			});
 	};
 
@@ -124,7 +125,7 @@ var createInstance = function (serviceReference) {
 		object = partyServiceImpl.fromJSON(object);
 		return partyServiceImpl.insert(object)
 			.then(function (result) {
-				return Promise.resolve(partyServiceImpl.toJSON(result)).asCallback(callback);
+				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
 			});
 	};
 
@@ -139,7 +140,7 @@ var createInstance = function (serviceReference) {
 		object = partyServiceImpl.fromJSON(object);
 		return partyServiceImpl.update(object)
 			.then(function (result) {
-				return Promise.resolve(partyServiceImpl.toJSON(result)).asCallback(callback);
+				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
 			});
 	};
 

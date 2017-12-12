@@ -6,13 +6,14 @@ var _ = require('lodash');
 // var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
-	function ($scope, operationService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService) {
+module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
+	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService) {
 
 	$scope.driversAndOps = driversAndOps;
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-	var operationDrivers = driversAndOps.drivers;
+	var allDrivers = driversAndOps.drivers;
+	var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
 	var operations = driversAndOps.operations;
 
 	var initRowModel = function () {
@@ -68,7 +69,14 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		if(typeof item !== 'undefined') {
 			// This item should contain the selected staff member
 			console.info('Item changed to ' + JSON.stringify(item));
-			var staffOperations = _.filter(operations, {id:item.opId});
+
+			var selectedDriver = _.find(driversAssignedToOperations,function (o) {
+				return o.id === item.id;
+			});
+
+			var operationId = selectedDriver.opId;
+
+			var staffOperations = _.filter(operations, {id:operationId});
 			console.log('Selected staff operations', staffOperations);
 			$scope.lbRow.operation = staffOperations[0];
 
@@ -87,7 +95,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 	}
 
 	$scope.staffSearch = function(query) {
-		return query ? operationDrivers.filter( createFilterForStaff(query) ) : operationDrivers;
+		return query ? allDrivers.filter( createFilterForStaff(query) ) : allDrivers;
 	};
 
 	//
@@ -158,7 +166,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 						}
 					}
 
-					var timeEngtryToInsert = {
+					var timeEntryToInsert = {
 						'resources': [ $scope.lbRow.staff ],
 						'principals': [],
 						'attributes': [],
@@ -171,9 +179,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					};
 
 					// Absence
-					timeEngtryToInsert.resources[0].absence = $scope.lbRow.absence;
+					timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
 
-					timeEntryService.insert(timeEngtryToInsert).then(function(){
+					timeEntryService.insert(timeEntryToInsert).then(function(){
 						$scope.init();
 
 						// Wait before performing the form reset
@@ -363,7 +371,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 			delete resource.opId;
 
-			var timeEngtryToUpdate = {
+			var timeEntryToUpdate = {
 				'id': rowObj.data.id,
 				'resources': [ resource ],
 				'principals': [],
@@ -376,9 +384,9 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 				'idOperation': rowObj.data.operation.id
 			};
 
-			timeEngtryToUpdate.resources[0].absence = rowObj.data.absence;
+			timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
 
-			timeEntryService.update(timeEngtryToUpdate).then(function(){
+			timeEntryService.update(timeEntryToUpdate).then(function(){
 				$scope.init();
 				// infoDialog('Time entry successfully updated');
 			});
@@ -393,9 +401,17 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 			.then(function (result) {
 				// console.log(JSON.stringify(result));
 				var agGridRecords = operationService.mapTimeEntryData(result);
+
 				//Now put the ag-grid ready records to the ui.
 				$scope.gridOptions.api.setRowData(agGridRecords);
 			});
+
+		//Test resource service.
+		// resourceService.findAvailableResources()
+		// 	.then(function (result) {
+		// 		console.log('Result resource service: \n ' + JSON.stringify(result));
+		// 	});
+
 	};
 
 	$scope.init();

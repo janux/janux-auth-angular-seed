@@ -30,12 +30,11 @@ var createInstance = function (operationServiceReference) {
 	OperationService.prototype.findAll = function (callback) {
 		var initDate = new moment().subtract(10, 'years').toDate();
 		var endDate = new moment().add(10, 'years').toDate();
-		return operationServiceReference.findByDateBetween(initDate, endDate).asCallback(callback);
+		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
 	};
 
-
     OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
-        return operationServiceReference.findAllWithoutTimeEntry().asCallback(callback);
+        return operationServiceReference.findAll().asCallback(callback);
     };
 
 	return new OperationService();

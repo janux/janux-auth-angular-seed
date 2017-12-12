@@ -6,6 +6,7 @@ var UserPersistence         = require('janux-persist').UserService,
 	RolePersistence         = require('janux-persist').RoleService,
 	GroupService            = require('janux-persist').GroupServiceImpl,
 	OperationServiceImpl    = require('glarus-services').OperationServiceImpl,
+	ResourceServiceImpl     = require('glarus-services').ResourceServiceImpl,
 	TimeEntryServiceImpl    = require('glarus-services').TimeEntryServiceImpl;
 
 var config                         = require('config'),
@@ -32,8 +33,10 @@ var config                         = require('config'),
 	// End glarus services DAOs.
 
 	// Begin glarus services implementations.
-	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyPersistenceService, VehicleDao, CurrentResourceDao),
-	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourceDao, PartyPersistenceService, VehicleDao),
+	ResourcePersistService         = new ResourceServiceImpl(ResourceDao, PartyPersistenceService, VehicleDao),
+	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao),
+	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao),
+
 	// End glarus services implementations.
 
 	UserPersistenceService         = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
@@ -46,7 +49,8 @@ var config                         = require('config'),
 	RoleService                    = require('./role-service'),
 	OperationService               = require('./operation-service'),
 	PartyService                   = require('./party-service'),
-	TimeEntryService               = require('./time-entry-service');
+	TimeEntryService               = require('./time-entry-service'),
+	ResourceService                = require('./resource-service');
 
 
 module.exports = {
@@ -55,6 +59,7 @@ module.exports = {
 	RoleService           : RoleService.create(RolePersistService),
 	UserPersistenceService: UserPersistenceService,
 	PartyService          : PartyService.create(PartyPersistenceService),
-	OperationService: OperationService.create(OperationPersistService),
-	TimeEntryService:  TimeEntryService.create(TimeEntryPersistService)
+	OperationService      : OperationService.create(OperationPersistService),
+	TimeEntryService      : TimeEntryService.create(TimeEntryPersistService),
+	ResourceService       : ResourceService.create(ResourcePersistService)
 };

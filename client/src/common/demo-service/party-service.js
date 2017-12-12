@@ -190,6 +190,14 @@ module.exports =
 						contact = fromJSON(contact);
 						return contact;
 					});
+				},
+
+				fromJSON: function (object) {
+					return fromJSON(object);
+				},
+
+				toJSON: function (object) {
+					return toJSON(object)
 				}
 			};
 			return service;

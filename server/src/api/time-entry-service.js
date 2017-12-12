@@ -2,9 +2,9 @@
  * Project janux-auth-angular-seed
  * Created by ernesto on 11/21/17.
  */
-var _       = require('lodash'),
-	fixDate = require('../util/fix-date'),
-	log4js  = require('log4js');
+var _                    = require('lodash'),
+	TimeEntryServiceImpl = require('glarus-services').TimeEntryServiceImpl,
+	log4js               = require('log4js');
 log = log4js.getLogger('time-entry-service');
 
 
@@ -24,23 +24,27 @@ var createInstance = function (timeEntryServiceReference) {
 		//We need to convert begin and end to proper dates.
 		log.debug("Call to insert with timeEntry: %j", timeEntry);
 
-		timeEntry.begin = fixDate(timeEntry.begin);
-		timeEntry.end = fixDate(timeEntry.end);
-		timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
-		timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
+		// timeEntry.begin = fixDate(timeEntry.begin);
+		// timeEntry.end = fixDate(timeEntry.end);
+		// timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
+		// timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
 
-		return timeEntryServiceReferenceInstance.insert(timeEntry).asCallback(callback);
+		var instance = TimeEntryServiceImpl.fromJSON(timeEntry);
+
+		return timeEntryServiceReferenceInstance.insert(instance).asCallback(callback);
 	};
 
 	TimeEntryService.prototype.update = function (timeEntry, callback) {
 		log.debug("Call to update with timeEntry: %j", timeEntry);
 
-		timeEntry.begin = fixDate(timeEntry.begin);
-		timeEntry.end = fixDate(timeEntry.end);
-		timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
-		timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
+		// timeEntry.begin = fixDate(timeEntry.begin);
+		// timeEntry.end = fixDate(timeEntry.end);
+		// timeEntry.lastUpdate = fixDate(timeEntry.lastUpdate);
+		// timeEntry.dateCreated = fixDate(timeEntry.dateCreated);
 
-		return timeEntryServiceReferenceInstance.update(timeEntry).asCallback(callback);
+		var instance = TimeEntryServiceImpl.fromJSON(timeEntry);
+
+		return timeEntryServiceReferenceInstance.update(instance).asCallback(callback);
 	};
 
 	TimeEntryService.prototype.removeByIds = function (ids, callback) {
@@ -55,7 +59,7 @@ var createInstance = function (timeEntryServiceReference) {
 module.exports.create = function (timeEntryServiceReference) {
 	// if the instance does not exist, create it
 	if (!_.isObject(timeEntryServiceInstance)) {
-		// userServiceInstance = new UserService(aDAO);
+			// userServiceInstance = new UserService(aDAO);
 		timeEntryServiceInstance = createInstance(timeEntryServiceReference);
 	}
 	return timeEntryServiceInstance;

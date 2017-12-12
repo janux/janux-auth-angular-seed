@@ -148,7 +148,7 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 					var begin = moment($scope.lbRow.start);
 					var end = '', endToInsert;
 
-					if(_.isNil($scope.lbRow.end) === false){
+					if(_.isNil($scope.lbRow.end) === false) {
 						end = moment($scope.lbRow.end);
 						endToInsert = end.toDate();
 
@@ -194,10 +194,39 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		}
 	};
 
+	function deleteConfirmed(rowsToDelete) {
+		$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
+
+		var timeEntryIds = _.map(rowsToDelete, 'id');
+		timeEntryService.removeByIds(timeEntryIds).then(function () {
+			infoDialog('The records were deleted correctly');
+		});
+	}
+
 	// Remove selected records
-	$scope.removeSelected = function () {
+	var removeSelected = function () {
 		var selectedData = $scope.gridOptions.api.getSelectedRows();
-		$scope.gridOptions.api.updateRowData({remove: selectedData});
+		if(selectedData.length > 0) {
+			$modal.open({
+				templateUrl: 'app/dialog-tpl/confirm-dialog.html',
+				controller: ['$scope','$modalInstance',
+					function($scope , $modalInstance) {
+						$scope.message= 'Are you sure you want to delete the row selection?';
+
+						$scope.ok = function() {
+							deleteConfirmed(selectedData );
+							$modalInstance.close();
+						};
+
+						$scope.cancel = function() {
+							$modalInstance.close();
+						};
+					}],
+				size: 'md'
+			});
+		}else{
+			infoDialog('Select at least one row to delete');
+		}
 	};
 
 	//
@@ -284,11 +313,11 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		},
 		{
 			headerName: '',
-			headerCheckboxSelection: true,
-			headerCheckboxSelectionFilteredOnly: true,
+			// headerCheckboxSelection: true,
+			// headerCheckboxSelectionFilteredOnly: true,
 			checkboxSelection: true,
-			headerComponentParams: {menuIcon: 'fa-external-link'},
 			cellEditor: agGridComp.rowActions,
+			headerComponent: agGridComp.deleteRowsHeaderComponent,
 			editable: true,
 			field: 'selected'	// field needed to avoid ag-grid warning
 		}
@@ -305,11 +334,17 @@ module.exports = ['$scope', 'operationService','$q','$timeout','$modal','$interv
 		rowSelection: 'multiple',
 		animateRows: true,
 		rowHeight: 50,
+		headerHeight: 35,
 		enableSorting: true,
 		pagination:true,
 		paginationAutoPageSize:true,
 		onGridReady: function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
+
+			// This function is defined to be able to trigger the deletion
+			// of the rows from the header component that does not have access
+			// to the scope.
+			$scope.gridOptions.api.deleteRows = removeSelected;
 		},
 		onRowEditingStarted: function (rowObj) {
 			// Nothing to do yet

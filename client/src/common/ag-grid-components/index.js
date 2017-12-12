@@ -22,5 +22,9 @@ module.exports = {
 	objectCellRenderer: require('./object-cell-renderer'),
 
 	// Custom filters
-	dateFilter: 		require('./date-filter')
+	dateFilter: 		require('./date-filter'),
+
+	// Header components
+	headerComponent: 	require('./header-component'),
+	deleteRowsHeaderComponent: 	require('./delete-rows-header-component')
 };

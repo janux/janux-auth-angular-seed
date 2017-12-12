@@ -1,0 +1,8 @@
+.modal-body
+	h4 {{ message }}
+
+.modal-footer
+
+	button.btn.btn-ok(ng-click='ok()') {{ 'label.ok' | translate }}
+	| &nbsp;
+	button.btn.btn-cancel(ng-click='cancel()') {{ 'label.cancel' | translate }}

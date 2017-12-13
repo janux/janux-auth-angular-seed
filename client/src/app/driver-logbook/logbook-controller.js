@@ -138,9 +138,9 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			processCellCallback : function(params) {
 				if (params.value ) {
 					if(params.column.colId === 'staff') {
-						return '"' + params.value.resource.displayName + '"';
+						return '"' + params.value + '"';
 					} else if(params.column.colId === 'operation' ){
-						return '"' + params.value.name + '"';
+						return '"' + params.value + '"';
 					} else  {
 						return '"' +  params.value + '"';
 					}

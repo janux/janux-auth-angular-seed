@@ -122,7 +122,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 	};
 
 
-	/*$scope.export = function () {
+	$scope.export = function () {
 		var params = {
 			skipHeader: false,
 			columnGroups: false,
@@ -137,7 +137,13 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			columnSeparator: ',',
 			processCellCallback : function(params) {
 				if (params.value ) {
-					return '"' +  params.value + '"';
+					if(params.column.colId === 'staff') {
+						return '"' + params.value.resource.displayName + '"';
+					} else if(params.column.colId === 'operation' ){
+						return '"' + params.value.name + '"';
+					} else  {
+						return '"' +  params.value + '"';
+					}
 				} else {
 					return params.value;
 				}
@@ -145,7 +151,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 		};
 
 		$scope.gridOptions.api.exportDataAsCsv(params);
-	};*/
+	};
 
 	// Add new record
 	$scope.addRow = function () {

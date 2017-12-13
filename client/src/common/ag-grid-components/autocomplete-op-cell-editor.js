@@ -7,7 +7,8 @@ function Autocomplete () {}
 Autocomplete.prototype.init = function(params) {
 	// Assign value to row scope
 	this.model = 'autocomplete'+params.column.colId;
-	params.$scope[this.model] = params.value;
+	// Access to complete operation object
+	params.$scope[this.model] = params.$scope.data[params.column.colId];
 	this.rowScope = params.$scope;
 
 	// Create angular material autocomplete

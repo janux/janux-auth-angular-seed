@@ -213,7 +213,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 
 		var timeEntryIds = _.map(rowsToDelete, 'id');
 		timeEntryService.removeByIds(timeEntryIds).then(function () {
-			infoDialog('The records were deleted correctly');
+			// infoDialog('The records were deleted correctly');
 		});
 	}
 
@@ -251,14 +251,21 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			headerName: 'Personal',
 			field: 'staff',
 			editable: true,
-			cellRenderer: agGridComp.staffCellRenderer,
+			// cellRenderer: agGridComp.staffCellRenderer,
+			valueGetter: function(params) {
+				var res = params.data.staff.resource;
+				return res.name.last +' '+ res.name.first;
+			},
 			cellEditor: agGridComp.autocompleteStaffCellEditor
 		},
 		{
 			headerName: 'Servicio',
 			field: 'operation',
 			editable: true,
-			cellRenderer: agGridComp.operationCellRenderer,
+			// cellRenderer: agGridComp.operationCellRenderer,
+			valueGetter: function(params) {
+				return params.data.operation.name;
+			},
 			cellEditor: agGridComp.autocompleteOpCellEditor
 		},
 		{

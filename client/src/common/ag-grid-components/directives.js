@@ -52,7 +52,7 @@ angular.module('agGridDirectives',[])
 					$scope[$attrs.selectedValueModel] = item;
 
 					// Update operation according to selected staff
-					$scope.$broadcast('agGridSelectedOpChange', item);
+					// $scope.$broadcast('agGridSelectedOpChange', item);
 
 				} else {
 					// This means that the entered search text is empty or doesn't match any staff member

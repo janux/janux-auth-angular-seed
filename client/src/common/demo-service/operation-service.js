@@ -12,8 +12,36 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http',
-		function ($q, $http) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService',
+		function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService) {
+
+			function fromJSON(object) {
+				object.client = partyService.fromJSON(object.client);
+				object.dateCreated = dateUtilService.stringToDate(object.dateCreated);
+				object.lastUpdate = dateUtilService.stringToDate(object.lastUpdate);
+				object.currentResources = _.map(object.currentResources, function (o) {
+					return resourceService.fromJSON(o);
+				});
+
+				object.schedule = _.map(object.schedule, function (o) {
+					return timeEntryService.fromJSON(o);
+				});
+
+				return object;
+			}
+
+			function toJSON(object) {
+				object.client = partyService.toJSON(object.client);
+				object.currentResources = _.map(object.currentResources, function (o) {
+					return resourceService.toJSON(o);
+				});
+
+				object.schedule = _.map(object.schedule, function (o) {
+					return timeEntryService.toJSON(o);
+				});
+				return object;
+			}
+
 			var service = {
 
 				findAll: function () {
@@ -21,7 +49,7 @@ module.exports =
 						'/rpc/2.0/operation',
 						'findAll'
 					).then(function (resp) {
-						return resp.data.result;
+						return fromJSON(resp.data.result);
 					});
 				},
 
@@ -30,7 +58,7 @@ module.exports =
 						'/rpc/2.0/operation',
 						'findAllWithoutTimeEntry'
 					).then(function (resp) {
-						return resp.data.result;
+						return fromJSON(resp.data.result);
 					});
 				},
 
@@ -46,7 +74,7 @@ module.exports =
 							var duration = '0:0';
 							var end = '', endOnlyHour = '';
 
-							if(typeof timeEntry.end !== 'undefined') {
+							if (_.isNil(timeEntry.end) === false) {
 								end = moment(timeEntry.end);
 								var durationMoment = moment.duration(end.diff(begin));
 								duration = durationMoment.get("hours") + ":" + durationMoment.get("minutes");
@@ -55,23 +83,33 @@ module.exports =
 							}
 
 							result.push({
-								client: operation.client.name,
-								id: timeEntry.id,
-								operation: operation,
-								staff: timeEntry.resources[0],
-								begin: begin.format(dateTimeFormatString),
-								beginOnlyHour:begin.format(formatStringOnlyHour),
-								beginOnlyDate:begin.format(formatStringOnlyDate),
-								endOnlyHour: endOnlyHour,
-								end: end,
-								duration: duration,
-								absence: timeEntry.resources[0].absence,
-								comment: timeEntry.comment
+								client       : operation.client.name,
+								id           : timeEntry.id,
+								operation    : operation,
+								staff        : timeEntry.resources[0],
+								begin        : begin.format(dateTimeFormatString),
+								beginOnlyHour: begin.format(formatStringOnlyHour),
+								beginOnlyDate: begin.format(formatStringOnlyDate),
+								endOnlyHour  : endOnlyHour,
+								end          : end,
+								duration     : duration,
+								absence      : timeEntry.resources[0].absence,
+								comment      : timeEntry.comment
 							});
 						}
 					}
 					return result;
+				},
+
+				fromJSON: function (object) {
+					return fromJSON(object);
+				},
+
+				toJSON: function (object) {
+					return toJSON(object);
 				}
+
+
 			};
 			return service;
 		}];

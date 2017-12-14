@@ -16,14 +16,27 @@ module.exports =
 			const RESOURCE_GUARD = "GUARD";
 
 			function fromJSON(object) {
-				var result = object;
+				if(_.isNil(object)) return object;
+				var result = _.clone(object);
 				if (result.type !== RESOURCE_VEHICLE) {
 					result.resource = partyService.fromJSON(result.resource);
 				}
 				result.vendor = partyService.fromJSON(result.vendor);
 
+
 				return result;
 			}
+
+			function toJSON(object) {
+				if(_.isNil(object)) return object;
+				var result = _.clone(object);
+				if (result.type !== RESOURCE_VEHICLE) {
+					result.resource = partyService.toJSON(result.resource);
+				}
+				result.vendor = partyService.toJSON(result.vendor);
+				return result;
+			}
+
 
 			var service = {
 
@@ -36,6 +49,14 @@ module.exports =
 							return fromJSON(o);
 						});
 					});
+				},
+
+				fromJSON: function (object) {
+					return fromJSON(object)
+				},
+
+				toJSON: function (object) {
+					return toJSON(object)
 				}
 
 			};

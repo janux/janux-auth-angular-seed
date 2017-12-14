@@ -19,9 +19,11 @@ module.exports =
 			 */
 			function fromJSON(object) {
 				var contact;
-				if (object.typeName = "PersonImpl") {
+				if(_.isNil(object)) return object;
+
+				if (object.typeName === "PersonImpl") {
 					contact = Person.fromJSON(object);
-				} else if (object.typeName = "OrganizationImpl") {
+				} else if (object.typeName === "OrganizationImpl") {
 					contact = Organization.fromJSON(object);
 				} else {
 					$log.error("No implementation for typeName " + object.typeName + " returning undefined");
@@ -158,11 +160,11 @@ module.exports =
 
 				/**
 				 * Insert a party.
-				 * @param party
+				 * @param timeEntry
 				 */
-				insert: function (party) {
-					$log.debug("Call to insert with " + JSON.stringify(party));
-					var objectToSend = toJSON(party);
+				insert: function (timeEntry) {
+					$log.debug("Call to insert with " + JSON.stringify(timeEntry));
+					var objectToSend = toJSON(timeEntry);
 
 					return $http.jsonrpc(
 						'/rpc/2.0/partyService',

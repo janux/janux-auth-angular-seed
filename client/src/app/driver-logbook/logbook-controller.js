@@ -74,12 +74,15 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 				return o.id === item.id;
 			});
 
-			var operationId = selectedDriver.opId;
+			if(_.isNil(selectedDriver)) {
+				$scope.lbRow.operation = undefined;
+			}else{
+				var operationId = selectedDriver.opId;
+				var staffOperations = _.filter(operations, {id:operationId});
 
-			var staffOperations = _.filter(operations, {id:operationId});
-			console.log('Selected staff operations', staffOperations);
-			$scope.lbRow.operation = staffOperations[0];
-
+				console.log('Selected staff operations', staffOperations);
+				$scope.lbRow.operation = staffOperations[0];
+			}
 		} else {
 			// This means that the entered search text is empty or doesn't match any staff member
 		}
@@ -123,6 +126,8 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 
 
 	$scope.export = function () {
+		var now = moment();
+
 		var params = {
 			skipHeader: false,
 			columnGroups: false,
@@ -133,7 +138,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			allColumns: true,
 			onlySelected: false,
 			suppressQuotes: true,
-			fileName: 'export.csv',
+			fileName: 'bitacora ' + now.format('YYYYMMDDHHmm') + ' .csv',
 			columnSeparator: ',',
 			processCellCallback : function(params) {
 				if (params.value ) {

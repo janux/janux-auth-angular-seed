@@ -87,6 +87,7 @@ angular.module('agGridDirectives',[])
 
 			// $scope.driversAndOps comes form parent controller
 			$scope.agGridOperations = $scope.driversAndOps.operations;
+			$scope.agGridDriversAssignedToOperations = $scope.driversAndOps.driversAssignedToOperations;
 
 			$scope.valueAutoOp = ''; // $scope[$attrs.selectedValueModel];
 			$scope.valueAutoOpPlaceholder = operation.name;
@@ -100,6 +101,8 @@ angular.module('agGridDirectives',[])
 					// This item should contain the selected operation
 					// console.info('Item changed to ' + JSON.stringify(item));
 					$scope[$attrs.selectedValueModel] = item;
+					// Update client cell
+					$scope.$broadcast('agGridClientUpdate', item.client);
 				} else {
 					// This means that the entered search text is empty or doesn't match any operation
 				}
@@ -117,9 +120,13 @@ angular.module('agGridDirectives',[])
 			};
 
 			$scope.$on('agGridSelectedOpChange', function (event, staffItem) {
-				console.log('opItem',staffItem);
-				// Update operations according to selected staff
-				var staffOperations = _.filter($scope.agGridOperations, {id:staffItem.opId});
+				var selectedDriver = _.find($scope.agGridDriversAssignedToOperations,function (o) {
+					return o.id === staffItem.id;
+				});
+
+				var operationId = selectedDriver.opId;
+
+				var staffOperations = _.filter($scope.agGridOperations, {id:operationId});
 
 				$scope.autoOpSelectedItem = staffOperations[0];
 				$scope[$attrs.selectedValueModel] = staffOperations[0].name;

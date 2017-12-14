@@ -21,18 +21,20 @@ module.exports =
 				var contact;
 				if(_.isNil(object)) return object;
 
-				if (object.typeName === "PersonImpl") {
-					contact = Person.fromJSON(object);
-				} else if (object.typeName === "OrganizationImpl") {
-					contact = Organization.fromJSON(object);
+				var result = _.cloneDeep(object); 
+						   
+				if (result.typeName === "PersonImpl") {
+					contact = Person.fromJSON(result);
+				} else if (result.typeName === "OrganizationImpl") {
+					contact = Organization.fromJSON(result);
 				} else {
-					$log.error("No implementation for typeName " + object.typeName + " returning undefined");
+					$log.error("No implementation for typeName " + result.typeName + " returning undefined");
 					//Let it crash.
 					return undefined;
 				}
-				contact.id = object.id;
-				contact.dateCreated = dateUtilService.stringToDate(object.dateCreated);
-				contact.lastUpdate = dateUtilService.stringToDate(object.lastUpdate);
+				contact.id = result.id;
+				contact.dateCreated = dateUtilService.stringToDate(result.dateCreated);
+				contact.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
 				return contact;
 			}
 
@@ -41,9 +43,11 @@ module.exports =
 			 * @param object
 			 */
 			function toJSON(object) {
-				var id = object.id;
-				var typeName = object.typeName;
-				var contact = object.toJSON();
+
+				var cloned = _.cloneDeep(object);
+				var id = cloned.id;
+				var typeName = cloned.typeName;
+				var contact = cloned.toJSON();
 				contact.id = id;
 				contact.typeName = typeName;
 				contact.dateCreated = object.dateCreated;

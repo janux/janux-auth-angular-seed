@@ -16,30 +16,35 @@ module.exports =
 		function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService) {
 
 			function fromJSON(object) {
-				object.client = partyService.fromJSON(object.client);
-				object.dateCreated = dateUtilService.stringToDate(object.dateCreated);
-				object.lastUpdate = dateUtilService.stringToDate(object.lastUpdate);
-				object.currentResources = _.map(object.currentResources, function (o) {
+				if (_.isNil(object)) return object;
+				var result = _.cloneDeep(object);
+
+				result.client = partyService.fromJSON(result.client);
+				result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
+				result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+				result.currentResources = _.map(result.currentResources, function (o) {
 					return resourceService.fromJSON(o);
 				});
 
-				object.schedule = _.map(object.schedule, function (o) {
+				result.schedule = _.map(result.schedule, function (o) {
 					return timeEntryService.fromJSON(o);
 				});
 
-				return object;
+				return result;
 			}
 
 			function toJSON(object) {
-				object.client = partyService.toJSON(object.client);
-				object.currentResources = _.map(object.currentResources, function (o) {
+				if (_.isNil(object)) return object;
+				var result = _.cloneDeep(object);
+				result.client = partyService.toJSON(result.client);
+				result.currentResources = _.map(result.currentResources, function (o) {
 					return resourceService.toJSON(o);
 				});
 
-				object.schedule = _.map(object.schedule, function (o) {
+				result.schedule = _.map(result.schedule, function (o) {
 					return timeEntryService.toJSON(o);
 				});
-				return object;
+				return result;
 			}
 
 			var service = {
@@ -49,7 +54,9 @@ module.exports =
 						'/rpc/2.0/operation',
 						'findAll'
 					).then(function (resp) {
-						return fromJSON(resp.data.result);
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
 				},
 
@@ -58,7 +65,9 @@ module.exports =
 						'/rpc/2.0/operation',
 						'findAllWithoutTimeEntry'
 					).then(function (resp) {
-						return fromJSON(resp.data.result);
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
 				},
 

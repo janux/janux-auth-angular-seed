@@ -7,29 +7,34 @@
 var _ = require('lodash');
 
 module.exports =
-	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService',
-		function ($q, $http, partyService, resourceService, dateUtilService) {
+	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log',
+		function ($q, $http, partyService, resourceService, dateUtilService, $log) {
 
 			//Generate a time-entry instance from a json object
 			function fromJSON(object) {
-				if(_.isNil(object)) return object;
+				if (_.isNil(object)) return object;
 				var result = _.clone(object);
-				
+
 				result.begin = dateUtilService.stringToDate(result.begin);
 				result.end = dateUtilService.stringToDate(result.end);
 				result.principals = _.map(result.principals, function (o) {
 					return partyService.fromJSON(o);
 				});
 				result.resources = _.map(result.resources, function (o) {
-					resourceService.fromJSON(o);
+					return resourceService.fromJSON(o);
 				});
+
+				if (result.resources.length === 0) {
+					$log.warn("Time entry " + result.id + "has zero resources");
+				}
+
 				return result;
 			}
 
 			function toJSON(object) {
-				if(_.isNil(object)) return object;
+				if (_.isNil(object)) return object;
 				var result = _.clone(object);
-				
+
 				result.principals = _.map(result.principals, function (o) {
 					return partyService.toJSON(o);
 				});
@@ -67,6 +72,14 @@ module.exports =
 					).then(function (resp) {
 						return resp.data.result;
 					});
+				},
+
+				fromJSON: function (object) {
+					return fromJSON(object);
+				},
+
+				toJSON: function (object) {
+					return toJSON(object);
 				}
 			};
 			return service;

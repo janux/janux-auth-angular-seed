@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var moment = require('moment');
 var _ = require('lodash');
 // var records = require('./mock-data');
@@ -91,9 +90,9 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 	function createFilterForStaff(query) {
 		return function filterFn(operationDriver) {
 			var driver = operationDriver.resource;
-			var name = driver.name.last+' '+driver.name.first;
-			var index = name.toLowerCase().indexOf(angular.lowercase(query));
-			return (index === 0);
+			var name = (driver.name.last+' '+driver.name.first).toLowerCase();
+			var contains = name.toLowerCase().includes(query.toLowerCase());
+			return contains;
 		};
 	}
 
@@ -115,8 +114,8 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 
 	function createFilterForOps(query) {
 		return function filterFn(operation) {
-			var index = operation.name.toLowerCase().indexOf(angular.lowercase(query));
-			return (index === 0);
+			var contains = operation.name.toLowerCase().includes(query.toLowerCase());
+			return contains;
 		};
 	}
 

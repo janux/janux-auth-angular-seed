@@ -62,9 +62,9 @@ angular.module('agGridDirectives',[])
 			function createFilterForStaff(query) {
 				return function filterFn(operationDriver) {
 					var driver = operationDriver.resource;
-					var name = driver.name.last+' '+driver.name.first;
-					var index = name.toLowerCase().indexOf(angular.lowercase(query));
-					return (index === 0);
+					var name = (driver.name.last+' '+driver.name.first).toLowerCase();
+					var contains = name.toLowerCase().includes(query.toLowerCase());
+					return contains;
 				};
 			}
 
@@ -110,8 +110,8 @@ angular.module('agGridDirectives',[])
 
 			function createFilterForOps(query) {
 				return function filterFn(operation) {
-					var index = operation.name.toLowerCase().indexOf(angular.lowercase(query));
-					return (index === 0);
+					var contains = operation.name.toLowerCase().includes(query.toLowerCase());
+					return contains;
 				};
 			}
 

@@ -2,7 +2,6 @@
 
 var moment = require('moment');
 var _ = require('lodash');
-// var records = require('./mock-data');
 var agGridComp = require('common/ag-grid-components');
 
 module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
@@ -348,6 +347,12 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 		}
 	];
 
+	var agGridSizeToFit = function(){
+		$timeout(function () {
+			$scope.gridOptions.api.sizeColumnsToFit();
+		},500);
+	};
+
 	$scope.gridOptions = {
 		columnDefs: columnDefs,
 		rowData: [],
@@ -364,7 +369,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 		pagination:true,
 		paginationAutoPageSize:true,
 		onGridReady: function () {
-			$scope.gridOptions.api.sizeColumnsToFit();
+			agGridSizeToFit();
 
 			// This function is defined to be able to trigger the deletion
 			// of the rows from the header component that does not have access
@@ -430,6 +435,10 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 		// 	});
 
 	};
+
+	$scope.$on('sideMenuSizeChange', function(){
+		agGridSizeToFit();
+	});
 
 	$scope.init();
 	//

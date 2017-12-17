@@ -11,8 +11,7 @@
           .accordion-heading(ng-click="subMenu = true; subMenuData = false; toggleSubmenu()")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
               i.fa.fa-users(ng-click="subMenu = !subMenu")
-              span.down(ng-click="subMenu=true")
-                | {{ 'user.title' | translate }}
+              span.down(ng-click="subMenu=true") People & Organizations
           .accordion-toggle.menu-sub
             .accordion-inner(ng-show="subMenu && !noneStyle")
               ul
@@ -37,6 +36,45 @@
                 li
                   a.submenu-left(href="#")
                     | Clients
+
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true; toggleSubmenu2()")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-archive(ng-click="subMenuData = !subMenuData")
+              span.down(ng-click="subMenuData=true")
+                | {{ 'operations.title' | translate }}
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenuData && !noneStyle")
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='operations.drivers' ng-click='ok()')
+                    | {{ 'operations.drivers' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
+                    | {{ 'operations.specials' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
+                    | {{ 'operations.guards' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
+                    | {{ 'operations.services' | translate }}
+          .accordion-toggle(ng-show="menu2 && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.drivers' ng-click='ok()')
+                    | {{ 'operations.drivers' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
+                    | {{ 'operations.specials' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
+                    | {{ 'operations.guards' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
+                    | {{ 'operations.services' | translate }}
 
     li
       .accordion(id="rightMenu")

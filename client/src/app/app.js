@@ -6,6 +6,10 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
+require('angular-material');
+require('datetimepicker');
+require('angular-animate');
+require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
 require('drag-and-drop-lists');
@@ -20,8 +24,7 @@ require('app/users');
 require('app/permissions');
 require('app/roles');
 require('app/staff');
-require('app/logbook');
-require('app/driver-logbook');
+require('app/operations');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -32,19 +35,18 @@ angular.module('MyApp',[
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',
+	'config',
+	'LocalStorageModule',
 	'commonDirectives',
 	'agGridDirectives',
 	'demoService',
 	'appUsers',
 	'appStaff',
 	'appPermissions',
-	'config',
 	'appRoles',
-	'appLogBook',
 	'appRoles',
-	'LocalStorageModule',
 	'angular-jwt',
-	'appDriverLogbook'
+	'appOperations'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
@@ -212,6 +214,7 @@ function ($rootScope) {
 		//and false will become true
 		$rootScope.bodyCon = !$rootScope.bodyCon;
 		$rootScope.noneStyle = !$rootScope.noneStyle;
+		$rootScope.$broadcast('sideMenuSizeChange');
 	};
 	//add class to search box
 	$rootScope.openSearch = false;

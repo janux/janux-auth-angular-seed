@@ -8,14 +8,21 @@ var agGrid = require('ag-grid');
 // get ag-Grid to create an Angular module and register the ag-Grid directive
 agGrid.initialiseAgGridWithAngular1(angular);
 
-require('angular').module('appDriverLogbook', [
+require('angular').module('appOperations', [
 	'agGrid'
 ])
 .config(['$stateProvider', function($stateProvider)
 {
-	$stateProvider.state('driver-logbook', {
-		url:'/driver-logbook',
-		templateUrl: 'app/driver-logbook/index.html',
+	$stateProvider.state('operations', {
+		url:'/operations',
+		template: '<ui-view/>',
+		authRequired: true,
+		redirectTo: 'operations.drivers'
+	})
+
+	.state('operations.drivers', {
+		url:'/operations/drivers',
+		templateUrl: 'app/operations/drivers-time-sheet.html',
 		authRequired: true,
 		resolve: {
 			driversAndOps: ['operationService', 'resourceService', function (operationService, resourceService) {
@@ -56,6 +63,6 @@ require('angular').module('appDriverLogbook', [
 				});
 			}]
 		},
-		controller: require('./logbook-controller')
+		controller: require('./drivers-time-sheet-controller')
 	});
 }]);

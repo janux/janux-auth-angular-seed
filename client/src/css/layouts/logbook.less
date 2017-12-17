@@ -3,6 +3,7 @@
 	.add-form {
 		display: -webkit-flex;
 		display: flex;
+		flex-wrap: nowrap;
 	}
 
 	.add-form .element {
@@ -18,26 +19,6 @@
 		width: 100%;
 		min-width: 100%;
 	}
-
-	.add-form md-input-container.jnx-datetime-picker label {
-		margin-left: 30px;
-	}
-
-	.add-form md-input-container.jnx-datetime-picker input[type="text"] {
-		min-width: calc(100% - 30px);
-	}
-
-	.add-form label {
-		font-weight: normal;
-		margin-bottom: 0;
-	}
-}
-
-// Hide button to clear the datetime picker fields
-// Even any datetime picker within ag-grid
-.jnx-datetime-picker .dtp-clear, .ag-cell .dtp-clear {
-	visibility: hidden;
-}
 
 	.add-form md-input-container.jnx-datetime-picker label {
 		margin-left: 30px;

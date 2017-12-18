@@ -166,7 +166,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 				if(!!$scope.driverTimeSheet.$valid){
 					var begin = moment($scope.lbRow.start);
 					var end = '', endToInsert;
-
+					var operation = $scope.lbRow.operation;
 					if(_.isNil($scope.lbRow.end) === false) {
 						end = moment($scope.lbRow.end);
 						endToInsert = end.toDate();
@@ -179,14 +179,14 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 
 					var timeEntryToInsert = {
 						'resources': [ $scope.lbRow.staff ],
-						'principals': [],
-						'attributes': [],
+						'principals': _.isArray(operation.principals) ? operation.principals : [],
+						'attributes': [] ,
 						'type': 'DRIVER',
 						'comment': $scope.lbRow.location,
 						'begin': begin.toDate(),
 						'end': endToInsert,
 						'billable': true,
-						'idOperation': $scope.lbRow.operation.id
+						'idOperation': operation.id
 					};
 
 					// Absence
@@ -392,7 +392,7 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			var timeEntryToUpdate = {
 				'id': rowObj.data.id,
 				'resources': [ resource ],
-				'principals': [],
+				'principals': _.isArray(rowObj.data.operation.principals) ? rowObj.data.operation.principals : [],
 				'attributes': [],
 				'type': 'DRIVER',
 				'comment': rowObj.data.comment,

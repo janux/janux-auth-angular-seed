@@ -20,22 +20,23 @@ var config                         = require('config'),
 	GroupDao                       = DAOs[appContext.groupDao],
 	GroupAttributeValueDao         = DAOs[appContext.groupAttributeValueDao],
 	PartyPersistenceService        = new PartyServiceImpl(PartyDao),
+
 	// Begin glarus services DAOs.
 	VehicleDao                     = DAOs[appContext.vehicleDao],
 	TimeEntryPrincipalDao          = DAOs[appContext.timeEntryPrincipalDao],
 	OperationDao                   = DAOs[appContext.operationDao],
+	OperationPrincipalDao          = DAOs[appContext.operationPrincipalDao],
 	TimeEntryDao                   = DAOs[appContext.timeEntryDao],
 	ResourceDao                    = DAOs[appContext.resourceDao],
 	CurrentResourceDao             = DAOs[appContext.currentResourceDao],
 	TimeEntryAttributeDao          = DAOs[appContext.timeEntryAttributeDao],
 	TimeEntryResourceDao           = DAOs[appContext.timeEntryResourceDao],
-
 	// End glarus services DAOs.
 
 	// Begin glarus services implementations.
 	ResourcePersistService         = new ResourceServiceImpl(ResourceDao, PartyPersistenceService, VehicleDao),
 	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao),
-	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao),
+	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao),
 
 	// End glarus services implementations.
 

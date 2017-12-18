@@ -22,6 +22,11 @@ module.exports =
 				result.client = partyService.fromJSON(result.client);
 				result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
 				result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+				result.principals = _.map(result.principals, function (o) {
+
+					return partyService.fromJSON(o);
+				});
+
 				result.currentResources = _.map(result.currentResources, function (o) {
 					return resourceService.fromJSON(o);
 				});

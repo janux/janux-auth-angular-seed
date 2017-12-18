@@ -23,6 +23,7 @@ module.exports = {
 		vehicleDao: 'vehicleDao',
 		timeEntryPrincipalDao: 'timeEntryPrincipalDao',
 		operationDao: 'operationDao',
+		operationPrincipalDao: 'operationPrincipalDao',
 		timeEntryDao: 'timeEntryDao',
 		resourceDao: 'resourceDao',
 		currentResourceDao: 'currentResourceDao',

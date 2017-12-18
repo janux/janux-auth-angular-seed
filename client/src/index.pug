@@ -1,7 +1,7 @@
 doctype html
 html(ng-app='MyApp')
 	head
-		title Janux Authorization
+		title Glarus
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 
@@ -14,9 +14,7 @@ html(ng-app='MyApp')
 		link(rel='stylesheet', href=cfg.server.static + '/' + cfg.dir.css + '/angular-material.min.css')
 		link(rel='stylesheet', href=cfg.server.static + '/' + cfg.dir.css + '/material-datetimepicker.css')
 		script(src=cfg.server.static+'/'+cfg.file.app+'?'+cfg.build.timestamp)
-
 	body
-		#top
-		section(ui-view)
+		section(ui-view id='wrapper' ng-controller='sidebarCtrl')
 
 // vim: set fo=rq wrap:

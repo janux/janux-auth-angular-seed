@@ -4,6 +4,7 @@
 		"yes": 		"Yes",
 		"ok": 		"Ok",
 		"cancel":   "Cancel",
+		"save":   "Save",
 		"clear":    "Clear",
 		"email":    "E-mail",
 		"login":    "Log In",
@@ -12,7 +13,8 @@
 		"people":   "People",
 		"organizations": "Organizations",
 		"username": "User:",
-	  	"search":	"Search"
+	  	"search":	"Search",
+	  	"staff": "Staff"
 	},
 	"dashboard": {
 		"title":"Dashboard"
@@ -57,6 +59,40 @@
 		"updatingRole": "Updating Role:",
 		"createRole": "Create Role:",
 		"authContextGroup": "Authorization Context Group"
+	},
+	"staff": {
+		"title": "People & Organizations",
+		"editStaff": "Edit staff",
+		"createStaff": "Create staff",
+		"employeeTitle": "Employee",
+		"addressesTitle": "Adresses",
+		"jobTitle": "Job",
+		"phonesTitle": "Phones",
+		"mailsTitle": "Mails",
+		"name": "Name",
+		"maternalName": "Maternal name",
+		"lastName": "Last name",
+		"job": "Job Title",
+		"type": "Type",
+		"area": "Area",
+		"country": "Country",
+		"email": "Email",
+		"edit": "Edit",
+		"delete": "Delete",
+		"creation": "Creation",
+		"phone": "Phone Number",
+		"fiscal": "Fiscal",
+		"street1": "Street 1",
+		"street2": "Street 2",
+		"street3": "Street 3",
+		"city": "City",
+		"state": "State",
+		"zip": "Zip",
+		"code": "Code",
+		"number": "Number",
+		"ext": "Ext",
+		"sms": "SMS",
+		"wps": "WPS"
 	},
 	"operations": {
 		"title": "Operations",

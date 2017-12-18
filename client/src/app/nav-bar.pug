@@ -1,62 +1,146 @@
-.sd-page-sidebar-wrapper(ng-controller='toggleMenu')
-      .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
-        ul.sd-page-sidebar-menu
-          li
-            a(ng-click='toggledMenu()')
-              span.fa.fa-bars.fa-lg.glyphicon-align-justify 
-              .btn-text
-          li
-            a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-              span.fa.fa-users.fa-lg 
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp; People & Organizations
-            ul(ng-hide='isCollapsed') 
-              li
-                a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Users
-              li
-                a
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Staff
-              li
-                a
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; Clients
-          li
-            a(ui-sref-active="active" ui-sref='driver-logbook' ng-click='ok()')
-              span.fa.fa-archive.fa-lg
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp; {{ 'operations.title' | translate }}
-            ul(ng-hide='isCollapsed')
-              li
-                a(ui-sref-active="active" ui-sref='driver-logbook' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; {{ 'operations.drivers' | translate }}
-              li
-                a(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; {{ 'operations.specials' | translate }}
-              li
-                a(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; {{ 'operations.guards' | translate }}
-              li
-                a(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
-                  span.fa.fa-angle-right
-                  | &nbsp;&nbsp; {{ 'operations.services' | translate }}
-
-          li
-            a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-              span.fa.fa-sitemap.fa-lg 
-              .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
-            ul(ng-hide='isCollapsed') 
+.sidebar-wrapper(ng-class="{'noneStyle' : noneStyle}" ng-mouseleave="subMenu = false; subMenuData = false")
+  ul.sidebar-nav
+    li
+      a(href="#" ng-click="toggleStyle()") 
+        i.fa.fa-bars
+        span
+          | &nbsp;
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = true; subMenuData = false; toggleSubmenu()")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-users(ng-click="subMenu = !subMenu")
+              span.down(ng-click="subMenu=true") People & Organizations
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenu && !noneStyle")
+              ul
                 li
-                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-                    span.fa.fa-angle-right
-                    | &nbsp;&nbsp; Roles
+                  a(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                    | Users
+                li
+                  a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                    | Staff
+                li
+                  a(href="#")
+                    | Clients
+          .accordion-toggle(ng-show="menu1 && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                    | Users
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                    | Staff
+                li
+                  a.submenu-left(href="#")
+                    | Clients
+
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true; toggleSubmenu2()")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-archive(ng-click="subMenuData = !subMenuData")
+              span.down(ng-click="subMenuData=true")
+                | {{ 'operations.title' | translate }}
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenuData && !noneStyle")
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='operations.drivers' ng-click='ok()')
+                    | {{ 'operations.drivers' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
+                    | {{ 'operations.specials' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
+                    | {{ 'operations.guards' | translate }}
+                li
+                  a(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
+                    | {{ 'operations.services' | translate }}
+          .accordion-toggle(ng-show="menu2 && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.drivers' ng-click='ok()')
+                    | {{ 'operations.drivers' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.specials' ng-click='ok()')
+                    | {{ 'operations.specials' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.guards' ng-click='ok()')
+                    | {{ 'operations.guards' | translate }}
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='operations.services' ng-click='ok()')
+                    | {{ 'operations.services' | translate }}
+
+    li
+      .accordion(id="rightMenu")
+        .accordion-group
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true; toggleSubmenu2()")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+              i.fa.fa-sitemap(ng-click="subMenuData = !subMenuData")
+              span.down(ng-click="subMenuData=true")
+                | {{ 'permission.title' | translate }}
+          .accordion-toggle.menu-sub
+            .accordion-inner(ng-show="subMenuData && !noneStyle")
+              ul
+                li
+                  a(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
+                    | Roles
                 li
                   a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
-                    span.fa.fa-angle-right
-                    | &nbsp;&nbsp; Authorizations
+                    | Authorizations
+          .accordion-toggle(ng-show="menu2 && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
+                    | Roles
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                    | Authorizations
+
+//- .sd-page-sidebar-wrapper(ng-controller='toggleMenu')
+//-   .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
+
+//-     ul.sd-page-sidebar-menu
+//-       li
+//-         a(ng-click='toggledMenu()')
+//-           span.fa.fa-bars.fa-lg.glyphicon-align-justify 
+//-           .btn-text
+//-       li
+//-         a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+//-           span.fa.fa-users.fa-lg 
+//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
+//-         ul(ng-hide='isCollapsed') 
+//-           li
+//-             a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Users
+//-           li
+//-             a.active(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Staff
+//-           li
+//-             a
+//-               span.fa.fa-angle-right
+//-               | &nbsp;&nbsp; Clients
+//-       li
+//-         a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+//-           span.fa.fa-sitemap.fa-lg 
+//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
+//-         ul(ng-hide='isCollapsed') 
+//-             li
+//-               a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+//-                 span.fa.fa-angle-right
+//-                 | &nbsp;&nbsp; Roles
+//-             li
+//-               a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+//-                 span.fa.fa-angle-right
+//-                 | &nbsp;&nbsp; Authorizations
 
 
 //- // Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar

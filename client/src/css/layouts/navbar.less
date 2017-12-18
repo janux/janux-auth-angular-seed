@@ -2,54 +2,42 @@
 // Navigation components
 //
 
-nav {
+// nav {
 
-  ul {
-	float: left;
-	display: block;
-	width: 100%;
-	background-color: @grey1;
-	text-align: center;
-	list-style: none;
-	.rem(padding-top, 3);
-	.rem(padding-bottom, 3);
-	margin: 0;
-	-webkit-margin-before: 0;
-	-webkit-margin-after: 0;
-	-webkit-padding-start: 0;
-  }
+//   ul {
+// 	float: left;
+// 	display: block;
+// 	width: 100%;
+// 	background-color: @grey1;
+// 	text-align: center;
+// 	list-style: none;
+// 	.rem(padding-top, 3);
+// 	.rem(padding-bottom, 3);
+// 	margin: 0;
+// 	-webkit-margin-before: 0;
+// 	-webkit-margin-after: 0;
+// 	-webkit-padding-start: 0;
+//   }
 
-  li {
-	display: inline-block;
-	margin: 0;
-	margin-left: 5%;
-  }
+//   li {
+// 	display: inline-block;
+// 	margin: 0;
+// 	margin-left: 5%;
+//   }
 
-  .first {
-	margin-left: 0;
-  }
+//   .first {
+// 	margin-left: 0;
+//   }
 
-}
+// }
 
 // Button to display the navigation bar aside
 
-.navbar-toggle-btn{
+.md-button.md-icon-button.navbar-toggle-btn{
 
-  float:right;
-  .rem(margin-top, 15);
-  .rem(margin-right, 15);
 
   display: none;
 
-  a{
-	color: @sageDark;
-  }
-
-  .glyphicon-align-justify{
-  	.rem(font-size, 22);
-	cursor: pointer;
-  	color: @white;
-  }
 
   .xs-device({.show});
   .small-device({.show});
@@ -163,7 +151,7 @@ nav {
   .xl-device({ .enable-sidebar });
 }
 
-.sidebar-nav {
+.mb-sidebar-nav {
   display: none;
 
   .enable-sidebar-nav{
@@ -194,7 +182,7 @@ nav {
   .xl-device({ .enable-sidebar-nav });
 }
 
-.sidebar-nav i {
+.mb-sidebar-nav i {
   display: block;
   cursor: pointer;
 }

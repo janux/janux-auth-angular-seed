@@ -6,8 +6,6 @@ require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-aside');
-require('angular-local-storage');
-require('angular-jwt');
 require('angular-material');
 require('datetimepicker');
 require('angular-animate');
@@ -25,8 +23,8 @@ require('common/demoService');
 require('app/users');
 require('app/permissions');
 require('app/roles');
-require('app/logbook');
-require('app/driver-logbook');
+require('app/staff');
+require('app/operations');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -37,17 +35,18 @@ angular.module('MyApp',[
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',
+	'config',
+	'LocalStorageModule',
 	'commonDirectives',
 	'agGridDirectives',
 	'demoService',
 	'appUsers',
+	'appStaff',
 	'appPermissions',
-	'config',
 	'appRoles',
-	'appLogBook',
-    'appDriverLogbook',
-	'LocalStorageModule',
-	'angular-jwt'
+	'appRoles',
+	'angular-jwt',
+	'appOperations'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
@@ -194,12 +193,45 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	});
 }])
 
-.controller('toggleMenu', ['$rootScope', 
-function ($rootScope) {
-  	$rootScope.toggledMenu = function() {
-    	$rootScope.isCollapsed = !$rootScope.isCollapsed;
-  	};  
+.controller('AppCtrl', ['$scope', 
+function ($scope) {
+  	$scope.currentNavItem = 'page1';
+  	$scope.goto=function(page){
+  		console.log('Goto' + page);
+  	};
 }])
+
+
+.controller('sidebarCtrl', ['$rootScope', 
+function ($rootScope) {
+	$rootScope.noneStyle = true;
+	$rootScope.bodyCon = false;
+	$rootScope.menu1 = false;
+    
+	//Toggle the styles
+	$rootScope.toggleStyle = function () {
+		//If they are true, they will become false 
+		//and false will become true
+		$rootScope.bodyCon = !$rootScope.bodyCon;
+		$rootScope.noneStyle = !$rootScope.noneStyle;
+		$rootScope.$broadcast('sideMenuSizeChange');
+	};
+	//add class to search box
+	$rootScope.openSearch = false;
+	$rootScope.searchToggle = function () {
+    	$rootScope.openSearch = !$rootScope.openSearch;
+	};  
+
+	$rootScope.toggleSubmenu = function () {
+		$rootScope.menu1 = !$rootScope.menu1;
+	};
+
+	$rootScope.toggleSubmenu2 = function () {
+		$rootScope.menu2 = !$rootScope.menu2;
+	};
+
+}])
+
 
 .controller('asideMenu', ['$scope','$aside','security',
 function($scope, $aside, security) {

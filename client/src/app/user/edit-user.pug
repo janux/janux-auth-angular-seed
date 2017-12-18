@@ -1,24 +1,24 @@
 login-toolbar(title='user.title')
-//include toolbar
 
-.sd-page-container
-	side-bar
+side-bar
 
-	.sd-page-content-wrapper
-		.sd-page-content(ng-class="{'toggleMenu-sd-content': isCollapsed}")
+.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid
+		.row
+			.col-lg-12
 
-			.title-bar
-				.title {{ 'user.editUser' | translate }}
-				.options
-					a(style="margin-right:5px" ng-click='cancel()')
-						span.fa.fa-times.fa-lg 
-						| &nbsp; Cancel
-					a(ng-click='save()')
-						span.fa.fa-hdd-o.fa-lg 
-						| &nbsp; Save
-			hr
+				.title-bar
+					.title {{ 'user.editUser' | translate }}
+					.options
+						a(style="margin-right:5px" ng-click='cancel()')
+							span.fa.fa-times.fa-lg 
+							| &nbsp; Cancel
+						a(ng-click='save()')
+							span.fa.fa-hdd-o.fa-lg 
+							| &nbsp; Save
+				hr
 
-			.user-form
-				include user-form
+				.user-form
+					include user-form
 
 footer-Janux

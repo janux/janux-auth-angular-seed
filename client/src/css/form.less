@@ -1,3 +1,107 @@
+.divider-line{
+	padding-bottom:10px; 
+	border-top:2px solid @green2;
+}
+md-toolbar.form-mid-toolbar{
+	background: @grey2;
+	color: @green1;
+	border-top:1px solid @grey2;
+	z-index: 0;
+}
+md-toolbar.form-mid-toolbar{
+	button.md-accent {
+		color: @white;
+	}
+	md-nav-ink-bar{
+		background: @white;
+	}
+}
+.md-button.trash,.md-button.save,.md-button.cancel{
+	border-radius: 20% !important;
+	box-shadow: 2px 2px 3px @grey1;
+}
+.md-button.trash{
+	background: #706e6e;
+}
+.md-button.save{
+	background: @green2;
+}
+.md-button.cancel{
+	background: #d0021b;
+}
+md-toolbar.form-root-toolbar{
+	background: @grey3;
+	color: @green1;
+	
+	z-index: 0;
+}
+.md-toolbar-tools.form-toolbar .md-button{
+	color: @white;
+	background: @green4;
+	border-radius: 20%;
+	&:hover{
+		background: @green1;
+	}
+}
+.an-material{
+	padding-left: 20px;
+	label{
+		font-weight: normal !important;
+	}
+	.hint {
+	    position: absolute;
+	    left: 2px;
+	    right: auto;
+	    bottom: 7px;
+	    font-size: 12px;
+	    line-height: 14px;
+	    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+	    color: grey; 
+	}
+    .full{
+    	width: 100%;
+    	.ng-pristine{
+			border-color: #dcdcdc !important;
+		}
+
+    }
+}
+.plus-btn{
+	background:@green2 !important;
+	border-radius:20% !important;
+	float: right;
+	&:hover{
+		background: @green1 !important;
+	}
+}
+
+.trash-btn{
+	background:@grey2 !important;
+	border-radius:20% !important;
+	float: right;
+	&:hover{
+		background: @grey1 !important;
+	}
+}
+
+.form-section{
+	display:table; 
+	background:@green2; 
+	padding:10px; 
+	color:white;
+}
+.staff-form{
+	overflow: hidden;
+	md-checkbox{
+		margin-top: -20px;
+		.md-label{
+			padding-top: 40px;
+			font-size: 11px;
+			margin-left: 0px !important;
+		}
+	}
+}
+
 .jx-checkbox {
 	width: 20px;
 	position: relative;
@@ -49,4 +153,15 @@
 
 .ng-pristine {
 	border-color: @pristine !important;
+}.spacing-bottom{
+	padding-bottom:30px;
+}
+
+.staff-name{
+	background:none; 
+	color:black; 
+	margin:15px 20px 15px 20px;
+}
+.spacing-ls{
+	margin:0 20px 0 20px;
 }

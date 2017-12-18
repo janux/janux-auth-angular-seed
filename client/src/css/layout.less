@@ -6,6 +6,15 @@ html, body, section{
   	margin: 0!important;
   	background: @white;
 }
+//Fix to angular material select issue
+body {
+    position: initial !important;
+    top: initial !important;
+    overflow: initial !important;
+}
+html {
+    overflow: initial !important;
+}
 
 // Sidebar Collapsed view
 .sidebar-wrapper {
@@ -110,6 +119,9 @@ html, body, section{
 		}
 	}
 }
+.submenu-left{
+	padding-left: 50px !important;
+}
 
 
 //Submenu view
@@ -121,7 +133,7 @@ html, body, section{
 	ul {
 		padding:0;
 		list-style:none;
-		background: #2c435b;
+		background: @grey1;
 		li{
 			a{
 				font-size: 13px !important;
@@ -265,3 +277,71 @@ input[type='text'], input[type='password'] {
 
 .show{  display: inline;  }
 .hide{  display: none;  }
+
+//Mobile menu
+.sd-page-container {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.sd-page-content-wrapper {
+	float: left;
+	width: 100%;
+}
+
+.sd-page-content {
+	margin-left: 235px;
+	margin-top: 0;
+	min-height: 680px;
+	padding: 25px 20px 10px;
+	background-color: @white;
+	color: @black;
+	overflow: hidden;
+}
+
+.sd-page-sidebar {
+	background-color: @grey1;
+	border-top: 1px solid @grey2;
+	width: 100%;
+	float: left;
+	position: absolute;
+	margin-right: -100%;
+}
+.sd-page-sidebar-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	li {
+		margin-bottom: 0px !important;
+		a {
+			color: @white;
+			display: block;
+			padding: 20px 30px;
+			text-decoration: none;
+			border-bottom: 1px solid @grey2;
+			text-align: left;
+			font-size: 13px;
+			cursor: pointer;
+			&:hover {
+				background-color: @grey6;
+			}
+		}
+		
+		a.active {
+			background-color: @grey6;
+			color: @white;
+		}
+		ul{
+			list-style: none;
+			padding: 0px;
+			li a{
+				width: 100%;
+				background-color: @grey4;
+				padding: 5px 60px;
+				border: none;
+			}
+			.medium-device({ display: none;});
+		}
+	}
+}

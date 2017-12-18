@@ -8,25 +8,13 @@
     li
       .accordion(id="rightMenu")
         .accordion-group
-          .accordion-heading(ng-click="subMenu = true; subMenuData = false")
+          .accordion-heading(ng-click="subMenu = true; subMenuData = false; toggleSubmenu()")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
               i.fa.fa-users(ng-click="subMenu = !subMenu")
               span.down(ng-click="subMenu=true")
                 | {{ 'user.title' | translate }}
           .accordion-toggle.menu-sub
             .accordion-inner(ng-show="subMenu && !noneStyle")
-              ul
-                li
-                  a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-                    | Users
-                li
-                  a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
-                    | Staff
-                li
-                  a(href="#")
-                    | Clients
-          .accordion-toggle(ng-show="subMenu && noneStyle")
-            .accordion-inner
               ul
                 li
                   a(ui-sref-active="active" ui-sref='users' ng-click='ok()')
@@ -37,11 +25,23 @@
                 li
                   a(href="#")
                     | Clients
+          .accordion-toggle(ng-show="menu1 && noneStyle")
+            .accordion-inner
+              ul
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                    | Users
+                li
+                  a.submenu-left(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                    | Staff
+                li
+                  a.submenu-left(href="#")
+                    | Clients
 
     li
       .accordion(id="rightMenu")
         .accordion-group
-          .accordion-heading(ng-click="subMenu = false; subMenuData = true")
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true; toggleSubmenu2()")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
               i.fa.fa-sitemap(ng-click="subMenuData = !subMenuData")
               span.down(ng-click="subMenuData=true")
@@ -50,19 +50,19 @@
             .accordion-inner(ng-show="subMenuData && !noneStyle")
               ul
                 li
-                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
                     | Roles
                 li
                   a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
                     | Authorizations
-          .accordion-toggle(ng-show="subMenuData && noneStyle")
+          .accordion-toggle(ng-show="menu2 && noneStyle")
             .accordion-inner
               ul
                 li
-                  a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
                     | Roles
                 li
-                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
                     | Authorizations
 
 //- .sd-page-sidebar-wrapper(ng-controller='toggleMenu')

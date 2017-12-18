@@ -33,7 +33,7 @@ require('angular').module('appStaff', [
 		url: '/staff-create',
 		templateUrl: 'app/staff/create-staff.html',
 		authRequired: true,
-		//controller: require('./create-user-controller.js'),
+		controller: require('./staff-create-controller.js'),
 		resolve: {}
 	});
 }]);

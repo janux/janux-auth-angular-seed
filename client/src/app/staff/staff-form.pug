@@ -139,7 +139,7 @@ md-content.staff-form(layout-padding)
 				.col-sm-12
 					md-divider.divider-line(ng-show="lastAddress==0")
 
-					fieldset(data-ng-repeat="address in addresses track by $index")
+					fieldset(data-ng-repeat="address in staff.contactMethods.addresses track by $index")
 						.row
 							.col-sm-4.an-material
 								md-input-container.full
@@ -199,7 +199,7 @@ md-content.staff-form(layout-padding)
 			p.form-section
 				| {{ 'staff.phonesTitle' | translate}}
 			.row(style="padding-left:20px")
-				fieldset(data-ng-repeat="phone in phones track by $index")
+				fieldset(data-ng-repeat="phone in staff.contactMethods.phones track by $index")
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.type' | translate}}
@@ -207,11 +207,11 @@ md-content.staff-form(layout-padding)
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.code' | translate}}
-							input(ng-model="phone._countryCode")
+							input(ng-model="phone.countryCode")
 					.col-sm-1.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.area' | translate}}
-							input(ng-model='phone._areaCode')
+							input(ng-model='phone.areaCode')
 					.col-sm-2.an-material.nopadding
 						md-input-container.full
 							label {{ 'staff.number' | translate}}
@@ -242,7 +242,7 @@ md-content.staff-form(layout-padding)
 			p.form-section
 				| {{ 'staff.mailsTitle' | translate}}
 			.row
-				fieldset(data-ng-repeat="email in emails track by $index")
+				fieldset(data-ng-repeat="email in staff.contactMethods.emails track by $index")
 					.col-sm-3.an-material
 						md-input-container.full
 							label {{ 'staff.type' | translate}}

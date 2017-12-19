@@ -3,7 +3,8 @@
  * Created by ernesto on 9/22/17.
  */
 'use strict';
-const SECRET = 'jules cyril value main why latex';
+var config = require('config').serverAppContext;
+
 //const TOKEN_TIME = 120 * 60; // in seconds
 
 const jwt = require('jsonwebtoken');
@@ -24,7 +25,7 @@ function generateToken(user) {
 	// console.log("now : " + now + "tomo: " + tomorrow + " expirationDate: " + expirationDate);
 	const expirationSeconds = expirationDate.getTime() - now.getTime();
 	// console.log("Setting " + expirationSeconds + " seconds");
-	return jwt.sign(user, SECRET, {
+	return jwt.sign(user, config.server.secret, {
 		expiresIn: expirationSeconds
 	});
 }
@@ -34,7 +35,7 @@ function generateToken(user) {
  * @type {middleware}
  */
 const authenticate = expressJwt({
-	secret: SECRET
+	secret: config.server.secret
 });
 
 /**

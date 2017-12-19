@@ -9,7 +9,8 @@ module.exports = {
 			port: 9000,
 			staticUrl: '',
 			distFolder: path.join('..', 'client', 'dist'),
-			livereload: false
+			livereload: false,
+			secret: 'jules cyril value main why latex'
 		},
 		//Daos to be used by the services.
 		accountDao: 'accountDao',

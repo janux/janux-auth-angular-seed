@@ -101,11 +101,11 @@ module.exports =
 								id           : timeEntry.id,
 								operation    : operation,
 								staff        : timeEntry.resources[0],
-								begin        : begin.format(dateTimeFormatString),
+								begin        : timeEntry.begin, //begin.format(dateTimeFormatString),
 								beginOnlyHour: begin.format(formatStringOnlyHour),
 								beginOnlyDate: begin.format(formatStringOnlyDate),
 								endOnlyHour  : endOnlyHour,
-								end          : end,
+								end          : timeEntry.end, //end,
 								duration     : duration,
 								absence      : timeEntry.resources[0].absence,
 								comment      : timeEntry.comment
@@ -122,7 +122,6 @@ module.exports =
 				toJSON: function (object) {
 					return toJSON(object);
 				}
-
 
 			};
 			return service;

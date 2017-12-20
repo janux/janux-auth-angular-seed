@@ -10,7 +10,7 @@ module.exports = {
 			staticUrl: '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
-			secret: 'jules cyril value main why latex'
+			secret: 'jules cyril value main why latex snowden obama'
 		},
 		//Daos to be used by the services.
 		accountDao: 'accountDao',

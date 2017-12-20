@@ -1,49 +1,59 @@
 'use strict';
-
+var Person = require('janux-people').Person;
+var PhoneNumber = require('janux-people').PhoneNumber;
+var Email = require('janux-people').EmailAddress;
+var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', function ($scope) {
+'$scope','partyService', function(
+ $scope , partyService ) {
 
-		$scope.addresses = [{type: '', country: '', fiscal:'',street1:'',street2:'',city:'',state:'',zip:''}];
+ 		// Create a new staff
+		var staff = new Person();
+		staff.setContactMethod('work', new PhoneNumber());
+		staff.setContactMethod('work', new Email());
+		staff.setContactMethod('Home', new PostalAddress());
+
+		$scope.staff = staff;	
+		console.log('Staff: ',$scope.staff);
   
 		$scope.addNewAddress = function() {
-		    var newItemNo = $scope.addresses.length+1;
-		    $scope.addresses.push({'id':'address'+newItemNo});
-		    $scope.itemAddress=newItemNo;
+		    $scope.staff.setContactMethod('work', new PostalAddress());
 		};
 
 		$scope.removeAddress = function(z) {
-		    //var lastItem = $scope.addresses.length-1;
-		    $scope.addresses.splice(z,1);
-		    //$scope.lastAddress=lastItem;
+		    $scope.staff.contactMethods.addresses.splice(z,1);
 		};
-
-		$scope.phones = [{type: '', code: '', area:'',ext:'',sms:'',wps:''}];
   
 		$scope.addNewPhone = function() {
-		    var newItemNo = $scope.phones.length+1;
-		    $scope.phones.push({'id':'phone'+newItemNo});
-		    $scope.itemPhone=newItemNo;
+			$scope.staff.setContactMethod('work', new PhoneNumber());
 		};
 
 		$scope.removePhone = function(z) {
-		    //var lastItem = $scope.phones.length-1;
-		    $scope.phones.splice(z,1);
-		    //$scope.lastPhone=lastItem;
+		    $scope.staff.contactMethods.phones.splice(z,1);
 		};
-
-		$scope.mails = [{type: '', mail: ''}];
   
 		$scope.addNewMail = function() {
-		    var newItemNo = $scope.mails.length+1;
-		    $scope.mails.push({'id':'mail'+newItemNo});
-		    $scope.itemMail=newItemNo;
+		    $scope.staff.setContactMethod('work', new Email());
 		};
 
 		$scope.removeMail = function(z) {
-		    //var lastItem = $scope.mails.length-1;
-		    $scope.mails.splice(z,1);
-		    //$scope.lastMail=lastItem;
+		    $scope.staff.contactMethods.emails.splice(z,1);
+		};
+
+		
+		
+
+		$scope.save = function () {
+			console.log('user created', $scope.staff);
+			partyService.insert($scope.staff).then(function (resp) {
+				console.log('Staff has been saved!', resp);
+				window.history.back();
+			});
+		};
+
+		$scope.cancel = function () {
+			window.history.back();
 		};
 
 	}];

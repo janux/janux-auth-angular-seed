@@ -206,7 +206,13 @@ function ($scope) {
 function ($rootScope) {
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
-	$rootScope.menu1 = false;
+
+	// TODO: Set this as configuration
+	['peopleOrgs','ops','authSchema'].forEach(function(opt){
+		$rootScope[opt+'ToggleSubmenu'] = function () {
+			$rootScope[opt+'Flag'] = !$rootScope[opt+'Flag'];
+		};
+	});
     
 	//Toggle the styles
 	$rootScope.toggleStyle = function () {
@@ -220,16 +226,7 @@ function ($rootScope) {
 	$rootScope.openSearch = false;
 	$rootScope.searchToggle = function () {
     	$rootScope.openSearch = !$rootScope.openSearch;
-	};  
-
-	$rootScope.toggleSubmenu = function () {
-		$rootScope.menu1 = !$rootScope.menu1;
 	};
-
-	$rootScope.toggleSubmenu2 = function () {
-		$rootScope.menu2 = !$rootScope.menu2;
-	};
-
 }])
 
 

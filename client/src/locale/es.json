@@ -1,0 +1,27 @@
+{
+	"grid": {
+		"page": "Página",
+		"more": "Mas",
+		"to": "a",
+		"of": "de",
+		"next": "Siguiente",
+		"last": "Última",
+		"first": "Primera",
+		"previous": "Anterior",
+		"loadingOoo": "Cargando...",
+		
+		"filterOoo": "Filtrar...",
+		"applyFilter": "Aplicar Filtro...",
+		
+		"equals": "Igual",
+		"lessThan": "Menor que",
+		"greaterThan": "Mayor que",
+
+		"notEqual": "Diferente de",
+		"contains": "Contiene",
+		"notContains": "No contiene",
+		"startsWith": "Inicia con",
+		"endsWith": "Termina con",
+		"inRange": "En rango"
+	}
+}

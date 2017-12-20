@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService',
-	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService) {
+module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout','$modal','$interval','driversAndOps','timeEntryService','$filter',
+	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService, $filter) {
 
 	$scope.driversAndOps = driversAndOps;
 
@@ -282,6 +282,9 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			field: 'begin',
 			editable: true,
 			filter: 'date',
+			valueGetter: function(params){
+				return (params.data.begin)?moment(params.data.begin).format(dateTimeFormatString):'';
+			},
 			cellEditor: agGridComp.dateTimeCellEditor,
 			sort: 'desc'
 		},
@@ -290,6 +293,10 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 			field: 'end',
 			editable: true,
 			filter: 'date',
+			valueGetter: function(params){
+
+				return (params.data.end)?moment(params.data.end).format(dateTimeFormatString):'';
+			},
 			cellEditor: agGridComp.dateTimeCellEditor
 		},
 		{
@@ -412,6 +419,11 @@ module.exports = ['$scope', 'operationService', 'resourceService','$q','$timeout
 				$scope.init();
 				// infoDialog('Time entry successfully updated');
 			});
+		},
+		localeTextFunc: function(key, defaultValue) {
+			var gridKey = 'grid.' + key;
+			var value = $filter('translate')(gridKey);
+			return value === gridKey ? defaultValue : value;
 		}
 		// components:{
 		// 	dateComponent: agGridComp.dateFilter

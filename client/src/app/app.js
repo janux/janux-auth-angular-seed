@@ -12,6 +12,7 @@ require('angular-animate');
 require('angular-aria');
 require('angular-local-storage');
 require('angular-jwt');
+require('angular-sanitize');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');
@@ -32,6 +33,7 @@ angular.module('MyApp',[
 	'ngAside',
 	'ngMaterial',
 	'ngMaterialDatePicker',
+	'ngSanitize',
 	'jnxSecurity',
 	'pascalprecht.translate',
 	'dndLists',
@@ -102,11 +104,17 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
 		suffix: '.json'
-	});
-
-	$translateProvider.preferredLanguage('en');
-	$translateProvider.fallbackLanguage('en');
-	$translateProvider.useSanitizeValueStrategy('escape');
+	})
+	// This is to make sure that language variations (eg. en_US and en_UK)
+	// all map to existing languages, when detecting language from browser below
+	.registerAvailableLanguageKeys(['en','es'], {
+		'en_*': 'en',
+		'es_*': 'es'
+	})
+	// determine preferred language from browser
+	.determinePreferredLanguage()
+	.fallbackLanguage('en')
+	.useSanitizeValueStrategy('sanitize');
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');

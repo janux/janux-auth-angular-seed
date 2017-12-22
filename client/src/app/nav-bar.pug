@@ -1,15 +1,15 @@
 .sidebar-wrapper(ng-class="{'noneStyle' : noneStyle}" ng-mouseleave="subMenu = false; subMenuData = false")
   ul.sidebar-nav
     li
-      a(href="#" ng-click="toggleStyle()") 
+      a(href="#" ng-click="toggleStyle()")
         i.fa.fa-bars
         span
           | &nbsp;
     li
-      .accordion(id="rightMenu")
+      .accordion(id="rightMenu1")
         .accordion-group
-          .accordion-heading(ng-click="subMenu = true; subMenuData = false; toggleSubmenu()")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+          .accordion-heading(ng-click="subMenu = true; subMenuData = false; peopleOrgsToggleSubmenu();")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#")
               i.fa.fa-users(ng-click="subMenu = !subMenu")
               span.down(ng-click="subMenu=true")
                 | {{ 'user.title' | translate }}
@@ -17,32 +17,32 @@
             .accordion-inner(ng-show="subMenu && !noneStyle")
               ul
                 li
-                  a(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='users')
                     | Users
                 li
-                  a(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='staff')
                     | Staff
                 li
                   a(href="#")
                     | Clients
-          .accordion-toggle(ng-show="menu1 && noneStyle")
+          .accordion-toggle(ng-show="peopleOrgsFlag && noneStyle")
             .accordion-inner
               ul
                 li
-                  a.submenu-left(ui-sref-active="active" ui-sref='users' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='users')
                     | Users
                 li
-                  a.submenu-left(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='staff')
                     | Staff
                 li
                   a.submenu-left(href="#")
                     | Clients
 
     li
-      .accordion(id="rightMenu")
+      .accordion(id="rightMenu2")
         .accordion-group
-          .accordion-heading(ng-click="subMenu = false; subMenuData = true; toggleSubmenu2()")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
+          .accordion-heading(ng-click="subMenu = false; subMenuData = true; authSchemaToggleSubmenu();")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu2" href="#")
               i.fa.fa-sitemap(ng-click="subMenuData = !subMenuData")
               span.down(ng-click="subMenuData=true")
                 | {{ 'permission.title' | translate }}
@@ -50,19 +50,19 @@
             .accordion-inner(ng-show="subMenuData && !noneStyle")
               ul
                 li
-                  a(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='permissions.roles')
                     | Roles
                 li
-                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts')
                     | Authorizations
-          .accordion-toggle(ng-show="menu2 && noneStyle")
+          .accordion-toggle(ng-show="authSchemaFlag && noneStyle")
             .accordion-inner
               ul
                 li
-                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles')
                     | Roles
                 li
-                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
+                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts')
                     | Authorizations
 
 //- .sd-page-sidebar-wrapper(ng-controller='toggleMenu')

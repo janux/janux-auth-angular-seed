@@ -4,14 +4,29 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = [
-'$scope','userService','$state','users','$modal', function(
- $scope , userService , $state , users , $modal) {
+'$scope','userService','$state','users','$modal', '$q', function(
+ $scope , userService , $state , users , $modal, $q) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
 	$scope.searchString = '';
 
 	$scope.searchFields = ['username', 'name', 'email', 'phone'];
+
+	var infoDialog = function(message){
+		$modal.open({
+			templateUrl: 'app/dialog-tpl/info-dialog.html',
+			controller: ['$scope','$modalInstance',
+				function($scope , $modalInstance) {
+					$scope.message= message;
+
+					$scope.ok = function() {
+						$modalInstance.close();
+					};
+				}],
+			size: 'md'
+		});
+	};
 
 	$scope.findUsers = function() {
 		userService.findBy($scope.searchField, $scope.searchString).then(function(usersMatch) {
@@ -47,6 +62,47 @@ module.exports = [
 				$modalInstance.dismiss();
 			};
 		}];
+
+	$scope.openDelete = function(){
+		var selectedIds = [];
+		for (var i = 0; i<$scope.usersMatch.length; i++) {
+			if($scope.usersMatch[i].Selected){
+				var userId = $scope.usersMatch[i].userId;
+				selectedIds.push(userId);
+			}
+		}
+
+		if(selectedIds.length>0) {
+			$modal.open({
+				templateUrl: 'app/dialog-tpl/confirm-dialog.html',
+				controller: ['$scope','$modalInstance',
+					function($scope , $modalInstance) {
+						$scope.message= 'Are you sure you want to delete the row selection?';
+
+						$scope.ok = function() {
+							var userDeletionArray =[];
+							//TO DO Create Method inside server
+							for (var i = 0; i<selectedIds.length; i++) {
+								console.log(selectedIds[i]);
+								userDeletionArray.push(userService.deleteUser(selectedIds[i]));
+							}
+							$q.all(userDeletionArray).then(function(){
+								$state.go($state.current, {}, {reload: true});
+							});
+
+							$modalInstance.close();
+						};
+
+						$scope.cancel = function() {
+							$modalInstance.close();
+						};
+					}],
+				size: 'md'
+			});
+		}else{
+			infoDialog('Select at least one row to delete');
+		}
+	};
 
 	$scope.openDeleteAuthContextDialog = function(user){
 		$modal.open({

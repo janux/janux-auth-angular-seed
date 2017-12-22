@@ -37,6 +37,7 @@
 	},
 	"user": {
 		"title": "People & Organizations",
+		"listTitle": "Users",
 	  	"editUser": "Edit user",
 	  	"createUser": "Create user",
 	  	"username": "Username",
@@ -45,7 +46,12 @@
 	  	"email": "Email",
 	  	"edit": "Edit",
 	  	"delete": "Delete",
-		"creation": "Creation"
+		"creation": "Creation",
+		"phone":"Phone",
+		"enabled":"Enabled",
+		"renew":"Renew password",
+		"edit":"Edit"
+
 	},
 	"role": {
 		"title": "Roles"

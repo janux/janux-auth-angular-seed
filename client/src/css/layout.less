@@ -220,11 +220,16 @@ input[type='text'], input[type='password'] {
     	background: @grey1;
     	color: white;
     	font-weight: bold;
+    	font-size: 13px;
+    }
+    td{
+    	font-size: 13px;
     }
     td, th {
     	padding: 6px;
     	border: 1px solid #cccccc;
     	text-align: left;
+
     }
 }
 
@@ -237,22 +242,38 @@ input[type='text'], input[type='password'] {
 	}
 }
 
+.container-fluid-flex{
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: row wrap;
+}
+
+.container-body{
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	padding: 30px;
+}
+
 .title-bar {
 	display: -webkit-flex;
 	display: flex;
+	justify-content: space-between;
 	color: @green1;
 	padding-top: 30px;
+	padding-bottom: 0px;
 	width: 100%;
 	.title {
 		.rem(font-size, 20);
 		font-weight: bold;
-		width: 50%;
+		//width: 50%;
 		.small-device({ line-height: 15px; font-size: 15px; });
 		.xs-device({ width: 20%; font-size: 15px; line-height: 15px; padding-top: 0px});
 	}
 	.options {
 		text-align: right;
-		width: 50%;
+		//width: 50%;
 		a {
 			color: @green1;
 			background-color: @green2;

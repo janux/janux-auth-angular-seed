@@ -1,9 +1,9 @@
 'user strict';
 
-var log4js      = require('log4js'),
-    _           = require('underscore'),
-    lodash      = require('lodash'),
-    log         = log4js.getLogger('UserService');
+var log4js = require('log4js'),
+	_      = require('underscore'),
+	lodash = require('lodash'),
+	log    = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
@@ -69,6 +69,11 @@ var createInstance = function (serviceReference) {
 
 	UserService.prototype.deleteUser = function (userId, callback) {
 		return userServicePersistence.deleteUserByUserId(userId).asCallback(callback);
+	};
+
+
+	UserService.prototype.deleteByUserIds = function (userIds, callback) {
+		return userServicePersistence.deleteByUserIds(userIds).asCallback(callback);
 	};
 
 	return new UserService();

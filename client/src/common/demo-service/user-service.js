@@ -96,6 +96,18 @@ function( $q ,  $http){
 			).then(function(resp) {
 				return resp.data.result;
 			});
+		},
+
+		// Delete user by id
+		deleteByUserIds: function(userIds)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'deleteByUserIds',
+				[ userIds ]
+			).then(function(resp) {
+				return resp.data.result;
+			});
 		}
 	};
 	return service;

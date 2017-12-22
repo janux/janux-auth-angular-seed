@@ -3,44 +3,63 @@ login-toolbar(title='user.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+				.md-toolbar-tools.form-toolbar
+					md-truncate
+						| {{ 'user.listTitle' | translate }}
+					span(flex)
 
-				.title-bar
-					.title {{ 'label.people' | translate }}
-					.options
-						a(ui-sref='users.create')
-							span.fa.fa-plus-circle.fa-lg 
-							| &nbsp; Add
-				hr
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='users.create')
+						md-icon.fa.fa-user-plus.fa-lg
 
-				table.list.users-list(ng-show='usersMatch.length')
-					thead
-						tr
-							th {{ 'user.displayName' | translate }}
-							th {{ 'user.username' | translate }}
-							th {{ 'user.email' | translate }}
-							th {{ 'user.creation' | translate }}
-							th
-					tbody
-						tr(ng-repeat='user in usersMatch')
-							td {{ user.contact.name.shortName }}
-							td {{ user.username }}
-							td {{ user.contact.emailAddress('work').address }}
-							td {{ user.cdate }}
-							td.text-center
-								a.action-button(ng-click='editUser(user.userId)')
-									span.fa.fa-pencil.fa-lg 
-								a.action-button(ng-click='openDeleteAuthContextDialog(user)')
-									span.fa.fa-trash.fa-lg 
+					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
+						md-icon.fa.fa-table.fa-lg
 
-				.users-filter
-					form.form-inline
-						.form-group
-							label(for='username') Find by:
-							select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
-							input.form-control(id='username' type='text' ng-model='searchString')
-							button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+					md-button.arrow.md-icon-button(aria-label="Upload")
+						md-icon.fa.fa-upload.fa-lg
+		.container-body
+			table.list.users-list(ng-show='usersMatch.length')
+				thead
+					tr
+						th {{ 'user.enabled' | translate }}
+						th {{ 'user.username' | translate }}
+						th {{ 'user.displayName' | translate }}
+						th {{ 'user.role' | translate }}
+						th {{ 'user.email' | translate }}
+						th {{ 'user.phone' | translate }}
+						th {{ 'user.renew' | translate }}
+						th {{ 'user.edit' | translate }}
+						th
+							md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+						
+				tbody
+					tr(ng-repeat='user in usersMatch')
+						td(style="text-align:center")
+							md-checkbox(aria-label="Enabled" ng-disabled="true" ng-model='user.enabled' class="md-primary")
+						td {{ user.username }}
+						td {{ user.contact.name.shortName }}
+						td {{ user.roles[0] }}
+						td {{ user.contact.emailAddress('work').address }}
+						td {{ user.contact.phoneNumber('work').number }}
+						td(style="text-align:center")
+							a.action-button
+								span.fa.fa-lock.fa-lg 
+						td.text-center
+							a.action-button(ng-click='editUser(user.userId)')
+								span.fa.fa-pencil.fa-lg 
+						td(style="text-align:center")
+							md-checkbox(aria-label="Trash" ng-model='user.Selected' class="md-primary")
+						
+
+			.users-filter
+				form.form-inline
+					.form-group
+						label(for='username') Find by:
+						select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+						input.form-control(id='username' type='text' ng-model='searchString')
+						button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+			
 
 footer-Janux

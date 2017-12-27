@@ -8,8 +8,8 @@ var _ = require('lodash');
 var momeent = require('moment');
 
 module.exports =
-	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob',
-		function ($q, $http, partyService, resourceService, dateUtilService, $log, FileSaver, Blob) {
+	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob', 'localStorageService',
+		function ($q, $http, partyService, resourceService, dateUtilService, $log, FileSaver, Blob, localStorageService) {
 
 			//Generate a time-entry instance from a json object
 			function fromJSON(object) {
@@ -84,15 +84,23 @@ module.exports =
 				},
 
 				timeEntryReport: function (ids) {
+					var headers = {
+						'Content-type': 'application/json',
+						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					};
+
+					var token = localStorageService.get("token");
+
+					if (_.isNil(token) === false) {
+						headers['Authorization'] = 'Bearer ' + token
+					}
+
 					$http({
 						url         : '/time-entry-report',
 						method      : 'POST',
 						responseType: 'arraybuffer',
 						data        : {ids: ids}, //this is your json data string
-						headers     : {
-							'Content-type': 'application/json',
-							'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-						}
+						headers     : headers
 					}).then(function (result) {
 						var now = moment();
 						var blob = new Blob([result.data], {

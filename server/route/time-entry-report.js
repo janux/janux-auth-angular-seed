@@ -15,7 +15,7 @@ var Excel = require('exceljs');
 
 
 module.exports = function (app) {
-	app.post('/time-entry-report', function (req, res) {
+	app.post('/time-entry-report', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
 
 		try {
 

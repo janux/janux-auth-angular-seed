@@ -23,6 +23,7 @@ module.exports = function(app) {
 	// module-specific routes
 	require('./auth')(app);
 	require('./rpc-api')(app);
+	require('./time-entry-report')(app);
 
 	// partials are served by their name
 	/*

@@ -1,13 +1,14 @@
-'user strict';
-var UserPersistence         = require('janux-persist').UserService,
-	PartyServiceImpl        = require('janux-persist').PartyServiceImpl,
-	AuthContextPersistence  = require('janux-persist').AuthContextService,
-	AuthContextGroupService = require('janux-persist').AuthContextGroupServiceImpl,
-	RolePersistence         = require('janux-persist').RoleService,
-	GroupService            = require('janux-persist').GroupServiceImpl,
-	OperationServiceImpl    = require('glarus-services').OperationServiceImpl,
-	ResourceServiceImpl     = require('glarus-services').ResourceServiceImpl,
-	TimeEntryServiceImpl    = require('glarus-services').TimeEntryServiceImpl;
+'use strict';
+var UserPersistence            = require('janux-persist').UserService,
+	PartyServiceImpl           = require('janux-persist').PartyServiceImpl,
+	AuthContextPersistence     = require('janux-persist').AuthContextService,
+	AuthContextGroupService    = require('janux-persist').AuthContextGroupServiceImpl,
+	RolePersistence            = require('janux-persist').RoleService,
+	GroupService               = require('janux-persist').GroupServiceImpl,
+	OperationServiceImpl       = require('glarus-services').OperationServiceImpl,
+	ResourceServiceImpl        = require('glarus-services').ResourceServiceImpl,
+	TimeEntryServiceImpl       = require('glarus-services').TimeEntryServiceImpl,
+	TimeEntryReportServiceImpl = require('glarus-services').TimeEntryServiceReport;
 
 var config                         = require('config'),
 	appContext                     = config.serverAppContext,
@@ -37,6 +38,7 @@ var config                         = require('config'),
 	ResourcePersistService         = new ResourceServiceImpl(ResourceDao, PartyPersistenceService, VehicleDao),
 	TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao),
 	OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao),
+	TimeEntryReportService         = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService),
 
 	// End glarus services implementations.
 
@@ -62,5 +64,6 @@ module.exports = {
 	PartyService          : PartyService.create(PartyPersistenceService),
 	OperationService      : OperationService.create(OperationPersistService),
 	TimeEntryService      : TimeEntryService.create(TimeEntryPersistService),
-	ResourceService       : ResourceService.create(ResourcePersistService)
+	ResourceService       : ResourceService.create(ResourcePersistService),
+	TimeEntryReportService: TimeEntryReportService
 };

@@ -5,10 +5,11 @@
 
 
 var _ = require('lodash');
+var momeent = require('moment');
 
 module.exports =
-	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log',
-		function ($q, $http, partyService, resourceService, dateUtilService, $log) {
+	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob',
+		function ($q, $http, partyService, resourceService, dateUtilService, $log, FileSaver, Blob) {
 
 			//Generate a time-entry instance from a json object
 			function fromJSON(object) {
@@ -80,6 +81,25 @@ module.exports =
 
 				toJSON: function (object) {
 					return toJSON(object);
+				},
+
+				timeEntryReport: function (ids) {
+					$http({
+						url         : '/time-entry-report',
+						method      : 'POST',
+						responseType: 'arraybuffer',
+						data        : {ids: ids}, //this is your json data string
+						headers     : {
+							'Content-type': 'application/json',
+							'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+						}
+					}).then(function (result) {
+						var now = moment();
+						var blob = new Blob([result.data], {
+							type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+						});
+						FileSaver.saveAs(blob, 'bitacora ' + now.format('YYYYMMDDHHmm') + '.xlsx');
+					});
 				}
 			};
 			return service;

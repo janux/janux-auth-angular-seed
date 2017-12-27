@@ -91,7 +91,8 @@
 		"app/operations": "./src/app/operations/index.js",
 		"common/agGridComponents": "./src/common/ag-grid-components/index.js",
 		"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
-		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js"
+		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
+	    "angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

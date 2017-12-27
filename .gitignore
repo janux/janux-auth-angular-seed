@@ -10,3 +10,4 @@ server/vendor/janux-*
 /server/server.iml
 /server/config/local.js
 /janux-auth-angular-seed.iml
+/server/vendor/glarus-services/

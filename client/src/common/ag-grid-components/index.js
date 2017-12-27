@@ -23,6 +23,7 @@ module.exports = {
 
 	// Custom filters
 	dateFilter: 		require('./date-filter'),
+	dateFilterComparator: require('./date-filter-comparator'),
 
 	// Header components
 	headerComponent: 	require('./header-component'),

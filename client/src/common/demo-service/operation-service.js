@@ -91,7 +91,8 @@ module.exports =
 							if (_.isNil(timeEntry.end) === false) {
 								end = moment(timeEntry.end);
 								var durationMoment = moment.duration(end.diff(begin));
-								duration = durationMoment.get("hours") + ":" + durationMoment.get("minutes");
+								var daysToHours = (durationMoment.get("days")>0)?durationMoment.get("days")*24:0;
+								duration = (durationMoment.get("hours")+daysToHours) + ":" + durationMoment.get("minutes");
 								endOnlyHour = end.format(formatStringOnlyHour);
 								end = end.format(dateTimeFormatString);
 							}

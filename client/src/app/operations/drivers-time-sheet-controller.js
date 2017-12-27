@@ -293,7 +293,10 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 				field      : 'begin',
 				editable   : true,
 				filter     : 'date',
-				valueGetter: function (params) {
+				filterParams:{
+					comparator: agGridComp.dateFilterComparator
+				},
+				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
 				},
 				cellEditor : agGridComp.dateTimeCellEditor,
@@ -304,8 +307,10 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 				field      : 'end',
 				editable   : true,
 				filter     : 'date',
-				valueGetter: function (params) {
-
+				filterParams:{
+					comparator: agGridComp.dateFilterComparator
+				},
+				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
 				},
 				cellEditor : agGridComp.dateTimeCellEditor
@@ -416,7 +421,7 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 				var endToUpdate;
 
 				if (rowObj.data.end) {
-					endToUpdate = moment(rowObj.data.end).toDate();
+					endToUpdate = rowObj.data.end;
 				}
 
 				var resource = _.clone(rowObj.data.staff);
@@ -430,7 +435,7 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 					'attributes' : [],
 					'type'       : 'DRIVER',
 					'comment'    : rowObj.data.comment,
-					'begin'      : moment(rowObj.data.begin).toDate(),
+					'begin'      : rowObj.data.begin,
 					'end'        : endToUpdate,
 					'billable'   : true,
 					'idOperation': rowObj.data.operation.id

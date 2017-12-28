@@ -121,8 +121,7 @@ var createInstance = function (serviceReference) {
 	 */
 	PartyService.prototype.insert = function (party, callback) {
 		log.debug("Call to insert with party %j", party);
-		var object = fixDates(party);
-		object = PartyServiceImplClass.fromJSON(object);
+		object = PartyServiceImplClass.fromJSON(party);
 		return partyServiceImpl.insert(object)
 			.then(function (result) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
@@ -136,8 +135,7 @@ var createInstance = function (serviceReference) {
 	 */
 	PartyService.prototype.update = function (party, callback) {
 		log.debug("Call to update with party %j", party);
-		var object = fixDates(party);
-		object = PartyServiceImplClass.fromJSON(object);
+		object = PartyServiceImplClass.fromJSON(party);
 		return partyServiceImpl.update(object)
 			.then(function (result) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);

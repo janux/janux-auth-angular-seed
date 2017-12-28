@@ -3,39 +3,46 @@ login-toolbar(title='user.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+				.md-toolbar-tools.form-toolbar
+					md-truncate
+						| {{ 'staff.listTitle' | translate }}
+					span(flex)
 
-				.title-bar
-					.title {{ 'label.staff' | translate }}
-					.options
-						a(ui-sref='staff.create')
-							span.fa.fa-plus-circle.fa-lg 
-							| &nbsp; Add
-				hr
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='staff.create')
+						md-icon.fa.fa-user-plus.fa-lg
 
-				table.list.users-list(ng-show='staffList.length')
-					thead
-						tr
-							th {{ 'staff.name' | translate }}
-							th {{ 'staff.maternalName' | translate }}
-							th {{ 'staff.lastName' | translate }}
-							th {{ 'staff.email' | translate }}
-							th {{ 'staff.phone' | translate }}
-							th
-					tbody
-						tr(ng-repeat='staff in staffList')
-							td {{ staff.name.first }}
-							td {{ staff.name.middle }}
-							td {{ staff.name.last }}
-							td {{ staff.emailAddress('work').address }}
-							td {{ staff.phoneNumber('work').number }}
-							td.text-center
-								a.action-button
-									span.fa.fa-pencil.fa-lg 
-								a.action-button
-									span.fa.fa-trash.fa-lg 
+					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
+						md-icon.fa.fa-table.fa-lg
+
+					md-button.arrow.md-icon-button(aria-label="Upload")
+						md-icon.fa.fa-upload.fa-lg
+		.container-body
+			table.list.users-list(ng-show='staffList.length')
+				thead
+					tr
+						th {{ 'staff.name' | translate }}
+						th {{ 'staff.phone' | translate }}
+						th {{ 'staff.email' | translate }}
+						th {{ 'staff.area' | translate }}
+						th {{ 'staff.userName' | translate }}
+						th {{ 'user.edit' | translate }}
+						th
+							md-button.md-icon-button(aria-label="Trash" style="background:none;")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+				tbody
+					tr(ng-repeat='staff in staffList')
+						td {{ staff.name.middle }} {{ staff.name.last }}, {{ staff.name.first }}
+						td {{ staff.phoneNumber('work').number }}
+						td {{ staff.emailAddress('work').address }}
+						td {{ staff.area }}
+						td {{ staff.user }}
+						td.text-center
+							a.action-button
+								span.fa.fa-pencil.fa-lg 
+						td(style="text-align:center")
+							md-checkbox(aria-label="Trash" ng-model='staff.Selected' class="md-primary")
 
 				
 				//- .users-filter

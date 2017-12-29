@@ -20,11 +20,11 @@ var createInstance = function (partyGroupServiceReference) {
 
 	}
 
-	function toJsonMany(values) {
-		return _.map(values,function (o) {
-			return PartyGroupServiceStatic.toJSON(o);
-		})
-	}
+	// function toJsonMany(values) {
+	// 	return _.map(values, function (o) {
+	// 		return PartyGroupServiceStatic.toJSON(o);
+	// 	})
+	// }
 
 	PartyGroupService.prototype = Object.create(null);
 	PartyGroupService.prototype.constructor = PartyGroupService;
@@ -38,39 +38,40 @@ var createInstance = function (partyGroupServiceReference) {
 	};
 
 	PartyGroupService.prototype.findOne = function (code, callback) {
-		return partyGroupServiceReferenceInstance.findOne(code)
-			.then(function (result) {
-				return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
-			});
+		return partyGroupServiceReferenceInstance.findOne(code).asCallback(callback);
+		// .then(function (result) {
+		// 	return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
+		// });
 	};
 
 	PartyGroupService.prototype.findOneOwnedByPartyAndType = function (partyId, type, callback) {
-		return partyGroupServiceReferenceInstance.findOneOwnedByPartyAndType(partyId, type)
-			.then(function (result) {
-				return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
-			});
+		return partyGroupServiceReferenceInstance.findOneOwnedByPartyAndType(partyId, type).asCallback(callback);
+
+		// .then(function (result) {
+		// 	return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
+		// });
 	};
 
 	PartyGroupService.prototype.findByTypes = function (types, callback) {
-		return partyGroupServiceReferenceInstance.findByTypes(types)
-			.then(function (result) {
-				return Promise.resolve(toJsonMany(result)).asCallback(callback);
-			});;
+		return partyGroupServiceReferenceInstance.findByTypes(types).asCallback(callback);
+		// .then(function (result) {
+		// 	return Promise.resolve(toJsonMany(result)).asCallback(callback);
+		// });;
 	};
 
 	PartyGroupService.prototype.insert = function (partyId, group, callback) {
-		return partyGroupServiceReferenceInstance.insert(partyId, PartyGroupServiceStatic.fromJSON(group))
-			.then(function (result) {
-				var k = PartyGroupServiceStatic.toJSON(result);
-				return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
-			});
+		return partyGroupServiceReferenceInstance.insert(partyId, PartyGroupServiceStatic.fromJSON(group)).asCallback(callback);
+		// .then(function (result) {
+		// 	var k = PartyGroupServiceStatic.toJSON(result);
+		// 	return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
+		// });
 	};
 
 	PartyGroupService.prototype.update = function (group, callback) {
-		return partyGroupServiceReferenceInstance.update(PartyGroupServiceStatic.fromJSON(group))
-			.then(function (result) {
-				return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
-			});
+		return partyGroupServiceReferenceInstance.update(PartyGroupServiceStatic.fromJSON(group)).asCallback(callback);
+		// 	.then(function (result) {
+		// 		return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);
+		// 	});
 	};
 
 	PartyGroupService.prototype.remove = function (code, callback) {

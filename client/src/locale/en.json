@@ -68,6 +68,7 @@
 	},
 	"staff": {
 		"title": "People & Organizations",
+		"listTitle": "Staff",
 		"editStaff": "Edit staff",
 		"createStaff": "Create staff",
 		"employeeTitle": "Employee",
@@ -98,7 +99,10 @@
 		"number": "Number",
 		"ext": "Ext",
 		"sms": "SMS",
-		"wps": "WPS"
+		"wps": "WPS",
+		"userName":"User Name",
+		"admissionDate":"Admission Date"
+
 	},
 	"operations": {
 		"title": "Operations",

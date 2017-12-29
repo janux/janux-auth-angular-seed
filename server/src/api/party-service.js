@@ -149,7 +149,7 @@ var createInstance = function (serviceReference) {
 	 */
 	PartyService.prototype.remove = function (id, callback) {
 		log.debug("Call to remove with id %j", id);
-		return partyServiceImpl.remove(id);
+		return partyServiceImpl.remove(id).asCallback(callback);
 	};
 
 	return new PartyService();

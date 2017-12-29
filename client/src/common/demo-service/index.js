@@ -11,6 +11,7 @@ require('angular').module('demoService', [])
 .factory('dateUtilService', require('./date-util-service'))
 .factory('operationService',require('./operation-service'))
 .factory('timeEntryService',require('./time-entry-service'))
+.factory('partyGroupService',require('./party-group-service'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

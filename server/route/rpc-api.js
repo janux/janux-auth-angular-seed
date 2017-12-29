@@ -11,14 +11,15 @@ var transport = jsonrpc.transports.server.middleware;
 var apiRoot = '../src/api/index';
 
 var services = {
-	users           : require(apiRoot).UserService,
-	authContext     : require(apiRoot).AuthContextService,
-	role            : require(apiRoot).RoleService,
-	operation       : require(apiRoot).OperationService,
-	timeEntry       : require(apiRoot).TimeEntryService,
-	partyService    : require(apiRoot).PartyService,
-	operationService: require(apiRoot).OperationService,
-	resourceService : require(apiRoot).ResourceService
+	users            : require(apiRoot).UserService,
+	authContext      : require(apiRoot).AuthContextService,
+	role             : require(apiRoot).RoleService,
+	operation        : require(apiRoot).OperationService,
+	timeEntry        : require(apiRoot).TimeEntryService,
+	partyService     : require(apiRoot).PartyService,
+	operationService : require(apiRoot).OperationService,
+	resourceService  : require(apiRoot).ResourceService,
+	partyGroupService: require(apiRoot).PartyGroupService
 };
 
 /*

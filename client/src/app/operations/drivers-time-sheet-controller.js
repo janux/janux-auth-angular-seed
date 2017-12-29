@@ -366,8 +366,20 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 						case 'I':
 							val = 'I';
 							break;
+						default:
+							val = '';
+							break;
 					}
 					return val;
+				},
+				filterParams: {
+					textFormatter: function(value) {
+						if(value === 'sin falta'){
+							return 'SF';
+						}else {
+							return value;
+						}
+					}
 				}
 			},
 			{
@@ -441,7 +453,10 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 					'idOperation': rowObj.data.operation.id
 				};
 
-				timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
+				// Temporary solution to mark records without absence
+				var absence = (rowObj.data.absence!=='SF')?rowObj.data.absence:'';
+
+				timeEntryToUpdate.resources[0].absence = absence;
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.init();

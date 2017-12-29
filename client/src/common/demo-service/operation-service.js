@@ -96,6 +96,10 @@ module.exports =
 								endOnlyHour = end.format(formatStringOnlyHour);
 								end = end.format(dateTimeFormatString);
 							}
+							// Temporary solution to mark records without absence
+							var absence = (!_.isNil(timeEntry.resources[0].absence)&&timeEntry.resources[0].absence!=='')?
+								timeEntry.resources[0].absence:'SF';
+							// var absence = timeEntry.resources[0].absence;
 
 							result.push({
 								client       : operation.client.name,
@@ -108,7 +112,7 @@ module.exports =
 								endOnlyHour  : endOnlyHour,
 								end          : timeEntry.end, //end,
 								duration     : duration,
-								absence      : timeEntry.resources[0].absence,
+								absence      : absence,
 								comment      : timeEntry.comment
 							});
 						}

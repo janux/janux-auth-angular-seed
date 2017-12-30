@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 
-module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntryService', '$filter',
-	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntryService, $filter) {
+module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter',
+	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter) {
 
 		$scope.driversAndOps = driversAndOps;
 
@@ -402,7 +402,7 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 
 		$scope.gridOptions = {
 			columnDefs               : columnDefs,
-			rowData                  : [],
+			rowData                  : timeEntries,
 			enableFilter             : true,
 			editType                 : 'fullRow',
 			angularCompileRows       : true,
@@ -495,7 +495,6 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 			agGridSizeToFit();
 		});
 
-		$scope.init();
 		//
 		// End of AG-Grid
 		//

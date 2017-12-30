@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 
 var angular= require('angular');
 // ECMA 5 - using nodes require() method
@@ -25,42 +25,15 @@ require('angular').module('appOperations', [
 		templateUrl: 'app/operations/drivers-time-sheet.html',
 		authRequired: true,
 		resolve: {
-			driversAndOps: ['operationService', 'resourceService', function (operationService, resourceService) {
-				return operationService.findAllWithoutTimeEntry().then(function(result) {
-
-					// TODO: Move this logic to operation service method
-					var driversAssignedToOperations = [];
-					var operations = [];
-					result.forEach(function (op) {
-						var tmpRes = _.filter(op.currentResources, {type:'DRIVER'});
-
-						// If the operation has at least one driver
-						if( tmpRes.length > 0 ) {
-							tmpRes.forEach(function(res, resId) {
-								tmpRes[resId].opId = op.id;
-							});
-
-							var opWithOutRes = _.clone(op);
-							delete opWithOutRes.currentResources;
-							driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
-							operations = operations.concat(opWithOutRes);
-						}
+			driversAndOps: ['operationService', 'resourceService', function (operationService) {
+				return operationService.findDriversAndOperations();
+			}],
+			timeEntries: ['operationService', function (operationService) {
+				return operationService.findAll()
+					.then(function (result) {
+						// console.log(JSON.stringify(result));
+						return operationService.mapTimeEntryData(result);
 					});
-
-					return resourceService.findAvailableResources().then(function (result) {
-
-						// Filter only drivers.
-						result = _.filter(result, function (o) {
-							return o.type === 'DRIVER';
-						});
-
-						return {
-							driversAssignedToOperations : driversAssignedToOperations,
-							drivers : result,
-							operations : operations
-						};
-					});
-				});
 			}]
 		},
 		controller: require('./drivers-time-sheet-controller')

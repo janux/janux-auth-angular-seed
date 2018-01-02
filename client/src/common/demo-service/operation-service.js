@@ -65,6 +65,19 @@ module.exports =
 					});
 				},
 
+				findByDateBetweenWithTimeEntries: function (initDate, endDate) {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findByDateBetweenWithTimeEntries',
+						[initDate, endDate]
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
+					});
+				},
+
+
 				findAllWithoutTimeEntry: function () {
 					return $http.jsonrpc(
 						'/rpc/2.0/operation',
@@ -91,14 +104,14 @@ module.exports =
 							if (_.isNil(timeEntry.end) === false) {
 								end = moment(timeEntry.end);
 								var durationMoment = moment.duration(end.diff(begin));
-								var daysToHours = (durationMoment.get("days")>0)?durationMoment.get("days")*24:0;
-								duration = (durationMoment.get("hours")+daysToHours) + ":" + durationMoment.get("minutes");
+								var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
+								duration = (durationMoment.get("hours") + daysToHours) + ":" + durationMoment.get("minutes");
 								endOnlyHour = end.format(formatStringOnlyHour);
 								end = end.format(dateTimeFormatString);
 							}
 							// Temporary solution to mark records without absence
-							var absence = (!_.isNil(timeEntry.resources[0].absence)&&timeEntry.resources[0].absence!=='')?
-								timeEntry.resources[0].absence:'SF';
+							var absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
+								timeEntry.resources[0].absence : 'SF';
 							// var absence = timeEntry.resources[0].absence;
 
 							result.push({

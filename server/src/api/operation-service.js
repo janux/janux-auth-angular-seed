@@ -7,7 +7,7 @@ var moment = require('moment');
 
 
 var log4js = require('log4js'),
-	log    = log4js.getLogger('operation-service');
+    log    = log4js.getLogger('operation-service');
 
 var operationServiceInstance = undefined;
 var operationServiceReferenceInstance = undefined;
@@ -33,9 +33,13 @@ var createInstance = function (operationServiceReference) {
 		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
 	};
 
-    OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
-        return operationServiceReference.findAll().asCallback(callback);
-    };
+	OperationService.prototype.findByDateBetweenWithTimeEntries = function (initDate, endDate, callback) {
+		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
+	};
+
+	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
+		return operationServiceReference.findAll().asCallback(callback);
+	};
 
 	return new OperationService();
 };

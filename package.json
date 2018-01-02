@@ -4,7 +4,7 @@
  "description": "This is the janux-auth-angular-seed project. It is working POC using janux-people, janux-authorize and janux-persist.",
  "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
-  "postinstall": "npm run install-server && npm run install-client && npm run install-client",
+  "postinstall": "npm run install-server && npm run install-server && npm run install-client && npm run install-client",
   "install-client": "npm install --prefix  ./client",
   "install-server": "npm install --prefix ./server",
   "build": "./client/node_modules/gulp/bin/gulp.js --cwd ./client build --prod",

@@ -89,6 +89,42 @@ module.exports =
 					});
 				},
 
+				findDriversAndOperations: function() {
+					return service.findAllWithoutTimeEntry().then(function(result) {
+						var driversAssignedToOperations = [];
+						var operations = [];
+						result.forEach(function (op) {
+							var tmpRes = _.filter(op.currentResources, {type:'DRIVER'});
+
+							// If the operation has at least one driver
+							if( tmpRes.length > 0 ) {
+								tmpRes.forEach(function(res, resId) {
+									tmpRes[resId].opId = op.id;
+								});
+
+								var opWithOutRes = _.clone(op);
+								delete opWithOutRes.currentResources;
+								driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
+								operations = operations.concat(opWithOutRes);
+							}
+						});
+
+						return resourceService.findAvailableResources().then(function (result) {
+
+							// Filter only drivers.
+							result = _.filter(result, function (o) {
+								return o.type === 'DRIVER';
+							});
+
+							return {
+								driversAssignedToOperations : driversAssignedToOperations,
+								drivers : result,
+								operations : operations
+							};
+						});
+					});
+				},
+
 				// Map an operation record to a easy-to show ag-grid row
 				mapTimeEntryData: function (record) {
 					var result = [];

@@ -10,7 +10,7 @@ side-bar
 						| {{ 'client.listTitle' | translate }}
 					span(flex)
 
-					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='client.create')
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add")
 						md-icon.fa.fa-user-plus.fa-lg
 
 					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
@@ -23,12 +23,11 @@ side-bar
 				thead
 					tr
 						th {{ 'client.name' | translate }}
-						th
 						th {{ 'client.address' | translate }}
 						th {{ 'client.contact' | translate }}
 						th {{ 'client.email' | translate }}
 						th {{ 'client.phone' | translate }}
-						th {{ 'client.celphone' | translate }}
+						th {{ 'client.cellphone' | translate }}
 						th {{ 'client.resealer' | translate }}
 						th {{ 'client.edit' | translate }}
 						th
@@ -36,13 +35,12 @@ side-bar
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
 				tbody
 					tr(ng-repeat='client in clientsList')
-						td {{ client.displayName }}
-						td {{ client.status }}
-						td {{ client.address }}
+						td {{ client.name }}
+						td {{ client.postalAddress('work').line1 }}
 						td {{ client.contact }}
-						td {{ client.email }}
-						td {{ client.phone }}
-						td {{ client.celphone }}
+						td {{ client.emailAddress('work').address}}
+						td {{ client.phoneNumber('work').number }}
+						td {{ client.phoneNumber('cellphone').number }}
 						td {{ client.resealer }}
 						td.text-center
 							a.action-button

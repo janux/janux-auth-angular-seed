@@ -2,9 +2,18 @@
 
 
 module.exports = [
-	'$scope', 'clientsList', function ($scope, clientsList) {
+	'$scope', 'clientsList', 'partyService', function ($scope, clientsList, partyService) {
 
-		$scope.clientsList = clientsList;
-		console.log('Client:', clientsList);
+
+		$scope.init = function () {
+			partyService.findOrganizations()
+				.then(function (result) {
+					$scope.clientsList = result;
+					console.log('Client:',result);
+				});
+		};
+
+		$scope.init();
+
 
 	}];

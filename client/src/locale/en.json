@@ -49,15 +49,13 @@
 		"creation": "Creation",
 		"phone":"Phone",
 		"enabled":"Enabled",
-		"renew":"Renew password",
-		"edit":"Edit"
+		"renew":"Renew password"
 
 	},
 	"role": {
 		"title": "Roles"
 	},
 	"permission": {
-		"title": "Authorization Schema",
 		"authContexts": "Authorization Contexts",
 		"createContext": "Create Authorization Context",
 		"editContext": "Edit Authorization Context",
@@ -104,11 +102,22 @@
 		"admissionDate":"Admission Date"
 
 	},
+	"peopleOrgs": {
+		"title": "People & Organizations",
+		"users": "Users",
+		"staff": "Staff",
+		"clients": "Clients"
+	},
 	"operations": {
 		"title": "Operations",
 		"drivers": "Drivers",
 		"specials": "Specials",
 		"guards": "Guards",
 		"services": "Services"
+	},
+	"authSchema": {
+		"title": "Authorization Schema",
+		"roles": "Roles",
+		"authorizations": "Authorizations"
 	}
 }

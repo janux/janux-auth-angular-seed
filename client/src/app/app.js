@@ -116,7 +116,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// determine preferred language from browser
 	.determinePreferredLanguage()
 	.fallbackLanguage('en')
-	.useSanitizeValueStrategy('sanitize');
+	.useSanitizeValueStrategy('sanitizeParameters');
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');
@@ -212,15 +212,35 @@ function ($scope) {
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 
-function ($rootScope) {
+.controller('sidebarCtrl', ['$rootScope', 'config',
+function ($rootScope, config) {
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
+	$rootScope.subMenu = [];
+	$rootScope.toggleSubmenu = [];
+	$rootScope.subMenuFlag = [];
+	$rootScope.mainMenu = config.mainMenu;
 
 	// TODO: Set this as configuration
-	['peopleOrgs','ops','authSchema'].forEach(function(opt){
-		$rootScope[opt+'ToggleSubmenu'] = function () {
-			$rootScope[opt+'Flag'] = !$rootScope[opt+'Flag'];
+	var options = ['peopleOrgs','operations','authSchema'];
+
+	// All submenus hidden
+	$rootScope.resetSubmenu = function () {
+		options.forEach(function(anOpt){
+			$rootScope.subMenu[anOpt] = false;
+		});
+	};
+
+	options.forEach(function(opt){
+		// Initialize
+		$rootScope.subMenu[opt] = false;
+
+		// Toogle submenu
+		$rootScope.toggleSubmenu[opt] = function () {
+			$rootScope.subMenuFlag[opt] = !$rootScope.subMenuFlag[opt];
+			options.forEach(function(anOpt){
+				$rootScope.subMenu[anOpt] = (anOpt!==opt)?false:true;
+			});
 		};
 	});
     

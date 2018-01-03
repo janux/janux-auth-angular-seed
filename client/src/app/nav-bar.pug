@@ -1,170 +1,28 @@
-.sidebar-wrapper(ng-class="{'noneStyle' : noneStyle}" ng-mouseleave="subMenu = false; subMenuData = false")
+.sidebar-wrapper(ng-class="{'noneStyle' : noneStyle}" ng-mouseleave="resetSubmenu();")
   ul.sidebar-nav
     li
-      a(href="#" ng-click="toggleStyle()")
+      a(href="#" ng-click="toggleStyle(); resetSubmenu()")
         i.fa.fa-bars
         span
           | &nbsp;
-    li
+
+    li(ng-repeat='option in mainMenu')
       .accordion(id="rightMenu1")
         .accordion-group
-          .accordion-heading(ng-click="subMenu = true; subMenuData = false; peopleOrgsToggleSubmenu();")
+          .accordion-heading(ng-click="toggleSubmenu[option.key]();")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#")
-              i.fa.fa-users(ng-click="subMenu = !subMenu")
-              span.down(ng-click="subMenu=true") People & Organizations
+              i.fa(ng-class="option.iconClass")
+              span.down {{ (option.translateKey | translate) }}
           .accordion-toggle.menu-sub
-            .accordion-inner(ng-show="subMenu && !noneStyle")
+            .accordion-inner(ng-show="subMenu[option.key] && !noneStyle")
               ul
-                li
-                  a(ui-sref-active="active" ui-sref='users')
-                    | Users
-                li
-                  a(ui-sref-active="active" ui-sref='staff')
-                    | Staff
-                li
-                  a(href="#")
-                    | Clients
-          .accordion-toggle(ng-show="peopleOrgsFlag && noneStyle")
+                li(ng-repeat='subOption in option.subOptions')
+                  a(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='resetSubmenu();')
+                    | {{ subOption.translate | translate }}
+
+          .accordion-toggle(ng-show="subMenuFlag[option.key] && noneStyle")
             .accordion-inner
               ul
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='users')
-                    | Users
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='staff')
-                    | Staff
-                li
-                  a.submenu-left(href="#")
-                    | Clients
-
-    li
-      .accordion(id="rightMenu2")
-        .accordion-group
-          .accordion-heading(ng-click="subMenu = false; subMenuData = true; opsToggleSubmenu();")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu" href="#")
-              i.fa.fa-archive(ng-click="subMenuData = !subMenuData")
-              span.down(ng-click="subMenuData=true")
-                | {{ 'operations.title' | translate }}
-          .accordion-toggle.menu-sub
-            .accordion-inner(ng-show="subMenuData && !noneStyle")
-              ul
-                li
-                  a(ui-sref-active="active" ui-sref='operations.drivers')
-                    | {{ 'operations.drivers' | translate }}
-                li
-                  a(ui-sref-active="active" ui-sref='operations.specials')
-                    | {{ 'operations.specials' | translate }}
-                li
-                  a(ui-sref-active="active" ui-sref='operations.guards')
-                    | {{ 'operations.guards' | translate }}
-                li
-                  a(ui-sref-active="active" ui-sref='operations.services')
-                    | {{ 'operations.services' | translate }}
-          .accordion-toggle(ng-show="opsFlag && noneStyle")
-            .accordion-inner
-              ul
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='operations.drivers')
-                    | {{ 'operations.drivers' | translate }}
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='operations.specials')
-                    | {{ 'operations.specials' | translate }}
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='operations.guards')
-                    | {{ 'operations.guards' | translate }}
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='operations.services')
-                    | {{ 'operations.services' | translate }}
-
-    li
-      .accordion(id="rightMenu")
-        .accordion-group
-          .accordion-heading(ng-click="subMenu = false; subMenuData = true; authSchemaToggleSubmenu();")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu2" href="#")
-              i.fa.fa-sitemap(ng-click="subMenuData = !subMenuData")
-              span.down(ng-click="subMenuData=true")
-                | {{ 'permission.title' | translate }}
-          .accordion-toggle.menu-sub
-            .accordion-inner(ng-show="subMenuData && !noneStyle")
-              ul
-                li
-                  a(ui-sref-active="active" ui-sref='permissions.roles')
-                    | Roles
-                li
-                  a(ui-sref-active="active" ui-sref='permissions.auth-contexts')
-                    | Authorizations
-          .accordion-toggle(ng-show="authSchemaFlag && noneStyle")
-            .accordion-inner
-              ul
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.roles')
-                    | Roles
-                li
-                  a.submenu-left(ui-sref-active="active" ui-sref='permissions.auth-contexts')
-                    | Authorizations
-
-//- .sd-page-sidebar-wrapper(ng-controller='toggleMenu')
-//-   .sd-page-sidebar(ng-class="{'toggleMenu': isCollapsed}")
-
-//-     ul.sd-page-sidebar-menu
-//-       li
-//-         a(ng-click='toggledMenu()')
-//-           span.fa.fa-bars.fa-lg.glyphicon-align-justify 
-//-           .btn-text
-//-       li
-//-         a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-//-           span.fa.fa-users.fa-lg 
-//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'user.title' | translate }}
-//-         ul(ng-hide='isCollapsed') 
-//-           li
-//-             a.active(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-//-               span.fa.fa-angle-right
-//-               | &nbsp;&nbsp; Users
-//-           li
-//-             a.active(ui-sref-active="active" ui-sref='staff' ng-click='ok()')
-//-               span.fa.fa-angle-right
-//-               | &nbsp;&nbsp; Staff
-//-           li
-//-             a
-//-               span.fa.fa-angle-right
-//-               | &nbsp;&nbsp; Clients
-//-       li
-//-         a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-//-           span.fa.fa-sitemap.fa-lg 
-//-           .btn-text(ng-hide='isCollapsed') &nbsp;&nbsp;{{ 'permission.title' | translate }}
-//-         ul(ng-hide='isCollapsed') 
-//-             li
-//-               a(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-//-                 span.fa.fa-angle-right
-//-                 | &nbsp;&nbsp; Roles
-//-             li
-//-               a(ui-sref-active="active" ui-sref='permissions.auth-contexts' ng-click='ok()')
-//-                 span.fa.fa-angle-right
-//-                 | &nbsp;&nbsp; Authorizations
-
-
-//- // Navigation bar, it can be applied in two ways: dropdown (aside) or sidebar
-
-//- //.dropdown.sidebar-box(ui-sref-active="active" ui-sref='dashboard' ng-click='ok()')
-//- //	i.glyphicon.glyphicon-dashboard(tooltip='{{"dashboard.title"|translate}}'
-//- //	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//- //	span.dropdown-text {{ 'dashboard.title' | translate }}
-
-//- .dropdown.sidebar-box(ui-sref-active="active" ui-sref='users' ng-click='ok()')
-//- 	img(src='/img/people_organization.png' tooltip='{{"user.title"|translate}}'
-//- 	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//- 	span.dropdown-text {{ 'user.title' | translate }}
-
-//- //.dropdown.sidebar-box(ui-sref-active="active" ui-sref='roles' ng-click='ok()')
-//- //	i.glyphicon.glyphicon-user(tooltip='{{"role.title"|translate}}'
-//- //	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//- //	span.dropdown-text {{ 'role.title' | translate }}
-
-//- .dropdown.sidebar-box(ui-sref-active="active" ui-sref='permissions' ng-click='ok()')
-//- 	img(src='/img/autorization.png' tooltip='{{"permission.title"|translate}}'
-//- 	tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
-//- 	span.dropdown-text {{ 'permission.title' | translate }}
-
-//- .dropdown.sidebar-box.hide-on-sidebar(ui-sref-active="active" ng-click='logout()')
-//- 	span.entypo.entypo-logout
-//- 	span.dropdown-text {{ 'label.logout' | translate }}
+                li(ng-repeat='subOption in option.subOptions')
+                  a.submenu-left(ui-sref-active="active" ui-sref='{{subOption.state}}')
+                    | {{ subOption.translate | translate }}

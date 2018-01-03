@@ -102,6 +102,20 @@
 		"admissionDate":"Admission Date"
 
 	},
+	"client": {
+		"title": "People & Organizations",
+		"name": "Business name",
+		"listTitle": "Clients",
+		"address": "Address",
+		"contact": "Contact",
+		"email": "Email",
+		"phone": "Phone",
+		"celphone": "Celphone",
+		"resealer": "Resealer",
+		"edit": "Edit"
+
+
+	},
 	"peopleOrgs": {
 		"title": "People & Organizations",
 		"users": "Users",

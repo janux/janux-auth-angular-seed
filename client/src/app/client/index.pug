@@ -1,0 +1,62 @@
+login-toolbar(title='user.title')
+
+side-bar
+
+.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+				.md-toolbar-tools.form-toolbar
+					md-truncate
+						| {{ 'client.listTitle' | translate }}
+					span(flex)
+
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='client.create')
+						md-icon.fa.fa-user-plus.fa-lg
+
+					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
+						md-icon.fa.fa-table.fa-lg
+
+					md-button.arrow.md-icon-button(aria-label="Upload")
+						md-icon.fa.fa-upload.fa-lg
+		.container-body
+			table.list.users-list(ng-show='clientsList.length')
+				thead
+					tr
+						th {{ 'client.name' | translate }}
+						th
+						th {{ 'client.address' | translate }}
+						th {{ 'client.contact' | translate }}
+						th {{ 'client.email' | translate }}
+						th {{ 'client.phone' | translate }}
+						th {{ 'client.celphone' | translate }}
+						th {{ 'client.resealer' | translate }}
+						th {{ 'client.edit' | translate }}
+						th
+							md-button.md-icon-button(aria-label="Trash" style="background:none;")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+				tbody
+					tr(ng-repeat='client in clientsList')
+						td {{ client.displayName }}
+						td {{ client.status }}
+						td {{ client.address }}
+						td {{ client.contact }}
+						td {{ client.email }}
+						td {{ client.phone }}
+						td {{ client.celphone }}
+						td {{ client.resealer }}
+						td.text-center
+							a.action-button
+								span.fa.fa-pencil.fa-lg 
+						td(style="text-align:center")
+							md-checkbox(aria-label="Trash" ng-model='client.Selected' class="md-primary")
+
+				
+				//- .users-filter
+				//- 	form.form-inline
+				//- 		.form-group
+				//- 			label(for='username') Find by:
+				//- 			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+				//- 			input.form-control(id='username' type='text' ng-model='searchString')
+				//- 			button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+
+footer-Janux

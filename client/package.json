@@ -88,6 +88,7 @@
 	  	"app/permissions":	  "./src/app/permission/index.js",
 		"app/roles":	  	  "./src/app/role/index.js",
 		"app/staff": 		  "./src/app/staff/index.js",
+		"app/client": 		  "./src/app/client/index.js",
 		"app/operations": "./src/app/operations/index.js",
 		"common/agGridComponents": "./src/common/ag-grid-components/index.js",
 		"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",

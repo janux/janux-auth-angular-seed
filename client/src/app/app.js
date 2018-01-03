@@ -27,6 +27,7 @@ require('app/permissions');
 require('app/roles');
 require('app/staff');
 require('app/operations');
+require('app/client');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -50,7 +51,8 @@ angular.module('MyApp',[
 	'appRoles',
 	'angular-jwt',
 	'ngFileSaver',
-	'appOperations'
+	'appOperations',
+	'appClient'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll',

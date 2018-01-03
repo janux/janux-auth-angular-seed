@@ -20,7 +20,7 @@ require('angular').module('config', [])
 						translate: 'peopleOrgs.staff'
 					},
 					clients: {
-						state: 'clients',
+						state: 'client',
 						translate: 'peopleOrgs.clients'
 					}
 				}

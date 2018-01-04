@@ -40,7 +40,7 @@ side-bar
 						td {{ staff.user }}
 						td.text-center
 							a.action-button
-								span.fa.fa-pencil.fa-lg 
+								span.fa.fa-pencil.fa-lg(ng-click='editStaff(staff.id)') 
 						td(style="text-align:center")
 							md-checkbox(aria-label="Trash" ng-model='staff.Selected' class="md-primary")
 

@@ -35,5 +35,18 @@ require('angular').module('appStaff', [
 		authRequired: true,
 		controller: require('./staff-create-controller.js'),
 		resolve: {}
+	})
+
+	// Edit specific staff member
+	.state('staff.edit', {
+		url: '/staff/{id}',
+		templateUrl: 'app/staff/edit-staff.html',
+		authRequired: true,
+		controller: require('./edit-staff-controller.js'),
+		resolve: {
+			staff: ['partyService', '$stateParams', function(partyService, $stateParams){
+				return partyService.findOne($stateParams.id);
+			}]
+		}
 	});
 }]);

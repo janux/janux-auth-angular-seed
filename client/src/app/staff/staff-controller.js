@@ -2,8 +2,12 @@
 
 
 module.exports = [
-	'$scope', 'staff', 'partyService', function ($scope, staff, partyService) {
+	'$scope', '$state', 'staff', 'partyService', function ($scope, $state, staff, partyService) {
 
+		$scope.editStaff = function(id) {
+			$state.go('staff.edit', { id: id });
+		};
+		
 		$scope.init = function () {
 			partyService.findPeople()
 				.then(function (result) {

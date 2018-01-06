@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 require('angular').module('config', [])
 	.value('config', {
 		// the state on which we should land by default, or upon login
@@ -64,6 +66,44 @@ require('angular').module('config', [])
 						translate: 'authSchema.authorizations'
 					}
 				}
+			}
+		],
+		periodFilter: [
+			{
+				key: 'last7Days',
+				label: 'periodFilter.last7Days'
+			},
+			{
+				key: 'currentWeek',
+				label: 'periodFilter.currentWeek'
+			},
+			{
+				key: 'lastWeek',
+				label: 'periodFilter.lastWeek'
+			},
+			{
+				key: 'last30Days',
+				label: 'periodFilter.last30Days'
+			},
+			{
+				key: 'currentMonth',
+				label: 'periodFilter.currentMonth'
+			},
+			{
+				key: 'lastMonth',
+				label: 'periodFilter.lastMonth'
+			},
+			{
+				key: 'last90Days',
+				label: 'periodFilter.last90Days'
+			},
+			{
+				key: 'currentQuarter',
+				label: 'periodFilter.currentQuarter'
+			},
+			{
+				key: 'lastQuarter',
+				label: 'periodFilter.lastQuarter'
 			}
 		]
 	});

@@ -23,5 +23,17 @@
 		"startsWith": "Inicia con",
 		"endsWith": "Termina con",
 		"inRange": "En rango"
+	},
+
+	"periodFilter": {
+		"last7Days":"Últimos 7 dias",
+		"currentWeek":"Semana actual",
+		"lastWeek":"Semana pasada",
+		"last30Days":"Últimos 30 dias",
+		"currentMonth":"Mes actual",
+		"lastMonth":"Mes pasado",
+		"last90Days":"Últimos 90 dias",
+		"currentQuarter":"Trimestre actual",
+		"lastQuarter":"Trimestre pasado"
 	}
 }

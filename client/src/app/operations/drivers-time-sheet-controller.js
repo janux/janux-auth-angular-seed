@@ -3,11 +3,21 @@
 var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
+var timePeriods = require('common/time-periods');
 
-module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter',
-	function ($scope, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter) {
+module.exports = ['$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter',
+	function ($scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter) {
+
+		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 
 		$scope.driversAndOps = driversAndOps;
+		$scope.periodFilterKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		$scope.periodFilterOptions = config.periodFilter;
+
+		$scope.periodChange = function () {
+			jnxStorage.setItem('driversTimeLogFilterPeriod',$scope.periodFilterKey,true);
+			$scope.findTimeEntries($scope.periodFilterKey);
+		};
 
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var allDrivers = driversAndOps.drivers;
@@ -202,7 +212,7 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
-							$scope.init();
+							$scope.findTimeEntries($scope.periodFilterKey);
 
 							// Wait before performing the form reset
 							$timeout(function () {
@@ -459,7 +469,7 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 				timeEntryToUpdate.resources[0].absence = absence;
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
-					$scope.init();
+					$scope.findTimeEntries($scope.periodFilterKey);
 					// infoDialog('Time entry successfully updated');
 				});
 			},
@@ -473,8 +483,10 @@ module.exports = ['$scope', 'operationService', 'resourceService', '$q', '$timeo
 			// }
 		};
 
-		$scope.init = function () {
-			operationService.findAll()
+		$scope.findTimeEntries = function (periodKey) {
+			var period = timePeriods[periodKey];
+
+			operationService.findByDateBetweenWithTimeEntries(period.from(), period.to())
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);

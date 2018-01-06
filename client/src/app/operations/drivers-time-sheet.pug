@@ -8,7 +8,14 @@ side-bar
 			.col-lg-12
 
 				.title-bar
-					.title Bitácora de Choferes
+					.title
+						| Bitácora de Choferes
+					.options
+						span Ver:
+					.options
+						md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
+							md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
+
 				hr
 
 				form(name='driverTimeSheet').add-form

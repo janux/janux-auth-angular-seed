@@ -7,6 +7,7 @@ var angular= require('angular');
 var agGrid = require('ag-grid');
 // get ag-Grid to create an Angular module and register the ag-Grid directive
 agGrid.initialiseAgGridWithAngular1(angular);
+var timePeriods = require('common/time-periods');
 
 require('angular').module('appOperations', [
 	'agGrid'
@@ -25,11 +26,15 @@ require('angular').module('appOperations', [
 		templateUrl: 'app/operations/drivers-time-sheet.html',
 		authRequired: true,
 		resolve: {
-			driversAndOps: ['operationService', 'resourceService', function (operationService) {
+			driversAndOps: ['operationService', function (operationService) {
 				return operationService.findDriversAndOperations();
 			}],
-			timeEntries: ['operationService', function (operationService) {
-				return operationService.findAll()
+			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
+				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+				var period = timePeriods[periodKey];
+
+				return operationService.findByDateBetweenWithTimeEntries(period.from(), period.to())
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);

@@ -93,7 +93,8 @@
 		"common/agGridComponents": "./src/common/ag-grid-components/index.js",
 		"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
 		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
-	    "angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js"
+	    "angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js",
+		"common/time-periods": "./src/common/time-periods.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

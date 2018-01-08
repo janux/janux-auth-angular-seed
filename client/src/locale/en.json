@@ -133,5 +133,16 @@
 		"title": "Authorization Schema",
 		"roles": "Roles",
 		"authorizations": "Authorizations"
+	},
+	"periodFilter": {
+		"last7Days":"Last 7 days",
+		"currentWeek":"Current week",
+		"lastWeek":"Last week",
+		"last30Days":"Last 30 days",
+		"currentMonth":"Current month",
+		"lastMonth":"Last month",
+		"last90Days":"Last 90 days",
+		"currentQuarter":"Current quarter",
+		"lastQuarter":"Last quarter"
 	}
 }

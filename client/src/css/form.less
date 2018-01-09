@@ -168,6 +168,7 @@ md-toolbar.form-root-toolbar{
 .ng-pristine {
 	border-color: @pristine !important;
 }.spacing-bottom{
+	padding-top:10px;
 	padding-bottom:30px;
 }
 
@@ -178,4 +179,28 @@ md-toolbar.form-root-toolbar{
 }
 .spacing-ls{
 	margin:0 20px 0 20px;
+}
+.form-group {
+   display: flex;
+   display: -webkit-flex;
+   flex-direction: row;
+ }
+ .masonry { 
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: wrap;
+}
+
+.masonry-brick {
+	flex: 0 50%;
+	padding: 0 10px 0 10px;
+  	box-sizing:border-box;
+}
+.fieldset-flex{
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+}
+.fieldset-flex>div{
+	padding: 3px;
 }

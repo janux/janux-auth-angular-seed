@@ -1,6 +1,6 @@
 md-content.staff-form(layout-padding)
-	.row
-		.col-sm-6
+	.container-flex-form
+		div
 			p.form-section
 				| {{ 'staff.employeeTitle' | translate}}
 			div.an-material
@@ -16,7 +16,7 @@ md-content.staff-form(layout-padding)
 					label {{ 'staff.lastName' | translate}}
 					input(ng-model='staff.name.last')
 
-		.col-sm-6
+		div
 			p.form-section
 				| {{ 'staff.jobTitle' | translate}}
 			div.an-material
@@ -27,239 +27,119 @@ md-content.staff-form(layout-padding)
 				md-input-container.full
 					label {{ 'staff.area' | translate}}
 					input(ng-model='staff.job.area')
-	.row
-		.col-sm-6
+	.masonry
+		.masonry-brick
 			p.form-section
-				| {{ 'staff.addressesTitle' | translate}}
-			//- .row
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Tipo
-			//- 			md-select(ng-model="tipo.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Country
-			//- 			md-select(ng-model="tipo.title")
-			//- 				md-option
-			//- 					| México
-			//- 	.col-sm-2(style="padding-top:20px")
-			//- 			md-checkbox(aria-label="Fiscal")
-			//- 				| Fiscal
-			//- 	.col-sm-2(style="padding-top:10px")
-			//- 			md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
-			//- 				md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
-			//- .row
-			//- 	.col-sm-7.an-material
-			//- 		md-input-container.full
-			//- 			label Calle
-			//- 			input(ng-model='type.calle')
-			//- 	.col-sm-5.an-material
-			//- 		md-input-container.full
-			//- 			label Colonia
-			//- 			input(ng-model='colonia.title')
-			//- .row
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Ciudad
-			//- 			md-select(ng-model="ciudad.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Estado
-			//- 			md-select(ng-model="estado.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label C.P.
-			//- 			input(ng-model='cp.title')
-			//- md-divider.divider-line
-			//- .row
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Tipo
-			//- 			md-select(ng-model="tipo.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Country
-			//- 			md-select(ng-model="tipo.title")
-			//- 				md-option
-			//- 					| México
-			//- 	.col-sm-2(style="padding-top:20px")
-			//- 			md-checkbox(aria-label="Fiscal")
-			//- 				| Fiscal
-			//- 	.col-sm-2(style="padding-top:10px")
-			//- 			md-button.md-icon-button(aria-label="Trash" style="background:#9b9b9b;border-radius:20%")
-			//- 				md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
-			//- .row
-			//- 	.col-sm-12.an-material
-			//- 		md-input-container.full
-			//- 			label Street 1
-			//- 			input(ng-model='type.calle')
-			//- .row
-			//- 	.col-sm-12.an-material
-			//- 		md-input-container.full
-			//- 			label Street 2
-			//- 			input(ng-model='type.calle')
-			//- .row
-			//- 	.col-sm-12.an-material
-			//- 		md-input-container.full
-			//- 			label Street 3
-			//- 			input(ng-model='type.calle')
-			//- .row
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label City
-			//- 			md-select(ng-model="ciudad.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label State
-			//- 			md-select(ng-model="estado.title")
-			//- 				md-option
-			//- 					| ------
-			//- 	.col-sm-4.an-material
-			//- 		md-input-container.full
-			//- 			label Zip code
-			//- 			input(ng-model='cp.title')
-			//- .row
-			//- 	.col-sm-12
-			//- 		md-divider.divider-line
-			//- 		md-button.md-icon-button(aria-label="Trash" ng-click="addNewAddress()" style="background:#707946;border-radius:20%; float:right")
-			//- 				md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
+				| {{ 'staff.addressesTitle' | translate}} 
+			md-divider.divider-line(ng-show="lastAddress==0")
 
-			//- ADDRESSES ROW
-			.row
-				.col-sm-12
-					md-divider.divider-line(ng-show="lastAddress==0")
+			fieldset(data-ng-repeat="address in staff.contactMethods.addresses track by $index")
+				.fieldset-flex
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.type' | translate}}
+							input(ng-model="address.type" id="address1")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.country' | translate}}
+							input(ng-model="address.country")
+					div.an-material.nopadding(style="padding-top:20px")
+							md-checkbox(aria-label="Fiscal" ng-model="address.fiscal")
+								| {{ 'staff.fiscal' | translate}}
+					div.an-material.nopadding(style="padding-top:10px")
+							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeAddress($index)")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+				.container-flex-form
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.street1' | translate}}
+							input(ng-model='address.line1')
+				.container-flex-form
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.street2' | translate}}
+							input(ng-model='address.line2')
 
-					fieldset(data-ng-repeat="address in staff.contactMethods.addresses track by $index")
-						.row
-							.col-sm-4.an-material
-								md-input-container.full
-									label {{ 'staff.type' | translate}}
-									input(ng-model="address.type" id="address1")
-							.col-sm-4.an-material
-								md-input-container.full
-									label {{ 'staff.country' | translate}}
-									input(ng-model="address.country")
-							.col-sm-2(style="padding-top:20px")
-									md-checkbox(aria-label="Fiscal" ng-model="address.fiscal")
-										| {{ 'staff.fiscal' | translate}}
-							.col-sm-2(style="padding-top:10px")
-									md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeAddress($index)")
-										md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
-						.row
-							.col-sm-12.an-material
-								md-input-container.full
-									label {{ 'staff.street1' | translate}}
-									input(ng-model='address.line1')
-						.row
-							.col-sm-12.an-material
-								md-input-container.full
-									label {{ 'staff.street2' | translate}}
-									input(ng-model='address.line2')
-						//- .row
-						//- 	.col-sm-12.an-material
-						//- 		md-input-container.full
-						//- 			label {{ 'staff.street3' | translate}}
-						//- 			input(ng-model='address.street3')
-						.row
-							.col-sm-4.an-material
-								md-input-container.full
-									label {{ 'staff.city' | translate}}
-									input(ng-model="address.cityText")
-							.col-sm-4.an-material
-								md-input-container.full
-									label {{ 'staff.state' | translate}}
-									input(ng-model="address.stateText")
-							.col-sm-4.an-material
-								md-input-container.full
-									label {{ 'staff.zip' | translate}}
-									input(ng-model='address.postalCode')
+				.fieldset-flex
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.city' | translate}}
+							input(ng-model="address.cityText")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.state' | translate}}
+							input(ng-model="address.stateText")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.zip' | translate}}
+							input(ng-model='address.postalCode')
 
-						
-						md-divider.divider-line
+			.container-flex-form
+				div
+					md-divider.divider-line
 
-					.row
-						.col-sm-12
-							md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewAddress()")
-									md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
+					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewAddress()")
+						md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
 
-					//- div(id="addressesDisplay")
-					//- 	| {{ addresses }}
-
-		.col-sm-6
+		.masonry-brick
 			p.form-section
 				| {{ 'staff.phonesTitle' | translate}}
-			.row(style="padding-left:20px")
-				fieldset(data-ng-repeat="phone in staff.contactMethods.phones track by $index")
-					.col-sm-2.an-material.nopadding
-						md-input-container.full
-							label {{ 'staff.type' | translate}}
-							input(ng-model="phone.type")
-					.col-sm-2.an-material.nopadding
-						md-input-container.full
-							label {{ 'staff.code' | translate}}
-							input(ng-model="phone.countryCode")
-					.col-sm-1.an-material.nopadding
-						md-input-container.full
-							label {{ 'staff.area' | translate}}
-							input(ng-model='phone.areaCode')
-					.col-sm-2.an-material.nopadding
-						md-input-container.full
-							label {{ 'staff.number' | translate}}
-							input(ng-model='phone.number')
-					.col-sm-1.an-material.nopadding
-						md-input-container.full
-							label {{ 'staff.ext' | translate}}
-							input(ng-model='phone.ext')
-					.col-sm-1(style="padding-top:10px")
-							md-checkbox(aria-label="SMS" ng-model='phone.sms')
-								| {{ 'staff.sms' | translate}}
-					.col-sm-1(style="padding-top:10px")
-							md-checkbox(aria-label="WSP" ng-model='phone.wsp')
-								| {{ 'staff.wps' | translate}}
-					.col-sm-2(style="padding-top:10px")
-							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removePhone($index)")
-								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			fieldset.fieldset-flex(data-ng-repeat="phone in staff.contactMethods.phones track by $index")
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.type' | translate}}
+						input(ng-model="phone.type")
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.code' | translate}}
+						input(ng-model="phone.countryCode")
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.area' | translate}}
+						input(ng-model='phone.areaCode')
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.number' | translate}}
+						input(ng-model='phone.number')
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.ext' | translate}}
+						input(ng-model='phone.ext')
+				div(style="padding-top:10px")
+						md-checkbox(aria-label="SMS" ng-model='phone.sms')
+							| {{ 'staff.sms' | translate}}
+				div(style="padding-top:10px")
+						md-checkbox(aria-label="WSP" ng-model='phone.wsp')
+							| {{ 'staff.wps' | translate}}
+				div(style="padding-top:10px")
+						md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removePhone($index)")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
-				.row
-					.col-sm-12
-						md-divider.divider-line
-						md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewPhone()")
-								md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
-				//- div(id="phonesDisplay")
-				//- 		| {{ phones }}
+			.container-flex-form
+				div
+					md-divider.divider-line
+					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewPhone()")
+							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
 
-		.col-sm-6
+
+
 			p.form-section
 				| {{ 'staff.mailsTitle' | translate}}
-			.row
-				fieldset(data-ng-repeat="email in staff.contactMethods.emails track by $index")
-					.col-sm-3.an-material
-						md-input-container.full
-							label {{ 'staff.type' | translate}}
-							input(ng-model="email.type")
-					.col-sm-7.an-material
-						md-input-container.full
-							label {{ 'staff.email' | translate}}
-							input(ng-model="email.address")
-					.col-sm-2(style="padding-top:10px")
-							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
-								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+			fieldset.fieldset-flex(data-ng-repeat="email in staff.contactMethods.emails track by $index")
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.type' | translate}}
+						input(ng-model="email.type")
+				div.an-material.nopadding
+					md-input-container.full
+						label {{ 'staff.email' | translate}}
+						input(ng-model="email.address")
+				div.an-material.nopadding(style="padding-top:10px")
+						md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
+							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
-				.row
-					.col-sm-12
-						md-divider.divider-line
-						md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewMail()")
-								md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
-
-				//- div(id="mailsDisplay")
-				//- 		| {{ mails }}
+			.container-flex-form
+				div
+					md-divider.divider-line
+					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewMail()")
+							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")

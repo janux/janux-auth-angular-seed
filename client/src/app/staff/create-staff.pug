@@ -3,47 +3,46 @@ login-toolbar(title='user.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			md-toolbar.form-root-toolbar
-				.md-toolbar-tools.form-toolbar
-					md-truncate
-						| {{ 'staff.createStaff' | translate }}
-					span(flex)
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar
+				md-truncate
+					| {{ 'staff.createStaff' | translate }}
+				span(flex)
 
-					md-button.md-icon-button.form-btn-toolbar(aria-label="Grid")
-						md-icon.fa.fa-table.fa-lg
+				md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
+					md-icon.fa.fa-table.fa-lg
 
-					md-button.md-icon-button(aria-label="Upload")
-						md-icon.fa.fa-upload.fa-lg
+				md-button.arrow.md-icon-button(aria-label="Upload")
+					md-icon.fa.fa-upload.fa-lg
 
-			.col-lg-12.spacing-bottom
+		.container-fluid-flex.spacing-bottom
 
-				//- md-content.staff-name
-				//- 	h4 Gilberto Márquez Díaz de Sandi
-				
-				md-content.spacing-ls
-					md-toolbar.form-mid-toolbar
-						.md-toolbar-tools
-							md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
-								md-nav-item(md-nav-click="goto('page1')" name="page1")
-									| GENERAL
-								md-nav-item(md-nav-click="goto('page2')" name="page2")
-									| HUMAN RESOURSES
-								md-nav-item(md-nav-click="goto('page3')" name="page3")
-									| PAYROLL LOGBOOK
-							
-							span(flex)
-							
-							md-button.md-icon-button.trash(aria-label="Trash")
-								md-icon.fa.fa-trash.fa-lg
+			//- md-content.staff-name
+			//- 	h4 Gilberto Márquez Díaz de Sandi
+			
+			md-content.spacing-ls
+				md-toolbar.form-mid-toolbar
+					.md-toolbar-tools
+						md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+							md-nav-item(md-nav-click="goto('page1')" name="page1")
+								| GENERAL
+							md-nav-item(md-nav-click="goto('page2')" name="page2")
+								| HUMAN RESOURSES
+							md-nav-item(md-nav-click="goto('page3')" name="page3")
+								| PAYROLL LOGBOOK
+						
+						span(flex)
+						
+						md-button.md-icon-button.trash(aria-label="Trash")
+							md-icon.fa.fa-trash.fa-lg
 
-							md-button.md-icon-button.save(aria-label="Save" ng-click='save()')
-								md-icon.fa.fa-check.fa-lg
+						md-button.md-icon-button.save(aria-label="Save" ng-click='save()')
+							md-icon.fa.fa-check.fa-lg
 
-							md-button.md-icon-button.cancel(aria-label="Cancel" ng-click='cancel()')
-								md-icon.fa.fa-times.fa-lg
+						md-button.md-icon-button.cancel(aria-label="Cancel" ng-click='cancel()')
+							md-icon.fa.fa-times.fa-lg
 
-					include staff-form
+				include staff-form
 
 footer-Janux

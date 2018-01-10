@@ -123,7 +123,7 @@
 			"end": "Termino",
 			"client": "Cliente",
 			"duration": "Duración",
-			"location": "Ubicación",
+			"comment": "Comentario",
 			"filterLabel": "Ver:",
 			"absence": "Falta",
 			"absenceOptions": {

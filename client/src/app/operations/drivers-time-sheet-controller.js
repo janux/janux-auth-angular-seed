@@ -290,7 +290,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				valueGetter: function (params) {
 					return params.data.operation.name;
 				},
-				cellEditor : agGridComp.autocompleteOpCellEditor
+				cellEditor : agGridComp.autocompleteOpCellEditor,
+				width: 100
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.client'),
@@ -311,7 +312,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
 				},
 				cellEditor : agGridComp.dateTimeCellEditor,
-				sort       : 'desc'
+				sort       : 'desc',
+				width: 160
 			},
 			{
 				headerName : $filter('translate')('operations.driversTimeLog.end'),
@@ -324,16 +326,18 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
 				},
-				cellEditor : agGridComp.dateTimeCellEditor
+				cellEditor : agGridComp.dateTimeCellEditor,
+				width: 160
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
-				cellEditor: agGridComp.durationCellUpdater
+				cellEditor: agGridComp.durationCellUpdater,
+				width: 100
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.location'),
+				headerName: $filter('translate')('operations.driversTimeLog.comment'),
 				field     : 'comment',
 				editable  : true,
 				cellEditor: agGridComp.commentCellEditor
@@ -391,7 +395,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 							return value;
 						}
 					}
-				}
+				},
+				width: 160
 			},
 			{
 				headerName       : '',
@@ -401,7 +406,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				cellEditor       : agGridComp.rowActions,
 				headerComponent  : agGridComp.deleteRowsHeaderComponent,
 				editable         : true,
-				field            : 'selected'	// field needed to avoid ag-grid warning
+				field            : 'selected',	// field needed to avoid ag-grid warning
+				width: 100
 			}
 		];
 

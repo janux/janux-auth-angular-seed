@@ -1,4 +1,149 @@
 {
+	"label": {
+		"no": "No",
+		"yes": "Si",
+		"ok": "Aceptar",
+		"cancel": "Cancelar",
+		"save": "Guardar",
+		"clear": "Limpiar",
+		"email": "E-mail",
+		"login": "Iniciar Sesión",
+		"logout": "Salir",
+		"password": "Contraseña:",
+		"people": "Personas",
+		"organizations": "Organizaciones",
+		"username": "Usuario:",
+		"search": "Buscar",
+		"staff": "Personal"
+	},
+	"login": {
+		"msg": {
+			"enterCredentials": "Por favor ingrese sus credenciales para iniciar sesión",
+			"goodbye": "Usted se ha desconectado",
+			"forcedLogout": "La sesión ha expirado. Por favor inicie sesión nuevamente",
+			"notAuthorized": "No está autorizado para realizar esta operación",
+			"notAuthenticated": "Esta área require que inicie sesión"
+		},
+		"error": {
+			"invalidCredentials": "El usuario/contraseña ingresado es invalido",
+			"serverError": "El servidor no está disponible o regresó un error",
+			"serverErrorOutput": "Error del servidor: {{parm1}}"
+		},
+		"forgotPass": "Recuperar contraseña",
+		"copy": "2017 Janux Media LTD. Copyright."
+	},
+	"user": {
+		"listTitle": "Usuarios",
+		"editUser": "Editar usuario",
+		"createUser": "Crear usuario",
+		"username": "Usuario",
+		"displayName": "Nombre",
+		"role": "Role",
+		"email": "Email",
+		"edit": "Editar",
+		"delete": "Delete",
+		"creation": "Creación",
+		"phone": "Teléfono",
+		"enabled": "Habilitado",
+		"renew": "Renovar contraseña"
+	},
+	"role": {
+		"title": "Roles"
+	},
+	"permission": {
+		"authContexts": "Contextos de autorización",
+		"createContext": "Crear contexto de autorización",
+		"editContext": "Editar contexto de autorización",
+		"copyContext": "Crear contexto de autorización a partir de ",
+		"updatingRole": "Actualizar role:",
+		"createRole": "Crear role:",
+		"authContextGroup": "Grupo de contextos de autorización"
+	},
+	"staff": {
+		"listTitle": "Personal",
+		"editStaff": "Editar personal",
+		"createStaff": "Agregar personal",
+		"employeeTitle": "Empleado",
+		"addressesTitle": "Direcciones",
+		"jobTitle": "Puesto",
+		"phonesTitle": "Telefonos",
+		"mailsTitle": "Correos",
+		"name": "Nombre",
+		"maternalName": "Apellido materno",
+		"lastName": "Apellido paterno",
+		"job": "Titulo del puesto",
+		"type": "Tipo",
+		"area": "Área",
+		"country": "País",
+		"email": "E-mail",
+		"edit": "Editar",
+		"delete": "Eliminar",
+		"creation": "Creación",
+		"phone": "Teléfono",
+		"fiscal": "Fiscal",
+		"street1": "Calle 1",
+		"street2": "Calle 2",
+		"street3": "Calle 3",
+		"city": "Ciudad",
+		"state": "Estado",
+		"zip": "C.P.",
+		"code": "Código",
+		"number": "Número",
+		"ext": "Ext",
+		"sms": "SMS",
+		"wps": "WPS",
+		"userName": "Usuario",
+		"admissionDate": "Fecha de admisión"
+	},
+	"client": {
+		"name": "Nombre del negocio",
+		"listTitle": "Clientes",
+		"address": "Dirección",
+		"contact": "Contacto",
+		"email": "Email",
+		"phone": "Teléfono",
+		"cellphone": "Móvil",
+		"reseller": "Revendedor",
+		"edit": "Editar"
+	},
+	"peopleOrgs": {
+		"title": "Personas & Organizaciones",
+		"users": "Usuarios",
+		"staff": "Personal",
+		"clients": "Clientes"
+	},
+	"operations": {
+		"title": "Operaciones",
+		"drivers": "Choferes",
+		"driversTimeLog": {
+			"title": "Bitácora de Choferes",
+			"staff": "Personal",
+			"operation": "Servicio",
+			"begin": "Inicio",
+			"end": "Termino",
+			"client": "Cliente",
+			"duration": "Duración",
+			"location": "Ubicación",
+			"filterLabel": "Ver:",
+			"absence": "Falta",
+			"absenceOptions": {
+				"D": "Descanso (D)",
+				"V": "Vacaciones (V)",
+				"PS": "No se encuentra principal (PS)",
+				"F": "Falta (F)",
+				"PC": "PC",
+				"I": "I"
+			}
+		},
+		"specials": "Especiales",
+		"guards": "Guardias",
+		"services": "Servicios"
+	},
+	"authSchema": {
+		"title": "Esquema de autorización",
+		"roles": "Roles",
+		"authorizations": "Autorizaciones"
+	},
 	"grid": {
 		"page": "Página",
 		"more": "Mas",
@@ -9,14 +154,13 @@
 		"first": "Primera",
 		"previous": "Anterior",
 		"loadingOoo": "Cargando...",
-		
 		"filterOoo": "Filtrar...",
 		"applyFilter": "Aplicar Filtro...",
-		
 		"equals": "Igual",
 		"lessThan": "Menor que",
 		"greaterThan": "Mayor que",
-
+		"lessThanOrEqual": "Menor o igual",
+		"greaterThanOrEqual": "Mayor o igual",
 		"notEqual": "Diferente de",
 		"contains": "Contiene",
 		"notContains": "No contiene",
@@ -24,16 +168,15 @@
 		"endsWith": "Termina con",
 		"inRange": "En rango"
 	},
-
 	"periodFilter": {
-		"last7Days":"Últimos 7 dias",
-		"currentWeek":"Semana actual",
-		"lastWeek":"Semana pasada",
-		"last30Days":"Últimos 30 dias",
-		"currentMonth":"Mes actual",
-		"lastMonth":"Mes pasado",
-		"last90Days":"Últimos 90 dias",
-		"currentQuarter":"Trimestre actual",
-		"lastQuarter":"Trimestre pasado"
+		"last7Days": "Últimos 7 dias",
+		"currentWeek": "Semana actual",
+		"lastWeek": "Semana pasada",
+		"last30Days": "Últimos 30 dias",
+		"currentMonth": "Mes actual",
+		"lastMonth": "Mes pasado",
+		"last90Days": "Últimos 90 dias",
+		"currentQuarter": "Trimestre actual",
+		"lastQuarter": "Trimestre pasado"
 	}
 }

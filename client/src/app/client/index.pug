@@ -1,4 +1,4 @@
-login-toolbar(title='user.title')
+login-toolbar(title='peopleOrgs.title')
 
 side-bar
 
@@ -28,7 +28,7 @@ side-bar
 						th {{ 'client.email' | translate }}
 						th {{ 'client.phone' | translate }}
 						th {{ 'client.cellphone' | translate }}
-						th {{ 'client.resealer' | translate }}
+						th {{ 'client.reseller' | translate }}
 						th {{ 'client.edit' | translate }}
 						th
 							md-button.md-icon-button(aria-label="Trash" style="background:none;")
@@ -41,7 +41,7 @@ side-bar
 						td {{ client.emailAddress('work').address}}
 						td {{ client.phoneNumber('work').number }}
 						td {{ client.phoneNumber('cellphone').number }}
-						td {{ client.resealer }}
+						td {{ client.reseller }}
 						td.text-center
 							a.action-button
 								span.fa.fa-pencil.fa-lg 

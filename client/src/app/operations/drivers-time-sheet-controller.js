@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter',
-	function ($scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter) {
+module.exports = ['$rootScope','$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter','$state',
+	function ($rootScope,$scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state) {
 
 		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 
@@ -272,7 +272,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 		//
 		var columnDefs = [
 			{
-				headerName : 'Personal',
+				headerName : $filter('translate')('operations.driversTimeLog.staff'),
 				field      : 'staff',
 				editable   : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
@@ -283,7 +283,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
 			{
-				headerName : 'Servicio',
+				headerName : $filter('translate')('operations.driversTimeLog.operation'),
 				field      : 'operation',
 				editable   : true,
 				// cellRenderer: agGridComp.operationCellRenderer,
@@ -293,18 +293,19 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 				cellEditor : agGridComp.autocompleteOpCellEditor
 			},
 			{
-				headerName: 'Cliente',
+				headerName: $filter('translate')('operations.driversTimeLog.client'),
 				field     : 'client',
 				editable  : true,
 				cellEditor: agGridComp.clientCellUpdater
 			},
 			{
-				headerName : 'Inicio',
+				headerName : $filter('translate')('operations.driversTimeLog.begin'),
 				field      : 'begin',
 				editable   : true,
 				filter     : 'date',
 				filterParams:{
-					comparator: agGridComp.dateFilterComparator
+					comparator: agGridComp.dateFilterComparator,
+					filterOptions: ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
@@ -313,7 +314,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 				sort       : 'desc'
 			},
 			{
-				headerName : 'Termino',
+				headerName : $filter('translate')('operations.driversTimeLog.end'),
 				field      : 'end',
 				editable   : true,
 				filter     : 'date',
@@ -326,13 +327,13 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 				cellEditor : agGridComp.dateTimeCellEditor
 			},
 			{
-				headerName: 'Duración',
+				headerName: $filter('translate')('operations.driversTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater
 			},
 			{
-				headerName: 'Ubicación',
+				headerName: $filter('translate')('operations.driversTimeLog.location'),
 				field     : 'comment',
 				editable  : true,
 				cellEditor: agGridComp.commentCellEditor
@@ -351,7 +352,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 			// 	cellEditor: agGridComp.objectCellEditor
 			// },
 			{
-				headerName    : 'Falta',
+				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
 				field         : 'absence',
 				editable      : true,
 				cellEditor    : agGridComp.absenceCellEditor,
@@ -359,22 +360,22 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 					var val = '';
 					switch (params.value) {
 						case 'D':
-							val = 'Descanso';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.D');
 							break;
 						case 'V':
-							val = 'Vacaciones';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.V');
 							break;
 						case 'PS':
-							val = 'No se encuentra principal';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PS');
 							break;
 						case 'F':
-							val = 'Falta';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.F');
 							break;
 						case 'PC':
-							val = 'PC';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PC');
 							break;
 						case 'I':
-							val = 'I';
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.I');
 							break;
 						default:
 							val = '';
@@ -443,7 +444,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 				var endToUpdate;
 
 				if (rowObj.data.end) {
-					endToUpdate = rowObj.data.end;
+					endToUpdate = moment(rowObj.data.end).toDate();
 				}
 
 				var resource = _.clone(rowObj.data.staff);
@@ -457,7 +458,7 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 					'attributes' : [],
 					'type'       : 'DRIVER',
 					'comment'    : rowObj.data.comment,
-					'begin'      : rowObj.data.begin,
+					'begin'      : moment(rowObj.data.begin).toDate(),
 					'end'        : endToUpdate,
 					'billable'   : true,
 					'idOperation': rowObj.data.operation.id
@@ -505,6 +506,12 @@ module.exports = ['$scope','config','jnxStorage','operationService', 'resourceSe
 
 		$scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
+		});
+
+		// We need to reload because when the language changes ag-grid doesn't reload by itself
+		$rootScope.$on('$translateChangeSuccess', function () {
+			console.log('$translateChangeSuccess');
+			$state.reload();
 		});
 
 		//

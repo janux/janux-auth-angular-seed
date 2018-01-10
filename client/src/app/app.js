@@ -5,6 +5,9 @@ var angular = require('angular');
 require('angular-ui-router');
 require('angular-translate');
 require('angular-translate-loader-static-files');
+require('angular-translate-cookie');
+require('angular-cookies');
+require('angular-translate-local');
 require('angular-aside');
 require('angular-material');
 require('datetimepicker');
@@ -32,6 +35,7 @@ require('app/client');
 angular.module('MyApp',[
 	'jsonrpc',
 	'ui.router',
+	'ngCookies',
 	'ngAside',
 	'ngMaterial',
 	'ngMaterialDatePicker',
@@ -55,8 +59,8 @@ angular.module('MyApp',[
 	'appClient'
 ])
 
-.run([  '$rootScope','$state','$stateParams','security','$anchorScroll',
-function($rootScope , $state , $stateParams , security , $anchorScroll) {
+.run([  '$rootScope','$state','$stateParams','security','$anchorScroll','$translate',
+function($rootScope , $state , $stateParams , security , $anchorScroll , $translate ) {
 	$rootScope.$state       = $state;
 	$rootScope.$stateParams = $stateParams;
 
@@ -98,6 +102,14 @@ function($rootScope , $state , $stateParams , security , $anchorScroll) {
 		}
 	});
 
+	$rootScope.$on('AppLogIn', function(event, currentUser) {
+		var storedLang = localStorage.getItem(currentUser.username+'-glarusLang');
+		if (storedLang) {
+			console.info('Using language from profile', storedLang);
+			$translate.use(storedLang);
+		}
+	});
+
 	// On page reload, check to see whether the user logged in previously
 	security.requestCurrentUser();
 }])
@@ -118,7 +130,8 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// determine preferred language from browser
 	.determinePreferredLanguage()
 	.fallbackLanguage('en')
-	.useSanitizeValueStrategy('sanitizeParameters');
+	.useSanitizeValueStrategy('sanitizeParameters')
+	.useLocalStorage();
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');
@@ -262,8 +275,8 @@ function ($rootScope, config) {
 }])
 
 
-.controller('asideMenu', ['$scope','$aside','security',
-function($scope, $aside, security) {
+.controller('asideMenu', ['$scope','$aside','security','$translate','jnxStorage',
+function($scope, $aside, security, $translate, jnxStorage) {
 
 	$scope.asideState = {
 		open: false
@@ -296,6 +309,11 @@ function($scope, $aside, security) {
 				};
 			}]
 		}).result.then(postClose, postClose);
+	};
+
+	$scope.toggleLang = function (langToSet) {
+		$translate.use(langToSet);
+		jnxStorage.setItem('glarusLang',langToSet, true);
 	};
 }]);
 

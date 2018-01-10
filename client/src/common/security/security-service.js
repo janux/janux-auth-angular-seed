@@ -7,8 +7,8 @@ var
 ;
 
 module.exports =
-       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper',
-function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper) {
+       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper','$rootScope',
+function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper, $rootScope) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -115,6 +115,7 @@ function($modal , $http , $location , $q , retryQueue , $state, localStorageServ
 				}
 
 				if ( service.isAuthenticated() ) {
+					$rootScope.$broadcast('AppLogIn', service.currentUser);
 					closeLoginDialog(true);
 					// if we are logging in from the goodbye page,
 					// redirect to the dashboard

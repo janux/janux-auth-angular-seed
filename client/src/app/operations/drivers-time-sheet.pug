@@ -8,10 +8,9 @@ side-bar
 			.col-lg-12
 
 				.title-bar
-					.title
-						| Bitácora de Choferes
+					.title {{ 'operations.driversTimeLog.title' | translate }}
 					.options
-						span Ver:
+						span {{ 'operations.driversTimeLog.filterLabel' | translate }}
 					.options
 						md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
 							md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
@@ -28,7 +27,7 @@ side-bar
 						md-selected-item-change='staffSelectedItemChange(item)',
 						md-item-text='item.resource.name.last+" "+item.resource.name.first',
 						md-min-length='0',
-						md-floating-label='Personal')
+						md-floating-label="{{ 'operations.driversTimeLog.staff' | translate }}")
 							md-item-template
 								span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
 
@@ -41,13 +40,13 @@ side-bar
 						md-selected-item-change='opsSelectedItemChange(item)',
 						md-item-text='item.name',
 						md-min-length='0',
-						md-floating-label='Servicio')
+						md-floating-label="{{ 'operations.driversTimeLog.operation' | translate }}")
 							md-item-template
 								span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
 
 					.element
 						md-input-container.jnx-datetime-picker
-							label Inicio
+							label {{ 'operations.driversTimeLog.begin' | translate }}
 							input(mdc-datetime-picker=''
 							date='true'
 							time='true'
@@ -63,7 +62,7 @@ side-bar
 
 					.element
 						md-input-container.jnx-datetime-picker
-							label Termino
+							label {{ 'operations.driversTimeLog.end' | translate }}
 							input(mdc-datetime-picker=''
 							date='true'
 							time='true'
@@ -93,20 +92,20 @@ side-bar
 
 					.element
 						md-input-container
-							label Ubicación
+							label {{ 'operations.driversTimeLog.location' | translate }}
 							input(ng-model='lbRow.location')
 
 					.element
 						md-input-container
-							label Falta
+							label {{ 'operations.driversTimeLog.absence' | translate }}
 							md-select(ng-model='lbRow.absence')
 								md-option(value='')
-								md-option(value='D') Descanso (D)
-								md-option(value='V') Vacaciones (V)
-								md-option(value='PS') No se encuentra principal (PS)
-								md-option(value='F') Falta (F)
-								md-option(value='PC') PC
-								md-option(value='I') I
+								md-option(value='D') {{ 'operations.driversTimeLog.absenceOptions.D' | translate }}
+								md-option(value='V') {{ 'operations.driversTimeLog.absenceOptions.V' | translate }}
+								md-option(value='PS') {{ 'operations.driversTimeLog.absenceOptions.PS' | translate }}
+								md-option(value='F') {{ 'operations.driversTimeLog.absenceOptions.F' | translate }}
+								md-option(value='PC') {{ 'operations.driversTimeLog.absenceOptions.PC' | translate }}
+								md-option(value='I') {{ 'operations.driversTimeLog.absenceOptions.I' | translate }}
 
 					.save
 						button.btn.btn-success(ng-click='addRow()')

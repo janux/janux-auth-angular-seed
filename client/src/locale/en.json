@@ -1,56 +1,51 @@
 {
 	"label": {
-		"no": 		"No",
-		"yes": 		"Yes",
-		"ok": 		"Ok",
-		"cancel":   "Cancel",
-		"save":   "Save",
-		"clear":    "Clear",
-		"email":    "E-mail",
-		"login":    "Log In",
-		"logout":   "Sign Out",
+		"no": "No",
+		"yes": "Yes",
+		"ok": "Ok",
+		"cancel": "Cancel",
+		"save": "Save",
+		"clear": "Clear",
+		"email": "E-mail",
+		"login": "Log In",
+		"logout": "Sign Out",
 		"password": "Password:",
-		"people":   "People",
+		"people": "People",
 		"organizations": "Organizations",
 		"username": "User:",
-	  	"search":	"Search",
-	  	"staff": "Staff"
-	},
-	"dashboard": {
-		"title":"Dashboard"
+		"search": "Search",
+		"staff": "Staff"
 	},
 	"login": {
 		"msg": {
 			"enterCredentials": "Please enter your login credentials",
-			"goodbye":          "You have been signed out",
-		    "forcedLogout":     "Your session has expired. Please log in again",
-			"notAuthorized":    "You are not authorized to perform this operation",
+			"goodbye": "You have been signed out",
+			"forcedLogout": "Your session has expired. Please log in again",
+			"notAuthorized": "You are not authorized to perform this operation",
 			"notAuthenticated": "This area requires you to be signed-in"
 		},
-		"error" : {
+		"error": {
 			"invalidCredentials": "The user/password that you entered is not valid",
-			"serverError":        "Server is unavailable or returned an error",
-			"serverErrorOutput":  "Server Error: {{parm1}}"
+			"serverError": "Server is unavailable or returned an error",
+			"serverErrorOutput": "Server Error: {{parm1}}"
 		},
 		"forgotPass": "Forgot Password",
 		"copy": "2017 Janux Media LTD. Copyright."
 	},
 	"user": {
-		"title": "People & Organizations",
 		"listTitle": "Users",
-	  	"editUser": "Edit user",
-	  	"createUser": "Create user",
-	  	"username": "Username",
-	  	"displayName": "Name",
-	  	"role": "Role",
-	  	"email": "Email",
-	  	"edit": "Edit",
-	  	"delete": "Delete",
+		"editUser": "Edit user",
+		"createUser": "Create user",
+		"username": "Username",
+		"displayName": "Name",
+		"role": "Role",
+		"email": "Email",
+		"edit": "Edit",
+		"delete": "Delete",
 		"creation": "Creation",
-		"phone":"Phone",
-		"enabled":"Enabled",
-		"renew":"Renew password"
-
+		"phone": "Phone",
+		"enabled": "Enabled",
+		"renew": "Renew password"
 	},
 	"role": {
 		"title": "Roles"
@@ -65,7 +60,6 @@
 		"authContextGroup": "Authorization Context Group"
 	},
 	"staff": {
-		"title": "People & Organizations",
 		"listTitle": "Staff",
 		"editStaff": "Edit staff",
 		"createStaff": "Create staff",
@@ -98,12 +92,10 @@
 		"ext": "Ext",
 		"sms": "SMS",
 		"wps": "WPS",
-		"userName":"User Name",
-		"admissionDate":"Admission Date"
-
+		"userName": "User Name",
+		"admissionDate": "Admission Date"
 	},
 	"client": {
-		"title": "People & Organizations",
 		"name": "Business name",
 		"listTitle": "Clients",
 		"address": "Address",
@@ -111,10 +103,8 @@
 		"email": "Email",
 		"phone": "Phone",
 		"cellphone": "Cellphone",
-		"resealer": "Resealer",
+		"reseller": "Reseller",
 		"edit": "Edit"
-
-
 	},
 	"peopleOrgs": {
 		"title": "People & Organizations",
@@ -125,6 +115,26 @@
 	"operations": {
 		"title": "Operations",
 		"drivers": "Drivers",
+		"driversTimeLog": {
+			"title": "Drivers Time Log",
+			"staff": "Staff",
+			"operation": "Operation",
+			"begin": "Begin",
+			"end": "End",
+			"client": "Client",
+			"duration": "Duration",
+			"location": "Comment",
+			"filterLabel": "List:",
+			"absence": "Absence",
+			"absenceOptions": {
+				"D": "Break (D)",
+				"V": "Holidays (V)",
+				"PS": "Principal not found (PS)",
+				"F": "Absence (F)",
+				"PC": "PC",
+				"I": "I"
+			}
+		},
 		"specials": "Specials",
 		"guards": "Guards",
 		"services": "Services"
@@ -134,15 +144,39 @@
 		"roles": "Roles",
 		"authorizations": "Authorizations"
 	},
+	"grid": {
+		"page": "Page",
+		"more": "More",
+		"to": "to",
+		"of": "of",
+		"next": "Next",
+		"last": "Last",
+		"first": "First",
+		"previous": "Previous",
+		"loadingOoo": "Loading...",
+		"filterOoo": "Filter...",
+		"applyFilter": "Apply filter...",
+		"equals": "Equals",
+		"lessThan": "Less than",
+		"greaterThan": "Greater than",
+		"lessThanOrEqual": "Less than or equal",
+		"greaterThanOrEqual": "Grater than or equal",
+		"notEqual": "Not equal",
+		"contains": "Contains",
+		"notContains": "Not contains",
+		"startsWith": "Starts with",
+		"endsWith": "Ends with",
+		"inRange": "In range"
+	},
 	"periodFilter": {
-		"last7Days":"Last 7 days",
-		"currentWeek":"Current week",
-		"lastWeek":"Last week",
-		"last30Days":"Last 30 days",
-		"currentMonth":"Current month",
-		"lastMonth":"Last month",
-		"last90Days":"Last 90 days",
-		"currentQuarter":"Current quarter",
-		"lastQuarter":"Last quarter"
+		"last7Days": "Last 7 days",
+		"currentWeek": "Current week",
+		"lastWeek": "Last week",
+		"last30Days": "Last 30 days",
+		"currentMonth": "Current month",
+		"lastMonth": "Last month",
+		"last90Days": "Last 90 days",
+		"currentQuarter": "Current quarter",
+		"lastQuarter": "Last quarter"
 	}
 }

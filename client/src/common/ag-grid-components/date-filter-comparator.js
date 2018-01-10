@@ -1,13 +1,19 @@
 'use strict';
 
-var comparator = function (filterBeginDate, cellValue) {
+var moment = require('moment');
 
-	var beginDateOnly = new Date(cellValue.getFullYear(), cellValue.getMonth(), cellValue.getDate());
+var comparator = function (filterDate, cellValue) {
+
+	var filterDate = moment(filterDate);
+	var cellDateOnly = moment(cellValue).startOf('day'); //new Date(cellValue.getFullYear(), cellValue.getMonth(), cellValue.getDate());
 
 	// Now that both parameters are Date objects, we can compare
-	if (beginDateOnly < filterBeginDate) {
+	// cellDateOnly < filterDate
+	if (cellDateOnly.isBefore(filterDate)) {
 		return -1;
-	} else if (beginDateOnly > filterBeginDate) {
+	}
+	// cellDateOnly > filterDate
+	else if (cellDateOnly.isAfter(filterDate)) {
 		return 1;
 	} else {
 		return 0;

@@ -20,7 +20,9 @@ module.exports = function (app) {
 				.then(function (result) {
 					log.debug("Report at %j ", result);
 					res.download(result, function (err) {
-						log.error("Error downloading file " + err);
+						if(err) {
+							log.error("Error downloading file " + err);
+						}
 					})
 				});
 		} catch (err) {

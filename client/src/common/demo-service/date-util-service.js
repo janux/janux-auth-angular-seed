@@ -7,6 +7,7 @@
 
 var _ = require('lodash');
 var moment = require('moment');
+require('moment-timezone');
 
 
 module.exports =
@@ -25,6 +26,14 @@ module.exports =
 					} else {
 						return dateMoment.toDate();
 					}
+				},
+
+				/**
+				 * Return the time zone defined in the browser.
+				 */
+				getBrowserTimeZone: function () {
+					console.log("moment timezone browser  " + moment.tz.guess());
+					return moment.tz.guess();
 				}
 			};
 			return service;

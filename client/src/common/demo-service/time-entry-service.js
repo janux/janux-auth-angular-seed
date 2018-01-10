@@ -5,7 +5,7 @@
 
 
 var _ = require('lodash');
-var momeent = require('moment');
+
 
 module.exports =
 	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob', 'localStorageService',
@@ -90,6 +90,7 @@ module.exports =
 					};
 
 					var token = localStorageService.get("token");
+					var timeZone = dateUtilService.getBrowserTimeZone();
 
 					if (_.isNil(token) === false) {
 						headers['Authorization'] = 'Bearer ' + token
@@ -99,7 +100,7 @@ module.exports =
 						url         : '/time-entry-report',
 						method      : 'POST',
 						responseType: 'arraybuffer',
-						data        : {ids: ids}, //this is your json data string
+						data        : {ids: ids, timeZone: timeZone},
 						headers     : headers
 					}).then(function (result) {
 						var now = moment();

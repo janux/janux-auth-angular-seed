@@ -47,7 +47,7 @@ module.exports =
 				const result = _.cloneDeep(object);
 				result.values = _.map(result.values, function (o) {
 					return toJSONItem(o);
-				})
+				});
 				return result;
 			}
 

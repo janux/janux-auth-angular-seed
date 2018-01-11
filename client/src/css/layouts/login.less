@@ -1,3 +1,24 @@
+//Glarus Theme
+.glarus-theme {
+	background: @login-glarus url('/img/glarus_back.jpg') no-repeat;
+	background-position: center right;
+	background-size: 80% 100%;
+	position:fixed; 
+	border:20px solid @login-glarus; 
+	width:100%;
+	.small-and-down({
+		background: @login-glarus;
+	});
+	.small-device({
+		border:none;
+	});
+	.smallest-device({
+		border:none;
+	});
+
+	height: 100%;
+}
+
 .login-form {
 	background: @login-bg url('/img/janux_logo_outline.png') no-repeat;
 	background-position: center left;
@@ -8,6 +29,34 @@
 	});
 
 	height: 100%;
+}
+
+.login-body-glarus{
+	.rem(font-size, 12);
+	background: @white;
+	// Vertical center
+	height:100%;
+	position: absolute;
+	width: 45%;
+	padding: 40px 25px;
+
+	.mobile{
+		margin-left: 10%;
+		width: 80%;
+	}
+
+	.small-device({ .mobile });
+	.xs-device({ .mobile });
+	.logo {
+		display: block;
+		margin: 20px auto;
+		margin: 2rem auto;
+		width: 60%;
+	}
+	.text-center-legal{
+		padding-top: 30px;
+		text-align: center;
+	}
 }
 
 .login-body {

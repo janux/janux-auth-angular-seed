@@ -291,7 +291,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					return params.data.operation.name;
 				},
 				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width: 100
+				width: 110
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.client'),
@@ -334,7 +334,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater,
-				width: 100
+				width: 95
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.comment'),
@@ -396,7 +396,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 						}
 					}
 				},
-				width: 160
+				width: 130
 			},
 			{
 				headerName       : '',
@@ -407,7 +407,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				headerComponent  : agGridComp.deleteRowsHeaderComponent,
 				editable         : true,
 				field            : 'selected',	// field needed to avoid ag-grid warning
-				width: 100
+				width: 80
 			}
 		];
 

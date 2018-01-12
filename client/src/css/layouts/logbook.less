@@ -1,7 +1,30 @@
 .time-sheet {
 	font-size: 14px;
 
+	// Needed to ensure ag-grid 100% height
+	height:calc(100% - 10px);
+
+	.container-fluid-flex{
+		height:100%;
+
+		.container-body{
+			padding: 20px;
+			height:calc(100% - 25px);
+		}
+	}
+
+	.filter-label {
+		color: @grey6;
+		font-size: 14px;
+		padding: 0 10px 0 50px;
+	}
+
+	.add-form-container {
+		width:100%;
+	}
+
 	.add-form {
+		font-size: 14px;
 		display: -webkit-flex;
 		display: flex;
 		flex-wrap: nowrap;
@@ -17,10 +40,6 @@
 		margin-left: 5px;
 	}
 
-	.add-form .save{
-		width:10%;
-	}
-
 	.add-form input[type="text"], md-autocomplete {
 		width: 100%;
 		min-width: 100%;
@@ -34,23 +53,15 @@
 		min-width: calc(100% - 30px);
 	}
 
-	.add-form label {
-		font-weight: normal;
-		margin-bottom: 0;
+	.add-form .dtp-btn-calendar md-icon {
+		color: @grey4;
+		fill: @grey4;
 	}
 
-	// Specific title bar
-	.title-bar {
-		justify-content: flex-start;
-	}
-	.title-bar .title {
-		padding-right: 20px;
-	}
-	.title-bar .options {
-		padding:5px 10px;
-	}
-	.title-bar .options md-select {
-		margin: -5px 0;
+	.add-form label, md-select span {
+		font-weight: normal;
+		margin-bottom: 0;
+		color: @grey6;
 	}
 }
 
@@ -62,8 +73,8 @@
 
 .driver-time-sheet {
 	width: 100%;
-	height: 380px;
-	//height: calc(100% - 1px);
+	//height: 380px;
+	height: calc(100% - 1px);
 
 	.glyphicon {
 		.rem(font-size, 20);
@@ -80,6 +91,9 @@
 	.row-actions {
 		text-align: center;
 		padding-top: 5px;
+		.glyphicon {
+			padding: 0 3px;
+		}
 	}
 
 	md-autocomplete, input {

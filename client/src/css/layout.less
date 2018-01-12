@@ -235,7 +235,8 @@ input[type='text'], input[type='password'] {
 	border-radius: 2px;
 }
 
-.list {
+.list,
+.list-glarus {
 	width: 100%;
 	border-collapse: collapse;
 
@@ -259,12 +260,42 @@ input[type='text'], input[type='password'] {
     }
 }
 
-.action-button{
+.list {
+	tr:nth-of-type(odd) {
+    	background: @sageLight;
+    }
+    th {
+    	background: @grey1;
+    }
+}
+.list-glarus {
+	tr:nth-of-type(odd) {
+    	background: @sidebar-bg-glarus;
+    }
+    th {
+    	background: @glarus-blue;
+    }
+}
+
+.action-button,
+.action-button-glarus{
 	padding-left: 5px;
+	&:hover{
+		cursor: pointer;
+	}
+}
+
+.action-button{
 	color: @green1;
 	&:hover{
 		color: @green2;
-		cursor: pointer;
+	}
+}
+
+.action-button-glarus{
+	color: @glarus-blue;
+	&:hover{
+		color: @hover-glarus;
 	}
 }
 

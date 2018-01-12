@@ -1,7 +1,7 @@
 md-content.staff-form(layout-padding)
 	.container-flex-form
 		div
-			p.form-section
+			p.form-section-glarus
 				| {{ 'staff.employeeTitle' | translate}}
 			div.an-material
 				md-input-container.full
@@ -17,7 +17,7 @@ md-content.staff-form(layout-padding)
 					input(ng-model='staff.name.last')
 
 		div
-			p.form-section
+			p.form-section-glarus
 				| {{ 'staff.jobTitle' | translate}}
 			div.an-material
 				md-input-container.full
@@ -29,9 +29,9 @@ md-content.staff-form(layout-padding)
 					input(ng-model='staff.job.area')
 	.masonry
 		.masonry-brick
-			p.form-section
+			p.form-section-glarus
 				| {{ 'staff.addressesTitle' | translate}} 
-			md-divider.divider-line(ng-show="lastAddress==0")
+			md-divider.divider-line-glarus(ng-show="lastAddress==0")
 
 			fieldset(data-ng-repeat="address in staff.contactMethods.addresses track by $index")
 				.fieldset-flex
@@ -76,13 +76,13 @@ md-content.staff-form(layout-padding)
 
 			.container-flex-form
 				div
-					md-divider.divider-line
+					md-divider.divider-line-glarus
 
-					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewAddress()")
+					md-button.md-icon-button.plus-btn-glarus(aria-label="Add New" ng-click="addNewAddress()")
 						md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
 
 		.masonry-brick
-			p.form-section
+			p.form-section-glarus
 				| {{ 'staff.phonesTitle' | translate}}
 			fieldset.fieldset-flex(data-ng-repeat="phone in staff.contactMethods.phones track by $index")
 				div.an-material.nopadding
@@ -117,13 +117,13 @@ md-content.staff-form(layout-padding)
 
 			.container-flex-form
 				div
-					md-divider.divider-line
-					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewPhone()")
+					md-divider.divider-line-glarus
+					md-button.md-icon-button.plus-btn-glarus(aria-label="Add New" ng-click="addNewPhone()")
 							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")
 
 
 
-			p.form-section
+			p.form-section-glarus
 				| {{ 'staff.mailsTitle' | translate}}
 			fieldset.fieldset-flex(data-ng-repeat="email in staff.contactMethods.emails track by $index")
 				div.an-material.nopadding
@@ -140,6 +140,6 @@ md-content.staff-form(layout-padding)
 
 			.container-flex-form
 				div
-					md-divider.divider-line
-					md-button.md-icon-button.plus-btn(aria-label="Add New" ng-click="addNewMail()")
+					md-divider.divider-line-glarus
+					md-button.md-icon-button.plus-btn-glarus(aria-label="Add New" ng-click="addNewMail()")
 							md-icon.fa.fa-plus-square.fa-lg(style="color:#ffffff")

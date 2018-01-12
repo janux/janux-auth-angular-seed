@@ -1,6 +1,13 @@
-.divider-line{
+.divider-line,
+.divider-line-glarus,
+{
 	padding-bottom:10px; 
-	border-top:2px solid @green2;
+}
+.divider-line{
+	border-top:2px solid @green2;	
+}
+.divider-line-glarus{
+	border-top:2px solid @glarus-blue;
 }
 md-toolbar.form-mid-toolbar{
 	background: @grey2;
@@ -39,6 +46,12 @@ md-toolbar.form-root-toolbar{
 	border-radius: 20%;
 	&:hover{
 		background: @green1;
+	}
+}
+.md-toolbar-tools.form-toolbar-glarus .md-button{
+	border-radius: 20%;
+	&:hover{
+		background: @glarus-blue;
 	}
 }
 
@@ -80,12 +93,22 @@ md-toolbar.form-root-toolbar{
 
     }
 }
+.plus-btn-glarus,
+.plus-btn{
+	float: right;
+	border-radius:20% !important;
+}
 .plus-btn{
 	background:@green2 !important;
-	border-radius:20% !important;
-	float: right;
 	&:hover{
 		background: @green1 !important;
+	}
+}
+
+.plus-btn-glarus{
+	background:@glarus-blue !important;
+	&:hover{
+		background: @hover-glarus !important;
 	}
 }
 
@@ -97,12 +120,18 @@ md-toolbar.form-root-toolbar{
 		background: @grey1 !important;
 	}
 }
-
-.form-section{
+.form-section,
+.form-section-glarus{
 	display:table; 
-	background:@green2; 
 	padding:10px; 
 	color:white;
+}
+
+.form-section{
+	background:@green2; 
+}
+.form-section-glarus{
+	background:@glarus-blue; 
 }
 .staff-form{
 	overflow: hidden;

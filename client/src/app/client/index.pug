@@ -5,7 +5,7 @@ side-bar
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")
-				.md-toolbar-tools.form-toolbar
+				.md-toolbar-tools.form-toolbar-glarus
 					md-truncate
 						| {{ 'client.listTitle' | translate }}
 					span(flex)
@@ -19,7 +19,7 @@ side-bar
 					md-button.arrow.md-icon-button(aria-label="Upload")
 						md-icon.fa.fa-upload.fa-lg
 		.container-body
-			table.list.users-list(ng-show='clientsList.length')
+			table.list-glarus.users-list(ng-show='clientsList.length')
 				thead
 					tr
 						th {{ 'client.name' | translate }}
@@ -43,7 +43,7 @@ side-bar
 						td {{ client.phoneNumber('cellphone').number }}
 						td {{ client.reseller }}
 						td.text-center
-							a.action-button
+							a.action-button-glarus
 								span.fa.fa-pencil.fa-lg 
 						td(style="text-align:center")
 							md-checkbox(aria-label="Trash" ng-model='client.Selected' class="md-primary")

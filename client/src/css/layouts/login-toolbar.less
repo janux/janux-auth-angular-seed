@@ -73,6 +73,23 @@
 	.small-device({ display: none; });
 	.xs-device({ display: none; });
 }
+.sd-top-menu-glarus {
+	.md-button{
+		&:not([disabled]) {
+			&:hover {
+  				background-color: @hover-glarus;
+			}
+		}
+	}
+	.sd-name {
+		&:after {
+			font-family: @font-awesome;
+			content: " \f107";
+		}
+	}
+	.small-device({ display: none; });
+	.xs-device({ display: none; });
+}
 .md-button.md-icon-button{
 	padding-top: 13px !important;
 }

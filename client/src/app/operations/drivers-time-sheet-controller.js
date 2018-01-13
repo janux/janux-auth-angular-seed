@@ -340,7 +340,15 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				headerName: $filter('translate')('operations.driversTimeLog.comment'),
 				field     : 'comment',
 				editable  : true,
-				cellEditor: agGridComp.commentCellEditor
+				cellEditor: agGridComp.commentCellEditor,
+				cellStyle: {
+					'white-space': 'normal'
+				},
+				cellFormatter: function (params) {
+					var maxLength = 35;
+					var comment = params.data.comment;
+					return agGridComp.util.truncate(comment,maxLength,'...');
+				}
 				// cellEditor: 'largeText',
 				// cellEditorParams: {
 				// 	maxLength: '300',
@@ -402,7 +410,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				headerName       : '',
 				// headerCheckboxSelection: true,
 				// headerCheckboxSelectionFilteredOnly: true,
-				checkboxSelection: true,
+				// checkboxSelection: true,
+				cellRenderer	 : agGridComp.checkBoxRowSelection,
 				cellEditor       : agGridComp.rowActions,
 				headerComponent  : agGridComp.deleteRowsHeaderComponent,
 				editable         : true,
@@ -427,7 +436,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 50,
+			rowHeight                : 40,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,

@@ -20,6 +20,7 @@ module.exports = {
 	operationCellRenderer: require('./operation-cell-renderer'),
 	simpleCellRenderer: require('./simple-cell-renderer'),
 	objectCellRenderer: require('./object-cell-renderer'),
+	checkBoxRowSelection: require('./checkBoxRowSelection'),
 
 	// Custom filters
 	dateFilter: 		require('./date-filter'),
@@ -27,5 +28,8 @@ module.exports = {
 
 	// Header components
 	headerComponent: 	require('./header-component'),
-	deleteRowsHeaderComponent: 	require('./delete-rows-header-component')
+	deleteRowsHeaderComponent: 	require('./delete-rows-header-component'),
+
+	// Util
+	util: require('./util')
 };

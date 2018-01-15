@@ -9,7 +9,7 @@ var UserPersistence            = require('janux-persist').UserService,
     OperationServiceImpl       = require('glarus-services').OperationServiceImpl,
     ResourceServiceImpl        = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl       = require('glarus-services').TimeEntryServiceImpl,
-    TimeEntryReportServiceImpl = require('glarus-services').TimeEntryServiceReport;
+    TimeEntryReportServiceImpl = require('glarus-services').TimeEntryReportService;
 
 var config                         = require('config'),
     appContext                     = config.serverAppContext,
@@ -22,7 +22,6 @@ var config                         = require('config'),
     GroupDao                       = DAOs[appContext.groupDao],
     GroupAttributeValueDao         = DAOs[appContext.groupAttributeValueDao],
     PartyPersistenceService        = new PartyServiceImpl(PartyDao),
-
 
     // Begin glarus services DAOs.
     VehicleDao                     = DAOs[appContext.vehicleDao],

@@ -28,7 +28,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 			$scope.lbRow = {
 				staff    : '',
 				operation: '',
-				start    : moment().format(dateTimeFormatString),
+				start    : moment().startOf('day').format(dateTimeFormatString),
 				end      : undefined,
 				provider : '',
 				location : '',
@@ -37,11 +37,11 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 		};
 		initRowModel();
 
-		var refreshStartServiceTime = 60 * 1000;	// 1 minute
-		// Refresh start time
-		$interval(function () {
-			$scope.lbRow.start = moment().format(dateTimeFormatString);
-		}, refreshStartServiceTime);
+		// var refreshStartServiceTime = 60 * 1000;	// 1 minute
+		// // Refresh start time
+		// $interval(function () {
+		// 	$scope.lbRow.start = moment().format(dateTimeFormatString);
+		// }, refreshStartServiceTime);
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {

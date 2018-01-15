@@ -164,4 +164,19 @@ angular.module('agGridDirectives',[])
 		scope:false,
 		templateUrl: 'common/ag-grid-components/templates/absence-cell-editor.html'
 	}
+}])
+
+// This attribute takes the function in the parent scope
+// that is responsible for resizing agGrid and executes it
+// every time de window changes it's size
+.directive('agGridReload', [ function() {
+	return {
+		restrict: 'A',
+		scope: false,
+		link: function(scope, element, attrs) {
+			angular.element(window).bind('resize', function(){
+				scope[attrs['agGridReload']]();
+			});
+		}
+	};
 }]);

@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Role = require('janux-authorize').Role;
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
+var util = require('common/security/util');
 
 module.exports = [
 '$scope', 'authContextGroups','roleService','$state',
@@ -54,4 +55,7 @@ module.exports = [
 			$state.go('permissions.roles');
 		});
 	};
+
+	// Convert object of authorization bits to array
+	$scope.authCBitsToArray = util.authCBitsToArray;
 }];

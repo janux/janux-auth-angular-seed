@@ -26,7 +26,7 @@
 				tr(ng-repeat='authContext in authContextGroup.values')
 					td.name {{ authContext.name }}
 					td.bits
-						div.bit(ng-repeat='(authName, authBit) in authContext.bit')
-							| {{ authName }}
+						div.bit(ng-repeat="authBit in authCBitsToArray(authContext.bit) | orderBy: 'position' ")
+							| {{ authBit.label }}
 							input.bit-check(type='checkbox'
-							ng-model='role.authContexts[authContext.name].bit[authName]')
+							ng-model='role.authContexts[authContext.name].bit[authBit.label]')

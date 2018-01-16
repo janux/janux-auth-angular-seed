@@ -1,68 +1,29 @@
-form.glarus-theme(name='form', novalidate)
+.glarus-bg
+	form.glarus-login(name='form', novalidate)
 
-	.login-body-glarus
-		img.logo(src='/img/logo_glarus_color.png')
+		.login-body-glarus
+			img.logo(src='/img/logo_glarus_color.png')
 
-		.alert.alert-warning(ng-show='authReason') {{authReason}}
-		.alert.alert-danger(ng-show='authError') {{authError}}
+			.alert.alert-warning(ng-show='authReason') {{authReason}}
+			.alert.alert-danger(ng-show='authError') {{authError}}
 
-		div.an-material
-			md-input-container.full
-				label(translate='label.username')
-				input(name='login', ng-model='user.account.name', required, autofocus, novalidate='')
+			div.an-material
+				md-input-container.full
+					label(translate='label.username')
+					input(name='login', ng-model='user.account.name', required, autofocus, novalidate='')
 
-		div.an-material
-			md-input-container.full
-				label(translate='label.password')
-				input(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
+			div.an-material
+				md-input-container.full
+					label(translate='label.password')
+					input(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
 
-		.fieldset-flex
-			div
-				a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
+			.fieldset-flex
+				div
+					a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
 
-			.btn-login-cnt
-				button.btn.btn-glarus(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
+				.btn-login-cnt
+					button.btn.btn-glarus(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
 
-		div.text-center-legal
-			.copy &copy; {{ "login.copy" | translate }}
+			div.text-center-legal
+				.copy &copy; {{ "login.copy" | translate }}
 
-	
-	//- .login-body
-
-	//- 	img.logo(src='/img/janux_logo.png')
-	//- 	.brand
-	//- 		span.janux janux
-	//- 	.brand
-	//- 		span.people people
-	//- 	.brand
-	//- 		hr.line
-
-	//- 	div.info-text
-	//- 		p Use one of the following user/password credentials to login:
-	//- 		ul
-	//- 			li widget/test1
-	//- 			li manager/test2
-	//- 			li admin/1234567
-
-	//- 	.alert.alert-warning(ng-show='authReason') {{authReason}}
-	//- 	.alert.alert-danger(ng-show='authError') {{authError}}
-	//- 	//.alert.alert-info(translate='login.msg.enterCredentials')
-
-	//- 	.login-lbl
-	//- 		label(translate='label.username')
-	//- 		input.login-field(name='login', ng-model='user.account.name', required, autofocus, novalidate='')
-
-	//- 	.login-lbl
-	//- 		label(translate='label.password')
-	//- 		input.login-field(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
-
-	//- 	div.text-right
-	//- 		a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
-
-	//- 	.btn-login-cnt
-	//- 		button.btn.btn-login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
-
-	//- 	hr.line
-
-	//- 	div.text-center
-	//- 		.copy &copy; {{ "login.copy" | translate }}

@@ -12,9 +12,9 @@ md-toolbar(ng-controller='asideMenu')
       md-button
         span.sd-name {{ currentUser.contact.name.first +' '+currentUser.contact.name.last}}
       md-button.md-icon-button(aria-label='EN', ng-click='toggleLang("en")')
-        img(src='/img/en.png' title='en')
+        img.flag-lang(src='/img/en.png' title='en')
       md-button.md-icon-button(aria-label='ES', ng-click='toggleLang("es")')
-        img(src='/img/es.png' title='es')
+        img.flag-lang(src='/img/es.png' title='es')
       md-button.md-icon-button(aria-label='Logout', ng-sshow='isAuthenticated()', ng-click='logout()')
         md-icon.fa.fa-sign-out.fa-lg
     md-button.md-icon-button.navbar-toggle-btn(aria-label='Menu', ng-click='openMenu()')

@@ -2,7 +2,8 @@
   ul.sidebar-nav.glarus-sidebar
     li
       a(href="#" ng-click="toggleStyle(); resetSubmenu()")
-        i.fa.fa-bars
+        i.fa.fa-bars.menu-open(ng-class="{'hide': noneStyle}")
+        i.fa.fa-times-circle.menu-close(ng-class="{'hide': !noneStyle}")
         span
           | &nbsp;
 
@@ -10,7 +11,7 @@
       .accordion(id="rightMenu1")
         .accordion-group
           .accordion-heading(ng-click="toggleSubmenu[option.key]();")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#")
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="right" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
               i.fa(ng-class="option.iconClass")
               span.down {{ (option.translateKey | translate) }}
           .accordion-toggle.menu-sub

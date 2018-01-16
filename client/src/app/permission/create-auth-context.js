@@ -1,7 +1,8 @@
 'use strict';
 
-// var _ = require('lodash');
+var _ = require('lodash');
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
+var util = require('common/security/util');
 
 module.exports = [
 	    '$scope','groupsList','authContextService','$state',
@@ -9,21 +10,32 @@ function($scope , groupsList , authContextService , $state){
 
 	// console.log('groupsList', groupsList);
 
-	$scope.permissionBits = [''];
+	$scope.permissionBits = [{
+		'label':'','position': 0
+	}];
 	$scope.contextName = '';
 	$scope.contextDesc = '';
 	$scope.contextGroupCode = groupsList[0].code;
 	$scope.groupsList = groupsList;
 	$scope.creating = true;
 
+	// Convert object of authorization bits to array
+	$scope.authCBitsToArray = util.authCBitsToArray;
+
 	$scope.cancel = function () {
 		window.history.back();
 	};
 
 	$scope.saveAuthContext = function () {
+		var bitListSortedByPosition = $scope.permissionBits.sort(function (a,b) {
+			return a.position>b.position;
+		}).map(function (bit) {
+			return bit.label;
+		});
+
 		if(!$scope.authContextForm.$invalid){
 			if($scope.permissionBits.length > 0){
-				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, $scope.permissionBits);
+				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, bitListSortedByPosition);
 
 				authContextService.insert($scope.contextGroupCode, authContext.toJSON())
 					.then(function () {
@@ -38,7 +50,11 @@ function($scope , groupsList , authContextService , $state){
 	};
 
 	$scope.addPermissionBit = function () {
-		$scope.permissionBits.push('');
+
+		var maxPosition = ($scope.permissionBits.length>0)?_.maxBy($scope.permissionBits, function(bit){ return bit.position; }).position+1:0;
+		$scope.permissionBits.push({
+			'label':'','position': maxPosition
+		});
 	};
 
 	$scope.removeBit = function (index) {

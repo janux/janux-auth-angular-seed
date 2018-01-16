@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('common/security/util');
+
 module.exports = [
 '$scope','authContextGroups','authContextService','$state','$modal', function(
  $scope , authContextGroups , authContextService , $state , $modal) {
@@ -92,4 +94,7 @@ module.exports = [
 			});
 		}
 	};
+
+	// Convert object of authorization bits to array
+	$scope.authCBitsToArray = util.authCBitsToArray;
 }];

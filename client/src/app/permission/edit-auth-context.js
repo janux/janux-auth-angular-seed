@@ -2,13 +2,17 @@
 
 var _ = require('lodash');
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
+var util = require('common/security/util');
 
 module.exports = [
 		'$scope','authContext','groupsList','authContextService','$state','$stateParams','$modal',
 function($scope , authContext , groupsList , authContextService , $state , $stateParams , $modal){
 
 	var name = authContext.name;
-	$scope.permissionBits = _.keys(authContext.bit);
+
+	// Convert object of authorization bits to array
+	$scope.permissionBits = util.authCBitsToArray(authContext.bit);
+
 	$scope.contextName = name;
 	$scope.contextDesc = authContext.description;
 	$scope.groupsList = groupsList;
@@ -33,9 +37,15 @@ function($scope , authContext , groupsList , authContextService , $state , $stat
 
 	$scope.saveAuthContext = function () {
 
+		var bitListSortedByPosition = $scope.permissionBits.sort(function (a,b) {
+			return a.position>b.position;
+		}).map(function (bit) {
+			return bit.label;
+		});
+
 		if(!$scope.authContextForm.$invalid){
 			if($scope.permissionBits.length > 0){
-				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, $scope.permissionBits);
+				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, bitListSortedByPosition);
 
 				if($scope.copying) {
 					if(authContext.name !== name) {
@@ -71,10 +81,16 @@ function($scope , authContext , groupsList , authContextService , $state , $stat
 	};
 
 	$scope.addPermissionBit = function () {
-		$scope.permissionBits.push('');
+
+		var maxPosition = ($scope.permissionBits.length>0)?_.maxBy($scope.permissionBits, function(bit){ return bit.position; }).position+1:0;
+		$scope.permissionBits.push({
+			'label':'','position': maxPosition
+		});
 	};
 
-	$scope.removeBit = function (index) {
-		$scope.permissionBits.splice(index,1);
+	$scope.removeBit = function (position) {
+		$scope.permissionBits = _.remove($scope.permissionBits, function(bit){
+			return bit.position !== position;
+		});
 	};
 }];

@@ -32,7 +32,7 @@
 										tr
 											td.name {{ authContext.name }}
 											td.bits
-												span(ng-repeat='(authName, authBit) in authContext.bit') &nbsp;&nbsp; {{ authName }}
+												span(ng-repeat="authBit in authCBitsToArray(authContext.bit) | orderBy: 'position'") &nbsp;&nbsp; {{ authBit.label }}
 											td.options
 												a.action-button(ui-sref='permissions.edit-auth-context({contextGroupCode: authContextGroup.code, contextName: authContext.name})')
 													span.fa.fa-pencil.fa-lg 

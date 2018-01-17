@@ -1,47 +1,63 @@
 'use strict';
 
-// var _ = require('lodash');
+var _ = require('lodash');
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
+var util = require('../../common/security/util');
 
 module.exports = [
-	    '$scope','groupsList','authContextService','$state',
-function($scope , groupsList , authContextService , $state){
+	'$scope','groupsList','authContextService','$state',
+	function($scope , groupsList , authContextService , $state){
 
-	// console.log('groupsList', groupsList);
+		// console.log('groupsList', groupsList);
 
-	$scope.permissionBits = [''];
-	$scope.contextName = '';
-	$scope.contextDesc = '';
-	$scope.contextGroupCode = groupsList[0].code;
-	$scope.groupsList = groupsList;
-	$scope.creating = true;
+		$scope.permissionBits = [{
+			'label':'','position': 0
+		}];
+		$scope.contextName = '';
+		$scope.contextDesc = '';
+		$scope.contextGroupCode = groupsList[0].code;
+		$scope.groupsList = groupsList;
+		$scope.creating = true;
 
-	$scope.cancel = function () {
-		window.history.back();
-	};
+		// Convert object of authorization bits to array
+		$scope.authCBitsToArray = util.authCBitsToArray;
 
-	$scope.saveAuthContext = function () {
-		if(!$scope.authContextForm.$invalid){
-			if($scope.permissionBits.length > 0){
-				var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, $scope.permissionBits);
+		$scope.cancel = function () {
+			window.history.back();
+		};
 
-				authContextService.insert($scope.contextGroupCode, authContext.toJSON())
-					.then(function () {
-						$state.go('permissions.auth-contexts');
-					});
-			}else{
-				console.error('Select at least one permission bit in order to create an authorization context');
+		$scope.saveAuthContext = function () {
+			var bitListSortedByPosition = $scope.permissionBits.sort(function (a,b) {
+				return a.position>b.position;
+			}).map(function (bit) {
+				return bit.label;
+			});
+
+			if(!$scope.authContextForm.$invalid){
+				if($scope.permissionBits.length > 0){
+					var authContext = AuthorizationContext.createInstance($scope.contextName, $scope.contextDesc, bitListSortedByPosition);
+
+					authContextService.insert($scope.contextGroupCode, authContext.toJSON())
+						.then(function () {
+							$state.go('permissions.auth-contexts');
+						});
+				}else{
+					console.error('Select at least one permission bit in order to create an authorization context');
+				}
+			}else {
+				console.error('Please complete all required fields');
 			}
-		}else {
-			console.error('Please complete all required fields');
-		}
-	};
+		};
 
-	$scope.addPermissionBit = function () {
-		$scope.permissionBits.push('');
-	};
+		$scope.addPermissionBit = function () {
 
-	$scope.removeBit = function (index) {
-		$scope.permissionBits.splice(index,1);
-	};
-}];
+			var maxPosition = ($scope.permissionBits.length>0)?_.maxBy($scope.permissionBits, function(bit){ return bit.position; }).position+1:0;
+			$scope.permissionBits.push({
+				'label':'','position': maxPosition
+			});
+		};
+
+		$scope.removeBit = function (index) {
+			$scope.permissionBits.splice(index,1);
+		};
+	}];

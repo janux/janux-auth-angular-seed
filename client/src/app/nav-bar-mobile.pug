@@ -2,11 +2,11 @@
       .sd-page-sidebar.mobile
         ul.sd-page-sidebar-menu
           li(ng-repeat='option in mainMenu')
-            a.active(ui-sref-active="active" ui-sref='{{option.state}}' ng-click='ok()')
+            a(ui-sref-active="active")
               span.fa.fa-lg(ng-class='option.iconClass')
               .btn-text &nbsp;&nbsp;{{ option.translateKey | translate }}
             ul 
               li(ng-repeat='subOption in option.subOptions')
-                a.active(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='ok()')
+                a.active(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='ok()' ng-show='userRole.can("READ",subOption.authContext);')
                   span.fa.fa-angle-right
                   | &nbsp;&nbsp; {{ subOption.translate | translate }}

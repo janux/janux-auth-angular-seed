@@ -227,8 +227,12 @@ function ($scope) {
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 'config',
-function ($rootScope, config) {
+.controller('sidebarCtrl', ['$rootScope', 'config', 'security',
+function ($rootScope, config, security) {
+	var userRole = security.currentUser.roles[0];
+	console.log('Time entry Driver:',userRole.can('READ','TIME_ENTRY_DRIVER'));
+
+	$rootScope.userRole = userRole;
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
 	$rootScope.subMenu = [];

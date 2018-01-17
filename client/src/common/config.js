@@ -15,15 +15,18 @@ require('angular').module('config', [])
 				subOptions: {
 					users: {
 						state: 'users',
-						translate: 'peopleOrgs.users'
+						translate: 'peopleOrgs.users',
+						authContext: 'USER'
 					},
 					staff: {
 						state: 'staff',
-						translate: 'peopleOrgs.staff'
+						translate: 'peopleOrgs.staff',
+						authContext: 'STAFF'
 					},
 					clients: {
 						state: 'client',
-						translate: 'peopleOrgs.clients'
+						translate: 'peopleOrgs.clients',
+						authContext: 'CLIENT'
 					}
 				}
 			},
@@ -35,19 +38,23 @@ require('angular').module('config', [])
 				subOptions: {
 					drivers: {
 						state: 'operations.drivers',
-						translate: 'operations.drivers'
+						translate: 'operations.drivers',
+						authContext: 'TIME_ENTRY_DRIVER'
 					},
 					specials: {
 						state: 'operations.specials',
-						translate: 'operations.specials'
+						translate: 'operations.specials',
+						authContext: 'TIME_ENTRY_OPS'
 					},
 					guards: {
 						state: 'operations.guards',
-						translate: 'operations.guards'
+						translate: 'operations.guards',
+						authContext: 'TIME_ENTRY_GUARD'
 					},
 					services: {
 						state: 'operations.services',
-						translate: 'operations.services'
+						translate: 'operations.services',
+						authContext: 'SERVICE'
 					}
 				}
 			},
@@ -59,11 +66,13 @@ require('angular').module('config', [])
 				subOptions: {
 					roles: {
 						state: 'permissions.roles',
-						translate: 'authSchema.roles'
+						translate: 'authSchema.roles',
+						authContext: 'ROLE'
 					},
 					authorizations: {
 						state: 'permissions.auth-contexts',
-						translate: 'authSchema.authorizations'
+						translate: 'authSchema.authorizations',
+						authContext: 'AUTH_CONTEXT'
 					}
 				}
 			}

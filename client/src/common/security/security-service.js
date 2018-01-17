@@ -152,6 +152,7 @@ function($modal , $http , $location , $q , retryQueue , $state, localStorageServ
 		requestCurrentUser: function() {
 			if ( service.isAuthenticated() ) {
 				console.log('currentUser-cached:', service.currentUser);
+				$rootScope.$emit('currentUserCached', service.currentUser);
 				return $q.when(service.currentUser);
 			} else {
 				return $http.get('/current-user').then(function(response) {

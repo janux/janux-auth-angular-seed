@@ -8,7 +8,7 @@
           | &nbsp;
 
     li(ng-repeat='option in mainMenu')
-      .accordion(id="rightMenu1")
+      .accordion(id="rightMenu1" ng-show='showOption(option)')
         .accordion-group
           .accordion-heading(ng-click="toggleSubmenu[option.key]();")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')

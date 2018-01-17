@@ -229,10 +229,25 @@ function ($scope) {
 
 .controller('sidebarCtrl', ['$rootScope', 'config', 'security',
 function ($rootScope, config, security) {
-	var userRole = security.currentUser.roles[0];
-	console.log('Time entry Driver:',userRole.can('READ','TIME_ENTRY_DRIVER'));
+	
 
-	$rootScope.userRole = userRole;
+
+	$rootScope.$on('currentUserCached', function(event, currentUser) {
+		var userRole = currentUser.roles[0];
+		console.log('Time entry Driver:',userRole.can('READ','TIME_ENTRY_DRIVER'));
+		$rootScope.userRole = userRole;
+
+		$rootScope.showOption = function(option){
+		var show = false;
+		var authContextsKeys = _.map(option.subOptions,function(subOption){
+				if(userRole.can('READ',subOption.authContext)){
+					show = true;
+				}
+			});	
+		return show;
+		};
+	});
+	
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
 	$rootScope.subMenu = [];

@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
-var util = require('common/security/util');
+var util = require('../../common/security/util');
 
 module.exports = [
 	'$scope','groupsList','authContextService','$state',

@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Role = require('janux-authorize').Role;
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
-var util = require('common/security/util');
+var util = require('../../common/security/util');
 
 module.exports = [
 	'$scope','role', 'authContextGroups','$state','roleService',

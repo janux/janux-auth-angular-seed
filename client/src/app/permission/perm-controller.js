@@ -1,6 +1,6 @@
 'use strict';
 
-var util = require('common/security/util');
+var util = require('../../common/security/util');
 
 module.exports = [
 	'$scope','authContextGroups','authContextService','$state','$modal', function(

@@ -3,11 +3,11 @@
 var _ = require('lodash');
 var Role = require('janux-authorize').Role;
 var AuthorizationContext = require('janux-authorize').AuthorizationContext;
-var util = require('common/security/util');
+var util = require('../../common/security/util');
 
 module.exports = [
-	'$scope', 'authContextGroups','roleService','$state',
-	function($scope, authContextGroups, roleService, $state) {
+	'$scope', 'authContextGroups', 'roleService', '$state',
+	function ($scope, authContextGroups, roleService, $state) {
 
 		$scope.authContextGroups = authContextGroups;
 
@@ -16,10 +16,10 @@ module.exports = [
 		};
 
 		$scope.role = {
-			'name': '',
-			'description': '',
-			'isAlmighty': false,
-			'enabled': true,
+			'name'        : '',
+			'description' : '',
+			'isAlmighty'  : false,
+			'enabled'     : true,
 			'authContexts': {}
 		};
 
@@ -29,7 +29,7 @@ module.exports = [
 			// at least one permit has been granted for this role
 
 			// Extract authorization contexts
-			var authContexts = _.mapKeys(_.flatten(_.map(authContextGroups, 'values')),'name');
+			var authContexts = _.mapKeys(_.flatten(_.map(authContextGroups, 'values')), 'name');
 			// console.log('authContexts', authContexts);
 
 			// Create Role
@@ -37,7 +37,7 @@ module.exports = [
 			role.enabled = $scope.role.enabled;
 			role.isAlmighty = $scope.role.isAlmighty;
 
-			for(var contextName in $scope.role.authContexts) {
+			for (var contextName in $scope.role.authContexts) {
 
 				// Create instance of authorization context
 				var givenContext = AuthorizationContext.fromJSON(authContexts[contextName]);
@@ -51,7 +51,7 @@ module.exports = [
 				role.grant(grantedBits, givenContext);
 			}
 
-			roleService.insert(role.toJSON()).then(function(){
+			roleService.insert(role.toJSON()).then(function () {
 				$state.go('permissions.roles');
 			});
 		};

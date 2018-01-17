@@ -3,17 +3,25 @@ login-toolbar(title='permission.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
-				.title-bar
-					.title {{ 'permission.createRole' | translate }}
-				hr
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					| {{ 'permission.createRole' | translate }}
+				span(flex)
 
-				include role-form
+				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='createRole()')
+					md-icon.fa.fa-check.fa-lg
 
-			.bottom-bar
-				button.btn.btn-ok(ng-click='createRole()') Create
-				button.btn.btn-cancel(ng-click='cancel()') Cancel
+				md-button.cancel.md-icon-button.form-btn-toolbar(aria-label="Cancel" ng-click='cancel()')
+					md-icon.fa.fa-times.fa-lg
+
+
+		.container-body-role
+			include role-form
+
+		//- .bottom-bar
+		//- 	button.btn.btn-ok(ng-click='createRole()') Create
+		//- 	button.btn.btn-cancel(ng-click='cancel()') Cancel
 
 footer-Janux

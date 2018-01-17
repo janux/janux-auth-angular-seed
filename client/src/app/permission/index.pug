@@ -3,12 +3,13 @@ login-toolbar(title='permission.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+				.md-toolbar-tools.form-toolbar-glarus
+					md-truncate
+						| {{ 'permission.authContexts' | translate }}
+		.container-body-role
 
-				.title-bar
-					.title {{ 'permission.authContexts' | translate }}
-				hr
+			include auth-contexts
 
-				include auth-contexts
+footer-Janux

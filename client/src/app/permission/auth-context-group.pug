@@ -3,30 +3,31 @@ login-toolbar(title='permission.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
-				.title-bar
-					.title {{ 'permission.authContextGroup' | translate }}
-					.options-glarus
-						a(style="margin-right:5px" ng-click='cancel()')
-							span.fa.fa-times.fa-lg 
-							| &nbsp; Cancel
-						a(ng-click='saveAuthContextGroup()')
-							span.fa.fa-hdd-o.fa-lg 
-							| &nbsp; Save
-				hr
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					| {{ 'permission.authContextGroup' | translate }}
+				span(flex)
 
-				form(name='authContextGroupForm')
+				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='saveAuthContextGroup()')
+					md-icon.fa.fa-check.fa-lg
 
-					table.table.context-form
-						tr
-							td: label(for='authContextGroupName') Name:
-							td: input#authContextGroupName.form-control(type='text' ng-model='contextGroupName' name='name' required='')
-						tr
-							td: label(for='authContextGroupCode') Code:
-							td: input#authContextGroupCode.form-control(type='text' ng-model='contextGroupCode' name='code' required='')
-						tr
-							td: label(for='authContextGroupDesc') Description:
-							td: input#authContextGroupDesc.form-control(type='text' ng-model='contextGroupDesc' name='description' required='')
+				md-button.cancel.md-icon-button.form-btn-toolbar(aria-label="Cancel" ng-click='cancel()')
+					md-icon.fa.fa-times.fa-lg
+		
+		.container-body-role
+
+			form(name='authContextGroupForm')
+
+				table.table.context-form
+					tr
+						td: label(for='authContextGroupName') Name:
+						td: input#authContextGroupName.form-control(type='text' ng-model='contextGroupName' name='name' required='')
+					tr
+						td: label(for='authContextGroupCode') Code:
+						td: input#authContextGroupCode.form-control(type='text' ng-model='contextGroupCode' name='code' required='')
+					tr
+						td: label(for='authContextGroupDesc') Description:
+						td: input#authContextGroupDesc.form-control(type='text' ng-model='contextGroupDesc' name='description' required='')
 footer-Janux

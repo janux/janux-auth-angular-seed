@@ -37,12 +37,12 @@ side-bar
 					th #
 					th Permission Bit
 					td
-				tr(ng-repeat='permBit in permissionBits')
-					td {{ $index+1 }}
+				tr(ng-repeat="permBit in permissionBits | orderBy:'+position' ")
+					td {{ permBit.position + 1 }}
 					td
-						input.form-control(type='text' ng-model='permissionBits[$index]' required='')
+						input.form-control(type='text' ng-model='permBit.label' required='')
 					td
-						span.glyphicon.glyphicon-remove-circle(ng-click='removeBit($index)')
+						span.glyphicon.glyphicon-remove-circle(ng-click='removeBit(permBit.position)')
 					//td: input.form-control(type='text' ng-model='permBit.description')
 
 			.text-right

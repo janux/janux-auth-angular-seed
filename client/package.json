@@ -99,7 +99,8 @@
 		"angular-local-storage": "./bower/angular-local-storage/dist/angular-local-storage.js",
 		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
 	    "angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js",
-		"common/time-periods": "./src/common/time-periods.js"
+		"common/time-periods": "./src/common/time-periods.js",
+		"common/security/util": "./src/common/security/util.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

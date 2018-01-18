@@ -45,7 +45,8 @@
 		"creation": "Creación",
 		"phone": "Teléfono",
 		"enabled": "Habilitado",
-		"renew": "Renovar contraseña"
+		"renew": "Renovar contraseña",
+		"title": "Personas & Organizaciones"
 	},
 	"role": {
 		"title": "Roles"
@@ -57,7 +58,8 @@
 		"copyContext": "Crear contexto de autorización a partir de ",
 		"updatingRole": "Actualizar role:",
 		"createRole": "Crear role:",
-		"authContextGroup": "Grupo de contextos de autorización"
+		"authContextGroup": "Grupo de contextos de autorización",
+		"title": "Esquema de autorización"
 	},
 	"staff": {
 		"listTitle": "Personal",

@@ -45,7 +45,8 @@
 		"creation": "Creation",
 		"phone": "Phone",
 		"enabled": "Enabled",
-		"renew": "Renew password"
+		"renew": "Renew password",
+		"title": "People & Organizations"
 	},
 	"role": {
 		"title": "Roles"
@@ -57,7 +58,8 @@
 		"copyContext": "Create Authorization Context from ",
 		"updatingRole": "Updating Role:",
 		"createRole": "Create Role:",
-		"authContextGroup": "Authorization Context Group"
+		"authContextGroup": "Authorization Context Group",
+		"title": "Authorization Schema"
 	},
 	"staff": {
 		"listTitle": "Staff",

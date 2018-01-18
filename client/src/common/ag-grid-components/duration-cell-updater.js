@@ -14,7 +14,7 @@ DurationUpdater.prototype.init = function(params) {
 			var begin = moment(timeFrame.begin);
 			var durationMoment = moment.duration(end.diff(begin));
 			var daysToHours = (durationMoment.get("days")>0)?durationMoment.get("days")*24:0;
-			out = (durationMoment.get('hours')+daysToHours) + ':' + durationMoment.get('minutes');
+			out = (durationMoment.get('hours')+daysToHours) + ':' + ('00'+durationMoment.get("minutes")).slice(-2);
 		}
 		params.$scope.agGridDurationUpdater = out;
 	}).bind(params);

@@ -141,7 +141,7 @@ module.exports =
 								end = moment(timeEntry.end);
 								var durationMoment = moment.duration(end.diff(begin));
 								var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
-								duration = (durationMoment.get("hours") + daysToHours) + ":" + durationMoment.get("minutes");
+								duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00'+durationMoment.get("minutes")).slice(-2);
 								endOnlyHour = end.format(formatStringOnlyHour);
 								end = end.format(dateTimeFormatString);
 							}

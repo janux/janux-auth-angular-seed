@@ -99,7 +99,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 		function createFilterForStaff(query) {
 			return function filterFn(operationDriver) {
 				var driver = operationDriver.resource;
-				var name = (driver.name.last + ' ' + driver.name.first).toLowerCase();
+				var name = (driver.name.last + ' ' + driver.name.first).toLowerCase()
+					.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 				var contains = name.toLowerCase().includes(query.toLowerCase());
 				return contains;
 			};

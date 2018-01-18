@@ -1,6 +1,7 @@
 'use strict'; 
 
 var angular = require('angular');
+var _ = require('lodash');
 
 require('angular-ui-router');
 require('angular-translate');
@@ -227,19 +228,17 @@ function ($scope) {
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 'config', 'security',
-function ($rootScope, config, security) {
-	
-
+.controller('sidebarCtrl', ['$rootScope', 'config',
+function ($rootScope, config) {
 
 	$rootScope.$on('currentUserCached', function(event, currentUser) {
 		var userRole = currentUser.roles[0];
-		console.log('Time entry Driver:',userRole.can('READ','TIME_ENTRY_DRIVER'));
+		// console.log('Time entry Driver:',userRole.can('READ','TIME_ENTRY_DRIVER'));
 		$rootScope.userRole = userRole;
 
 		$rootScope.showOption = function(option){
 		var show = false;
-		var authContextsKeys = _.map(option.subOptions,function(subOption){
+		_.map(option.subOptions,function(subOption){
 				if(userRole.can('READ',subOption.authContext)){
 					show = true;
 				}
@@ -255,8 +254,7 @@ function ($rootScope, config, security) {
 	$rootScope.subMenuFlag = [];
 	$rootScope.mainMenu = config.mainMenu;
 
-	// TODO: Set this as configuration
-	var options = ['peopleOrgs','operations','authSchema'];
+	var options = _.map(config.mainMenu,'key');
 
 	// All submenus hidden
 	$rootScope.resetSubmenu = function () {
@@ -273,7 +271,7 @@ function ($rootScope, config, security) {
 		$rootScope.toggleSubmenu[opt] = function () {
 			$rootScope.subMenuFlag[opt] = !$rootScope.subMenuFlag[opt];
 			options.forEach(function(anOpt){
-				$rootScope.subMenu[anOpt] = (anOpt!==opt)?false:true;
+				$rootScope.subMenu[anOpt] = (anOpt===opt);
 			});
 		};
 	});

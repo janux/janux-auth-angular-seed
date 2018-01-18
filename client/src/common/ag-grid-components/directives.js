@@ -174,8 +174,13 @@ angular.module('agGridDirectives',[])
 		restrict: 'A',
 		scope: false,
 		link: function(scope, element, attrs) {
-			angular.element(window).bind('resize', function(){
+			var onResize = function(){
 				scope[attrs['agGridReload']]();
+			};
+			angular.element(window).bind('resize', onResize);
+
+			scope.$on('$destroy', function () {
+				angular.element(window).off('resize', onResize);
 			});
 		}
 	};

@@ -61,6 +61,7 @@ side-bar
 								edit-input='true'
 								click-outside-to-close='true'
 								show-icon='true'
+								minute-steps='1'
 								ng-model='lbRow.start'
 								ng-model-options="{ debounce: 1000 }"
 								type='text' required='')
@@ -73,10 +74,12 @@ side-bar
 								time='true'
 								show-todays-date=''
 								minutes='true'
+								min-date='lbRow.start'
 								format='YYYY-MM-DD HH:mm'
 								edit-input='true'
 								click-outside-to-close='true'
 								show-icon='true'
+								minute-steps='1'
 								ng-model='lbRow.end'
 								ng-model-options="{ debounce: 1000 }"
 								type='text')

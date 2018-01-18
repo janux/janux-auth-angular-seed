@@ -17,7 +17,7 @@ DateTimepicker.formatStringOnlyDate = 'YYYY-MM-DD';
 // gets called once before the renderer is used
 DateTimepicker.prototype.init = function(params) {
 
-	var date = (params.value)?new Date(params.value):moment().format(DateTimepicker.formatString);
+	var date = (params.value)?new Date(params.value):moment().startOf('day').format(DateTimepicker.formatString);
 	var onBlurMethodName = 'datetime'+params.column.colId+'CellEditorBlur';
 
 	// Assign value to row scope
@@ -41,6 +41,7 @@ DateTimepicker.prototype.init = function(params) {
 	this.datetimePicker.setAttribute('minutes', 'true');
 	this.datetimePicker.setAttribute('format', DateTimepicker.formatString);
 	this.datetimePicker.setAttribute('show-icon', 'true');
+	this.datetimePicker.setAttribute('minute-steps', '1');
 	this.datetimePicker.setAttribute('type', 'text');
 	this.datetimePicker.setAttribute('class', 'jnx-datetime-picker');
 	this.datetimePicker.setAttribute('edit-input', 'true');

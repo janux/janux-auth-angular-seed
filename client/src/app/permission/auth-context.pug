@@ -5,19 +5,21 @@ side-bar
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid
 		.row
-			.col-lg-12
-				.title-bar
-					.title(ng-show='creating') {{ 'permission.createContext' | translate }}
-					.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
+			md-toolbar.form-root-toolbar
+				.md-toolbar-tools
+					md-truncate
+						.title(ng-show='creating') {{ 'permission.createContext' | translate }}
+						.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
 					.title(ng-show='editing') {{ 'permission.editContext' | translate }}
-					.options
-						a(style="margin-right:5px" ng-click='cancel()')
-							span.fa.fa-times.fa-lg 
-							| &nbsp; Cancel
-						a(ng-click='saveAuthContext()')
-							span.fa.fa-hdd-o.fa-lg 
-							| &nbsp; Save
-				hr
+					span(flex)
+
+					md-button.md-icon-button.save(aria-label="Save" ng-click='saveAuthContext()')
+								md-icon.fa.fa-check.fa-lg
+
+					md-button.md-icon-button.cancel(aria-label="Cancel" ng-click='cancel()')
+						md-icon.fa.fa-times.fa-lg
+			
+			.col-lg-12(style="padding-top:20px;")
 
 				form(name='authContextForm')
 

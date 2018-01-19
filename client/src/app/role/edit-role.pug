@@ -5,15 +5,23 @@ side-bar
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid
 		.row
-			.col-lg-12
-				.title-bar
-					.title {{ 'permission.updatingRole' | translate }}
-				hr
+			md-toolbar.form-root-toolbar
+				.md-toolbar-tools
+					md-truncate
+						| {{ 'permission.updatingRole' | translate }}
+					span(flex)
+
+					md-button.md-icon-button.save(aria-label="Save" ng-click='saveRole()')
+								md-icon.fa.fa-check.fa-lg
+
+					md-button.md-icon-button.cancel(aria-label="Cancel" ng-click='cancel()')
+						md-icon.fa.fa-times.fa-lg
+			.col-lg-12(style="padding-top:20px;")
 
 				include role-form
 
-			.bottom-bar
-				button.btn.btn-ok(ng-click='saveRole()') Save
-				button.btn.btn-cancel(ng-click='cancel()') Cancel
+			//- .bottom-bar
+			//- 	button.btn.btn-ok(ng-click='saveRole()') Save
+			//- 	button.btn.btn-cancel(ng-click='cancel()') Cancel
 
 footer-Janux

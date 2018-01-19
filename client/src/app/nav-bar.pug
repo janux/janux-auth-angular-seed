@@ -17,13 +17,13 @@
           .accordion-toggle.menu-sub
             .accordion-inner(ng-show="subMenu[option.key] && !noneStyle")
               ul
-                li(ng-repeat='subOption in option.subOptions')
-                  a(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='resetSubmenu();' ng-show='userRole.can("READ",subOption.authContext);')
+                li(ng-repeat='subOption in option.subOptions' ng-show='userRole.can("READ",subOption.authContext);')
+                  a(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='resetSubmenu();')
                     | {{ subOption.translate | translate }}
 
           .accordion-toggle(ng-show="subMenuFlag[option.key] && noneStyle")
             .accordion-inner
               ul
-                li(ng-repeat='subOption in option.subOptions')
-                  a.submenu-left(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-show='userRole.can("READ",subOption.authContext);')
+                li(ng-repeat='subOption in option.subOptions' ng-show='userRole.can("READ",subOption.authContext);')
+                  a.submenu-left(ui-sref-active="active" ui-sref='{{subOption.state}}')
                     | {{ subOption.translate | translate }}

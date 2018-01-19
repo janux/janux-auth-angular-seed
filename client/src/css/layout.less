@@ -29,8 +29,7 @@ html {
 	position: fixed;
 	left: 0;
 	width: @sidebar-width;
-	z-index: 200;
-	overflow-y: hidden;
+	z-index: 10;
 	.small-device({ display: none;});
 	.smallest-device({ display: none;});
 }
@@ -113,7 +112,7 @@ html {
 
 .noneStyle {
 	width: @sidebar-width-full;
-	z-index: 1000;
+	z-index: 10;
 	transition:all 0.3s ease;
 	-webkit-transition:all 0.3s ease;
 	-moz-transition:all 0.3s ease;

@@ -11,7 +11,7 @@
       .accordion(id="rightMenu1" ng-show='showOption(option)')
         .accordion-group
           .accordion-heading(ng-click="toggleSubmenu[option.key]();")
-            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+            a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="right" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
               i.fa(ng-class="option.iconClass")
               span.down {{ (option.translateKey | translate) }}
           .accordion-toggle.menu-sub

@@ -6,7 +6,7 @@ module.exports = {
 			return moment().subtract('7', 'days').toDate();
 		},
 		to: function () {
-			return moment().toDate();
+			return moment().add(1, 'day').startOf('day').toDate();
 		}
 	},
 	'currentWeek': {
@@ -30,7 +30,7 @@ module.exports = {
 			return moment().subtract('30', 'days').toDate();
 		},
 		to: function () {
-			return moment().toDate();
+			return moment().add(1, 'day').startOf('day').toDate();
 		}
 	},
 	'currentMonth': {
@@ -54,7 +54,7 @@ module.exports = {
 			return moment().subtract('90', 'days').toDate();
 		},
 		to: function () {
-			return moment().toDate();
+			return moment().add(1, 'day').startOf('day').toDate();
 		}
 	},
 	'currentQuarter': {

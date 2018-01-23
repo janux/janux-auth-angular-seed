@@ -48,6 +48,10 @@ DateTimepicker.prototype.init = function(params) {
 	this.datetimePicker.setAttribute('ng-model', this.model);
 	this.datetimePicker.setAttribute('ng-change', onBlurMethodName+'()');
 	this.datetimePicker.setAttribute('ng-model-options', '{ debounce: 1000 }');
+	this.datetimePicker.setAttribute('lang', '{{ lang }}');
+	this.datetimePicker.setAttribute('today-text', '{{ "label.today" | translate }}');
+	this.datetimePicker.setAttribute('ok-text', '{{ "label.ok" | translate }}');
+	this.datetimePicker.setAttribute('cancel-text', '{{ "label.cancel" | translate }}');
 };
 
 // gets called once when grid ready to insert the element

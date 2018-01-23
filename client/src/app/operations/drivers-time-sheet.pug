@@ -64,7 +64,11 @@ side-bar
 								minute-steps='1'
 								ng-model='lbRow.start'
 								ng-model-options="{ debounce: 1000 }"
-								type='text' required='')
+								type='text' required='',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}')
 
 						.element
 							md-input-container.jnx-datetime-picker
@@ -82,7 +86,11 @@ side-bar
 								minute-steps='1'
 								ng-model='lbRow.end'
 								ng-model-options="{ debounce: 1000 }"
-								type='text')
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}')
 
 						.element
 							md-input-container

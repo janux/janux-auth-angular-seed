@@ -5,14 +5,15 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope','$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter','$state',
-	function ($rootScope,$scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state) {
+module.exports = ['$rootScope','$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter','$state','$translate',
+	function ($rootScope,$scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
 
 		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 		$scope.periodFilterOptions = config.periodFilter;
+		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
 			jnxStorage.setItem('driversTimeLogFilterPeriod',$scope.periodFilterKey,true);

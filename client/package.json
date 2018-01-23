@@ -76,7 +76,7 @@
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./node_modules/lodash/index.js",
 		"md5":             	  "./bower/js-md5/src/md5.js",
-		"moment":             "./bower/moment/moment.js",
+		"moment":             "./bower/moment/min/moment-with-locales.js",
 		"moment-timezone":    "./bower/moment-timezone/builds/moment-timezone-with-data.js",
 		"drag-and-drop-lists":"./bower/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js",
 		"drag-drop-mobile":   "./vendor/drag-drop-webkit-mobile/ios-drag-drop.js",

@@ -73,7 +73,7 @@ module.exports = [
 					templateUrl: 'app/dialog-tpl/info-dialog.html',
 					controller: ['$scope','$modalInstance', '$filter',
 						function($scope , $modalInstance, $filter) {
-							$scope.message = $filter('translate')('authSchema.dialogs.warningDeletion');
+							$scope.message = $filter('translate')('authSchema.dialogs.warningDeletion',{value:group.values.length});
 							//$scope.message = 'You can not delete this group because it contains '+group.values.length+' linked authorization contexts';
 
 							$scope.ok = function() {

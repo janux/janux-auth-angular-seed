@@ -158,7 +158,7 @@
 		"roles": "Roles",
 		"authorizations": "Authorizations",
 		"dialogs":{
-			"warningDeletion":"You can not delete this group because it contains {{groupValues}} linked authorization contexts"
+			"warningDeletion":"You can not delete this group because it contains {{ value }} linked authorization contexts"
 		}
 	},
 	"grid": {

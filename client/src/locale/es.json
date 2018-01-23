@@ -158,7 +158,7 @@
 		"roles": "Roles",
 		"authorizations": "Autorizaciones",
 		"dialogs":{
-			"warningDeletion":"No puedes eliminar este grupo por que contiene {{groupValues}} esquemas de autorización vinculados"
+			"warningDeletion":"No puedes eliminar este grupo por que contiene {{ value }} esquemas de autorización vinculados"
 		}
 	},
 	"grid": {

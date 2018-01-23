@@ -47,7 +47,11 @@
 		"phone": "Phone",
 		"enabled": "Enabled",
 		"renew": "Renew password",
-		"title": "People & Organizations"
+		"title": "People & Organizations",
+		"dialogs":{
+			"noRowSelectedError":"Select at least one row to delete",
+			"confirmDeletion":"Are you sure you want to delete the row selection?"
+		}
 	},
 	"role": {
 		"title": "Roles"
@@ -140,12 +144,22 @@
 		},
 		"specials": "Specials",
 		"guards": "Guards",
-		"services": "Services"
+		"services": "Services",
+		"dialogs":{
+			"endDateError":"End date should be higher than begin date",
+			"invalidOperation":"Invalid operation selected",
+			"invalidStaff":"Invalid staff member selected",
+			"noRowSelectedError":"Select at least one row to delete",
+			"confirmDeletion":"Are you sure you want to delete the row selection?"
+		}
 	},
 	"authSchema": {
 		"title": "Authorization Schema",
 		"roles": "Roles",
-		"authorizations": "Authorizations"
+		"authorizations": "Authorizations",
+		"dialogs":{
+			"warningDeletion":"You can not delete this group because it contains {{groupValues}} linked authorization contexts"
+		}
 	},
 	"grid": {
 		"page": "Page",
@@ -181,5 +195,8 @@
 		"last90Days": "Last 90 days",
 		"currentQuarter": "Current quarter",
 		"lastQuarter": "Last quarter"
+	},
+	"dialogs":{
+		"delete":"Are you sure to delete the "
 	}
 }

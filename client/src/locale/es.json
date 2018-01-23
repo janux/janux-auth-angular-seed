@@ -47,7 +47,11 @@
 		"phone": "Teléfono",
 		"enabled": "Habilitado",
 		"renew": "Renovar contraseña",
-		"title": "Personas & Organizaciones"
+		"title": "Personas & Organizaciones",
+		"dialogs":{
+			"noRowSelectedError":"Selecciona al menos un registro para borrar",
+			"confirmDeletion":"De verdad deseas borrar la selección?"
+		}
 	},
 	"role": {
 		"title": "Roles"
@@ -140,12 +144,22 @@
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",
-		"services": "Servicios"
+		"services": "Servicios",
+		"dialogs":{
+			"endDateError":"La fecha de término debe ser mayor a la fecha de inicio",
+			"invalidOperation":"La operación seleccionada es invalida",
+			"invalidStaff":"El personal seleccionado es invalido",
+			"noRowSelectedError":"Selecciona al menos un registro para borrar",
+			"confirmDeletion":"De verdad deseas borrar la selección?"
+		}
 	},
 	"authSchema": {
 		"title": "Esquema de autorización",
 		"roles": "Roles",
-		"authorizations": "Autorizaciones"
+		"authorizations": "Autorizaciones",
+		"dialogs":{
+			"warningDeletion":"No puedes eliminar este grupo por que contiene {{groupValues}} esquemas de autorización vinculados"
+		}
 	},
 	"grid": {
 		"page": "Página",
@@ -181,5 +195,8 @@
 		"last90Days": "Últimos 90 dias",
 		"currentQuarter": "Trimestre actual",
 		"lastQuarter": "Trimestre pasado"
+	},
+	"dialogs":{
+		"delete":"Estas seguro que quieres borrar "
 	}
 }

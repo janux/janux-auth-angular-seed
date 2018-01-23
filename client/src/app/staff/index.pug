@@ -1,4 +1,4 @@
-login-toolbar(title='peopleOrgs.title')
+login-toolbar(toolbar-title='peopleOrgs.title')
 
 side-bar
 
@@ -10,7 +10,7 @@ side-bar
 						| {{ 'staff.listTitle' | translate }}
 					span(flex)
 
-					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='staff.create')
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='staff.create' ng-show='userRole.can("READ",subOption.authContext);')
 						md-icon.fa.fa-user-plus.fa-lg
 
 					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
@@ -27,8 +27,9 @@ side-bar
 						th {{ 'staff.email' | translate }}
 						th {{ 'staff.area' | translate }}
 						th {{ 'staff.userName' | translate }}
-						th {{ 'user.edit' | translate }}
-						th
+						th(ng-show='userRole.can("READ",subOption.authContext);') 
+							| {{ 'user.edit' | translate }}
+						th(ng-show='userRole.can("READ",subOption.authContext);') 
 							md-button.md-icon-button(aria-label="Trash" style="background:none;")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
 				tbody
@@ -38,10 +39,10 @@ side-bar
 						td {{ staff.emailAddress('work').address }}
 						td {{ staff.area }}
 						td {{ staff.user }}
-						td.text-center
+						td.text-centerth(ng-show='userRole.can("READ",subOption.authContext);') 
 							a.action-button-glarus
 								span.fa.fa-pencil.fa-lg(ng-click='editStaff(staff.id)') 
-						td(style="text-align:center")
+						td(style="text-align:center" ng-show='userRole.can("READ",subOption.authContext);')
 							md-checkbox(aria-label="Trash" ng-model='staff.Selected' class="md-primary")
 
 				

@@ -1,4 +1,4 @@
-login-toolbar(title='user.title')
+login-toolbar(toolbar-title='user.title')
 
 side-bar
 
@@ -27,15 +27,15 @@ side-bar
 						md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
 							md-nav-item(md-nav-click="goto('page1')" name="page1")
 								| GENERAL
-							md-nav-item(md-nav-click="goto('page2')" name="page2")
-								| HUMAN RESOURSES
-							md-nav-item(md-nav-click="goto('page3')" name="page3")
-								| PAYROLL LOGBOOK
+							//- md-nav-item(md-nav-click="goto('page2')" name="page2")
+							//- 	| HUMAN RESOURSES
+							//- md-nav-item(md-nav-click="goto('page3')" name="page3")
+							//- 	| PAYROLL LOGBOOK
 						
 						span(flex)
 						
-						md-button.md-icon-button.trash(aria-label="Trash")
-							md-icon.fa.fa-trash.fa-lg
+						//- md-button.md-icon-button.trash(aria-label="Trash")
+						//- 	md-icon.fa.fa-trash.fa-lg
 
 						md-button.md-icon-button.save(aria-label="Save" ng-click='save()')
 							md-icon.fa.fa-check.fa-lg

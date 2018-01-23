@@ -11,7 +11,7 @@ module.exports = ['security', function(security) {
 		replace:	true,
 		scope:		true,
 		link: function($scope, $element, $attrs, $controller) {
-			$scope.title = $attrs['title'];
+			$scope.title = $attrs['toolbarTitle'];
 			$scope.isAuthenticated = security.isAuthenticated;
 			$scope.login	= security.showLogin;
 			$scope.logout = security.logout;

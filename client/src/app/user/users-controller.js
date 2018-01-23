@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = [
-'$scope','userService','$state','users','$modal', '$q', function(
- $scope , userService , $state , users , $modal, $q) {
+'$scope','userService','$state','users','$modal', '$q', '$filter', function(
+ $scope , userService , $state , users , $modal, $q, $filter) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
@@ -13,12 +13,12 @@ module.exports = [
 
 	$scope.searchFields = ['username', 'name', 'email', 'phone'];
 
-	var infoDialog = function(message){
+	var infoDialog = function(translateKey){
 		$modal.open({
 			templateUrl: 'app/dialog-tpl/info-dialog.html',
 			controller: ['$scope','$modalInstance',
 				function($scope , $modalInstance) {
-					$scope.message= message;
+					$scope.message= $filter('translate')(translateKey);
 
 					$scope.ok = function() {
 						$modalInstance.close();
@@ -75,9 +75,9 @@ module.exports = [
 		if(selectedIds.length>0) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/confirm-dialog.html',
-				controller: ['$scope','$modalInstance',
-					function($scope , $modalInstance) {
-						$scope.message= 'Are you sure you want to delete the row selection?';
+				controller: ['$scope','$modalInstance','$filter',
+					function($scope , $modalInstance, $filter) {
+						$scope.message= $filter('translate')('user.dialogs.confirmDeletion');
 
 						$scope.ok = function() {
 							var userDeletionArray =[];
@@ -100,7 +100,7 @@ module.exports = [
 				size: 'md'
 			});
 		}else{
-			infoDialog('Select at least one row to delete');
+			infoDialog('user.dialogs.noRowSelectedError');
 		}
 	};
 

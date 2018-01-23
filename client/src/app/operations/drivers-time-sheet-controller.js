@@ -51,12 +51,12 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 			provider : ''
 		};
 
-		var infoDialog = function (message) {
+		var infoDialog = function (translateKey) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',
 				controller : ['$scope', '$modalInstance',
 					function ($scope, $modalInstance) {
-						$scope.message = message;
+						$scope.message = $filter('translate')(translateKey);
 
 						$scope.ok = function () {
 							$modalInstance.close();
@@ -193,7 +193,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 							endToInsert = end.toDate();
 
 							if (begin > end) {
-								infoDialog('End date should be higher than begin date');
+								infoDialog('operations.dialogs.endDateError');
 								return;
 							}
 						}
@@ -227,10 +227,10 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 						});
 					}
 				} else {
-					infoDialog('Invalid operation selected');
+					infoDialog('operations.dialogs.invalidOperation');
 				}
 			} else {
-				infoDialog('Invalid staff member selected');
+				infoDialog('operations.dialogs.invalidStaff');
 			}
 		};
 
@@ -251,7 +251,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
-							$scope.message = 'Are you sure you want to delete the row selection?';
+							$scope.message= $filter('translate')('operations.dialogs.confirmDeletion');
 
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
@@ -265,7 +265,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					size       : 'md'
 				});
 			} else {
-				infoDialog('Select at least one row to delete');
+				infoDialog('operations.dialogs.noRowSelectedError');
 			}
 		};
 

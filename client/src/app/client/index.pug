@@ -1,4 +1,4 @@
-login-toolbar(title='peopleOrgs.title')
+login-toolbar(toolbar-title='peopleOrgs.title')
 
 side-bar
 
@@ -10,7 +10,7 @@ side-bar
 						| {{ 'client.listTitle' | translate }}
 					span(flex)
 
-					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add")
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-show='userRole.can("CREATE",subOption.authContext);')
 						md-icon.fa.fa-user-plus.fa-lg
 
 					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
@@ -29,8 +29,9 @@ side-bar
 						th {{ 'client.phone' | translate }}
 						th {{ 'client.cellphone' | translate }}
 						th {{ 'client.reseller' | translate }}
-						th {{ 'client.edit' | translate }}
-						th
+						th(ng-show='userRole.can("UPDATE",subOption.authContext);') 
+							| {{ 'client.edit' | translate }}
+						th(ng-show='userRole.can("DELETE",subOption.authContext);')
 							md-button.md-icon-button(aria-label="Trash" style="background:none;")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
 				tbody
@@ -42,10 +43,10 @@ side-bar
 						td {{ client.phoneNumber('work').number }}
 						td {{ client.phoneNumber('cellphone').number }}
 						td {{ client.reseller }}
-						td.text-center
+						td.text-center(ng-show='userRole.can("UPDATE",subOption.authContext);')
 							a.action-button-glarus
 								span.fa.fa-pencil.fa-lg 
-						td(style="text-align:center")
+						td(style="text-align:center" ng-show='userRole.can("DELETE",subOption.authContext);')
 							md-checkbox(aria-label="Trash" ng-model='client.Selected' class="md-primary")
 
 				

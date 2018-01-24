@@ -62,6 +62,9 @@ var createInstance = function(roleServiceReference) {
 				roleToUpdate.id = role.id;
 				roleToUpdate.name = roleObject.name;
 				roleToUpdate.description = roleObject.description;
+				roleToUpdate.enabled = roleObject.enabled;
+				roleToUpdate.isAlmighty = roleObject.isAlmighty;
+				roleToUpdate.sortOrder = roleObject.sortOrder;
 				roleToUpdate.authContexts = roleObject.authContexts;
 				roleToUpdate.permissions = roleObject.permissions;
 

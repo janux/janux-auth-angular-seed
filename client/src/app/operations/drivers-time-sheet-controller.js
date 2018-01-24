@@ -306,7 +306,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				field      : 'begin',
 				editable   : true,
 				filter     : 'date',
-				filterParams:{
+					filterParams:{
+					inRangeInclusive : true,
 					comparator: agGridComp.dateFilterComparator,
 					filterOptions: ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},

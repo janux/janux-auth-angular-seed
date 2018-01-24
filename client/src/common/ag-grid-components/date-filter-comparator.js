@@ -4,16 +4,14 @@ var moment = require('moment');
 
 var comparator = function (filterDate, cellValue) {
 
-	var filterDate = moment(filterDate);
-	var cellDateOnly = moment(cellValue).startOf('day'); //new Date(cellValue.getFullYear(), cellValue.getMonth(), cellValue.getDate());
+	var filterDateMoment = moment(filterDate).startOf('day');
+	var cellDateOnlyMoment = moment(cellValue).startOf('day'); //new Date(cellValue.getFullYear(), cellValue.getMonth(), cellValue.getDate());
 
 	// Now that both parameters are Date objects, we can compare
-	// cellDateOnly < filterDate
-	if (cellDateOnly.isBefore(filterDate)) {
+
+	if (cellDateOnlyMoment.isBefore(filterDateMoment)) {
 		return -1;
-	}
-	// cellDateOnly > filterDate
-	else if (cellDateOnly.isAfter(filterDate)) {
+	} else if (cellDateOnlyMoment.isAfter(filterDateMoment)) {
 		return 1;
 	} else {
 		return 0;

@@ -4,20 +4,24 @@ side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum
+						| {{ 'peopleOrgs.title' | translate }}
+					h2
+						| {{ 'user.createUser' | translate }}
+				span(flex)
+
+				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='save()')
+					md-icon.fa.fa-check.fa-lg
+
+				md-button.cancel.md-icon-button.form-btn-toolbar(aria-label="Cancel" ng-click='cancel()')
+					md-icon.fa.fa-times.fa-lg
 		
 			
-		.title-bar
-			.title {{ 'user.createUser' | translate }}
-			.options-glarus
-				a(style="margin-right:5px" ng-click='cancel()')
-					span.fa.fa-times.fa-lg 
-					| &nbsp; {{ 'label.cancel' | translate }}
-				a(ng-click='save()')
-					span.fa.fa-hdd-o.fa-lg 
-					| &nbsp; {{ 'label.save' | translate }}
-		hr
 
-		.container-body
+		.container-body-role
 
 			.user-form
 				.label-form.label-disp

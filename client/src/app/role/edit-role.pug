@@ -7,7 +7,10 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					| {{ 'permission.createRole' | translate }}
+					span.title-breadcrum
+						| {{ 'permission.title' | translate }}
+					h2
+						| {{ 'permission.updatingRole' | translate }}
 				span(flex)
 
 				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='saveRole()')

@@ -7,7 +7,10 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 				.md-toolbar-tools.form-toolbar-glarus
 					md-truncate
-						| {{ 'user.listTitle' | translate }}
+						span.title-breadcrum
+							| {{ 'peopleOrgs.title' | translate }}
+						h2
+							| {{ 'user.listTitle' | translate }}
 					span(flex)
 
 					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='users.create')

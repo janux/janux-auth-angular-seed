@@ -27,6 +27,7 @@ md-toolbar.form-mid-toolbar{
 	border-radius: 20% !important;
 	box-shadow: 2px 2px 3px @grey1;
 }
+
 .md-button.trash{
 	background: #706e6e;
 }
@@ -37,9 +38,9 @@ md-toolbar.form-mid-toolbar{
 	background: #d0021b;
 }
 md-toolbar.form-root-toolbar{
-	background: #d7d6d7;
-	color: #004c6b;
-	
+	background: @toolbar-glarus;
+	color: @glarus-blue;
+	padding-bottom:10px; 
 	z-index: 0;
 }
 .md-toolbar-tools.form-toolbar .md-button{
@@ -57,17 +58,26 @@ md-toolbar.form-root-toolbar{
 
 .md-button.add{
 	color: @white;
-	background: #109e5a;
+	background: @glarus-blue;
+	&:hover{
+		background: @hover-glarus !important;
+	}
 }
 
 .md-button.grid{
 	color: @white;
-	background: #f4be6b;
+	background: @glarus-blue;
+	&:hover{
+		background: @hover-glarus !important;
+	}
 }
 
 .md-button.arrow{
 	color: @white;
-	background: #e56a86;
+	background: @glarus-blue;
+	&:hover{
+		background: @hover-glarus !important;
+	}
 }
 
 .an-material{

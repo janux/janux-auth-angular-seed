@@ -3,22 +3,25 @@ login-toolbar(toolbar-title='user.title')
 side-bar
 
 .page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
-	.container-fluid
-		.row
-			.col-lg-12
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum
+						| {{ 'peopleOrgs.title' | translate }}
+					h2
+						| {{ 'user.editUser' | translate }}
+				span(flex)
 
-				.title-bar
-					.title {{ 'user.editUser' | translate }}
-					.options
-						a(style="margin-right:5px" ng-click='cancel()')
-							span.fa.fa-times.fa-lg 
-							| &nbsp; Cancel
-						a(ng-click='save()')
-							span.fa.fa-hdd-o.fa-lg 
-							| &nbsp; Save
-				hr
+				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='save()')
+					md-icon.fa.fa-check.fa-lg
 
-				.user-form
-					include user-form
+				md-button.cancel.md-icon-button.form-btn-toolbar(aria-label="Cancel" ng-click='cancel()')
+					md-icon.fa.fa-times.fa-lg
+		
+
+		.container-body-role
+			.user-form
+				include user-form
 
 footer-Janux

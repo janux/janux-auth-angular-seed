@@ -7,7 +7,10 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 				.md-toolbar-tools.form-toolbar-glarus
 					md-truncate
-						| {{ 'permission.authContexts' | translate }}
+						span.title-breadcrum
+							| {{ 'permission.title' | translate }}
+						h2
+							| {{ 'permission.authContexts' | translate }}
 		.container-body-role
 
 			include auth-contexts

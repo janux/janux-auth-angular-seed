@@ -1,4 +1,4 @@
-login-toolbar(toolbar-title='user.title')
+login-toolbar(toolbar-title='peopleOrgs.title')
 
 side-bar
 
@@ -7,14 +7,17 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					| {{ 'staff.createStaff' | translate }}
+					span.title-breadcrum
+						| {{ 'peopleOrgs.title' | translate }}
+					h2
+						| {{ 'staff.createStaff' | translate }}
 				span(flex)
 
-				md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
-					md-icon.fa.fa-table.fa-lg
+				//- md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
+				//- 	md-icon.fa.fa-table.fa-lg
 
-				md-button.arrow.md-icon-button(aria-label="Upload")
-					md-icon.fa.fa-upload.fa-lg
+				//- md-button.arrow.md-icon-button(aria-label="Upload")
+				//- 	md-icon.fa.fa-upload.fa-lg
 
 		.container-fluid-flex.spacing-bottom
 

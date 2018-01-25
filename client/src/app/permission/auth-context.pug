@@ -7,9 +7,12 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					.title(ng-show='creating') {{ 'permission.createContext' | translate }}
-					.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
-					.title(ng-show='editing') {{ 'permission.editContext' | translate }}
+					span.title-breadcrum
+						| {{ 'permission.title' | translate }}
+					h2
+						.title(ng-show='creating') {{ 'permission.createContext' | translate }}
+						.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
+						.title(ng-show='editing') {{ 'permission.editContext' | translate }}
 				span(flex)
 
 				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='saveAuthContext()')

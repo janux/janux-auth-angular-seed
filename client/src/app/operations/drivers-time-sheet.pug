@@ -5,19 +5,22 @@ side-bar
 .page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar
-			.md-toolbar-tools.form-toolbar
+			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
 					span.title-breadcrum
 						| {{ 'operations.title' | translate }}
-					h2
+					h2.title-bar-txt
 						| {{ 'operations.driversTimeLog.title' | translate }}
 
-				md-truncate.filter-label
-					| {{ 'operations.driversTimeLog.filterLabel' | translate }}
+				//- md-truncate.filter-label
+				//- 	| {{ 'operations.driversTimeLog.filterLabel' | translate }}
 
-				md-truncate.add-form
-					md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
-						md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
+				md-truncate.add-form.filter-label
+					md-input-container
+						label
+							| {{ 'operations.driversTimeLog.filterLabel' | translate }}
+						md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
+							md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
 				span(flex)
 
 				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()')
@@ -39,6 +42,8 @@ side-bar
 							md-item-template
 								span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
 
+					.vertical-line
+
 					.element-small
 						md-autocomplete(md-no-cache='false',
 						md-items='item in opsSearch(lbSearch.operation)',
@@ -51,6 +56,8 @@ side-bar
 						md-floating-label="{{ 'operations.driversTimeLog.operation' | translate }}")
 							md-item-template
 								span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
+
+					.vertical-line
 
 					.element
 						md-input-container.jnx-datetime-picker
@@ -72,6 +79,8 @@ side-bar
 							today-text='{{ "label.today" | translate }}',
 							ok-text='{{ "label.ok" | translate }}',
 							cancel-text='{{ "label.cancel" | translate }}')
+
+					.vertical-line
 
 					.element
 						md-input-container.jnx-datetime-picker
@@ -95,10 +104,14 @@ side-bar
 							ok-text='{{ "label.ok" | translate }}',
 							cancel-text='{{ "label.cancel" | translate }}')
 
+					.vertical-line
+
 					.element
 						md-input-container
 							label {{ 'operations.driversTimeLog.comment' | translate }}
 							input(ng-model='lbRow.location')
+
+					.vertical-line
 
 					.element-small
 						md-input-container
@@ -111,6 +124,8 @@ side-bar
 								md-option(value='F') {{ 'operations.driversTimeLog.absenceOptions.F' | translate }}
 								md-option(value='PC') {{ 'operations.driversTimeLog.absenceOptions.PC' | translate }}
 								md-option(value='I') {{ 'operations.driversTimeLog.absenceOptions.I' | translate }}
+
+					.vertical-line
 
 					.btn-element-small
 

@@ -16,7 +16,7 @@
 	.filter-label {
 		color: @grey6;
 		font-size: 14px;
-		padding: 0 10px 0 50px;
+		padding: 20px 10px 0 50px;
 	}
 
 	.add-form-container {
@@ -43,7 +43,6 @@
 	.add-form .btn-element-small {
 		width:12%;
 		margin-left: 5px;
-		text-align: right;
 	}
 
 	.add-form input[type="text"], md-autocomplete {
@@ -133,7 +132,8 @@ class, it gets put onto the row that is currently in edit mode. */
 
 .add-row-section{
 	width: 100%;
-	margin:10px 20px -10px 20px; 
+	margin:10px 20px 10px 20px; 
+	max-height: 80px;
 	padding: 5px;
 	background-color: @glarus-green1;
 }
@@ -141,6 +141,7 @@ class, it gets put onto the row that is currently in edit mode. */
 	background: @glarus-blue;
 	border-radius: 10%;
 	margin-top: 15px;
+	margin-left: 10px;
 	md-icon{
 		color: @white !important;
 		font-size: 16px;
@@ -148,4 +149,11 @@ class, it gets put onto the row that is currently in edit mode. */
 	&:hover{
 		background: @hover-glarus;
 	}
+}
+
+.vertical-line {
+   width: 1px;
+   height: 30px;
+   background-color: @grey2;
+   margin: 25px 10px;
 }

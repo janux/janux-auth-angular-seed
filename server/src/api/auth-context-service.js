@@ -92,6 +92,8 @@ var createInstance = function(authContextServiceReference,
 				authContextToUpdate.name = authContextObject.name;
 				authContextToUpdate.description = authContextObject.description;
 				authContextToUpdate.bit = authContextObject.bit;
+				authContextToUpdate.sortOrder = authContextObject.sortOrder;
+				authContextToUpdate.enabled = authContextObject.enabled;
 
 				log.info("Update auth context %j ",authContextToUpdate);
 
@@ -102,6 +104,14 @@ var createInstance = function(authContextServiceReference,
 						return authContextServicePersistence.update(authContextToUpdate).asCallback(callback);
 					});
 			});
+	};
+
+	//
+	// Update order of the authorization contexts
+	//
+	AuthContextService.prototype.updateSortOrder = function(authContextsOrder, callback) {
+
+		return authContextServicePersistence.updateSortOrder(authContextsOrder).asCallback(callback);
 	};
 
 	//
@@ -127,7 +137,7 @@ var createInstance = function(authContextServiceReference,
 		group.name = groupObject.name;
 		group.code = groupObject.code;
 		group.description = groupObject.description;
-		group.attributes = {};
+		group.attributes = groupObject.attributes;
 		group.values = [];
 
 		// Insert the AuthContextorization Context Group
@@ -150,27 +160,19 @@ var createInstance = function(authContextServiceReference,
 	};
 
 	//
+	// Update order of authorization context groups
+	//
+	AuthContextService.prototype.updateGroupsSortOrder = function(groupsOrder, callback) {
+
+		return authContextGroupServicePersistence.updateGroupsSortOrder(groupsOrder).asCallback(callback);
+	};
+
+	//
 	// Load one authorization context group
 	//
 	AuthContextService.prototype.findGroupByCode = function(groupCode, callback) {
 
 		return authContextGroupServicePersistence.findOne(groupCode).asCallback(callback);
-	};
-
-	//
-	// Insert one authorization context group
-	//
-	AuthContextService.prototype.insertGroup = function(groupObject, callback) {
-
-		var group = new GroupImpl();
-		group.name = groupObject.name;
-		group.code = groupObject.code;
-		group.description = groupObject.description;
-		group.attributes = {};
-		group.values = [];
-
-		// Insert the AuthContextorization Context Group
-		return authContextGroupServicePersistence.insert(group).asCallback(callback);
 	};
 
 	//

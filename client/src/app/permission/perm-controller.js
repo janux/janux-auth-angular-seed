@@ -1,13 +1,22 @@
 'use strict';
-
+var _ = require('lodash');
 var util = require('../../common/security/util');
 
 module.exports = [
 	'$scope','authContextGroups','authContextService','$state','$modal', function(
 		$scope , authContextGroups , authContextService , $state , $modal) {
 
-		$scope.authContextGroups = authContextGroups;
-		// console.log('authContextGroups', authContextGroups);
+		// Ensure order of groups
+		$scope.authContextGroups = _.sortBy(authContextGroups, function (group) {
+			group.values = _.sortBy(group.values, 'sortOrder');
+			return (!group.attributes.sortOrder)?0:group.attributes.sortOrder;
+		});
+		console.log('authContextGroups', authContextGroups);
+
+		$scope.listTypes = {
+			authContextGroup: ['authContextGroup'],
+			authContext: ['authContext']
+		};
 
 		//
 		// Delete authorization context
@@ -94,6 +103,62 @@ module.exports = [
 					}
 				});
 			}
+		};
+
+		$scope.moveGroup = function (index) {
+			var groupsOrder = [];
+
+			$scope.authContextGroups.splice(index, 1);
+			$scope.authContextGroups.forEach(function (group, iGroup) {
+				group.attributes = { sortOrder: ''+iGroup };
+				var groupToSave = {};
+				groupToSave.code = group.code;
+				groupToSave.attributes = group.attributes;
+				groupsOrder.push(groupToSave);
+			});
+
+			authContextService.updateGroupsSortOrder(groupsOrder).then(function (resp) {
+				console.log('Updated groups order', resp);
+			});
+		};
+
+		$scope.moveAuthContext = function (authContextGroup, index) {
+			var promises = [];
+			var groupToWork, authContextsOrder = [];
+			var authContext = authContextGroup.values[index];
+
+			// Move the context
+			authContextGroup.values.splice(index, 1);
+
+			// Check if the context has fallen into another group
+			if(!_.find(authContextGroup.values, {name: authContext.name})){
+				var newGroup = _.find($scope.authContextGroups,function (group) {
+					return _.find(group.values, {name: authContext.name});
+				});
+				groupToWork = newGroup;
+
+				// Ensure auth context order
+				authContext.sortOrder = _.findIndex(groupToWork.values, {name:authContext.name});
+				promises.push(authContextService.update(authContext.name,groupToWork.code,authContext));
+			} else {
+				groupToWork = authContextGroup;
+			}
+
+			// Sort authorization contexts
+			groupToWork.values.forEach(function(authContext, iContext){
+				var contextToSave = {};
+				contextToSave.name = authContext.name;
+				contextToSave.sortOrder = iContext;
+				authContextsOrder.push(contextToSave);
+			});
+
+			console.log('Sorted auth context group', authContextsOrder);
+
+			promises.push(authContextService.updateSortOrder(authContextsOrder));
+
+			Promise.all(promises).then(function(resp){
+				console.log('Updated authorization context', resp);
+			});
 		};
 
 		// Convert object of authorization bits to array

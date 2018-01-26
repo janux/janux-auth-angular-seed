@@ -18,7 +18,8 @@ module.exports = [
 			var group = {
 				name: $scope.contextGroupName,
 				code: $scope.contextGroupCode,
-				description: $scope.contextGroupDesc
+				description: $scope.contextGroupDesc,
+				attributes: { sortOrder: '0' }
 			};
 
 			authContextService.insertGroup(group)

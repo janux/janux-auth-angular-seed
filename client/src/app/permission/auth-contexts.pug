@@ -2,10 +2,11 @@
 
 	// Draggable Group list
 	.drag-n-drop
-		ul(dnd-list='authContextGroups')
+		ul(dnd-list='authContextGroups', dnd-allowed-types='listTypes.authContextGroup')
 			li.auth-context-group(ng-repeat='authContextGroup in authContextGroups',
 			dnd-draggable='authContextGroup',
-			dnd-moved='authContextGroups.splice($index, 1)',
+			dnd-moved='moveGroup($index);',
+			dnd-type='listTypes.authContextGroup[0]',
 			dnd-effect-allowed='move')
 				.group-element
 					table
@@ -21,10 +22,11 @@
 
 				// Draggable Authorization Context list
 				.drag-n-drop
-					ul(dnd-list='authContextGroup.values')
+					ul(dnd-list='authContextGroup.values', dnd-allowed-types='listTypes.authContext')
 						li.auth-context(ng-repeat='authContext in authContextGroup.values',
 						dnd-draggable='authContext',
-						dnd-moved='authContextGroup.values.splice($index, 1)',
+						dnd-type='listTypes.authContext[0]',
+						dnd-moved='moveAuthContext(authContextGroup, $index);',
 						dnd-effect-allowed='move')
 							.element
 								table.context-list

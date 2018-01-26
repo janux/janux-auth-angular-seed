@@ -89,6 +89,18 @@ function( $q ,  $http){
 			});
 		},
 
+		updateSortOrder: function(authsOrder)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/authContext',
+				'updateSortOrder',
+				[ authsOrder ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
 		deleteByName: function(groupCode, contextName)
 		{
 			return $http.jsonrpc(
@@ -131,6 +143,18 @@ function( $q ,  $http){
 				'/rpc/2.0/authContext',
 				'updateGroup',
 				[ code, contextGroupObject ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
+		updateGroupsSortOrder: function(groupsOrder)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/authContext',
+				'updateGroupsSortOrder',
+				[ groupsOrder ]
 			).then(function(resp) {
 				console.log('resp.data.result', resp.data.result);
 				return resp.data.result;

@@ -4,7 +4,7 @@ var _ = require('lodash');
 
 module.exports = ['$scope','roles','$modal','$state','roleService',
 	function($scope, roles, $modal, $state,roleService) {
-	$scope.roles = _.values(roles);
+	$scope.roles = _.sortBy(_.values(roles),'sortOrder');
 	// console.log('Loaded roles', $scope.roles);
 
 	//
@@ -38,6 +38,24 @@ module.exports = ['$scope','roles','$modal','$state','roleService',
 			resolve: {
 				name: function () { return name; }
 			}
+		});
+	};
+
+	$scope.moveRole = function (index) {
+		var rolesToSave = [];
+		// Move role
+		$scope.roles.splice(index, 1);
+		// Update sort order
+		$scope.roles.forEach(function(role, iRole){
+			role.sortOrder = iRole;
+			var roleToSave = {};
+			roleToSave.id = role.id;
+			roleToSave.sortOrder = role.sortOrder;
+			rolesToSave.push(roleToSave);
+		});
+
+		roleService.updateSortOrder(rolesToSave).then(function (resp) {
+			console.log('Updated roles', resp);
 		});
 	};
 }];

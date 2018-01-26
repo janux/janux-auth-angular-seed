@@ -56,6 +56,18 @@ function( $q ,  $http){
 			});
 		},
 
+		updateSortOrder: function(rolesOrder)
+		{
+			return $http.jsonrpc(
+				'/rpc/2.0/role',
+				'updateSortOrder',
+				[ rolesOrder ]
+			).then(function(resp) {
+				console.log('resp.data.result', resp.data.result);
+				return resp.data.result;
+			});
+		},
+
 		deleteByName: function(roleName)
 		{
 			return $http.jsonrpc(

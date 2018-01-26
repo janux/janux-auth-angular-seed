@@ -40,9 +40,10 @@ module.exports = [
 	console.log('scope.role', $scope.role);
 
 	$scope.saveRole = function () {
-		var roleToSave = Role.createInstance($scope.role.name, $scope.role.description);
-		roleToSave.enabled = $scope.role.enabled;
-		roleToSave.isAlmighty = $scope.role.isAlmighty;
+			var roleToSave = Role.createInstance($scope.role.name, $scope.role.description);
+			roleToSave.enabled = $scope.role.enabled;
+			roleToSave.isAlmighty = $scope.role.isAlmighty;
+			roleToSave.sortOrder = $scope.role.sortOrder;
 
 		for(var contextName in $scope.role.authContexts) {
 

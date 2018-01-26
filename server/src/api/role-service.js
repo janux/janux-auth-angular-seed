@@ -75,6 +75,14 @@ var createInstance = function(roleServiceReference) {
 	};
 
 	//
+	// Update order of the roles
+	//
+	RoleService.prototype.updateSortOrder = function(rolesOrder, callback) {
+
+		return roleServicePersistence.updateSortOrder(rolesOrder).asCallback(callback);
+	};
+
+	//
 	// Delete one role by name
 	//
 	RoleService.prototype.deleteByName = function(name, callback) {

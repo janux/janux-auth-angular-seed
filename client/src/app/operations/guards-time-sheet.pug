@@ -1,0 +1,119 @@
+login-toolbar(toolbar-title='operations.title')
+
+side-bar
+
+.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar
+			.md-toolbar-tools.form-toolbar
+				md-truncate
+					| {{ 'operations.driversTimeLog.title' | translate }}
+
+				md-truncate.filter-label
+					| {{ 'operations.driversTimeLog.filterLabel' | translate }}
+
+				md-truncate.add-form
+					md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
+						md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
+				span(flex)
+
+				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()')
+					md-icon.fa.fa-download.fa-lg
+
+			.md-toolbar-tools.form-toolbar
+				md-truncate.add-form-container
+					form(name='driverTimeSheet').add-form
+						.element
+							md-autocomplete(md-no-cache='false',
+							md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
+							md-selected-item='lbRow.staff',
+							md-search-text-change='staffSearchTextChange(lbSearch.staff)',
+							md-search-text='lbSearch.staff',
+							md-selected-item-change='staffSelectedItemChange(item)',
+							md-item-text='item.resource.name.last+" "+item.resource.name.first',
+							md-min-length='0',
+							md-floating-label="{{ 'operations.driversTimeLog.staff' | translate }}")
+								md-item-template
+									span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+
+						.element-small
+							md-autocomplete(md-no-cache='false',
+							md-items='item in opsSearch(lbSearch.operation)',
+							md-selected-item='lbRow.operation',
+							md-search-text-change='opsSearchTextChange(lbSearch.operation)',
+							md-search-text='lbSearch.operation',
+							md-selected-item-change='opsSelectedItemChange(item)',
+							md-item-text='item.name',
+							md-min-length='0',
+							md-floating-label="{{ 'operations.driversTimeLog.operation' | translate }}")
+								md-item-template
+									span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
+
+						.element
+							md-input-container.jnx-datetime-picker
+								label {{ 'operations.driversTimeLog.begin' | translate }}
+								input(mdc-datetime-picker=''
+								date='true'
+								time='true'
+								show-todays-date=''
+								minutes='true'
+								format='YYYY-MM-DD HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='lbRow.start'
+								ng-model-options="{ debounce: 1000 }"
+								type='text' required='',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}')
+
+						.element
+							md-input-container.jnx-datetime-picker
+								label {{ 'operations.driversTimeLog.end' | translate }}
+								input(mdc-datetime-picker=''
+								date='true'
+								time='true'
+								show-todays-date=''
+								minutes='true'
+								min-date='lbRow.start'
+								format='YYYY-MM-DD HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='lbRow.end'
+								ng-model-options="{ debounce: 1000 }"
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}')
+
+						.element
+							md-input-container
+								label {{ 'operations.driversTimeLog.comment' | translate }}
+								input(ng-model='lbRow.location')
+
+						.element-small
+							md-input-container
+								label {{ 'operations.driversTimeLog.absence' | translate }}
+								md-select(ng-model='lbRow.absence')
+									md-option(value='')
+									md-option(value='D') {{ 'operations.driversTimeLog.absenceOptions.D' | translate }}
+									md-option(value='V') {{ 'operations.driversTimeLog.absenceOptions.V' | translate }}
+									md-option(value='PS') {{ 'operations.driversTimeLog.absenceOptions.PS' | translate }}
+									md-option(value='F') {{ 'operations.driversTimeLog.absenceOptions.F' | translate }}
+									md-option(value='PC') {{ 'operations.driversTimeLog.absenceOptions.PC' | translate }}
+									md-option(value='I') {{ 'operations.driversTimeLog.absenceOptions.I' | translate }}
+
+				span(flex)
+
+				md-button.add.md-icon-button.form-btn-toolbar(aria-label="Grid" ng-click='addRow()')
+					md-icon.fa.fa-save.fa-lg
+
+		.container-body
+			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+footer-Janux

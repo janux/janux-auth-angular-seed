@@ -54,21 +54,21 @@ module.exports =
 
 			var service = {
 
-				findAll: function () {
-					return $http.jsonrpc(
-						'/rpc/2.0/operation',
-						'findAll'
-					).then(function (resp) {
-						return _.map(resp.data.result, function (o) {
-							return fromJSON(o);
-						});
-					});
-				},
+				// findAll: function () {
+				// 	return $http.jsonrpc(
+				// 		'/rpc/2.0/operation',
+				// 		'findAll'
+				// 	).then(function (resp) {
+				// 		return _.map(resp.data.result, function (o) {
+				// 			return fromJSON(o);
+				// 		});
+				// 	});
+				// },
 
-				findByDateBetweenWithTimeEntries: function (initDate, endDate, type) {
+				findByDateBetweenWithTimeEntriesAndType: function (initDate, endDate, type) {
 					return $http.jsonrpc(
 						'/rpc/2.0/operation',
-						'findByDateBetweenWithTimeEntries',
+						'findByDateBetweenWithTimeEntriesAndType',
 						[initDate, endDate, type]
 					).then(function (resp) {
 						return _.map(resp.data.result, function (o) {

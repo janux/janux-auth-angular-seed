@@ -33,8 +33,8 @@ var createInstance = function (operationServiceReference) {
 		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
 	};
 
-	OperationService.prototype.findByDateBetweenWithTimeEntries = function (initDate, endDate, callback) {
-		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
+	OperationService.prototype.findByDateBetweenWithTimeEntries = function (initDate, endDate, type, callback) {
+		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate, type).asCallback(callback);
 	};
 
 	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {

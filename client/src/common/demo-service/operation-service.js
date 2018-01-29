@@ -65,11 +65,11 @@ module.exports =
 					});
 				},
 
-				findByDateBetweenWithTimeEntries: function (initDate, endDate) {
+				findByDateBetweenWithTimeEntries: function (initDate, endDate, type) {
 					return $http.jsonrpc(
 						'/rpc/2.0/operation',
 						'findByDateBetweenWithTimeEntries',
-						[initDate, endDate]
+						[initDate, endDate, type]
 					).then(function (resp) {
 						return _.map(resp.data.result, function (o) {
 							return fromJSON(o);
@@ -89,16 +89,16 @@ module.exports =
 					});
 				},
 
-				findDriversAndOperations: function() {
-					return service.findAllWithoutTimeEntry().then(function(result) {
+				findDriversAndOperations: function () {
+					return service.findAllWithoutTimeEntry().then(function (result) {
 						var driversAssignedToOperations = [];
 						var operations = [];
 						result.forEach(function (op) {
-							var tmpRes = _.filter(op.currentResources, {type:'DRIVER'});
+							var tmpRes = _.filter(op.currentResources, {type: 'DRIVER'});
 
 							// If the operation has at least one driver
-							if( tmpRes.length > 0 ) {
-								tmpRes.forEach(function(res, resId) {
+							if (tmpRes.length > 0) {
+								tmpRes.forEach(function (res, resId) {
 									tmpRes[resId].opId = op.id;
 								});
 
@@ -117,9 +117,9 @@ module.exports =
 							});
 
 							return {
-								driversAssignedToOperations : driversAssignedToOperations,
-								drivers : result,
-								operations : operations
+								driversAssignedToOperations: driversAssignedToOperations,
+								drivers                    : result,
+								operations                 : operations
 							};
 						});
 					});
@@ -141,7 +141,7 @@ module.exports =
 								end = moment(timeEntry.end);
 								var durationMoment = moment.duration(end.diff(begin));
 								var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
-								duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00'+durationMoment.get("minutes")).slice(-2);
+								duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00' + durationMoment.get("minutes")).slice(-2);
 								endOnlyHour = end.format(formatStringOnlyHour);
 								end = end.format(dateTimeFormatString);
 							}

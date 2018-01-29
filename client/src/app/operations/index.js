@@ -42,5 +42,28 @@ require('angular').module('appOperations', [
 			}]
 		},
 		controller: require('./drivers-time-sheet-controller')
+	})
+
+	.state('operations.guards', {
+		url:'/operations/guards',
+		templateUrl: 'app/operations/guards-time-sheet.html',
+		authRequired: true,
+		resolve: {
+			driversAndOps: ['operationService', function (operationService) {
+				return operationService.findDriversAndOperations();
+			}],
+			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
+				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+				var period = timePeriods[periodKey];
+
+				return operationService.findByDateBetweenWithTimeEntries(period.from(), period.to())
+					.then(function (result) {
+						// console.log(JSON.stringify(result));
+						return operationService.mapTimeEntryData(result);
+					});
+			}]
+		},
+		controller: require('./guards-time-sheet-controller')
 	});
 }]);

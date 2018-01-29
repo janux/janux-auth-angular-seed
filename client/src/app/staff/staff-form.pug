@@ -85,35 +85,36 @@ md-content.staff-form(layout-padding)
 			p.form-section-glarus
 				| {{ 'staff.phonesTitle' | translate}}
 			fieldset.fieldset-flex(data-ng-repeat="phone in staff.contactMethods.phones track by $index")
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.type' | translate}}
-						input(ng-model="phone.type")
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.code' | translate}}
-						input(ng-model="phone.countryCode")
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.area' | translate}}
-						input(ng-model='phone.areaCode')
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.number' | translate}}
-						input(ng-model='phone.number')
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.ext' | translate}}
-						input(ng-model='phone.ext')
-				div(style="padding-top:10px")
-						md-checkbox(aria-label="SMS" ng-model='phone.sms')
-							| {{ 'staff.sms' | translate}}
-				div(style="padding-top:10px")
-						md-checkbox(aria-label="WSP" ng-model='phone.wsp')
-							| {{ 'staff.wps' | translate}}
-				div(style="padding-top:10px")
-						md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removePhone($index)")
-							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+				.fieldset-flex
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.type' | translate}}
+							input(ng-model="phone.type")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.code' | translate}}
+							input(ng-model="phone.countryCode")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.area' | translate}}
+							input(ng-model='phone.areaCode')
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.number' | translate}}
+							input(ng-model='phone.number')
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.ext' | translate}}
+							input(ng-model='phone.ext')
+					div(style="padding-top:10px")
+							md-checkbox(aria-label="SMS" ng-model='phone.sms')
+								| {{ 'staff.sms' | translate}}
+					div(style="padding-top:10px")
+							md-checkbox(aria-label="WSP" ng-model='phone.wsp')
+								| {{ 'staff.wps' | translate}}
+					div(style="padding-top:10px")
+							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removePhone($index)")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
 			.container-flex-form
 				div
@@ -126,17 +127,18 @@ md-content.staff-form(layout-padding)
 			p.form-section-glarus
 				| {{ 'staff.mailsTitle' | translate}}
 			fieldset.fieldset-flex(data-ng-repeat="email in staff.contactMethods.emails track by $index")
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.type' | translate}}
-						input(ng-model="email.type")
-				div.an-material.nopadding
-					md-input-container.full
-						label {{ 'staff.email' | translate}}
-						input(ng-model="email.address")
-				div.an-material.nopadding(style="padding-top:10px")
-						md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
-							md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
+				.fieldset-flex
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.type' | translate}}
+							input(ng-model="email.type")
+					div.an-material.nopadding
+						md-input-container.full
+							label {{ 'staff.email' | translate}}
+							input(ng-model="email.address")
+					div.an-material.nopadding(style="padding-top:10px")
+							md-button.md-icon-button.trash-btn(aria-label="Trash" ng-click="removeMail($index)")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff")
 
 			.container-flex-form
 				div

@@ -9,7 +9,7 @@ side-bar
 				md-truncate
 					span.title-breadcrum
 						| {{ 'permission.title' | translate }}
-					h2
+					h2.title-bar-txt
 						.title(ng-show='creating') {{ 'permission.createContext' | translate }}
 						.title(ng-show='copying') {{ 'permission.copyContext' | translate }} {{ copyFrom }}
 						.title(ng-show='editing') {{ 'permission.editContext' | translate }}

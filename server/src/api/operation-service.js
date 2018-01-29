@@ -27,14 +27,14 @@ var createInstance = function (operationServiceReference) {
 	// For the moment. We are going to get the data given
 	// a big date interval.
 	// TODO: Improve find methods.
-	OperationService.prototype.findAll = function (callback) {
-		var initDate = new moment().subtract(10, 'years').toDate();
-		var endDate = new moment().add(10, 'years').toDate();
-		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
-	};
+	// OperationService.prototype.findAll = function (callback) {
+	// 	var initDate = new moment().subtract(10, 'years').toDate();
+	// 	var endDate = new moment().add(10, 'years').toDate();
+	// 	return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate).asCallback(callback);
+	// };
 
-	OperationService.prototype.findByDateBetweenWithTimeEntries = function (initDate, endDate, type, callback) {
-		return operationServiceReference.findByDateBetweenWithTimeEntries(initDate, endDate, type).asCallback(callback);
+	OperationService.prototype.findByDateBetweenWithTimeEntriesAndType = function (initDate, endDate, type, callback) {
+		return operationServiceReference.findByDateBetweenWithTimeEntriesAndType(initDate, endDate, type).asCallback(callback);
 	};
 
 	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {

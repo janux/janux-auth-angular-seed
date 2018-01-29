@@ -34,7 +34,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 
-				return operationService.findByDateBetweenWithTimeEntries(period.from(), period.to())
+				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'DRIVER')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -57,7 +57,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 
-				return operationService.findByDateBetweenWithTimeEntries(period.from(), period.to())
+				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'GUARD')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);

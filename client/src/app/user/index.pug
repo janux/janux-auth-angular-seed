@@ -8,7 +8,7 @@ side-bar
 			.col-lg-12
 
 				.title-bar
-					.title {{ 'label.people' | translate }}
+					.title {{ 'user.listTitle' | translate }}
 					.options
 						a(ui-sref='users.create')
 							span.fa.fa-plus-circle.fa-lg 
@@ -18,22 +18,37 @@ side-bar
 				table.list.users-list(ng-show='usersMatch.length')
 					thead
 						tr
-							th {{ 'user.displayName' | translate }}
 							th {{ 'user.username' | translate }}
+							th {{ 'user.displayName' | translate }}
+							th {{ 'user.role' | translate }}
 							th {{ 'user.email' | translate }}
-							th {{ 'user.creation' | translate }}
+							th {{ 'user.phone' | translate }}
+							th {{ 'user.renew' | translate }}
+							th {{ 'user.edit' | translate }}
 							th
+								md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
+									md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+
 					tbody
 						tr(ng-repeat='user in usersMatch')
-							td {{ user.contact.name.shortName }}
 							td {{ user.username }}
+							td {{ user.contact.name.shortName }}
+							td {{ user.roles[0] }}
 							td {{ user.contact.emailAddress('work').address }}
-							td {{ user.cdate }}
+							td {{ user.contact.phoneNumber('work').number }}
+							td(style="text-align:center")
+								a.action-button-glarus
+									span.fa.fa-lock.fa-lg
 							td.text-center
-								a.action-button(ng-click='editUser(user.userId)')
-									span.fa.fa-pencil.fa-lg 
-								a.action-button(ng-click='openDeleteAuthContextDialog(user)')
-									span.fa.fa-trash.fa-lg 
+								a.action-button-glarus(ng-click='editUser(user.userId)')
+									span.fa.fa-pencil.fa-lg
+							td(style="text-align:center")
+								md-checkbox(aria-label="Trash" ng-model='user.Selected' class="md-primary")
+							//td.text-center
+							//	a.action-button(ng-click='editUser(user.userId)')
+							//		span.fa.fa-pencil.fa-lg
+							//	a.action-button(ng-click='openDeleteAuthContextDialog(user)')
+							//		span.fa.fa-trash.fa-lg
 
 				.users-filter
 					form.form-inline

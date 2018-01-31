@@ -72,12 +72,13 @@
 		"createStaff": "Create staff",
 		"employeeTitle": "Employee",
 		"addressesTitle": "Adresses",
-		"jobTitle": "Job",
+		"jobTitle": "Activities",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
 		"name": "Name",
-		"maternalName": "Maternal name",
+		"middleName": "Middle name",
 		"lastName": "Last name",
+		"maternalName": "Maternal name",
 		"job": "Job Title",
 		"type": "Type",
 		"area": "Area",
@@ -100,7 +101,8 @@
 		"sms": "SMS",
 		"wps": "WPS",
 		"userName": "User Name",
-		"admissionDate": "Admission Date"
+		"admissionDate": "Admission Date",
+		"first": "Main"
 	},
 	"client": {
 		"name": "Business name",

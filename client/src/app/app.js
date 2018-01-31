@@ -219,14 +219,6 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	});
 }])
 
-.controller('AppCtrl', ['$scope', 
-function ($scope) {
-  	$scope.currentNavItem = 'page1';
-  	$scope.goto=function(page){
-  		console.log('Goto' + page);
-  	};
-}])
-
 
 .controller('sidebarCtrl', ['$rootScope', 'config',
 function ($rootScope, config) {

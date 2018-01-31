@@ -19,33 +19,30 @@ side-bar
 				//- md-button.arrow.md-icon-button(aria-label="Upload")
 				//- 	md-icon.fa.fa-upload.fa-lg
 
-	.container-fluid-flex.spacing-bottom
+		.container-fluid-flex.spacing-bottom
 
-		//- md-content.staff-name
-		//- 	h4 Gilberto Márquez Díaz de Sandi
-		
-		md-content.spacing-ls
-			md-toolbar.form-mid-toolbar
-				.md-toolbar-tools
-					md-nav-bar(md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
-						md-nav-item(md-nav-click="goto('page1')" name="page1")
-							| GENERAL
-						//- md-nav-item(md-nav-click="goto('page2')" name="page2")
-						//- 	| HUMAN RESOURSES
-						//- md-nav-item(md-nav-click="goto('page3')" name="page3")
-						//- 	| PAYROLL LOGBOOK
-					
-					span(flex)
-					
-					//- md-button.md-icon-button.trash(aria-label="Trash")
-					//- 	md-icon.fa.fa-trash.fa-lg
+			md-content.staff-name
+				h4(style="font-weight:bold") {{ staff.name.first }} {{ staff.name.middle }} {{ staff.name.last }}
+			
+			md-content.spacing-ls
+				.form-mid-toolbar-glarus
+					ul.arrowunderline
+						li
+							a.active(href="#")
+								| DATOS GENERALES
+						li
+							a(href="#")
+								| RECURSOS HUMANOS
+						li
+							a(href="#")
+								| BITACORA NÓMINA
 
-					md-button.md-icon-button.save(aria-label="Save" ng-click='save()')
-						md-icon.fa.fa-check.fa-lg
+					.btn-row
+						button.btn(ng-click='save()')
+							i.fa.fa-check
+						button.btn(ng-click='cancel()')
+							i.fa.fa-times
 
-					md-button.md-icon-button.cancel(aria-label="Cancel" ng-click='cancel()')
-						md-icon.fa.fa-times.fa-lg
-
-			include staff-form
+				include staff-form
 
 footer-Janux

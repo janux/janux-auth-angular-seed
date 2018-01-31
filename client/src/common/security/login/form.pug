@@ -7,12 +7,12 @@
 			.alert.alert-warning(ng-show='authReason') {{authReason}}
 			.alert.alert-danger(ng-show='authError') {{authError}}
 
-			div.an-material
+			div.an-material-login
 				md-input-container.full
 					label(translate='label.username')
 					input(name='login', ng-model='user.account.name', required, autofocus, novalidate='')
 
-			div.an-material
+			div.an-material-login
 				md-input-container.full
 					label(translate='label.password')
 					input(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
@@ -22,7 +22,7 @@
 					a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
 
 				.btn-login-cnt
-					button.btn.btn-glarus(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
+					button.btn-glarus(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')
 
 			div.text-center-legal
 				.copy &copy; {{ "login.copy" | translate }}

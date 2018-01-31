@@ -50,7 +50,7 @@ require('angular').module('appOperations', [
 		authRequired: true,
 		resolve: {
 			driversAndOps: ['operationService', function (operationService) {
-				return operationService.findDriversAndOperations();
+				return operationService.findGuardsAndOperations();
 			}],
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
 				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);

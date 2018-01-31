@@ -54,17 +54,6 @@ module.exports =
 
 			var service = {
 
-				// findAll: function () {
-				// 	return $http.jsonrpc(
-				// 		'/rpc/2.0/operation',
-				// 		'findAll'
-				// 	).then(function (resp) {
-				// 		return _.map(resp.data.result, function (o) {
-				// 			return fromJSON(o);
-				// 		});
-				// 	});
-				// },
-
 				findByDateBetweenWithTimeEntriesAndType: function (initDate, endDate, type) {
 					return $http.jsonrpc(
 						'/rpc/2.0/operation',
@@ -85,6 +74,42 @@ module.exports =
 					).then(function (resp) {
 						return _.map(resp.data.result, function (o) {
 							return fromJSON(o);
+						});
+					});
+				},
+
+				findGuardsAndOperations: function () {
+					return service.findAllWithoutTimeEntry().then(function (result) {
+						var driversAssignedToOperations = [];
+						var operations = [];
+						result.forEach(function (op) {
+							var tmpRes = _.filter(op.currentResources, {type: 'GUARD'});
+
+							// If the operation has at least one driver
+							if (tmpRes.length > 0) {
+								tmpRes.forEach(function (res, resId) {
+									tmpRes[resId].opId = op.id;
+								});
+
+								var opWithOutRes = _.clone(op);
+								delete opWithOutRes.currentResources;
+								driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
+								operations = operations.concat(opWithOutRes);
+							}
+						});
+
+						return resourceService.findAvailableResources().then(function (result) {
+
+							// Filter only persons.
+							result = _.filter(result, function (o) {
+								return o.type !== 'VEHICLE';
+							});
+
+							return {
+								driversAssignedToOperations: driversAssignedToOperations,
+								drivers                    : result,
+								operations                 : operations
+							};
 						});
 					});
 				},
@@ -111,9 +136,9 @@ module.exports =
 
 						return resourceService.findAvailableResources().then(function (result) {
 
-							// Filter only drivers.
+							// Filter only persons.
 							result = _.filter(result, function (o) {
-								return o.type === 'DRIVER';
+								return o.type !== 'VEHICLE';
 							});
 
 							return {

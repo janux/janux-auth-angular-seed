@@ -211,3 +211,57 @@
 		width: 100%;
 	});
 }
+
+// NavBar Staff
+
+ul.arrowunderline{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	text-align:left; /* enter "left", "right", or "center" to orient the menu accordingly */
+	width:70%; 
+	display:inline-block;
+	li{
+		display:inline;
+		margin-right:25px; /* spacing between each menu item */
+		font-size: 13px;
+		a{
+			position:relative;
+			color:#7b97a6;
+			padding-bottom:8px; /*spacing between each menu item and arrow underline beneath it */
+			text-decoration:none;	
+			&:hover{
+				border-bottom:3px solid @white; /* style of arrow underline */
+				color:@white;
+				&::after{
+					content:'';
+					width:0;
+					height:0;
+					position:absolute;
+					left:50%;
+					margin-left:-5px; /* value should match border-width below */
+					bottom: 0;
+					border-width:5px; /* value should match margin-left above */
+					border-style:solid;
+					border-color: transparent transparent @white transparent; /* create up arrow */
+				}
+			}
+		}
+	}
+}
+.active{
+	border-bottom:3px solid @white; /* style of arrow underline */
+	color:@white !important;
+	&::after{
+		content:'';
+		width:0;
+		height:0;
+		position:absolute;
+		left:50%;
+		margin-left:-5px; /* value should match border-width below */
+		bottom: 0;
+		border-width:5px; /* value should match margin-left above */
+		border-style:solid;
+		border-color: transparent transparent @white transparent; /* create up arrow */
+	}
+}

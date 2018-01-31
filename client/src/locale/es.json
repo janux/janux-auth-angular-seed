@@ -72,13 +72,14 @@
 		"createStaff": "Agregar personal",
 		"employeeTitle": "Empleado",
 		"addressesTitle": "Direcciones",
-		"jobTitle": "Puesto",
+		"jobTitle": "Funciones",
 		"phonesTitle": "Telefonos",
 		"mailsTitle": "Correos",
 		"name": "Nombre",
-		"maternalName": "Apellido materno",
+		"middleName": "Segundo Nombre",
 		"lastName": "Apellido paterno",
-		"job": "Titulo del puesto",
+		"maternalName": "Apellido materno",
+		"job": "Puesto",
 		"type": "Tipo",
 		"area": "Área",
 		"country": "País",
@@ -100,7 +101,8 @@
 		"sms": "SMS",
 		"wps": "WPS",
 		"userName": "Usuario",
-		"admissionDate": "Fecha de admisión"
+		"admissionDate": "Fecha de admisión",
+		"first": "Principal"
 	},
 	"client": {
 		"name": "Nombre del negocio",

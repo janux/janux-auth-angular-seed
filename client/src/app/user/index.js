@@ -50,6 +50,14 @@ require('angular').module('appUsers', [
 		resolve: {
 			user: ['userService', '$stateParams', function(userService, $stateParams){
 				return userService.findById($stateParams.userId);
+			}],
+			roles: ['roleService', 'user', function(roleService, user) {
+				return roleService.findAll().then(function (roles) {
+					return _.sortBy(_.mapValues(roles,function (role) {
+						role.enabled = (user.roles.indexOf(role.name)!==-1);
+						return role;
+					}),'sortOrder');
+				});
 			}]
 		}
 	});

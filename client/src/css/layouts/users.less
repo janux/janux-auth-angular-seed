@@ -8,13 +8,98 @@
 	padding: 10px 0;
 }
 
+.glarus-user-page {
+	h2 {
+		font-weight: bold !important;
+	}
+
+	.form-section {
+		background: @hover-glarus;
+		padding: 5px 15px;
+		font-weight: bold;
+	}
+
+	.list-glarus {
+		td,th { padding: 15px 15px; }
+
+		td.role-enabled {
+			text-align: center;
+		}
+		td.role-name {
+			font-weight: bold;
+		}
+	}
+
+	// User options navigation bar
+
+	md-toolbar.options-tabs {
+
+		min-height: 48px !important;
+
+		.md-toolbar-tools {
+			padding: 0 20px 0 0 !important;
+			height: 48px;
+			max-height: 48px;
+		}
+
+		li.md-nav-item {
+			margin-left:0;
+		}
+
+		.md-button.md-icon-button {
+			width: 32px;
+			height: 32px;
+			min-height: 32px;
+			padding-left: 4px;
+			.fa-lg {
+				line-height: 0.40em;
+			}
+		}
+
+		// TODO: Place colors as variables
+		.md-icon-button.save {
+			background: #7ed321;
+		}
+
+		.md-icon-button.trash {
+			background: #9b9b9b;
+		}
+
+		.vertical-divider {
+			border-top-width: 0;
+			border-right-width: 2px;
+			border-right-style: solid;
+			border-color: rgba(255,255,255,0.20);
+			height: 70%;
+			margin: 2px 12px;
+		}
+
+		md-nav-bar md-nav-ink-bar {
+			background: url('/img/nav-ink-bar.png') no-repeat top center;
+			height:7px;
+		}
+	}
+
+	md-toolbar.form-mid-toolbar{
+		background: @glarus-blue;
+		color: @toolbar-glarus;
+		border-top:1px solid @grey2;
+		z-index: 0;
+
+		.md-unselected {
+			color: rgba(255,255,255,0.54);
+		}
+	}
+}
+
 .user-form {
 	padding: 20px;
-	border:1px dotted @grey1;
+	border:1px solid @grey5;
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	background: #eeeeee;
 
 	.label-form{
 		margin-top: 10px;
@@ -67,12 +152,52 @@
 		.xs-device({ width: 100%; });
 	}
 
-	table {
-		width: 100%;
+	md-input-container {
+		margin:15px 0 0 0;
+		width: 80%;
 
-		td {
-			padding:10px 0 ;
+		label {
+			left: 2px !important;
 		}
+
+		label:not(.md-container-ignore){
+			bottom: 90%;
+		}
+
+		md-checkbox {
+			margin-bottom: 0;
+		}
+
+		.md-datepicker-input-container {
+			margin: 0;
+			width: 85%;
+		}
+
+		.md-datepicker-input.md-input {
+			width: 100%;
+			max-width: 100%;
+			border-color: @glarus-blue !important;
+		}
+
+		.md-datepicker-expand-triangle {
+			visibility: hidden;
+		}
+
+		.md-datepicker-button {
+			float:right !important;
+		}
+	}
+
+	md-content {
+		background: transparent;
+	}
+
+	.full{
+		width: 70%;
+		.ng-pristine{
+			border-color: @glarus-blue !important;
+		}
+
 	}
 }
 

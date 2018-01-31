@@ -42,27 +42,6 @@ module.exports = [
 		$state.go('users.edit', { userId: userId });
 	};
 
-	var deleteUser = function (userId) {
-		userService.deleteUser(userId).then(function(userDeleted) {
-			console.log('User successfully deleted', userDeleted);
-			$state.go($state.current, {}, {reload: true});
-		});
-	};
-
-	var deleteUserCtrl = ['$scope','$modalInstance', 'data',
-		function($scope , $modalInstance, data) {
-			$scope.targetDescr = 'User: '+data.username;
-
-			$scope.ok = function() {
-				deleteUser(data.userId);
-				$modalInstance.close();
-			};
-
-			$scope.cancel = function() {
-				$modalInstance.dismiss();
-			};
-		}];
-
 	$scope.openDelete = function(){
 		var selectedIds = [];
 		for (var i = 0; i<$scope.usersMatch.length; i++) {
@@ -104,16 +83,4 @@ module.exports = [
 		}
 	};
 
-	$scope.openDeleteAuthContextDialog = function(user){
-		$modal.open({
-			templateUrl: 'app/dialog-tpl/delete-dialog.html',
-			controller: deleteUserCtrl,
-			size: 'md',
-			resolve: {
-				data: function () {
-					return user;
-				}
-			}
-		});
-	};
 }];

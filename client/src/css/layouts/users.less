@@ -13,6 +13,15 @@
 		font-weight: bold !important;
 	}
 
+	.user-options {
+		padding: 20px;
+		margin-bottom: 10px;
+		width: 100%;
+		md-content {
+			width: 100%;
+		}
+	}
+
 	.form-section {
 		background: @hover-glarus;
 		padding: 5px 15px;
@@ -21,6 +30,10 @@
 
 	.list-glarus {
 		td,th { padding: 15px 15px; }
+
+		td {
+			background: @white;
+		}
 
 		td.role-enabled {
 			text-align: center;
@@ -77,6 +90,11 @@
 		md-nav-bar md-nav-ink-bar {
 			background: url('/img/nav-ink-bar.png') no-repeat top center;
 			height:7px;
+
+		}
+
+		.active:after{
+			all: initial;
 		}
 	}
 
@@ -93,13 +111,14 @@
 }
 
 .user-form {
+
+	display: flex;
 	padding: 20px;
 	border:1px solid @grey5;
 	display: -webkit-flex;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	background: #eeeeee;
+	//flex-direction: row;
+	//flex-wrap: wrap;
+	background: @glarus-back;
 
 	.label-form{
 		margin-top: 10px;
@@ -166,6 +185,12 @@
 
 		md-checkbox {
 			margin-bottom: 0;
+			margin-top: -20px;
+			.md-label{
+				padding-top: 40px;
+				font-size: 11px;
+				margin-left: 0px !important;
+			}
 		}
 
 		.md-datepicker-input-container {

@@ -10,32 +10,21 @@ side-bar
 					span.title-breadcrum
 						| {{ 'peopleOrgs.title' | translate }}
 					h2.title-bar-txt
-						| {{ 'staff.createStaff' | translate }}
+						| {{ 'client.createClient' | translate }}
 				span(flex)
 
-				//- md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
-				//- 	md-icon.fa.fa-table.fa-lg
-
-				//- md-button.arrow.md-icon-button(aria-label="Upload")
-				//- 	md-icon.fa.fa-upload.fa-lg
 
 		.container-fluid-flex.spacing-bottom
 
-			md-content.staff-name
-				h4(style="font-weight:bold") {{ staff.name.first }} {{ staff.name.middle }} {{ staff.name.last }}
-			
-			md-content.spacing-ls
+			md-content.spacing-ls(style="margin-top:20px")
 				.form-mid-toolbar-glarus
 					ul.arrowunderline
 						li
 							a.active(href="#")
-								| {{ 'staff.tabMenu.tabMenuFirst' | translate }}
+								| {{ 'client.tabMenu.tabMenuFirst' | translate }}
 						li
 							a(href="#")
-								| {{ 'staff.tabMenu.tabMenuSecond' | translate }}
-						li
-							a(href="#")
-								| {{ 'staff.tabMenu.tabMenuThird' | translate }}
+								| {{ 'client.tabMenu.tabMenuSecond' | translate }}
 
 					.btn-row
 						button.btn(ng-click='save()')
@@ -43,6 +32,6 @@ side-bar
 						button.btn(ng-click='cancel()')
 							i.fa.fa-times
 
-				include staff-form
+				include client-form
 
 footer-Janux

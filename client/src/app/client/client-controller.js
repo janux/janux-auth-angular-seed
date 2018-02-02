@@ -2,8 +2,11 @@
 
 
 module.exports = [
-	'$scope', 'clientsList', 'partyService', function ($scope, clientsList, partyService) {
+	'$scope', '$state', 'clientsList', 'partyService', function ($scope, $state, clientsList, partyService) {
 
+		$scope.editClient = function (id) {
+			$state.go('client.edit', {id: id});
+		};
 
 		$scope.init = function () {
 			partyService.findOrganizations()

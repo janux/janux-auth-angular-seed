@@ -15,7 +15,11 @@ module.exports = [
 			window.history.back();
 		};
 
-		$scope.authContextGroups = authContextGroups;
+		// Ensure order of groups
+		$scope.authContextGroups = _.sortBy(authContextGroups, function (group) {
+			group.values = _.sortBy(group.values, 'sortOrder');
+			return (!group.attributes.sortOrder)?0:group.attributes.sortOrder;
+		});
 		console.debug('Authorization Contexts Groups', authContextGroups);
 
 		// Extract authorization contexts

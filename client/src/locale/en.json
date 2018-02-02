@@ -62,7 +62,10 @@
 		}
 	},
 	"role": {
-		"title": "Roles"
+		"title": "Roles",
+		"dialogs": {
+			"rolePosition":"Role position successfully updated"
+		}
 	},
 	"permission": {
 		"authContexts": "Authorization Contexts",
@@ -72,7 +75,11 @@
 		"updatingRole": "Updating Role:",
 		"createRole": "Create Role:",
 		"authContextGroup": "Authorization Context Group",
-		"title": "Authorization Schema"
+		"title": "Authorization Schema",
+		"dialogs": {
+			"AuthContextPosition": "Authorization context position successfully updated",
+			"GroupPosition":"Group position successfully updated"
+		}
 	},
 	"staff": {
 		"listTitle": "Staff",

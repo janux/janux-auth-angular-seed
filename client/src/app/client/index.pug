@@ -13,7 +13,7 @@ side-bar
 							| {{ 'client.listTitle' | translate }}
 					span(flex)
 
-					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-show='userRole.can("CREATE",subOption.authContext);')
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ui-sref='client.create' ng-show='userRole.can("CREATE",subOption.authContext);')
 						md-icon.fa.fa-user-plus.fa-lg
 
 					md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")

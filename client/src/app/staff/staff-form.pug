@@ -53,11 +53,11 @@
 							label {{ 'staff.ext' | translate}}
 							input(ng-model='phone.ext')
 					div
-							md-checkbox(aria-label="SMS" ng-model='phone.sms')
+							md-checkbox.md-primary(aria-label="SMS" ng-model='phone.sms')
 								| {{ 'staff.sms' | translate}}
 					div
-							md-checkbox(aria-label="WSP" ng-model='phone.wsp')
-								| {{ 'staff.wps' | translate}}
+							md-checkbox.md-primary(aria-label="WSP" ng-model='phone.wsp')
+								| {{ 'staff.wsp' | translate}}
 					div
 							button.btn-trash(ng-click="removePhone($index)")
 								i.fa.fa-trash
@@ -126,7 +126,7 @@
 							label {{ 'staff.country' | translate}}
 							input(ng-model="address.country")
 					div
-							md-checkbox(aria-label="Fiscal" ng-model="address.fiscal")
+							md-checkbox.md-primary(aria-label="Fiscal" ng-model="address.fiscal")
 								| {{ 'staff.fiscal' | translate}}
 					div
 						button.btn-trash(ng-click="removeAddress($index)")

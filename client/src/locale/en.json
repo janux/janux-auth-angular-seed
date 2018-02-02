@@ -107,10 +107,15 @@
 		"number": "Number",
 		"ext": "Ext",
 		"sms": "SMS",
-		"wps": "WPS",
+		"wsp": "WSP",
 		"userName": "User Name",
 		"admissionDate": "Admission Date",
-		"first": "Main"
+		"first": "Main",
+		"tabMenu": {
+			"tabMenuFirst":"General Data",
+			"tabMenuSecond":"Human Resources",
+			"tabMenuThird":"Roster Time Log"
+		}
 	},
 	"client": {
 		"name": "Business name",
@@ -121,7 +126,39 @@
 		"phone": "Phone",
 		"cellphone": "Cellphone",
 		"reseller": "Reseller",
-		"edit": "Edit"
+		"edit": "Edit",
+		"createClient": "Create client",
+		"Organization":"Organization",
+		"rfc":"RFC",
+		"phonesTitle": "Phones",
+		"mailsTitle": "Mails",
+		"addressesTitle": "Adresses",
+		"type": "Type",
+		"area": "Area",
+		"country": "Country",
+		"email": "Email",
+		"edit": "Edit",
+		"delete": "Delete",
+		"creation": "Creation",
+		"phone": "Phone Number",
+		"fiscal": "Fiscal",
+		"street1": "Street 1",
+		"street2": "Street 2",
+		"street3": "Street 3",
+		"city": "City",
+		"state": "State",
+		"zip": "Zip",
+		"code": "Code",
+		"number": "Number",
+		"ext": "Ext",
+		"sms": "SMS",
+		"wsp": "WSP",
+		"first": "Main",
+		"tabMenu": {
+			"tabMenuFirst":"Organization",
+			"tabMenuSecond":"Contacts"
+		}
+		
 	},
 	"peopleOrgs": {
 		"title": "People & Organizations",

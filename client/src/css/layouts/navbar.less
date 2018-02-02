@@ -223,15 +223,18 @@ ul.arrowunderline{
 	display:inline-block;
 	li{
 		display:inline;
-		margin-right:25px; /* spacing between each menu item */
-		font-size: 13px;
+		margin-right:0px; /* spacing between each menu item */
+		font-size: 14px;
 		a{
 			position:relative;
 			color:#7b97a6;
-			padding-bottom:8px; /*spacing between each menu item and arrow underline beneath it */
+			padding-bottom:13px; /*spacing between each menu item and arrow underline beneath it */
+			padding-left: 13px;
+			padding-right: 13px;
 			text-decoration:none;	
+			text-transform: uppercase;
 			&:hover{
-				border-bottom:3px solid @white; /* style of arrow underline */
+				border-bottom:4px solid @white; /* style of arrow underline */
 				color:@white;
 				&::after{
 					content:'';
@@ -239,29 +242,29 @@ ul.arrowunderline{
 					height:0;
 					position:absolute;
 					left:50%;
-					margin-left:-5px; /* value should match border-width below */
+					margin-left:-6px; /* value should match border-width below */
 					bottom: 0;
-					border-width:5px; /* value should match margin-left above */
+					border-width:6px; /* value should match margin-left above */
 					border-style:solid;
 					border-color: transparent transparent @white transparent; /* create up arrow */
 				}
 			}
 		}
-	}
-}
-.active{
-	border-bottom:3px solid @white; /* style of arrow underline */
-	color:@white !important;
-	&::after{
-		content:'';
-		width:0;
-		height:0;
-		position:absolute;
-		left:50%;
-		margin-left:-5px; /* value should match border-width below */
-		bottom: 0;
-		border-width:5px; /* value should match margin-left above */
-		border-style:solid;
-		border-color: transparent transparent @white transparent; /* create up arrow */
+		a.active{
+			border-bottom:4px solid @white; /* style of arrow underline */
+			color:@white !important;
+			&::after{
+				content:'';
+				width:0;
+				height:0;
+				position:absolute;
+				left:50%;
+				margin-left:-6px; /* value should match border-width below */
+				bottom: 0;
+				border-width:6px; /* value should match margin-left above */
+				border-style:solid;
+				border-color: transparent transparent @white transparent; /* create up arrow */
+			}
+		}
 	}
 }

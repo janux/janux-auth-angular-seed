@@ -177,8 +177,7 @@ module.exports =
 					).then(function (resp) {
 						var contact = resp.data.result;
 						contact = fromJSON(contact);
-						return contact;
-					});
+						return contact;					});
 				},
 
 				/**

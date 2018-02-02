@@ -4,10 +4,10 @@
  */
 
 var _ = require('lodash');
-var moment = require('moment');
-var Promise = require('bluebird');
 var PartyGroupServiceStatic = require('janux-persist').PartyGroupServiceImpl;
+var PartyServiceImplClass = require('janux-persist').PartyServiceImpl;
 var log4js = require('log4js');
+var Promise = require('bluebird');
 var log = log4js.getLogger('party-group-service');
 
 var partyGroupServiceInstance = undefined;
@@ -80,6 +80,14 @@ var createInstance = function (partyGroupServiceReference) {
 
 	PartyGroupService.prototype.addItem = function (code, item, callback) {
 		return partyGroupServiceReferenceInstance.addItem(code, PartyGroupServiceStatic.fromJSONItem(item)).asCallback(callback);
+	};
+
+	PartyGroupService.prototype.addItemNewParty = function (code, party, attributes, callback) {
+		var partyObject = PartyServiceImplClass.fromJSON(party);
+		return partyGroupServiceReferenceInstance.addItemNewParty(code, partyObject, attributes)
+			.then(function (result) {
+				return Promise.resolve(result).asCallback(callback);
+			});
 	};
 
 	PartyGroupService.prototype.removeItem = function (code, partyId, callback) {

@@ -34,6 +34,19 @@ require('angular').module('appClient', [
 		authRequired: true,
 		controller: require('./client-create-controller.js'),
 		resolve: {}
+	})
+
+	// Edit specific client
+	.state('client.edit', {
+		url: '/client/{id}',
+		templateUrl: 'app/client/edit-client.html',
+		authRequired: true,
+		controller: require('./edit-client-controller.js'),
+		resolve: {
+			client: ['partyService', '$stateParams', function(partyService, $stateParams){
+				return partyService.findOne($stateParams.id);
+			}]
+		}
 	});
 
 }]);

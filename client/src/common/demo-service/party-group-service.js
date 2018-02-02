@@ -3,8 +3,6 @@
  * Created by ernesto on 12/28/17.
  */
 'use strict';
-var Person = require('janux-people').Person;
-var Organization = require('janux-people').Organization;
 var _ = require('lodash');
 
 module.exports =
@@ -151,6 +149,17 @@ module.exports =
 						'/rpc/2.0/partyGroupService',
 						'addItem',
 						[code, toJSONItem(item)]
+					).then(function (resp) {
+						return resp.data.result;
+					});
+				},
+
+				addItemNewParty: function (code, party, attributes) {
+					$log.debug("Call to addItemNewParty with " + code + " party " + party);
+					return $http.jsonrpc(
+						'/rpc/2.0/partyGroupService',
+						'addItemNewParty',
+						[code, partyService.toJSON(party), attributes]
 					).then(function (resp) {
 						return resp.data.result;
 					});

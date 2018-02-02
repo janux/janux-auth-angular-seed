@@ -37,7 +37,7 @@ side-bar
 							md-button.md-icon-button(aria-label="Trash" style="background:none;")
 								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
 				tbody
-					tr(ng-repeat='staff in staffList')
+					tr(ng-repeat='staff in staffList track by staff.id')
 						td {{ staff.name.middle }} {{ staff.name.last }}, {{ staff.name.first }}
 						td {{ staff.phoneNumber('work').number }}
 						td {{ staff.emailAddress('work').address }}

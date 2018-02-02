@@ -75,6 +75,15 @@ require('angular').module('appClient', [
 				return rateMatrixService.findOrInsertDefaultRateMatrix(client.id);
 			}]
 		}
+	})
+
+	// Create Client
+	.state('client.create', {
+		url: '/client-create',
+		templateUrl: 'app/client/create-client.html',
+		authRequired: true,
+		controller: require('./client-create-controller.js'),
+		resolve: {}
 	});
 
 }]);

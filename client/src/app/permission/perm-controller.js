@@ -3,8 +3,8 @@ var _ = require('lodash');
 var util = require('../../common/security/util');
 
 module.exports = [
-	'$scope','authContextGroups','authContextService','$state','$modal', function(
-		$scope , authContextGroups , authContextService , $state , $modal) {
+'$scope','authContextGroups','authContextService','$state','$modal','$mdToast','$filter', function(
+ $scope , authContextGroups , authContextService , $state , $modal , $mdToast , $filter) {
 
 		// Ensure order of groups
 		$scope.authContextGroups = _.sortBy(authContextGroups, function (group) {
@@ -53,9 +53,6 @@ module.exports = [
 				}
 			});
 		};
-
-		//
-		// Delete authorization context group
 
 		var deleteContextGroupCtrl = ['$scope','$modalInstance', 'group',
 			function($scope , $modalInstance, group) {
@@ -118,6 +115,12 @@ module.exports = [
 			});
 
 			authContextService.updateGroupsSortOrder(groupsOrder).then(function (resp) {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('permission.dialogs.GroupPosition'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
 				console.log('Updated groups order', resp);
 			});
 		};
@@ -157,6 +160,12 @@ module.exports = [
 			promises.push(authContextService.updateSortOrder(authContextsOrder));
 
 			Promise.all(promises).then(function(resp){
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('permission.dialogs.AuthContextPosition'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
 				console.log('Updated authorization context', resp);
 			});
 		};

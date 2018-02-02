@@ -62,7 +62,10 @@
 		}
 	},
 	"role": {
-		"title": "Roles"
+		"title": "Roles",
+		"dialogs": {
+			"rolePosition":"Se actualizó correctamente la posición del role"
+		}
 	},
 	"permission": {
 		"authContexts": "Contextos de autorización",
@@ -72,7 +75,11 @@
 		"updatingRole": "Actualizar role:",
 		"createRole": "Crear role:",
 		"authContextGroup": "Grupo de contextos de autorización",
-		"title": "Esquema de autorización"
+		"title": "Esquema de autorización",
+		"dialogs": {
+			"AuthContextPosition": "Se actualizó correctamente la posición del contexto de autorización",
+			"GroupPosition":"Se actualizó correctamente la posición del grupo"
+		}
 	},
 	"staff": {
 		"listTitle": "Personal",

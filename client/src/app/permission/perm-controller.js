@@ -4,8 +4,8 @@ var _ = require('lodash');
 var util = require('../../common/security/util');
 
 module.exports = [
-'$scope','authContextGroups','authContextService','$state','$modal', function(
- $scope , authContextGroups , authContextService , $state , $modal) {
+'$scope','authContextGroups','authContextService','$state','$modal','$mdToast', function(
+ $scope , authContextGroups , authContextService , $state , $modal , $mdToast) {
 
 	// Ensure order of groups
 	$scope.authContextGroups = _.sortBy(authContextGroups, function (group) {
@@ -118,6 +118,12 @@ module.exports = [
 		});
 
 		authContextService.updateGroupsSortOrder(groupsOrder).then(function (resp) {
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent('Group position successfully updated')
+					.position( 'top right' )
+					.hideDelay(3000)
+			);
 			console.log('Updated groups order', resp);
 		});
 	};
@@ -157,6 +163,12 @@ module.exports = [
 		promises.push(authContextService.updateSortOrder(authContextsOrder));
 
 		Promise.all(promises).then(function(resp){
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent('Authorization context position successfully updated')
+					.position( 'top right' )
+					.hideDelay(3000)
+			);
 			console.log('Updated authorization context', resp);
 		});
 	};

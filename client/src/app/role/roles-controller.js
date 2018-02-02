@@ -2,8 +2,8 @@
 
 var _ = require('lodash');
 
-module.exports = ['$scope','roles','$modal','$state','roleService',
-	function($scope, roles, $modal, $state,roleService) {
+module.exports = ['$scope','roles','$modal','$state','roleService','$mdToast',
+	function($scope, roles, $modal, $state,roleService,$mdToast) {
 	$scope.roles = _.sortBy(_.values(roles),'sortOrder');
 	// console.log('Loaded roles', $scope.roles);
 
@@ -55,6 +55,12 @@ module.exports = ['$scope','roles','$modal','$state','roleService',
 		});
 
 		roleService.updateSortOrder(rolesToSave).then(function (resp) {
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent('Role position successfully updated')
+					.position( 'top right' )
+					.hideDelay(3000)
+			);
 			console.log('Updated roles', resp);
 		});
 	};

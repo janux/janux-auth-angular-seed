@@ -1,0 +1,51 @@
+.section-form
+	p.form-section-glarus
+		| {{ section | translate}}
+	md-divider.divider-line-glarus(ng-show="lastAddress==0")
+
+	fieldset(data-ng-repeat="address in data.contactMethods.addresses track by $index")
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.type' | translate}}
+					input(ng-model="address.type" id="address1")
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.country' | translate}}
+					input(ng-model="address.country")
+			div
+				md-checkbox.md-primary(aria-label="Fiscal" ng-model="address.fiscal")
+					| {{ 'people.fiscal' | translate}}
+			div
+				button.btn-trash(ng-click="removeAddress($index)")
+					i.fa.fa-trash
+
+		.container-flex-form
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.street1' | translate}}
+					input(ng-model='address.line1')
+		.container-flex-form
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.street2' | translate}}
+					input(ng-model='address.line2')
+
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.city' | translate}}
+					input(ng-model="address.cityText")
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.state' | translate}}
+					input(ng-model="address.stateText")
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.zip' | translate}}
+					input(ng-model='address.postalCode')
+
+	.btn-row-form
+		md-divider.divider-line-glarus
+		button.btn-plus(ng-click="addNewAddress()")
+			i.fa.fa-plus-square

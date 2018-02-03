@@ -19,6 +19,7 @@ require('common/jsonrpc');
 require('common/jnxSecurity');
 require('common/directives');
 require('common/demoService');
+require('common/components');
 require('app/users');
 require('app/permissions');
 require('app/roles');
@@ -34,6 +35,7 @@ angular.module('MyApp',[
 	'pascalprecht.translate',
 	'dndLists',
 	'commonDirectives',
+	'commonComponents',
 	'demoService',
 	'appUsers',
 	'appStaff',

@@ -109,5 +109,29 @@
 		"ext":"Ext",
 		"sms":"SMS",
 		"wps":"WPS"
+	},
+	"people": {
+		"name": "Name",
+		"middleName": "Middle name",
+		"lastName": "Last name",
+		"maternalName": "Maternal name",
+		"job": "Job Title",
+		"type": "Type",
+		"area": "Area",
+		"country": "Country",
+		"email": "Email",
+		"phone": "Phone Number",
+		"fiscal": "Fiscal",
+		"street1": "Street 1",
+		"street2": "Street 2",
+		"street3": "Street 3",
+		"city": "City",
+		"state": "State",
+		"zip": "Zip",
+		"code": "Code",
+		"number": "Number",
+		"ext": "Ext",
+		"sms": "SMS",
+		"wsp": "WSP"
 	}
 }

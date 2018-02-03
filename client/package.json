@@ -87,7 +87,8 @@
 		"app/permissions": "./src/app/permission/index.js",
 		"app/roles": "./src/app/role/index.js",
 		"app/staff": "./src/app/staff/index.js",
-		"common/security/util": "./src/common/security/util.js"
+		"common/security/util": "./src/common/security/util.js",
+		"common/components": "./src/common/components/directives.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

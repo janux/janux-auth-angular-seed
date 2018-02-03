@@ -1,0 +1,40 @@
+.section-form
+	p.form-section-glarus
+		| {{ section | translate}}
+	fieldset.fieldset-flex(data-ng-repeat="phone in data.contactMethods.phones track by $index")
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.type' | translate}}
+					input(ng-model="phone.type")
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.code' | translate}}
+					input(ng-model="phone.countryCode")
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.area' | translate}}
+					input(ng-model='phone.areaCode')
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.number' | translate}}
+					input(ng-model='phone.number')
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'people.ext' | translate}}
+					input(ng-model='phone.ext')
+			div
+				md-checkbox.md-primary(aria-label="SMS" ng-model='phone.sms')
+					| {{ 'people.sms' | translate}}
+			div
+				md-checkbox.md-primary(aria-label="WSP" ng-model='phone.wsp')
+					| {{ 'people.wsp' | translate}}
+			div
+				button.btn-trash(ng-click="removePhone($index)")
+					i.fa.fa-trash
+
+
+	.btn-row-form
+		md-divider.divider-line-glarus
+		button.btn-plus(ng-click="addNewPhone()")
+			i.fa.fa-plus-square

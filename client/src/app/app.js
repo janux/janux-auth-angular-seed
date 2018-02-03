@@ -26,6 +26,7 @@ require('common/jnxSecurity');
 require('common/directives');
 require('common/ag-grid-directives');
 require('common/demoService');
+require('common/components');
 require('app/users');
 require('app/permissions');
 require('app/roles');
@@ -47,6 +48,7 @@ angular.module('MyApp',[
 	'config',
 	'LocalStorageModule',
 	'commonDirectives',
+	'commonComponents',
 	'agGridDirectives',
 	'demoService',
 	'appUsers',

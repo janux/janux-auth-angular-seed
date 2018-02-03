@@ -100,7 +100,8 @@
 		"angular-jwt": "./bower/angular-jwt/dist/angular-jwt.js",
 		"angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js",
 		"common/time-periods": "./src/common/time-periods.js",
-		"common/security/util": "./src/common/security/util.js"
+		"common/security/util": "./src/common/security/util.js",
+		"common/components": "./src/common/components/directives.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

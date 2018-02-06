@@ -1,0 +1,14 @@
+.section-form
+	p.form-section
+		| {{ 'client.Organization' | translate}}
+	div.an-material
+		md-input-container.full
+			label {{ 'party.org.name' | translate}}
+			input(ng-model='data.name')
+
+		md-input-container.full
+			label {{ 'party.org.rfc' | translate}}
+			input(ng-model='data.rfc')
+
+		md-checkbox.md-primary(aria-label="Reseller" ng-model='data.reseller')
+			| {{ 'party.org.reseller' | translate}}

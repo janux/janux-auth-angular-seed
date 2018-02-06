@@ -1,26 +1,26 @@
 .section-form
-	p.form-section-glarus
+	p.form-section
 		| {{ section | translate}}
 	fieldset.fieldset-flex
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.name' | translate}}
+					label {{ 'party.person.name' | translate}}
 					input(ng-model='data.name.first')
 
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.middleName' | translate}}
+					label {{ 'party.person.middleName' | translate}}
 					input(ng-model='data.name.middle')
 
 	fieldset.fieldset-flex
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.lastName' | translate}}
+					label {{ 'party.person.lastName' | translate}}
 					input(ng-model='data.name.last')
 
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.maternalName' | translate}}
+					label {{ 'party.person.maternalName' | translate}}
 					input(ng-model='data.name.maternal')

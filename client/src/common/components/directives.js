@@ -23,6 +23,14 @@ angular.module('commonComponents',[])
 	};
 })
 
+.directive('organization', function() {
+	return{
+		scope: scopeDefinition,
+		restrict:'E',
+		templateUrl: 'common/components/templates/organization.html'
+	};
+})
+
 .directive('phones', function() {
 	return{
 		scope: scopeDefinition,

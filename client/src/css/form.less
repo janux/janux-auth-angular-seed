@@ -96,6 +96,31 @@ md-toolbar.form-root-toolbar{
 	padding:5px 15px;
 	color:white;
 }
+.staff-form-left,
+.staff-form-right{
+	overflow: hidden;
+	padding-top: 12px;
+	display: inline-block;
+	vertical-align: top;
+	md-checkbox{
+		margin-top: -20px;
+		.md-label{
+			padding-top: 40px;
+			font-size: 11px;
+			margin-left: 0px !important;
+		}
+	}
+}
+.staff-form-left{
+	width: 55%;
+	.small-device({ width: 100%;});
+	.smallest-device({ width: 100%;});
+}
+.staff-form-right{
+	width: 44%;
+	.small-device({ width: 100%;});
+	.smallest-device({ width: 100%;});
+}
 .staff-form{
 	overflow: hidden;
 	md-checkbox{
@@ -174,3 +199,41 @@ md-toolbar.form-root-toolbar{
 	margin:0 20px 0 20px;
 	width: 100%;
 }
+
+.form-group {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: row;
+}
+.masonry {
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: wrap;
+}
+
+.masonry-brick {
+	flex: 0 50%;
+	padding: 0 10px 0 10px;
+	box-sizing:border-box;
+}
+.fieldset-flex{
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	width: 100%;
+}
+.fieldset-flex>div{
+	padding: 3px;
+}
+.btn-row{
+	width:29%;
+	display:inline-block;
+	text-align:right;
+}
+
+.btn-row-form{
+	width:100%;
+	display:inline-block;
+	text-align:right;
+}
+// Style buttons

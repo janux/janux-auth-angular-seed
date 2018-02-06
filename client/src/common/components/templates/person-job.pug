@@ -1,11 +1,11 @@
 .section-form
-	p.form-section-glarus
+	p.form-section
 		| {{ section | translate}}
 	div.an-material
 		md-input-container.full
-			label {{ 'people.job' | translate}}
+			label {{ 'party.person.job' | translate}}
 			input(ng-model='data.job.title')
 
 		md-input-container.full
-			label {{ 'people.area' | translate}}
+			label {{ 'party.person.area' | translate}}
 			input(ng-model='data.job.area')

@@ -38,6 +38,7 @@
 	"user": {
 		"title": "People & Organizations",
 		"listTitle": "Users",
+		"contact": "Contact",
 		"user": "User",
 	  	"editUser": "Edit user",
 	  	"createUser": "Create user",
@@ -110,14 +111,21 @@
 		"sms":"SMS",
 		"wps":"WPS"
 	},
-	"people": {
-		"name": "Name",
-		"middleName": "Middle name",
-		"lastName": "Last name",
-		"maternalName": "Maternal name",
-		"job": "Job Title",
-		"type": "Type",
-		"area": "Area",
+	"party": {
+		"person": {
+			"name": "Name",
+			"middleName": "Middle name",
+			"lastName": "Last name",
+			"maternalName": "Maternal name",
+			"job": "Job Title",
+			"type": "Type",
+			"area": "Area"
+		},
+		"org": {
+			"name": "Business name",
+			"rfc": "RFC",
+			"reseller": "Reseller"
+		},
 		"country": "Country",
 		"email": "Email",
 		"phone": "Phone Number",
@@ -132,6 +140,8 @@
 		"number": "Number",
 		"ext": "Ext",
 		"sms": "SMS",
-		"wsp": "WSP"
+		"wsp": "WSP",
+		"first": "Main",
+		"type": "Type"
 	}
 }

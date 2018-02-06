@@ -1,20 +1,20 @@
 .section-form
-	p.form-section-glarus
+	p.form-section
 		| {{ section | translate}}
 	fieldset.fieldset-flex(data-ng-repeat="email in data.contactMethods.emails track by $index")
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.type' | translate}}
+					label {{ 'party.type' | translate}}
 					input(ng-model="email.type")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'people.email' | translate}}
+					label {{ 'party.email' | translate}}
 					input(ng-model="email.address")
 
 			div
 				md-checkbox(aria-label="Principal" ng-model='email.principal')
-					| {{ 'people.first' | translate}}
+					| {{ 'party.first' | translate}}
 
 			div
 				button.btn-trash(ng-click="removeMail($index)")

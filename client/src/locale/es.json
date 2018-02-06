@@ -144,11 +144,8 @@
 		"type": "Tipo",
 		"area": "Área",
 		"country": "País",
-		"email": "E-mail",
-		"edit": "Editar",
 		"delete": "Eliminar",
 		"creation": "Creación",
-		"phone": "Teléfono",
 		"fiscal": "Fiscal",
 		"street1": "Calle 1",
 		"street2": "Calle 2",
@@ -252,5 +249,36 @@
 	},
 	"dialogs":{
 		"delete":"Estas seguro que quieres borrar "
+	},
+	"party": {
+		"person": {
+			"name": "Nombre",
+			"middleName": "Segundo Nombre",
+			"lastName": "Apellido paterno",
+			"maternalName": "Apellido materno",
+			"job": "Puesto",
+			"type": "Tipo"
+		},
+		"org": {
+			"name": "Name or social reason",
+			"rfc": "RFC",
+			"isReseller": "It's a reseller"
+		},
+		"area": "Área",
+		"country": "País",
+		"email": "E-mail",
+		"phone": "Teléfono",
+		"fiscal": "Fiscal",
+		"street1": "Calle 1",
+		"street2": "Calle 2",
+		"street3": "Calle 3",
+		"city": "Ciudad",
+		"state": "Estado",
+		"zip": "C.P.",
+		"code": "Código",
+		"number": "Número",
+		"ext": "Ext",
+		"sms": "SMS",
+		"wsp": "WSP"
 	}
 }

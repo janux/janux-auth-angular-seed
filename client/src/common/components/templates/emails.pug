@@ -5,16 +5,16 @@
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.type' | translate}}
+					label {{ 'party.type' | translate}}
 					input(ng-model="email.type")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.email' | translate}}
+					label {{ 'party.email' | translate}}
 					input(ng-model="email.address")
 
 			div
 				md-checkbox(aria-label="Principal" ng-model='email.principal')
-					| {{ 'staff.first' | translate}}
+					| {{ 'party.first' | translate}}
 
 			div
 				button.btn-trash(ng-click="removeMail($index)")

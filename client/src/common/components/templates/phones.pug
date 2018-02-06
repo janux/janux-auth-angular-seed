@@ -5,30 +5,30 @@
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.type' | translate}}
+					label {{ 'party.type' | translate}}
 					input(ng-model="phone.type")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.code' | translate}}
+					label {{ 'party.code' | translate}}
 					input(ng-model="phone.countryCode")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.area' | translate}}
+					label {{ 'party.area' | translate}}
 					input(ng-model='phone.areaCode')
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.number' | translate}}
+					label {{ 'party.number' | translate}}
 					input(ng-model='phone.number')
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.ext' | translate}}
+					label {{ 'party.ext' | translate}}
 					input(ng-model='phone.ext')
 			div
 				md-checkbox.md-primary(aria-label="SMS" ng-model='phone.sms')
-					| {{ 'staff.sms' | translate}}
+					| {{ 'party.sms' | translate}}
 			div
 				md-checkbox.md-primary(aria-label="WSP" ng-model='phone.wsp')
-					| {{ 'staff.wsp' | translate}}
+					| {{ 'party.wsp' | translate}}
 			div
 				button.btn-trash(ng-click="removePhone($index)")
 					i.fa.fa-trash

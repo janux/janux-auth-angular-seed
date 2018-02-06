@@ -7,15 +7,15 @@
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.type' | translate}}
+					label {{ 'party.type' | translate}}
 					input(ng-model="address.type" id="address1")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.country' | translate}}
+					label {{ 'party.country' | translate}}
 					input(ng-model="address.country")
 			div
 				md-checkbox.md-primary(aria-label="Fiscal" ng-model="address.fiscal")
-					| {{ 'staff.fiscal' | translate}}
+					| {{ 'party.fiscal' | translate}}
 			div
 				button.btn-trash(ng-click="removeAddress($index)")
 					i.fa.fa-trash
@@ -23,26 +23,26 @@
 		.container-flex-form
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.street1' | translate}}
+					label {{ 'party.street1' | translate}}
 					input(ng-model='address.line1')
 		.container-flex-form
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.street2' | translate}}
+					label {{ 'party.street2' | translate}}
 					input(ng-model='address.line2')
 
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.city' | translate}}
+					label {{ 'party.city' | translate}}
 					input(ng-model="address.cityText")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.state' | translate}}
+					label {{ 'party.state' | translate}}
 					input(ng-model="address.stateText")
 			.an-material.nopadding
 				md-input-container.full
-					label {{ 'staff.zip' | translate}}
+					label {{ 'party.zip' | translate}}
 					input(ng-model='address.postalCode')
 
 	.btn-row-form

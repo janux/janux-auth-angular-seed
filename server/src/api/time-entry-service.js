@@ -3,8 +3,8 @@
  * Created by ernesto on 11/21/17.
  */
 var _                    = require('lodash'),
-	TimeEntryServiceImpl = require('glarus-services').TimeEntryServiceImpl,
-	log4js               = require('log4js');
+    TimeEntryServiceImpl = require('glarus-services').TimeEntryServiceImpl,
+    log4js               = require('log4js');
 log = log4js.getLogger('time-entry-service');
 
 
@@ -34,7 +34,7 @@ var createInstance = function (timeEntryServiceReference) {
 		return timeEntryServiceReferenceInstance.insert(instance).asCallback(callback);
 	};
 
-	TimeEntryService.prototype.update = function (timeEntry, callback) {
+		TimeEntryService.prototype.update = function (timeEntry, callback) {
 		log.debug("Call to update with timeEntry: %j", timeEntry);
 
 		// timeEntry.begin = fixDate(timeEntry.begin);
@@ -59,7 +59,7 @@ var createInstance = function (timeEntryServiceReference) {
 module.exports.create = function (timeEntryServiceReference) {
 	// if the instance does not exist, create it
 	if (!_.isObject(timeEntryServiceInstance)) {
-			// userServiceInstance = new UserService(aDAO);
+		// userServiceInstance = new UserService(aDAO);
 		timeEntryServiceInstance = createInstance(timeEntryServiceReference);
 	}
 	return timeEntryServiceInstance;

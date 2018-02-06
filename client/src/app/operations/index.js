@@ -53,7 +53,7 @@ require('angular').module('appOperations', [
 				return operationService.findGuardsAndOperations();
 			}],
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
-				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+				var storedFilterPeriod = jnxStorage.findItem('guardsTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 

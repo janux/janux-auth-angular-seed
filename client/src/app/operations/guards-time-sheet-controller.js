@@ -5,18 +5,18 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope','$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter','$state','$translate',
-	function ($rootScope,$scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
 
-		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+		var storedFilterPeriod = jnxStorage.findItem('guardsTimeLogFilterPeriod', true);
 
 		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilter;
 		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('driversTimeLogFilterPeriod',$scope.periodFilterKey,true);
+			jnxStorage.setItem('guardsTimeLogFilterPeriod', $scope.periodFilterKey, true);
 			$scope.findTimeEntries($scope.periodFilterKey);
 		};
 
@@ -32,18 +32,10 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				start    : moment().startOf('day').format(dateTimeFormatString),
 				end      : undefined,
 				provider : '',
-				location : '',
-				absence  : ''
+				location : ''
 			};
 		};
 		initRowModel();
-
-		// var refreshStartServiceTime = 60 * 1000;	// 1 minute
-		// // Refresh start time
-		// $interval(function () {
-		// 	$scope.lbRow.start = moment().format(dateTimeFormatString);
-		// }, refreshStartServiceTime);
-
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
 			staff    : '',
@@ -65,11 +57,6 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				size       : 'md'
 			});
 		};
-
-		// Runs every time the text in the field to find the staff member changes
-		// $scope.staffSearchTextChange = function(text) {
-		// 	console.info('Text changed to ' + text);
-		// };
 
 		//
 		// Staff autocomplete
@@ -136,41 +123,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 
 
 		$scope.export = function () {
-
-			/*var now = moment();
-
-			var params = {
-				skipHeader: false,
-				columnGroups: false,
-				skipFooters: false,
-				skipGroups: false,
-				skipPinnedTop: true,
-				skipPinnedBottom: true,
-				allColumns: true,
-				onlySelected: false,
-				suppressQuotes: true,
-				fileName: 'bitacora ' + now.format('YYYYMMDDHHmm') + ' .csv',
-				columnSeparator: ',',
-				processCellCallback : function(params) {
-					if (params.value ) {
-						if(params.column.colId === 'staff') {
-							return '"' + params.value + '"';
-						} else if(params.column.colId === 'operation' ){
-							return '"' + params.value + '"';
-						} else  {
-							return '"' +  params.value + '"';
-						}
-					} else {
-						return params.value;
-					}
-				}
-			};
-
-			$scope.gridOptions.api.exportDataAsCsv(params);*/
-
-
 			var ids = [];
-
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
@@ -202,16 +155,13 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 							'resources'  : [$scope.lbRow.staff],
 							'principals' : [],
 							'attributes' : [],
-							'type'       : 'DRIVER',
+							'type'       : 'GUARD',
 							'comment'    : $scope.lbRow.location,
 							'begin'      : begin.toDate(),
 							'end'        : endToInsert,
 							'billable'   : true,
 							'idOperation': $scope.lbRow.operation.id
 						};
-
-						// Absence
-						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -251,7 +201,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
-							$scope.message= $filter('translate')('operations.dialogs.confirmDeletion');
+							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
 
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
@@ -293,7 +243,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					return params.data.operation.name;
 				},
 				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width: 110
+				width      : 110
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.client'),
@@ -302,124 +252,65 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				cellEditor: agGridComp.clientCellUpdater
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.begin'),
-				field      : 'begin',
-				editable   : true,
-				filter     : 'date',
-					filterParams:{
-					inRangeInclusive : true,
-					comparator: agGridComp.dateFilterComparator,
-					filterOptions: ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
+				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				field         : 'begin',
+				editable      : true,
+				filter        : 'date',
+				filterParams  : {
+					inRangeInclusive: true,
+					comparator      : agGridComp.dateFilterComparator,
+					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
 				},
-				cellEditor : agGridComp.dateTimeCellEditor,
-				sort       : 'desc',
-				width: 160
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				sort          : 'desc',
+				width         : 160
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.end'),
-				field      : 'end',
-				editable   : true,
-				filter     : 'date',
-				filterParams:{
+				headerName    : $filter('translate')('operations.driversTimeLog.end'),
+				field         : 'end',
+				editable      : true,
+				filter        : 'date',
+				filterParams  : {
 					comparator: agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
 				},
-				cellEditor : agGridComp.dateTimeCellEditor,
-				width: 160
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				width         : 160
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater,
-				width: 95
+				width     : 95
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.comment'),
-				field     : 'comment',
-				editable  : true,
-				cellEditor: agGridComp.commentCellEditor,
-				cellStyle: {
+				headerName   : $filter('translate')('operations.driversTimeLog.comment'),
+				field        : 'comment',
+				editable     : true,
+				cellEditor   : agGridComp.commentCellEditor,
+				cellStyle    : {
 					'white-space': 'normal'
 				},
 				cellFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
-					return agGridComp.util.truncate(comment,maxLength,'...');
+					return agGridComp.util.truncate(comment, maxLength, '...');
 				}
-				// cellEditor: 'largeText',
-				// cellEditorParams: {
-				// 	maxLength: '300',
-				// 	cols: '50',
-				// 	rows: '6'
-				// }
-			},
-			// {
-			// 	headerName: 'Object',
-			// 	field: 'Object',
-			// 	editable: true,
-			// 	cellRenderer:agGridComp.objectCellRenderer,
-			// 	cellEditor: agGridComp.objectCellEditor
-			// },
-			{
-				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
-				field         : 'absence',
-				editable      : true,
-				cellEditor    : agGridComp.absenceCellEditor,
-				valueFormatter: function (params) {
-					var val = '';
-					switch (params.value) {
-						case 'D':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.D');
-							break;
-						case 'V':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.V');
-							break;
-						case 'PS':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PS');
-							break;
-						case 'F':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.F');
-							break;
-						case 'PC':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PC');
-							break;
-						case 'I':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.I');
-							break;
-						default:
-							val = '';
-							break;
-					}
-					return val;
-				},
-				filterParams: {
-					textFormatter: function(value) {
-						if(value === 'sin falta'){
-							return 'SF';
-						}else {
-							return value;
-						}
-					}
-				},
-				width: 130
 			},
 			{
-				headerName       : '',
-				// headerCheckboxSelection: true,
-				// headerCheckboxSelectionFilteredOnly: true,
-				// checkboxSelection: true,
-				cellRenderer	 : agGridComp.checkBoxRowSelection,
-				cellEditor       : agGridComp.rowActions,
-				headerComponent  : agGridComp.deleteRowsHeaderComponent,
-				editable         : true,
-				field            : 'selected',	// field needed to avoid ag-grid warning
-				width: 80
+				headerName     : '',
+				cellRenderer   : agGridComp.checkBoxRowSelection,
+				cellEditor     : agGridComp.rowActions,
+				headerComponent: agGridComp.deleteRowsHeaderComponent,
+				editable       : true,
+				field          : 'selected',	// field needed to avoid ag-grid warning
+				width          : 80
 			}
 		];
 
@@ -475,18 +366,13 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					'resources'  : [resource],
 					'principals' : [],
 					'attributes' : [],
-					'type'       : 'DRIVER',
+					'type'       : 'GUARD',
 					'comment'    : rowObj.data.comment,
 					'begin'      : moment(rowObj.data.begin).toDate(),
 					'end'        : endToUpdate,
 					'billable'   : true,
 					'idOperation': rowObj.data.operation.id
 				};
-
-				// Temporary solution to mark records without absence
-				var absence = (rowObj.data.absence!=='SF')?rowObj.data.absence:'';
-
-				timeEntryToUpdate.resources[0].absence = absence;
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);
@@ -506,7 +392,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 		$scope.findTimeEntries = function (periodKey) {
 			var period = timePeriods[periodKey];
 
-			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'GUARD')
+			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(), 'GUARD')
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);

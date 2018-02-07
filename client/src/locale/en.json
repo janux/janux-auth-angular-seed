@@ -348,6 +348,10 @@
 				"NOT_COVERED": "Not covered (NOT COVERED)"
 			}
 		},
+		"guardsTimeLog": {
+			"title": "Guards time log",
+			"filterLabel": "List:"
+		},
 		"specials": "Specials",
 		"specialsTimeLog": {
 			"title": "Special ops time log",

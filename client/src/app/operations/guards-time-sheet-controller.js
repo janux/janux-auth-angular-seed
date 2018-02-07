@@ -160,7 +160,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'begin'      : begin.toDate(),
 							'end'        : endToInsert,
 							'billable'   : true,
-							'idOperation': $scope.lbRow.operation.id
+							'idOperation': $scope.lbRow.operation.id,
+							'extras'     : $scope.lbRow.extras
 						};
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
@@ -224,7 +225,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		//
 		var columnDefs = [
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.staff'),
+				headerName : $filter('translate')('operations.guardsTimeLog.staff'),
 				field      : 'staff',
 				editable   : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
@@ -235,7 +236,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.operation'),
+				headerName : $filter('translate')('operations.guardsTimeLog.operation'),
 				field      : 'operation',
 				editable   : true,
 				// cellRenderer: agGridComp.operationCellRenderer,
@@ -246,10 +247,40 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width      : 110
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.client'),
+				headerName: $filter('translate')('operations.guardsTimeLog.client'),
 				field     : 'client',
 				editable  : true,
 				cellEditor: agGridComp.clientCellUpdater
+			},
+
+			// Extras
+			{
+				headerName    : $filter('translate')('operations.guardsTimeLog.extras'),
+				field         : 'extras',
+				editable      : true,
+				cellEditor    : agGridComp.guardExtraCellEditor,
+				valueFormatter: function (params) {
+					var val = '';
+					switch (params.value) {
+						case 'D':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.AF');
+							break;
+						case 'V':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.A');
+							break;
+						case 'PS':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NM');
+							break;
+						case 'F':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NRM');
+							break;
+						default:
+							val = '';
+							break;
+					}
+					return val;
+				},
+				width         : 130
 			},
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
@@ -371,7 +402,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'begin'      : moment(rowObj.data.begin).toDate(),
 					'end'        : endToUpdate,
 					'billable'   : true,
-					'idOperation': rowObj.data.operation.id
+					'idOperation': rowObj.data.operation.id,
+					'extras'     : rowObj.data.extras
 				};
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {

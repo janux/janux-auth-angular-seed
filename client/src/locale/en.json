@@ -162,8 +162,23 @@
 			}
 		},
 		"guardsTimeLog": {
-			"title": "Guards time log",
-			"filterLabel": "List:"
+			"title": "Guards Time Log",
+			"staff": "Staff",
+			"operation": "Operation",
+			"begin": "Begin",
+			"end": "End",
+			"client": "Client",
+			"duration": "Duration",
+			"comment": "Comment",
+			"filterLabel": "List:",
+			"absence": "Absence",
+		  	"extras": "Extras",
+			"extraOptions": {
+				"AF": "Additional invoiced",
+				"A": "Additional not invoiced",
+				"NM": "Night shift maintenance",
+				"NRM": "Night shift goods receipt"
+			}
 		},
 		"specials": "Specials",
 		"guards": "Guards",

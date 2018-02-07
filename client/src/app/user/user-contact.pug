@@ -1,74 +1,8 @@
-h3 User contact
-//.data(ng-init='address = user.contact.postalAddress()')
-//	h4
-//		i.fa.fa-building-o
-//		| &nbsp;&nbsp;Data
-//	.label-form
-//		label(for='line1') Line 1
-//
-//	.textbox-form
-//		input.form-element(type='text' id='line1' ng-model='address.line1')
-//
-//	.label-form
-//		label(for='line2') Line 2
-//
-//	.textbox-form
-//		input.form-element(type='text' id='line2' ng-model='address.line2')
-//
-//	.label-form
-//		label(for='state') State
-//
-//	.textbox-form
-//		input.form-element(type='text' id='state' ng-model='address.stateText')
-//
-//	.label-form
-//		label(for='city') City
-//
-//	.textbox-form
-//		input.form-element(type='text' id='city' ng-model='address.cityText')
-//
-//	.label-form
-//		label(for='pc') Postal Code
-//
-//	.textbox-form
-//		input.form-element(type='text' id='pc' ng-model='address.postalCode')
-//
-//.contact
-//	h4
-//		i.fa.fa-user
-//		| &nbsp;&nbsp;Contact
-//	.label-form
-//		label(for='hp') Honorific prefix
-//
-//	.textbox-form
-//		input.form-element(type='text' id='hp' ng-model='user.contact.name.honorificPrefix')
-//
-//	.label-form
-//		label(for='hs') Honorific suffix
-//
-//	.textbox-form
-//		input.form-element(type='text' id='hs' ng-model='user.contact.name.honorificSuffix')
-//
-//	.label-form
-//		label(for='name') First name
-//
-//	.textbox-form
-//		input.form-element(type='text' id='name' ng-model='user.contact.name.first')
-//
-//	.label-form
-//		label(for='last') Last name
-//
-//	.textbox-form
-//		input.form-element(type='text' id='last' ng-model='user.contact.name.last')
-//
-//	.label-form
-//		label(for='email') Email
-//
-//	.textbox-form
-//		input.form-element(type='text' id='email' ng-model='user.contact.emailAddress().address')
-//
-//	.label-form
-//		label(for='phone') Phone number
-//
-//	.textbox-form
-//		input.form-element(type='text' id='phone' ng-model='user.contact.phoneNumber().number')
+.container-flex-form
+	.staff-form-left
+		person-name(data="user.contact" section="user.contact")
+		addresses(data="user.contact" section="staff.addressesTitle")
+	.staff-form-right
+		person-job(data="user.contact", section="staff.jobTitle")
+		phones(data="user.contact", section="staff.phonesTitle")
+		emails(data="user.contact", section="staff.mailsTitle")

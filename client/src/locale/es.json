@@ -36,6 +36,7 @@
 	"user": {
 		"listTitle": "Usuarios",
 		"user": "Usuario",
+		"contact": "Contacto",
 		"editUser": "Editar usuario",
 		"createUser": "Crear usuario",
 		"username": "Usuario",
@@ -260,9 +261,9 @@
 			"type": "Tipo"
 		},
 		"org": {
-			"name": "Name or social reason",
+			"name": "Nombre o razón social",
 			"rfc": "RFC",
-			"isReseller": "It's a reseller"
+			"reseller": "Revendedor"
 		},
 		"area": "Área",
 		"country": "País",
@@ -279,6 +280,7 @@
 		"number": "Número",
 		"ext": "Ext",
 		"sms": "SMS",
-		"wsp": "WSP"
+		"wsp": "WSP",
+		"first": "Principal"
 	}
 }

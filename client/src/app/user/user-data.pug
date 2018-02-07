@@ -2,19 +2,19 @@ div
 	p.form-section
 		| {{ 'user.user' | translate }}
 	div.an-material
-		md-input-container.full
+		md-input-container.user-field
 			label {{ 'user.username' | translate }}
 			input(ng-model='user.username')
 
-		md-input-container.full
+		md-input-container.user-field
 			label {{ 'user.email' | translate }}
 			input(ng-model='user.email')
 
-		md-input-container.full
+		md-input-container
 			md-checkbox.md-primary(aria-label="Enabled" ng-model='user.enabled')
 				| {{ 'user.enabled' | translate }}
 
-		md-input-container.full
+		md-input-container
 			md-checkbox.md-primary(aria-label="Locked" ng-model='user.locked')
 				| {{ 'user.locked' | translate }}
 

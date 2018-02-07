@@ -161,6 +161,10 @@
 				"I": "I"
 			}
 		},
+		"guardsTimeLog": {
+			"title": "Guards time log",
+			"filterLabel": "List:"
+		},
 		"specials": "Specials",
 		"guards": "Guards",
 		"services": "Services",

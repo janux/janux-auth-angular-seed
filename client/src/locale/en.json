@@ -36,6 +36,7 @@
 	"user": {
 		"listTitle": "Users",
 		"user": "User",
+		"contact": "Contact",
 		"editUser": "Edit user",
 		"createUser": "Create user",
 		"username": "Username",
@@ -263,7 +264,7 @@
 		"org": {
 			"name": "Business name",
 			"rfc": "RFC",
-			"isReseller": "Reseller"
+			"reseller": "Reseller"
 		},
 		"country": "Country",
 		"email": "Email",
@@ -279,6 +280,7 @@
 		"number": "Number",
 		"ext": "Ext",
 		"sms": "SMS",
-		"wsp": "WSP"
+		"wsp": "WSP",
+		"first": "Main"
 	}
 }

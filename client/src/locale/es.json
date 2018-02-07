@@ -175,10 +175,10 @@
 			"absence": "Falta",
 			"extras": "Extras",
 			"extraOptions": {
-				"AF": "Adicional facturado",
-				"A": "Adicional no facturado",
-				"NM": "Nocturno mantenimiento",
-				"NRM": "Nocturno recibo mercancia"
+				"AF": "Adicional facturado (AF)",
+				"A": "Adicional no facturado (A)",
+				"NM": "Nocturno mantenimiento (NM)",
+				"NRM": "Nocturno recibo mercancia (NRM)"
 			}
 		},
 		"specials": "Especiales",

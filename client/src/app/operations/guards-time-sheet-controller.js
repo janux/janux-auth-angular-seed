@@ -244,13 +244,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return params.data.operation.name;
 				},
 				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width      : 110
+				width      : 130
 			},
 			{
 				headerName: $filter('translate')('operations.guardsTimeLog.client'),
 				field     : 'client',
 				editable  : true,
-				cellEditor: agGridComp.clientCellUpdater
+				cellEditor: agGridComp.clientCellUpdater,
+				width      : 110
 			},
 
 			// Extras
@@ -280,7 +281,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					}
 					return val;
 				},
-				width         : 130
+				width         : 170
 			},
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.begin'),

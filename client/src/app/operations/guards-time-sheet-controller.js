@@ -21,8 +21,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-		var allDrivers = driversAndOps.drivers;
-		var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
+		var allGuards = driversAndOps.guards;
+		var guardsAssignedToOperations = driversAndOps.guardsAssignedToOperations;
 		var operations = driversAndOps.operations;
 
 		var initRowModel = function () {
@@ -66,7 +66,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// This item should contain the selected staff member
 				console.info('Item changed to ' + JSON.stringify(item));
 
-				var selectedDriver = _.find(driversAssignedToOperations, function (o) {
+				var selectedDriver = _.find(guardsAssignedToOperations, function (o) {
 					return o.id === item.id;
 				});
 
@@ -95,7 +95,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		}
 
 		$scope.staffSearch = function (query) {
-			return query ? allDrivers.filter(createFilterForStaff(query)) : allDrivers;
+			return query ? allGuards.filter(createFilterForStaff(query)) : allGuards;
 		};
 
 		//
@@ -262,16 +262,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				valueFormatter: function (params) {
 					var val = '';
 					switch (params.value) {
-						case 'D':
+						case 'AF':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.AF');
 							break;
-						case 'V':
+						case 'A':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.A');
 							break;
-						case 'PS':
+						case 'NM':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NM');
 							break;
-						case 'F':
+						case 'NRM':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NRM');
 							break;
 						default:

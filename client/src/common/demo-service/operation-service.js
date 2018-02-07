@@ -23,7 +23,6 @@ module.exports =
 				result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
 				result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
 				result.principals = _.map(result.principals, function (o) {
-
 					return partyService.fromJSON(o);
 				});
 
@@ -80,7 +79,7 @@ module.exports =
 
 				findGuardsAndOperations: function () {
 					return service.findAllWithoutTimeEntry().then(function (result) {
-						var driversAssignedToOperations = [];
+						var guardsAssignedToOperations = [];
 						var operations = [];
 						result.forEach(function (op) {
 							var tmpRes = _.filter(op.currentResources, {type: 'GUARD'});
@@ -93,7 +92,7 @@ module.exports =
 
 								var opWithOutRes = _.clone(op);
 								delete opWithOutRes.currentResources;
-								driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
+								guardsAssignedToOperations = guardsAssignedToOperations.concat(tmpRes);
 								operations = operations.concat(opWithOutRes);
 							}
 						});
@@ -106,9 +105,9 @@ module.exports =
 							});
 
 							return {
-								driversAssignedToOperations: driversAssignedToOperations,
-								drivers                    : result,
-								operations                 : operations
+								guardsAssignedToOperations: guardsAssignedToOperations,
+								guards                    : result,
+								operations                : operations
 							};
 						});
 					});
@@ -136,9 +135,9 @@ module.exports =
 
 						return resourceService.findAvailableResources().then(function (result) {
 
-							// Filter only persons.
+							// Filter only persons and resources that belongs to glarus.
 							result = _.filter(result, function (o) {
-								return o.type !== 'VEHICLE';
+								return o.type !== 'VEHICLE' && o.vendor.id === '10000';
 							});
 
 							return {
@@ -187,7 +186,8 @@ module.exports =
 								end          : timeEntry.end, //end,
 								duration     : duration,
 								absence      : absence,
-								comment      : timeEntry.comment
+								comment      : timeEntry.comment,
+								extras       : timeEntry.extras
 							});
 						}
 					}

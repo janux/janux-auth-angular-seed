@@ -5,18 +5,18 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope','$scope','config','jnxStorage','operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter','$state','$translate',
-	function ($rootScope,$scope,config,jnxStorage,operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
 
 		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 
 		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilter;
 		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('driversTimeLogFilterPeriod',$scope.periodFilterKey,true);
+			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);
 			$scope.findTimeEntries($scope.periodFilterKey);
 		};
 
@@ -199,7 +199,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 						}
 
 						var timeEntryToInsert = {
-							'resources'  : [$scope.lbRow.staff],
+							'resources'  : [_.clone($scope.lbRow.staff)],
 							'principals' : [],
 							'attributes' : [],
 							'type'       : 'DRIVER',
@@ -210,6 +210,8 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 							'idOperation': $scope.lbRow.operation.id
 						};
 
+						//Forcing resource type driver.
+						timeEntryToInsert.resources[0].type = 'DRIVER';
 						// Absence
 						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
 
@@ -251,7 +253,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
-							$scope.message= $filter('translate')('operations.dialogs.confirmDeletion');
+							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
 
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
@@ -293,7 +295,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					return params.data.operation.name;
 				},
 				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width: 110
+				width      : 110
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.client'),
@@ -302,55 +304,55 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				cellEditor: agGridComp.clientCellUpdater
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.begin'),
-				field      : 'begin',
-				editable   : true,
-				filter     : 'date',
-					filterParams:{
-					inRangeInclusive : true,
-					comparator: agGridComp.dateFilterComparator,
-					filterOptions: ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
+				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				field         : 'begin',
+				editable      : true,
+				filter        : 'date',
+				filterParams  : {
+					inRangeInclusive: true,
+					comparator      : agGridComp.dateFilterComparator,
+					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
 				},
-				cellEditor : agGridComp.dateTimeCellEditor,
-				sort       : 'desc',
-				width: 160
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				sort          : 'desc',
+				width         : 160
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.end'),
-				field      : 'end',
-				editable   : true,
-				filter     : 'date',
-				filterParams:{
+				headerName    : $filter('translate')('operations.driversTimeLog.end'),
+				field         : 'end',
+				editable      : true,
+				filter        : 'date',
+				filterParams  : {
 					comparator: agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
 				},
-				cellEditor : agGridComp.dateTimeCellEditor,
-				width: 160
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				width         : 160
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater,
-				width: 95
+				width     : 95
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.comment'),
-				field     : 'comment',
-				editable  : true,
-				cellEditor: agGridComp.commentCellEditor,
-				cellStyle: {
+				headerName   : $filter('translate')('operations.driversTimeLog.comment'),
+				field        : 'comment',
+				editable     : true,
+				cellEditor   : agGridComp.commentCellEditor,
+				cellStyle    : {
 					'white-space': 'normal'
 				},
 				cellFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
-					return agGridComp.util.truncate(comment,maxLength,'...');
+					return agGridComp.util.truncate(comment, maxLength, '...');
 				}
 				// cellEditor: 'largeText',
 				// cellEditorParams: {
@@ -398,28 +400,28 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 					}
 					return val;
 				},
-				filterParams: {
-					textFormatter: function(value) {
-						if(value === 'sin falta'){
+				filterParams  : {
+					textFormatter: function (value) {
+						if (value === 'sin falta') {
 							return 'SF';
-						}else {
+						} else {
 							return value;
 						}
 					}
 				},
-				width: 130
+				width         : 130
 			},
 			{
-				headerName       : '',
+				headerName     : '',
 				// headerCheckboxSelection: true,
 				// headerCheckboxSelectionFilteredOnly: true,
 				// checkboxSelection: true,
-				cellRenderer	 : agGridComp.checkBoxRowSelection,
-				cellEditor       : agGridComp.rowActions,
-				headerComponent  : agGridComp.deleteRowsHeaderComponent,
-				editable         : true,
-				field            : 'selected',	// field needed to avoid ag-grid warning
-				width: 80
+				cellRenderer   : agGridComp.checkBoxRowSelection,
+				cellEditor     : agGridComp.rowActions,
+				headerComponent: agGridComp.deleteRowsHeaderComponent,
+				editable       : true,
+				field          : 'selected',	// field needed to avoid ag-grid warning
+				width          : 80
 			}
 		];
 
@@ -472,7 +474,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 
 				var timeEntryToUpdate = {
 					'id'         : rowObj.data.id,
-					'resources'  : [resource],
+					'resources'  : [_.clone(resource)],
 					'principals' : [],
 					'attributes' : [],
 					'type'       : 'DRIVER',
@@ -484,9 +486,11 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 				};
 
 				// Temporary solution to mark records without absence
-				var absence = (rowObj.data.absence!=='SF')?rowObj.data.absence:'';
+				var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
 
 				timeEntryToUpdate.resources[0].absence = absence;
+				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
+				timeEntryToUpdate.resources[0].type = 'DRIVER';
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);
@@ -506,7 +510,7 @@ module.exports = ['$rootScope','$scope','config','jnxStorage','operationService'
 		$scope.findTimeEntries = function (periodKey) {
 			var period = timePeriods[periodKey];
 
-			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'DRIVER')
+			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(), 'DRIVER')
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);

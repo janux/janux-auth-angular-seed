@@ -165,6 +165,13 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/absence-cell-editor.html'
 	}
 }])
+.directive('agGuardExtras', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/guard-extras-cell-editor.pug'
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

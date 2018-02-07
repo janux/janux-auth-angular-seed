@@ -11,6 +11,7 @@ module.exports = {
 	autocompleteStaffCellEditor: require('./autocomplete-staff-cell-editor'),
 	autocompleteOpCellEditor: require('./autocomplete-op-cell-editor'),
 	absenceCellEditor: require('./absence-cell-editor'),
+	guardExtraCellEditor: require('./guard-extras-cell-editor'),
 	clientCellUpdater: require('./client-cell-updater'),
 	durationCellUpdater: require('./duration-cell-updater'),
 	commentCellEditor: require('./comment-cell-editor'),

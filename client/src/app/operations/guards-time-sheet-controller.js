@@ -492,6 +492,36 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				width         : 170
 			},
+
+			// Extras
+			{
+				headerName    : $filter('translate')('operations.guardsTimeLog.extras'),
+				field         : 'extras',
+				editable      : true,
+				cellEditor    : agGridComp.guardExtraCellEditor,
+				valueFormatter: function (params) {
+					var val = '';
+					switch (params.value) {
+						case 'D':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.AF');
+							break;
+						case 'V':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.A');
+							break;
+						case 'PS':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NM');
+							break;
+						case 'F':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NRM');
+							break;
+						default:
+							val = '';
+							break;
+					}
+					return val;
+				},
+				width         : 130
+			},
 			{
 				headerName    : $filter('translate')('operations.guardsTimeLog.begin'),
 				field         : 'begin',

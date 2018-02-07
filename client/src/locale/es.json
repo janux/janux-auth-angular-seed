@@ -193,6 +193,10 @@
 				"I": "I"
 			}
 		},
+		"guardsTimeLog": {
+			"title": "Bitácora de Guardias",
+			"filterLabel": "Ver:"
+		},
 		"specials": "Especiales",
 		"guards": "Guardias",
 		"services": "Servicios",

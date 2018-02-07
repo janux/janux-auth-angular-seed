@@ -195,7 +195,23 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
-			"filterLabel": "Ver:"
+			"filterLabel": "Ver:",
+			"staff": "Personal",
+			"operation": "Servicio",
+			"begin": "Inicio",
+			"end": "Término",
+			"client": "Cliente",
+			"duration": "Duración",
+			"comment": "Comentario",
+			"filterLabel": "Ver:",
+			"absence": "Falta",
+			"extras": "Extras",
+			"extraOptions": {
+				"AF": "Adicional facturado",
+				"A": "Adicional no facturado",
+				"NM": "Nocturno mantenimiento",
+				"NRM": "Nocturno recibo mercancia"
+			}
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",

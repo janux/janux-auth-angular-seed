@@ -206,10 +206,10 @@
 			"absence": "Absence",
 		  	"extras": "Extras",
 			"extraOptions": {
-				"AF": "Additional invoiced",
-				"A": "Additional not invoiced",
-				"NM": "Night shift maintenance",
-				"NRM": "Night shift goods receipt"
+				"AF": "Additional invoiced (AF)",
+				"A": "Additional not invoiced (A)",
+				"NM": "Night shift maintenance (NM)",
+				"NRM": "Night shift goods receipt (NRM)"
 			}
 		},
 		"specials": "Specials",

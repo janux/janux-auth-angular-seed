@@ -6,12 +6,12 @@ function GuardExtrasCellEditor () {}
 // gets called once before the renderer is used
 GuardExtrasCellEditor.prototype.init = function(params) {
 	// Assign value to row scope
-	this.model = 'agGridGuardExtras';
+	this.model = 'agGridGuardExtra';
 	params.$scope[this.model] = params.value;
 	this.rowScope = params.$scope;
 
 	// Create angular material autocomplete
-	this.autocomplete = document.createElement('ag-grid-guards-extra');
+	this.autocomplete = document.createElement('ag-grid-guard-extras');
 };
 
 // gets called once when grid ready to insert the element

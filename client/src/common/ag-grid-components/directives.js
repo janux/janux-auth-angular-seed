@@ -165,11 +165,11 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/absence-cell-editor.html'
 	}
 }])
-.directive('agGuardExtras', [ function() {
+.directive('agGridGuardExtras', [ function() {
 	return {
 		restrict: 'E',
 		scope:false,
-		templateUrl: 'common/ag-grid-components/templates/guard-extras-cell-editor.pug'
+		templateUrl: 'common/ag-grid-components/templates/guard-extras-cell-editor.html'
 	}
 }])
 

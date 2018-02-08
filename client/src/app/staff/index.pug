@@ -26,10 +26,10 @@ side-bar
 			table.list-glarus.users-list(ng-show='staffList.length')
 				thead
 					tr
-						th {{ 'staff.name' | translate }}
-						th {{ 'staff.phone' | translate }}
-						th {{ 'staff.email' | translate }}
-						th {{ 'staff.area' | translate }}
+						th {{ 'party.person.name' | translate }}
+						th {{ 'party.phone' | translate }}
+						th {{ 'party.email' | translate }}
+						th {{ 'party.person.area' | translate }}
 						th {{ 'staff.userName' | translate }}
 						th(ng-show='userRole.can("READ",subOption.authContext);') 
 							| {{ 'user.edit' | translate }}

@@ -1,0 +1,14 @@
+p.form-section
+	| {{ section | translate }}
+div.an-material
+
+	table.list.list-glarus
+		tr
+			th {{ 'user.roleName' | translate }}
+			th {{ 'user.roleDescr' | translate }}
+			th {{ 'user.roleEnabled' | translate }}
+		tr(ng-repeat='role in data')
+			td.role-name {{ role.name }}
+			td {{ role.description }}
+			td.role-enabled
+				md-checkbox.md-primary(aria-label="role.name" ng-model='role.enabled')

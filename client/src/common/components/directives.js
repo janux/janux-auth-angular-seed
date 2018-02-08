@@ -8,6 +8,24 @@ var scopeDefinition = { "data":"=", "section":"@" };
 
 angular.module('commonComponents',[])
 
+.directive('user', function() {
+	var userComponentScope = scopeDefinition;
+	userComponentScope.password = "<";
+	return{
+		scope: scopeDefinition,
+		restrict:'E',
+		templateUrl: 'common/components/templates/user.html'
+	};
+})
+
+.directive('userRoles', function() {
+	return{
+		scope: scopeDefinition,
+		restrict:'E',
+		templateUrl: 'common/components/templates/user-roles.html'
+	};
+})
+
 .directive('personName', function() {
 	return{
 		scope: scopeDefinition,

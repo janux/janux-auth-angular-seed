@@ -36,6 +36,7 @@
 	"user": {
 		"listTitle": "Users",
 		"user": "User",
+		"notifications": "Notifications",
 		"password": "Password",
 		"contact": "Contact",
 		"editUser": "Edit user",

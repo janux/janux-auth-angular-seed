@@ -29,7 +29,12 @@ side-bar
 							md-icon.fa.fa-times.fa-lg
 
 				.user-form(ng-show='currentNavItem=="user"')
-					include user-data
+					md-content.staff-form(layout-padding)
+						.container-flex-form
+							div
+								user(data="user", section="user.user", password="false")
+							div
+								user-roles(data="roles", section="user.roles")
 
 				.user-form(ng-show='currentNavItem=="contact"')
 					include user-contact

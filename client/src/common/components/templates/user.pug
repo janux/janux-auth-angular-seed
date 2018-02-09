@@ -3,29 +3,30 @@ p.form-section
 div.an-material
 	md-input-container.user-field
 		label {{ 'user.username' | translate }}
-		input(ng-model='data.username')
+		input(ng-model='data.username' required='')
 
 	md-input-container.user-field(ng-show='password')
 		label {{ 'user.password' | translate }}
-		input(type="password" ng-model='data.password')
+		input(type="password" ng-model='data.password' required='')
 
 	md-input-container.user-field
 		label {{ 'user.email' | translate }}
 		input(ng-model='data.contact.contactMethods.emails[0].address')
 
-	md-input-container
+	md-input-container.full
 		md-checkbox.md-primary(aria-label="Enabled" ng-model='data.enabled')
 			| {{ 'user.enabled' | translate }}
 
-	md-input-container
+	md-input-container.full
 		md-checkbox.md-primary(aria-label="Locked" ng-model='data.locked')
 			| {{ 'user.locked' | translate }}
 
 
-	md-input-container
-		label {{ 'user.expirationDate' | translate }}
-		md-datepicker(ng-model="data.expire")
-
-	md-input-container
-		label {{ 'user.passExpirationDate' | translate }}
-		md-datepicker(ng-model="data.expirePassWord")
+	.full
+		md-input-container
+			label {{ 'user.expirationDate' | translate }}
+			md-datepicker(ng-model="data.expire")
+	.full
+		md-input-container
+			label {{ 'user.passExpirationDate' | translate }}
+			md-datepicker(ng-model="data.expirePassWord")

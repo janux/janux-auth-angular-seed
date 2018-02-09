@@ -40,6 +40,7 @@
 		"listTitle": "Users",
 		"contact": "Contact",
 		"user": "User",
+		"password": "password",
 	  	"editUser": "Edit user",
 	  	"createUser": "Create user",
 	  	"username": "Username",
@@ -61,7 +62,10 @@
 		"renew": "Renew password",
 		"dialogs":{
 			"noRowSelectedError":"Select at least one row to delete",
-			"confirmDeletion":"Are you sure you want to delete the row selection?"
+			"confirmDeletion":"Are you sure you want to delete the row selection?",
+			"nameEmpty": "The user's contact name can not be empty",
+			"emailEmpty": "The user's contact email can not be empty",
+			"noRoles": "You must select at least one role from the list"
 		}
 	},
 	"role": {

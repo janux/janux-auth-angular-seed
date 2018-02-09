@@ -11,11 +11,11 @@ side-bar
 					.md-toolbar-tools
 						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
 							md-nav-item.active(md-nav-click="goto('user')" name="user")
-								| USER
+								| {{ 'user.user' | translate | uppercase }}
 							md-nav-item(md-nav-click="goto('contact')" name="contact")
-								| CONTACT
+								| {{ 'user.contact' | translate | uppercase }}
 							md-nav-item(md-nav-click="goto('notifications')" name="notifications")
-								| NOTIFICATIONS
+								| {{ 'user.notifications' | translate | uppercase }}
 
 						span(flex)
 

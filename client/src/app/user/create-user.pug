@@ -2,7 +2,7 @@ login-toolbar(toolbar-title='user.title')
 
 side-bar
 
-.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+.page-content-wrapper.glarus-user-page(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
@@ -13,31 +13,36 @@ side-bar
 						| {{ 'user.createUser' | translate }}
 				span(flex)
 
-				md-button.save.md-icon-button.form-btn-toolbar(aria-label="Create" ng-click='save()')
-					md-icon.fa.fa-check.fa-lg
+		.container-fluid-flex.user-options
+			md-content
+				md-toolbar.form-mid-toolbar.options-tabs
+					.md-toolbar-tools
+						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+							md-nav-item.active(md-nav-click="goto('user')" name="user")
+								| USER
+							md-nav-item(md-nav-click="goto('contact')" name="contact")
+								| CONTACT
+							md-nav-item(md-nav-click="goto('notifications')" name="notifications")
+								| NOTIFICATIONS
 
-				md-button.cancel.md-icon-button.form-btn-toolbar(aria-label="Cancel" ng-click='cancel()')
-					md-icon.fa.fa-times.fa-lg
-		
-			
+						span(flex)
 
-		.container-body-role
+						.btn-row
+							button.btn(ng-click='save()')
+								i.fa.fa-check
+							button.btn(ng-click='cancel()')
+								i.fa.fa-times
 
-			.user-form
-				.label-form.label-disp
-					label(for='username') Username
-					
-				.textbox-form.textbox-disp
-					input.form-element(type='text' id='username' ng-model='user.username')
-					
-				.label-form.label-disp
-					label(for='password') Password
-							
-				.textbox-form.textbox-disp
-					input.form-element(type='password' id='password' ng-model='user.password')
-					
+				.user-form(ng-show='currentNavItem=="user"')
+					div
+						user(data="user", section="user.user", password="true")
+					div
+						user-roles(data="roles", section="user.roles")
 
-				include user-form
+				.user-form(ng-show='currentNavItem=="contact"')
+					include user-contact
 
+				.user-form(ng-show='currentNavItem=="notifications"')
+					include user-notifications
 
 footer-Janux

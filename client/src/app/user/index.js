@@ -39,7 +39,16 @@ require('angular').module('appUsers', [
 		templateUrl: 'app/user/create-user.html',
 		authRequired: true,
 		controller: require('./create-user-controller.js'),
-		resolve: {}
+		resolve: {
+			roles: ['roleService', function(roleService) {
+				return roleService.findAll().then(function (roles) {
+					return _.sortBy(_.mapValues(roles,function (role) {
+						role.enabled = false;
+						return role;
+					}),'sortOrder');
+				});
+			}]
+		}
 	})
 	// Edit specific user
 	.state('users.edit', {

@@ -36,6 +36,7 @@
 	"user": {
 		"listTitle": "Usuarios",
 		"user": "Usuario",
+		"password": "Contraseña",
 		"contact": "Contacto",
 		"editUser": "Editar usuario",
 		"createUser": "Crear usuario",
@@ -59,7 +60,10 @@
 		"title": "Personas & Organizaciones",
 		"dialogs":{
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
-			"confirmDeletion":"De verdad deseas borrar la selección?"
+			"confirmDeletion":"De verdad deseas borrar la selección?",
+			"nameEmpty": "El nombre del contacto del usuario no puede estar vacio",
+			"emailEmpty": "El correo electrónico del usuario no puede estar vacio",
+			"noRoles": "Debe seleccionar al menos un role de la lista"
 		}
 	},
 	"role": {

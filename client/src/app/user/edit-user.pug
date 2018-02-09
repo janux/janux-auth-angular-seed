@@ -36,7 +36,10 @@ side-bar
 								i.fa.fa-times
 
 				.user-form(ng-show='currentNavItem=="user"')
-					include user-data
+					div
+						user(data="user", section="user.user", password="false")
+					div
+						user-roles(data="roles", section="user.roles")
 
 				.user-form(ng-show='currentNavItem=="contact"')
 					include user-contact

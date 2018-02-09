@@ -3,11 +3,11 @@ p.form-section
 div.an-material
 	md-input-container.user-field
 		label {{ 'user.username' | translate }}
-		input(ng-model='data.username')
+		input(ng-model='data.username' required='')
 
 	md-input-container.user-field(ng-show='password')
 		label {{ 'user.password' | translate }}
-		input(type="password" ng-model='data.password')
+		input(type="password" ng-model='data.password' required='')
 
 	md-input-container.user-field
 		label {{ 'user.email' | translate }}

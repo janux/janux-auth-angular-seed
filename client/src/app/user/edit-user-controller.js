@@ -1,7 +1,5 @@
 'use strict';
 
-var Email = require('janux-people').EmailAddress;
-
 module.exports = [
 '$scope','userService','$state','user','roles','$modal', function(
  $scope , userService , $state , user , roles , $modal) {
@@ -10,15 +8,10 @@ module.exports = [
 
 	$scope.user = user;
 	$scope.roles = roles;
-	$scope.user.email = user.contact.emailAddress('work').address;
 
 	$scope.currentNavItem = 'user';
 	
 	$scope.save = function () {
-
-		// Update email
-		$scope.user.contact.setContactMethod('work', new Email($scope.user.email));
-		delete $scope.user.email;
 
 		$scope.user.roles = [];
 

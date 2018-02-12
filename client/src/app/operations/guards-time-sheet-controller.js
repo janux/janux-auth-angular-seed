@@ -164,6 +164,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'extras'     : $scope.lbRow.extras
 						};
 
+						if ($scope.lbRow.extras === 'A') {
+							timeEntryToInsert.billable = false;
+						}
+
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
 
@@ -251,7 +255,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				field     : 'client',
 				editable  : true,
 				cellEditor: agGridComp.clientCellUpdater,
-				width      : 110
+				width     : 110
 			},
 
 			// Extras
@@ -406,6 +410,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'idOperation': rowObj.data.operation.id,
 					'extras'     : rowObj.data.extras
 				};
+
+				if (rowObj.data.extras === 'A') {
+					timeEntryToUpdate.billable = false;
+				}
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

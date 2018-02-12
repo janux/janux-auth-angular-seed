@@ -214,6 +214,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						timeEntryToInsert.resources[0].type = 'DRIVER';
 						// Absence
 						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
+						if (_.isNil($scope.lbRow.absence) || $scope.lbRow.absence.trim() === '') {
+							timeEntryToInsert.billable = false;
+						}
+
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -455,12 +459,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// to the scope.
 				$scope.gridOptions.api.deleteRows = removeSelected;
 			},
-			onRowEditingStarted      : function (rowObj) {
+			onRowEditingStarted      : function () {
 				// Nothing to do yet
-				console.log('Row edition started', rowObj);
+				// console.log('Row edition started', rowObj);
 			},
 			onRowValueChanged        : function (rowObj) {
-				console.log('Row data changed', rowObj);
+				// console.log('Row data changed', rowObj);
 
 				var endToUpdate;
 
@@ -485,10 +489,18 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'idOperation': rowObj.data.operation.id
 				};
 
-				// Temporary solution to mark records without absence
-				var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
 
-				timeEntryToUpdate.resources[0].absence = absence;
+				// Temporary solution to mark records without absence
+				if (rowObj.data.absence === 'SF') {
+					timeEntryToUpdate.resources[0].absence = '';
+					timeEntryToUpdate.billable = true;
+				} else {
+					timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
+					timeEntryToUpdate.billable = false;
+				}
+
+				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
+
 				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
 				timeEntryToUpdate.resources[0].type = 'DRIVER';
 

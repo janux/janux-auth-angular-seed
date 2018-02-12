@@ -80,34 +80,42 @@ module.exports =
 				findGuardsAndOperations: function () {
 					return service.findAllWithoutTimeEntry().then(function (result) {
 						var guardsAssignedToOperations = [];
-						var operations = [];
+						var operationsAvailableForSelection = [];
 						result.forEach(function (op) {
-							var tmpRes = _.filter(op.currentResources, {type: 'GUARD'});
 
-							// If the operation has at least one driver
-							if (tmpRes.length > 0) {
-								tmpRes.forEach(function (res, resId) {
-									tmpRes[resId].opId = op.id;
+							//Filter all resources associated with the operation marked as guards.
+							var resourcesMarkedAsGuards = _.filter(op.currentResources, {type: 'GUARD'});
+							if (resourcesMarkedAsGuards.length > 0) {
+								resourcesMarkedAsGuards.forEach(function (res, resId) {
+									resourcesMarkedAsGuards[resId].opId = op.id;
 								});
+								// Fill the list of guards assigned to an operation.
+								// This list helps to auto-select an operation when the users selects a guard.
+								guardsAssignedToOperations = guardsAssignedToOperations.concat(resourcesMarkedAsGuards);
 
+							}
+
+							//Only shows the operation marked as guards.
+							if (op.type === "GUARD") {
 								var opWithOutRes = _.clone(op);
 								delete opWithOutRes.currentResources;
-								guardsAssignedToOperations = guardsAssignedToOperations.concat(tmpRes);
-								operations = operations.concat(opWithOutRes);
+								operationsAvailableForSelection = operationsAvailableForSelection.concat(opWithOutRes);
 							}
+
+
 						});
 
-						return resourceService.findAvailableResources().then(function (result) {
+						return resourceService.findAvailableResources().then(function (allGuardsAvailableForSelection) {
 
 							// Filter only persons.
-							result = _.filter(result, function (o) {
+							allGuardsAvailableForSelection = _.filter(allGuardsAvailableForSelection, function (o) {
 								return o.type !== 'VEHICLE';
 							});
 
 							return {
 								guardsAssignedToOperations: guardsAssignedToOperations,
-								guards                    : result,
-								operations                : operations
+								guards                    : allGuardsAvailableForSelection,
+								operations                : operationsAvailableForSelection
 							};
 						});
 					});
@@ -118,31 +126,39 @@ module.exports =
 						var driversAssignedToOperations = [];
 						var operations = [];
 						result.forEach(function (op) {
-							var tmpRes = _.filter(op.currentResources, {type: 'DRIVER'});
+							var resourcesMarkedAsDrivers = _.filter(op.currentResources, {type: 'DRIVER'});
 
 							// If the operation has at least one driver
-							if (tmpRes.length > 0) {
-								tmpRes.forEach(function (res, resId) {
-									tmpRes[resId].opId = op.id;
+							if (resourcesMarkedAsDrivers.length > 0) {
+								resourcesMarkedAsDrivers.forEach(function (res, resId) {
+									resourcesMarkedAsDrivers[resId].opId = op.id;
 								});
 
+								// Fill the list of drivers assigned to an operation.
+								// This list helps to auto-select an operation when the users selects a driver.
+								driversAssignedToOperations = driversAssignedToOperations.concat(resourcesMarkedAsDrivers);
+
+							}
+
+							// Only shows the operations marked as driver.
+							if (op.type === "DRIVER") {
 								var opWithOutRes = _.clone(op);
 								delete opWithOutRes.currentResources;
-								driversAssignedToOperations = driversAssignedToOperations.concat(tmpRes);
 								operations = operations.concat(opWithOutRes);
 							}
+
 						});
 
-						return resourceService.findAvailableResources().then(function (result) {
+						return resourceService.findAvailableResources().then(function (allDriversAvailableForSelection) {
 
 							// Filter only persons and resources that belongs to glarus.
-							result = _.filter(result, function (o) {
+							allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
 								return o.type !== 'VEHICLE' && o.vendor.id === '10000';
 							});
 
 							return {
 								driversAssignedToOperations: driversAssignedToOperations,
-								drivers                    : result,
+								drivers                    : allDriversAvailableForSelection,
 								operations                 : operations
 							};
 						});

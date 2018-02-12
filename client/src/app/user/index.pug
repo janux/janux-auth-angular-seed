@@ -25,34 +25,33 @@ side-bar
 			table.list-glarus.users-list(ng-show='usersMatch.length')
 				thead
 					tr
-						th {{ 'user.enabled' | translate }}
+					
 						th {{ 'user.username' | translate }}
 						th {{ 'user.displayName' | translate }}
 						th {{ 'user.role' | translate }}
 						th {{ 'user.email' | translate }}
 						th {{ 'user.phone' | translate }}
-						th {{ 'user.renew' | translate }}
+						th.user-renew {{ 'user.renew' | translate }}
 						th {{ 'user.edit' | translate }}
 						th
 							md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
-								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+								md-icon.fa.fa-trash.fa-lg.trash-center
 						
 				tbody
-					tr(ng-repeat='user in usersMatch')
-						td(style="text-align:center")
-							md-checkbox(aria-label="Enabled" ng-disabled="true" ng-model='user.enabled' class="md-primary")
+					tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}")
+
 						td {{ user.username }}
 						td {{ user.contact.name.shortName }}
 						td {{ user.roles[0] }}
 						td {{ user.contact.emailAddress('work').address }}
 						td {{ user.contact.phoneNumber('work').number }}
 						td(style="text-align:center")
-							a.action-button-glarus
+							a.action-button-glarus-lock
 								span.fa.fa-lock.fa-lg 
-						td.text-center
-							a.action-button-glarus(ng-click='editUser(user.userId)')
-								span.fa.fa-pencil.fa-lg 
 						td(style="text-align:center")
+							a.action-button-glarus-pencil(ng-click='editUser(user.userId)')
+								span.fa.fa-pencil.fa-lg
+						td.checkbox-center
 							md-checkbox(aria-label="Trash" ng-model='user.Selected' class="md-primary")
 						
 

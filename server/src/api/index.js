@@ -1,15 +1,16 @@
 'use strict';
-var UserPersistence            = require('janux-persist').UserService,
-    PartyServiceImpl           = require('janux-persist').PartyServiceImpl,
-    AuthContextPersistence     = require('janux-persist').AuthContextService,
-    AuthContextGroupService    = require('janux-persist').AuthContextGroupServiceImpl,
-    RolePersistence            = require('janux-persist').RoleService,
-    GroupService               = require('janux-persist').GroupServiceImpl,
-    PartyGroupServiceImpl      = require('janux-persist').PartyGroupServiceImpl,
-    OperationServiceImpl       = require('glarus-services').OperationServiceImpl,
-    ResourceServiceImpl        = require('glarus-services').ResourceServiceImpl,
-    TimeEntryServiceImpl       = require('glarus-services').TimeEntryServiceImpl,
-    TimeEntryReportServiceImpl = require('glarus-services').TimeEntryReportService;
+var UserPersistence                 = require('janux-persist').UserService,
+    PartyServiceImpl                = require('janux-persist').PartyServiceImpl,
+    AuthContextPersistence          = require('janux-persist').AuthContextService,
+    AuthContextGroupService         = require('janux-persist').AuthContextGroupServiceImpl,
+    RolePersistence                 = require('janux-persist').RoleService,
+    GroupService                    = require('janux-persist').GroupServiceImpl,
+    PartyGroupServiceImpl           = require('janux-persist').PartyGroupServiceImpl,
+    OperationServiceImpl            = require('glarus-services').OperationServiceImpl,
+    ResourceServiceImpl             = require('glarus-services').ResourceServiceImpl,
+    TimeEntryServiceImpl            = require('glarus-services').TimeEntryServiceImpl,
+    TimeEntryReportServiceImpl      = require('glarus-services').TimeEntryReportService,
+    TimeEntryReportGuardServiceImpl = require('glarus-services').TimeEntryReportGuardService;
 
 var config                         = require('config'),
     appContext                     = config.serverAppContext,
@@ -40,6 +41,7 @@ var config                         = require('config'),
     TimeEntryPersistService        = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao),
     OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao),
     TimeEntryReportService         = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService),
+    TimeEntryReportGuardService    = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService),
 
     // End glarus services implementations.
 
@@ -69,5 +71,6 @@ module.exports = {
 	TimeEntryService      : TimeEntryService.create(TimeEntryPersistService),
 	ResourceService       : ResourceService.create(ResourcePersistService),
 	TimeEntryReportService: TimeEntryReportService,
+	TimeEntryReportGuardService: TimeEntryReportGuardService,
 	PartyGroupService     : PartyGroupService.create(PartyGroupPersistenceService)
 };

@@ -43,6 +43,36 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			provider : ''
 		};
 
+
+		// Set isBillableFlag given the user input.
+		function setBillableFlag(timeEntry) {
+			if (timeEntry.extras === 'A') {
+				timeEntry.billable = false;
+			}
+			return timeEntry;
+		}
+
+		// Fix resource type given the user input.
+		function setResourceType(timeEntry) {
+
+			// If night shift maintenance. Whe change the resource type.
+			if (timeEntry.extras === 'NM') {
+				timeEntry.resources[0].type = 'GUARD_NIGHT_SHIFT_MAINTENANCE';
+			}
+
+			//If goods receipt. We change the resource type.
+			if (timeEntry.extras === 'NRM') {
+				timeEntry.resources[0].type = 'GUARD_GOODS_RECEIPT';
+			}
+
+			//If guard support. We change the resource type.
+			if (timeEntry.extras === 'AF' || $scope.lbRow.extras === 'A') {
+				timeEntry.resources[0].type = 'GUARD_SUPPORT';
+			}
+
+			return timeEntry;
+		}
+
 		var infoDialog = function (translateKey) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',
@@ -128,7 +158,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				ids.push(item.data.id);
 			});
 
-			timeEntryService.timeEntryReport(ids);
+			timeEntryService.timeEntryReportGuard(ids);
 
 		};
 
@@ -152,7 +182,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						}
 
 						var timeEntryToInsert = {
-							'resources'  : [$scope.lbRow.staff],
+							'resources'  : [_.clone($scope.lbRow.staff)],
 							'principals' : [],
 							'attributes' : [],
 							'type'       : 'GUARD',
@@ -164,9 +194,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'extras'     : $scope.lbRow.extras
 						};
 
-						if ($scope.lbRow.extras === 'A') {
-							timeEntryToInsert.billable = false;
-						}
+
+						timeEntryToInsert = setBillableFlag(timeEntryToInsert);
+						timeEntryToInsert = setResourceType(timeEntryToInsert);
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -399,7 +429,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 				var timeEntryToUpdate = {
 					'id'         : rowObj.data.id,
-					'resources'  : [resource],
+					'resources'  : [_.clone(resource)],
 					'principals' : [],
 					'attributes' : [],
 					'type'       : 'GUARD',
@@ -411,9 +441,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'extras'     : rowObj.data.extras
 				};
 
-				if (rowObj.data.extras === 'A') {
-					timeEntryToUpdate.billable = false;
-				}
+				setBillableFlag(timeEntryToUpdate);
+				setResourceType(timeEntryToUpdate);
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

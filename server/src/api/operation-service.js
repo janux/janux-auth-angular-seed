@@ -78,6 +78,16 @@ var createInstance = function (operationServiceReference, userOperationServiceRe
 		return userOperationServiceReferenceInstance.findWithoutTimeEntryByUsername(username).asCallback(callback);
 	};
 
+	// Insert an operation
+	OperationService.prototype.insert = function (operation, callback) {
+		return operationServiceReference.insert(operation).asCallback(callback);
+	};
+
+	// Update an operation
+	OperationService.prototype.update = function (operation, callback) {
+		return operationServiceReference.update(operation).asCallback(callback);
+	};
+
 	return new OperationService();
 };
 

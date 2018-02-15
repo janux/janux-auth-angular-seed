@@ -22,6 +22,9 @@ module.exports =
 		result.client = partyService.fromJSON(result.client);
 		result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
 		result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+		result.start = dateUtilService.stringToDate(result.start);
+		result.end = dateUtilService.stringToDate(result.end);
+		result.interestedParty = partyService.fromJSON(result.interestedParty);
 		result.principals = _.map(result.principals, function (o) {
 			return partyService.fromJSON(o);
 		});
@@ -41,6 +44,7 @@ module.exports =
 		if (_.isNil(object)) return object;
 		var result = _.cloneDeep(object);
 		result.client = partyService.toJSON(result.client);
+		result.interestedParty = partyService.toJSON(result.interestedParty);
 		result.currentResources = _.map(result.currentResources, function (o) {
 			return resourceService.toJSON(o);
 		});
@@ -82,9 +86,9 @@ module.exports =
 			return $http.jsonrpc(
 				'/rpc/2.0/operation',
 				'insert',
-				[ operation ]
+				[ toJSON(operation) ]
 			).then(function (resp) {
-				return resp.data.result;
+			return fromJSON(resp.data.result);
 			});
 		},
 

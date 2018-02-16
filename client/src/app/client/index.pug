@@ -33,10 +33,10 @@ side-bar
 						th {{ 'client.cellphone' | translate }}
 						th {{ 'client.reseller' | translate }}
 						th(ng-show='userRole.can("UPDATE",subOption.authContext);') 
-							| {{ 'client.edit' | translate }}
+							.col-edit-client {{ 'client.edit' | translate }}
 						th(ng-show='userRole.can("DELETE",subOption.authContext);')
-							md-button.md-icon-button(aria-label="Trash" style="background:none;")
-								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff;")
+							md-button.md-icon-button(aria-label="Trash" style="background:none; margin:0px;")
+								md-icon.fa.fa-trash.fa-lg(style="color:#ffffff; background:none; padding:0px")
 				tbody
 					tr(ng-repeat='client in clientsList')
 						td {{ client.name }}
@@ -50,7 +50,7 @@ side-bar
 							a.action-button-glarus
 								span.fa.fa-pencil.fa-lg(ng-click='editClient(client.id)') 
 						td(style="text-align:center" ng-show='userRole.can("DELETE",subOption.authContext);')
-							md-checkbox(aria-label="Trash" ng-model='client.Selected' class="md-primary")
+							md-checkbox(aria-label="Trash" ng-model='client.Selected' class="md-primary" style="margin-top:12px; margin-left:10px;")
 
 				
 				//- .users-filter

@@ -52,6 +52,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			return timeEntry;
 		}
 
+		function setExtraFlag(timeEntry) {
+			if (timeEntry.extras === 'BASE') {
+				timeEntry.extras = '';
+			}
+			return timeEntry;
+		}
+
 		// Fix resource type given the user input.
 		function setResourceType(timeEntry) {
 
@@ -315,6 +322,15 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					}
 					return val;
 				},
+				filterParams  : {
+					textFormatter: function (value) {
+						if (value === 'base') {
+							return 'BASE';
+						} else {
+							return value;
+						}
+					}
+				},
 				width         : 170
 			},
 			{
@@ -441,6 +457,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'extras'     : rowObj.data.extras
 				};
 
+
+				setExtraFlag(timeEntryToUpdate);
 				setBillableFlag(timeEntryToUpdate);
 				setResourceType(timeEntryToUpdate);
 

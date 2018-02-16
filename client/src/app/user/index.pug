@@ -32,13 +32,13 @@ side-bar
 						th {{ 'user.email' | translate }}
 						th {{ 'user.phone' | translate }}
 						th.user-renew {{ 'user.renew' | translate }}
-						th {{ 'user.edit' | translate }}
+						th.col-edit-user {{ 'user.edit' | translate }}
 						th
 							md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
 								md-icon.fa.fa-trash.fa-lg.trash-center
 						
 				tbody
-					tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}")
+					tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}" )
 
 						td {{ user.username }}
 						td {{ user.contact.name.shortName }}

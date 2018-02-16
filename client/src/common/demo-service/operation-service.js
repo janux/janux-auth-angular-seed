@@ -212,9 +212,15 @@ module.exports =
 						end = end.format(dateTimeFormatString);
 					}
 					// Temporary solution to mark records without absence
-					var absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
-						timeEntry.resources[0].absence : 'SF';
-					// var absence = timeEntry.resources[0].absence;
+					if( operation.type === 'DRIVER') {
+						var absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
+							timeEntry.resources[0].absence : 'SF';
+					}
+
+					// Temporary solution for empty extras.
+					if(operation.type === 'GUARD' && (_.isNil(timeEntry.extras) || timeEntry.extras === '')) {
+						timeEntry.extras = 'BASE';
+					}
 
 					result.push({
 						client       : operation.client.name,

@@ -73,7 +73,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			}
 
 			//If guard support. We change the resource type.
-			if (timeEntry.extras === 'AF' || $scope.lbRow.extras === 'A') {
+			if (timeEntry.extras === 'AF' || timeEntry.extras === 'A') {
 				timeEntry.resources[0].type = 'GUARD_SUPPORT';
 			}
 

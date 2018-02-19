@@ -323,6 +323,7 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
+			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
 			"date": "Fecha",

@@ -608,6 +608,19 @@
 			"SPECIAL": "Special"
 		}
 	},
+	"services": {
+		"title": "Services",
+		"listTitle": "List of services",
+		"list": {
+			"type":"Type",
+			"name":"Name",
+			"client":"Client",
+			"assigned":"Assigned personal",
+			"duration": "Duration",
+			"begin": "Begin",
+			"end": "End"
+		}
+	},
 	"authSchema": {
 		"title": "Authorization Schema",
 		"roles": "Roles",

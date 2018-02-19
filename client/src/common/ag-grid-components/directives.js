@@ -172,6 +172,16 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/guard-extras-cell-editor.html'
 	}
 }])
+.directive('agGridViewOperation', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/view-operation.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.opId = $attrs.opId;
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

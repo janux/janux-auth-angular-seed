@@ -55,6 +55,18 @@ module.exports =
 		return result;
 	}
 
+	function calculateDuration(begin, end) {
+		var duration = '0:0';
+
+		if (_.isNil(end) === false) {
+			end = moment(end);
+			var durationMoment = moment.duration(end.diff(begin));
+			var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
+			duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00' + durationMoment.get("minutes")).slice(-2);
+		}
+		return duration;
+	}
+
 	var service = {
 
 		findByDateBetweenWithTimeEntriesAndType: function (initDate, endDate, type) {
@@ -200,14 +212,11 @@ module.exports =
 					var timeEntry = operation.schedule[j];
 					var begin = moment(timeEntry.begin);
 
-					var duration = '0:0';
+					var duration = calculateDuration(timeEntry.begin, timeEntry.end);
 					var end = '', endOnlyHour = '';
 
 					if (_.isNil(timeEntry.end) === false) {
 						end = moment(timeEntry.end);
-						var durationMoment = moment.duration(end.diff(begin));
-						var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
-						duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00' + durationMoment.get("minutes")).slice(-2);
 						endOnlyHour = end.format(formatStringOnlyHour);
 						end = end.format(dateTimeFormatString);
 					}
@@ -240,6 +249,30 @@ module.exports =
 				}
 			}
 			return result;
+		},
+
+		// Map operations properties in order to create a list with ag-grid or similar
+		mapOperations: function (operations) {
+
+			return _.map(operations, function (operation) {
+
+				const duration = calculateDuration(operation.start, operation.end);
+				const start = (!_.isNil(operation.start))?moment(operation.start).format('YYYY-MM-DD'):'';
+				const end = (!_.isNil(operation.end))?moment(operation.start).format('YYYY-MM-DD'):'';
+				var assigned = operation.currentResources[0].resource;
+				assigned = assigned.name.last+' '+assigned.name.first;
+
+				return {
+					id: operation.id,
+					type: operation.type,
+					name: operation.name,
+					client: operation.client.name,
+					assigned: assigned,
+					duration: duration,
+					start: start,
+					end: end
+				}
+			});
 		},
 
 		fromJSON: function (object) {

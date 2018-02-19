@@ -59,6 +59,13 @@ require('angular').module('config', [])
 				}
 			},
 			{
+				key: 'services',
+				translateKey: 'services.title',
+				iconClass: 'fa-tachometer',
+				state: 'services',
+				subOptions: {}
+			},
+			{
 				key: 'authSchema',
 				translateKey: 'authSchema.title',
 				iconClass: 'fa-sitemap',

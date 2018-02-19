@@ -8,7 +8,14 @@
           | &nbsp;
 
     li(ng-repeat='option in mainMenu')
-      .accordion(id="rightMenu1" ng-show='showOption(option)')
+      .accordion(id="option" ng-if='!menuHasSubOptions(option)')
+        .accordion-group
+          .accordion-heading
+            a.accordion-toggle(ui-sref='services' ui-sref-active="active" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="right" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')
+              i.fa(ng-class="option.iconClass")
+              span.option {{ (option.translateKey | translate) }}
+
+      .accordion(id="rightMenu1" ng-show='showOption(option)' ng-if='menuHasSubOptions(option)')
         .accordion-group
           .accordion-heading(ng-click="toggleSubmenu[option.key]();")
             a.accordion-toggle(data-toggle="collapse" data-parent="#rightMenu1" href="#" tooltip='{{ (option.translateKey | translate) }}' tooltip-placement="right" tooltip-trigger="mouseenter" tooltip-popup-delay = '300')

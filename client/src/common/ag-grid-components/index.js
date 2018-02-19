@@ -22,6 +22,7 @@ module.exports = {
 	simpleCellRenderer: require('./simple-cell-renderer'),
 	objectCellRenderer: require('./object-cell-renderer'),
 	checkBoxRowSelection: require('./checkBoxRowSelection'),
+	viewOperationCellRenderer: require('./view-operation-cell-renderer'),
 
 	// Custom filters
 	dateFilter: 		require('./date-filter'),

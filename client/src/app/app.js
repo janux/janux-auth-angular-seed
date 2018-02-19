@@ -33,6 +33,7 @@ require('app/roles');
 require('app/staff');
 require('app/operations');
 require('app/client');
+require('app/services');
 
 angular.module('MyApp',[
 	'jsonrpc',
@@ -59,7 +60,8 @@ angular.module('MyApp',[
 	'angular-jwt',
 	'ngFileSaver',
 	'appOperations',
-	'appClient'
+	'appClient',
+	'appServices'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll','$translate',
@@ -255,6 +257,10 @@ function ($rootScope, config) {
 		options.forEach(function(anOpt){
 			$rootScope.subMenu[anOpt] = false;
 		});
+	};
+
+	$rootScope.menuHasSubOptions = function (menu) {
+		return (Object.keys(menu.subOptions).length>0);
 	};
 
 	options.forEach(function(opt){

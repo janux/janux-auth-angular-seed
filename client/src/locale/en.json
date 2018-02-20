@@ -182,6 +182,22 @@
 			}
 		},
 		"specials": "Specials",
+		"specialsTimeLog":{
+			"title": "Operaciones especiales",
+			"filterLabel": "Ver:",
+			"staff": "Personal",
+			"operation": "Servicio",
+			"begin": "Inicio",
+			"end": "Término",
+			"client": "Cliente",
+			"duration": "Duración",
+			"comment": "Comentario",
+		  	"initOdometerValue": "Km start",
+		  	"endOdometerValue": "Km end",
+		  	"vehicle" : "Vehicle",
+		    "initFuel": "Fuel init",
+		    "endFuel": "Fuel end"
+		},
 		"guards": "Guards",
 		"services": "Services",
 		"dialogs":{

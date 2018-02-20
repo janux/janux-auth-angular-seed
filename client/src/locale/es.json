@@ -171,7 +171,6 @@
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
-			"filterLabel": "Ver:",
 			"absence": "Falta",
 			"extras": "Extras",
 			"extraOptions": {
@@ -181,6 +180,22 @@
 				"NRM": "Nocturno recibo mercancia (NRM)",
 			    "CLOSED" : "Tienda cerrada (CLOSED)"
 			}
+		},
+	  	"specialsTimeLog":{
+			"title": "Operaciones especiales",
+			"filterLabel": "Ver:",
+			"staff": "Personal",
+			"operation": "Servicio",
+			"begin": "Inicio",
+			"end": "Término",
+			"client": "Cliente",
+			"duration": "Duración",
+			"comment": "Comentario",
+		    "initOdometerValue": "Km inicio",
+		    "endOdometerValue": "Km fin",
+		    "initFuel": "Gasolina inicio",
+		    "endFuel": "Gasolina fin",
+		    "vehicle" : "Vehículo"
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",

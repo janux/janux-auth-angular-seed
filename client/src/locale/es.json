@@ -323,7 +323,6 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
-			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
 			"date": "Fecha",
@@ -597,7 +596,10 @@
 			"assigned":"Personal asignado",
 			"duration": "Duracion",
 			"begin": "Inicio",
-			"end": "Fin"
+			"end": "Fin",
+			"DRIVER": "Chofer fijo",
+			"GUARD": "Guardia",
+			"SPECIAL": "Especial"
 		}
 	},
 	"authSchema": {

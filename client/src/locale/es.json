@@ -208,7 +208,6 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
-			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
 			"begin": "Inicio",

@@ -76,6 +76,9 @@ module.exports =
 		{
 			headerName : $filter('translate')('services.list.type'),
 			field      : 'type',
+			cellFormatter: function (params) {
+				return $filter('translate')('services.list.'+params.value);
+			},
 			width          : 80
 		},
 		{

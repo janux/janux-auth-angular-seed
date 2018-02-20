@@ -259,8 +259,12 @@ module.exports =
 				const duration = calculateDuration(operation.start, operation.end);
 				const start = (!_.isNil(operation.start))?moment(operation.start).format('YYYY-MM-DD'):'';
 				const end = (!_.isNil(operation.end))?moment(operation.start).format('YYYY-MM-DD'):'';
-				var assigned = operation.currentResources[0].resource;
-				assigned = assigned.name.last+' '+assigned.name.first;
+
+				var assigned = '';
+				if(operation.currentResources.length > 0 ){
+					assigned = operation.currentResources[0].resource;
+					assigned = assigned.name.last+' '+assigned.name.first;
+				}
 
 				return {
 					id: operation.id,

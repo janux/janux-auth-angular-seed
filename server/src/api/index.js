@@ -10,7 +10,8 @@ var UserPersistence                 = require('janux-persist').UserService,
     ResourceServiceImpl             = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl            = require('glarus-services').TimeEntryServiceImpl,
     TimeEntryReportServiceImpl      = require('glarus-services').TimeEntryReportService,
-    TimeEntryReportGuardServiceImpl = require('glarus-services').TimeEntryReportGuardService;
+    TimeEntryReportGuardServiceImpl = require('glarus-services').TimeEntryReportGuardService,
+    VehicleServiceImpl              = require('glarus-services').VehicleServiceImpl;
 
 var config                         = require('config'),
     appContext                     = config.serverAppContext,
@@ -42,6 +43,7 @@ var config                         = require('config'),
     OperationPersistService        = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao),
     TimeEntryReportService         = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService),
     TimeEntryReportGuardService    = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService),
+    VehiclePersistenceService      = new VehicleServiceImpl(VehicleDao),
 
     // End glarus services implementations.
 
@@ -58,19 +60,21 @@ var config                         = require('config'),
     PartyService                   = require('./party-service'),
     TimeEntryService               = require('./time-entry-service'),
     ResourceService                = require('./resource-service'),
-    PartyGroupService              = require('./party-group-service');
+    PartyGroupService              = require('./party-group-service'),
+    VehicleService                 = require('./vehicle-service');
 
 
 module.exports = {
-	UserService           : UserService.create(UserPersistenceService),
-	AuthContextService    : AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
-	RoleService           : RoleService.create(RolePersistService),
-	UserPersistenceService: UserPersistenceService,
-	PartyService          : PartyService.create(PartyPersistenceService),
-	OperationService      : OperationService.create(OperationPersistService),
-	TimeEntryService      : TimeEntryService.create(TimeEntryPersistService),
-	ResourceService       : ResourceService.create(ResourcePersistService),
-	TimeEntryReportService: TimeEntryReportService,
+	UserService                : UserService.create(UserPersistenceService),
+	AuthContextService         : AuthContextService.create(AuthContextPersistService, AuthContextGroupPersistService),
+	RoleService                : RoleService.create(RolePersistService),
+	UserPersistenceService     : UserPersistenceService,
+	PartyService               : PartyService.create(PartyPersistenceService),
+	OperationService           : OperationService.create(OperationPersistService),
+	TimeEntryService           : TimeEntryService.create(TimeEntryPersistService),
+	ResourceService            : ResourceService.create(ResourcePersistService),
+	TimeEntryReportService     : TimeEntryReportService,
 	TimeEntryReportGuardService: TimeEntryReportGuardService,
-	PartyGroupService     : PartyGroupService.create(PartyGroupPersistenceService)
+	PartyGroupService          : PartyGroupService.create(PartyGroupPersistenceService),
+	VehicleService             : VehicleService.create(VehiclePersistenceService)
 };

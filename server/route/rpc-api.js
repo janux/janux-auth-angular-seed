@@ -19,7 +19,8 @@ var services = {
 	partyService     : require(apiRoot).PartyService,
 	operationService : require(apiRoot).OperationService,
 	resourceService  : require(apiRoot).ResourceService,
-	partyGroupService: require(apiRoot).PartyGroupService
+	partyGroupService: require(apiRoot).PartyGroupService,
+	vehicleService   : require(apiRoot).VehicleService
 };
 
 /*

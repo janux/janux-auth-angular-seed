@@ -220,7 +220,7 @@ module.exports =
 							driversAssignedToOperations = driversAssignedToOperations.concat(resourcesMaskedAsSpecialOps);
 						}
 
-						// Only shows the operations marked as driver.
+
 						if (op.type === "SPECIAL_OPS") {
 							var opWithOutRes = _.clone(op);
 							delete opWithOutRes.currentResources;
@@ -229,17 +229,22 @@ module.exports =
 
 					});
 
-					return resourceService.findAvailableResources().then(function (allDriversAvailableForSelection) {
+					return resourceService.findAvailableResources().then(function (allResources) {
 
 						// Filter only persons and resources that belongs to glarus.
-						allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
+						var allDriversAvailableForSelection = _.filter(allResources, function (o) {
 							return o.type !== 'VEHICLE' && o.vendor.id === '10000';
+						});
+
+						var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
+							return o.type === 'VEHICLE';
 						});
 
 
 						return {
 							driversAssignedToOperations: driversAssignedToOperations,
 							drivers                    : allDriversAvailableForSelection,
+							vehicles                   : allVehiclesAvailableForSelection,
 							operations                 : operations
 						};
 					});
@@ -283,6 +288,7 @@ module.exports =
 						var vehicle = _.find(timeEntry.resources, function (o) {
 							return o.type === "VEHICLE"
 						});
+
 
 						result.push({
 							client       : operation.client.name,

@@ -6,7 +6,7 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
-	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, vehicles, timeEntryService, $filter, $state, $translate) {
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
 
 		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 
@@ -23,6 +23,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var allDrivers = driversAndOps.drivers;
 		var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
+		var allVehicles = driversAndOps.vehicles;
 		var operations = driversAndOps.operations;
 
 		var initRowModel = function () {
@@ -48,7 +49,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.lbSearch = {
 			staff    : '',
 			operation: '',
-			provider : ''
+			provider : '',
+			vehicle  : ''
 		};
 
 		var infoDialog = function (translateKey) {
@@ -109,6 +111,18 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		$scope.staffSearch = function (query) {
 			return query ? allDrivers.filter(createFilterForStaff(query)) : allDrivers;
+		};
+
+
+		function createFilterForVehicle(query) {
+			return function filterFn(elementVehicle) {
+				var displayName = elementVehicle.resource.name + elementVehicle.resource.plateNumber;
+				return displayName.toLowerCase().includes(query.toLowerCase());
+			};
+		}
+
+		$scope.vehicleSearch = function (query) {
+			return query ? allVehicles.filter(createFilterForVehicle(query)) : allVehicles;
 		};
 
 		//
@@ -248,7 +262,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		//
 		var columnDefs = [
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.staff'),
+				headerName : $filter('translate')('operations.specialsTimeLog.staff'),
 				field      : 'staff',
 				editable   : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
@@ -259,7 +273,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
 			{
-				headerName : $filter('translate')('operations.driversTimeLog.operation'),
+				headerName : $filter('translate')('operations.specialsTimeLog.operation'),
 				field      : 'operation',
 				editable   : true,
 				// cellRenderer: agGridComp.operationCellRenderer,
@@ -270,13 +284,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width      : 110
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.client'),
+				headerName: $filter('translate')('operations.specialsTimeLog.client'),
 				field     : 'client',
 				editable  : true,
 				cellEditor: agGridComp.clientCellUpdater
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 				field         : 'begin',
 				editable      : true,
 				filter        : 'date',
@@ -293,7 +307,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.end'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
 				field         : 'end',
 				editable      : true,
 				filter        : 'date',
@@ -307,14 +321,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.duration'),
+				headerName: $filter('translate')('operations.specialsTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater,
 				width     : 95
 			},
 			{
-				headerName   : $filter('translate')('operations.driversTimeLog.comment'),
+				headerName   : $filter('translate')('operations.specialsTimeLog.comment'),
 				field        : 'comment',
 				editable     : true,
 				cellEditor   : agGridComp.commentCellEditor,
@@ -333,55 +347,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// 	rows: '6'
 				// }
 			},
-			// {
-			// 	headerName: 'Object',
-			// 	field: 'Object',
-			// 	editable: true,
-			// 	cellRenderer:agGridComp.objectCellRenderer,
-			// 	cellEditor: agGridComp.objectCellEditor
-			// },
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
-				field         : 'absence',
-				editable      : true,
-				cellEditor    : agGridComp.absenceCellEditor,
-				valueFormatter: function (params) {
-					var val = '';
-					switch (params.value) {
-						case 'D':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.D');
-							break;
-						case 'V':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.V');
-							break;
-						case 'PS':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PS');
-							break;
-						case 'F':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.F');
-							break;
-						case 'PC':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PC');
-							break;
-						case 'I':
-							val = $filter('translate')('operations.driversTimeLog.absenceOptions.I');
-							break;
-						default:
-							val = '';
-							break;
-					}
-					return val;
+				headerName : $filter('translate')('operations.specialsTimeLog.vehicle'),
+				field      : 'vehicle',
+				editable   : true,
+				valueGetter: function (params) {
+					var res = params.data.vehicle.resource;
+					return res.name + ' ' + res.plateNumber;
 				},
-				filterParams  : {
-					textFormatter: function (value) {
-						if (value === 'sin falta') {
-							return 'SF';
-						} else {
-							return value;
-						}
-					}
-				},
-				width         : 130
+				cellEditor : agGridComp.autocompleteVehicleCellEditor,
+				width      : 100
 			},
 			{
 				headerName     : '',
@@ -469,13 +444,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
 
-				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
-				timeEntryToUpdate.resources[0].type = 'DRIVER';
+				timeEntryToUpdate.resources[0].type = 'SPECIAL_OPS';
 
-				timeEntryService.update(timeEntryToUpdate).then(function () {
-					$scope.findTimeEntries($scope.periodFilterKey);
-					// infoDialog('Time entry successfully updated');
-				});
+				$scope.findTimeEntries($scope.periodFilterKey);
+				// timeEntryService.update(timeEntryToUpdate).then(function () {
+				// 	$scope.findTimeEntries($scope.periodFilterKey);
+				// 	// infoDialog('Time entry successfully updated');
+				// });
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
@@ -490,7 +465,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.findTimeEntries = function (periodKey) {
 			var period = timePeriods[periodKey];
 
-			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(), 'DRIVER')
+			operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);

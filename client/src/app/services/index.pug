@@ -2,9 +2,9 @@ login-toolbar(toolbar-title='peopleOrgs.title')
 
 side-bar
 
-.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+.page-content-wrapper.time-sheet.ops-sheet-page(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
-		md-toolbar.form-root-toolbar(style="height:10px")
+		md-toolbar.form-root-toolbar(style="height:10px;")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
 					span.title-breadcrum
@@ -21,5 +21,5 @@ side-bar
 					md-icon.fa.fa-download.fa-lg
 
 		.container-body
-			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+			.ops-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 footer-Janux

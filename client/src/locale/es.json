@@ -191,10 +191,10 @@
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
-		    "initOdometerValue": "Km inicio",
+		    "initOdometerValue": "Km ini",
 		    "endOdometerValue": "Km fin",
-		    "initFuel": "Gasolina inicio",
-		    "endFuel": "Gasolina fin",
+		    "fuelStart": "G ini",
+		    "fuelEnd": "G fin",
 		    "vehicle" : "Vehículo"
 		},
 		"specials": "Especiales",

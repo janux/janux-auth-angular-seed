@@ -85,12 +85,6 @@ require('angular').module('appOperations', [
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
 					});
-			}],
-			vehicles :['vehicleService',function (vehicleService) {
-				return vehicleService.findAll()
-					.then(function (result) {
-						return result;
-					});
 			}]
 		},
 		controller: require('./special-ops-time-sheet-controller')

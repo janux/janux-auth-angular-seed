@@ -196,8 +196,8 @@
 		  	"initOdometerValue": "Km start",
 		  	"endOdometerValue": "Km end",
 		  	"vehicle" : "Vehicle",
-		    "initFuel": "Fuel init",
-		    "endFuel": "Fuel end"
+		    "fuelStart": "F start",
+		    "fuelEnd": "F end"
 		},
 		"guards": "Guards",
 		"services": "Services",

@@ -356,8 +356,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return res.name + ' ' + res.plateNumber;
 				},
 				cellEditor : agGridComp.autocompleteVehicleCellEditor,
-				width      : 100
+				width      : 160
 			},
+
 			{
 				headerName     : '',
 				// headerCheckboxSelection: true,

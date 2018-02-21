@@ -8,7 +8,7 @@ angular.module('agGridDirectives',[])
 			elem.bind("touchstart click", function (e) {
 
 				$modal.open({
-					templateUrl: 'common/ag-grid-components/templates/large-text-cell-editor.html',
+					templateUrl: 'common/ag-grid-components/templates/largje-text-cell-editor.html',
 					controller: ['$scope','$modalInstance',
 						function($scope , $modalInstance) {
 							var model = attrs['ngModel'];
@@ -36,11 +36,10 @@ angular.module('agGridDirectives',[])
 		controller: ['$scope','$attrs', function($scope,$attrs) {
 			var resourceVehicle = $scope[$attrs.selectedValueModel].resource;
 			$scope.valueAutoVehicle = '';
-			$scope.valueAutoVehiclePlaceholder = resourceVehicle.name + resourceVehicle.plateNumber;
+			$scope.valueAutoVehiclePlaceholder = resourceVehicle.name + " " + resourceVehicle.plateNumber;
 			$scope.autoVehicleSelectedItem = '';
 
 			$scope.vehicles = $scope.driversAndOps.vehicles;
-
 
 			$scope.agGridVehicleSelectedItemChange = function(item) {
 				if(typeof item !== 'undefined') {

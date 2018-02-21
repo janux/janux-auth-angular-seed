@@ -10,6 +10,7 @@ module.exports = {
 	largeTextCellEditor: require('./large-text-cell-editor'),
 	autocompleteStaffCellEditor: require('./autocomplete-staff-cell-editor'),
 	autocompleteOpCellEditor: require('./autocomplete-op-cell-editor'),
+	autocompleteVehicleCellEditor: require('./auto-complete-vehicle-cell-editor'),
 	absenceCellEditor: require('./absence-cell-editor'),
 	guardExtraCellEditor: require('./guard-extras-cell-editor'),
 	clientCellUpdater: require('./client-cell-updater'),

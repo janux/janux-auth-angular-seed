@@ -355,6 +355,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					var res = params.data.vehicle.resource;
 					return res.name + ' ' + res.plateNumber;
 				},
+				cellStyle    : {
+					'white-space': 'normal'
+				},
 				cellEditor : agGridComp.autocompleteVehicleCellEditor,
 				width      : 160
 			},

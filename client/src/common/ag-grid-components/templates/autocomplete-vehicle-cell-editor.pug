@@ -1,10 +1,13 @@
-md-autocomplete(md-no-cache='false',
-md-items="item in agGridVehicleSearch(valueAutoVehicle) | orderBy:'resource.name'",
-md-selected-item='autoVehicleSelectedItem',
-md-search-text='valueAutoVehicle',
-md-selected-item-change='agGridVehicleSelectedItemChange(item)',
-md-item-text='item.resource.name + " " +  item.resource.plateNumber',
-md-min-length='0',
-ng-attr-placeholder="{{ valueAutoVehiclePlaceholder }}")
-	md-item-template
-		span(md-highlight-text='valueAutoVehicle', md-highlight-flags='^i') {{item.resource.name + " " +  item.resource.plateNumber}}
+.modal-body
+	md-autocomplete(md-no-cache='false',
+	md-items="item in agGridVehicleSearch(valueAutoVehicle) | orderBy:'resource.name'",
+	md-selected-item='autoVehicleSelectedItem',
+	md-search-text='valueAutoVehicle',
+	md-selected-item-change='agGridVehicleSelectedItemChange(item)',
+	md-item-text='item.resource.name + " " +  item.resource.plateNumber',
+	md-min-length='0',
+	ng-attr-placeholder="{{ valueAutoVehiclePlaceholder }}")
+		md-item-template
+			span(md-highlight-text='valueAutoVehicle', md-highlight-flags='^i') {{item.resource.name + " " +  item.resource.plateNumber}}
+.modal-footer
+	button.btn.btn-ok(ng-click='ok()') {{ 'label.ok' | translate }}

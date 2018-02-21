@@ -10,7 +10,7 @@ angular.module('agGridDirectives',[])
 			elem.bind("touchstart click", function (e) {
 
 				$modal.open({
-					templateUrl: 'common/ag-grid-components/templates/largje-text-cell-editor.html',
+					templateUrl: 'common/ag-grid-components/templates/large-text-cell-editor.html',
 					controller: ['$scope','$modalInstance',
 						function($scope , $modalInstance) {
 							var model = attrs['ngModel'];
@@ -30,49 +30,29 @@ angular.module('agGridDirectives',[])
 	}
 }])
 
-.directive('agGridVehicleAutocomplete', [ function() {
+.directive('agGridVehicleAutocomplete', ['$modal', function( $modal ) {
 	return {
-		restrict: 'E',
+		restrict: 'A',
 		scope:false,
-		templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
-		controller: ['$scope','$attrs', function($scope,$attrs) {
-			var resourceVehicle = $scope[$attrs.selectedValueModel].resource;
-			$scope.valueAutoVehicle = '';
-			$scope.valueAutoVehiclePlaceholder = resourceVehicle.name + " " + resourceVehicle.plateNumber;
-			$scope.autoVehicleSelectedItem = '';
+		link: function (scope, elem, attrs) {
+			elem.bind("touchstart click", function (e) {
+				$modal.open({
+					templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
+					controller: ['$scope','$modalInstance',
+						function($scope , $modalInstance) {
+							var model = attrs['ngModel'];
+							$scope.data = scope[model];
+							$scope.ok = function() {
+								scope[model] = $scope.data;
+								$modalInstance.close();
+							};
+						}]
+				});
 
-			$scope.vehicles = $scope.driversAndOps.vehicles;
-
-			$scope.agGridVehicleSelectedItemChange = function(item) {
-				if(typeof item !== 'undefined') {
-					// This item should contain the selected staff member
-					console.info('Item changed to ' + JSON.stringify(item));
-
-					// Update ag-grid cell value
-					$scope[$attrs.selectedValueModel] = item;
-
-					// Update operation according to selected staff
-					// $scope.$broadcast('agGridSelectedOpChange', item);
-
-				} else {
-					// This means that the entered search text is empty or doesn't match any staff member
-				}
-			};
-
-			function createFilterForVehicle(query) {
-				return function filterFn(resource) {
-					var name = resource.resource.name + resource.resource.plateNumber;
-					var contains = name.toLowerCase().includes(query.toLowerCase());
-					return contains;
-				};
-			}
-
-			$scope.agGridVehicleSearch = function(query) {
-				var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
-				console.log('agGridVehicleSearch', out);
-				return out;
-			};
-		}]
+				e.preventDefault();
+				e.stopPropagation();
+			});
+		}
 	}
 }])
 

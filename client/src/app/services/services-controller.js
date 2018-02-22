@@ -97,6 +97,9 @@ module.exports =
 		{
 			headerName : $filter('translate')('services.list.duration'),
 			field      : 'duration',
+			cellFormatter: function (params) {
+				return (params.value)?$filter('amDurationFormat')(params.value, 'millisecond'):'';
+			},
 			width          : 80
 		},
 		{

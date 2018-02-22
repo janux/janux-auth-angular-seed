@@ -18,6 +18,7 @@ require('angular-local-storage');
 require('angular-jwt');
 require('angular-sanitize');
 require('angular-file-saver');
+require('angular-moment');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');
@@ -58,6 +59,7 @@ angular.module('MyApp',[
 	'appRoles',
 	'appRoles',
 	'angular-jwt',
+	'angularMoment',
 	'ngFileSaver',
 	'appOperations',
 	'appClient',

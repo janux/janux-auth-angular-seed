@@ -40,6 +40,30 @@ angular.module('agGridDirectives',[])
 						function($scope , $modalInstance) {
 							var model = attrs['ngModel'];
 							$scope.data = scope[model];
+							$scope.vehicles = scope.driversAndOps.vehicles;
+
+							$scope.valueAutoVehicle = '';
+							$scope.valueAutoVehiclePlaceholder = $scope.data;
+							$scope.autoVehicleSelectedItem = '';
+
+							$scope.agGridVehicleSelectedItemChange = function(item) {
+
+							};
+
+							function createFilterForVehicle(query) {
+								return function filterFn(resource) {
+									var name = resource.resource.name + resource.resource.plateNumber;
+									var contains = name.toLowerCase().includes(query.toLowerCase());
+									return contains;
+								};
+							}
+
+							$scope.agGridVehicleSearch = function(query) {
+								var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
+								console.log('agGridVehicleSearch', out);
+								return out;
+							};
+
 							$scope.ok = function() {
 								scope[model] = $scope.data;
 								$modalInstance.close();

@@ -8,7 +8,7 @@ var timePeriods = require('common/time-periods');
 module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
 	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
 
-		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
@@ -16,7 +16,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);
+			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
 			$scope.findTimeEntries($scope.periodFilterKey);
 		};
 
@@ -150,14 +150,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 
 		$scope.export = function () {
-
-			var ids = [];
-
-			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
-				ids.push(item.data.id);
-			});
-
-			timeEntryService.timeEntryReport(ids);
 
 		};
 

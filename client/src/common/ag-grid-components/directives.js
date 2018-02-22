@@ -30,51 +30,53 @@ angular.module('agGridDirectives',[])
 	}
 }])
 
-.directive('agGridVehicleAutocomplete', ['$modal', function( $modal ) {
+.directive('agGridVehicleAutocomplete', ['$mdDialog', function( $mdDialog ) {
 	return {
 		restrict: 'A',
 		scope:false,
 		link: function (scope, elem, attrs) {
-			elem.bind("touchstart click", function (e) {
-				$modal.open({
-					templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
-					controller: ['$scope','$modalInstance',
-						function($scope , $modalInstance) {
-							var model = attrs['ngModel'];
-							$scope.data = scope[model];
-							$scope.vehicles = scope.driversAndOps.vehicles;
+			$mdDialog.show({
+				controller: ['$scope',
+					function($scope ) {
+						var model = attrs['ngModel'];
+						$scope.data = scope[model];
+						$scope.vehicles = scope.driversAndOps.vehicles;
 
-							$scope.valueAutoVehicle = '';
-							$scope.valueAutoVehiclePlaceholder = $scope.data;
-							$scope.autoVehicleSelectedItem = '';
+						$scope.valueAutoVehicle = '';
+						$scope.valueAutoVehiclePlaceholder = $scope.data;
+						$scope.autoVehicleSelectedItem = '';
 
-							$scope.agGridVehicleSelectedItemChange = function(item) {
+						$scope.agGridVehicleSelectedItemChange = function(item) {
 
+						};
+
+						function createFilterForVehicle(query) {
+							return function filterFn(resource) {
+								var name = resource.resource.name + resource.resource.plateNumber;
+								var contains = name.toLowerCase().includes(query.toLowerCase());
+								return contains;
 							};
+						}
 
-							function createFilterForVehicle(query) {
-								return function filterFn(resource) {
-									var name = resource.resource.name + resource.resource.plateNumber;
-									var contains = name.toLowerCase().includes(query.toLowerCase());
-									return contains;
-								};
-							}
+						$scope.agGridVehicleSearch = function(query) {
+							var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
+							console.log('agGridVehicleSearch', out);
+							return out;
+						};
 
-							$scope.agGridVehicleSearch = function(query) {
-								var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
-								console.log('agGridVehicleSearch', out);
-								return out;
-							};
+						$scope.ok = function() {
+							scope[model] = $scope.data;
+							$mdDialog.cancel();
+						};
+					}],
+				templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
+				parent: angular.element(document.body),
+				clickOutsideToClose:false
+			})
+			.then(function(answer) {
 
-							$scope.ok = function() {
-								scope[model] = $scope.data;
-								$modalInstance.close();
-							};
-						}]
-				});
+			}, function() {
 
-				e.preventDefault();
-				e.stopPropagation();
 			});
 		}
 	}

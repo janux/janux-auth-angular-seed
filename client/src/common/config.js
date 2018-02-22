@@ -51,11 +51,7 @@ require('angular').module('config', [])
 						translate: 'operations.guards',
 						authContext: 'TIME_ENTRY_GUARD'
 					},
-					services: {
-						state: 'operations.services',
-						translate: 'operations.services',
-						authContext: 'SERVICE'
-					}
+					
 				}
 			},
 			{

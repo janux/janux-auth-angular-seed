@@ -73,6 +73,7 @@
 		"angular-translate-local": "./bower/angular-translate-storage-local/angular-translate-storage-local.js",
 		"angular-aside":      "./bower/angular-aside/dist/js/angular-aside.min.js",
 		"angular-sanitize":      "./bower/angular-sanitize/angular-sanitize.js",
+		"angular-moment": 	"./bower/angular-moment/angular-moment.js",
 		"jquery":             "./bower/jquery/dist/jquery.js",
 		"lodash":             "./node_modules/lodash/index.js",
 		"md5":             	  "./bower/js-md5/src/md5.js",
@@ -117,6 +118,13 @@
 				"moment:moment"
 			],
 			"exports": "datetimepicker"
+		},
+		"angular-moment": {
+			"depends": [
+				"angular:angular",
+				"moment:moment"
+			],
+			"exports": "angular-moment"
 		}
 	},
 	"browserify": {

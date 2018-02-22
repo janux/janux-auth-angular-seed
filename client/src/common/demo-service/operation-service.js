@@ -256,7 +256,7 @@ module.exports =
 
 			return _.map(operations, function (operation) {
 
-				const duration = calculateDuration(operation.start, operation.end);
+				const duration = (!_.isNil(operation.start))?moment(operation.start).diff(moment(operation.end)):'';
 				const start = (!_.isNil(operation.start))?moment(operation.start).format('YYYY-MM-DD'):'';
 				const end = (!_.isNil(operation.end))?moment(operation.start).format('YYYY-MM-DD'):'';
 

@@ -125,23 +125,33 @@ side-bar
 
 					.element-very-small
 						md-input-container
-							label {{ 'operations.specialsTimeLog.initOdometerValue' | translate }}
-							input(ng-model='lbRow.initOdometer')
+							label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
+							input(ng-model='lbRow.initOdometer' type="number" )
 
 					.element-very-small
 						md-input-container
-							label {{ 'operations.specialsTimeLog.endOdometerValue' | translate }}
-							input(ng-model='lbRow.endOdometer')
+							label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
+							input(ng-model='lbRow.endOdometer' type="number" )
 
 					.element-very-small
 						md-input-container
 							label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
-							input(ng-model='lbRow.fuelStart')
+							md-select(ng-model='lbRow.fuelStart')
+								md-option(value="F") F
+								md-option(value="3/4") 3/4
+								md-option(value="1/2") 1/2
+								md-option(value="1/4") 1/4
+								md-option(value="E") E
 
 					.element-very-small
 						md-input-container
 							label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
-							input(ng-model='lbRow.fuelEnd')
+							md-select(ng-model='lbRow.fuelEnd')
+								md-option(value="F") F
+								md-option(value="3/4") 3/4
+								md-option(value="1/2") 1/2
+								md-option(value="1/4") 1/4
+								md-option(value="E") E
 
 					.btn-element-small
 

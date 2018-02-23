@@ -17,6 +17,7 @@ md-dialog
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
 					input(ng-model='odometerStart' type="number" )
+				span(flex)
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
 					input(ng-model='odometerEnd' type="number" )
@@ -30,6 +31,7 @@ md-dialog
 						md-option(value="1/2") 1/2
 						md-option(value="1/4") 1/4
 						md-option(value="E") E
+				span(flex)
 				md-input-container
 					label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
 					md-select(ng-model='fuelEnd')

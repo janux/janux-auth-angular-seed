@@ -340,18 +340,21 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// }
 			},
 			{
-				headerName : $filter('translate')('operations.specialsTimeLog.vehicle'),
-				field      : 'vehicle',
-				editable   : true,
-				valueGetter: function (params) {
-					var res = params.data.vehicle.resource;
-					return res.name + ' ' + res.plateNumber;
+				headerName   : $filter('translate')('operations.specialsTimeLog.vehicle'),
+				field        : 'vehicle',
+				editable     : true,
+				cellFormatter: function (params) {
+					return params.data.vehicle.resource.name + ' ' + params.data.vehicle.resource.plateNumber;
 				},
+				// valueGetter: function (params) {
+				// 	var res = params.data.vehicle.resource;
+				// 	return res.name + ' ' + res.plateNumber;
+				// },
 				cellStyle    : {
 					'white-space': 'normal'
 				},
-				cellEditor : agGridComp.autocompleteVehicleCellEditor,
-				width      : 160
+				cellEditor   : agGridComp.autocompleteVehicleCellEditor,
+				width        : 180
 			},
 
 			{
@@ -415,7 +418,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 				delete resource.opId;
 
-				var timeEntryToUpdate = {
+				var specialOpsTimeEntryToUpdate = {
 					'id'         : rowObj.data.id,
 					'resources'  : [_.clone(resource)],
 					'principals' : [],
@@ -431,16 +434,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 				// Temporary solution to mark records without absence
 				if (rowObj.data.absence === 'SF') {
-					timeEntryToUpdate.resources[0].absence = '';
-					timeEntryToUpdate.billable = true;
+					specialOpsTimeEntryToUpdate.resources[0].absence = '';
+					specialOpsTimeEntryToUpdate.billable = true;
 				} else {
-					timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
-					timeEntryToUpdate.billable = false;
+					specialOpsTimeEntryToUpdate.resources[0].absence = rowObj.data.absence;
+					specialOpsTimeEntryToUpdate.billable = false;
 				}
 
 				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
 
-				timeEntryToUpdate.resources[0].type = 'SPECIAL_OPS';
+				specialOpsTimeEntryToUpdate.resources[0].type = 'SPECIAL_OPS';
 
 				$scope.findTimeEntries($scope.periodFilterKey);
 				// timeEntryService.update(timeEntryToUpdate).then(function () {

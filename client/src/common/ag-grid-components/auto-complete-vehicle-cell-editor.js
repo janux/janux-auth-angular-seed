@@ -10,19 +10,30 @@ AutoCompleteVehicle.prototype.init = function (params) {
 	// this.model = 'autocomplete' + params.column.colId;
 	// // Access to complete staff object
 	// params.$scope[this.model] = params.$scope.data[params.column.colId];
-	// this.rowScope = params.$scope;
+
 //
 	// // Create angular material autocomplete
 	// this.autocomplete = document.createElement('ag-grid-vehicle-autocomplete');
 	// this.autocomplete.setAttribute('selected-value-model', this.model);
 
 
-	this.model = 'vehicleAutoComplete'+params.column.colId;
+	this.model = 'vehicleAutoComplete' + params.column.colId;
+	// var model = this.model;
 	params.$scope[this.model] = params.value;
+
+	//Adding an event in order to help to update the info.
+	var onVehicleUpdateData = (function (event, vehicle) {
+		this.eInput.value = vehicle.resource.name + ' ' + vehicle.resource.plateNumber;
+	}).bind(this);
+	params.$scope.$on('agGridVehicleUpdateEvent', onVehicleUpdateData);
+
 	this.eInput = document.createElement('input');
-	this.eInput.value = params.value;
+	this.eInput.value = params.value.resource.name + ' ' + params.value.resource.plateNumber;
 	this.eInput.setAttribute('ag-grid-vehicle-autocomplete', '');
-	this.eInput.setAttribute('ng-model', this.model);
+	this.eInput.setAttribute('ng-model-to-directive', this.model);
+
+	this.rowScope = params.$scope;
+
 
 };
 
@@ -38,7 +49,7 @@ AutoCompleteVehicle.prototype.afterGuiAttached = function () {
 
 // returns the new value after editing
 AutoCompleteVehicle.prototype.getValue = function () {
-	return this.eInput.value;
+	return this.rowScope[this.model];
 };
 
 // any cleanup we need to be done here

@@ -192,8 +192,8 @@
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
-		  	"initOdometerValue": "Km start",
-		  	"endOdometerValue": "Km end",
+		  	"odometerStart": "Km start",
+		  	"odometerEnd": "Km end",
 		  	"vehicle" : "Vehicle",
 		    "fuelStart": "F start",
 		    "fuelEnd": "F end"

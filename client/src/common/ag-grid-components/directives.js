@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 angular.module('agGridDirectives',[])
 
 .directive('agGridLargeText', ['$modal', function($modal) {
@@ -33,49 +35,79 @@ angular.module('agGridDirectives',[])
 		restrict: 'A',
 		scope:false,
 		link: function (scope, elem, attrs) {
-			$mdDialog.show({
-				controller: ['$scope',
-					function($scope ) {
-						var model = attrs['ngModel'];
-						$scope.data = scope[model];
-						$scope.vehicles = scope.driversAndOps.vehicles;
 
-						$scope.valueAutoVehicle = '';
-						$scope.valueAutoVehiclePlaceholder = $scope.data;
-						$scope.autoVehicleSelectedItem = '';
+			elem.bind("touchstart click", function (e) {
 
-						$scope.agGridVehicleSelectedItemChange = function(item) {
+				$mdDialog.show({
+					controller: ['$scope',
+						function($scope ) {
+							var model = attrs['ngModelToDirective'];
+							var selectedItem = undefined;
+							$scope.data = scope[model];
+							$scope.vehicles = scope.driversAndOps.vehicles;
 
-						};
+							$scope.valueAutoVehicle = '';
+							$scope.valueAutoVehiclePlaceholder = $scope.data.resource.name +  " " + $scope.data.resource.plateNumber;
 
-						function createFilterForVehicle(query) {
-							return function filterFn(resource) {
-								var name = resource.resource.name + resource.resource.plateNumber;
-								var contains = name.toLowerCase().includes(query.toLowerCase());
-								return contains;
+							$scope.odometerStart= $scope.data.resource.odometerStart;
+							$scope.odometerEnd= $scope.data.resource.odometerEnd;
+
+							$scope.fuelStart= $scope.data.resource.fuelStart;
+							$scope.fuelEnd= $scope.data.resource.fuelEnd;
+
+
+
+							$scope.agGridVehicleSelectedItemChange = function(item) {
+								console.log(" vehicles item changes to " + JSON.stringify(item));
+								selectedItem = _.cloneDeep(item);
 							};
-						}
 
-						$scope.agGridVehicleSearch = function(query) {
-							var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
-							console.log('agGridVehicleSearch', out);
-							return out;
-						};
+							function createFilterForVehicle(query) {
+								return function filterFn(resource) {
+									var name = resource.resource.name + resource.resource.plateNumber;
+									var contains = name.toLowerCase().includes(query.toLowerCase());
+									return contains;
+								};
+							}
 
-						$scope.ok = function() {
-							scope[model] = $scope.data;
-							$mdDialog.cancel();
-						};
-					}],
-				templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
-				parent: angular.element(document.body),
-				clickOutsideToClose:false
-			})
-			.then(function(answer) {
+							$scope.agGridVehicleSearch = function(query) {
+								var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
+								console.log('agGridVehicleSearch', out);
+								return out;
+							};
 
-			}, function() {
+							$scope.ok = function() {
+								if(_.isNil(selectedItem)) {
+									selectedItem= _.cloneDeep($scope.data);
+								}
 
+								selectedItem.resource.odometerStart = $scope.odometerStart;
+								selectedItem.resource.odometerEnd = $scope.odometerEnd;
+								selectedItem.resource.fuelStart = $scope.fuelStart;
+								selectedItem.resource.fuelEnd = $scope.fuelEnd;
+								// Send the new vehicles as selected record to the ag-grid.
+								scope[model] = selectedItem;
+
+								scope.$broadcast('agGridVehicleUpdateEvent',selectedItem);
+
+								$mdDialog.cancel();
+							};
+						}],
+					templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
+					parent: angular.element(document.body),
+					clickOutsideToClose: true
+				})
+				.then(function(answer) {
+
+				}, function() {
+
+				});
+
+				e.preventDefault();
+				e.stopPropagation();
 			});
+
+
 		}
 	}
 }])

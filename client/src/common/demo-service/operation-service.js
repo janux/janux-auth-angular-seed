@@ -225,7 +225,7 @@ module.exports =
 						});
 
 						var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type === 'VEHICLE';
+							return o.type === 'VEHICLE' && o.vendor.id === '10000';
 						});
 
 

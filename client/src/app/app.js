@@ -2,6 +2,7 @@
 
 var angular = require('angular');
 var _ = require('lodash');
+var moment = require('moment');
 
 require('angular-ui-router');
 require('angular-translate');
@@ -114,6 +115,7 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 		if (storedLang) {
 			console.info('Using language from profile', storedLang);
 			$translate.use(storedLang);
+			moment.locale(storedLang);
 		}
 	});
 
@@ -332,6 +334,7 @@ function($scope, $aside, security, $translate, jnxStorage) {
 
 	$scope.toggleLang = function (langToSet) {
 		$translate.use(langToSet);
+		moment.locale(langToSet);
 		jnxStorage.setItem('glarusLang',langToSet, true);
 	};
 }]);

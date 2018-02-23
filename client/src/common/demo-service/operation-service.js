@@ -258,7 +258,7 @@ module.exports =
 
 				const duration = (!_.isNil(operation.start))?moment(operation.start).diff(moment(operation.end)):'';
 				const start = (!_.isNil(operation.start))?moment(operation.start).format('YYYY-MM-DD'):'';
-				const end = (!_.isNil(operation.end))?moment(operation.start).format('YYYY-MM-DD'):'';
+				const end = (!_.isNil(operation.end))?moment(operation.end).format('YYYY-MM-DD'):'';
 
 				var assigned = '';
 				if(operation.currentResources.length > 0 ){

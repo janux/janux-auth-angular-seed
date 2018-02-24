@@ -364,7 +364,8 @@
 				"AF": "Additional invoiced (AF)",
 				"A": "Additional not invoiced (A)",
 				"NM": "Night shift maintenance (NM)",
-				"NRM": "Night shift goods receipt (NRM)"
+				"NRM": "Night shift goods receipt (NRM)",
+			    "CLOSED" : "Closed store (CLOSED)"
 			}
 		},
 		"specials": "Specials",

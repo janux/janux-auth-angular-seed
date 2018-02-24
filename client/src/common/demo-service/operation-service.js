@@ -151,9 +151,9 @@ module.exports =
 					});
 
 					return {
-						guardsAssignedToOperations: guardsAssignedToOperations,
-						guards                    : allGuardsAvailableForSelection,
-						operations                : operationsAvailableForSelection
+						guardsAssignedToOperations       : guardsAssignedToOperations,
+						allPersonnelAvailableForSelection: allGuardsAvailableForSelection,
+						operations                       : operationsAvailableForSelection
 					};
 				});
 			});
@@ -195,9 +195,9 @@ module.exports =
 					});
 
 					return {
-						driversAssignedToOperations: driversAssignedToOperations,
-						drivers                    : allDriversAvailableForSelection,
-						operations                 : operations
+						driversAssignedToOperations      : driversAssignedToOperations,
+						allPersonnelAvailableForSelection: allDriversAvailableForSelection,
+						operations                       : operations
 					};
 				});
 			});

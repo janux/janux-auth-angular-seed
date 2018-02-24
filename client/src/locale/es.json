@@ -178,7 +178,8 @@
 				"AF": "Adicional facturado (AF)",
 				"A": "Adicional no facturado (A)",
 				"NM": "Nocturno mantenimiento (NM)",
-				"NRM": "Nocturno recibo mercancia (NRM)"
+				"NRM": "Nocturno recibo mercancia (NRM)",
+			    "CLOSED" : "Tienda cerrada (CLOSED)"
 			}
 		},
 		"specials": "Especiales",

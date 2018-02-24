@@ -38,7 +38,7 @@ angular.module('agGridDirectives',[])
 			$scope.valueAutoStaffPlaceholder = resource.name.last+' '+resource.name.first;
 			$scope.autoStaffSelectedItem = '';
 			// $scope.driversAndOps comes form parent controller
-			$scope.agGridOperationDrivers = $scope.driversAndOps.drivers;
+			$scope.agGridOperationDrivers = $scope.driversAndOps.allPersonnelAvailableForSelection;
 
 			//
 			// Staff autocomplete

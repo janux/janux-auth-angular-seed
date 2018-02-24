@@ -21,7 +21,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-		var allGuards = driversAndOps.guards;
+		var allGuards = driversAndOps.allPersonnelAvailableForSelection;
 		var guardsAssignedToOperations = driversAndOps.guardsAssignedToOperations;
 		var operations = driversAndOps.operations;
 
@@ -46,12 +46,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		// Set isBillableFlag given the user input.
 		function setBillableFlag(timeEntry) {
-			if (timeEntry.extras === 'A') {
+			if (timeEntry.extras === 'A' || timeEntry.extras === 'CLOSED') {
 				timeEntry.billable = false;
 			}
 			return timeEntry;
 		}
 
+		// Replacing base por empty string.
+		// "BASE" is a temporal string that help to filter data in the ag-grid.
 		function setExtraFlag(timeEntry) {
 			if (timeEntry.extras === 'BASE') {
 				timeEntry.extras = '';
@@ -75,6 +77,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			//If guard support. We change the resource type.
 			if (timeEntry.extras === 'AF' || timeEntry.extras === 'A') {
 				timeEntry.resources[0].type = 'GUARD_SUPPORT';
+			}
+
+			if (timeEntry.extras === 'CLOSED') {
+				timeEntry.resources = [];
 			}
 
 			return timeEntry;
@@ -172,7 +178,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
-			if (!!$scope.lbRow.staff) {
+			if ($scope.lbRow.extras === 'CLOSED' || !!$scope.lbRow.staff) {
 				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
@@ -201,9 +207,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'extras'     : $scope.lbRow.extras
 						};
 
-
-						timeEntryToInsert = setBillableFlag(timeEntryToInsert);
 						timeEntryToInsert = setResourceType(timeEntryToInsert);
+						timeEntryToInsert = setBillableFlag(timeEntryToInsert);
+
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -225,6 +231,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				infoDialog('operations.dialogs.invalidStaff');
 			}
 		};
+
 
 		function deleteConfirmed(rowsToDelete) {
 			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
@@ -271,8 +278,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				editable   : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter: function (params) {
-					var res = params.data.staff.resource;
-					return res.name.last + ' ' + res.name.first;
+					var result;
+					if (_.isNil(params.data.staff)) {
+						result = '';
+					} else {
+						result = params.data.staff.resource;
+						result = result.name.last + ' ' + result.name.first;
+					}
+					return result;
 				},
 				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
@@ -315,6 +328,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							break;
 						case 'NRM':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NRM');
+							break;
+						case 'CLOSED':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.CLOSED');
 							break;
 						default:
 							val = '';
@@ -459,8 +475,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 
 				setExtraFlag(timeEntryToUpdate);
-				setBillableFlag(timeEntryToUpdate);
 				setResourceType(timeEntryToUpdate);
+				setBillableFlag(timeEntryToUpdate);
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

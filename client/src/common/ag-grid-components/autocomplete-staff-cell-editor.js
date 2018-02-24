@@ -6,7 +6,7 @@ function Autocomplete () {}
 // gets called once before the renderer is used
 Autocomplete.prototype.init = function(params) {
 	// Assign value to row scope
-	this.model = 'autocomplete'+params.column.colId;
+	this.model = 'staffAutocomplete'+params.column.colId;
 	// Access to complete staff object
 	params.$scope[this.model] = params.$scope.data[params.column.colId];
 	this.rowScope = params.$scope;

@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 angular.module('agGridDirectives',[])
 
 .directive('agGridLargeText', ['$modal', function($modal) {
@@ -33,12 +35,19 @@ angular.module('agGridDirectives',[])
 		scope:false,
 		templateUrl: 'common/ag-grid-components/templates/autocomplete-staff-cell-editor.html',
 		controller: ['$scope','$attrs', function($scope,$attrs) {
-			var resource = $scope[$attrs.selectedValueModel].resource;
+			var resource = undefined;
 			$scope.valueAutoStaff = ''; // $scope[$attrs.selectedValueModel];
-			$scope.valueAutoStaffPlaceholder = resource.name.last+' '+resource.name.first;
 			$scope.autoStaffSelectedItem = '';
-			// $scope.driversAndOps comes form parent controller
 			$scope.agGridOperationDrivers = $scope.driversAndOps.allPersonnelAvailableForSelection;
+			if(_.isNil($scope[$attrs.selectedValueModel]) === false){
+				resource = $scope[$attrs.selectedValueModel].resource;
+				$scope.valueAutoStaffPlaceholder = resource.name.last+' '+resource.name.first;
+				// $scope.driversAndOps comes form parent controller
+			}else{
+				$scope.valueAutoStaffPlaceholder = '';
+			}
+
+
 
 			//
 			// Staff autocomplete

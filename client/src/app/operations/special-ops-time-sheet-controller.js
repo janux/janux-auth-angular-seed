@@ -34,8 +34,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				start    : moment().startOf('day').format(dateTimeFormatString),
 				end      : undefined,
 				provider : '',
-				location : '',
-				absence  : ''
+				location : ''
 			};
 		};
 		initRowModel();
@@ -188,6 +187,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
 						var end = '', endToInsert;
+						var vehicle;
 
 						if (_.isNil($scope.lbRow.end) === false) {
 							end = moment($scope.lbRow.end);
@@ -215,9 +215,17 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						specialOpsTimeEntryToInsert.resources[0].type = 'DRIVER';
 
 						// Adding the vehicle resource.
-						if(!_.isNil($scope.lbRow.vehicle)) {
-							specialOpsTimeEntryToInsert.resources[1] = $scope.lbRow.vehicle;
+						if (!_.isNil($scope.lbRow.vehicle)) {
+							vehicle = _.clone($scope.lbRow.vehicle);
+							// Adding the vehicle fuel and odometer values.
+							vehicle.odometerStart = $scope.lbRow.odometerStart;
+							vehicle.odometerEnd = $scope.lbRow.odometerEnd;
+							vehicle.fuelStart = $scope.lbRow.fuelStart;
+							vehicle.fuelEnd = $scope.lbRow.fuelEnd;
+
+							specialOpsTimeEntryToInsert.resources[1] = vehicle;
 						}
+
 
 						timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -449,7 +457,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'resources'  : [_.clone(resource)],
 					'principals' : [],
 					'attributes' : [],
-					'type'       : 'DRIVER',
+					'type'       : 'SPECIAL_OPS',
 					'comment'    : rowObj.data.comment,
 					'begin'      : moment(rowObj.data.begin).toDate(),
 					'end'        : endToUpdate,
@@ -457,25 +465,17 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'idOperation': rowObj.data.operation.id
 				};
 
+				// Force the person to be assigned as driver.
+				specialOpsTimeEntryToUpdate.resources[0].type = 'DRIVER';
 
-				// Temporary solution to mark records without absence
-				if (rowObj.data.absence === 'SF') {
-					specialOpsTimeEntryToUpdate.resources[0].absence = '';
-					specialOpsTimeEntryToUpdate.billable = true;
-				} else {
-					specialOpsTimeEntryToUpdate.resources[0].absence = rowObj.data.absence;
-					specialOpsTimeEntryToUpdate.billable = false;
-				}
+				// Assign vehicle.
+				specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
 
-				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
-
-				specialOpsTimeEntryToUpdate.resources[0].type = 'SPECIAL_OPS';
-
-				$scope.findTimeEntries($scope.periodFilterKey);
-				// timeEntryService.update(timeEntryToUpdate).then(function () {
-				// 	$scope.findTimeEntries($scope.periodFilterKey);
-				// 	// infoDialog('Time entry successfully updated');
-				// });
+				// $scope.findTimeEntries($scope.periodFilterKey);
+				timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
+					$scope.findTimeEntries($scope.periodFilterKey);
+					// infoDialog('Time entry successfully updated');
+				});
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;

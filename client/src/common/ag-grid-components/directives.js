@@ -49,11 +49,11 @@ angular.module('agGridDirectives',[])
 							$scope.valueAutoVehicle = '';
 							$scope.valueAutoVehiclePlaceholder = $scope.data.resource.name +  " " + $scope.data.resource.plateNumber;
 
-							$scope.odometerStart= $scope.data.resource.odometerStart;
-							$scope.odometerEnd= $scope.data.resource.odometerEnd;
+							$scope.odometerStart= $scope.data.odometerStart;
+							$scope.odometerEnd= $scope.data.odometerEnd;
 
-							$scope.fuelStart= $scope.data.resource.fuelStart;
-							$scope.fuelEnd= $scope.data.resource.fuelEnd;
+							$scope.fuelStart= $scope.data.fuelStart;
+							$scope.fuelEnd= $scope.data.fuelEnd;
 
 
 
@@ -81,10 +81,10 @@ angular.module('agGridDirectives',[])
 									selectedItem= _.cloneDeep($scope.data);
 								}
 
-								selectedItem.resource.odometerStart = $scope.odometerStart;
-								selectedItem.resource.odometerEnd = $scope.odometerEnd;
-								selectedItem.resource.fuelStart = $scope.fuelStart;
-								selectedItem.resource.fuelEnd = $scope.fuelEnd;
+								selectedItem.odometerStart = $scope.odometerStart;
+								selectedItem.odometerEnd = $scope.odometerEnd;
+								selectedItem.fuelStart = $scope.fuelStart;
+								selectedItem.fuelEnd = $scope.fuelEnd;
 								// Send the new vehicles as selected record to the ag-grid.
 								scope[model] = selectedItem;
 

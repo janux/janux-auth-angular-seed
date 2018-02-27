@@ -193,28 +193,29 @@ module.exports =
 			findDriversAndSpecialOps: function () {
 				return service.findAllWithoutTimeEntry().then(function (result) {
 					var driversAssignedToOperations = [];
+					var vehiclesAssignedToOperations = [];
 					var operations = [];
 					result.forEach(function (op) {
-						var resourcesMaskedAsSpecialOps = _.filter(op.currentResources, {type: 'SPECIAL_OPS'});
-
-						// If the operation has at least one driver
-						if (resourcesMaskedAsSpecialOps.length > 0) {
-							resourcesMaskedAsSpecialOps.forEach(function (res, resId) {
-								resourcesMaskedAsSpecialOps[resId].opId = op.id;
-							});
-
-							// Fill the list of drivers assigned to an operation.
-							// This list helps to auto-select an operation when the users selects a driver.
-							driversAssignedToOperations = driversAssignedToOperations.concat(resourcesMaskedAsSpecialOps);
-						}
-
 
 						if (op.type === "SPECIAL_OPS") {
+							var resourcesMarkedAsSpecialOps = _.map(op.currentResources, function (o) {
+								var result = _.cloneDeep(o);
+								result.opId = op.id;
+								return result;
+							});
+
+							driversAssignedToOperations = _.filter(resourcesMarkedAsSpecialOps, function (o) {
+								return o.type !== "VEHICLE";
+							});
+
+							vehiclesAssignedToOperations = _.filter(resourcesMarkedAsSpecialOps, function (o) {
+								return o.type === "VEHICLE";
+							});
+
 							var opWithOutRes = _.clone(op);
 							delete opWithOutRes.currentResources;
 							operations = operations.concat(opWithOutRes);
 						}
-
 					});
 
 					return resourceService.findAvailableResources().then(function (allResources) {
@@ -230,10 +231,11 @@ module.exports =
 
 
 						return {
-							driversAssignedToOperations: driversAssignedToOperations,
-							drivers                    : allDriversAvailableForSelection,
-							vehicles                   : allVehiclesAvailableForSelection,
-							operations                 : operations
+							driversAssignedToOperations : driversAssignedToOperations,
+							vehiclesAssignedToOperations: vehiclesAssignedToOperations,
+							drivers                     : allDriversAvailableForSelection,
+							vehicles                    : allVehiclesAvailableForSelection,
+							operations                  : operations
 						};
 					});
 				});

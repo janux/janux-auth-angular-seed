@@ -23,6 +23,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var allDrivers = driversAndOps.drivers;
 		var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
+		var vehiclesAssignedToOperations = driversAndOps.vehiclesAssignedToOperations;
 		var allVehicles = driversAndOps.vehicles;
 		var operations = driversAndOps.operations;
 
@@ -81,6 +82,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// This item should contain the selected staff member
 				console.info('Item changed to ' + JSON.stringify(item));
 
+				// Looking for operation.
 				var selectedDriver = _.find(driversAssignedToOperations, function (o) {
 					return o.id === item.id;
 				});
@@ -88,15 +90,40 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				if (_.isNil(selectedDriver)) {
 					$scope.lbRow.operation = undefined;
 				} else {
-					var operationId = selectedDriver.opId;
-					var staffOperations = _.filter(operations, {id: operationId});
+
+					var operationId;
+					var staffOperations;
+					var candidateVehicle;
+
+					// Setting the associated person.
+					operationId = selectedDriver.opId;
+					staffOperations = _.filter(operations, {id: operationId});
 
 					console.log('Selected staff operations', staffOperations);
 					$scope.lbRow.operation = staffOperations[0];
+
+					// Setting the associated vehicle.
+					candidateVehicle = _.find(vehiclesAssignedToOperations, function (o) {
+						return o.opId === operationId;
+					});
+
+					if (!_.isNil(candidateVehicle)) {
+						var vehicleSelectedItem = _.find(allVehicles, function (o) {
+							return candidateVehicle.id === o.id;
+						});
+						if (!_.isNil(vehicleSelectedItem)) {
+							$scope.lbRow.vehicle = vehicleSelectedItem;
+						}
+					}
+
 				}
+
+
 			} else {
 				// This means that the entered search text is empty or doesn't match any staff member
 			}
+
+
 		};
 
 		function createFilterForStaff(query) {
@@ -172,11 +199,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							}
 						}
 
-						var timeEntryToInsert = {
+						var specialOpsTimeEntryToInsert = {
 							'resources'  : [_.clone($scope.lbRow.staff)],
 							'principals' : [],
 							'attributes' : [],
-							'type'       : 'DRIVER',
+							'type'       : 'SPECIAL_OPS',
 							'comment'    : $scope.lbRow.location,
 							'begin'      : begin.toDate(),
 							'end'        : endToInsert,
@@ -185,15 +212,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						};
 
 						//Forcing resource type driver.
-						timeEntryToInsert.resources[0].type = 'DRIVER';
-						// Absence
-						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
-						if (_.isNil($scope.lbRow.absence) || $scope.lbRow.absence.trim() === '') {
-							timeEntryToInsert.billable = false;
+						specialOpsTimeEntryToInsert.resources[0].type = 'DRIVER';
+
+						// Adding the vehicle resource.
+						if(!_.isNil($scope.lbRow.vehicle)) {
+							specialOpsTimeEntryToInsert.resources[1] = $scope.lbRow.vehicle;
 						}
 
-
-						timeEntryService.insert(timeEntryToInsert).then(function () {
+						timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
 
 							// Wait before performing the form reset

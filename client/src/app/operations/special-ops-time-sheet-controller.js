@@ -21,7 +21,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-		var allDrivers = driversAndOps.drivers;
+		var allDrivers = driversAndOps.allPersonnelAvailableForSelection;
 		var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
 		var vehiclesAssignedToOperations = driversAndOps.vehiclesAssignedToOperations;
 		var allVehicles = driversAndOps.vehicles;

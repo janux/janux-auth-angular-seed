@@ -123,12 +123,12 @@ side-bar
 							md-item-template
 								p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
 
-					.element-very-small
+					.element-small
 						md-input-container
 							label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
 							input(ng-model='lbRow.odometerStart' type="number")
 
-					.element-very-small
+					.element-small
 						md-input-container
 							label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
 							input(ng-model='lbRow.odometerEnd' type="number")

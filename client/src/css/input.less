@@ -1,0 +1,15 @@
+// This file helps tho disappear the spinner associated with
+// the input of type number.
+
+// For webkit browsers ( google chrome)
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+// For firefox.
+input[type=number] {
+  -moz-appearance:textfield;
+}
+

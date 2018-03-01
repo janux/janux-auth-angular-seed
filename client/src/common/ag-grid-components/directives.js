@@ -29,6 +29,89 @@ angular.module('agGridDirectives',[])
 		}
 	}
 }])
+
+.directive('agGridVehicleAutocomplete', ['$mdDialog', function( $mdDialog ) {
+	return {
+		restrict: 'A',
+		scope:false,
+		link: function (scope, elem, attrs) {
+
+			elem.bind("touchstart click", function (e) {
+
+				$mdDialog.show({
+					controller: ['$scope',
+						function($scope ) {
+							var model = attrs['ngModelToDirective'];
+							var selectedItem = undefined;
+							$scope.data = scope[model];
+							$scope.vehicles = scope.driversAndOps.vehicles;
+
+							$scope.valueAutoVehicle = '';
+							$scope.valueAutoVehiclePlaceholder = $scope.data.resource.name +  " " + $scope.data.resource.plateNumber;
+
+							$scope.odometerStart= $scope.data.odometerStart;
+							$scope.odometerEnd= $scope.data.odometerEnd;
+
+							$scope.fuelStart= $scope.data.fuelStart;
+							$scope.fuelEnd= $scope.data.fuelEnd;
+
+
+
+							$scope.agGridVehicleSelectedItemChange = function(item) {
+								console.log(" vehicles item changes to " + JSON.stringify(item));
+								selectedItem = _.cloneDeep(item);
+							};
+
+							function createFilterForVehicle(query) {
+								return function filterFn(resource) {
+									var name = resource.resource.name + resource.resource.plateNumber;
+									var contains = name.toLowerCase().includes(query.toLowerCase());
+									return contains;
+								};
+							}
+
+							$scope.agGridVehicleSearch = function(query) {
+								var out = query ? $scope.vehicles.filter( createFilterForVehicle(query) ) : $scope.vehicles;
+								console.log('agGridVehicleSearch', out);
+								return out;
+							};
+
+							$scope.ok = function() {
+								if(_.isNil(selectedItem)) {
+									selectedItem= _.cloneDeep($scope.data);
+								}
+
+								selectedItem.odometerStart = $scope.odometerStart;
+								selectedItem.odometerEnd = $scope.odometerEnd;
+								selectedItem.fuelStart = $scope.fuelStart;
+								selectedItem.fuelEnd = $scope.fuelEnd;
+								// Send the new vehicles as selected record to the ag-grid.
+								scope[model] = selectedItem;
+
+								scope.$broadcast('agGridVehicleUpdateEvent',selectedItem);
+
+								$mdDialog.cancel();
+							};
+						}],
+					templateUrl: 'common/ag-grid-components/templates/autocomplete-vehicle-cell-editor.html',
+					parent: angular.element(document.body),
+					clickOutsideToClose: true
+				})
+				.then(function(answer) {
+
+				}, function() {
+
+				});
+
+				e.preventDefault();
+				e.stopPropagation();
+			});
+
+
+		}
+	}
+}])
+
 .directive('agGridStaffAutocomplete', [ function() {
 	return {
 		restrict: 'E',

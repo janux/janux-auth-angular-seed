@@ -1,0 +1,53 @@
+md-dialog
+	md-dialog-content
+		.md-dialog-content
+			md-content
+				md-autocomplete(md-no-cache='false',
+				md-items="item in agGridVehicleSearch(valueAutoVehicle) | orderBy:'resource.name'",
+				md-search-text='valueAutoVehicle',
+				md-selected-item-change='agGridVehicleSelectedItemChange(item)',
+				md-item-text='item.resource.name + " " +  item.resource.plateNumber',
+				md-min-length='0',
+				ng-attr-placeholder="{{ valueAutoVehiclePlaceholder }}")
+					md-item-template
+						p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
+
+
+
+			md-content
+				md-input-container
+					label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
+					input(ng-model='odometerStart' type="number" )
+				span(flex)
+				md-input-container
+					label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
+					input(ng-model='odometerEnd' type="number" )
+
+			md-content
+				md-input-container
+					label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
+					md-select(ng-model='fuelStart')
+						md-option(value="F") F
+						md-option(value="7/8") 7/8
+						md-option(value="3/4") 3/4
+						md-option(value="5/8") 5/8
+						md-option(value="4/8") 1/2
+						md-option(value="3/8") 3/8
+						md-option(value="2/8") 1/4
+						md-option(value="1/8") 1/8
+				span(flex)
+				md-input-container
+					label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
+					md-select(ng-model='fuelEnd')
+						md-option(value="F") F
+						md-option(value="7/8") 7/8
+						md-option(value="3/4") 3/4
+						md-option(value="5/8") 5/8
+						md-option(value="4/8") 1/2
+						md-option(value="3/8") 3/8
+						md-option(value="2/8") 1/4
+						md-option(value="1/8") 1/8
+
+	md-dialog-actions
+		// TODO : Replace it with a angular material button.
+		button.btn.btn-ok(ng-click='ok()') {{ 'label.ok' | translate }}

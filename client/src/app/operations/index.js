@@ -65,5 +65,28 @@ require('angular').module('appOperations', [
 			}]
 		},
 		controller: require('./guards-time-sheet-controller')
+	})
+
+	.state('operations.specials', {
+		url:'/operations/specials',
+		templateUrl: 'app/operations/special-ops-time-sheet.html',
+		authRequired: true,
+		resolve: {
+			driversAndOps: ['operationService', function (operationService) {
+				return operationService.findDriversAndSpecialOps();
+			}],
+			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
+				var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+				var period = timePeriods[periodKey];
+
+				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'SPECIAL_OPS')
+					.then(function (result) {
+						// console.log(JSON.stringify(result));
+						return operationService.mapTimeEntryData(result);
+					});
+			}]
+		},
+		controller: require('./special-ops-time-sheet-controller')
 	});
 }]);

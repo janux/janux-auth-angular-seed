@@ -164,6 +164,7 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
+			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
 			"begin": "Inicio",
@@ -171,7 +172,6 @@
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
-			"filterLabel": "Ver:",
 			"absence": "Falta",
 			"extras": "Extras",
 			"extraOptions": {
@@ -181,6 +181,22 @@
 				"NRM": "Nocturno recibo mercancia (NRM)",
 			    "CLOSED" : "Tienda cerrada (CLOSED)"
 			}
+		},
+	  	"specialsTimeLog":{
+			"title": "Operaciones especiales",
+			"filterLabel": "Ver:",
+			"staff": "Personal",
+			"operation": "Servicio",
+			"begin": "Inicio",
+			"end": "Término",
+			"client": "Cliente",
+			"duration": "Duración",
+			"comment": "Comentario",
+		    "odometerStart": "Km ini",
+		    "odometerEnd": "Km fin",
+		    "fuelStart": "G ini",
+		    "fuelEnd": "G fin",
+		    "vehicle" : "Vehículo"
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",

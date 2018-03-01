@@ -40,8 +40,13 @@
 		margin-left: 5px;
 	}
 
+	.add-form .element-very-small {
+		width:7%;
+		margin-left: 4px;
+	}
+
 	.add-form .btn-element-small {
-		width:12%;
+		width:8%;
 		margin-left: 5px;
 	}
 
@@ -140,7 +145,7 @@ class, it gets put onto the row that is currently in edit mode. */
 
 .add-row-section{
 	width: 100%;
-	margin:10px 20px 10px 20px; 
+	margin:10px 20px 10px 20px;
 	max-height: 80px;
 	padding: 5px;
 	background-color: @glarus-green1;
@@ -166,16 +171,17 @@ class, it gets put onto the row that is currently in edit mode. */
    margin: 25px 10px;
 }
 
-.ops-sheet.ag-fresh .ag-row-selected {
-	background-color: @glarus-blue-trans !important;
-	
-}
 
-md-checkbox.md-checked .md-icon {
-	background-color: @glarus-blue !important;
-}
+.md-dialog-content {
 
-.ops-sheet.ag-fresh .ag-cell-not-inline-editing {
-	position: absolute;
-	padding-top: 10px !important;
+	md-autocomplete {
+		border-bottom: @glarus-blue 1px solid;
+	}
+	// md-autocomplete{
+	// 	margin-bottom: 3px;
+	// }
+	md-content{
+		background-color: @white;
+		padding-top: 5px;
+	}
 }

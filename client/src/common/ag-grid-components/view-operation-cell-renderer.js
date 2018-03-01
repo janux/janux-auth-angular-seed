@@ -6,7 +6,7 @@ function ViewOperation() {
 ViewOperation.prototype.init = function (params) {
 	this.eGui = document.createElement('div');
 	this.eGui.align='center';
-	this.eGui.style='padding-top:5px;';
+	this.eGui.style='padding-top:0px;';
 	var eye = document.createElement('ag-grid-view-operation');
 	eye.setAttribute('op-id', params.value);
 

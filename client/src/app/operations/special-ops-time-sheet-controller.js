@@ -379,13 +379,20 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				editable     : true,
 				cellFormatter: function (params) {
 					var odometerDifference;
-					if (!_.isNil(params.data.vehicle.odometerStart) && !_.isNil(params.data.vehicle.odometerEnd)) {
-						odometerDifference = params.data.vehicle.odometerEnd - params.data.vehicle.odometerStart;
-						odometerDifference = '(' + odometerDifference + ' km)';
+
+					if (!_.isNil(params.data.vehicle)) {
+						if (!_.isNil(params.data.vehicle.odometerStart) && !_.isNil(params.data.vehicle.odometerEnd)) {
+							odometerDifference = params.data.vehicle.odometerEnd - params.data.vehicle.odometerStart;
+							odometerDifference = '(' + odometerDifference + ' km)';
+						} else {
+							odometerDifference = '';
+						}
+						return params.data.vehicle.resource.name + '<br>' + params.data.vehicle.resource.plateNumber + ' ' + odometerDifference;
 					} else {
-						odometerDifference = '';
+						return '';
 					}
-					return params.data.vehicle.resource.name + '<br>' + params.data.vehicle.resource.plateNumber + ' ' + odometerDifference;
+
+
 				},
 				cellStyle    : {
 					'white-space': 'normal'

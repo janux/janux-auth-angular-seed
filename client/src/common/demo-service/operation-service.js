@@ -149,14 +149,14 @@ module.exports =
 							return o.type !== 'VEHICLE';
 						});
 
-					return {
-						guardsAssignedToOperations       : guardsAssignedToOperations,
-						allPersonnelAvailableForSelection: allGuardsAvailableForSelection,
-						operations                       : operationsAvailableForSelection
-					};
+						return {
+							guardsAssignedToOperations       : guardsAssignedToOperations,
+							allPersonnelAvailableForSelection: allGuardsAvailableForSelection,
+							operations                       : operationsAvailableForSelection
+						};
+					});
 				});
-			});
-		},
+			},
 
 			findDriversAndOperations: function () {
 				return service.findAllWithoutTimeEntry().then(function (result) {
@@ -193,14 +193,14 @@ module.exports =
 							return o.type !== 'VEHICLE' && o.vendor.id === '10000';
 						});
 
-					return {
-						driversAssignedToOperations      : driversAssignedToOperations,
-						allPersonnelAvailableForSelection: allDriversAvailableForSelection,
-						operations                       : operations
-					};
+						return {
+							driversAssignedToOperations      : driversAssignedToOperations,
+							allPersonnelAvailableForSelection: allDriversAvailableForSelection,
+							operations                       : operations
+						};
+					});
 				});
-			});
-		},
+			},
 
 			findDriversAndSpecialOps: function () {
 				return service.findAllWithoutTimeEntry().then(function (result) {
@@ -259,6 +259,7 @@ module.exports =
 				for (var i = 0; i < record.length; i++) {
 					var operation = record[i];
 					for (var j = 0; j < operation.schedule.length; j++) {
+						var absence;
 						var timeEntry = operation.schedule[j];
 						var begin = moment(timeEntry.begin);
 
@@ -271,9 +272,15 @@ module.exports =
 							end = end.format(dateTimeFormatString);
 						}
 						// Temporary solution to mark records without absence
+						// or records with no resource.
 						if (operation.type === 'DRIVER') {
-							var absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
-								timeEntry.resources[0].absence : 'SF';
+
+							if (!_.isNil(timeEntry.extras) && timeEntry.extras === 'PS') {
+								absence = "PS";
+							} else {
+								absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
+									timeEntry.resources[0].absence : 'SF';
+							}
 						}
 
 						// Temporary solution for empty extras.

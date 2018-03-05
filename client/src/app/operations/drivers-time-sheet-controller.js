@@ -180,24 +180,32 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		function handleAbsence(timeEntry, absence) {
-
-			if (absence === 'SF') {
+			// If SF, then we must to set an empty value.
+			if (absence === 'PS') {
+				timeEntry.extras = 'PS';
+				timeEntry.resources = [];
+				timeEntry.billable = false;
+			} else if (absence === 'SF') {
 				timeEntry.resources[0].absence = '';
 				timeEntry.billable = true;
+				timeEntry.resources[0].type = 'DRIVER';
 			} else if (_.isNil(absence) || absence.trim() === '') {
 				timeEntry.resources[0].absence = '';
 				timeEntry.billable = true;
+				timeEntry.resources[0].type = 'DRIVER';
 			} else {
 				timeEntry.resources[0].absence = absence;
 				timeEntry.billable = false;
+				timeEntry.resources[0].type = 'DRIVER';
 			}
 			return timeEntry;
 		}
 
+
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
-			if (!!$scope.lbRow.staff) {
+			if ($scope.lbRow.absence === 'PS' || !!$scope.lbRow.staff) {
 				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
@@ -225,11 +233,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'idOperation': $scope.lbRow.operation.id
 						};
 
-						//Forcing resource type driver.
-						guardTimeEntryToInsert.resources[0].type = 'DRIVER';
 
 						guardTimeEntryToInsert = handleAbsence(guardTimeEntryToInsert, $scope.lbRow.absence);
-
 
 						timeEntryService.insert(guardTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -297,8 +302,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				editable   : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter: function (params) {
-					var res = params.data.staff.resource;
-					return res.name.last + ' ' + res.name.first;
+					var result;
+					if (_.isNil(params.data.staff)) {
+						result = '';
+					} else {
+						result = params.data.staff.resource;
+						result = result.name.last + ' ' + result.name.first;
+					}
+					return result;
 				},
 				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
@@ -501,21 +512,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					'idOperation': rowObj.data.operation.id
 				};
 
-
-				timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
-				// Temporary solution to mark records without absence
-				// if (rowObj.data.absence === 'SF') {
-				// 	timeEntryToUpdate.resources[0].absence = '';
-				// 	timeEntryToUpdate.billable = true;
-				// } else {
-				// 	timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
-				// 	timeEntryToUpdate.billable = false;
-				// }
-
-				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
-
 				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
-				timeEntryToUpdate.resources[0].type = 'DRIVER';
+				timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
+
+
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

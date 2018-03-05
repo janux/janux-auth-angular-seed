@@ -179,6 +179,21 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		};
 
+		function handleAbsence(timeEntry, absence) {
+
+			if (absence === 'SF') {
+				timeEntry.resources[0].absence = '';
+				timeEntry.billable = true;
+			} else if (_.isNil(absence) || absence.trim() === '') {
+				timeEntry.resources[0].absence = '';
+				timeEntry.billable = true;
+			} else {
+				timeEntry.resources[0].absence = absence;
+				timeEntry.billable = false;
+			}
+			return timeEntry;
+		}
+
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
@@ -198,7 +213,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							}
 						}
 
-						var timeEntryToInsert = {
+						var guardTimeEntryToInsert = {
 							'resources'  : [_.clone($scope.lbRow.staff)],
 							'principals' : [],
 							'attributes' : [],
@@ -211,15 +226,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						};
 
 						//Forcing resource type driver.
-						timeEntryToInsert.resources[0].type = 'DRIVER';
-						// Absence
-						timeEntryToInsert.resources[0].absence = $scope.lbRow.absence;
-						if (_.isNil($scope.lbRow.absence) || $scope.lbRow.absence.trim() === '') {
-							timeEntryToInsert.billable = false;
-						}
+						guardTimeEntryToInsert.resources[0].type = 'DRIVER';
+
+						guardTimeEntryToInsert = handleAbsence(guardTimeEntryToInsert, $scope.lbRow.absence);
 
 
-						timeEntryService.insert(timeEntryToInsert).then(function () {
+						timeEntryService.insert(guardTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
 
 							// Wait before performing the form reset
@@ -490,14 +502,15 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				};
 
 
+				timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
 				// Temporary solution to mark records without absence
-				if (rowObj.data.absence === 'SF') {
-					timeEntryToUpdate.resources[0].absence = '';
-					timeEntryToUpdate.billable = true;
-				} else {
-					timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
-					timeEntryToUpdate.billable = false;
-				}
+				// if (rowObj.data.absence === 'SF') {
+				// 	timeEntryToUpdate.resources[0].absence = '';
+				// 	timeEntryToUpdate.billable = true;
+				// } else {
+				// 	timeEntryToUpdate.resources[0].absence = rowObj.data.absence;
+				// 	timeEntryToUpdate.billable = false;
+				// }
 
 				// var absence = (rowObj.data.absence !== 'SF') ? rowObj.data.absence : '';
 

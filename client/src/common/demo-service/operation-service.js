@@ -44,6 +44,9 @@ module.exports =
 			var result = _.cloneDeep(object);
 			result.client = partyService.toJSON(result.client);
 			result.interestedParty = partyService.toJSON(result.interestedParty);
+			result.principals = _.map(result.principals, function (o) {
+				return partyService.toJSON(o);
+			});
 			result.currentResources = _.map(result.currentResources, function (o) {
 				return resourceService.toJSON(o);
 			});

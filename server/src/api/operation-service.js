@@ -4,6 +4,7 @@
  */
 var _ = require('lodash');
 var moment = require('moment');
+var OperationServiceImp = require('glarus-services').OperationServiceImpl;
 
 
 var log4js = require('log4js'),
@@ -33,12 +34,18 @@ var createInstance = function (operationServiceReference) {
 
 	// Insert an operation
 	OperationService.prototype.insert = function (operation, callback) {
-		return operationServiceReference.insert(operation).asCallback(callback);
+
+		var instance = OperationServiceImp.fromJSON(operation);
+
+		return operationServiceReference.insert(instance).asCallback(callback);
 	};
 
 	// Update an operation
 	OperationService.prototype.update = function (operation, callback) {
-		return operationServiceReference.update(operation).asCallback(callback);
+
+		var instance = OperationServiceImp.fromJSON(operation);
+
+		return operationServiceReference.update(instance).asCallback(callback);
 	};
 
 	return new OperationService();

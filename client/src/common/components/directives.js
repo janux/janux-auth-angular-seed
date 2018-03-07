@@ -210,6 +210,23 @@ angular.module('commonComponents',[])
 				return query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
 			};
 
+			$scope.footerOption =   {
+				value: '',
+				display: 'Create new principal',
+				isFooter:true
+			};
+
+			$scope.principalSelectedItemChange = function (item) {
+				if (item) {
+					if (item.isFooter) {
+						$scope.createPrincipal();
+					}
+					else {
+						console.log('Principal item changed to ' + JSON.stringify(item));
+					}
+				}
+			};
+
 			$scope.addPrincipal= function() {
 				$scope.data.principals.push({object:'',search:''});
 			};
@@ -278,8 +295,14 @@ angular.module('commonComponents',[])
 				e.hidePreview();
 			};
 
+			var refreshClientContactsList = function () {
+				if($scope.data.client.object) {
+					$scope.clientSelectedItemChange($scope.data.client.object);
+				}
+			};
+
 			// Add principal dialog
-			$scope.addPrincipal = function () {
+			$scope.createPrincipal = function () {
 				$mdDialog.show({
 					controller: ['$scope', function($scope ) {
 
@@ -304,6 +327,7 @@ angular.module('commonComponents',[])
 											.position( 'top right' )
 											.hideDelay(3000)
 									);
+									refreshClientContactsList($scope.principal);
 									$mdDialog.cancel();
 								});
 							} else {

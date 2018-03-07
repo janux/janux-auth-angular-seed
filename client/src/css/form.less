@@ -9,18 +9,13 @@
 .divider-line-glarus{
 	border-top:2px solid @glarus-blue;
 }
+
 md-toolbar.form-mid-toolbar{
 	background: @grey2;
 	color: @green1;
 	border-top:1px solid @grey2;
 	z-index: 0;
-}
-.form-mid-toolbar-glarus{
-	background: @glarus-blue;
-	padding: 8px;
-	z-index: 0;
-}
-md-toolbar.form-mid-toolbar{
+
 	button.md-accent {
 		color: @white;
 	}
@@ -28,6 +23,21 @@ md-toolbar.form-mid-toolbar{
 		background: @white;
 	}
 }
+
+.form-mid-toolbar-glarus{
+	background: @glarus-blue;
+	padding: 8px;
+	z-index: 0;
+	margin: 0 !important;
+
+	// Instead of tabs we have text only
+	.text-only {
+		width:70%;
+		color: @white;
+		padding: 7px 0 0 15px;
+	}
+}
+
 .md-button.trash,.md-button.save,.md-button.cancel{
 	border-radius: 20% !important;
 	box-shadow: 2px 2px 3px @grey1;
@@ -59,6 +69,14 @@ md-toolbar.form-root-toolbar{
 	border-radius: 10%;
 	&:hover{
 		background: @glarus-blue;
+	}
+}
+
+md-menu-content {
+	.md-button {
+		text-align: left !important;
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }
 

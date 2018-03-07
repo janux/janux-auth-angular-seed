@@ -206,7 +206,11 @@
 			"invalidOperation":"La operación seleccionada es invalida",
 			"invalidStaff":"El personal seleccionado es invalido",
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
-			"confirmDeletion":"De verdad deseas borrar la selección?"
+			"confirmDeletion":"De verdad deseas borrar la selección?",
+			"principalCreated": "Principal insertado correctamene",
+			"noContacts": "No hay grupo de contactos asociado a este cliente",
+			"addingPrincipal": "Agregar principal",
+			"addedSpecialOp":"Operación especial agregada exitosamente"
 		}
 	},
 	"services": {
@@ -222,8 +226,10 @@
 			"end": "Fin",
 			"DRIVER": "Chofer fijo",
 			"GUARD": "Guardia",
-			"SPECIAL": "Especial"
-		}
+			"SPECIAL_OPS": "Especial"
+		},
+		"addSpecial":"Agregar servicio especial",
+		"specialService": "Servicio especial"
 	},
 	"authSchema": {
 		"title": "Esquema de autorización",

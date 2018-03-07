@@ -1,2 +1,4 @@
 div.text-center
-	span.fa.fa-eye(ui-sref='services.edit({id:opId})')
+	span.fa.fa-eye(ng-if='opType=="SPECIAL_OPS"', ui-sref='services.view-special({id:opId})')
+	span.fa.fa-eye(ng-if='opType=="DRIVER"')
+	span.fa.fa-eye(ng-if='opType=="GUARD"')

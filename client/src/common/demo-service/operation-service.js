@@ -71,6 +71,16 @@ module.exports =
 
 		var service = {
 
+			findById: function ( operationId ) {
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findById',
+					[ operationId ]
+				).then(function (resp) {
+					return fromJSON(resp.data.result[0]);
+				});
+			},
+
 			findByDateBetweenWithTimeEntriesAndType: function (initDate, endDate, type) {
 				return $http.jsonrpc(
 					'/rpc/2.0/operation',
@@ -111,7 +121,7 @@ module.exports =
 				return $http.jsonrpc(
 					'/rpc/2.0/operation',
 					'update',
-					[operation]
+					[toJSON(operation)]
 				).then(function (resp) {
 					return resp.data.result;
 				});
@@ -340,6 +350,7 @@ module.exports =
 
 					return {
 						id      : operation.id,
+						view	: { id: operation.id, type: operation.type },
 						type    : operation.type,
 						name    : operation.name,
 						client  : operation.client.name,

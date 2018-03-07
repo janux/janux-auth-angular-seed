@@ -206,7 +206,11 @@
 			"invalidOperation":"Invalid operation selected",
 			"invalidStaff":"Invalid staff member selected",
 			"noRowSelectedError":"Select at least one row to delete",
-			"confirmDeletion":"Are you sure you want to delete the row selection?"
+			"confirmDeletion":"Are you sure you want to delete the row selection?",
+			"principalCreated": "Principal inserted correctly",
+			"noContacts": "There is no group of contacts associated with this client",
+			"addingPrincipal": "Adding principal",
+			"addedSpecialOp":"Special operation added correctly"
 		}
 	},
 	"services": {
@@ -222,8 +226,10 @@
 			"end": "End",
 			"DRIVER": "Fixed driver",
 			"GUARD": "Guard",
-			"SPECIAL": "Special"
-		}
+			"SPECIAL_OPS": "Special"
+		},
+		"addSpecial":"Add special service",
+		"specialService": "Special service"
 	},
 	"authSchema": {
 		"title": "Authorization Schema",

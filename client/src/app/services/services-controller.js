@@ -23,6 +23,10 @@ module.exports =
 		});
 	};
 
+	$scope.openAddOperationMenu = function($mdMenu, ev) {
+		$mdMenu.open(ev);
+	};
+
 	var agGridSizeToFit = function () {
 		$timeout(function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
@@ -69,7 +73,7 @@ module.exports =
 	var columnDefs = [
 		{
 			headerName     : '',
-			field          : 'id',
+			field          : 'view',
 			width          : 50,
 			cellRenderer: agGridComp.viewOperationCellRenderer
 		},

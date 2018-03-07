@@ -3,7 +3,6 @@
  * Created by ernesto on 10/31/17.
  */
 var _ = require('lodash');
-var moment = require('moment');
 var OperationServiceImp = require('glarus-services').OperationServiceImpl;
 
 
@@ -23,6 +22,12 @@ var createInstance = function (operationServiceReference) {
 
 	OperationService.prototype = Object.create(null);
 	OperationService.prototype.constructor = OperationService;
+
+	// Find and operation by id
+	OperationService.prototype.findById = function (operationId, callback) {
+
+		return operationServiceReference.findByIds([operationId]).asCallback(callback);
+	};
 
 	OperationService.prototype.findWithTimeEntriesByDateBetweenAndType = function (initDate, endDate, type, callback) {
 		return operationServiceReference.findWithTimeEntriesByDateBetweenAndType(initDate, endDate, type).asCallback(callback);

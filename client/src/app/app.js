@@ -20,6 +20,12 @@ require('angular-jwt');
 require('angular-sanitize');
 require('angular-file-saver');
 require('angular-moment');
+require('highlight');
+require('angular-highlightjs');
+require('marked');
+require('angular-marked');
+require('bootstrap-markdown');
+require('angular-markdown-editor');
 require('drag-and-drop-lists');
 require('drag-drop-mobile');
 require('common/config');
@@ -46,6 +52,9 @@ angular.module('MyApp',[
 	'ngMaterialDatePicker',
 	'ngSanitize',
 	'jnxSecurity',
+	'hc.marked',
+	'hljs',
+	'angular-markdown-editor',
 	'pascalprecht.translate',
 	'dndLists',
 	'config',
@@ -123,8 +132,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider',
-function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider,localStorageServiceProvider) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider,localStorageServiceProvider,markedProvider,hljsServiceProvider,$mdDateLocaleProvider) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
@@ -225,6 +234,38 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		},
 		controller: 'loginController'
 	});
+
+	// marked config
+	// markedProvider.setOptions({
+	// 	gfm: true,
+	// 	tables: true,
+	// 	sanitize: true,
+	// 	highlight: function (code, lang) {
+	// 		if (lang) {
+	// 			return hljs.highlight(lang, code, true).value;
+	// 		} else {
+	// 			return hljs.highlightAuto(code).value;
+	// 		}
+	// 	}
+	// });
+
+	// highlight config
+	hljsServiceProvider.setOptions({
+		// replace tab with 4 spaces
+		tabReplace: '    '
+	});
+
+	$mdDateLocaleProvider.formatDate = function(date) {
+		if (!date) {return '';}
+		else{
+			return moment(date).format('YYYY-MM-DD');
+		}
+
+	};
+	$mdDateLocaleProvider.parseDate = function(dateString) {
+		var m = moment(dateString, 'YYYY-MM-DD', true);
+		return m.isValid() ? m.toDate() : new Date(NaN);
+	};
 }])
 
 

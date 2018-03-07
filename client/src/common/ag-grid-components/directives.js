@@ -271,6 +271,7 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/view-operation.html',
 		controller: ['$scope','$attrs', function($scope,$attrs) {
 			$scope.opId = $attrs.opId;
+			$scope.opType = $attrs.opType;
 		}]
 	}
 }])

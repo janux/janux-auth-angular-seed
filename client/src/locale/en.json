@@ -229,6 +229,10 @@
 			"invalidStaff":"Invalid staff member selected",
 			"noRowSelectedError":"Select at least one row to delete",
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
+			"principalCreated": "Principal inserted correctly",
+			"noContacts": "There is no group of contacts associated with this client",
+			"addingPrincipal": "Adding principal",
+			"addedSpecialOp":"Special operation added correctly",
 		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance"
 		}
 	},
@@ -245,8 +249,10 @@
 			"end": "End",
 			"DRIVER": "Fixed driver",
 			"GUARD": "Guard",
-			"SPECIAL": "Special"
-		}
+			"SPECIAL_OPS": "Special"
+		},
+		"addSpecial":"Add special service",
+		"specialService": "Special service"
 	},
 	"authSchema": {
 		"title": "Authorization Schema",

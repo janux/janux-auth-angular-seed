@@ -1,0 +1,52 @@
+//
+// Operations page structure
+//
+
+.operations-page {
+	// First row of form elements
+	.section-form {
+		margin-top: 0;
+		padding: 30px 20px 0 20px;
+	}
+
+	// Second row of form elements
+	.section-form~.section-form {
+		padding: 0px 20px 20px 20px;
+	}
+
+	md-autocomplete[md-floating-label] {
+		height: 20px;
+	}
+
+	.btn-row-form {
+		text-align: left;
+	}
+
+	md-input-container {
+		margin: 0;
+	}
+
+	// Avoid text from disappear
+	md-input-container:not(.md-input-has-value) input:not(:focus) {
+		color: black;
+	}
+
+	.md-datepicker-input {
+		min-width: 110px;
+	}
+
+	.markdown.outline {
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		padding: 20px;
+	}
+
+	.md-editor>textarea {
+		padding: 10px;
+	}
+
+	md-autocomplete[md-floating-label] .md-show-clear-button button {
+		top:0;
+	}
+}
+

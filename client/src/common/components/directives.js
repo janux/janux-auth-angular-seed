@@ -193,7 +193,18 @@ angular.module('commonComponents',[])
 			}
 
 			$scope.requesterSearch = function (query) {
-				return query ? clientContacts.filter(createFilterForRequester(query)) : clientContacts;
+				var out = query ? clientContacts.filter(createFilterForRequester(query)) : clientContacts;
+				return out.concat( [ {
+					addOption:true
+				} ] );
+			};
+
+			$scope.requesterSelectedItemChange = function (item) {
+				if (item) {
+					if (item.addOption) {
+						createContact('Requester');
+					}
+				}
 			};
 
 			// Principals
@@ -207,22 +218,16 @@ angular.module('commonComponents',[])
 			}
 
 			$scope.principalSearch = function (query) {
-				return query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
-			};
-
-			$scope.footerOption =   {
-				value: '',
-				display: 'Create new principal',
-				isFooter:true
+				var out = query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
+				return out.concat([ {
+					addOption:true
+				} ]);
 			};
 
 			$scope.principalSelectedItemChange = function (item) {
 				if (item) {
-					if (item.isFooter) {
-						$scope.createPrincipal();
-					}
-					else {
-						console.log('Principal item changed to ' + JSON.stringify(item));
+					if (item.addOption) {
+						createContact('Principal');
 					}
 				}
 			};
@@ -302,7 +307,7 @@ angular.module('commonComponents',[])
 			};
 
 			// Add principal dialog
-			$scope.createPrincipal = function () {
+			var createContact = function (type) {
 				$mdDialog.show({
 					controller: ['$scope', function($scope ) {
 
@@ -313,6 +318,7 @@ angular.module('commonComponents',[])
 						principal.setContactMethod('Home', new PostalAddress());
 
 						$scope.principal = principal;
+						$scope.type = type;
 
 						$scope.save = function() {
 							if(!_.isNil(clientGroupCode)) {
@@ -339,7 +345,7 @@ angular.module('commonComponents',[])
 							$mdDialog.cancel();
 						};
 					}],
-					templateUrl: 'common/components/templates/add-principal.html',
+					templateUrl: 'common/components/templates/add-contact.html',
 					parent: angular.element(document.body),
 					clickOutsideToClose: true
 				});

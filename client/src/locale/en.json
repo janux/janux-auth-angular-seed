@@ -209,7 +209,6 @@
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
 			"principalCreated": "Principal inserted correctly",
 			"noContacts": "There is no group of contacts associated with this client",
-			"addingPrincipal": "Adding principal",
 			"addedSpecialOp":"Special operation added correctly"
 		}
 	},
@@ -229,7 +228,33 @@
 			"SPECIAL_OPS": "Special"
 		},
 		"addSpecial":"Add special service",
-		"specialService": "Special service"
+		"specialService": "Special service",
+		"specialForm": {
+			"name": "Name",
+			"begin": "Begin",
+			"end": "End",
+			"client": "Client",
+			"requester": "Requester",
+			"addRequester":"Add new requester",
+			"principal": "Principal",
+			"addPrincipal": "Add new principal",
+			"staff": "Staff",
+			"staffDriver": "Driver",
+			"staffGuard": "Guard",
+			"vehicle": "Vehicle",
+			"details": "Details",
+			"addingPrincipal": "Add principal",
+			"addingRequester": "Add requester",
+			"dialogs": {
+				"nameEmpty": "Operation can't be empty",
+				"startEmpty": "Start date can't be empty",
+				"clientEmpty": "Client can't be empty",
+				"requesterEmpty": "Requester can't be empty",
+				"principalEmpty": "You must select at least one principal",
+				"staffEmpty": "You must select at least one staff member",
+				"vehicleEmpty": "You muest select at least one vehicle"
+			}
+		}
 	},
 	"authSchema": {
 		"title": "Authorization Schema",

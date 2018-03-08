@@ -1,21 +1,20 @@
 .container-flex-form
-	//button(ng-click='addPrincipal()') Add principal
 	.section-form
 		fieldset.fieldset-flex
 			.fieldset-flex
 				.an-material.nopadding
 					md-input-container.full
-						label Name
-						input(ng-model='data.name' ng-disabled='disabled')
+						label {{ 'services.specialForm.name' | translate }}
+						input(ng-model='data.name' ng-disabled='disabled' required='')
 
 				.an-material.nopadding
 					md-input-container.full
-						label Begin
-						md-datepicker(ng-model="data.start" ng-disabled='disabled')
+						label {{ 'services.specialForm.begin' | translate }}
+						md-datepicker(ng-model="data.start" ng-disabled='disabled' required='')
 
 				.an-material.nopadding
 					md-input-container.full
-						label End
+						label {{ 'services.specialForm.end' | translate }}
 						md-datepicker(ng-model="data.end" ng-disabled='disabled')
 
 				.an-material.nopadding
@@ -29,8 +28,8 @@
 						md-item-text='item.name',
 						md-min-length='0',
 						md-clear-button='!disabled'
-						md-floating-label="Client",
-						ng-disabled='disabled')
+						md-floating-label="{{ 'services.specialForm.client' | translate }}",
+						ng-disabled='disabled' required='')
 							md-item-template
 								span(md-highlight-text='data.client.search', md-highlight-flags='^i') {{item.name}}
 
@@ -46,10 +45,14 @@
 						md-item-text='item.name.last+" "+item.name.first',
 						md-min-length='0',
 						md-clear-button='!disabled'
-						md-floating-label="Requester",
-						ng-disabled='disabled')
+						md-floating-label="{{ 'services.specialForm.requester' | translate }}",
+						ng-disabled='disabled' required='')
 							md-item-template
-								span(md-highlight-text='data.interestedParty.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+								span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+								span(ng-if='item.addOption')
+									md-icon(style="height:auto;")
+										i.fa.fa-plus-circle
+									strong {{ 'services.specialForm.addRequester' | translate }}
 	.section-form
 		fieldset.fieldset-flex
 			.fieldset-flex
@@ -58,7 +61,7 @@
 						.an-material.nopadding
 							md-input-container.full
 								md-autocomplete.autocomplete-custom-template(md-no-cache='true',
-								md-items="item in principalSearch(principal.search).concat(footerOption) | orderBy:'name.last'",
+								md-items="item in principalSearch(principal.search) | orderBy:'name.last'",
 								md-selected-item='principal.object',
 								md-search-text-change='principalSearchTextChange(principal.search)',
 								md-search-text='principal.search',
@@ -66,14 +69,14 @@
 								md-item-text='item.name.last+" "+item.name.first',
 								md-min-length='0',
 								md-clear-button='!disabled'
-								md-floating-label="Principal",
-								ng-disabled='disabled')
+								md-floating-label="{{ 'services.specialForm.principal' | translate }}",
+								ng-disabled='disabled' required='')
 									md-item-template
-										span(ng-if='!item.isFooter' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
-										span(ng-if='item.isFooter')
+										span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+										span(ng-if='item.addOption')
 											md-icon(style="height:auto;")
 												i.fa.fa-plus-circle
-											strong Crear nuevo principal
+											strong {{ 'services.specialForm.addPrincipal' | translate }}
 
 						div(ng-hide='disabled')
 							button.btn-trash(ng-click="removePrincipal($index)")
@@ -97,16 +100,16 @@
 								md-item-text='item.resource.name.last+" "+item.resource.name.first',
 								md-min-length='0',
 								md-clear-button='!disabled'
-								md-floating-label="Staff",
-								ng-disabled='disabled')
+								md-floating-label="{{ 'services.specialForm.staff' | translate }}",
+								ng-disabled='disabled' required='')
 									md-item-template
 										span(md-highlight-text='staff.search', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
 						.an-material.nopadding
 							md-input-container.full
 								label Function
 								md-select(ng-model='staff.object.type' ng-disabled='disabled')
-									md-option(value='GUARD') Driver
-									md-option(value='DRIVER') Guard
+									md-option(value='GUARD') {{ 'services.specialForm.staffDriver' | translate }}
+									md-option(value='DRIVER') {{ 'services.specialForm.staffGuard' | translate }}
 						div(ng-hide='disabled')
 							button.btn-trash(ng-click="removeStaff($index)")
 								i.fa.fa-trash
@@ -129,8 +132,8 @@
 								md-item-text='item.resource.name+" "+item.resource.plateNumber',
 								md-min-length='0',
 								md-clear-button='!disabled'
-								md-floating-label="Vehicle"
-								ng-disabled='disabled')
+								md-floating-label="{{ 'services.specialForm.vehicle' | translate }}"
+								ng-disabled='disabled' required='')
 									md-item-template
 										span(md-highlight-text='vehicle.search', md-highlight-flags='^i') {{item.resource.name+', '+item.resource.plateNumber}}
 
@@ -143,10 +146,10 @@
 						button.btn-plus(ng-click="addVehicle()")
 							i.fa.fa-plus-square
 	.section-form
-		span Details:
+		span {{ 'services.specialForm.details' | translate }}:
 
 	.section-form(ng-hide='disabled')
-		textarea.content-box(name="special-ops-description"
+		textarea(name="special-ops-description"
 		ng-model="data.description"
 		markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 		on-fullscreen="onFullScreenCallback()"

@@ -252,7 +252,33 @@
 			"SPECIAL_OPS": "Especial"
 		},
 		"addSpecial":"Agregar servicio especial",
-		"specialService": "Servicio especial"
+		"specialService": "Servicio especial",
+		"specialForm": {
+			"name": "Nombre",
+			"begin": "Inicio",
+			"end": "Término",
+			"client": "Cliente",
+			"requester": "Solicitante",
+			"addRequester":"Agregar nuevo solicitante",
+			"principal": "Principal",
+			"addPrincipal": "Crear nuevo principal",
+			"staff": "Personal",
+			"staffDriver": "Conductor",
+			"staffGuard": "Guardia",
+			"vehicle": "Vehículo",
+			"details": "Detalles",
+			"addingPrincipal": "Agregar principal",
+			"addingRequester": "Agregar solicitante",
+			"dialogs": {
+				"nameEmpty": "El nombre no puede estar vacio",
+				"startEmpty": "Debe especificar una fecha de inicio",
+				"clientEmpty": "Debe especificar el cliente",
+				"requesterEmpty": "Debe especificar el solicitante",
+				"principalEmpty": "Debe seleccionar al menos un principal",
+				"staffEmpty": "Debe asignar al menos un miembro del personal",
+				"vehicleEmpty": "Debe seleccionar un vehiculo para la operación"
+			}
+		}
 	},
 	"authSchema": {
 		"title": "Esquema de autorización",

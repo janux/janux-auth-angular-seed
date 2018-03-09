@@ -1,7 +1,7 @@
 .container-flex-form
 	.section-form
 		fieldset.fieldset-flex
-			.fieldset-flex
+			.fieldset-flex.first-row
 				.an-material.nopadding
 					md-input-container.full
 						label {{ 'services.specialForm.name' | translate }}
@@ -57,7 +57,7 @@
 		fieldset.fieldset-flex
 			.fieldset-flex
 				.an-material.nopadding
-					.fieldset-flex(ng-repeat="principal in data.principals track by $index")
+					.fieldset-flex.many-of-kind(ng-repeat="principal in data.principals track by $index")
 						.an-material.nopadding
 							md-input-container.full
 								md-autocomplete.autocomplete-custom-template(md-no-cache='true',
@@ -81,14 +81,14 @@
 						div(ng-hide='disabled')
 							button.btn-trash(ng-click="removePrincipal($index)")
 								i.fa.fa-trash
-					.btn-row-form(ng-hide='disabled')
+					.btn-row-form(ng-hide='disabled || hideAddPrincipal()')
 						//md-divider.divider-line-glarus
 						button.btn-plus(ng-click="addPrincipal()")
 							i.fa.fa-plus-square
 
 
 				.an-material.nopadding
-					.fieldset-flex(ng-repeat="staff in data.staff track by $index")
+					.fieldset-flex.many-of-kind(ng-repeat="staff in data.staff track by $index")
 						.an-material.nopadding
 							md-input-container.full
 								md-autocomplete(md-no-cache='false',
@@ -113,14 +113,14 @@
 						div(ng-hide='disabled')
 							button.btn-trash(ng-click="removeStaff($index)")
 								i.fa.fa-trash
-					.btn-row-form(ng-hide='disabled')
+					.btn-row-form(ng-hide='disabled || hideAddStaff()')
 						//md-divider.divider-line-glarus
 						button.btn-plus(ng-click="addStaff()")
 							i.fa.fa-plus-square
 
 
 				.an-material.nopadding
-					.fieldset-flex(ng-repeat="vehicle in data.vehicles track by $index")
+					.fieldset-flex.many-of-kind(ng-repeat="vehicle in data.vehicles track by $index")
 						.an-material.nopadding
 							md-input-container.full
 								md-autocomplete(md-no-cache='false',
@@ -141,7 +141,7 @@
 							button.btn-trash(ng-click="removeVehicle($index)")
 								i.fa.fa-trash
 
-					.btn-row-form(ng-hide='disabled')
+					.btn-row-form(ng-hide='disabled || hideAddVehicle()')
 						//md-divider.divider-line-glarus
 						button.btn-plus(ng-click="addVehicle()")
 							i.fa.fa-plus-square

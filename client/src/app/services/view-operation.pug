@@ -24,10 +24,10 @@ side-bar
 					.btn-row
 						button.btn(ng-show='editMode' ng-click='save()')
 							i.fa.fa-check
-						button.btn(ng-show='editMode' ng-click='cancel()')
-							i.fa.fa-times
 						button.btn(ng-show='!editMode' ng-click='editMode=!editMode')
 							i.fa.fa-pencil
+						button.btn( ng-click='cancel()')
+							i.fa.fa-times
 
 				special-service(data="data", cl='cl' disabled='!editMode')
 footer-Janux

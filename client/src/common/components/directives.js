@@ -160,7 +160,7 @@ angular.module('commonComponents',[])
 				return query ? $scope.cl.filter(createFilterForClient(query)) : $scope.cl;
 			};
 
-			$scope.clientSelectedItemChange = function (item) {
+			$scope.clientSelectedItemChange = function (item, assignContactToList) {
 
 				if(!_.isNil(item)) {
 					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS')
@@ -178,9 +178,38 @@ angular.module('commonComponents',[])
 							clientContacts = [];
 							infoDialog('operations.dialogs.noContacts');
 						}
+
+
+						if(!_.isNil(assignContactToList) && clientContacts.length > 0) {
+							var contact = _.find(clientContacts, function(client){
+								return (client.name.first === assignContactToList.contact.name.first &&
+									client.name.last === assignContactToList.contact.name.last);
+							});
+
+							// Update selection
+							switch(assignContactToList.type) {
+								// Have been inserted the contact from principal list
+								case 'Principal':
+									$scope.data.principals.forEach(function (principal, iPrincipal) {
+										if(principal.object.addOption === true) {
+											$scope.data.principals[iPrincipal].object = contact;
+										}
+									});
+									break;
+								// Have been inserted the contact from requester list
+								case 'Requester':
+									$scope.data.interestedParty.object = contact;
+									break;
+							}
+						}
 					});
 				}
 			};
+
+			// Initialize client contacts
+			if($scope.data.client.object) {
+				$scope.clientSelectedItemChange($scope.data.client.object);
+			}
 
 			// Requester
 			function createFilterForRequester(query) {
@@ -202,7 +231,11 @@ angular.module('commonComponents',[])
 			$scope.requesterSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
-						createContact('Requester');
+						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
+							infoDialog('operations.dialogs.noContacts');
+							return;
+						}
+						createContact('Requester'); //
 					}
 				}
 			};
@@ -227,6 +260,10 @@ angular.module('commonComponents',[])
 			$scope.principalSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
+						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
+							infoDialog('operations.dialogs.noContacts');
+							return;
+						}
 						createContact('Principal');
 					}
 				}
@@ -237,7 +274,17 @@ angular.module('commonComponents',[])
 			};
 
 			$scope.removePrincipal = function(z) {
+				if($scope.data.principals.length===1) {
+					infoDialog('services.specialForm.dialogs.principalEmpty');
+					return;
+				}
 				$scope.data.principals.splice(z,1);
+			};
+
+			$scope.hideAddPrincipal = function () {
+				return !_.every($scope.data.principals, function(principal){
+					return (principal.object !== '');
+				});
 			};
 
 			// Staff
@@ -260,7 +307,17 @@ angular.module('commonComponents',[])
 			};
 
 			$scope.removeStaff = function(z) {
+				if($scope.data.staff.length === 1) {
+					infoDialog('services.specialForm.dialogs.staffEmpty');
+					return;
+				}
 				$scope.data.staff.splice(z,1);
+			};
+
+			$scope.hideAddStaff = function () {
+				return !_.every($scope.data.staff, function(staff){
+					return (staff.object !== '');
+				});
 			};
 
 			// Vehicles
@@ -283,7 +340,17 @@ angular.module('commonComponents',[])
 			};
 
 			$scope.removeVehicle = function(z) {
+				if($scope.data.vehicles.length===1) {
+					infoDialog('services.specialForm.dialogs.vehicleEmpty');
+					return;
+				}
 				$scope.data.vehicles.splice(z,1);
+			};
+
+			$scope.hideAddVehicle = function () {
+				return !_.every($scope.data.vehicles, function(vehicle){
+					return (vehicle.object !== '');
+				});
 			};
 
 			// Markdown editor
@@ -300,9 +367,12 @@ angular.module('commonComponents',[])
 				e.hidePreview();
 			};
 
-			var refreshClientContactsList = function () {
+			var refreshClientContactsList = function (type, insertedContact) {
 				if($scope.data.client.object) {
-					$scope.clientSelectedItemChange($scope.data.client.object);
+					$scope.clientSelectedItemChange(
+						$scope.data.client.object,
+						{ contact: insertedContact, type: type }
+					);
 				}
 			};
 
@@ -321,19 +391,31 @@ angular.module('commonComponents',[])
 						$scope.type = type;
 
 						$scope.save = function() {
-							if(!_.isNil(clientGroupCode)) {
+							if(!_.isNil(clientGroupCode) && clientGroupCode !== '') {
+								console.log('$scope.principal', $scope.principal);
+
+								// Validate first and last name
+								if($scope.principal.name.first === '' || _.isNil($scope.principal.name.first)) {
+									infoDialog('services.specialForm.dialogs.contactNameEmpty');
+									return;
+								}else if($scope.principal.name.last === '' || _.isNil($scope.principal.name.last)) {
+									infoDialog('services.specialForm.dialogs.contactLastNameEmpty');
+									return;
+								}
+
 								console.log('clientGroupCode', clientGroupCode);
 								// Insert principal
 								partyGroupService.addItemNewParty(clientGroupCode,$scope.principal,{})
 								.then(function (result) {
-									console.log('Principal inserted', result);
+									console.log('Client contact inserted', result);
 									$mdToast.show(
 										$mdToast.simple()
-											.textContent($filter('translate')('operations.dialogs.principalCreated'))
+											.textContent($filter('translate')('operations.dialogs.clientContactCreated'))
 											.position( 'top right' )
 											.hideDelay(3000)
 									);
-									refreshClientContactsList($scope.principal);
+									refreshClientContactsList(type, result);
+
 									$mdDialog.cancel();
 								});
 							} else {

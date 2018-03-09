@@ -44,6 +44,7 @@ module.exports =
 
 		// Process operation to insert
 		var operation = _.clone($scope.data);
+		console.log('Operation to insert', operation);
 
 		// Validate operation
 		if(operation.name === '') {
@@ -90,7 +91,7 @@ module.exports =
 		delete operation.staff;
 		delete operation.vehicles;
 
-		// console.log('Operation to save', operation);
+		console.log('Operation to save', operation);
 
 		operationService.insert(operation).then(function (result) {
 			console.log('Inserted operation', result);

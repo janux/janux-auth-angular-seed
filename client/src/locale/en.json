@@ -229,6 +229,7 @@
 			"invalidStaff":"Invalid staff member selected",
 			"noRowSelectedError":"Select at least one row to delete",
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
+		    "clientContactCreated": "Client contact inserted correctly",
 			"principalCreated": "Principal inserted correctly",
 			"noContacts": "There is no group of contacts associated with this client",
 			"addingPrincipal": "Adding principal",
@@ -270,13 +271,15 @@
 			"addingPrincipal": "Add principal",
 			"addingRequester": "Add requester",
 			"dialogs": {
-				"nameEmpty": "Operation can't be empty",
+				"nameEmpty": "Operation name can't be empty",
 				"startEmpty": "Start date can't be empty",
 				"clientEmpty": "Client can't be empty",
 				"requesterEmpty": "Requester can't be empty",
 				"principalEmpty": "You must select at least one principal",
 				"staffEmpty": "You must select at least one staff member",
-				"vehicleEmpty": "You muest select at least one vehicle"
+				"vehicleEmpty": "You muest select at least one vehicle",
+				"contactNameEmpty": "Contact name can't be empty",
+				"contactLastNameEmpty": "Contact last name can't be empty"
 			}
 		}
 	},

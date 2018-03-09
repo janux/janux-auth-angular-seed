@@ -361,7 +361,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				cellStyle    : {
 					'white-space': 'normal'
 				},
-				cellFormatter: function (params) {
+				valueFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
 					return agGridComp.util.truncate(comment, maxLength, '...');
@@ -377,7 +377,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				headerName   : $filter('translate')('operations.specialsTimeLog.vehicle'),
 				field        : 'vehicle',
 				editable     : true,
-				cellFormatter: function (params) {
+				valueFormatter: function (params) {
 					var odometerDifference;
 
 					if (!_.isNil(params.data.vehicle)) {

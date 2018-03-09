@@ -24,13 +24,23 @@ var createInstance = function (operationServiceReference) {
 	OperationService.prototype = Object.create(null);
 	OperationService.prototype.constructor = OperationService;
 
-	OperationService.prototype.findByDateBetweenWithTimeEntriesAndType = function (initDate, endDate, type, callback) {
-		return operationServiceReference.findByDateBetweenWithTimeEntriesAndType(initDate, endDate, type).asCallback(callback);
+	OperationService.prototype.findWithTimeEntriesByDateBetweenAndType = function (initDate, endDate, type, callback) {
+		return operationServiceReference.findWithTimeEntriesByDateBetweenAndType(initDate, endDate, type).asCallback(callback);
 	};
+
+	OperationService.prototype.findWithTimeEntriesByDateAndPartyAndType = function (initDate, endDate, idParty, type, callback) {
+		return operationServiceReference.findWithTimeEntriesByDateAndPartyAndType(initDate, endDate, idParty, type).asCallback(callback);
+	};
+
 
 	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
 		return operationServiceReference.findAll().asCallback(callback);
 	};
+
+	OperationService.prototype.findByType = function (type, callback) {
+		return operationServiceReference.findByType(type).asCallback(callback);
+	};
+
 
 	// Insert an operation
 	OperationService.prototype.insert = function (operation, callback) {

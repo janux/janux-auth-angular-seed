@@ -200,13 +200,36 @@
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",
+	    "attendance": "Asistencias",
+	    "attendanceTimeLog":{
+			"title" : "Bitácora de asistencias",
+		    "operation": "Servicio",
+		    "operationType": "Tipo",
+		    "operationTypeDriver": "Chofer fijo",
+		    "operationTypeGuard": "Guardia",
+		    "operationTypeSpecialOps": "Operacion especial",
+		    "operationTypeAttendance": "Asistencia",
+		    "filterLabel": "Ver:",
+		    "staff" : "Personal",
+		  	"begin":"Inicio",
+		    "end": "Fin",
+		    "duration":"Duración",
+		    "comment":"Comentarios",
+		    "absence":"Absence",
+		    "absenceOptions": {
+				"D": "Descanso (D)",
+				"V": "Vacaciones (V)",
+				"F": "Falta (F)"
+		    }
+		},
 		"services": "Servicios",
 		"dialogs":{
 			"endDateError":"La fecha de término debe ser mayor a la fecha de inicio",
 			"invalidOperation":"La operación seleccionada es invalida",
 			"invalidStaff":"El personal seleccionado es invalido",
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
-			"confirmDeletion":"De verdad deseas borrar la selección?"
+			"confirmDeletion":"De verdad deseas borrar la selección?",
+		    "invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia"
 		}
 	},
 	"services": {

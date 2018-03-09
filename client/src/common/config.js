@@ -51,7 +51,13 @@ require('angular').module('config', [])
 						translate: 'operations.guards',
 						authContext: 'TIME_ENTRY_GUARD'
 					},
-					
+
+					attendance: {
+						state: 'operations.attendance',
+						translate: 'operations.attendance',
+						authContext: 'TIME_ENTRY_ATTENDANCE'
+					}
+
 				}
 			},
 			{

@@ -34,7 +34,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 
-				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'DRIVER')
+				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'DRIVER')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -57,7 +57,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 
-				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'GUARD')
+				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'GUARD')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -80,7 +80,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
 
-				return operationService.findByDateBetweenWithTimeEntriesAndType(period.from(), period.to(),'SPECIAL_OPS')
+				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'SPECIAL_OPS')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -88,5 +88,26 @@ require('angular').module('appOperations', [
 			}]
 		},
 		controller: require('./special-ops-time-sheet-controller')
+	})
+
+	.state('operations.attendance', {
+		url:'/operations/attendance',
+		templateUrl: 'app/operations/attendance-time-sheet.html',
+		authRequired: true,
+		resolve: {
+			driversAndOps: ['operationService', function (operationService) {
+				return operationService.findStaffAndOperationAttendance();
+			}],
+			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
+				var storedFilterPeriod = jnxStorage.findItem('attendanceTimeLogFilterPeriod', true);
+				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+				var period = timePeriods[periodKey];
+				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(), undefined)
+					.then(function (result) {
+						return operationService.mapTimeEntryData(result);
+					});
+			}]
+		},
+		controller: require('./attendance-time-sheet-controller')
 	});
 }]);

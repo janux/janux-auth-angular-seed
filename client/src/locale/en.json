@@ -184,15 +184,15 @@
 		},
 		"specials": "Specials",
 		"specialsTimeLog":{
-			"title": "Operaciones especiales",
-			"filterLabel": "Ver:",
+			"title": "Special ops time log",
+			"filterLabel": "List:",
 			"staff": "Personal",
-			"operation": "Servicio",
-			"begin": "Inicio",
-			"end": "Término",
-			"client": "Cliente",
-			"duration": "Duración",
-			"comment": "Comentario",
+			"operation": "Operaton",
+			"begin": "Begin",
+			"end": "End",
+			"client": "Client",
+			"duration": "Duration",
+			"comment": "Comment",
 		  	"odometerStart": "Km start",
 		  	"odometerEnd": "Km end",
 		  	"vehicle" : "Vehicle",
@@ -200,13 +200,36 @@
 		    "fuelEnd": "F end"
 		},
 		"guards": "Guards",
+	  	"attendance": "Attendances",
+	    "attendanceTimeLog":{
+			"title" : "Attendances time log",
+			"operation": "Operation",
+			"operationType": "Type",
+		    "operationTypeDriver": "Driver",
+		    "operationTypeGuard": "Guard",
+		    "operationTypeSpecialOps": "Special Ops",
+		    "operationTypeAttendance": "Attendance",
+			"filterLabel": "List:",
+			"staff" : "Staff",
+			"begin":"Begin",
+			"end": "End",
+			"duration":"Duration",
+			"comment":"Comments",
+			"absence":"Absence",
+			"absenceOptions": {
+		  		"D": "Break (D)",
+		  		"V": "Holidays (V)",
+		  		"F": "Absence (F)"
+		 	}
+	  	},
 		"services": "Services",
 		"dialogs":{
 			"endDateError":"End date should be higher than begin date",
 			"invalidOperation":"Invalid operation selected",
 			"invalidStaff":"Invalid staff member selected",
 			"noRowSelectedError":"Select at least one row to delete",
-			"confirmDeletion":"Are you sure you want to delete the row selection?"
+			"confirmDeletion":"Are you sure you want to delete the row selection?",
+		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance"
 		}
 	},
 	"services": {

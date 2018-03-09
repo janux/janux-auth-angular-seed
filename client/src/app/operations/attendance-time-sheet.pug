@@ -1,0 +1,136 @@
+login-toolbar(toolbar-title='operations.title')
+
+side-bar
+
+.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid-flex
+
+		md-toolbar.form-root-toolbar(style="height:10px;")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum
+						| {{ 'operations.title' | translate }}
+					h2.title-bar-txt
+						| {{ 'operations.attendanceTimeLog.title' | translate }}
+
+				//- md-truncate.filter-label
+				//- 	| {{ 'operations.driversTimeLog.filterLabel' | translate }}
+
+				md-truncate.add-form.filter-label
+					md-input-container
+						label
+							| {{ 'operations.attendanceTimeLog.filterLabel' | translate }}
+						md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
+							md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
+
+
+				md-truncate.add-form.filter-label
+					md-input-container(style="width:250px")
+						label
+							| {{ 'operations.attendanceTimeLog.staff' | translate }}
+						md-autocomplete(md-no-cache='false',
+							md-items="item in staffSearch(lbSearch.staffSearch) | orderBy:'resource.name.last'",
+							md-search-text='lbSearch.staffSearch',
+							md-selected-item-change='staffSearchSelectedItemChange(item)',
+							md-item-text='item.resource.name.last+" "+item.resource.name.first',
+							md-min-length='0',
+							md-clear-button='true'
+							class="md-autocomplete-override")
+								md-item-template
+									span() {{item.resource.name.last+', '+item.resource.name.first}}
+
+				span(flex)
+
+				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()')
+					md-icon.fa.fa-download.fa-lg
+
+		.add-row-section
+			md-truncate.add-form-container
+				form(name='driverTimeSheet').add-form
+					.element
+						md-autocomplete(md-no-cache='false',
+						md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
+						md-selected-item='lbRow.staff',
+						md-search-text='lbSearch.staff',
+						md-selected-item-change='staffInsertSelectedItemChange(item)',
+						md-item-text='item.resource.name.last+" "+item.resource.name.first',
+						md-min-length='0',
+						md-floating-label="{{ 'operations.attendanceTimeLog.staff' | translate }}")
+							md-item-template
+								span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+
+					.vertical-line
+
+					.element
+						md-input-container.jnx-datetime-picker
+							label {{ 'operations.attendanceTimeLog.begin' | translate }}
+							input(mdc-datetime-picker=''
+							date='true'
+							time='true'
+							show-todays-date=''
+							minutes='true'
+							format='YYYY-MM-DD HH:mm'
+							edit-input='true'
+							click-outside-to-close='true'
+							show-icon='true'
+							minute-steps='1'
+							ng-model='lbRow.start'
+							ng-model-options="{ debounce: 1000 }"
+							type='text' required='',
+							lang='{{ lang }}',
+							today-text='{{ "label.today" | translate }}',
+							ok-text='{{ "label.ok" | translate }}',
+							cancel-text='{{ "label.cancel" | translate }}')
+
+					.vertical-line
+
+					.element
+						md-input-container.jnx-datetime-picker
+							label {{ 'operations.attendanceTimeLog.end' | translate }}
+							input(mdc-datetime-picker=''
+							date='true'
+							time='true'
+							show-todays-date=''
+							minutes='true'
+							min-date='lbRow.start'
+							format='YYYY-MM-DD HH:mm'
+							edit-input='true'
+							click-outside-to-close='true'
+							show-icon='true'
+							minute-steps='1'
+							ng-model='lbRow.end'
+							ng-model-options="{ debounce: 1000 }"
+							type='text',
+							lang='{{ lang }}',
+							today-text='{{ "label.today" | translate }}',
+							ok-text='{{ "label.ok" | translate }}',
+							cancel-text='{{ "label.cancel" | translate }}')
+
+					.vertical-line
+
+					.element
+						md-input-container
+							label {{ 'operations.attendanceTimeLog.comment' | translate }}
+							input(ng-model='lbRow.location')
+
+					.vertical-line
+
+					.element-small
+						md-input-container
+							label {{ 'operations.attendanceTimeLog.absence' | translate }}
+							md-select(ng-model='lbRow.absence')
+								md-option(value='')
+								md-option(value='D') {{ 'operations.attendanceTimeLog.absenceOptions.D' | translate }}
+								md-option(value='V') {{ 'operations.attendanceTimeLog.absenceOptions.V' | translate }}
+								md-option(value='F') {{ 'operations.attendanceTimeLog.absenceOptions.F' | translate }}
+
+					.vertical-line
+
+					.btn-element-small
+
+						md-button.md-icon-button.stack(aria-label="Grid" ng-click='addRow()')
+							md-icon.fa.fa-plus-square.fa-lg
+
+		.container-body(style="margin-top:-20px; padding-bottom:50px;")
+			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+footer-Janux

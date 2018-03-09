@@ -12,7 +12,7 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService) {
 
 		function fromJSON(object) {
 			if (_.isNil(object)) return object;
@@ -71,11 +71,39 @@ module.exports =
 
 		var service = {
 
-			findByDateBetweenWithTimeEntriesAndType: function (initDate, endDate, type) {
+			findWithTimeEntriesByDateBetweenAndType: function (initDate, endDate, type) {
+				// Handle optional parameter type.
+				var params;
+				if (_.isNil(type)) {
+					params = [initDate, endDate];
+				} else {
+					params = [initDate, endDate, type];
+				}
+
+
 				return $http.jsonrpc(
 					'/rpc/2.0/operation',
-					'findByDateBetweenWithTimeEntriesAndType',
-					[initDate, endDate, type]
+					'findWithTimeEntriesByDateBetweenAndType',
+					params
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
+			findWithTimeEntriesByDateAndPartyAndType: function (initDate, endDate, idParty, type) {
+				// Handle optional parameter type.
+				var params;
+				if (_.isNil(type)) {
+					params = [initDate, endDate, idParty];
+				} else {
+					params = [initDate, endDate, idParty, type];
+				}
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findWithTimeEntriesByDateAndPartyAndType',
+					params
 				).then(function (resp) {
 					return _.map(resp.data.result, function (o) {
 						return fromJSON(o);
@@ -88,6 +116,19 @@ module.exports =
 				return $http.jsonrpc(
 					'/rpc/2.0/operation',
 					'findAllWithoutTimeEntry'
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
+
+			findByType: function (type) {
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findByType',
+					[type]
 				).then(function (resp) {
 					return _.map(resp.data.result, function (o) {
 						return fromJSON(o);
@@ -159,6 +200,45 @@ module.exports =
 						};
 					});
 				});
+			},
+
+
+			findStaffAndOperationAttendance: function () {
+				var operation;
+				var vendor;
+				return service.findByType('ATTENDANCE')
+					.then(function (resultOperations) {
+						// We expect this method returns one and only one record.
+
+						operation = resultOperations[0];
+
+						//Get glarus company. In order to emulate a vendor.
+						return partyService.findOne('10000');
+					})
+					.then(function (resultCompany) {
+						vendor = resultCompany;
+						return partyGroupService.findOne('glarus_staff_group');
+					})
+					.then(function (resultGroup) {
+						//TODO. Exclude "external" staff.
+
+						// The variable to define, allPersonnelAvailableForSelection, has to be
+						// of type resource because is used as a resource in different time entries
+						// logs an cell editors. In this case we are going to define fictional resources.
+						var parties = _.map(resultGroup.values, function (o) {
+							return {
+								type    : "PERSON_ATTENDANCE",
+								resource: o.party,
+								vendor  : vendor
+							};
+						});
+
+						return {
+							allPersonnelAvailableForSelection: parties,
+							operation                        : operation
+						};
+
+					});
 			},
 
 			findDriversAndOperations: function () {
@@ -284,6 +364,10 @@ module.exports =
 								absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
 									timeEntry.resources[0].absence : 'SF';
 							}
+						}
+
+						if (operation.type === 'ATTENDANCE') {
+							absence = timeEntry.resources[0].absence;
 						}
 
 						// Temporary solution for empty extras.

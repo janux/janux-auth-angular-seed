@@ -243,13 +243,13 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 						result = result.name.last + ' ' + result.name.first;
 					}
 					return result;
-				}
-				// cellEditor : agGridComp.autocompleteStaffCellEditor
+				},
+				cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
 			{
 				headerName : $filter('translate')('operations.attendanceTimeLog.operation'),
 				field      : 'operation',
-				editable   : true,
+				editable   : false,
 				valueGetter: function (params) {
 					return params.data.operation.name;
 				},
@@ -458,7 +458,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					infoDialog('operations.dialogs.invalidOperationForAttendance');
 					$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 				}
-				
+
 			},
 
 			localeTextFunc: function (key, defaultValue) {

@@ -207,7 +207,7 @@
 			"invalidStaff":"El personal seleccionado es invalido",
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
 			"confirmDeletion":"De verdad deseas borrar la selección?",
-			"principalCreated": "Principal insertado correctamene",
+			"clientContactCreated": "Contacto del cliente insertado correctamente",
 			"noContacts": "No hay grupo de contactos asociado a este cliente",
 			"addedSpecialOp":"Operación especial agregada exitosamente"
 		}
@@ -252,7 +252,9 @@
 				"requesterEmpty": "Debe especificar el solicitante",
 				"principalEmpty": "Debe seleccionar al menos un principal",
 				"staffEmpty": "Debe asignar al menos un miembro del personal",
-				"vehicleEmpty": "Debe seleccionar un vehiculo para la operación"
+				"vehicleEmpty": "Debe seleccionar un vehiculo para la operación",
+				"contactNameEmpty": "El nombre del contacto no puede estar vacio",
+				"contactLastNameEmpty": "El apellido del contacto no puede estar vacio"
 			}
 		}
 	},

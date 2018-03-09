@@ -169,7 +169,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					attendanceTimeEntryToInsert = handleAbsence(attendanceTimeEntryToInsert, $scope.lbRow.absence);
 
 					timeEntryService.insert(attendanceTimeEntryToInsert).then(function () {
-						$scope.findTimeEntries($scope.periodFilterKey);
+						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 
 						// Wait before performing the form reset
 						$timeout(function () {
@@ -451,15 +451,14 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 
 					timeEntryService.update(timeEntryToUpdate).then(function () {
-						$scope.findTimeEntries($scope.periodFilterKey);
+						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 						// infoDialog('Time entry successfully updated');
 					});
 				} else {
 					infoDialog('operations.dialogs.invalidOperationForAttendance');
-					$scope.findTimeEntries($scope.periodFilterKey);
+					$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 				}
-
-
+				
 			},
 
 			localeTextFunc: function (key, defaultValue) {

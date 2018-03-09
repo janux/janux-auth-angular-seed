@@ -376,7 +376,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				cellStyle    : {
 					'white-space': 'normal'
 				},
-				cellFormatter: function (params) {
+				valueFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
 					return agGridComp.util.truncate(comment, maxLength, '...');

@@ -80,7 +80,7 @@ module.exports =
 		{
 			headerName : $filter('translate')('services.list.type'),
 			field      : 'type',
-			cellFormatter: function (params) {
+			valueFormatter: function (params) {
 				return $filter('translate')('services.list.'+params.value);
 			},
 			width          : 80
@@ -101,7 +101,7 @@ module.exports =
 		{
 			headerName : $filter('translate')('services.list.duration'),
 			field      : 'duration',
-			cellFormatter: function (params) {
+			valueFormatter: function (params) {
 				return (params.value)?$filter('amDurationFormat')(params.value, 'millisecond'):'';
 			},
 			width          : 80

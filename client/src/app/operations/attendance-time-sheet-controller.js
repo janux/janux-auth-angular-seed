@@ -243,8 +243,8 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 						result = result.name.last + ' ' + result.name.first;
 					}
 					return result;
-				},
-				cellEditor : agGridComp.autocompleteStaffCellEditor
+				}
+				// cellEditor : agGridComp.autocompleteStaffCellEditor
 			},
 			{
 				headerName : $filter('translate')('operations.attendanceTimeLog.operation'),

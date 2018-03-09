@@ -132,8 +132,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider',
-function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider,localStorageServiceProvider,markedProvider,hljsServiceProvider,$mdDateLocaleProvider) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider','$mdAriaProvider',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider , localStorageServiceProvider , markedProvider , hljsServiceProvider , $mdDateLocaleProvider , $mdAriaProvider) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
@@ -266,6 +266,9 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		var m = moment(dateString, 'YYYY-MM-DD', true);
 		return m.isValid() ? m.toDate() : new Date(NaN);
 	};
+
+	// Globally disables all ARIA warnings.
+	$mdAriaProvider.disableWarnings();
 }])
 
 

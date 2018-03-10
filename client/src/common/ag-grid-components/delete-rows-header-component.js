@@ -39,8 +39,8 @@ DelRowsHeaderComp.prototype.getGui = function (){
 };
 
 DelRowsHeaderComp.prototype.destroy = function () {
-	this.eGui.removeChild(this.selectAll);
-	this.eGui.removeChild(this.deleteBtn);
+	// this.eGui.removeChild(this.selectAll);
+	// this.eGui.removeChild(this.deleteBtn);
 };
 
 module.exports = DelRowsHeaderComp;

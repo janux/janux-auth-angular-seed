@@ -415,7 +415,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		var agGridSizeToFit = function () {
 			$timeout(function () {
 				$scope.gridOptions.api.sizeColumnsToFit();
-			}, 500);
+			}, 1000);
 		};
 		$scope.agGridSizeToFit = agGridSizeToFit;
 

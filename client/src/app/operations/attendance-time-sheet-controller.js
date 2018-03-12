@@ -124,7 +124,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				ids.push(item.data.id);
 			});
 
-			timeEntryService.timeEntryReport(ids);
+			timeEntryService.timeEntryReportAttendance(ids);
 
 		};
 

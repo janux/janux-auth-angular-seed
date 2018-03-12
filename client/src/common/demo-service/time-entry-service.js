@@ -137,6 +137,62 @@ module.exports =
 						});
 						FileSaver.saveAs(blob, 'bitacora-guardias' + now.format('YYYYMMDDHHmm') + '.xlsx');
 					});
+				},
+
+				timeEntryReportAttendance: function (ids) {
+					var headers = {
+						'Content-type': 'application/json',
+						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					};
+
+					var token = localStorageService.get("token");
+					var timeZone = dateUtilService.getBrowserTimeZone();
+
+					if (_.isNil(token) === false) {
+						headers['Authorization'] = 'Bearer ' + token
+					}
+
+					$http({
+						url         : '/time-entry-report-attendance',
+						method      : 'POST',
+						responseType: 'arraybuffer',
+						data        : {ids: ids, timeZone: timeZone},
+						headers     : headers
+					}).then(function (result) {
+						var now = moment();
+						var blob = new Blob([result.data], {
+							type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+						});
+						FileSaver.saveAs(blob, 'bitacora-asistencia' + now.format('YYYYMMDDHHmm') + '.xlsx');
+					});
+				},
+
+				timeEntryReportSpecialOps: function (ids) {
+					var headers = {
+						'Content-type': 'application/json',
+						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					};
+
+					var token = localStorageService.get("token");
+					var timeZone = dateUtilService.getBrowserTimeZone();
+
+					if (_.isNil(token) === false) {
+						headers['Authorization'] = 'Bearer ' + token
+					}
+
+					$http({
+						url         : '/time-entry-report-special-ops',
+						method      : 'POST',
+						responseType: 'arraybuffer',
+						data        : {ids: ids, timeZone: timeZone},
+						headers     : headers
+					}).then(function (result) {
+						var now = moment();
+						var blob = new Blob([result.data], {
+							type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+						});
+						FileSaver.saveAs(blob, 'bitacora-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx');
+					});
 				}
 			};
 			return service;

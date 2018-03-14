@@ -1,6 +1,6 @@
 'use strict';
 
-var moment = require('moment');
+	var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
@@ -207,7 +207,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
-							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
+							$scope.message = $filter('translate')('operations.dialogs.confirmDe;letion');
 
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
@@ -341,6 +341,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				headerName    : $filter('translate')('operations.attendanceTimeLog.absence'),
 				field         : 'absence',
 				editable      : true,
+				// TODO: new absence cell editor for only attendance.
 				cellEditor    : agGridComp.absenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';

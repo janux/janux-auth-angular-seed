@@ -358,6 +358,7 @@ module.exports =
 
 						var duration = calculateDuration(timeEntry.begin, timeEntry.end);
 						var end = '', endOnlyHour = '';
+						absence = undefined;
 
 						if (_.isNil(timeEntry.end) === false) {
 							end = moment(timeEntry.end);

@@ -5,12 +5,14 @@ var PostalAddress = require('janux-people').PostalAddress;
 
 
 module.exports = [
-'$scope','partyService','$state','client', function(
- $scope , partyService , $state , client) {
+'$scope','partyService','$state','client','contacts', function(
+ $scope , partyService , $state , client , contacts) {
 
-	console.log('client being edited', client);
+	console.log('client being edited', client, 'contacts', contacts);
+	$scope.currentNavItem = 'client';
 
 	$scope.client = client;
+	$scope.contacts = contacts;
 
 	$scope.addNewAddress = function() {
 	    $scope.client.setContactMethod('work', new PostalAddress());

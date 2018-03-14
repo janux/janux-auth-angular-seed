@@ -120,6 +120,7 @@
 		"reseller": "Reseller",
 		"edit": "Edit",
 		"createClient": "Create client",
+		"editClient": "Edit client",
 		"Organization":"Organization",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",

@@ -72,6 +72,60 @@ md-toolbar.form-root-toolbar{
 	}
 }
 
+// This is a proposal of toolbar with tabs, currently implemented in:
+// users and client modules
+.tabs-glarus {
+
+	margin: 20px;
+	width:100%;
+
+	md-toolbar.options-tabs {
+
+		min-height: 48px !important;
+
+		.md-toolbar-tools {
+			padding: 0 20px 0 0 !important;
+			height: 48px;
+			max-height: 48px;
+		}
+
+		li.md-nav-item {
+			margin-left:0;
+		}
+
+		.md-button.md-icon-button {
+			width: 32px;
+			height: 32px;
+			min-height: 32px;
+			padding-left: 4px;
+			.fa-lg {
+				line-height: 0.40em;
+			}
+		}
+
+		md-nav-bar md-nav-ink-bar {
+			background: url('/img/nav-ink-bar.png') no-repeat top center;
+			height:7px;
+
+		}
+
+		.active:after{
+			all: initial;
+		}
+	}
+
+	md-toolbar.form-mid-toolbar{
+		background: @glarus-blue;
+		color: @toolbar-glarus;
+		border-top:1px solid @grey2;
+		z-index: 0;
+
+		.md-unselected {
+			color: rgba(255,255,255,0.54);
+		}
+	}
+}
+
 md-menu-content {
 	.md-button {
 		text-align: left !important;

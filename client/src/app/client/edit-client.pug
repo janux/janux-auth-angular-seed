@@ -10,36 +10,33 @@ side-bar
 					span.title-breadcrum
 						| {{ 'peopleOrgs.title' | translate }}
 					h2.title-bar-txt
-						| {{ 'client.createClient' | translate }}
+						| {{ 'client.editClient' | translate }}
 				span(flex)
 
-				//- md-button.grid.md-icon-button.form-btn-toolbar(aria-label="Grid")
-				//- 	md-icon.fa.fa-table.fa-lg
+		.container-fluid-flex
+			md-content.tabs-glarus
+				md-toolbar.form-mid-toolbar.options-tabs
+					.md-toolbar-tools
+						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+							md-nav-item.active(md-nav-click="goto('client')" name="client")
+								| {{ 'client.tabMenu.tabMenuFirst' | translate | uppercase }}
+							md-nav-item(md-nav-click="goto('contacts')" name="contacts")
+								| {{ 'client.tabMenu.tabMenuSecond' | translate | uppercase }}
 
-				//- md-button.arrow.md-icon-button(aria-label="Upload")
-				//- 	md-icon.fa.fa-upload.fa-lg
+						span(flex)
 
-		.container-fluid-flex.spacing-bottom
+						.btn-row
+							button.btn(ng-show='currentNavItem=="client"')
+								i.fa.fa-trash
+							button.btn(ng-click='save()' ng-show='currentNavItem=="client"')
+								i.fa.fa-check
+							button.btn(ng-click='cancel()')
+								i.fa.fa-times
 
-			md-content.spacing-ls(style="margin-top:20px")
-				.form-mid-toolbar-glarus
-					ul.arrowunderline
-						li
-							a.active(href="#")
-								| {{ 'client.tabMenu.tabMenuFirst' | translate }}
-						li
-							a(href="#")
-								| {{ 'client.tabMenu.tabMenuSecond' | translate }}
+				div(ng-show='currentNavItem=="client"')
+					include client-form
 
-					.btn-row
-						button.btn
-							i.fa.fa-trash
-						button.btn(ng-click='save()')
-							i.fa.fa-check
-						button.btn(ng-click='cancel()')
-							i.fa.fa-times
-
-
-				include client-form
+				div(ng-show='currentNavItem=="contacts"')
+					include client-contacts
 
 footer-Janux

@@ -43,7 +43,7 @@ module.exports =
 			if (_.isNil(object)) return object;
 			var result = _.cloneDeep(object);
 			result.client = partyService.toJSON(result.client);
-			result.interestedParty = partyService.toJSON(result.interestedParty);
+			result.interestedParty = (!_.isNil(result.interestedParty))?partyService.toJSON(result.interestedParty):null;
 			result.principals = _.map(result.principals, function (o) {
 				return partyService.toJSON(o);
 			});

@@ -32,13 +32,13 @@ module.exports =
 		operation.interestedParty = {object:operation.interestedParty, search:''};
 		operation.principals = (operation.principals.length>0)?_.map(operation.principals, function(principal){
 			return {object:principal, search:''};
-		}):[{object:'', search:''}];
+		}):[{object:null, search:''}];
 
 		// Filter Vehicles
 		operation.vehicles = _.filter( operation.currentResources, { type:'VEHICLE' } );
 		operation.vehicles = (operation.vehicles.length>0)?_.map(operation.vehicles,function (vehicle) {
 			return {object:vehicle, search:''};
-		}):[{object:'', search:''}];
+		}):[{object:null, search:''}];
 
 		// Filter staff
 		operation.staff = _.filter( operation.currentResources, function (resource){
@@ -46,13 +46,13 @@ module.exports =
 		} );
 		operation.staff = (operation.staff.length>0)?_.map(operation.staff,function (staff) {
 			return {object:staff, search:''};
-		}):[{object:'', search:''}];
+		}):[{object:null, search:''}];
 
 		return operation;
 	};
 
 	$scope.data = mapOperationToEditable(operation);
-	console.log('$scope.data', $scope.data);
+	console.log('editable operation', $scope.data);
 
 	// Update operation
 	$scope.save = function () {
@@ -66,45 +66,55 @@ module.exports =
 		} else if (!_.isDate(operation.start)) {
 			infoDialog('services.specialForm.dialogs.startEmpty');
 			return;
-		} else if (operation.client.object === '') {
+		} else if (!_.isDate(operation.end)) {
+			infoDialog('services.specialForm.dialogs.endEmpty');
+			return;
+		} else if (_.isNil(operation.client.object)) {
 			infoDialog('services.specialForm.dialogs.clientEmpty');
 			return;
-		} else if (operation.interestedParty.object === '') {
-			infoDialog('services.specialForm.dialogs.requesterEmpty');
-			return;
-		} else if (operation.principals.length===0 || operation.principals[0].object === '') {
-			infoDialog('services.specialForm.dialogs.principalEmpty');
-			return;
-		} else if (operation.staff.length===0 || operation.staff[0].object === '') {
-			infoDialog('services.specialForm.dialogs.staffEmpty');
-			return;
-		} else if (operation.vehicles.length===0 || operation.vehicles[0].object === '') {
-			infoDialog('services.specialForm.dialogs.vehicleEmpty');
-			return;
 		}
+		// else if (operation.interestedParty.object === '') {
+		// 	infoDialog('services.specialForm.dialogs.requesterEmpty');
+		// 	return;
+		// } else if (operation.principals.length===0 || operation.principals[0].object === '') {
+		// 	infoDialog('services.specialForm.dialogs.principalEmpty');
+		// 	return;
+		// } else if (operation.staff.length===0 || operation.staff[0].object === '') {
+		// 	infoDialog('services.specialForm.dialogs.staffEmpty');
+		// 	return;
+		// } else if (operation.vehicles.length===0 || operation.vehicles[0].object === '') {
+		// 	infoDialog('services.specialForm.dialogs.vehicleEmpty');
+		// 	return;
+		// }
 
 		operation.client = operation.client.object;
 		operation.interestedParty = operation.interestedParty.object;
-		operation.principals = _.filter(operation.principals, function (principal) {
-			return (!_.isNil(principal.object));
-		});
-		operation.principals = _.map(operation.principals,'object');
+		operation.principals = _.chain(operation.principal)
+			.map('object')
+			.filter(function (principal) { return (!_.isNil(principal)); })
+			.value();
 
 		var resources = [];
-		operation.staff = _.filter(operation.staff,function (staff) {
-			return (!_.isNil(staff.object));
-		});
-		resources = resources.concat(_.map(operation.staff,function (staff) {
-			delete staff.object.id;
-			return staff.object;
-		}));
-		operation.vehicles = _.filter(operation.vehicles,function (vehicle) {
-			return (!_.isNil(vehicle.object));
-		});
-		resources = resources.concat(_.map(operation.vehicles,function (vehicle) {
-			delete vehicle.object.id;
-			return vehicle.object;
-		}));
+
+		var staff = _.chain(operation.staff)
+			.filter(function (staff) { return (!_.isNil(staff.object)); })
+			.map(function (staff) {
+				delete staff.object.id;
+				return staff.object;
+			})
+			.value();
+
+		resources = resources.concat(staff);
+
+		var vehicles = _.chain(operation.vehicles)
+			.filter(function (vehicle) { return (!_.isNil(vehicle.object)); })
+			.map(function (vehicle) {
+				delete vehicle.object.id;
+				return vehicle.object;
+			})
+			.value();
+
+		resources = resources.concat(vehicles);
 
 		operation.currentResources = resources;
 		operation.start = moment(operation.start).toDate();

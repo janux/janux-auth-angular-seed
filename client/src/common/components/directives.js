@@ -270,12 +270,12 @@ angular.module('commonComponents',[])
 			};
 
 			$scope.addPrincipal= function() {
-				$scope.data.principals.push({object:'',search:''});
+				$scope.data.principals.push({object:null,search:''});
 			};
 
 			$scope.removePrincipal = function(z) {
 				if($scope.data.principals.length===1) {
-					infoDialog('services.specialForm.dialogs.principalEmpty');
+					// infoDialog('services.specialForm.dialogs.principalEmpty');
 					return;
 				}
 				$scope.data.principals.splice(z,1);
@@ -283,7 +283,7 @@ angular.module('commonComponents',[])
 
 			$scope.hideAddPrincipal = function () {
 				return !_.every($scope.data.principals, function(principal){
-					return (principal.object !== '');
+					return (!_.isNil(principal.object));
 				});
 			};
 
@@ -302,13 +302,20 @@ angular.module('commonComponents',[])
 				return query ? staff.filter(createFilterForStaff(query)) : staff;
 			};
 
+			$scope.staffSelectedItemChange = function (item, index) {
+				if (item) {
+					// Default selected type
+					$scope.data.staff[index].object.type = 'DRIVER';
+				}
+			};
+
 			$scope.addStaff= function() {
-				$scope.data.staff.push({object:'',search:''});
+				$scope.data.staff.push({object:null,search:''});
 			};
 
 			$scope.removeStaff = function(z) {
 				if($scope.data.staff.length === 1) {
-					infoDialog('services.specialForm.dialogs.staffEmpty');
+					// infoDialog('services.specialForm.dialogs.staffEmpty');
 					return;
 				}
 				$scope.data.staff.splice(z,1);
@@ -316,7 +323,7 @@ angular.module('commonComponents',[])
 
 			$scope.hideAddStaff = function () {
 				return !_.every($scope.data.staff, function(staff){
-					return (staff.object !== '');
+					return (!_.isNil(staff.object));
 				});
 			};
 
@@ -336,12 +343,12 @@ angular.module('commonComponents',[])
 			};
 
 			$scope.addVehicle= function() {
-				$scope.data.vehicles.push({object:'',search:''});
+				$scope.data.vehicles.push({object:null,search:''});
 			};
 
 			$scope.removeVehicle = function(z) {
 				if($scope.data.vehicles.length===1) {
-					infoDialog('services.specialForm.dialogs.vehicleEmpty');
+					// infoDialog('services.specialForm.dialogs.vehicleEmpty');
 					return;
 				}
 				$scope.data.vehicles.splice(z,1);
@@ -349,7 +356,7 @@ angular.module('commonComponents',[])
 
 			$scope.hideAddVehicle = function () {
 				return !_.every($scope.data.vehicles, function(vehicle){
-					return (vehicle.object !== '');
+					return (!_.isNil(vehicle.object));
 				});
 			};
 

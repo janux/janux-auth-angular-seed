@@ -370,6 +370,12 @@
 		"sms": "SMS",
 		"wsp": "WSP",
 		"first": "Principal",
-		"type": "Tipo"
+		"type": "Tipo",
+		"dialogs": {
+			"c": "Editando el contacto",
+			"contactSaved": "Contacto actualizado correctamente",
+			"contactNameEmpty": "El nombre del contacto no puede estar vacio",
+			"contactLastNameEmpty": "El apellido del contacto no puede estar vacio"
+		}
 	}
 }

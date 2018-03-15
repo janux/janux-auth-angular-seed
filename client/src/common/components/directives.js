@@ -7,6 +7,21 @@ var PostalAddress = require('janux-people').PostalAddress;
 
 var scopeDefinition = { "data":"=", "section":"@" };
 
+var infoDialog = function (translateKey, $modal, $filter) {
+	$modal.open({
+		templateUrl: 'app/dialog-tpl/info-dialog.html',
+		controller : ['$scope', '$modalInstance',
+			function ($scope, $modalInstance) {
+				$scope.message = $filter('translate')(translateKey);
+
+				$scope.ok = function () {
+					$modalInstance.close();
+				};
+			}],
+		size       : 'md'
+	});
+};
+
 angular.module('commonComponents',[])
 
 .directive('user', function() {
@@ -116,20 +131,7 @@ angular.module('commonComponents',[])
 			var staff = [];
 			var vehicles = [];
 
-			var infoDialog = function (translateKey) {
-				$modal.open({
-					templateUrl: 'app/dialog-tpl/info-dialog.html',
-					controller : ['$scope', '$modalInstance',
-						function ($scope, $modalInstance) {
-							$scope.message = $filter('translate')(translateKey);
 
-							$scope.ok = function () {
-								$modalInstance.close();
-							};
-						}],
-					size       : 'md'
-				});
-			};
 
 			resourceService.findAvailableResources().then(function (resources) {
 				// console.log('resources', resources);
@@ -176,7 +178,7 @@ angular.module('commonComponents',[])
 							console.log('clientContacts',clientContacts);
 						} else {
 							clientContacts = [];
-							infoDialog('operations.dialogs.noContacts');
+							infoDialog('operations.dialogs.noContacts',$modal, $filter);
 						}
 
 
@@ -232,7 +234,7 @@ angular.module('commonComponents',[])
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
-							infoDialog('operations.dialogs.noContacts');
+							infoDialog('operations.dialogs.noContacts',$modal, $filter);
 							return;
 						}
 						createContact('Requester'); //
@@ -250,18 +252,18 @@ angular.module('commonComponents',[])
 				};
 			}
 
-			$scope.principalSearch = function (query) {
+			$scope.contactSearch = function (query) {
 				var out = query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
 				return out.concat([ {
 					addOption:true
 				} ]);
 			};
 
-			$scope.principalSelectedItemChange = function (item) {
+			$scope.contactSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
-							infoDialog('operations.dialogs.noContacts');
+							infoDialog('operations.dialogs.noContacts',$modal, $filter);
 							return;
 						}
 						createContact('Principal');
@@ -394,25 +396,25 @@ angular.module('commonComponents',[])
 						principal.setContactMethod('work', new Email());
 						principal.setContactMethod('Home', new PostalAddress());
 
-						$scope.principal = principal;
+						$scope.contact = principal;
 						$scope.type = type;
 
 						$scope.save = function() {
 							if(!_.isNil(clientGroupCode) && clientGroupCode !== '') {
-								console.log('$scope.principal', $scope.principal);
+								console.log('$scope.contact', $scope.contact);
 
 								// Validate first and last name
-								if($scope.principal.name.first === '' || _.isNil($scope.principal.name.first)) {
-									infoDialog('services.specialForm.dialogs.contactNameEmpty');
+								if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
+									infoDialog('services.specialForm.dialogs.contactNameEmpty',$modal, $filter);
 									return;
-								}else if($scope.principal.name.last === '' || _.isNil($scope.principal.name.last)) {
-									infoDialog('services.specialForm.dialogs.contactLastNameEmpty');
+								}else if($scope.contact.name.last === '' || _.isNil($scope.contact.name.last)) {
+									infoDialog('services.specialForm.dialogs.contactLastNameEmpty',$modal, $filter);
 									return;
 								}
 
 								console.log('clientGroupCode', clientGroupCode);
 								// Insert principal
-								partyGroupService.addItemNewParty(clientGroupCode,$scope.principal,{})
+								partyGroupService.addItemNewParty(clientGroupCode,$scope.contact,{})
 								.then(function (result) {
 									console.log('Client contact inserted', result);
 									$mdToast.show(
@@ -426,7 +428,7 @@ angular.module('commonComponents',[])
 									$mdDialog.cancel();
 								});
 							} else {
-								infoDialog('operations.dialogs.noContacts');
+								infoDialog('operations.dialogs.noContacts',$scope, $filter);
 							}
 						};
 
@@ -434,7 +436,7 @@ angular.module('commonComponents',[])
 							$mdDialog.cancel();
 						};
 					}],
-					templateUrl: 'common/components/templates/add-contact.html',
+					templateUrl: 'common/components/templates/contact.html',
 					parent: angular.element(document.body),
 					clickOutsideToClose: true
 				});

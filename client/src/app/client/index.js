@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
-
 require('common/demoService');
 
 require('angular').module('appClient', [
@@ -40,7 +38,7 @@ require('angular').module('appClient', [
 
 	// Edit specific client
 	.state('client.edit', {
-		url: '/edit/{id}',
+		url: '/edit/{id}/{tab}',
 		templateUrl: 'app/client/edit-client.html',
 		authRequired: true,
 		controller: require('./edit-client-controller.js'),
@@ -48,17 +46,8 @@ require('angular').module('appClient', [
 			client: ['partyService', '$stateParams', function(partyService, $stateParams){
 				return partyService.findOne($stateParams.id);
 			}],
-			contacts: ['client','partyGroupService',function (client,partyGroupService) {
-				return partyGroupService.findOneOwnedByPartyAndType(client.id, 'COMPANY_CONTACTS').then(function (result) {
-
-					var parties = [];
-					if(!_.isNil(result)){
-						parties = _.map(result.values, function (o) {
-							return o.party;
-						});
-					}
-					return parties;
-				});
+			clientGroup: ['client','partyGroupService',function (client,partyGroupService) {
+				return partyGroupService.findOneOwnedByPartyAndType(client.id, 'COMPANY_CONTACTS');
 			}]
 		}
 	});

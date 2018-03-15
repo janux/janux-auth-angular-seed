@@ -9,7 +9,7 @@
 				th(ng-show='userRole.can("READ",subOption.authContext);')
 					.col-edit-contact {{ 'user.edit' | translate }}
 				th(ng-show='userRole.can("READ",subOption.authContext);')
-					md-button.md-icon-button(aria-label="Trash" style="background:none; margin-left:0px; margin-right:0px  padding-right:0px;")
+					md-button.md-icon-button(ng-click='disableSelectedContacts()' aria-label="Trash" style="background:none; margin-left:0px; margin-right:0px  padding-right:0px;")
 						md-icon.fa.fa-trash.fa-lg.trash-center(style="color:#ffffff; background:none; margin-left:15px; padding-right:50px;" )
 		tbody
 			tr(ng-repeat='contact in contacts track by contact.id')
@@ -21,5 +21,5 @@
 					a.action-button-glarus
 						span.fa.fa-pencil.fa-lg(ng-click='editContact(contact.id)' style="margin-left:8px;")
 				td(style="text-align:center" ng-show='userRole.can("READ",subOption.authContext);' )
-					md-checkbox(aria-label="Trash" ng-model='contact.Selected' class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
+					md-checkbox(aria-label="Trash" ng-model='contact.selected' class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
 

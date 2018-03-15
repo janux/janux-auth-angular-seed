@@ -133,6 +133,11 @@
 		"tabMenu": {
 			"tabMenuFirst":"Organización",
 			"tabMenuSecond":"Contactos"
+		},
+		"dialogs": {
+			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
+			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
+			"successDeletedContacts":"Los contactos seleccionados han sido eliminados"
 		}
 	},
 	"peopleOrgs": {

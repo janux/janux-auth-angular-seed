@@ -131,6 +131,11 @@
 		"tabMenu": {
 			"tabMenuFirst":"Organization",
 			"tabMenuSecond":"Contacts"
+		},
+		"dialogs": {
+			"noRowSelectedError":"Select at least one client contact to delete",
+			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
+			"successDeletedContacts":"Selected contacts successfully deleted"
 		}
 		
 	},

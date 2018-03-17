@@ -179,7 +179,8 @@
 				"A": "Additional not invoiced (A)",
 				"NM": "Night shift maintenance (NM)",
 				"NRM": "Night shift goods receipt (NRM)",
-			    "CLOSED" : "Closed store (CLOSED)"
+			    "CLOSED" : "Closed store (CLOSED)",
+			    "GUARD_SHIFT_LEADER": "Shift leader"
 			}
 		},
 		"specials": "Specials",

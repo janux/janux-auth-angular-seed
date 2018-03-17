@@ -83,6 +83,88 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				timeEntry.resources = [];
 			}
 
+			if (timeEntry.extras === 'GUARD_SHIFT_LEADER') {
+				timeEntry.resources[0].type = 'GUARD_SHIFT_LEADER';
+			}
+
+			return timeEntry;
+		}
+
+		// Fill the initial hour and end hour to the time entry
+		// attributes given the extra value and the operation defined
+		function setHoursInResource(operation, timeEntry) {
+			var initHourParameter;
+			var endHourHourParameter;
+			var initHourAttributeValuePair;
+			var endHourAttributeValuePair;
+			var timeEntryInitHourParameterName = 'init.hour';
+			var timeEntryEndHourParameterName = 'end.hour';
+			var existingAttributeValuePair;
+			switch (timeEntry.extras) {
+				case 'NM':
+					initHourParameter = 'nightShiftMaintenance.initHour';
+					endHourHourParameter = 'nightShiftMaintenance.endHour';
+					break;
+				case 'NRM':
+					initHourParameter = 'goodsReceipt.initHour';
+					endHourHourParameter = 'goodsReceipt.endHour';
+					break;
+				case 'A':
+					initHourParameter = 'guardSupport.initHour';
+					endHourHourParameter = 'guardSupport.endHour';
+					break;
+				case 'AF':
+					initHourParameter = 'guardSupport.initHour';
+					endHourHourParameter = 'guardSupport.endHour';
+					break;
+				case 'GUARD_SHIFT_LEADER':
+					initHourParameter = 'shiftLeader.initHour';
+					endHourHourParameter = 'shiftLeader.endHour';
+					break;
+				default:
+					initHourParameter = 'guard.initHour';
+					endHourHourParameter = 'guard.endHour';
+					break;
+			}
+			if (!_.isNil(initHourParameter) && !_.isNil(endHourHourParameter)) {
+				initHourAttributeValuePair = _.find(operation.attributes, function (o) {
+					return o.name === initHourParameter;
+				});
+				endHourAttributeValuePair = _.find(operation.attributes, function (o) {
+					return o.name === endHourHourParameter;
+				});
+
+
+				//Fill time entry attributes.
+				if (!_.isNil(initHourAttributeValuePair)) {
+					existingAttributeValuePair = _.find(timeEntry.attributes, function (o) {
+						return o.name === timeEntryInitHourParameterName;
+					});
+
+					if (existingAttributeValuePair) {
+						existingAttributeValuePair.value = initHourAttributeValuePair.value;
+					} else {
+						timeEntry.attributes.push({
+							name : timeEntryInitHourParameterName,
+							value: initHourAttributeValuePair.value
+						});
+					}
+				}
+
+				if (!_.isNil(endHourAttributeValuePair)) {
+					existingAttributeValuePair = _.find(timeEntry.attributes, function (o) {
+						return o.name === timeEntryEndHourParameterName;
+					});
+					if (existingAttributeValuePair) {
+						existingAttributeValuePair.value = endHourAttributeValuePair.value;
+					} else {
+						timeEntry.attributes.push({
+							name : timeEntryEndHourParameterName,
+							value: endHourAttributeValuePair.value
+						});
+					}
+				}
+			}
 			return timeEntry;
 		}
 
@@ -209,7 +291,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 						timeEntryToInsert = setResourceType(timeEntryToInsert);
 						timeEntryToInsert = setBillableFlag(timeEntryToInsert);
-
+						timeEntryToInsert = setHoursInResource($scope.lbRow.operation, timeEntryToInsert);
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -251,7 +333,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
 							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
-
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
 								$modalInstance.close();
@@ -332,6 +413,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						case 'CLOSED':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.CLOSED');
 							break;
+						case 'GUARD_SHIFT_LEADER':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.GUARD_SHIFT_LEADER');
+							break;
 						default:
 							val = '';
 							break;
@@ -339,12 +423,51 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return val;
 				},
 				filterParams  : {
-					textFormatter: function (value) {
-						if (value === 'base') {
-							return 'BASE';
-						} else {
-							return value;
+
+					textCustomComparator: function (filter, gridValue, filterText) {
+
+						var filterTextLoweCase = filterText.toLowerCase();
+						var valueLowerCase = _.isNil(gridValue) ? gridValue : gridValue.toString().toLowerCase();
+						if (filterTextLoweCase === 'base' && (valueLowerCase === 'BASE'.toLowerCase() || valueLowerCase === 'GUARD_SHIFT_LEADER'.toLowerCase())) {
+							switch (filter) {
+								case 'contains':
+									return true;
+								case 'notContains':
+									return false;
+								case 'equals':
+									return true;
+								case 'notEqual':
+									return false;
+								case 'startsWith':
+									return true;
+								case 'endsWith':
+									return true;
+								default:
+									// should never happen
+									console.warn('invalid filter type ' + filter);
+									return false;
+							}
 						}
+						switch (filter) {
+							case 'contains':
+								return valueLowerCase.indexOf(filterTextLoweCase) >= 0;
+							case 'notContains':
+								return valueLowerCase.indexOf(filterTextLoweCase) === -1;
+							case 'equals':
+								return valueLowerCase === filterTextLoweCase;
+							case 'notEqual':
+								return valueLowerCase !== filterTextLoweCase;
+							case 'startsWith':
+								return valueLowerCase.indexOf(filterTextLoweCase) === 0;
+							case 'endsWith':
+								var index = valueLowerCase.lastIndexOf(filterTextLoweCase);
+								return index >= 0 && index === (valueLowerCase.length - filterTextLoweCase.length);
+							default:
+								// should never happen
+								console.warn('invalid filter type ' + filter);
+								return false;
+						}
+
 					}
 				},
 				width         : 170
@@ -388,11 +511,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width     : 95
 			},
 			{
-				headerName   : $filter('translate')('operations.driversTimeLog.comment'),
-				field        : 'comment',
-				editable     : true,
-				cellEditor   : agGridComp.commentCellEditor,
-				cellStyle    : {
+				headerName    : $filter('translate')('operations.driversTimeLog.comment'),
+				field         : 'comment',
+				editable      : true,
+				cellEditor    : agGridComp.commentCellEditor,
+				cellStyle     : {
 					'white-space': 'normal'
 				},
 				valueFormatter: function (params) {
@@ -477,6 +600,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				setExtraFlag(timeEntryToUpdate);
 				setResourceType(timeEntryToUpdate);
 				setBillableFlag(timeEntryToUpdate);
+				setHoursInResource(rowObj.data.operation, timeEntryToUpdate);
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

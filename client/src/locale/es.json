@@ -179,7 +179,8 @@
 				"A": "Adicional no facturado (A)",
 				"NM": "Nocturno mantenimiento (NM)",
 				"NRM": "Nocturno recibo mercancia (NRM)",
-			    "CLOSED" : "Tienda cerrada (CLOSED)"
+			    "CLOSED" : "Tienda cerrada (CLOSED)",
+			    "GUARD_SHIFT_LEADER": "Jefe de turno"
 			}
 		},
 	  	"specialsTimeLog":{

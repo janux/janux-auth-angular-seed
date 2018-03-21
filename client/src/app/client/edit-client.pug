@@ -14,6 +14,9 @@ side-bar
 				span(flex)
 
 		.container-fluid-flex
+			//md-content.breadcrumb-nav
+			//	h4 {{ breadcrumbNav }}
+
 			md-content.tabs-glarus
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools
@@ -28,7 +31,9 @@ side-bar
 						.btn-row
 							button.btn(ng-show='currentNavItem=="client"')
 								i.fa.fa-trash
-							button.btn(ng-click='save()' ng-show='currentNavItem=="client"')
+							button.btn(ng-click='save()' ng-show='currentNavItem=="contacts" && !editContact')
+								i.fa.fa-check
+							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && editContact')
 								i.fa.fa-check
 							button.btn(ng-click='cancel()')
 								i.fa.fa-times
@@ -36,7 +41,10 @@ side-bar
 				div(ng-show='currentNavItem=="client"')
 					include client-form
 
-				div(ng-show='currentNavItem=="contacts"')
+				div(ng-show='currentNavItem=="contacts" && !editContact')
 					include client-contacts
+
+				div(ng-show='currentNavItem=="contacts" && editContact')
+					include ../../common/components/templates/contact
 
 footer-Janux

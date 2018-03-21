@@ -1,11 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
-
-var PhoneNumber = require('janux-people').PhoneNumber;
-var Email = require('janux-people').EmailAddress;
-var PostalAddress = require('janux-people').PostalAddress;
+// var angular = require('angular');
 
 module.exports = [
 '$scope','partyService','$state','client','clientGroup','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
@@ -41,30 +37,6 @@ module.exports = [
 			size       : 'md'
 		});
 	};
-
-	$scope.addNewAddress = function() {
-	    $scope.client.setContactMethod('work', new PostalAddress());
-	};
-
-	$scope.removeAddress = function(z) {
-	    $scope.client.contactMethods.addresses.splice(z,1);
-	};
-
-	$scope.addNewPhone = function() {
-		$scope.client.setContactMethod('work', new PhoneNumber());
-	};
-
-	$scope.removePhone = function(z) {
-	    $scope.client.contactMethods.phones.splice(z,1);
-	};
-
-	$scope.addNewMail = function() {
-	    $scope.client.setContactMethod('work', new Email());
-	};
-
-	$scope.removeMail = function(z) {
-	    $scope.client.contactMethods.emails.splice(z,1);
-	};
 	
 	$scope.save = function () {
 		partyService.update($scope.client).then(function () {
@@ -77,49 +49,82 @@ module.exports = [
 		window.history.back();
 	};
 
-	$scope.editClientContact = function(contactId) {
-		$mdDialog.show({
-			controller: ['$scope', function($scope ) {
+	$scope.saveContact = function() {
+		// Validate first and last name
+		if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
+			infoDialog('party.dialogs.contactNameEmpty');
+			return;
+		}else if($scope.contact.name.last === '' || _.isNil($scope.contact.name.last)) {
+			infoDialog('party.dialogs.contactLastNameEmpty');
+			return;
+		}
 
-				$scope.contact = {};
-				partyService.findOne(contactId).then(function(response){
-					$scope.contact = response;
-					console.log('$scope.contact', $scope.contact);
-				});
-				$scope.type = 'client contact';
-
-				$scope.save = function() {
-					// Validate first and last name
-					if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
-						infoDialog('party.dialogs.contactNameEmpty');
-						return;
-					}else if($scope.contact.name.last === '' || _.isNil($scope.contact.name.last)) {
-						infoDialog('party.dialogs.contactLastNameEmpty');
-						return;
-					}
-
-					// Save client contact
-					partyService.update($scope.contact).then(function (result) {
-						console.log('client contact saved', result);
-						$mdToast.show(
-							$mdToast.simple()
-								.textContent($filter('translate')('party.dialogs.contactSaved'))
-								.position( 'top right' )
-								.hideDelay(3000)
-						);
-						$mdDialog.cancel();
-						$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
-					});
-				};
-
-				$scope.cancel = function() {
-					$mdDialog.cancel();
-				};
-			}],
-			templateUrl: 'common/components/templates/contact.html',
-			parent: angular.element(document.body),
-			clickOutsideToClose: true
+		// Save client contact
+		partyService.update($scope.contact).then(function (result) {
+			console.log('client contact saved', result);
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent($filter('translate')('party.dialogs.contactSaved'))
+					.position( 'top right' )
+					.hideDelay(3000)
+			);
+			$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
 		});
+	};
+
+	$scope.editClientContact = function(contactId) {
+		// hide toolbar inside contact template
+		$scope.hideContactToolbar = true;
+
+		partyService.findOne(contactId).then(function(response){
+			$scope.currentNavItem='contacts';
+			$scope.editContact=true;
+			$scope.contact = response;
+			console.log('$scope.contact', $scope.contact);
+		});
+
+		// $mdDialog.show({
+		// 	controller: ['$scope', function($scope ) {
+		//
+		// 		$scope.contact = {};
+		// 		partyService.findOne(contactId).then(function(response){
+		// 			$scope.contact = response;
+		// 			console.log('$scope.contact', $scope.contact);
+		// 		});
+		// 		$scope.type = 'client contact';
+		//
+		// 		$scope.save = function() {
+		// 			// Validate first and last name
+		// 			if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
+		// 				infoDialog('party.dialogs.contactNameEmpty');
+		// 				return;
+		// 			}else if($scope.contact.name.last === '' || _.isNil($scope.contact.name.last)) {
+		// 				infoDialog('party.dialogs.contactLastNameEmpty');
+		// 				return;
+		// 			}
+		//
+		// 			// Save client contact
+		// 			partyService.update($scope.contact).then(function (result) {
+		// 				console.log('client contact saved', result);
+		// 				$mdToast.show(
+		// 					$mdToast.simple()
+		// 						.textContent($filter('translate')('party.dialogs.contactSaved'))
+		// 						.position( 'top right' )
+		// 						.hideDelay(3000)
+		// 				);
+		// 				$mdDialog.cancel();
+		// 				$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+		// 			});
+		// 		};
+		//
+		// 		$scope.cancel = function() {
+		// 			$mdDialog.cancel();
+		// 		};
+		// 	}],
+		// 	templateUrl: 'common/components/templates/contact.html',
+		// 	parent: angular.element(document.body),
+		// 	clickOutsideToClose: true
+		// });
 	};
 
 	// Disable selected client's contacts

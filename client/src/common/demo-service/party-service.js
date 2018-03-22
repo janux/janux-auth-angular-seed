@@ -19,10 +19,10 @@ module.exports =
 			 */
 			function fromJSON(object) {
 				var contact;
-				if(_.isNil(object)) return object;
+				if (_.isNil(object)) return object;
 
-				var result = _.cloneDeep(object); 
-						   
+				var result = _.cloneDeep(object);
+
 				if (result.typeName === "PersonImpl") {
 					contact = Person.fromJSON(result);
 				} else if (result.typeName === "OrganizationImpl") {
@@ -35,6 +35,7 @@ module.exports =
 				contact.id = result.id;
 				contact.dateCreated = dateUtilService.stringToDate(result.dateCreated);
 				contact.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+				contact.staff = result.staff;
 				return contact;
 			}
 
@@ -52,6 +53,7 @@ module.exports =
 				contact.typeName = typeName;
 				contact.dateCreated = object.dateCreated;
 				contact.lastUpdate = object.lastUpdate;
+				contact.staff = object.staff;
 				return contact;
 			}
 
@@ -177,7 +179,8 @@ module.exports =
 					).then(function (resp) {
 						var contact = resp.data.result;
 						contact = fromJSON(contact);
-						return contact;					});
+						return contact;
+					});
 				},
 
 				/**

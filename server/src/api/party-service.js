@@ -24,12 +24,6 @@ var createInstance = function (serviceReference) {
 	PartyService.prototype = Object.create(null);
 	PartyService.prototype.constructor = PartyService;
 
-	function fixDates(party) {
-		party.dateCreated = fixDate(party.dateCreated);
-		party.lastUpdate = fixDate(party.lastUpdate);
-		return party;
-	}
-
 	function toJSONMany(records) {
 		return _.map(records, function (o) {
 			return PartyServiceImplClass.toJSON(o);

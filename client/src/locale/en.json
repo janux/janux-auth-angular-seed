@@ -135,7 +135,9 @@
 		"dialogs": {
 			"noRowSelectedError":"Select at least one client contact to delete",
 			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
-			"successDeletedContacts":"Selected contacts successfully deleted"
+			"successDeletedContacts":"Selected contacts successfully deleted",
+			"unsavedClient": "You have unsaved changes for this client",
+			"clientSaved": "Client successfully saved"
 		}
 		
 	},
@@ -376,7 +378,8 @@
 			"editContact": "Editing contact",
 			"contactSaved": "Contact successfully saved",
 			"contactNameEmpty": "Contact name can't be empty",
-			"contactLastNameEmpty": "Contact last name can't be empty"
+			"contactLastNameEmpty": "Contact last name can't be empty",
+			"unsavedContact": "You have unsaved changes for this contact"
 		}
 	}
 }

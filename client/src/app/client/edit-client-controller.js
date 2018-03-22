@@ -37,19 +37,48 @@ module.exports = [
 			size       : 'md'
 		});
 	};
-	
-	$scope.save = function () {
+
+	var save = function (preventDefault) {
 		partyService.update($scope.client).then(function () {
 			console.log('Client has been saved!');
-			window.history.back();
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent($filter('translate')('client.dialogs.clientSaved'))
+					.position( 'top right' )
+					.hideDelay(3000)
+			);
+			if(!preventDefault){
+				window.history.back();
+			}
 		});
 	};
-		
-	$scope.cancel = function () {
-		window.history.back();
+	$scope.save = save;
+
+	var checkClientDataBeforeExit = function () {
+		if($scope.currentNavItem === 'client' && $scope.clientForm.$dirty) {
+			console.error('Unsaved changes');
+
+			$modal.open({
+				templateUrl: 'app/dialog-tpl/save-dialog.html',
+				controller : ['$scope', '$modalInstance',
+					function ($scope, $modalInstance) {
+						$scope.message = $filter('translate')('client.dialogs.unsavedClient');
+
+						$scope.save = function () {
+							save(true);
+							$modalInstance.close();
+						};
+
+						$scope.cancel = function () {
+							$modalInstance.close();
+						};
+					}],
+				size       : 'md'
+			});
+		}
 	};
 
-	$scope.saveContact = function() {
+	var saveContact = function(preventDefault) {
 		// Validate first and last name
 		if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
 			infoDialog('party.dialogs.contactNameEmpty');
@@ -68,8 +97,67 @@ module.exports = [
 					.position( 'top right' )
 					.hideDelay(3000)
 			);
-			$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+			if(!preventDefault){
+				$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+			}
 		});
+	};
+	$scope.saveContact = saveContact;
+
+	var checkClientContactBeforeExit = function () {
+		if($scope.editContact && $scope.contactForm.$dirty) {
+			console.error('Unsaved changes');
+			$modal.open({
+				templateUrl: 'app/dialog-tpl/save-dialog.html',
+				controller : ['$scope', '$modalInstance',
+					function ($scope, $modalInstance) {
+						$scope.message = $filter('translate')('party.dialogs.unsavedContact');
+
+						$scope.save = function () {
+							saveContact(true);
+							$modalInstance.close();
+						};
+
+						$scope.cancel = function () {
+							$modalInstance.close();
+						};
+					}],
+				size       : 'md'
+			});
+		}
+	};
+
+	$scope.changeTab = function (tab) {
+		switch (tab) {
+			case 'client':
+				// Possibly client contact editing taking place
+				checkClientContactBeforeExit();
+				$scope.editContact = false;
+				$scope.currentNavItem = 'client';
+				break;
+
+			case 'contacts':
+				// Possibly client data editing taking place
+				checkClientDataBeforeExit();
+
+				$scope.currentNavItem = 'contacts';
+				// cancel current contact editing
+				$scope.editContact=false;
+				break;
+		}
+	};
+
+	$scope.cancel = function () {
+		checkClientDataBeforeExit();
+		// window.history.back();
+		$state.go('client.list');
+	};
+
+	$scope.cancelEditContact = function () {
+		checkClientContactBeforeExit();
+		$scope.currentNavItem='contacts';
+		$scope.editContact=false;
+		console.log('Cancel contact edit');
 	};
 
 	$scope.editClientContact = function(contactId) {

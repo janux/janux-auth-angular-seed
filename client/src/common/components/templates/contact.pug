@@ -1,21 +1,22 @@
 md-content
-	.form-mid-toolbar-glarus.form-group(ng-hide='hideContactToolbar')
-		.text-only
-			span
-				b {{ 'party.dialogs.editContact' | translate | uppercase }}
+	form(name='contactForm')
+		.form-mid-toolbar-glarus.form-group(ng-hide='hideContactToolbar')
+			.text-only
+				span
+					b {{ 'party.dialogs.editContact' | translate | uppercase }}
 
-		.btn-row
-			button.btn(ng-click='save()')
-				i.fa.fa-check
-			button.btn(ng-click='cancel()')
-				i.fa.fa-times
+			.btn-row
+				button.btn(ng-click='save()')
+					i.fa.fa-check
+				button.btn(ng-click='cancel()')
+					i.fa.fa-times
 
-	.container-flex-form
-		.staff-form-left
-			person-name(data="contact", section="party.person.name")
-			phones(data="contact", section="staff.phonesTitle")
-			emails(data="contact", section="staff.mailsTitle")
+		.container-flex-form
+			.staff-form-left
+				person-name(data="contact", section="party.person.name")
+				phones(data="contact", section="staff.phonesTitle")
+				emails(data="contact", section="staff.mailsTitle")
 
-		.staff-form-right
-			person-job(data="contact", section="staff.jobTitle")
-			addresses(data="contact", section="staff.addressesTitle")
+			.staff-form-right
+				person-job(data="contact", section="staff.jobTitle")
+				addresses(data="contact", section="staff.addressesTitle")

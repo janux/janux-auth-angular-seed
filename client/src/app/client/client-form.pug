@@ -1,8 +1,9 @@
 .container-flex-form
-	.staff-form-left
-		organization(data="client", section="client.Organization")
-		phones(data="client", section="client.phonesTitle")
-		emails(data="client", section="client.mailsTitle")
+	form(name='clientForm')
+		.staff-form-left
+			organization(data="client", section="client.Organization")
+			phones(data="client", section="client.phonesTitle")
+			emails(data="client", section="client.mailsTitle")
 
-	.staff-form-right
-		addresses(data="client", section="client.addressesTitle")
+		.staff-form-right
+			addresses(data="client", section="client.addressesTitle")

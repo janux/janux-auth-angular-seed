@@ -9,8 +9,12 @@ side-bar
 				md-truncate
 					span.title-breadcrum
 						| {{ 'peopleOrgs.title' | translate }}
-					h2.title-bar-txt
-						| {{ client.name }}
+					h3.title-bar-txt-highlight
+						span(ng-class='{"active":(currentNavItem=="client")}') {{ client.name }}
+						span.fa.fa-caret-right(ng-show='currentNavItem=="contacts"')
+						span(ng-class='{"active":(currentNavItem=="contacts" && !editContact)}' ng-show='currentNavItem=="contacts"')  {{ 'client.tabMenu.tabMenuSecond' | translate }}
+						span.fa.fa-caret-right(ng-show='editContact')
+						span(ng-class='{"active":editContact}' ng-show='editContact') {{ contact.name.shortName }}
 				span(flex)
 
 		.container-fluid-flex
@@ -21,9 +25,9 @@ side-bar
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools
 						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
-							md-nav-item.active(md-nav-click="goto('client')" name="client")
+							md-nav-item.active(md-nav-click="changeTab('client')" name="client")
 								| {{ 'client.tabMenu.tabMenuFirst' | translate | uppercase }}
-							md-nav-item(md-nav-click="goto('contacts')" name="contacts")
+							md-nav-item(md-nav-click="changeTab('contacts')" name="contacts")
 								| {{ 'client.tabMenu.tabMenuSecond' | translate | uppercase }}
 
 						span(flex)
@@ -31,11 +35,13 @@ side-bar
 						.btn-row
 							button.btn(ng-show='currentNavItem=="client"')
 								i.fa.fa-trash
-							button.btn(ng-click='save()' ng-show='currentNavItem=="contacts" && !editContact')
+							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts"')
 								i.fa.fa-check
 							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && editContact')
 								i.fa.fa-check
-							button.btn(ng-click='cancel()')
+							button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && editContact')
+								i.fa.fa-times
+							button.btn(ng-click='cancel()' ng-show='!editContact')
 								i.fa.fa-times
 
 				div(ng-show='currentNavItem=="client"')

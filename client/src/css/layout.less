@@ -475,7 +475,23 @@ input[type='text'], input[type='password'] {
 	}
 }
 
-.title-bar-txt{
+.title-bar-txt-highlight,
+.title-bar-txt {
+
+	.fa.fa-caret-right {
+		color: @footer-glarus;
+		margin: 0 5px;
+	}
+
+	.active {
+		font-weight: bold !important;
+	}
+
 	font-weight: bold !important;
 	padding-left: 10px;
+}
+
+// Breadcrum with highlight
+.title-bar-txt-highlight {
+	font-weight: normal !important;
 }

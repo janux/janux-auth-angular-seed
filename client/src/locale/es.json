@@ -126,7 +126,6 @@
 		"phonesTitle": "Teléfonos",
 		"mailsTitle": "Correos",
 		"addressesTitle": "Direcciones",
-		"addressesTitle": "Direcciones",
 		"country": "País",
 		"delete": "Eliminar",
 		"creation": "Creación",
@@ -137,7 +136,9 @@
 		"dialogs": {
 			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
 			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
-			"successDeletedContacts":"Los contactos seleccionados han sido eliminados"
+			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
+			"unsavedClient": "Tiene cambios sin guardar para este cliente",
+			"clientSaved": "Cliente guardado correctamente"
 		}
 	},
 	"peopleOrgs": {
@@ -376,7 +377,8 @@
 			"c": "Editando el contacto",
 			"contactSaved": "Contacto actualizado correctamente",
 			"contactNameEmpty": "El nombre del contacto no puede estar vacio",
-			"contactLastNameEmpty": "El apellido del contacto no puede estar vacio"
+			"contactLastNameEmpty": "El apellido del contacto no puede estar vacio",
+			"unsavedContact": "Tiene cambios sin guardar para este contacto"
 		}
 	}
 }

@@ -11,7 +11,7 @@ var config               = require('config').serverAppContext,
 
 
 const PartyDaoMongooseImpl       = require('janux-persist').PartyDaoMongooseImpl,
-      StaffDao                   = require('janux-persist').StaffDao,
+      StaffDao                   = require('janux-persist').StaffDataDao,
       AccountDaoMongooseImpl     = require('janux-persist').AccountDaoMongooseImpl,
       AuthContextDaoMongooseImpl = require('janux-persist').AuthContextDaoMongooseImpl,
       RoleDaoMongooseImpl        = require('janux-persist').RoleDaoMongooseImpl,

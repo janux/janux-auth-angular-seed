@@ -178,7 +178,7 @@ angular.module('commonComponents',[])
 							console.log('clientContacts',clientContacts);
 						} else {
 							clientContacts = [];
-							infoDialog('operations.dialogs.noContacts',$modal, $filter);
+							infoDialog('party.dialogs.noContacts',$modal, $filter);
 						}
 
 
@@ -234,7 +234,7 @@ angular.module('commonComponents',[])
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
-							infoDialog('operations.dialogs.noContacts',$modal, $filter);
+							infoDialog('party.dialogs.noContacts',$modal, $filter);
 							return;
 						}
 						createContact('Requester'); //
@@ -263,7 +263,7 @@ angular.module('commonComponents',[])
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
-							infoDialog('operations.dialogs.noContacts',$modal, $filter);
+							infoDialog('party.dialogs.noContacts',$modal, $filter);
 							return;
 						}
 						createContact('Principal');
@@ -428,7 +428,7 @@ angular.module('commonComponents',[])
 									$mdDialog.cancel();
 								});
 							} else {
-								infoDialog('operations.dialogs.noContacts',$scope, $filter);
+								infoDialog('party.dialogs.noContacts',$scope, $filter);
 							}
 						};
 

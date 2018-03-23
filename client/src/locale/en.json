@@ -136,7 +136,7 @@
 			"noRowSelectedError":"Select at least one client contact to delete",
 			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
 			"successDeletedContacts":"Selected contacts successfully deleted",
-			"unsavedClient": "You have unsaved changes for this client",
+			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
 			"clientSaved": "Client successfully saved"
 		}
 		
@@ -240,7 +240,6 @@
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
 		    "clientContactCreated": "Client contact inserted correctly",
 			"principalCreated": "Principal inserted correctly",
-			"noContacts": "There is no group of contacts associated with this client",
 			"addingPrincipal": "Adding principal",
 			"addedSpecialOp":"Special operation added correctly",
 		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance"
@@ -379,7 +378,9 @@
 			"contactSaved": "Contact successfully saved",
 			"contactNameEmpty": "Contact name can't be empty",
 			"contactLastNameEmpty": "Contact last name can't be empty",
-			"unsavedContact": "You have unsaved changes for this contact"
+			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
+			"noContacts": "There is no associated group of contacts",
+			"addingContact": "Adding contact"
 		}
 	}
 }

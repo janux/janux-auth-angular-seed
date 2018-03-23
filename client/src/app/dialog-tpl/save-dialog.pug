@@ -3,6 +3,8 @@
 
 .modal-footer
 
-	button.btn.btn-ok(ng-click='save()') {{ 'label.save' | translate }}
+	button.btn.btn-ok(ng-click='save()') {{ 'label.yes' | translate }}
+	| &nbsp;
+	button.btn.btn-ok(ng-click='no()') {{ 'label.no' | translate }}
 	| &nbsp;
 	button.btn.btn-cancel(ng-click='cancel()') {{ 'label.cancel' | translate }}

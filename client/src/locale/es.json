@@ -137,7 +137,7 @@
 			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
 			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
-			"unsavedClient": "Tiene cambios sin guardar para este cliente",
+			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
 			"clientSaved": "Cliente guardado correctamente"
 		}
 	},
@@ -239,7 +239,6 @@
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
 			"confirmDeletion":"De verdad deseas borrar la selección?",
 			"clientContactCreated": "Contacto del cliente insertado correctamente",
-			"noContacts": "No hay grupo de contactos asociado a este cliente",
 			"addingPrincipal": "Agregar principal",
 			"addedSpecialOp":"Operación especial agregada exitosamente",
             "invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia"
@@ -378,7 +377,9 @@
 			"contactSaved": "Contacto actualizado correctamente",
 			"contactNameEmpty": "El nombre del contacto no puede estar vacio",
 			"contactLastNameEmpty": "El apellido del contacto no puede estar vacio",
-			"unsavedContact": "Tiene cambios sin guardar para este contacto"
+			"unsavedContact": "Tiene cambios sin guardar para este contacto. Desea guardarlos?",
+			"noContacts": "No hay grupo de contactos asociado",
+			"addingContact": "Agregar contacto"
 		}
 	}
 }

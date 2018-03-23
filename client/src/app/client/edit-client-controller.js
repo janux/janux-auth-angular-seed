@@ -3,9 +3,14 @@
 var _ = require('lodash');
 // var angular = require('angular');
 
+var Person = require('janux-people').Person;
+var PhoneNumber = require('janux-people').PhoneNumber;
+var Email = require('janux-people').EmailAddress;
+var PostalAddress = require('janux-people').PostalAddress;
+
 module.exports = [
-'$scope','partyService','$state','client','clientGroup','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
- $scope , partyService , $state , client , clientGroup , $modal , $filter , $mdDialog , $mdToast , $stateParams) {
+'$scope','partyService','partyGroupService','$state','client','clientGroup','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
+ $scope , partyService , partyGroupService , $state , client , clientGroup , $modal , $filter , $mdDialog , $mdToast , $stateParams) {
 
 	var contacts = [];
 	if(!_.isNil(clientGroup)){
@@ -22,6 +27,8 @@ module.exports = [
 
 	$scope.client = client;
 	$scope.contacts = contacts;
+	$scope.editContact = false;
+	$scope.addContact = false;
 
 	var infoDialog = function (translateKey) {
 		$modal.open({
@@ -38,8 +45,28 @@ module.exports = [
 		});
 	};
 
+	$scope.addClientContact = function () {
+		if(!_.isNil(clientGroupCode)) {
+			// hide toolbar inside contact template
+			$scope.hideContactToolbar = true;
+
+			$scope.currentNavItem = 'contacts';
+			$scope.addContact = true;
+			$scope.editContact = false;
+
+			// Create a new staff
+			var contact = new Person();
+			contact.setContactMethod('work', new PhoneNumber());
+			contact.setContactMethod('work', new Email());
+			contact.setContactMethod('Home', new PostalAddress());
+			$scope.contact = contact;
+		} else {
+			infoDialog('party.dialogs.noContacts');
+		}
+	};
+
 	var save = function (preventDefault) {
-		partyService.update($scope.client).then(function () {
+		return partyService.update($scope.client).then(function () {
 			console.log('Client has been saved!');
 			$mdToast.show(
 				$mdToast.simple()
@@ -58,7 +85,7 @@ module.exports = [
 		if($scope.currentNavItem === 'client' && $scope.clientForm.$dirty) {
 			console.error('Unsaved changes');
 
-			$modal.open({
+			return $modal.open({
 				templateUrl: 'app/dialog-tpl/save-dialog.html',
 				controller : ['$scope', '$modalInstance',
 					function ($scope, $modalInstance) {
@@ -66,15 +93,23 @@ module.exports = [
 
 						$scope.save = function () {
 							save(true);
-							$modalInstance.close();
+							return $modalInstance.close(true);
+						};
+
+						$scope.no = function () {
+							return $modalInstance.close(true);
 						};
 
 						$scope.cancel = function () {
-							$modalInstance.close();
+							return $modalInstance.close(false);
+							// $modalInstance.close();
+							// return false;
 						};
 					}],
 				size       : 'md'
 			});
+		}else {
+			return {result: false};
 		}
 	};
 
@@ -88,26 +123,43 @@ module.exports = [
 			return;
 		}
 
-		// Save client contact
-		partyService.update($scope.contact).then(function (result) {
-			console.log('client contact saved', result);
-			$mdToast.show(
-				$mdToast.simple()
-					.textContent($filter('translate')('party.dialogs.contactSaved'))
-					.position( 'top right' )
-					.hideDelay(3000)
-			);
-			if(!preventDefault){
-				$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
-			}
-		});
+		if($scope.editContact) {
+			// Save client contact
+			partyService.update($scope.contact).then(function (result) {
+				console.log('client contact saved', result);
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('party.dialogs.contactSaved'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
+				if(!preventDefault){
+					$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+				}
+			});
+		} else if($scope.addContact) {
+			// Insert client contact
+			partyGroupService.addItemNewParty(clientGroupCode,$scope.contact,{})
+			.then(function (result) {
+				console.log('Client contact inserted', result);
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('client.dialogs.clientContactCreated'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
+				if(!preventDefault){
+					$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+				}
+			});
+		}
 	};
 	$scope.saveContact = saveContact;
 
 	var checkClientContactBeforeExit = function () {
 		if($scope.editContact && $scope.contactForm.$dirty) {
 			console.error('Unsaved changes');
-			$modal.open({
+			return $modal.open({
 				templateUrl: 'app/dialog-tpl/save-dialog.html',
 				controller : ['$scope', '$modalInstance',
 					function ($scope, $modalInstance) {
@@ -115,15 +167,21 @@ module.exports = [
 
 						$scope.save = function () {
 							saveContact(true);
-							$modalInstance.close();
+							return $modalInstance.close(true);
+						};
+
+						$scope.no = function () {
+							return $modalInstance.close(true);
 						};
 
 						$scope.cancel = function () {
-							$modalInstance.close();
+							return $modalInstance.close(false);
 						};
 					}],
 				size       : 'md'
 			});
+		}else {
+			return {result:false};
 		}
 	};
 
@@ -131,33 +189,70 @@ module.exports = [
 		switch (tab) {
 			case 'client':
 				// Possibly client contact editing taking place
-				checkClientContactBeforeExit();
-				$scope.editContact = false;
-				$scope.currentNavItem = 'client';
+				var saveClientDialogResult = checkClientContactBeforeExit().result;
+				if(saveClientDialogResult) {
+					saveClientDialogResult.then(function (res) {
+						if(res) {
+							$scope.contactForm.$setPristine();
+							$scope.editContact = false;
+							$scope.addContact = false;
+							$scope.currentNavItem = 'client';
+						} else {
+							$scope.currentNavItem = 'contacts';
+						}
+					});
+				}
 				break;
 
 			case 'contacts':
 				// Possibly client data editing taking place
-				checkClientDataBeforeExit();
-
-				$scope.currentNavItem = 'contacts';
-				// cancel current contact editing
-				$scope.editContact=false;
+				var saveContactDialogResult = checkClientDataBeforeExit().result;
+				if(saveContactDialogResult) {
+					saveContactDialogResult.then(function (res) {
+						if(res) {
+							$scope.clientForm.$setPristine();
+							$scope.currentNavItem = 'contacts';
+							// cancel current contact editing
+							$scope.editContact=false;
+							$scope.addContact = false;
+						} else {
+							$scope.currentNavItem = 'client';
+						}
+					});
+				}
 				break;
 		}
 	};
 
 	$scope.cancel = function () {
-		checkClientDataBeforeExit();
-		// window.history.back();
-		$state.go('client.list');
+		// If we are in the client tab
+		var saveContactDialogResult = checkClientDataBeforeExit().result;
+
+		if($scope.currentNavItem==='client' && saveContactDialogResult) {
+			saveContactDialogResult.then(function (res) {
+				if(res) {
+					// window.history.back();
+					$state.go('client.list');
+				}
+			});
+		}else {
+			$state.go('client.list');
+		}
 	};
 
 	$scope.cancelEditContact = function () {
-		checkClientContactBeforeExit();
-		$scope.currentNavItem='contacts';
-		$scope.editContact=false;
-		console.log('Cancel contact edit');
+		var saveContactDialogResult = checkClientContactBeforeExit().result;
+		if(saveContactDialogResult) {
+			saveContactDialogResult.then(function(res){
+				if(res) {
+					// $scope.currentNavItem='contacts';
+					// $scope.editContact=false;
+					// $scope.addContact=false;
+					$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
+					console.log('Cancel contact edit');
+				}
+			});
+		}
 	};
 
 	$scope.editClientContact = function(contactId) {
@@ -167,52 +262,10 @@ module.exports = [
 		partyService.findOne(contactId).then(function(response){
 			$scope.currentNavItem='contacts';
 			$scope.editContact=true;
+			$scope.addContact = false;
 			$scope.contact = response;
 			console.log('$scope.contact', $scope.contact);
 		});
-
-		// $mdDialog.show({
-		// 	controller: ['$scope', function($scope ) {
-		//
-		// 		$scope.contact = {};
-		// 		partyService.findOne(contactId).then(function(response){
-		// 			$scope.contact = response;
-		// 			console.log('$scope.contact', $scope.contact);
-		// 		});
-		// 		$scope.type = 'client contact';
-		//
-		// 		$scope.save = function() {
-		// 			// Validate first and last name
-		// 			if($scope.contact.name.first === '' || _.isNil($scope.contact.name.first)) {
-		// 				infoDialog('party.dialogs.contactNameEmpty');
-		// 				return;
-		// 			}else if($scope.contact.name.last === '' || _.isNil($scope.contact.name.last)) {
-		// 				infoDialog('party.dialogs.contactLastNameEmpty');
-		// 				return;
-		// 			}
-		//
-		// 			// Save client contact
-		// 			partyService.update($scope.contact).then(function (result) {
-		// 				console.log('client contact saved', result);
-		// 				$mdToast.show(
-		// 					$mdToast.simple()
-		// 						.textContent($filter('translate')('party.dialogs.contactSaved'))
-		// 						.position( 'top right' )
-		// 						.hideDelay(3000)
-		// 				);
-		// 				$mdDialog.cancel();
-		// 				$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
-		// 			});
-		// 		};
-		//
-		// 		$scope.cancel = function() {
-		// 			$mdDialog.cancel();
-		// 		};
-		// 	}],
-		// 	templateUrl: 'common/components/templates/contact.html',
-		// 	parent: angular.element(document.body),
-		// 	clickOutsideToClose: true
-		// });
 	};
 
 	// Disable selected client's contacts

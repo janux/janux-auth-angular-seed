@@ -12,9 +12,11 @@ side-bar
 					h3.title-bar-txt-highlight
 						span(ng-class='{"active":(currentNavItem=="client")}') {{ client.name }}
 						span.fa.fa-caret-right(ng-show='currentNavItem=="contacts"')
-						span(ng-class='{"active":(currentNavItem=="contacts" && !editContact)}' ng-show='currentNavItem=="contacts"')  {{ 'client.tabMenu.tabMenuSecond' | translate }}
+						span(ng-class='{"active":(currentNavItem=="contacts" && (!editContact && !addContact ))}' ng-show='currentNavItem=="contacts"' ng-click='cancelEditContact()')  {{ 'client.tabMenu.tabMenuSecond' | translate }}
 						span.fa.fa-caret-right(ng-show='editContact')
 						span(ng-class='{"active":editContact}' ng-show='editContact') {{ contact.name.shortName }}
+						span.fa.fa-caret-right(ng-show='addContact')
+						span(ng-class='{"active":addContact}' ng-show='addContact') {{ 'party.dialogs.addingContact' | translate }}
 				span(flex)
 
 		.container-fluid-flex
@@ -37,20 +39,22 @@ side-bar
 								i.fa.fa-trash
 							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts"')
 								i.fa.fa-check
-							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && editContact')
+							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
 								i.fa.fa-check
-							button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && editContact')
+							button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
 								i.fa.fa-times
-							button.btn(ng-click='cancel()' ng-show='!editContact')
+							button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact)')
+								i.fa.fa-user-plus
+							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact')
 								i.fa.fa-times
 
 				div(ng-show='currentNavItem=="client"')
 					include client-form
 
-				div(ng-show='currentNavItem=="contacts" && !editContact')
+				div(ng-show='currentNavItem=="contacts" && (!editContact && !addContact )')
 					include client-contacts
 
-				div(ng-show='currentNavItem=="contacts" && editContact')
+				div(ng-show='currentNavItem=="contacts" && (editContact || addContact )')
 					include ../../common/components/templates/contact
 
 footer-Janux

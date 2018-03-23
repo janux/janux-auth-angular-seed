@@ -252,6 +252,8 @@ module.exports = [
 					console.log('Cancel contact edit');
 				}
 			});
+		}else {
+			$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
 		}
 	};
 

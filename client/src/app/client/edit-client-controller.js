@@ -189,26 +189,29 @@ module.exports = [
 		switch (tab) {
 			case 'client':
 				// Possibly client contact editing taking place
-				var saveClientDialogResult = checkClientContactBeforeExit().result;
-				if(saveClientDialogResult) {
-					saveClientDialogResult.then(function (res) {
+				var saveClientContactDialogResult = checkClientContactBeforeExit().result;
+				if(saveClientContactDialogResult) {
+					saveClientContactDialogResult.then(function (res) {
+						// Saved or not
 						if(res) {
-							$scope.contactForm.$setPristine();
-							$scope.editContact = false;
-							$scope.addContact = false;
-							$scope.currentNavItem = 'client';
-						} else {
+							$state.go('client.edit', {id: client.id, tab:'client'}, {reload: true});
+						}
+						// Canceled
+						else {
 							$scope.currentNavItem = 'contacts';
 						}
 					});
+				}else {	// No changes
+					$scope.editContact = false;
+					$scope.addContact = false;
 				}
 				break;
 
 			case 'contacts':
 				// Possibly client data editing taking place
-				var saveContactDialogResult = checkClientDataBeforeExit().result;
-				if(saveContactDialogResult) {
-					saveContactDialogResult.then(function (res) {
+				var saveClientDialogResult = checkClientDataBeforeExit().result;
+				if(saveClientDialogResult) {
+					saveClientDialogResult.then(function (res) {
 						if(res) {
 							$scope.clientForm.$setPristine();
 							$scope.currentNavItem = 'contacts';

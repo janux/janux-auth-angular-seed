@@ -78,7 +78,7 @@ module.exports =
 
 		operation.client = operation.client.object;
 		operation.interestedParty = operation.interestedParty.object;
-		operation.principals = _.chain(operation.principal)
+		operation.principals = _.chain(operation.principals)
 			.map('object')
 			.filter(function (principal) { return (!_.isNil(principal)); })
 			.value();

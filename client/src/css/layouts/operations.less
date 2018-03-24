@@ -13,17 +13,22 @@
 		height: 45px;
 	}
 
+	p.form-section-glarus{
+		margin-bottom: 0px;
+		margin-top: 10px;
+	}
+
 	// Second row of form elements
 	.section-form~.section-form {
-		padding: 0px 20px 20px;
+		padding: 20px 20px 0px;
 	}
 
 	md-autocomplete[md-floating-label] {
 		height: 20px;
 	}
 
-	.btn-row-form {
-		text-align: left;
+	.add-btn-cnt {
+		width:30px;
 	}
 
 	md-input-container {
@@ -36,7 +41,21 @@
 	}
 
 	.md-datepicker-input {
-		min-width: 110px;
+		//min-width: 110px;
+	}
+
+	.md-datepicker-input-container {
+		width:  ~"calc( 100% - 40px )";
+	}
+
+	.md-datepicker-button{
+		margin-left:0 !important;
+		margin-right:0 !important;
+		padding-left: 0 !important;
+	}
+
+	.md-icon-button+.md-datepicker-input-container {
+		margin-left:0;
 	}
 
 	.markdown.outline {
@@ -64,6 +83,24 @@
 
 	.many-of-kind {
 		margin-top:30px;
+	}
+
+	.special-left,
+	.special-right{
+		overflow: hidden;
+		padding-top: 12px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	.special-left{
+		width: 475px;
+		.small-device({ width: 100%;});
+		.smallest-device({ width: 100%;});
+	}
+	.special-right{
+		width: ~"calc( 100% - 480px )";
+		.small-device({ width: 100%;});
+		.smallest-device({ width: 100%;});
 	}
 }
 

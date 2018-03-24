@@ -1,162 +1,190 @@
 .container-flex-form
-	.section-form
-		fieldset.fieldset-flex
-			.fieldset-flex.first-row
-				.an-material.nopadding
-					md-input-container.full
-						label {{ 'services.specialForm.name' | translate }}
-						input(ng-model='data.name' ng-disabled='disabled')
+	.special-left
+		.section-form
+			fieldset.fieldset-flex
+				.fieldset-flex.first-row
+					.an-material.nopadding
+						md-input-container.full
+							md-autocomplete(md-no-cache='true',
+							md-items="item in clientSearch(data.client.search) | orderBy:'name'",
+							md-selected-item='data.client.object',
+							md-search-text-change='clientSearchTextChange(data.client.search)',
+							md-search-text='data.client.search',
+							md-selected-item-change='clientSelectedItemChange(item)',
+							md-item-text='item.name',
+							md-min-length='0',
+							md-clear-button='!disabled'
+							md-floating-label="{{ 'services.specialForm.client' | translate }}",
+							ng-disabled='disabled' required='')
+								md-item-template
+									span(md-highlight-text='data.client.search', md-highlight-flags='^i') {{item.name}}
+		.section-form
+			fieldset.fieldset-flex
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.specialForm.begin' | translate }}
+							md-datepicker(ng-model="data.start" ng-disabled='disabled' required='' ng-change='startDateChange()')
 
-				.an-material.nopadding
-					md-input-container.full
-						label {{ 'services.specialForm.begin' | translate }}
-						md-datepicker(ng-model="data.start" ng-disabled='disabled' required='')
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.specialForm.end' | translate }}
+							md-datepicker(ng-model="data.end" ng-disabled='disabled' required='')
 
-				.an-material.nopadding
-					md-input-container.full
-						label {{ 'services.specialForm.end' | translate }}
-						md-datepicker(ng-model="data.end" ng-disabled='disabled' required='')
+		.section-form
+			fieldset.fieldset-flex
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							md-autocomplete(md-no-cache='true',
+							md-items="item in requesterSearch(data.interestedParty.search) | orderBy:'name.last'",
+							md-selected-item='data.interestedParty.object',
+							md-search-text-change='requesterSearchTextChange(data.interestedParty.search)',
+							md-search-text='data.interestedParty.search',
+							md-selected-item-change='requesterSelectedItemChange(item)',
+							md-item-text='item.name.last+" "+item.name.first',
+							md-min-length='0',
+							md-clear-button='!disabled'
+							md-floating-label="{{ 'services.specialForm.requester' | translate }}",
+							ng-disabled='disabled')
+								md-item-template
+									span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+									span(ng-if='item.addOption')
+										md-icon(style="height:auto;")
+											i.fa.fa-plus-circle
+										strong {{ 'services.specialForm.addRequester' | translate }}
 
-				.an-material.nopadding
-					md-input-container.full
-						md-autocomplete(md-no-cache='true',
-						md-items="item in clientSearch(data.client.search) | orderBy:'name'",
-						md-selected-item='data.client.object',
-						md-search-text-change='clientSearchTextChange(data.client.search)',
-						md-search-text='data.client.search',
-						md-selected-item-change='clientSelectedItemChange(item)',
-						md-item-text='item.name',
-						md-min-length='0',
-						md-clear-button='!disabled'
-						md-floating-label="{{ 'services.specialForm.client' | translate }}",
-						ng-disabled='disabled' required='')
-							md-item-template
-								span(md-highlight-text='data.client.search', md-highlight-flags='^i') {{item.name}}
+		.section-form
+			fieldset.fieldset-flex
+				p.form-section-glarus
+					| {{ 'services.specialForm.principal' | translate}}
+				.fieldset-flex
+					.an-material.nopadding
+						.fieldset-flex.many-of-kind(ng-repeat="principal in data.principals track by $index")
+							.an-material.nopadding
+								md-input-container.full
+									md-autocomplete.autocomplete-custom-template(md-no-cache='true',
+									md-items="item in principalSearch(principal.search) | orderBy:'name.last'",
+									md-selected-item='principal.object',
+									md-search-text-change='principalSearchTextChange(principal.search)',
+									md-search-text='principal.search',
+									md-selected-item-change='principalSelectedItemChange(item)',
+									md-item-text='item.name.last+" "+item.name.first',
+									md-min-length='0',
+									md-clear-button='!disabled'
+									md-floating-label="{{ 'services.specialForm.principal' | translate }}",
+									ng-disabled='disabled')
+										md-item-template
+											span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+											span(ng-if='item.addOption')
+												md-icon(style="height:auto;")
+													i.fa.fa-plus-circle
+												strong {{ 'services.specialForm.addPrincipal' | translate }}
 
+							div(ng-hide='disabled')
+								button.btn-trash(ng-click="removePrincipal($index)")
+									i.fa.fa-trash
+							div
+								.add-btn-cnt
+									button.btn-plus(ng-hide='disabled || hideAddPrincipal($index)' ng-click="addPrincipal()")
+										i.fa.fa-plus-square
+						//.btn-row-form(ng-hide='disabled || hideAddPrincipal()')
+						//	//md-divider.divider-line-glarus
+						//	button.btn-plus(ng-click="addPrincipal()")
+						//		i.fa.fa-plus-square
 
-				.an-material.nopadding
-					md-input-container.full
-						md-autocomplete(md-no-cache='true',
-						md-items="item in requesterSearch(data.interestedParty.search) | orderBy:'name.last'",
-						md-selected-item='data.interestedParty.object',
-						md-search-text-change='requesterSearchTextChange(data.interestedParty.search)',
-						md-search-text='data.interestedParty.search',
-						md-selected-item-change='requesterSelectedItemChange(item)',
-						md-item-text='item.name.last+" "+item.name.first',
-						md-min-length='0',
-						md-clear-button='!disabled'
-						md-floating-label="{{ 'services.specialForm.requester' | translate }}",
-						ng-disabled='disabled')
-							md-item-template
-								span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
-								span(ng-if='item.addOption')
-									md-icon(style="height:auto;")
-										i.fa.fa-plus-circle
-									strong {{ 'services.specialForm.addRequester' | translate }}
-	.section-form
-		fieldset.fieldset-flex
-			.fieldset-flex
-				.an-material.nopadding
-					.fieldset-flex.many-of-kind(ng-repeat="principal in data.principals track by $index")
-						.an-material.nopadding
-							md-input-container.full
-								md-autocomplete.autocomplete-custom-template(md-no-cache='true',
-								md-items="item in principalSearch(principal.search) | orderBy:'name.last'",
-								md-selected-item='principal.object',
-								md-search-text-change='principalSearchTextChange(principal.search)',
-								md-search-text='principal.search',
-								md-selected-item-change='principalSelectedItemChange(item)',
-								md-item-text='item.name.last+" "+item.name.first',
-								md-min-length='0',
-								md-clear-button='!disabled'
-								md-floating-label="{{ 'services.specialForm.principal' | translate }}",
-								ng-disabled='disabled')
-									md-item-template
-										span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
-										span(ng-if='item.addOption')
-											md-icon(style="height:auto;")
-												i.fa.fa-plus-circle
-											strong {{ 'services.specialForm.addPrincipal' | translate }}
-
-						div(ng-hide='disabled')
-							button.btn-trash(ng-click="removePrincipal($index)")
-								i.fa.fa-trash
-					.btn-row-form(ng-hide='disabled || hideAddPrincipal()')
-						//md-divider.divider-line-glarus
-						button.btn-plus(ng-click="addPrincipal()")
-							i.fa.fa-plus-square
-
-
-				.an-material.nopadding
-					.fieldset-flex.many-of-kind(ng-repeat="staff in data.staff track by $index")
-						.an-material.nopadding
-							md-input-container.full
-								md-autocomplete(md-no-cache='false',
-								md-items="item in staffSearch(staff.search) | orderBy:'resource.name.last'",
-								md-selected-item='staff.object',
-								md-search-text-change='staffSearchTextChange(staff.search)',
-								md-search-text='staff.search',
-								md-selected-item-change='staffSelectedItemChange(item, $index)',
-								md-item-text='item.resource.name.last+" "+item.resource.name.first',
-								md-min-length='0',
-								md-clear-button='!disabled'
-								md-floating-label="{{ 'services.specialForm.staff' | translate }}",
-								ng-disabled='disabled')
-									md-item-template
-										span(md-highlight-text='staff.search', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
-						.an-material.nopadding
-							md-input-container.full
-								label {{ 'services.specialForm.function' | translate }}
-								md-select(ng-model='staff.object.type' ng-disabled='disabled')
-									md-option(value='DRIVER') {{ 'services.specialForm.staffDriver' | translate }}
-									md-option(value='GUARD') {{ 'services.specialForm.staffGuard' | translate }}
-									md-option(value='GUARD_ARMED') {{ 'services.specialForm.staffGuardArmed' | translate }}
-									md-option(value='COORDINATOR') {{ 'services.specialForm.staffCoordinator' | translate }}
-						div(ng-hide='disabled')
-							button.btn-trash(ng-click="removeStaff($index)")
-								i.fa.fa-trash
-					.btn-row-form(ng-hide='disabled || hideAddStaff()')
-						//md-divider.divider-line-glarus
-						button.btn-plus(ng-click="addStaff()")
-							i.fa.fa-plus-square
+		.section-form
+			fieldset.fieldset-flex
+				p.form-section-glarus
+					| {{ 'services.specialForm.resources' | translate }}
+				.fieldset-flex
+					.an-material.nopadding
+						.fieldset-flex.many-of-kind(ng-repeat="staff in data.staff track by $index")
+							.an-material.nopadding
+								md-input-container.full
+									md-autocomplete(md-no-cache='false',
+									md-items="item in staffSearch(staff.search) | orderBy:'resource.name.last'",
+									md-selected-item='staff.object',
+									md-search-text-change='staffSearchTextChange(staff.search)',
+									md-search-text='staff.search',
+									md-selected-item-change='staffSelectedItemChange(item, $index)',
+									md-item-text='item.resource.name.last+" "+item.resource.name.first',
+									md-min-length='0',
+									md-clear-button='!disabled'
+									md-floating-label="{{ 'services.specialForm.staff' | translate }}",
+									ng-disabled='disabled')
+										md-item-template
+											span(md-highlight-text='staff.search', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+							.an-material.nopadding
+								md-input-container.full
+									label {{ 'services.specialForm.function' | translate }}
+									md-select(ng-model='staff.object.type' ng-disabled='disabled')
+										md-option(value='DRIVER') {{ 'services.specialForm.staffDriver' | translate }}
+										md-option(value='GUARD') {{ 'services.specialForm.staffGuard' | translate }}
+										md-option(value='GUARD_ARMED') {{ 'services.specialForm.staffGuardArmed' | translate }}
+										md-option(value='COORDINATOR') {{ 'services.specialForm.staffCoordinator' | translate }}
+							div(ng-hide='disabled')
+								button.btn-trash(ng-click="removeStaff($index)")
+									i.fa.fa-trash
+							div
+								.add-btn-cnt
+									button.btn-plus(ng-hide='disabled || hideAddStaff($index)' ng-click="addStaff()")
+										i.fa.fa-plus-square
+						//.btn-row-form(ng-hide='disabled || hideAddStaff()')
+						//	//md-divider.divider-line-glarus
+						//	button.btn-plus(ng-click="addStaff()")
+						//		i.fa.fa-plus-square
 
 
-				.an-material.nopadding
-					.fieldset-flex.many-of-kind(ng-repeat="vehicle in data.vehicles track by $index")
-						.an-material.nopadding
-							md-input-container.full
-								md-autocomplete(md-no-cache='false',
-								md-items="item in vehicleSearch(vehicle.search) | orderBy:'resource.name'",
-								md-selected-item='vehicle.object',
-								md-search-text-change='vehicleSearchTextChange(vehicleSearchString)',
-								md-search-text='vehicle.search',
-								md-selected-item-change='vehicleSelectedItemChange(item)',
-								md-item-text='item.resource.name+" "+item.resource.plateNumber',
-								md-min-length='0',
-								md-clear-button='!disabled'
-								md-floating-label="{{ 'services.specialForm.vehicle' | translate }}"
-								ng-disabled='disabled')
-									md-item-template
-										span(md-highlight-text='vehicle.search', md-highlight-flags='^i') {{item.resource.name+', '+item.resource.plateNumber}}
+						.fieldset-flex.many-of-kind(ng-repeat="vehicle in data.vehicles track by $index")
+							.an-material.nopadding
+								md-input-container.full
+									md-autocomplete(md-no-cache='false',
+									md-items="item in vehicleSearch(vehicle.search) | orderBy:'resource.name'",
+									md-selected-item='vehicle.object',
+									md-search-text-change='vehicleSearchTextChange(vehicleSearchString)',
+									md-search-text='vehicle.search',
+									md-selected-item-change='vehicleSelectedItemChange(item)',
+									md-item-text='item.resource.name+" "+item.resource.plateNumber',
+									md-min-length='0',
+									md-clear-button='!disabled'
+									md-floating-label="{{ 'services.specialForm.vehicle' | translate }}"
+									ng-disabled='disabled')
+										md-item-template
+											span(md-highlight-text='vehicle.search', md-highlight-flags='^i') {{item.resource.name+', '+item.resource.plateNumber}}
 
-						div(ng-hide='disabled')
-							button.btn-trash(ng-click="removeVehicle($index)")
-								i.fa.fa-trash
+							div(ng-hide='disabled')
+								button.btn-trash(ng-click="removeVehicle($index)")
+									i.fa.fa-trash
+							div
+								.add-btn-cnt
+									button.btn-plus(ng-hide='disabled || hideAddVehicle($index)' ng-click="addVehicle()")
+										i.fa.fa-plus-square
 
-					.btn-row-form(ng-hide='disabled || hideAddVehicle()')
-						//md-divider.divider-line-glarus
-						button.btn-plus(ng-click="addVehicle()")
-							i.fa.fa-plus-square
-	.section-form
-		span {{ 'services.specialForm.details' | translate }}:
+						//.btn-row-form(ng-hide='disabled || hideAddVehicle()')
+						//	//md-divider.divider-line-glarus
+						//	button.btn-plus(ng-click="addVehicle()")
+						//		i.fa.fa-plus-square
 
-	.section-form(ng-hide='disabled')
-		textarea(name="special-ops-description"
-		ng-model="data.description"
-		markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
-		on-fullscreen="onFullScreenCallback()"
-		on-fullscreen-exit="onFullScreenExitCallback()"
-		rows="10")
+	.special-right
+		.section-form
+			fieldset.fieldset-flex
+				.fieldset-flex.first-row
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.specialForm.name' | translate }}
+							input(ng-model='data.name' ng-disabled='disabled')
 
-	.section-form(ng-show='disabled')
-		.markdown.outline(marked="data.description")
+		.section-form
+			span {{ 'services.specialForm.details' | translate }}:
+
+		.section-form(ng-hide='disabled')
+			textarea(name="special-ops-description"
+			ng-model="data.description"
+			markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
+			on-fullscreen="onFullScreenCallback()"
+			on-fullscreen-exit="onFullScreenExitCallback()"
+			rows="15")
+
+		.section-form(ng-show='disabled')
+			.markdown.outline(marked="data.description")

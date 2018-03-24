@@ -131,8 +131,6 @@ angular.module('commonComponents',[])
 			var staff = [];
 			var vehicles = [];
 
-
-
 			resourceService.findAvailableResources().then(function (resources) {
 				// console.log('resources', resources);
 
@@ -147,6 +145,27 @@ angular.module('commonComponents',[])
 				});
 				console.log('vehicles', vehicles);
 			});
+
+			var calculateName = function() {
+				var name = [];
+
+				if(!_.isNil($scope.data.client.object)) {
+					var short = $scope.data.client.object.name.split(' ');
+					name.push(short[0]);
+				}
+				if(!_.isNil($scope.data.principals[0].object)) {
+					name.push($scope.data.principals[0].object.name.last);
+				}
+				if(_.isDate($scope.data.start)){
+					name.push(moment($scope.data.start).format('YYYYMMDD'));
+				}
+
+				$scope.data.name = name.join('-');
+			};
+
+			$scope.startDateChange = function () {
+				calculateName();
+			};
 
 			// Client
 			function createFilterForClient(query) {
@@ -165,6 +184,8 @@ angular.module('commonComponents',[])
 			$scope.clientSelectedItemChange = function (item, assignContactToList) {
 
 				if(!_.isNil(item)) {
+					calculateName();
+
 					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS')
 					.then(function (result) {
 						// Set current group code of client organization
@@ -252,14 +273,14 @@ angular.module('commonComponents',[])
 				};
 			}
 
-			$scope.contactSearch = function (query) {
+			$scope.principalSearch = function (query) {
 				var out = query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
 				return out.concat([ {
 					addOption:true
 				} ]);
 			};
 
-			$scope.contactSelectedItemChange = function (item) {
+			$scope.principalSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
@@ -267,6 +288,8 @@ angular.module('commonComponents',[])
 							return;
 						}
 						createContact('Principal');
+					}else {
+						calculateName();
 					}
 				}
 			};
@@ -283,10 +306,12 @@ angular.module('commonComponents',[])
 				$scope.data.principals.splice(z,1);
 			};
 
-			$scope.hideAddPrincipal = function () {
-				return !_.every($scope.data.principals, function(principal){
+			$scope.hideAddPrincipal = function (index) {
+				var principalCompleted = !_.every($scope.data.principals, function(principal){
 					return (!_.isNil(principal.object));
 				});
+
+				return (principalCompleted || $scope.data.principals.length-1>index);
 			};
 
 			// Staff
@@ -323,10 +348,12 @@ angular.module('commonComponents',[])
 				$scope.data.staff.splice(z,1);
 			};
 
-			$scope.hideAddStaff = function () {
-				return !_.every($scope.data.staff, function(staff){
+			$scope.hideAddStaff = function (index) {
+				var staffCompleted = !_.every($scope.data.staff, function(staff){
 					return (!_.isNil(staff.object));
 				});
+
+				return (staffCompleted || $scope.data.staff.length-1>index);
 			};
 
 			// Vehicles
@@ -356,10 +383,12 @@ angular.module('commonComponents',[])
 				$scope.data.vehicles.splice(z,1);
 			};
 
-			$scope.hideAddVehicle = function () {
-				return !_.every($scope.data.vehicles, function(vehicle){
+			$scope.hideAddVehicle = function (index) {
+				var vehiclesCompleted = !_.every($scope.data.vehicles, function(vehicle){
 					return (!_.isNil(vehicle.object));
 				});
+
+				return (vehiclesCompleted || $scope.data.vehicles.length-1>index);
 			};
 
 			// Markdown editor

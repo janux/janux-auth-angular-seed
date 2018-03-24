@@ -263,7 +263,7 @@
 		"addSpecial":"Add special service",
 		"specialService": "Special service",
 		"specialForm": {
-			"name": "Name",
+			"name": "Service name",
 			"begin": "Begin",
 			"end": "End",
 			"client": "Client",
@@ -271,6 +271,7 @@
 			"addRequester":"Add new requester",
 			"principal": "Principal",
 			"addPrincipal": "Add new principal",
+			"resources": "Resources",
 			"staff": "Staff",
 			"function": "Function",
 			"staffDriver": "Driver",

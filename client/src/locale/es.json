@@ -262,7 +262,7 @@
 		"addSpecial":"Agregar servicio especial",
 		"specialService": "Servicio especial",
 		"specialForm": {
-			"name": "Nombre",
+			"name": "Nombre del servicio",
 			"begin": "Inicio",
 			"end": "Término",
 			"client": "Cliente",
@@ -270,6 +270,7 @@
 			"addRequester":"Agregar nuevo solicitante",
 			"principal": "Principal",
 			"addPrincipal": "Crear nuevo principal",
+			"resources": "Recursos",
 			"staff": "Personal",
 			"function": "Función",
 			"staffDriver": "Conductor",

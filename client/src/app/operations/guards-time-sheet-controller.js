@@ -63,11 +63,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		}
 
 		function setExternalFlag(timeEntry, isExternal) {
-			if (isExternal === true && timeEntry.resources.length > 0) {
-				timeEntry.resources[0].isExternal = true;
-				// TODO: Replace this hardcoded id.
-				timeEntry.resources[0].vendor.id = '10000';
+			if (timeEntry.resources.length > 0) {
+				if (isExternal === true) {
+					timeEntry.resources[0].isExternal = true;
+					// TODO: Replace this hardcoded id.
+					timeEntry.resources[0].vendor.id = '10000';
+				} else {
+					timeEntry.resources[0].isExternal = false;
+				}
 			}
+
 			return timeEntry;
 		}
 
@@ -488,7 +493,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 170
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				headerName    : $filter('translate')('operations.guardsTimeLog.begin'),
 				field         : 'begin',
 				editable      : true,
 				filter        : 'date',
@@ -505,7 +510,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.end'),
+				headerName    : $filter('translate')('operations.guardsTimeLog.end'),
 				field         : 'end',
 				editable      : true,
 				filter        : 'date',
@@ -519,14 +524,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName: $filter('translate')('operations.driversTimeLog.duration'),
+				headerName: $filter('translate')('operations.guardsTimeLog.duration'),
 				field     : 'duration',
 				editable  : true,
 				cellEditor: agGridComp.durationCellUpdater,
 				width     : 95
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.comment'),
+				headerName    : $filter('translate')('operations.guardsTimeLog.comment'),
 				field         : 'comment',
 				editable      : true,
 				cellEditor    : agGridComp.commentCellEditor,
@@ -540,13 +545,20 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				}
 			},
 			{
-				headerName       : 'External',
-				editable         : true,
-				checkboxSelection: true,
-				suppressSorting  : true,
-				suppressMenu     : true,
-				field            : 'isExternal',
-				width            : 80
+				headerName     : $filter('translate')('operations.guardsTimeLog.isExternal'),
+				editable       : true,
+				cellEditor     : agGridComp.checkBoxCellEditor,
+				suppressSorting: true,
+				suppressMenu   : true,
+				field          : 'isExternal',
+				valueFormatter : function (params) {
+					if (params.value === true) {
+						return $filter('translate')('operations.guardsTimeLog.isExternal');
+					} else {
+						return '';
+					}
+				},
+				width          : 80
 			},
 			{
 				headerName     : '',
@@ -621,10 +633,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				};
 
 
-				setExtraFlag(timeEntryToUpdate);
-				setResourceType(timeEntryToUpdate);
-				setBillableFlag(timeEntryToUpdate);
-				setHoursInResource(rowObj.data.operation, timeEntryToUpdate);
+				timeEntryToUpdate = setExtraFlag(timeEntryToUpdate);
+				timeEntryToUpdate = setResourceType(timeEntryToUpdate);
+				timeEntryToUpdate = setBillableFlag(timeEntryToUpdate);
+				timeEntryToUpdate = setHoursInResource(rowObj.data.operation, timeEntryToUpdate);
+				timeEntryToUpdate = setExternalFlag(timeEntryToUpdate, rowObj.data.isExternal);
+
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
 					$scope.findTimeEntries($scope.periodFilterKey);

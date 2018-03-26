@@ -43,7 +43,7 @@ module.exports =
 			if (_.isNil(object)) return object;
 			var result = _.cloneDeep(object);
 			result.client = partyService.toJSON(result.client);
-			result.interestedParty = (!_.isNil(result.interestedParty))?partyService.toJSON(result.interestedParty):null;
+			result.interestedParty = (!_.isNil(result.interestedParty)) ? partyService.toJSON(result.interestedParty) : null;
 			result.principals = _.map(result.principals, function (o) {
 				return partyService.toJSON(o);
 			});
@@ -71,11 +71,11 @@ module.exports =
 
 		var service = {
 
-			findById: function ( operationId ) {
+			findById: function (operationId) {
 				return $http.jsonrpc(
 					'/rpc/2.0/operation',
 					'findById',
-					[ operationId ]
+					[operationId]
 				).then(function (resp) {
 					return fromJSON(resp.data.result[0]);
 				});
@@ -346,7 +346,7 @@ module.exports =
 				});
 			},
 
-			// Map an operation record to a easy-to show ag-grid row
+			// Map an operation record to a easy-to show ag-grid row.
 			mapTimeEntryData: function (record) {
 				var result = [];
 				for (var i = 0; i < record.length; i++) {
@@ -382,9 +382,16 @@ module.exports =
 						}
 
 						// Temporary solution for empty extras.
-						if (operation.type === 'GUARD' && (_.isNil(timeEntry.extras) || timeEntry.extras === '')) {
-							timeEntry.extras = 'BASE';
+						if (operation.type === 'GUARD') {
+							if (_.isNil(timeEntry.extras) || timeEntry.extras === '') {
+								timeEntry.extras = 'BASE';
+							}
+
+							if (timeEntry.resources.length > 0 && timeEntry.resources[0].isExternal === true) {
+								timeEntry.isExternal = true;
+							}
 						}
+
 
 						// Separating staff and vehicle.
 						var staff = _.find(timeEntry.resources, function (o) {
@@ -411,7 +418,8 @@ module.exports =
 							duration     : duration,
 							absence      : absence,
 							comment      : timeEntry.comment,
-							extras       : timeEntry.extras
+							extras       : timeEntry.extras,
+							isExternal   : timeEntry.isExternal
 						});
 					}
 				}
@@ -435,7 +443,7 @@ module.exports =
 
 					return {
 						id      : operation.id,
-						view	: { id: operation.id, type: operation.type },
+						view    : {id: operation.id, type: operation.type},
 						type    : operation.type,
 						name    : operation.name,
 						client  : operation.client.name,

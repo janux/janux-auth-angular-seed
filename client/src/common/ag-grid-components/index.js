@@ -16,6 +16,7 @@ module.exports = {
 	clientCellUpdater: require('./client-cell-updater'),
 	durationCellUpdater: require('./duration-cell-updater'),
 	commentCellEditor: require('./comment-cell-editor'),
+	checkBoxCellEditor: require('./checkbox-cell-editor'),
 
 	// Custom Cell Renderer
 	staffCellRenderer: require('./staff-cell-renderer'),

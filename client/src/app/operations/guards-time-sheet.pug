@@ -125,6 +125,11 @@ side-bar
 								md-option(value='CLOSED') {{ 'operations.guardsTimeLog.extraOptions.CLOSED' | translate }}
 								md-option(value='GUARD_SHIFT_LEADER') {{ 'operations.guardsTimeLog.extraOptions.GUARD_SHIFT_LEADER' | translate }}
 
+					.element-small
+						md-input-container
+							md-checkbox(ng-model='lbRow.isExternal')
+								| {{ 'operations.guardsTimeLog.isExternal' | translate }}
+
 					.vertical-line
 
 					.btn-element-small

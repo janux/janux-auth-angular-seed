@@ -182,6 +182,7 @@
 			"filterLabel": "List:",
 			"absence": "Absence",
 		  	"extras": "Extras",
+		    "isExternal" : "External",
 			"extraOptions": {
 				"AF": "Additional invoiced (AF)",
 				"A": "Additional not invoiced (A)",

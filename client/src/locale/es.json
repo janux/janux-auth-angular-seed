@@ -182,6 +182,7 @@
 			"comment": "Comentario",
 			"absence": "Falta",
 			"extras": "Extras",
+		    "isExternal" : "Externo",
 			"extraOptions": {
 				"AF": "Adicional facturado (AF)",
 				"A": "Adicional no facturado (A)",

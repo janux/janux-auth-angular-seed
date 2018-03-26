@@ -17,7 +17,6 @@ module.exports = {
 	checkBoxCellEditor : require('./checkbox-cell-editor'),
 	durationCellUpdater: require('./duration-cell-updater'),
 	commentCellEditor: require('./comment-cell-editor'),
-	checkBoxCellEditor: require('./checkbox-cell-editor'),
 
 	// Custom Cell Renderer
 	staffCellRenderer: require('./staff-cell-renderer'),

@@ -14,6 +14,7 @@ module.exports = {
 	absenceCellEditor: require('./absence-cell-editor'),
 	guardExtraCellEditor: require('./guard-extras-cell-editor'),
 	clientCellUpdater: require('./client-cell-updater'),
+	checkBoxCellEditor : require('./checkbox-cell-editor'),
 	durationCellUpdater: require('./duration-cell-updater'),
 	commentCellEditor: require('./comment-cell-editor'),
 

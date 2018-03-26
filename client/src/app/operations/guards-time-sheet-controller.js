@@ -27,12 +27,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		var initRowModel = function () {
 			$scope.lbRow = {
-				staff    : '',
-				operation: '',
-				start    : moment().startOf('day').format(dateTimeFormatString),
-				end      : undefined,
-				provider : '',
-				location : ''
+				staff     : '',
+				operation : '',
+				start     : moment().startOf('day').format(dateTimeFormatString),
+				end       : undefined,
+				provider  : '',
+				location  : '',
+				isExternal: false
 			};
 		};
 		initRowModel();
@@ -57,6 +58,15 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		function setExtraFlag(timeEntry) {
 			if (timeEntry.extras === 'BASE') {
 				timeEntry.extras = '';
+			}
+			return timeEntry;
+		}
+
+		function setExternalFlag(timeEntry, isExternal) {
+			if (isExternal === true && timeEntry.resources.length > 0) {
+				timeEntry.resources[0].isExternal = true;
+				// TODO: Replace this hardcoded id.
+				timeEntry.resources[0].vendor.id = '10000';
 			}
 			return timeEntry;
 		}
@@ -191,6 +201,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// This item should contain the selected staff member
 				console.info('Item changed to ' + JSON.stringify(item));
 
+				$scope.lbRow.isExternal = item.resource.staff && item.resource.staff.isExternal === true;
+
 				var selectedDriver = _.find(guardsAssignedToOperations, function (o) {
 					return o.id === item.id;
 				});
@@ -203,6 +215,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 					console.log('Selected staff operations', staffOperations);
 					$scope.lbRow.operation = staffOperations[0];
+
 				}
 			} else {
 				// This means that the entered search text is empty or doesn't match any staff member
@@ -257,6 +270,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		};
 
+
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
@@ -292,6 +306,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						timeEntryToInsert = setResourceType(timeEntryToInsert);
 						timeEntryToInsert = setBillableFlag(timeEntryToInsert);
 						timeEntryToInsert = setHoursInResource($scope.lbRow.operation, timeEntryToInsert);
+						timeEntryToInsert = setExternalFlag(timeEntryToInsert, $scope.lbRow.isExternal);
 
 						timeEntryService.insert(timeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
@@ -523,6 +538,15 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					var comment = params.data.comment;
 					return agGridComp.util.truncate(comment, maxLength, '...');
 				}
+			},
+			{
+				headerName       : 'External',
+				editable         : true,
+				checkboxSelection: true,
+				suppressSorting  : true,
+				suppressMenu     : true,
+				field            : 'isExternal',
+				width            : 80
 			},
 			{
 				headerName     : '',

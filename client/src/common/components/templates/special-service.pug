@@ -29,7 +29,7 @@
 					.an-material.nopadding
 						md-input-container.full
 							label {{ 'services.specialForm.end' | translate }}
-							md-datepicker(ng-model="data.end" ng-disabled='disabled' required='')
+							md-datepicker(ng-model="data.end" ng-disabled='disabled' required='' md-min-date='data.start')
 
 		.section-form
 			fieldset.fieldset-flex

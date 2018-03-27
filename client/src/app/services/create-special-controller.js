@@ -58,6 +58,10 @@ module.exports =
 			infoDialog('services.specialForm.dialogs.endEmpty');
 			return;
 		}
+		else if (operation.start > operation.end) {
+			infoDialog('operations.dialogs.endDateError');
+			return;
+		}
 		else if (_.isNil(operation.client.object)) {
 			infoDialog('services.specialForm.dialogs.clientEmpty');
 			return;

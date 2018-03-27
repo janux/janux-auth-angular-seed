@@ -247,6 +247,7 @@ angular.module('commonComponents',[])
 			$scope.requesterSearch = function (query) {
 				var out = query ? clientContacts.filter(createFilterForRequester(query)) : clientContacts;
 				return out.concat( [ {
+					name: { last:'aa' },	// Ensure position on top
 					addOption:true
 				} ] );
 			};
@@ -256,6 +257,7 @@ angular.module('commonComponents',[])
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
 							infoDialog('party.dialogs.noContacts',$modal, $filter);
+							$scope.data.interestedParty.object = null;
 							return;
 						}
 						createContact('Requester'); //
@@ -276,6 +278,7 @@ angular.module('commonComponents',[])
 			$scope.principalSearch = function (query) {
 				var out = query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
 				return out.concat([ {
+					name: { last:'aa' },	// Ensure position on top
 					addOption:true
 				} ]);
 			};
@@ -284,7 +287,14 @@ angular.module('commonComponents',[])
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
+
 							infoDialog('party.dialogs.noContacts',$modal, $filter);
+							// Clean option
+							$scope.data.principals.forEach(function (principal, iPrincipal) {
+								if(principal.object.addOption === true) {
+									$scope.data.principals[iPrincipal].object = null;
+								}
+							});
 							return;
 						}
 						createContact('Principal');

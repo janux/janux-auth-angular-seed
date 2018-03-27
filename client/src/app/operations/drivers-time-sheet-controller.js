@@ -80,7 +80,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				console.info('Item changed to ' + JSON.stringify(item));
 
 				var selectedDriver = _.find(driversAssignedToOperations, function (o) {
-					return o.id === item.id;
+					return o.resource.id === item.resource.id;
 				});
 
 				if (_.isNil(selectedDriver)) {
@@ -369,11 +369,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width     : 95
 			},
 			{
-				headerName   : $filter('translate')('operations.driversTimeLog.comment'),
-				field        : 'comment',
-				editable     : true,
-				cellEditor   : agGridComp.commentCellEditor,
-				cellStyle    : {
+				headerName    : $filter('translate')('operations.driversTimeLog.comment'),
+				field         : 'comment',
+				editable      : true,
+				cellEditor    : agGridComp.commentCellEditor,
+				cellStyle     : {
 					'white-space': 'normal'
 				},
 				valueFormatter: function (params) {
@@ -514,7 +514,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
 				timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
-
 
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {

@@ -209,7 +209,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				$scope.lbRow.isExternal = item.resource.staff && item.resource.staff.isExternal === true;
 
 				var selectedDriver = _.find(guardsAssignedToOperations, function (o) {
-					return o.id === item.id;
+					return o.resource.id === item.resource.id;
 				});
 
 				if (_.isNil(selectedDriver)) {

@@ -26,6 +26,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		var vehiclesAssignedToOperations = driversAndOps.vehiclesAssignedToOperations;
 		var allVehicles = driversAndOps.vehicles;
 		var operations = driversAndOps.operations;
+		var selectedDriver;
 
 		var initRowModel = function () {
 			$scope.lbRow = {
@@ -82,8 +83,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				console.info('Item changed to ' + JSON.stringify(item));
 
 				// Looking for operation.
-				var selectedDriver = _.find(driversAssignedToOperations, function (o) {
-					return o.id === item.id;
+				selectedDriver = _.find(driversAssignedToOperations, function (o) {
+					return o.resource.id === item.resource.id;
 				});
 
 				if (_.isNil(selectedDriver)) {
@@ -108,16 +109,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 					if (!_.isNil(candidateVehicle)) {
 						var vehicleSelectedItem = _.find(allVehicles, function (o) {
-							return candidateVehicle.id === o.id;
+							return candidateVehicle.resource.id === o.resource.id;
 						});
 						if (!_.isNil(vehicleSelectedItem)) {
 							$scope.lbRow.vehicle = vehicleSelectedItem;
 						}
 					}
-
 				}
-
-
 			} else {
 				// This means that the entered search text is empty or doesn't match any staff member
 			}
@@ -189,7 +187,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.addRow = function () {
 			// Selected person
 			if (!!$scope.lbRow.staff) {
-				if (!!$scope.lbRow.operaztion) {
+				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
 						var end = '', endToInsert;
@@ -217,8 +215,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							'idOperation': $scope.lbRow.operation.id
 						};
 
-						//Forcing resource type driver.
-						specialOpsTimeEntryToInsert.resources[0].type = 'DRIVER';
+
+						//If there is a selected driver and their operationId
+						//is the same to the selected operation.
+						//Then set the resource type of the selected driver.
+						if (!_.isNil(selectedDriver) && selectedDriver.opId === specialOpsTimeEntryToInsert.idOperation) {
+							specialOpsTimeEntryToInsert.resources[0].type = selectedDriver.type;
+						} else {
+							specialOpsTimeEntryToInsert.resources[0].type = 'DRIVER';
+						}
+
 
 						// Adding the vehicle resource.
 						if (!_.isNil($scope.lbRow.vehicle)) {
@@ -360,11 +366,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width     : 95
 			},
 			{
-				headerName   : $filter('translate')('operations.specialsTimeLog.comment'),
-				field        : 'comment',
-				editable     : true,
-				cellEditor   : agGridComp.commentCellEditor,
-				cellStyle    : {
+				headerName    : $filter('translate')('operations.specialsTimeLog.comment'),
+				field         : 'comment',
+				editable      : true,
+				cellEditor    : agGridComp.commentCellEditor,
+				cellStyle     : {
 					'white-space': 'normal'
 				},
 				valueFormatter: function (params) {
@@ -380,9 +386,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// }
 			},
 			{
-				headerName   : $filter('translate')('operations.specialsTimeLog.vehicle'),
-				field        : 'vehicle',
-				editable     : true,
+				headerName    : $filter('translate')('operations.specialsTimeLog.vehicle'),
+				field         : 'vehicle',
+				editable      : true,
 				valueFormatter: function (params) {
 					var odometerDifference;
 
@@ -393,18 +399,18 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						} else {
 							odometerDifference = '';
 						}
-						return params.data.vehicle.resource.name + '<br>' + params.data.vehicle.resource.plateNumber + ' ' + odometerDifference;
+						return params.data.vehicle.resource.name + ' ' + params.data.vehicle.resource.plateNumber + ' ' + odometerDifference;
 					} else {
 						return '';
 					}
 
 
 				},
-				cellStyle    : {
+				cellStyle     : {
 					'white-space': 'normal'
 				},
-				cellEditor   : agGridComp.autocompleteVehicleCellEditor,
-				width        : 180
+				cellEditor    : agGridComp.autocompleteVehicleCellEditor,
+				width         : 180
 			},
 
 			{
@@ -482,7 +488,18 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				};
 
 				// Force the person to be assigned as driver.
-				specialOpsTimeEntryToUpdate.resources[0].type = 'DRIVER';
+
+				//
+				//Get the resource type associated to the operation.
+				var selectedDriverToUpdate = _.find($scope.driversAndOps.driversAssignedToOperations, function (o) {
+					return o.resource.id === resource.resource.id && o.opId === rowObj.data.operation.id;
+				});
+				if (selectedDriverToUpdate) {
+					specialOpsTimeEntryToUpdate.resources[0].type = selectedDriverToUpdate.type;
+				} else {
+					specialOpsTimeEntryToUpdate.resources[0].type = 'DRIVER';
+				}
+
 
 				// Assign vehicle.
 				specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);

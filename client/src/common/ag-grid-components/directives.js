@@ -200,6 +200,24 @@ angular.module('agGridDirectives',[])
 				}
 			};
 
+			$scope.comparator=function (x,y) {
+				var a = x.value;
+				var b = y.value;
+
+				if(a.type === 'SPECIAL_OPS'){
+					if(_.isNil(a.start) && _.isNil(b.start)) {
+						return 0;
+					}else if(_.isNil(b.start)){
+						return 1;
+					}else {
+						return a.start.getTime()>b.start.getTime() ? -1 : 1;
+					}
+
+				}else{
+					return a.name.localeCompare(b.name);
+				}
+			};
+
 			function createFilterForOps(query) {
 				return function filterFn(operation) {
 					var contains = operation.name.toLowerCase().includes(query.toLowerCase());

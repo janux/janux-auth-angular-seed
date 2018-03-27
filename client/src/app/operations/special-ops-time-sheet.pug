@@ -45,7 +45,7 @@ side-bar
 
 					.element-small
 						md-autocomplete(md-no-cache='false',
-						md-items='item in opsSearch(lbSearch.operation)',
+						md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
 						md-selected-item='lbRow.operation',
 						md-search-text-change='opsSearchTextChange(lbSearch.operation)',
 						md-search-text='lbSearch.operation',

@@ -164,7 +164,7 @@
 			"absenceOptions": {
 				"D": "Break (D)",
 				"V": "Holidays (V)",
-				"PS": "Principal not found (PS)",
+				"PS": "Leave of absence (PS)",
 				"F": "Absence (F)",
 				"PC": "PC",
 				"I": "I"

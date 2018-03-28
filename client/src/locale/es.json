@@ -164,7 +164,7 @@
 			"absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",
-				"PS": "No se encuentra principal (PS)",
+				"PS": "Permiso sin goce de sueldo (PS)",
 				"F": "Falta (F)",
 				"PC": "PC",
 				"I": "I"

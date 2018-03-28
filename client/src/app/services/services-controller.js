@@ -110,7 +110,9 @@ module.exports =
 			headerName : $filter('translate')('services.list.begin'),
 			field      : 'start',
 			filter        : 'date',
-			width          : 100
+			width          : 100,
+			sort          : 'desc'
+
 		},
 		{
 			headerName : $filter('translate')('services.list.end'),

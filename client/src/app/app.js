@@ -132,8 +132,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider','$mdAriaProvider',
-function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider , localStorageServiceProvider , markedProvider , hljsServiceProvider , $mdDateLocaleProvider , $mdAriaProvider) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider','$mdAriaProvider','$provide',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider , localStorageServiceProvider , markedProvider , hljsServiceProvider , $mdDateLocaleProvider , $mdAriaProvider , $provide) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
@@ -161,6 +161,37 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	$locationProvider.html5Mode(true);
 
 	localStorageServiceProvider.setPrefix('janux-demo');
+
+	// add additional function to md-autocomplete
+	function mdAutoCompleteDirectiveOverride($delegate) {
+		var directive = $delegate[0];
+		// need to append to base compile function
+		var compile = directive.compile;
+
+		// add our custom attribute to the directive's scope
+		angular.extend(directive.scope, {
+			menuContainerClass: '@?mdMenuContainerClass'
+		});
+
+		// recompile directive and add our class to the virtual repeat container
+		directive.compile = function(element, attr) {
+			var template = compile.apply(this, arguments);
+			var menuContainerClass = attr.mdMenuContainerClass ? attr.mdMenuContainerClass : '';
+			var menuContainer = element.find('md-virtual-repeat-container');
+
+			menuContainer.addClass(menuContainerClass);
+
+			// recompile the template
+			return function() {
+				template.apply(this, arguments);
+			};
+		};
+
+		return $delegate;
+	}
+
+	$provide.decorator('mdAutocompleteDirective', mdAutoCompleteDirectiveOverride);
+	mdAutoCompleteDirectiveOverride.$inject = ['$delegate'];
 
 	//
 	// State Configuration

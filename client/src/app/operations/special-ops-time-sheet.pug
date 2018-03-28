@@ -32,6 +32,7 @@ side-bar
 					.element
 						md-autocomplete(md-no-cache='false',
 						md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
+						md-menu-container-class='autocomplete-options-container-wider'
 						md-selected-item='lbRow.staff',
 						md-search-text='lbSearch.staff',
 						md-selected-item-change='staffSelectedItemChange(item)',
@@ -43,9 +44,10 @@ side-bar
 
 					.vertical-line
 
-					.element-small
+					.element-small.dropdown-wider
 						md-autocomplete(md-no-cache='false',
 						md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
+						md-menu-container-class='autocomplete-options-container-wider'
 						md-selected-item='lbRow.operation',
 						md-search-text-change='opsSearchTextChange(lbSearch.operation)',
 						md-search-text='lbSearch.operation',

@@ -252,12 +252,16 @@ angular.module('commonComponents',[])
 				} ] );
 			};
 
+			var clearRequesterOption = function () {
+				$scope.data.interestedParty.object = null;
+			};
+
 			$scope.requesterSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
 						if(_.isNil(clientGroupCode) || clientGroupCode === '') {
 							infoDialog('party.dialogs.noContacts',$modal, $filter);
-							$scope.data.interestedParty.object = null;
+							clearRequesterOption();
 							return;
 						}
 						createContact('Requester'); //
@@ -283,6 +287,14 @@ angular.module('commonComponents',[])
 				} ]);
 			};
 
+			var clearPrincipalOption = function () {
+				$scope.data.principals.forEach(function (principal, iPrincipal) {
+					if(principal.object.addOption === true) {
+						$scope.data.principals[iPrincipal].object = null;
+					}
+				});
+			};
+
 			$scope.principalSelectedItemChange = function (item) {
 				if (item) {
 					if (item.addOption) {
@@ -290,11 +302,7 @@ angular.module('commonComponents',[])
 
 							infoDialog('party.dialogs.noContacts',$modal, $filter);
 							// Clean option
-							$scope.data.principals.forEach(function (principal, iPrincipal) {
-								if(principal.object.addOption === true) {
-									$scope.data.principals[iPrincipal].object = null;
-								}
-							});
+							clearPrincipalOption();
 							return;
 						}
 						createContact('Principal');
@@ -472,6 +480,15 @@ angular.module('commonComponents',[])
 						};
 
 						$scope.cancel = function() {
+							switch(type) {
+								case 'Principal':
+									clearPrincipalOption();
+									break;
+
+								case 'Requester':
+									clearRequesterOption();
+									break;
+							}
 							$mdDialog.cancel();
 						};
 					}],

@@ -44,8 +44,8 @@ var createInstance = function (partyGroupServiceReference) {
 		// });
 	};
 
-	PartyGroupService.prototype.findOneOwnedByPartyAndType = function (partyId, type, callback) {
-		return partyGroupServiceReferenceInstance.findOneOwnedByPartyAndType(partyId, type).asCallback(callback);
+	PartyGroupService.prototype.findOneOwnedByPartyAndType = function (partyId, type, createOne, callback) {
+		return partyGroupServiceReferenceInstance.findOneOwnedByPartyAndType(partyId, type, createOne).asCallback(callback);
 
 		// .then(function (result) {
 		// 	return Promise.resolve(PartyGroupServiceStatic.toJSON(result)).asCallback(callback);

@@ -85,12 +85,18 @@ module.exports =
 					});
 				},
 
-				findOneOwnedByPartyAndType: function (partyId, type) {
+				findOneOwnedByPartyAndType: function (partyId, type, createOne) {
 					$log.debug("Call to findOneOwnedByPartyAndType with " + partyId + " and " + type);
+					var params;
+					if (_.isNil(createOne)) {
+						params = [partyId, type]
+					} else {
+						params = [partyId, type, createOne]
+					}
 					return $http.jsonrpc(
 						'/rpc/2.0/partyGroupService',
 						'findOneOwnedByPartyAndType',
-						[partyId, type]
+						params
 					).then(function (resp) {
 						return fromJSON(resp.data.result);
 					});

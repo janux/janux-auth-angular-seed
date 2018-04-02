@@ -186,7 +186,7 @@ angular.module('commonComponents',[])
 				if(!_.isNil(item)) {
 					calculateName();
 
-					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS')
+					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS', true)
 					.then(function (result) {
 						// Set current group code of client organization
 						clientGroupCode = (_.isNil(result))?null:result.code;

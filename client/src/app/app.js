@@ -20,6 +20,7 @@ require('angular-jwt');
 require('angular-sanitize');
 require('angular-file-saver');
 require('angular-moment');
+require('angular-loading-bar');
 require('highlight');
 require('angular-highlightjs');
 require('marked');
@@ -56,6 +57,7 @@ angular.module('MyApp',[
 	'hljs',
 	'angular-markdown-editor',
 	'pascalprecht.translate',
+	'angular-loading-bar',
 	'dndLists',
 	'config',
 	'LocalStorageModule',
@@ -132,8 +134,8 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 	security.requestCurrentUser();
 }])
 
-.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider','$mdAriaProvider','$provide',
-function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider , localStorageServiceProvider , markedProvider , hljsServiceProvider , $mdDateLocaleProvider , $mdAriaProvider , $provide) {
+.config(['$stateProvider','$urlRouterProvider','$locationProvider','$translateProvider','localStorageServiceProvider','markedProvider','hljsServiceProvider','$mdDateLocaleProvider','$mdAriaProvider','$provide','cfpLoadingBarProvider',
+function( $stateProvider , $urlRouterProvider , $locationProvider , $translateProvider , localStorageServiceProvider , markedProvider , hljsServiceProvider , $mdDateLocaleProvider , $mdAriaProvider , $provide , cfpLoadingBarProvider ) {
 
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
@@ -150,6 +152,9 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	.fallbackLanguage('en')
 	.useSanitizeValueStrategy('sanitizeParameters')
 	.useLocalStorage();
+
+	// Angular loading bar
+	cfpLoadingBarProvider.latencyThreshold = 500;
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');

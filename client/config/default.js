@@ -86,7 +86,8 @@ cfg.fileset.cssLibs = [
 	path.join(cfg.dir.bower,'ag-grid','dist','styles','ag-theme-material.css'),
 	path.join(cfg.dir.bower,'angular-material','angular-material.min.css'),
 	path.join(cfg.dir.bower,'ng-material-datetimepicker','css','material-datetimepicker.css'),
-	path.join(cfg.dir.bower,'bootstrap-markdown','css','bootstrap-markdown.min.css')
+	path.join(cfg.dir.bower,'bootstrap-markdown','css','bootstrap-markdown.min.css'),
+	path.join(cfg.dir.bower,'angular-loading-bar','build','loading-bar.min.css')
 ];
 
 // any javascript libs that need to be copied to dist/js

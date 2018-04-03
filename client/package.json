@@ -74,6 +74,7 @@
 		"angular-aside":      "./bower/angular-aside/dist/js/angular-aside.min.js",
 		"angular-sanitize":      "./bower/angular-sanitize/angular-sanitize.js",
 		"angular-moment": 	"./bower/angular-moment/angular-moment.js",
+		"angular-loading-bar": "./bower/angular-loading-bar/build/loading-bar.min.js",
 		"highlight": "./bower/highlight/src/highlight.js",
 		"angular-highlightjs": "./bower/angular-highlightjs/src/angular-highlightjs.js",
 		"bootstrap-markdown": "./bower/bootstrap-markdown/js/bootstrap-markdown.js",

@@ -152,13 +152,14 @@ angular.module('commonComponents',[])
 		scope: specialServiceScope,
 		restrict:'E',
 		templateUrl: 'common/components/templates/special-service.html',
-		controller: ['$scope','resourceService','partyGroupService', 'resellerService', '$rootScope','$mdDialog','$mdToast', '$modal','$filter',
-			function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter) {
+		controller: ['$scope','resourceService','partyGroupService', 'resellerService', '$rootScope','$mdDialog','$mdToast', '$modal','$filter','$q',
+			function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter , $q) {
 
 			var clientGroupCode = '';
-			var clientContacts = [];
-			var staff = [];
-			var vehicles = [];
+			var clientContacts = [];		// Client contacts
+			var possibleRequesters = [];	// Client contacts + reseller contacts
+			var staff = [];					// Staff members
+			var vehicles = [];				// Available vehicles
 
 			resourceService.findAvailableResources().then(function (resources) {
 				// console.log('resources', resources);
@@ -215,27 +216,37 @@ angular.module('commonComponents',[])
 				if(!_.isNil(item)) {
 					calculateName();
 
-					// resellerService.findResellerContactsByClient(item.id)
-					// 	.then(function (result) {
-					// 		console.log(JSON.stringify(result));
-					// 	});
+					// Requesting client contacts and reseller contacts if exists
+					var contactsRequests = [];
+					contactsRequests.push(resellerService.findResellerContactsByClient(item.id));
+					contactsRequests.push(partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS', true));
 
-					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS', true)
-					.then(function (result) {
+					$q.all(contactsRequests).then(function (results) {
+						var resellerContactsResult = results[0];
+						var clientContactsResult = results[1];
+
 						// Set current group code of client organization
-						clientGroupCode = (_.isNil(result))?null:result.code;
-						if(!_.isNil(result)) {
+						clientGroupCode = (_.isNil(clientContactsResult))?null:clientContactsResult.code;
+						if(!_.isNil(clientContactsResult)) {
 
-							var parties = _.map(result.values, function (o) {
+							clientContacts = _.map(clientContactsResult.values, function (o) {
 								return o.party;
 							});
-							clientContacts = parties;
+							possibleRequesters = clientContacts;
 							console.log('clientContacts',clientContacts);
 						} else {
 							clientContacts = [];
+							possibleRequesters = [];
 							infoDialog('party.dialogs.noContacts',$modal, $filter);
 						}
 
+						// Reseller contacts?
+						if(!_.isNil(resellerContactsResult)) {
+							var resellerParties = _.map(resellerContactsResult.values, function (o) {
+								return o.party;
+							});
+							possibleRequesters = possibleRequesters.concat(resellerParties);
+						}
 
 						if(!_.isNil(assignContactToList) && clientContacts.length > 0) {
 							var contact = _.find(clientContacts, function(client){
@@ -279,11 +290,13 @@ angular.module('commonComponents',[])
 			}
 
 			$scope.requesterSearch = function (query) {
-				var out = query ? clientContacts.filter(createFilterForRequester(query)) : clientContacts;
-				return out.concat( [ {
-					name: { last:'aa' },	// Ensure position on top
+				var out = query ? possibleRequesters.filter(createFilterForRequester(query)) : possibleRequesters;
+				out =  out.concat( [ {
+					name: { last:'  ' },	// Ensure position on top
 					addOption:true
 				} ] );
+				// console.log('out requesters', out);
+				return out;
 			};
 
 			var clearRequesterOption = function () {
@@ -316,7 +329,7 @@ angular.module('commonComponents',[])
 			$scope.principalSearch = function (query) {
 				var out = query ?  clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
 				return out.concat([ {
-					name: { last:'aa' },	// Ensure position on top
+					name: { last:'  ' },	// Ensure position on top
 					addOption:true
 				} ]);
 			};

@@ -152,8 +152,8 @@ angular.module('commonComponents',[])
 		scope: specialServiceScope,
 		restrict:'E',
 		templateUrl: 'common/components/templates/special-service.html',
-		controller: ['$scope','resourceService','partyGroupService','$rootScope','$mdDialog','$mdToast', '$modal','$filter',
-			function ($scope, resourceService, partyGroupService, $rootScope, $mdDialog, $mdToast, $modal, $filter) {
+		controller: ['$scope','resourceService','partyGroupService', 'resellerService', '$rootScope','$mdDialog','$mdToast', '$modal','$filter',
+			function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter) {
 
 			var clientGroupCode = '';
 			var clientContacts = [];
@@ -214,6 +214,11 @@ angular.module('commonComponents',[])
 
 				if(!_.isNil(item)) {
 					calculateName();
+
+					// resellerService.findResellerContactsByClient(item.id)
+					// 	.then(function (result) {
+					// 		console.log(JSON.stringify(result));
+					// 	});
 
 					partyGroupService.findOneOwnedByPartyAndType(item.id, 'COMPANY_CONTACTS', true)
 					.then(function (result) {

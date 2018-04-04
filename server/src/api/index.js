@@ -6,6 +6,7 @@ var UserPersistence                      = require('janux-persist').UserService,
     RolePersistence                      = require('janux-persist').RoleService,
     GroupService                         = require('janux-persist').GroupServiceImpl,
     PartyGroupServiceImpl                = require('janux-persist').PartyGroupServiceImpl,
+    ResellerServiceImpl                  = require('janux-persist').ResellerServiceImpl,
     OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
     ResourceServiceImpl                  = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl                 = require('glarus-services').TimeEntryServiceImpl,
@@ -56,6 +57,7 @@ var config                           = require('config'),
     UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
     GroupPersistService              = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
     PartyGroupPersistenceService     = new PartyGroupServiceImpl(PartyPersistenceService, GroupPersistService),
+    ResellerPersistenceService       = new ResellerServiceImpl(PartyGroupPersistenceService),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
     RolePersistService               = RolePersistence.createInstance(RoleDAO),
@@ -67,7 +69,8 @@ var config                           = require('config'),
     TimeEntryService                 = require('./time-entry-service'),
     ResourceService                  = require('./resource-service'),
     PartyGroupService                = require('./party-group-service'),
-    VehicleService                   = require('./vehicle-service');
+    VehicleService                   = require('./vehicle-service'),
+    ResellerService                  = require('./reseller-service');
 
 
 module.exports = {
@@ -84,5 +87,6 @@ module.exports = {
 	TimeEntryReportAttendanceService: TimeEntryReportAttendanceService,
 	TimeEntryReportSpecialOpsService: TimeEntryReportSpecialOpsService,
 	PartyGroupService               : PartyGroupService.create(PartyGroupPersistenceService),
-	VehicleService                  : VehicleService.create(VehiclePersistenceService)
+	VehicleService                  : VehicleService.create(VehiclePersistenceService),
+	ResellerService                 : ResellerService.create(ResellerPersistenceService)
 };

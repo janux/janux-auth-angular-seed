@@ -20,7 +20,8 @@ var services = {
 	operationService : require(apiRoot).OperationService,
 	resourceService  : require(apiRoot).ResourceService,
 	partyGroupService: require(apiRoot).PartyGroupService,
-	vehicleService   : require(apiRoot).VehicleService
+	vehicleService   : require(apiRoot).VehicleService,
+	resellerService  : require(apiRoot).ResellerService
 };
 
 /*

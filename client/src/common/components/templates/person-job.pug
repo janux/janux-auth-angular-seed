@@ -1,11 +1,18 @@
 .section-form
 	p.form-section-glarus
 		| {{ section | translate}}
-	div.an-material
-		md-input-container.full
-			label {{ 'party.person.job' | translate}}
-			input(ng-model='data.job.title')
+	fieldset.fieldset-flex
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'party.person.job' | translate}}
+					input(ng-model='data.staff.jobTitle')
 
-		md-input-container.full
-			label {{ 'party.person.area' | translate}}
-			input(ng-model='data.job.area')
+			div( ng-show='externalflag' )
+				md-checkbox.inline.md-primary(aria-label='is external' ng-model='data.staff.isExternal') Is external
+
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'party.person.area' | translate}}
+					input(ng-model='data.staff.jobDepartment')

@@ -50,10 +50,39 @@ angular.module('commonComponents',[])
 	};
 })
 .directive('personJob', function() {
+	var jobComponentScope = scopeDefinition;
+	jobComponentScope.externalflag = "<";
+
+	var checkStaff = function ($scope) {
+		if(!_.isNil($scope.data)) {
+			if(_.isNil($scope.data.staff) && $scope.externalflag) {
+				$scope.data.staff = {
+					isExternal:false
+				};
+			} else if(_.isNil($scope.data.staff) && !$scope.externalflag) {
+				$scope.data.staff = {
+					isExternal:false
+				};
+			}
+			console.log('scope.data.staff', $scope.data.staff);
+		}
+	};
+
 	return{
-		scope: scopeDefinition,
+		scope: jobComponentScope,
 		restrict:'E',
-		templateUrl: 'common/components/templates/person-job.html'
+		templateUrl: 'common/components/templates/person-job.html',
+		controller: ['$scope',function ($scope) {
+			checkStaff($scope);
+		}],
+		link: function (scope) {
+			console.log('scope.data', scope.data);
+			scope.$watch('data.name', function(newValue, oldValue) {
+				if (newValue) {
+					checkStaff(scope);
+				}
+			},true);
+		}
 	};
 })
 

@@ -133,6 +133,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/addresses.html',
 		controller: function ($scope) {
+			$scope.addressTypes = ['HOME', 'WORK', 'OTHER'];
+
 			$scope.addNewAddress = function() {
 				$scope.data.setContactMethod('work', new PostalAddress());
 			};

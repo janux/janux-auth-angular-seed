@@ -7,8 +7,12 @@
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
+					//label {{ 'party.type' | translate}}
+					//input(ng-model="address.type" id="address1")
 					label {{ 'party.type' | translate}}
-					input(ng-model="address.type" id="address1")
+					md-select(aria-label='type' ng-model='address.type')
+						md-option(ng-value='aType', ng-repeat='aType in addressTypes') {{ 'party.contactType.'+aType | translate }}
+
 			.an-material.nopadding
 				md-input-container.full
 					label {{ 'party.country' | translate}}

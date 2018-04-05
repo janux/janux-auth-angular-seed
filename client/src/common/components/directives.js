@@ -117,6 +117,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/emails.html',
 		controller: function ($scope) {
+			$scope.mailTypes = ['PERSONAL', 'WORK', 'OTHER'];
+
 			$scope.addNewMail = function() {
 				$scope.data.setContactMethod('work', new Email());
 			};

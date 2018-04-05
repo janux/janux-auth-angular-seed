@@ -386,6 +386,7 @@
 		},
 		"contactType": {
 			"HOME": "Home",
+			"PERSONAL": "Personal",
 			"WORK": "Work",
 			"MOBILE": "Mobile",
 			"FAX": "Fax",

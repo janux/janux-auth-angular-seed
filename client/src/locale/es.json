@@ -385,6 +385,7 @@
 		},
 		"contactType": {
 			"HOME": "Residencia",
+			"PERSONAL": "Personal",
 			"WORK": "Trabajo",
 			"MOBILE": "Móvil",
 			"FAX": "Fax",

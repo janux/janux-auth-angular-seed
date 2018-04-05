@@ -98,8 +98,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				timeEntry.resources = [];
 			}
 
-			if (timeEntry.extras === 'GUARD_SHIFT_LEADER') {
-				timeEntry.resources[0].type = 'GUARD_SHIFT_LEADER';
+			if (timeEntry.extras === 'GUARD_SHIFT_MANAGER') {
+				timeEntry.resources[0].type = 'GUARD_SHIFT_MANAGER';
 			}
 
 			return timeEntry;
@@ -132,9 +132,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					initHourParameter = 'guardSupport.initHour';
 					endHourHourParameter = 'guardSupport.endHour';
 					break;
-				case 'GUARD_SHIFT_LEADER':
-					initHourParameter = 'shiftLeader.initHour';
-					endHourHourParameter = 'shiftLeader.endHour';
+				case 'GUARD_SHIFT_MANAGER':
+					initHourParameter = 'shiftManager.initHour';
+					endHourHourParameter = 'shiftManager.endHour';
 					break;
 				default:
 					initHourParameter = 'guard.initHour';
@@ -433,8 +433,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						case 'CLOSED':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.CLOSED');
 							break;
-						case 'GUARD_SHIFT_LEADER':
-							val = $filter('translate')('operations.guardsTimeLog.extraOptions.GUARD_SHIFT_LEADER');
+						case 'GUARD_SHIFT_MANAGER':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.GUARD_SHIFT_MANAGER');
 							break;
 						default:
 							val = '';
@@ -448,7 +448,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 						var filterTextLoweCase = filterText.toLowerCase();
 						var valueLowerCase = _.isNil(gridValue) ? gridValue : gridValue.toString().toLowerCase();
-						if (filterTextLoweCase === 'base' && (valueLowerCase === 'BASE'.toLowerCase() || valueLowerCase === 'GUARD_SHIFT_LEADER'.toLowerCase())) {
+						if (filterTextLoweCase === 'base' && (valueLowerCase === 'BASE'.toLowerCase() || valueLowerCase === 'GUARD_SHIFT_MANAGER'.toLowerCase())) {
 							switch (filter) {
 								case 'contains':
 									return true;

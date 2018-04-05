@@ -369,8 +369,8 @@ module.exports =
 						// or records with no resource.
 						if (operation.type === 'DRIVER') {
 
-							if (!_.isNil(timeEntry.extras) && timeEntry.extras === 'PS') {
-								absence = "PS";
+							if (!_.isNil(timeEntry.extras) && timeEntry.extras === 'NO_SERVICE_PROVIDED') {
+								absence = "NO_SERVICE_PROVIDED";
 							} else {
 								absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
 									timeEntry.resources[0].absence : 'SF';

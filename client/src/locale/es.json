@@ -167,7 +167,8 @@
 				"PS": "Permiso sin goce de sueldo (PS)",
 				"F": "Falta (F)",
 				"PC": "PC",
-				"I": "I"
+				"I": "I",
+			    "NO_SERVICE_PROVIDED": "No se requirió servicio"
 			}
 		},
 		"guardsTimeLog": {
@@ -189,7 +190,7 @@
 				"NM": "Nocturno mantenimiento (NM)",
 				"NRM": "Nocturno recibo mercancia (NRM)",
 			    "CLOSED" : "Tienda cerrada (CLOSED)",
-			    "GUARD_SHIFT_LEADER": "Jefe de turno"
+			    "GUARD_SHIFT_MANAGER": "Jefe de turno"
 			}
 		},
 	  	"specialsTimeLog":{
@@ -229,7 +230,10 @@
 		    "absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",
-				"F": "Falta (F)"
+				"F": "Falta (F)",
+			    "PS": "Permiso sin goce de sueldo (PS)",
+			    "PC": "PC",
+			    "I": "I"
 		    }
 		},
 		"services": "Servicios",

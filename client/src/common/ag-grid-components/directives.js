@@ -275,6 +275,13 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/absence-cell-editor.html'
 	}
 }])
+.directive('agGridDriverAbsence', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/driver-absence-cell-editor.html'
+	}
+}])
 .directive('agGridGuardExtras', [ function() {
 	return {
 		restrict: 'E',

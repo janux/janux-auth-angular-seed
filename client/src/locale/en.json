@@ -167,7 +167,8 @@
 				"PS": "Leave of absence (PS)",
 				"F": "Absence (F)",
 				"PC": "PC",
-				"I": "I"
+				"I": "I",
+			    "NO_SERVICE_PROVIDED": "No serviced provided"
 			}
 		},
 		"guardsTimeLog": {
@@ -189,10 +190,9 @@
 				"NM": "Night shift maintenance (NM)",
 				"NRM": "Night shift goods receipt (NRM)",
 			    "CLOSED" : "Closed store (CLOSED)",
-			    "GUARD_SHIFT_LEADER": "Shift leader"
+			    "GUARD_SHIFT_MANAGER": "Shift manager"
 			}
-		},
-		"specials": "Specials",
+		}, "specials": "Specials",
 		"specialsTimeLog":{
 			"title": "Special ops time log",
 			"filterLabel": "List:",
@@ -227,9 +227,12 @@
 			"comment":"Comments",
 			"absence":"Absence",
 			"absenceOptions": {
-		  		"D": "Break (D)",
-		  		"V": "Holidays (V)",
-		  		"F": "Absence (F)"
+			  "D": "Break (D)",
+			  "V": "Holidays (V)",
+			  "PS": "Leave of absence (PS)",
+			  "F": "Absence (F)",
+			  "PC": "PC",
+			  "I": "I"
 		 	}
 	  	},
 		"services": "Services",

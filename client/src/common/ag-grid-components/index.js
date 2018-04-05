@@ -12,6 +12,7 @@ module.exports = {
 	autocompleteOpCellEditor: require('./autocomplete-op-cell-editor'),
 	autocompleteVehicleCellEditor: require('./auto-complete-vehicle-cell-editor'),
 	absenceCellEditor: require('./absence-cell-editor'),
+	driverAbsenceCellEditor: require('./driver-absence-cell-editor'),
 	guardExtraCellEditor: require('./guard-extras-cell-editor'),
 	clientCellUpdater: require('./client-cell-updater'),
 	checkBoxCellEditor : require('./checkbox-cell-editor'),

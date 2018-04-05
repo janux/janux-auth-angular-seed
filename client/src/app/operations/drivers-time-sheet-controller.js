@@ -181,8 +181,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		function handleAbsence(timeEntry, absence) {
 			// If SF, then we must to set an empty value.
-			if (absence === 'PS') {
-				timeEntry.extras = 'PS';
+			if (absence === 'NO_SERVICE_PROVIDED') {
+				timeEntry.extras = 'NO_SERVICE_PROVIDED';
 				timeEntry.resources = [];
 				timeEntry.billable = false;
 			} else if (absence === 'SF') {
@@ -205,7 +205,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
-			if ($scope.lbRow.absence === 'PS' || !!$scope.lbRow.staff) {
+			if ($scope.lbRow.absence === 'NO_SERVICE_PROVIDED' || !!$scope.lbRow.staff) {
 				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
@@ -399,7 +399,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
 				field         : 'absence',
 				editable      : true,
-				cellEditor    : agGridComp.absenceCellEditor,
+				cellEditor    : agGridComp.driverAbsenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';
 					switch (params.value) {
@@ -420,6 +420,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							break;
 						case 'I':
 							val = $filter('translate')('operations.driversTimeLog.absenceOptions.I');
+							break;
+						case 'NO_SERVICE_PROVIDED':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.NO_SERVICE_PROVIDED');
 							break;
 						default:
 							val = '';

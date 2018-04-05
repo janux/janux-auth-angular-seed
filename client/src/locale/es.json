@@ -382,6 +382,13 @@
 			"unsavedContact": "Tiene cambios sin guardar para este contacto. Desea guardarlos?",
 			"noContacts": "No hay grupo de contactos asociado",
 			"addingContact": "Agregar contacto"
+		},
+		"contactType": {
+			"HOME": "Residencia",
+			"WORK": "Trabajo",
+			"MOBILE": "Móvil",
+			"FAX": "Fax",
+			"OTHER": "Otro"
 		}
 	}
 }

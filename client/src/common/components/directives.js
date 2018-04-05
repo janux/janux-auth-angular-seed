@@ -64,7 +64,6 @@ angular.module('commonComponents',[])
 					isExternal:false
 				};
 			}
-			console.log('scope.data.staff', $scope.data.staff);
 		}
 	};
 
@@ -76,7 +75,7 @@ angular.module('commonComponents',[])
 			checkStaff($scope);
 		}],
 		link: function (scope) {
-			console.log('scope.data', scope.data);
+			// console.log('scope.data', scope.data);
 			scope.$watch('data.name', function(newValue, oldValue) {
 				if (newValue) {
 					checkStaff(scope);
@@ -100,6 +99,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/phones.html',
 		controller: function ($scope) {
+			$scope.phoneTypes = ['HOME', 'WORK', 'MOBILE', 'FAX', 'OTHER'];
+
 			$scope.addNewPhone = function() {
 				$scope.data.setContactMethod('work', new PhoneNumber());
 			};

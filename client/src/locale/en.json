@@ -383,6 +383,13 @@
 			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
 			"noContacts": "There is no associated group of contacts",
 			"addingContact": "Adding contact"
+		},
+		"contactType": {
+			"HOME": "Home",
+			"WORK": "Work",
+			"MOBILE": "Mobile",
+			"FAX": "Fax",
+			"OTHER": "Other"
 		}
 	}
 }

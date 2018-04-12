@@ -3,10 +3,14 @@
 		| {{ section | translate}}
 	fieldset.fieldset-flex(data-ng-repeat="email in data.contactMethods.emails track by $index")
 		.fieldset-flex
-			.an-material.nopadding
+			.an-material.nopadding.half
 				md-input-container.full
+					//label {{ 'party.type' | translate}}
+					//input(ng-model="email.type")
 					label {{ 'party.type' | translate}}
-					input(ng-model="email.type")
+					md-select(aria-label='type' ng-model='email.type')
+						md-option(ng-value='aType', ng-repeat='aType in mailTypes') {{ 'party.contactType.'+aType | translate }}
+
 			.an-material.nopadding
 				md-input-container.full
 					label {{ 'party.email' | translate}}

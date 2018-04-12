@@ -83,6 +83,7 @@
 		"authContextGroup": "Authorization Context Group"
 	},
 	"staff": {
+		"generalTab": "General data",
 		"title": "People & Organizations",
 	  	"editStaff": "Edit staff",
 	  	"createStaff": "Create staff",
@@ -102,6 +103,7 @@
 	  	"edit": "Edit",
 	  	"delete": "Delete",
 		"creation": "Creation",
+		"userName": "User Name",
 		"phone":"Phone Number",
 		"fiscal":"Fiscal",
 		"street1":"Street 1",
@@ -134,6 +136,7 @@
 		"country": "Country",
 		"email": "Email",
 		"phone": "Phone Number",
+		"area": "Area",
 		"fiscal": "Fiscal",
 		"street1": "Street 1",
 		"street2": "Street 2",
@@ -147,6 +150,25 @@
 		"sms": "SMS",
 		"wsp": "WSP",
 		"first": "Main",
-		"type": "Type"
+		"type": "Type",
+		"dialogs": {
+			"editContact": "Editing contact",
+			"contactSaved": "Contact successfully saved",
+			"contactNameEmpty": "Contact name can't be empty",
+			"contactLastNameEmpty": "Contact last name can't be empty",
+			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
+			"noContacts": "There is no associated group of contacts",
+			"addingContact": "Adding contact",
+			"noRowSelectedError":"Select at least one row to delete",
+			"confirmDeletion":"Are you sure you want to delete the row selection?"
+		},
+		"contactType": {
+			"HOME": "Home",
+			"PERSONAL": "Personal",
+			"WORK": "Work",
+			"MOBILE": "Mobile",
+			"FAX": "Fax",
+			"OTHER": "Other"
+		}
 	}
 }

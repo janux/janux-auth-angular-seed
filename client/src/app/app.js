@@ -99,10 +99,10 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	$translateProvider.useStaticFilesLoader({
 		prefix: 'locale/',
 		suffix: '.json'
-	});
-
-	$translateProvider.preferredLanguage('en');
-	$translateProvider.fallbackLanguage('en');
+	})
+	.preferredLanguage('en')
+	.fallbackLanguage('en')
+	.useSanitizeValueStrategy('sanitizeParameters');
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');

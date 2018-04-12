@@ -198,6 +198,20 @@ module.exports =
 					});
 				},
 
+				/**
+				 * Remove a party.
+				 * @param party
+				 */
+				remove: function (id) {
+					return $http.jsonrpc(
+						'/rpc/2.0/partyService',
+						'remove',
+						[id]
+					).then(function (resp) {
+						return resp.data.result;
+					});
+				},
+
 				fromJSON: function (object) {
 					return fromJSON(object);
 				},

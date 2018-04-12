@@ -5,8 +5,12 @@
 		.fieldset-flex
 			.an-material.nopadding
 				md-input-container.full
+					//label {{ 'party.type' | translate}}
+					//input(ng-model="phone.type")
 					label {{ 'party.type' | translate}}
-					input(ng-model="phone.type")
+					md-select(aria-label='type' ng-model='phone.type')
+						md-option(ng-value='pType', ng-repeat='pType in phoneTypes') {{ 'party.contactType.'+pType | translate }}
+
 			.an-material.nopadding
 				md-input-container.full
 					label {{ 'party.code' | translate}}

@@ -55,6 +55,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/phones.html',
 		controller: function ($scope) {
+			$scope.phoneTypes = ['HOME', 'WORK', 'MOBILE', 'FAX', 'OTHER'];
+
 			$scope.addNewPhone = function() {
 				$scope.data.setContactMethod('work', new PhoneNumber());
 			};
@@ -71,6 +73,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/emails.html',
 		controller: function ($scope) {
+			$scope.mailTypes = ['PERSONAL', 'WORK', 'OTHER'];
+
 			$scope.addNewMail = function() {
 				$scope.data.setContactMethod('work', new Email());
 			};
@@ -87,6 +91,8 @@ angular.module('commonComponents',[])
 		restrict:'E',
 		templateUrl: 'common/components/templates/addresses.html',
 		controller: function ($scope) {
+			$scope.addressTypes = ['HOME', 'WORK', 'OTHER'];
+
 			$scope.addNewAddress = function() {
 				$scope.data.setContactMethod('work', new PostalAddress());
 			};

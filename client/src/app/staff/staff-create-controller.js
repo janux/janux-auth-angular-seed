@@ -8,52 +8,25 @@ module.exports = [
 '$scope','partyService', function(
  $scope , partyService ) {
 
- 		// Create a new staff
-		var staff = new Person();
-		staff.setContactMethod('work', new PhoneNumber());
-		staff.setContactMethod('work', new Email());
-		staff.setContactMethod('Home', new PostalAddress());
+	// Create a new staff
+	var staff = new Person();
+	staff.setContactMethod('work', new PhoneNumber());
+	staff.setContactMethod('work', new Email());
+	staff.setContactMethod('Home', new PostalAddress());
 
-		$scope.staff = staff;	
-		console.log('Staff: ',$scope.staff);
-  
-		$scope.addNewAddress = function() {
-		    $scope.staff.setContactMethod('work', new PostalAddress());
-		};
+	$scope.staff = staff;
+	$scope.currentNavItem = 'general';
 
-		$scope.removeAddress = function(z) {
-		    $scope.staff.contactMethods.addresses.splice(z,1);
-		};
-  
-		$scope.addNewPhone = function() {
-			$scope.staff.setContactMethod('work', new PhoneNumber());
-		};
-
-		$scope.removePhone = function(z) {
-		    $scope.staff.contactMethods.phones.splice(z,1);
-		};
-  
-		$scope.addNewMail = function() {
-		    $scope.staff.setContactMethod('work', new Email());
-		};
-
-		$scope.removeMail = function(z) {
-		    $scope.staff.contactMethods.emails.splice(z,1);
-		};
-
-		
-		
-
-		$scope.save = function () {
-			console.log('user created', $scope.staff);
-			partyService.insert($scope.staff).then(function (resp) {
-				console.log('Staff has been saved!', resp);
-				window.history.back();
-			});
-		};
-
-		$scope.cancel = function () {
+	$scope.save = function () {
+		console.log('user created', $scope.staff);
+		partyService.insert($scope.staff).then(function (resp) {
+			console.log('Staff has been saved!', resp);
 			window.history.back();
-		};
+		});
+	};
 
-	}];
+	$scope.cancel = function () {
+		window.history.back();
+	};
+
+}];

@@ -15,35 +15,30 @@ side-bar
 							| &nbsp; Add
 				hr
 
-				table.list.users-list(ng-show='staffList.length')
+				table.list.users-list.list-with-footer(ng-show='staffList.length')
 					thead
 						tr
-							th {{ 'staff.name' | translate }}
-							th {{ 'staff.maternalName' | translate }}
-							th {{ 'staff.lastName' | translate }}
-							th {{ 'staff.email' | translate }}
+							th {{ 'party.person.name' | translate }}
 							th {{ 'staff.phone' | translate }}
+							th {{ 'staff.email' | translate }}
+							th {{ 'staff.userName' | translate }}
 							th
+								.col-edit-staff {{ 'user.edit' | translate }}
+							th
+								md-button.md-icon-button(aria-label="Trash" style="background:none; margin-left:0px; margin-right:0px  padding-right:0px;" ng-click='openDelete()')
+									md-icon.fa.fa-trash.fa-lg.trash-center(style="color:#ffffff; background:none; margin-left:15px; padding-right:50px;" )
+
 					tbody
 						tr(ng-repeat='staff in staffList')
-							td {{ staff.name.first }}
-							td {{ staff.name.middle }}
-							td {{ staff.name.last }}
-							td {{ staff.emailAddress('work').address }}
+							td {{ staff.name.middle }} {{ staff.name.last }}, {{ staff.name.first }}
 							td {{ staff.phoneNumber('work').number }}
-							td.text-center
+							td {{ staff.emailAddress('work').address }}
+							td {{ staff.user }}
+							td(style="text-align:center")
 								a.action-button
-									span.fa.fa-pencil.fa-lg 
-								a.action-button
-									span.fa.fa-trash.fa-lg 
+									span.fa.fa-pencil.fa-lg(ui-sref='staff.edit({id:staff.id})')
+							td(style="text-align:center")
+								md-checkbox(aria-label="Trash" ng-model='staff.Selected' class="md-primary" style="margin-top:8px; margin-left:10px; background:none;")
 
-				
-				//- .users-filter
-				//- 	form.form-inline
-				//- 		.form-group
-				//- 			label(for='username') Find by:
-				//- 			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
-				//- 			input.form-control(id='username' type='text' ng-model='searchString')
-				//- 			button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
 
 footer-Janux

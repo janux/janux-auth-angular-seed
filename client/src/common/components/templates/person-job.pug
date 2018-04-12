@@ -1,11 +1,16 @@
 .section-form
 	p.form-section
 		| {{ section | translate}}
-	div.an-material
-		md-input-container.full
-			label {{ 'party.person.job' | translate}}
-			input(ng-model='data.job.title')
+	fieldset.fieldset-flex
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'party.person.job' | translate}}
+					input(ng-model='data.staff.jobTitle')
 
-		md-input-container.full
-			label {{ 'party.person.area' | translate}}
-			input(ng-model='data.job.area')
+	fieldset.fieldset-flex
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'party.person.area' | translate}}
+					input(ng-model='data.staff.jobDepartment')

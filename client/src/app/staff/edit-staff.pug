@@ -8,20 +8,20 @@ side-bar
 			md-toolbar.form-root-toolbar
 				.md-toolbar-tools.form-toolbar
 					md-truncate
-						| {{ 'staff.createStaff' | translate }}
+						| {{ 'staff.editStaff' | translate }} : {{ staff.name.shortName }}
 					span(flex)
 
-					//md-button.md-icon-button.form-btn-toolbar(aria-label="Grid")
-					//	md-icon.fa.fa-table.fa-lg
-					//
-					//md-button.md-icon-button(aria-label="Upload")
-					//	md-icon.fa.fa-upload.fa-lg
+					md-button.md-icon-button.form-btn-toolbar(aria-label="Grid")
+						md-icon.fa.fa-table.fa-lg
+
+					md-button.md-icon-button(aria-label="Upload")
+						md-icon.fa.fa-upload.fa-lg
 
 			.container-fluid-flex.spacing-bottom
 
-				//- md-content.staff-name
-				//- 	h4 Gilberto Márquez Díaz de Sandi
-				
+				//md-content.staff-name
+				//	h4 {{ staff.name.shortName }}
+
 				md-content.spacing-ls
 					md-toolbar.form-mid-toolbar
 						.md-toolbar-tools
@@ -32,9 +32,9 @@ side-bar
 								//	| HUMAN RESOURSES
 								//md-nav-item(md-nav-click="goto('page3')" name="page3")
 								//	| PAYROLL LOGBOOK
-							
+
 							span(flex)
-							
+
 							//md-button.md-icon-button.trash(aria-label="Trash")
 							//	md-icon.fa.fa-trash.fa-lg
 

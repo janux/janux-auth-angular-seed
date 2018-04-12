@@ -12,14 +12,18 @@ module.exports = {
 			livereload: false,
 			secret: 'jules cyril value main why latex'
 		},
-		//Daos to be used by the services.
-		accountDao: 'accountDao',
-		partyDao: 'partyDao',
-		authContextDao: 'authContextDao',
-		roleDao: 'roleDao',
-		groupContentDao: 'groupContentDao',
-		groupDao: 'groupDao',
-		groupAttributeValueDao: 'groupAttributeValueDao',
+
+		dao: {
+			//Daos to be used by the services.
+			accountDao: 'accountDao',
+			partyDao: 'partyDao',
+			authContextDao: 'authContextDao',
+			roleDao: 'roleDao',
+			groupContentDao: 'groupContentDao',
+			groupDao: 'groupDao',
+			groupAttributeValueDao: 'groupAttributeValueDao',
+			staffDao              : 'staffDao'
+		},
 
 		log4js: {
 			config: require('./log4js.js'),

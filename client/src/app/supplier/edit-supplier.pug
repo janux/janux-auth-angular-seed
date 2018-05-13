@@ -47,13 +47,6 @@ side-bar
 								i.fa.fa-times
 							button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact)')
 								i.fa.fa-user-plus
-							// Staff
-							button.btn(ng-click='saveSupplierStaff()' ng-show='currentNavItem=="supplierStaff" && (editStaff || addStaff)')
-								i.fa.fa-check
-							button.btn(ng-click='cancelEditSupplierStaff()' ng-show='currentNavItem=="supplierStaff" && (editStaff || addStaff)')
-								i.fa.fa-times
-							button.btn(ng-click='addSupplierStaff()' ng-show='currentNavItem=="supplierStaff" && (!addStaff && !editStaff)')
-								i.fa.fa-user-plus
 							// Cancel update supplier data
 							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact && !addStaff && !editStaff')
 								i.fa.fa-times

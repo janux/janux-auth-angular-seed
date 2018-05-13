@@ -35,6 +35,9 @@ module.exports =
 				contact.id = result.id;
 				contact.dateCreated = dateUtilService.stringToDate(result.dateCreated);
 				contact.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+				contact.isSupplier = result.isSupplier;
+				contact.isReseller = result.isReseller;
+				contact.functionsProvided = result.functionsProvided;
 				contact.staff = result.staff;
 				return contact;
 			}
@@ -53,6 +56,9 @@ module.exports =
 				contact.typeName = typeName;
 				contact.dateCreated = object.dateCreated;
 				contact.lastUpdate = object.lastUpdate;
+				contact.isSupplier = object.isSupplier;
+				contact.isReseller = object.isReseller;
+				contact.functionsProvided = object.functionsProvided;
 				contact.staff = object.staff;
 				return contact;
 			}
@@ -146,6 +152,25 @@ module.exports =
 						return contacts;
 					});
 				},
+
+				/**
+				 * Find organizations by isSupplierFlag.
+				 * @param isSupplier
+				 */
+				findOrganizationByIsSupplier: function (isSupplier) {
+					return $http.jsonrpc(
+						'/rpc/2.0/partyService',
+						'findOrganizationByIsSupplier',
+						[isSupplier]
+					).then(function (resp) {
+						var contacts = resp.data.result;
+						contacts = _.map(contacts, function (o) {
+							return fromJSON(o);
+						});
+						return contacts;
+					});
+				},
+
 
 				/**
 				 * Find all organizations.

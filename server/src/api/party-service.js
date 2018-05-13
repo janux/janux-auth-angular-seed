@@ -106,6 +106,21 @@ var createInstance = function (serviceReference) {
 	};
 
 	/**
+	 * Find by isSupplier flag andTypeName
+	 * @param isSupplier
+	 * @param typeName
+	 * @param callback
+	 * @return {Bluebird<PartyAbstract[]> | *}
+	 */
+	PartyService.prototype.findOrganizationByIsSupplier = function (isSupplier, callback) {
+		log.debug("Call to findOrganizationByIsSupplier with isSupplier %j", isSupplier);
+		return partyServiceImpl.findOrganizationByIsSupplier(isSupplier)
+			.then(function (result) {
+				return Promise.resolve(toJSONMany(result)).asCallback(callback);
+			});
+	};
+
+	/**
 	 * Insert a new party.
 	 * @param party
 	 * @param callback

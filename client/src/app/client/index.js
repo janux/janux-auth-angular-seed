@@ -47,7 +47,7 @@ require('angular').module('appClient', [
 				return partyService.findOne($stateParams.id);
 			}],
 			clientGroup: ['client','partyGroupService',function (client,partyGroupService) {
-				return partyGroupService.findOneOwnedByPartyAndType(client.id, 'COMPANY_CONTACTS');
+				return partyGroupService.findOneOwnedByPartyAndType(client.id, 'COMPANY_CONTACTS', true);
 			}]
 		}
 	});

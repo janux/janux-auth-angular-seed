@@ -27,6 +27,11 @@ require('angular').module('config', [])
 						state: 'client',
 						translate: 'peopleOrgs.clients',
 						authContext: 'CLIENT'
+					},
+					suppliers: {
+						state: 'supplier',
+						translate: 'peopleOrgs.suppliers',
+						authContext: 'SUPPLIERS'
 					}
 				}
 			},

@@ -89,12 +89,6 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				$scope.gridOptions.api.setRowData(agGridRecords);
 			});
 
-			//Test resource service.
-			// resourceService.findAvailableResources()
-			// 	.then(function (result) {
-			// 		console.log('Result resource service: \n ' + JSON.stringify(result));
-			// 	});
-
 		};
 
 

@@ -42,6 +42,7 @@ require('app/roles');
 require('app/staff');
 require('app/operations');
 require('app/client');
+require('app/supplier');
 require('app/services');
 
 angular.module('MyApp',[
@@ -75,7 +76,8 @@ angular.module('MyApp',[
 	'ngFileSaver',
 	'appOperations',
 	'appClient',
-	'appServices'
+	'appServices',
+	'appSupplier'
 ])
 
 .run([  '$rootScope','$state','$stateParams','security','$anchorScroll','$translate',

@@ -130,8 +130,42 @@
 		"delete": "Eliminar",
 		"creation": "Creación",
 		"tabMenu": {
+		"tabMenuFirst":"Organización",
+		"tabMenuSecond":"Contactos"
+		},
+		"dialogs": {
+			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
+			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
+			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
+			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
+			"clientSaved": "Cliente guardado correctamente"
+		}
+	},
+    "supplier": {
+		"name": "Nombre del negocio",
+		"listTitle": "Proveedores",
+		"address": "Dirección",
+		"contact": "Contacto",
+		"email": "Email",
+		"phone": "Teléfono",
+		"cellphone": "Móvil",
+		"reseller": "Revendedor",
+		"edit": "Editar",
+		"createClient": "Agregar cliente",
+		"editClient": "Editar cliente",
+		"Organization":"Organización",
+		"jobTitle": "Funciones",
+		"phonesTitle": "Teléfonos",
+		"mailsTitle": "Correos",
+		"addressesTitle": "Direcciones",
+		"country": "País",
+		"delete": "Eliminar",
+		"creation": "Creación",
+	    "available": "Disponible",
+		"tabMenu": {
 			"tabMenuFirst":"Organización",
-			"tabMenuSecond":"Contactos"
+			"tabMenuSecond":"Contactos",
+			"tabMenuThird":"Personal"
 		},
 		"dialogs": {
 			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
@@ -145,7 +179,8 @@
 		"title": "Personas & Organizaciones",
 		"users": "Usuarios",
 		"staff": "Personal",
-		"clients": "Clientes"
+		"clients": "Clientes",
+	  	"suppliers": "Proveedores"
 	},
 	"operations": {
 		"title": "Operaciones",
@@ -378,6 +413,18 @@
 		"wsp": "WSP",
 		"first": "Principal",
 		"type": "Tipo",
+	    "functionsProvided":{
+		    "title": "Funciones que ofrece",
+			"driver": "Chofer",
+			"agent": "Agente",
+			"agent_armed": "Agente armado",
+			"coordinator": "Coordinador",
+			"guard": "Guardia",
+			"guard_support": "Guardia adicional",
+			"guard_shift_manager": "Guardia jefe de turno",
+			"guard_night_shift_maintenance": "Guardia mantenimiento nocturno",
+			"guard_goods_receipt": "Guardia recibo de mercancia"
+		},
 		"dialogs": {
 			"c": "Editando el contacto",
 			"contactSaved": "Contacto actualizado correctamente",

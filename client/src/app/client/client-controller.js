@@ -9,7 +9,7 @@ module.exports = [
 		};
 
 		$scope.init = function () {
-			partyService.findOrganizations()
+			partyService.findOrganizationByIsSupplier(false)
 				.then(function (result) {
 					$scope.clientsList = result;
 					console.log('Client:',result);

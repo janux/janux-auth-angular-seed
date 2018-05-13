@@ -196,7 +196,13 @@ module.exports =
 
 					});
 
-					return resourceService.findAvailableResources().then(function (allGuardsAvailableForSelection) {
+					return resourceService.findAvailableResources([
+						'GUARD',
+						'GUARD_SHIFT_MANAGER',
+						'GUARD_NIGHT_SHIFT_MAINTENANCE',
+						'GUARD_GOODS_RECEIPT',
+						'GUARD_SUPPORT'
+					]).then(function (allGuardsAvailableForSelection) {
 
 						// Filter only persons.
 						allGuardsAvailableForSelection = _.filter(allGuardsAvailableForSelection, function (o) {
@@ -279,7 +285,7 @@ module.exports =
 
 					});
 
-					return resourceService.findAvailableResources().then(function (allDriversAvailableForSelection) {
+					return resourceService.findAvailableResources(['DRIVER']).then(function (allDriversAvailableForSelection) {
 
 						// Filter only persons and resources that belongs to glarus.
 						allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
@@ -323,7 +329,7 @@ module.exports =
 						}
 					});
 
-					return resourceService.findAvailableResources().then(function (allResources) {
+					return resourceService.findAvailableResources(['DRIVER','AGENT','AGENT_ARMED','COORDINATOR']).then(function (allResources) {
 
 						// Filter only persons and resources that belongs to glarus.
 						var allDriversAvailableForSelection = _.filter(allResources, function (o) {

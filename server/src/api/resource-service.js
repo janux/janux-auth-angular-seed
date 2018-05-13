@@ -7,7 +7,9 @@ var moment = require('moment');
 
 
 var log4js = require('log4js'),
-	log    = log4js.getLogger('resource-service');
+    log    = log4js.getLogger('resource-service');
+
+var ReourceServiceImplClass = require('glarus-services').ResourceServiceImpl;
 
 var resourceServiceInstance = undefined;
 var resourceServiceReferenceInstance = undefined;
@@ -23,9 +25,28 @@ var createInstance = function (resourceServiceReference) {
 	ResourceService.prototype = Object.create(null);
 	ResourceService.prototype.constructor = ResourceService;
 
-	ResourceService.prototype.findAvailableResources = function (callback) {
-		log.debug("Call to findAvailableResources");
-		return resourceServiceReferenceInstance.findAvailableResources().asCallback(callback);
+	ResourceService.prototype.findAvailableResources = function (functions, callback) {
+		log.debug("Call to findAvailableResources with functions " + JSON.stringify(functions));
+		return resourceServiceReferenceInstance.findAvailableResources(functions).asCallback(callback);
+	};
+
+	ResourceService.prototype.findAvailableResourcesByVendor = function (idVendor, callback) {
+		log.debug("Call to findAvailableResourcesByVendor with idVendor %j", idVendor)
+		return resourceServiceReferenceInstance.findAvailableResourcesByVendor(idVendor).asCallback(callback);
+	};
+
+
+	ResourceService.prototype.removeByIdsWithValidation = function (ids, callback) {
+		log.debug("Call to removeByIdsWithValidation  with ids: %j ", ids);
+		return resourceServiceReferenceInstance.removeByIdsWithValidation(ids).asCallback(callback);
+	};
+
+	ResourceService.prototype.insertMany = function (resources, callback) {
+		log.debug("Call to insertMany with resources %j", resources);
+		var resourcesInstances = _.map(resources, function (o) {
+			return ReourceServiceImplClass.fromJSON(o);
+		});
+		return resourceServiceReferenceInstance.insertMany(resourcesInstances).asCallback(callback);
 	};
 
 

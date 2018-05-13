@@ -54,6 +54,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			vehicle  : ''
 		};
 
+
+		function setExtraFlag(resource) {
+			if (resource.resource.isExternal === true) {
+				resource.isExternal = true;
+			}
+			return resource;
+		}
+
 		var infoDialog = function (translateKey) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',
@@ -224,6 +232,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						} else {
 							specialOpsTimeEntryToInsert.resources[0].type = 'DRIVER';
 						}
+
+						specialOpsTimeEntryToInsert.resources[0] = setExtraFlag(specialOpsTimeEntryToInsert.resources[0]);
 
 
 						// Adding the vehicle resource.
@@ -500,6 +510,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					specialOpsTimeEntryToUpdate.resources[0].type = 'DRIVER';
 				}
 
+				specialOpsTimeEntryToUpdate.resources[0] = setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
 
 				// Assign vehicle.
 				specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
@@ -531,12 +542,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					//Now put the ag-grid ready records to the ui.
 					$scope.gridOptions.api.setRowData(agGridRecords);
 				});
-
-			//Test resource service.
-			// resourceService.findAvailableResources()
-			// 	.then(function (result) {
-			// 		console.log('Result resource service: \n ' + JSON.stringify(result));
-			// 	});
 
 		};
 

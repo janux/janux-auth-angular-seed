@@ -16,7 +16,7 @@ module.exports =
 			const RESOURCE_GUARD = "GUARD";
 
 			function fromJSON(object) {
-				if(_.isNil(object)) return object;
+				if (_.isNil(object)) return object;
 				var result = _.clone(object);
 				if (result.type !== RESOURCE_VEHICLE) {
 					result.resource = partyService.fromJSON(result.resource);
@@ -28,7 +28,7 @@ module.exports =
 			}
 
 			function toJSON(object) {
-				if(_.isNil(object)) return object;
+				if (_.isNil(object)) return object;
 				var result = _.clone(object);
 				if (result.type !== RESOURCE_VEHICLE) {
 					result.resource = partyService.toJSON(result.resource);
@@ -40,10 +40,67 @@ module.exports =
 
 			var service = {
 
-				findAvailableResources: function () {
+				/**
+				 * Find available resources by functions.
+				 * @param functions The functions we need to provide.
+				 * @return {*}
+				 */
+				findAvailableResources: function (functions) {
 					return $http.jsonrpc(
 						'/rpc/2.0/resourceService',
-						'findAvailableResources'
+						'findAvailableResources',
+						[functions]
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
+					});
+				},
+
+
+				/**
+				 * Find available resources provided by vendor.
+				 * @param idVendor
+				 * @return {*}
+				 */
+				findAvailableResourcesByVendor: function (idVendor) {
+					return $http.jsonrpc(
+						'/rpc/2.0/resourceService',
+						'findAvailableResourcesByVendor',
+						[idVendor]
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
+					});
+				},
+
+				/**
+				 * Remove resources.
+				 * @param ids
+				 */
+				removeByIdsWithValidation: function (ids) {
+					return $http.jsonrpc(
+						'/rpc/2.0/resourceService',
+						'removeByIdsWithValidation',
+						[ids]
+					).then(function (resp) {
+						return resp.data.result;
+					});
+				},
+
+				/**
+				 * Insert many resources.
+				 * @param resources
+				 */
+				insertMany: function (resources) {
+					var objectsToSend = _.map(resources, function (o) {
+						return toJSON(o);
+					});
+					return $http.jsonrpc(
+						'/rpc/2.0/resourceService',
+						'insertMany',
+						[objectsToSend]
 					).then(function (resp) {
 						return _.map(resp.data.result, function (o) {
 							return fromJSON(o);

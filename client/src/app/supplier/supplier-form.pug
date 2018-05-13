@@ -1,0 +1,10 @@
+.container-flex-form
+	form(name='supplierForm')
+		.staff-form-left
+			organization(data="supplier", section="supplier.Organization")
+			phones(data="supplier", section="supplier.phonesTitle")
+			emails(data="supplier", section="supplier.mailsTitle")
+			functions-provided(data="supplier", section="party.functionsProvided.title")
+
+		.staff-form-right
+			addresses(data="supplier", section="supplier.addressesTitle")

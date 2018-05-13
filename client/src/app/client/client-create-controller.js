@@ -46,6 +46,8 @@ module.exports = [
 
 		$scope.save = function () {
 			console.log('client created', $scope.client);
+			//Setting the supplier flag as false.
+			$scope.client.isSupplier = false;
 			partyService.insert($scope.client).then(function (resp) {
 				console.log('Client has been saved!', resp);
 				window.history.back();

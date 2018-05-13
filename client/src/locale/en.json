@@ -111,7 +111,7 @@
 	},
 	"client": {
 		"name": "Business name",
-		"listTitle": "Clients",
+		"listTitle": "Supliers",
 		"address": "Address",
 		"contact": "Contact",
 		"email": "Email",
@@ -141,11 +141,45 @@
 		}
 		
 	},
+    "supplier":{
+		"name": "Business name",
+		"listTitle": "Clients",
+		"address": "Address",
+		"contact": "Contact",
+		"email": "Email",
+		"phone": "Phone",
+		"cellphone": "Cellphone",
+		"reseller": "Reseller",
+		"edit": "Edit",
+		"createClient": "Create client",
+		"editClient": "Edit client",
+		"Organization":"Organization",
+		"phonesTitle": "Phones",
+		"mailsTitle": "Mails",
+		"addressesTitle": "Adresses",
+		"country": "Country",
+		"delete": "Delete",
+		"creation": "Creation",
+	    "available": "Available",
+		"tabMenu": {
+			"tabMenuFirst":"Organization",
+			"tabMenuSecond":"Contacts",
+		    "tabMenuThird":"Staff"
+		},
+		"dialogs": {
+			"noRowSelectedError":"Select at least one client contact to delete",
+			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
+			"successDeletedContacts":"Selected contacts successfully deleted",
+			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
+			"clientSaved": "Client successfully saved"
+		}
+	},
 	"peopleOrgs": {
 		"title": "People & Organizations",
 		"users": "Users",
 		"staff": "Staff",
-		"clients": "Clients"
+		"clients": "Clients",
+	    "suppliers": "Suppliers"
 	},
 	"operations": {
 		"title": "Operations",
@@ -378,6 +412,18 @@
 		"wsp": "WSP",
 		"first": "Main",
 		"type": "Type",
+	    "functionsProvided":{
+		  	"title":"Provided functions",
+	  		"driver": "Diver",
+	  		"agent": "Agent",
+	  		"agent_armed": "Agent armed",
+	  		"coordinator": "Coordinator",
+	  		"guard": "Guard",
+	  		"guard_support": "Guard (additional)",
+	  		"guard_shift_manager": "Guardia (shift manager)",
+	  		"guard_night_shift_maintenance": "Guard (night shift maintenance)",
+	  		"guard_goods_receipt": "Guard (goods receipt)"
+	    },
 		"dialogs": {
 			"editContact": "Editing contact",
 			"contactSaved": "Contact successfully saved",

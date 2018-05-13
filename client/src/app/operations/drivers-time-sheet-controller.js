@@ -546,12 +546,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					$scope.gridOptions.api.setRowData(agGridRecords);
 				});
 
-			//Test resource service.
-			// resourceService.findAvailableResources()
-			// 	.then(function (result) {
-			// 		console.log('Result resource service: \n ' + JSON.stringify(result));
-			// 	});
-
 		};
 
 		$scope.$on('sideMenuSizeChange', function () {

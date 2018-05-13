@@ -102,6 +102,7 @@
 		"app/roles":	  	  "./src/app/role/index.js",
 		"app/staff": 		  "./src/app/staff/index.js",
 		"app/client": 		  "./src/app/client/index.js",
+		"app/supplier": 	  "./src/app/supplier/index.js",
 		"app/operations": "./src/app/operations/index.js",
 		"app/services": "./src/app/services/index.js",
 		"common/agGridComponents": "./src/common/ag-grid-components/index.js",

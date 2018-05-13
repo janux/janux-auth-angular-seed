@@ -1,0 +1,25 @@
+.section-form
+	p.form-section-glarus
+		| {{ section | translate}}
+	fieldset
+		.container-flex-form
+			div
+				md-checkbox.md-primary(ng-model="enabled.function_driver")
+					| {{'party.functionsProvided.driver'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_agent")
+					| {{'party.functionsProvided.agent'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_agent_armed")
+					| {{'party.functionsProvided.agent_armed'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_coordinator")
+					| {{'party.functionsProvided.coordinator'  | translate }}
+		.container-flex-form
+				md-checkbox.md-primary(ng-model="enabled.function_guard")
+					| {{'party.functionsProvided.guard'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_guard_support")
+					| {{'party.functionsProvided.guard_support'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_guard_shift_manager")
+					| {{'party.functionsProvided.guard_shift_manager'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_guard_night_shift_maintenance")
+					| {{'party.functionsProvided.guard_night_shift_maintenance'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_guard_goods_receipt")
+					| {{'party.functionsProvided.guard_goods_receipt'  | translate }}

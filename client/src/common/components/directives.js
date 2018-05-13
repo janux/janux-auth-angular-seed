@@ -147,6 +147,56 @@ angular.module('commonComponents',[])
 		}
 	};
 })
+.directive('functionsProvided',function () {
+	return{
+		scope: scopeDefinition,
+		restrict:'E',
+		templateUrl: 'common/components/templates/functions-provided.html',
+		controller: function ($scope) {
+			$scope.functions = {};
+			$scope.functions.function_driver = "DRIVER";
+			$scope.functions.function_agent = "AGENT";
+			$scope.functions.function_agent_armed = "AGENT_ARMED";
+			$scope.functions.function_coordinator = "COORDINATOR";
+			$scope.functions.function_guard = "GUARD";
+			$scope.functions.function_guard_support = "GUARD_SUPPORT";
+			$scope.functions.function_guard_shift_manager= "GUARD_SHIFT_MANAGER";
+			$scope.functions.function_guard_night_shift_maintenance= "GUARD_NIGHT_SHIFT_MAINTENANCE";
+			$scope.functions.function_guard_goods_receipt= "GUARD_GOODS_RECEIPT";
+
+			$scope.enabled = {};
+			$scope.enabled.function_driver = false;
+			$scope.enabled.function_agent = false;
+			$scope.enabled.function_agent_armed = false;
+			$scope.enabled.function_coordinator = false;
+			$scope.enabled.function_guard = false;
+			$scope.enabled.function_guard_support = false;
+			$scope.enabled.function_guard_shift_manager= false;
+			$scope.enabled.function_guard_night_shift_maintenance= false;
+			$scope.enabled.function_guard_goods_receipt= false;
+
+
+			$scope.changeFlags = function (newValue,flagName) {
+
+			};
+
+			$scope.init = function () {
+				$scope.enabled.function_driver = $scope.data.functionsProvided.indexOf($scope.functions.function_driver) >= 0;
+				$scope.enabled.function_agent = $scope.data.functionsProvided.indexOf($scope.functions.function_agent) >= 0;
+				$scope.enabled.function_agent_armed = $scope.data.functionsProvided.indexOf($scope.functions.function_agent_armed) >= 0;
+				$scope.enabled.function_coordinator = $scope.data.functionsProvided.indexOf($scope.functions.function_coordinator) >= 0;
+				$scope.enabled.function_guard = $scope.data.functionsProvided.indexOf($scope.functions.function_guard) >= 0;
+				$scope.enabled.function_guard_support = $scope.data.functionsProvided.indexOf($scope.functions.function_guard_support) >= 0;
+				$scope.enabled.function_guard_shift_manager = $scope.data.functionsProvided.indexOf($scope.functions.function_guard_shift_manager) >= 0;
+				$scope.enabled.function_guard_night_shift_maintenance = $scope.data.functionsProvided.indexOf($scope.functions.function_guard_night_shift_maintenance) >= 0;
+				$scope.enabled.function_guard_goods_receipt = $scope.data.functionsProvided.indexOf($scope.functions.function_guard_goods_receipt) >= 0;
+			};
+
+			$scope.init();
+
+		}
+	};
+})
 
 .directive('specialService', function() {
 	var specialServiceScope = scopeDefinition;
@@ -165,13 +215,13 @@ angular.module('commonComponents',[])
 			var possibleRequesters = [];	// Client contacts + reseller contacts
 			var staff = [];					// Staff members
 			var vehicles = [];				// Available vehicles
-
-			resourceService.findAvailableResources().then(function (resources) {
+			// All special ops functions.
+			resourceService.findAvailableResources(['DRIVER','AGENT','AGENT_ARMED','COORDINATOR']).then(function (resources) {
 				// console.log('resources', resources);
 
-				// Filter only persons and resources that belongs to glarus.
+
 				staff = _.filter(resources, function (o) {
-					return o.type !== 'VEHICLE' && o.vendor.id === '10000';
+					return o.type !== 'VEHICLE';
 				});
 
 				// Filter vehicles only

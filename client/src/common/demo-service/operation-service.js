@@ -121,6 +121,21 @@ module.exports =
 				});
 			},
 
+			findWithTimeEntriesByDateBetweenAndVendor: function (initDate, endDate, idVendor) {
+				// Handle optional parameter type.
+				var params;
+				params = [initDate, endDate, idVendor];
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findWithTimeEntriesByDateBetweenAndVendor',
+					params
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
 
 			findAllWithoutTimeEntry: function () {
 				return $http.jsonrpc(
@@ -329,7 +344,7 @@ module.exports =
 						}
 					});
 
-					return resourceService.findAvailableResources(['DRIVER','AGENT','AGENT_ARMED','COORDINATOR']).then(function (allResources) {
+					return resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR']).then(function (allResources) {
 
 						// Filter only persons and resources that belongs to glarus.
 						var allDriversAvailableForSelection = _.filter(allResources, function (o) {

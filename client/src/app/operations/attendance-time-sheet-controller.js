@@ -75,7 +75,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			var promise;
 			if (_.isNil(resource)) {
 				$log.debug('Calling filter with no person');
-				promise = operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(), undefined);
+				promise = operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), '10000');
 			} else {
 				$log.debug('Calling filter with person');
 				promise = operationService.findWithTimeEntriesByDateAndPartyAndType(period.from(), period.to(), resource.resource.id, undefined);

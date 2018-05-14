@@ -37,6 +37,9 @@ var createInstance = function (operationServiceReference) {
 		return operationServiceReference.findWithTimeEntriesByDateAndPartyAndType(initDate, endDate, idParty, type).asCallback(callback);
 	};
 
+	OperationService.prototype.findWithTimeEntriesByDateBetweenAndVendor = function (initDate, endDate, idVendor, callback) {
+		return operationServiceReference.findWithTimeEntriesByDateBetweenAndVendor(initDate, endDate, idVendor).asCallback(callback);
+	};
 
 	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
 		return operationServiceReference.findAll().asCallback(callback);

@@ -102,7 +102,7 @@ require('angular').module('appOperations', [
 				var storedFilterPeriod = jnxStorage.findItem('attendanceTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods[periodKey];
-				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(), undefined)
+				return operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), '10000')
 					.then(function (result) {
 						return operationService.mapTimeEntryData(result);
 					});

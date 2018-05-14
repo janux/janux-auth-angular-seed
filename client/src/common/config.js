@@ -5,128 +5,183 @@ var moment = require('moment');
 require('angular').module('config', [])
 	.value('config', {
 		// the state on which we should land by default, or upon login
-		defaultState: 'operations.drivers',
-		mainMenu: [
+		defaultState          : 'operations.drivers',
+		mainMenu              : [
 			{
-				key: 'peopleOrgs',
+				key         : 'peopleOrgs',
 				translateKey: 'peopleOrgs.title',
-				iconClass: 'fa-users',
-				state: 'users',
-				subOptions: {
-					users: {
-						state: 'users',
-						translate: 'peopleOrgs.users',
+				iconClass   : 'fa-users',
+				state       : 'users',
+				subOptions  : {
+					users    : {
+						state      : 'users',
+						translate  : 'peopleOrgs.users',
 						authContext: 'USER'
 					},
-					staff: {
-						state: 'staff',
-						translate: 'peopleOrgs.staff',
+					staff    : {
+						state      : 'staff',
+						translate  : 'peopleOrgs.staff',
 						authContext: 'STAFF'
 					},
-					clients: {
-						state: 'client',
-						translate: 'peopleOrgs.clients',
+					clients  : {
+						state      : 'client',
+						translate  : 'peopleOrgs.clients',
 						authContext: 'CLIENT'
 					},
 					suppliers: {
-						state: 'supplier',
-						translate: 'peopleOrgs.suppliers',
+						state      : 'supplier',
+						translate  : 'peopleOrgs.suppliers',
 						authContext: 'SUPPLIERS'
 					}
 				}
 			},
 			{
-				key: 'operations',
+				key         : 'operations',
 				translateKey: 'operations.title',
-				iconClass: 'fa-archive',
-				state: 'operations',
-				subOptions: {
-					drivers: {
-						state: 'operations.drivers',
-						translate: 'operations.drivers',
+				iconClass   : 'fa-archive',
+				state       : 'operations',
+				subOptions  : {
+					drivers : {
+						state      : 'operations.drivers',
+						translate  : 'operations.drivers',
 						authContext: 'TIME_ENTRY_DRIVER'
 					},
 					specials: {
-						state: 'operations.specials',
-						translate: 'operations.specials',
+						state      : 'operations.specials',
+						translate  : 'operations.specials',
 						authContext: 'TIME_ENTRY_OPS'
 					},
-					guards: {
-						state: 'operations.guards',
-						translate: 'operations.guards',
+					guards  : {
+						state      : 'operations.guards',
+						translate  : 'operations.guards',
 						authContext: 'TIME_ENTRY_GUARD'
 					},
 
 					attendance: {
-						state: 'operations.attendance',
-						translate: 'operations.attendance',
+						state      : 'operations.attendance',
+						translate  : 'operations.attendance',
 						authContext: 'TIME_ENTRY_ATTENDANCE'
 					}
 
 				}
 			},
 			{
-				key: 'services',
+				key         : 'services',
 				translateKey: 'services.title',
-				iconClass: 'fa-tachometer',
-				state: 'services',
-				subOptions: {}
+				iconClass   : 'fa-tachometer',
+				state       : 'services',
+				subOptions  : {}
 			},
 			{
-				key: 'authSchema',
+				key         : 'authSchema',
 				translateKey: 'authSchema.title',
-				iconClass: 'fa-sitemap',
-				state: 'permissions',
-				subOptions: {
-					roles: {
-						state: 'permissions.roles',
-						translate: 'authSchema.roles',
+				iconClass   : 'fa-sitemap',
+				state       : 'permissions',
+				subOptions  : {
+					roles         : {
+						state      : 'permissions.roles',
+						translate  : 'authSchema.roles',
 						authContext: 'ROLE'
 					},
 					authorizations: {
-						state: 'permissions.auth-contexts',
-						translate: 'authSchema.authorizations',
+						state      : 'permissions.auth-contexts',
+						translate  : 'authSchema.authorizations',
 						authContext: 'AUTH_CONTEXT'
 					}
 				}
 			}
 		],
-		periodFilter: [
+		periodFilter          : [
 			{
-				key: 'last7Days',
+				key  : 'last7Days',
 				label: 'periodFilter.last7Days'
 			},
 			{
-				key: 'currentWeek',
+				key  : 'currentWeek',
 				label: 'periodFilter.currentWeek'
 			},
 			{
-				key: 'lastWeek',
+				key  : 'lastWeek',
 				label: 'periodFilter.lastWeek'
 			},
 			{
-				key: 'last30Days',
+				key  : 'last30Days',
 				label: 'periodFilter.last30Days'
 			},
 			{
-				key: 'currentMonth',
+				key  : 'currentMonth',
 				label: 'periodFilter.currentMonth'
 			},
 			{
-				key: 'lastMonth',
+				key  : 'lastMonth',
 				label: 'periodFilter.lastMonth'
 			},
 			{
-				key: 'last90Days',
+				key  : 'last90Days',
 				label: 'periodFilter.last90Days'
 			},
 			{
-				key: 'currentQuarter',
+				key  : 'currentQuarter',
 				label: 'periodFilter.currentQuarter'
 			},
 			{
-				key: 'lastQuarter',
+				key  : 'lastQuarter',
 				label: 'periodFilter.lastQuarter'
+			}
+		],
+		periodFilterSpecialOps: [
+			{
+				key  : 'last7Days',
+				label: 'periodFilter.last7Days'
+			},
+			{
+				key  : 'currentWeek',
+				label: 'periodFilter.currentWeek'
+			},
+			{
+				key  : 'lastWeek',
+				label: 'periodFilter.lastWeek'
+			},
+			{
+				key  : 'last30Days',
+				label: 'periodFilter.last30Days'
+			},
+			{
+				key  : 'currentMonth',
+				label: 'periodFilter.currentMonth'
+			},
+			{
+				key  : 'lastMonth',
+				label: 'periodFilter.lastMonth'
+			},
+			{
+				key  : 'last90Days',
+				label: 'periodFilter.last90Days'
+			},
+			{
+				key  : 'currentQuarter',
+				label: 'periodFilter.currentQuarter'
+			},
+			{
+				key  : 'lastQuarter',
+				label: 'periodFilter.lastQuarter'
+			},
+
+			{
+				key  : 'lastQuarter',
+				label: 'periodFilter.lastQuarter'
+			},
+			{
+				key  : 'oneYear',
+				label: 'periodFilter.oneYear'
+			},
+			{
+				key  : 'yearToDate',
+				label: 'periodFilter.yearToDate'
+			},
+			{
+				key  : 'lastYear',
+				label: 'periodFilter.lastYear'
 			}
 		]
 	});

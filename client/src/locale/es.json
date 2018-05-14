@@ -376,7 +376,10 @@
 		"lastMonth": "Mes pasado",
 		"last90Days": "Últimos 90 dias",
 		"currentQuarter": "Trimestre actual",
-		"lastQuarter": "Trimestre pasado"
+		"lastQuarter": "Trimestre pasado",
+	    "oneYear": "Últimos 365 días",
+	    "yearToDate":"Este año",
+	    "lastYear":"Año pasado"
 	},
 	"dialogs":{
 		"delete":"Estas seguro que quieres borrar "

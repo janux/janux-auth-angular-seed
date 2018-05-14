@@ -71,7 +71,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		};
 
 		$scope.findTimeEntries = function (periodKey, resource) {
-			var period = timePeriods[periodKey];
+			var period = timePeriods.nonSpecialOps[periodKey];
 			var promise;
 			if (_.isNil(resource)) {
 				$log.debug('Calling filter with no person');

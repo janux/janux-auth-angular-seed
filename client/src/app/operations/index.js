@@ -32,7 +32,7 @@ require('angular').module('appOperations', [
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
 				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-				var period = timePeriods[periodKey];
+				var period = timePeriods.nonSpecialOps[periodKey];
 
 				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'DRIVER')
 					.then(function (result) {
@@ -55,7 +55,7 @@ require('angular').module('appOperations', [
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
 				var storedFilterPeriod = jnxStorage.findItem('guardsTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-				var period = timePeriods[periodKey];
+				var period = timePeriods.nonSpecialOps[periodKey];
 
 				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'GUARD')
 					.then(function (result) {
@@ -78,7 +78,7 @@ require('angular').module('appOperations', [
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
 				var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-				var period = timePeriods[periodKey];
+				var period = timePeriods.specialOps[periodKey];
 
 				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'SPECIAL_OPS')
 					.then(function (result) {
@@ -101,7 +101,7 @@ require('angular').module('appOperations', [
 			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
 				var storedFilterPeriod = jnxStorage.findItem('attendanceTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-				var period = timePeriods[periodKey];
+				var period = timePeriods.nonSpecialOps[periodKey];
 				return operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), '10000')
 					.then(function (result) {
 						return operationService.mapTimeEntryData(result);

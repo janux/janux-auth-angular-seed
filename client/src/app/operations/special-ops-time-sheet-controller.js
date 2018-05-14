@@ -12,7 +12,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilter;
+		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
@@ -532,7 +532,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		$scope.findTimeEntries = function (periodKey) {
-			var period = timePeriods[periodKey];
+			var period = timePeriods.specialOps[periodKey];
 
 			operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {

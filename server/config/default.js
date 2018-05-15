@@ -10,7 +10,7 @@ module.exports = {
 			staticUrl : '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
-			secret    : 'jules cyril value main why latex snowden obama'
+			secret    : 'jules cyril value 238947 239800 239048 2309483 '
 		},
 
 		dao: {

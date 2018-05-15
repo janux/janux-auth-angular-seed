@@ -323,6 +323,7 @@
 		},
 		"guardsTimeLog": {
 			"title": "Bitácora de Guardias",
+			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
 			"date": "Fecha",
@@ -568,22 +569,6 @@
 				"invalidPercentage": "El valor del porcentaje es inválido",
 				"invoiceEnded": "No se puede modificar la factura debido a que estado está marcado como terminada"
 			}
-		}
-	},
-	"services": {
-		"title": "Servicios",
-		"listTitle": "Lista de servicios",
-		"list": {
-			"type":"Tipo",
-			"name":"Nombre",
-			"client":"Cliente",
-			"assigned":"Personal asignado",
-			"duration": "Duracion",
-			"begin": "Inicio",
-			"end": "Fin",
-			"DRIVER": "Chofer fijo",
-			"GUARD": "Guardia",
-			"SPECIAL": "Especial"
 		}
 	},
 	"services": {

@@ -195,7 +195,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.addRow = function () {
 			// Selected person
 			if (!!$scope.lbRow.staff) {
-				if (!!$scope.lbRow.operaztion) {
+				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
 						var end = '', endToInsert;

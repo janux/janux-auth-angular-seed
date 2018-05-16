@@ -24,16 +24,16 @@ var zone = moment.tz.zone(DEFAULT_TIME_ZONE);
  */
 function generateToken(user) {
 
-	const now = moment();
-	const expiration = moment().hour(3);
-	// Remove password
-	user.password = undefined;
-	if (expiration.date() === now.date()) {
-		expiration.add(1, 'days');
-	}
 
-	const expirationTimeZoned = localize(expiration);
-	const durationSeconds = Math.round(moment.duration(expirationTimeZoned.diff(now)).asSeconds());
+	user.password = undefined;
+	// const expiration = moment().hour(3);
+	// Remove password
+	// const now = moment();
+	// if (expiration.date() === now.date()) {
+	// 	expiration.add(1, 'days');
+	// }
+	// const expirationTimeZoned = localize(expiration);
+	// const durationSeconds = Math.round(moment.duration(expirationTimeZoned.diff(now)).asSeconds());
 	// console.log(now.format());
 	// console.log(expirationTimeZoned.format());
 	// console.log(" duration seconds" + durationSeconds);
@@ -51,11 +51,11 @@ function generateToken(user) {
 				parentOrganizationId = selectedGroup.attributes[ATTRIBUTE_PARTY_OWNER];
 				user.parentOrganizationId = parentOrganizationId;
 				return jwt.sign(user, config.server.secret, {
-					expiresIn: durationSeconds
+					expiresIn: "48h"
 				});
 			} else {
 				return jwt.sign(user, config.server.secret, {
-					expiresIn: durationSeconds
+					expiresIn: "48h"
 				});
 			}
 		});

@@ -20,7 +20,7 @@ module.exports = {
 	RoleService                     : RoleService.create(Services.RolePersistService),
 	UserPersistenceService          : Services.UserPersistenceService,
 	PartyService                    : PartyService.create(Services.PartyPersistenceService),
-	OperationService                : OperationService.create(Services.OperationPersistService),
+	OperationService                : OperationService.create(Services.OperationPersistService,Services.UserOperationService),
 	TimeEntryService                : TimeEntryService.create(Services.TimeEntryPersistService),
 	ResourceService                 : ResourceService.create(Services.ResourcePersistService),
 	TimeEntryReportService          : Services.TimeEntryReportService,

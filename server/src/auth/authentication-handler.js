@@ -47,10 +47,8 @@ var security = {
       if (!user) { return res.json( {user: null} ); }
       req.logIn(user, function(err) {
         if ( err ) { return next(err); }
-        tokenHandler.generateToken(user)
-            .then(function (result) {
-	            return res.json({user: user,token:result});
-            });
+	      var token = tokenHandler.generateToken(user);
+	      return res.json({user: user, token: token});
       });
     }
     return passport.authenticate('local', authenticationFailed)(req, res, next);

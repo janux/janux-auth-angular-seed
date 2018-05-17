@@ -34,7 +34,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods.nonSpecialOps[periodKey];
 
-				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'DRIVER')
+				return operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(),'DRIVER')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -57,7 +57,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods.nonSpecialOps[periodKey];
 
-				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'GUARD')
+				return operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(),'GUARD')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);
@@ -80,7 +80,7 @@ require('angular').module('appOperations', [
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods.specialOps[periodKey];
 
-				return operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(),'SPECIAL_OPS')
+				return operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(),'SPECIAL_OPS')
 					.then(function (result) {
 						// console.log(JSON.stringify(result));
 						return operationService.mapTimeEntryData(result);

@@ -22,7 +22,7 @@ require('angular').module('appServices', [
 		controller: require('./services-controller.js'),
 		resolve: {
 			operations: ['operationService', function (operationService) {
-				return operationService.findAllWithoutTimeEntry().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
 					// console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations);
 				});

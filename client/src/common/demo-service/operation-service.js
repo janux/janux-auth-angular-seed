@@ -12,7 +12,7 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security) {
 
 		function fromJSON(object) {
 			if (_.isNil(object)) return object;
@@ -81,7 +81,7 @@ module.exports =
 				});
 			},
 
-			findWithTimeEntriesByDateBetweenAndType: function (initDate, endDate, type) {
+			/*findWithTimeEntriesByDateBetweenAndType: function (initDate, endDate, type) {
 				// Handle optional parameter type.
 				var params;
 				if (_.isNil(type)) {
@@ -100,7 +100,7 @@ module.exports =
 						return fromJSON(o);
 					});
 				});
-			},
+			},*/
 
 			findWithTimeEntriesByDateAndPartyAndType: function (initDate, endDate, idParty, type) {
 				// Handle optional parameter type.
@@ -137,16 +137,16 @@ module.exports =
 			},
 
 
-			findAllWithoutTimeEntry: function () {
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findAllWithoutTimeEntry'
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
-					});
-				});
-			},
+			// findWithoutTimeEntryByAuthenticatedUser: function () {
+			// 	return $http.jsonrpc(
+			// 		'/rpc/2.0/operation',
+			// 		'findWithoutTimeEntryByAuthenticatedUser'
+			// 	).then(function (resp) {
+			// 		return _.map(resp.data.result, function (o) {
+			// 			return fromJSON(o);
+			// 		});
+			// 	});
+			// },
 
 
 			findByType: function (type) {
@@ -183,8 +183,42 @@ module.exports =
 				});
 			},
 
+			// Methods where an username is required.
+
+			findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser: function (initDate, endDate, type) {
+				var params;
+				var username = security.currentUser.username;
+				if (_.isNil(type)) {
+					params = [initDate, endDate, username];
+				} else {
+					params = [initDate, endDate, username, type];
+				}
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findWithTimeEntriesByDateBetweenAndUserAndType',
+					params
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
+			findWithoutTimeEntryByAuthenticatedUser: function () {
+				var username = security.currentUser.username;
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findWithoutTimeEntryByUsername',
+					[username]
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
 			findGuardsAndOperations: function () {
-				return service.findAllWithoutTimeEntry().then(function (result) {
+				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
 					var guardsAssignedToOperations = [];
 					var operationsAvailableForSelection = [];
 					result.forEach(function (op) {
@@ -273,7 +307,7 @@ module.exports =
 			},
 
 			findDriversAndOperations: function () {
-				return service.findAllWithoutTimeEntry().then(function (result) {
+				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
 					var driversAssignedToOperations = [];
 					var operations = [];
 					result.forEach(function (op) {
@@ -317,7 +351,7 @@ module.exports =
 			},
 
 			findDriversAndSpecialOps: function () {
-				return service.findAllWithoutTimeEntry().then(function (result) {
+				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
 					var driversAssignedToOperations = [];
 					var vehiclesAssignedToOperations = [];
 					var operations = [];

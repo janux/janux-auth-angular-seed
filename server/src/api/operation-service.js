@@ -11,9 +11,11 @@ var log4js = require('log4js'),
 
 var operationServiceInstance = undefined;
 var operationServiceReferenceInstance = undefined;
+var userOperationServiceReferenceInstance = undefined;
 
-var createInstance = function (operationServiceReference) {
+var createInstance = function (operationServiceReference, userOperationServiceReference) {
 	operationServiceReferenceInstance = operationServiceReference;
+	userOperationServiceReferenceInstance = userOperationServiceReference;
 
 
 	function OperationService() {
@@ -26,27 +28,27 @@ var createInstance = function (operationServiceReference) {
 	// Find and operation by id
 	OperationService.prototype.findById = function (operationId, callback) {
 
-		return operationServiceReference.findByIds([operationId]).asCallback(callback);
+		return operationServiceReferenceInstance.findByIds([operationId]).asCallback(callback);
 	};
 
 	OperationService.prototype.findWithTimeEntriesByDateBetweenAndType = function (initDate, endDate, type, callback) {
-		return operationServiceReference.findWithTimeEntriesByDateBetweenAndType(initDate, endDate, type).asCallback(callback);
+		return operationServiceReferenceInstance.findWithTimeEntriesByDateBetweenAndType(initDate, endDate, type).asCallback(callback);
 	};
 
 	OperationService.prototype.findWithTimeEntriesByDateAndPartyAndType = function (initDate, endDate, idParty, type, callback) {
-		return operationServiceReference.findWithTimeEntriesByDateAndPartyAndType(initDate, endDate, idParty, type).asCallback(callback);
+		return operationServiceReferenceInstance.findWithTimeEntriesByDateAndPartyAndType(initDate, endDate, idParty, type).asCallback(callback);
 	};
 
 	OperationService.prototype.findWithTimeEntriesByDateBetweenAndVendor = function (initDate, endDate, idVendor, callback) {
-		return operationServiceReference.findWithTimeEntriesByDateBetweenAndVendor(initDate, endDate, idVendor).asCallback(callback);
+		return operationServiceReferenceInstance.findWithTimeEntriesByDateBetweenAndVendor(initDate, endDate, idVendor).asCallback(callback);
 	};
 
 	OperationService.prototype.findAllWithoutTimeEntry = function (callback) {
-		return operationServiceReference.findAll().asCallback(callback);
+		return operationServiceReferenceInstance.findAll().asCallback(callback);
 	};
 
 	OperationService.prototype.findByType = function (type, callback) {
-		return operationServiceReference.findByType(type).asCallback(callback);
+		return operationServiceReferenceInstance.findByType(type).asCallback(callback);
 	};
 
 
@@ -55,7 +57,7 @@ var createInstance = function (operationServiceReference) {
 
 		var instance = OperationServiceImp.fromJSON(operation);
 
-		return operationServiceReference.insert(instance).asCallback(callback);
+		return operationServiceReferenceInstance.insert(instance).asCallback(callback);
 	};
 
 	// Update an operation
@@ -63,17 +65,27 @@ var createInstance = function (operationServiceReference) {
 
 		var instance = OperationServiceImp.fromJSON(operation);
 
-		return operationServiceReference.update(instance).asCallback(callback);
+		return operationServiceReferenceInstance.update(instance).asCallback(callback);
+	};
+
+	// Methods where an username is required.
+
+	OperationService.prototype.findWithTimeEntriesByDateBetweenAndUserAndType = function (initDate, endDate, username, type, callback) {
+		return userOperationServiceReferenceInstance.findWithTimeEntriesByDateBetweenAndUserAndType(initDate, endDate, username, type).asCallback(callback);
+	};
+
+	OperationService.prototype.findWithoutTimeEntryByUsername = function (username, callback) {
+		return userOperationServiceReferenceInstance.findWithoutTimeEntryByUsername(username).asCallback(callback);
 	};
 
 	return new OperationService();
 };
 
-module.exports.create = function (operationServiceReference) {
+module.exports.create = function (operationServiceReference, userOperationServiceReference) {
 	// if the instance does not exist, create it
 	if (!_.isObject(operationServiceInstance)) {
 		// userServiceInstance = new UserService(aDAO);
-		operationServiceInstance = createInstance(operationServiceReference);
+		operationServiceInstance = createInstance(operationServiceReference, userOperationServiceReference);
 	}
 	return operationServiceInstance;
 };

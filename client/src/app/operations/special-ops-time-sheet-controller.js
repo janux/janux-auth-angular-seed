@@ -534,7 +534,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.findTimeEntries = function (periodKey) {
 			var period = timePeriods.specialOps[periodKey];
 
-			operationService.findWithTimeEntriesByDateBetweenAndType(period.from(), period.to(), 'SPECIAL_OPS')
+			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);

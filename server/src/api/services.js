@@ -14,7 +14,8 @@ var UserPersistence                      = require('janux-persist').UserService,
     TimeEntryReportGuardServiceImpl      = require('glarus-services').TimeEntryReportGuardService,
     TimeEntryReportAttendanceServiceImpl = require('glarus-services').TimeEntryReportAttendanceService,
     TimeEntryReportSpecialOpsServiceImpl = require('glarus-services').TimeEntryReportSpecialOpsService,
-    VehicleServiceImpl                   = require('glarus-services').VehicleServiceImpl;
+    VehicleServiceImpl                   = require('glarus-services').VehicleServiceImpl,
+    UserOperationServiceImpl             = require('glarus-services').UserOperationService;
 
 var config                           = require('config'),
     appContext                       = config.serverAppContext,
@@ -60,7 +61,8 @@ var config                           = require('config'),
     ResellerPersistenceService       = new ResellerServiceImpl(PartyGroupPersistenceService),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
-    RolePersistService               = RolePersistence.createInstance(RoleDAO);
+    RolePersistService               = RolePersistence.createInstance(RoleDAO),
+    UserOperationService             = new UserOperationServiceImpl(UserPersistenceService, OperationPersistService, PartyGroupPersistenceService, PartyPersistenceService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,
@@ -78,5 +80,6 @@ module.exports = {
 	ResellerPersistenceService      : ResellerPersistenceService,
 	AuthContextPersistService       : AuthContextPersistService,
 	AuthContextGroupPersistService  : AuthContextGroupPersistService,
-	RolePersistService              : RolePersistService
+	RolePersistService              : RolePersistService,
+	UserOperationService            : UserOperationService
 };

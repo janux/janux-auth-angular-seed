@@ -22,9 +22,6 @@ require('angular').module('appStaff', [
 		authRequired: true,
 		controller: require('./staff-controller.js'),
 		resolve: {
-			staff: ['staffService', function (staffService) {
-				return staffService.findAll();
-			}]
 		}
 	})
 

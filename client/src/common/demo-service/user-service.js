@@ -4,9 +4,9 @@ var Person = require('janux-people').Person;
 
 module.exports =
 ['$q', '$http',
-function( $q ,  $http){
-
+function( $q ,  $http ){
 	var service = {
+
 
 		// Find users by specifying the field and search string
 		findBy: function(field, search)
@@ -55,6 +55,18 @@ function( $q ,  $http){
 					out[iUser].contact = Person.fromJSON(out[iUser].contact);
 				});
 				return out;
+			});
+		},
+
+		findCompanyInfo: function(username){
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'findCompanyInfo',
+				[ username ]
+			).then(function(resp) {
+				// TODO. For some reason, I can't import PartyService, maybe due to some circular dependency.
+				// return PartyService.fromJSON(resp.data.result);
+				return resp.data.result;
 			});
 		},
 

@@ -4,14 +4,14 @@ var _ = require('lodash');
 
 
 module.exports = [
-	'$scope', '$state', 'staff', 'partyService', 'partyGroupService', 'resourceService', function ($scope, $state, staff, partyService, partyGroupService, resourceService) {
+	'$scope', '$state', 'partyService', 'partyGroupService', 'resourceService', 'config', function ($scope, $state, partyService, partyGroupService, resourceService, config) {
 
 		$scope.editStaff = function (id) {
 			$state.go('staff.edit', {id: id});
 		};
 
 		$scope.findSupplier = function () {
-			partyService.findOne('10000')
+			partyService.findOne(config.glarus)
 				.then(function (result) {
 					$scope.supplier = result;
 				});
@@ -36,7 +36,7 @@ module.exports = [
 		};
 
 		$scope.refreshResources = function () {
-			resourceService.findAvailableResourcesByVendor('10000')
+			resourceService.findAvailableResourcesByVendor(config.glarus)
 				.then(function (resources) {
 					$scope.assignableResources = resources;
 					$scope.staffList = _.map($scope.staffList, function (it) {

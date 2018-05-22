@@ -1,6 +1,7 @@
 'use strict';
 
 require('common/demoService');
+var _ = require('lodash');
 
 require('angular').module('appSupplier', [
 	'demoService'
@@ -19,6 +20,21 @@ require('angular').module('appSupplier', [
 				templateUrl : 'app/supplier/index.html',
 				authRequired: true,
 				controller  : require('./supplier-controller.js'),
+				resolve     : {
+					suppliers: ['partyService', 'security', 'userService', function (partyService, security, userService) {
+						var companyInfo;
+						return userService.findCompanyInfo(security.currentUser.username)
+							.then(function (result) {
+								companyInfo = result;
+								return partyService.findOrganizationByIsSupplier(true);
+							})
+							.then(function (result) {
+								return _.filter(result, function (o) {
+									return o.id !== companyInfo.id;
+								});
+							});
+					}]
+				}
 			})
 
 			// Create supplier

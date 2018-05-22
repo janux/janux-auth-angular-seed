@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 
 var angular = require('angular');
 var _ = require('lodash');
@@ -40,6 +40,7 @@ require('app/users');
 require('app/permissions');
 require('app/roles');
 require('app/staff');
+require('app/staff-client');
 require('app/operations');
 require('app/client');
 require('app/supplier');
@@ -68,6 +69,7 @@ angular.module('MyApp',[
 	'demoService',
 	'appUsers',
 	'appStaff',
+	'appStaffClient',
 	'appPermissions',
 	'appRoles',
 	'appRoles',
@@ -160,10 +162,10 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 
 	// redirect from 1st parm to 2nd parm
 	$urlRouterProvider.when('/c?id', '/contacts/:id');
-	
+
 	// redirect invalid urls to the home page
 	$urlRouterProvider.otherwise('/');
-	
+
 	// HTML5 History API enabled
 	$locationProvider.html5Mode(true);
 
@@ -203,7 +205,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	//
 	// State Configuration
 	//
-	
+
 	//
 	// This is boilerplate code that we must add to each state for which we
 	// require an authenticated user, so we define it once here rather than
@@ -215,7 +217,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// but angular kept throwing an error to the effect that it could not find
 	// the $authentication provider; I speculate that this is because
 	// $authenticator depends on security/retryQueue, which may not yet have
-	// been instantiated at config time of the myApp module. 
+	// been instantiated at config time of the myApp module.
 	//
 	// In the original angular-app, the $jnxAuth provider is injected in a
 	// 'projects' module which has its own routes definition.  It would be
@@ -230,7 +232,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 	// 		return $jnxAuth.requireAuthenticatedUser();
 	// 	}]
 	// };
-	
+
 	$stateProvider
 	// .state('auth-required', {
 	// 	abstract: true,
@@ -310,8 +312,76 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 'config',
-function ($rootScope, config) {
+.controller('sidebarCtrl', ['$rootScope', 'config','userService','security','partyService',
+function ($rootScope, config, userService, security, partyService) {
+	var options;
+
+	function manageMenuByCompanyInfo(menu, companyInfo){
+		menu = _.clone(menu);
+		const company = partyService.fromJSON(companyInfo);
+		console.log(company);
+		if(company.functionsReceived.indexOf(config.functions.function_driver) === -1  ){
+			// Removing drivers section.
+			delete menu[1].subOptions.drivers;
+		}
+
+		if(company.functionsReceived.indexOf(config.functions.function_driver) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_agent) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_agent_armed) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_coordinator) === -1){
+			// Removing special ops section.
+			delete menu[1].subOptions.specials;
+		}
+
+		if(company.functionsReceived.indexOf(config.functions.function_guard) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_guard_support) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_guard_goods_receipt) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_guard_shift_manager) === -1 &&
+			company.functionsReceived.indexOf(config.functions.function_guard_night_shift_maintenance) === -1){
+			// Removing guards sections.
+			delete menu[1].subOptions.guards;
+		}
+
+		return menu;
+	}
+
+	function populateMenu() {
+		if (!_.isNil(security.currentUser)) {
+			userService.findCompanyInfo(security.currentUser.username)
+				.then(function (companyInfo) {
+
+					$rootScope.noneStyle = true;
+					$rootScope.bodyCon = false;
+					$rootScope.subMenu = [];
+					$rootScope.toggleSubmenu = [];
+					$rootScope.subMenuFlag = [];
+					if (companyInfo.id === config.glarus) {
+						$rootScope.mainMenu = config.mainMenu;
+					}else{
+						$rootScope.mainMenu = manageMenuByCompanyInfo(config.mainMenuClient, companyInfo);
+					}
+
+					options = _.map($rootScope.mainMenu, 'key');
+
+					options.forEach(function(opt){
+						// Initialize
+						$rootScope.subMenu[opt] = false;
+
+						// Toogle submenu
+						$rootScope.toggleSubmenu[opt] = function () {
+							$rootScope.subMenuFlag[opt] = !$rootScope.subMenuFlag[opt];
+							options.forEach(function(anOpt){
+								$rootScope.subMenu[anOpt] = (anOpt===opt);
+							});
+						};
+					});
+				});
+		}
+	}
+
+	$rootScope.$on('AppLogIn', function () {
+		populateMenu();
+	});
 
 	$rootScope.$on('currentUserCached', function(event, currentUser) {
 		var userRole = currentUser.roles[0];
@@ -324,19 +394,21 @@ function ($rootScope, config) {
 				if(userRole.can('READ',subOption.authContext)){
 					show = true;
 				}
-			});	
+			});
 		return show;
 		};
 	});
-	
+
+
+
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
 	$rootScope.subMenu = [];
 	$rootScope.toggleSubmenu = [];
 	$rootScope.subMenuFlag = [];
-	$rootScope.mainMenu = config.mainMenu;
 
-	var options = _.map(config.mainMenu,'key');
+
+
 
 	// All submenus hidden
 	$rootScope.resetSubmenu = function () {
@@ -349,32 +421,24 @@ function ($rootScope, config) {
 		return (Object.keys(menu.subOptions).length>0);
 	};
 
-	options.forEach(function(opt){
-		// Initialize
-		$rootScope.subMenu[opt] = false;
+	//add class to search box
+	$rootScope.openSearch = false;
+	$rootScope.searchToggle = function () {
+		$rootScope.openSearch = !$rootScope.openSearch;
+	};
 
-		// Toogle submenu
-		$rootScope.toggleSubmenu[opt] = function () {
-			$rootScope.subMenuFlag[opt] = !$rootScope.subMenuFlag[opt];
-			options.forEach(function(anOpt){
-				$rootScope.subMenu[anOpt] = (anOpt===opt);
-			});
-		};
-	});
-    
 	//Toggle the styles
 	$rootScope.toggleStyle = function () {
-		//If they are true, they will become false 
+		//If they are true, they will become false
 		//and false will become true
 		$rootScope.bodyCon = !$rootScope.bodyCon;
 		$rootScope.noneStyle = !$rootScope.noneStyle;
 		$rootScope.$broadcast('sideMenuSizeChange');
 	};
-	//add class to search box
-	$rootScope.openSearch = false;
-	$rootScope.searchToggle = function () {
-    	$rootScope.openSearch = !$rootScope.openSearch;
-	};
+	populateMenu();
+
+
+
 }])
 
 

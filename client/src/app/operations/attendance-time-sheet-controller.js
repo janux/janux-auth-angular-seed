@@ -75,7 +75,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			var promise;
 			if (_.isNil(resource)) {
 				$log.debug('Calling filter with no person');
-				promise = operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), '10000');
+				promise = operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), config.glarus);
 			} else {
 				$log.debug('Calling filter with person');
 				promise = operationService.findWithTimeEntriesByDateAndPartyAndType(period.from(), period.to(), resource.resource.id, undefined);

@@ -74,7 +74,7 @@ module.exports = [
 		};
 
 		var save = function (preventDefault) {
-			return partyService.update($scope.contact).then(function () {
+			return partyService.update($scope.supplier).then(function () {
 				console.log('Client has been saved!');
 				$mdToast.show(
 					$mdToast.simple()

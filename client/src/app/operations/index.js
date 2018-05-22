@@ -12,7 +12,7 @@ var timePeriods = require('common/time-periods');
 require('angular').module('appOperations', [
 	'agGrid'
 ])
-.config(['$stateProvider', function($stateProvider)
+.config(['$stateProvider',  function($stateProvider)
 {
 	$stateProvider.state('operations', {
 		url:'/operations',
@@ -98,11 +98,11 @@ require('angular').module('appOperations', [
 			driversAndOps: ['operationService', function (operationService) {
 				return operationService.findStaffAndOperationAttendance();
 			}],
-			timeEntries: ['operationService','jnxStorage', function (operationService,jnxStorage) {
+			timeEntries: ['operationService','jnxStorage','config', function (operationService,jnxStorage,config) {
 				var storedFilterPeriod = jnxStorage.findItem('attendanceTimeLogFilterPeriod', true);
 				var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 				var period = timePeriods.nonSpecialOps[periodKey];
-				return operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), '10000')
+				return operationService.findWithTimeEntriesByDateBetweenAndVendor(period.from(), period.to(), config.glarus)
 					.then(function (result) {
 						return operationService.mapTimeEntryData(result);
 					});

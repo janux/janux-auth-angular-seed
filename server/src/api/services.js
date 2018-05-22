@@ -55,9 +55,9 @@ var config                           = require('config'),
 
     // End glarus services implementations.
 
-    UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
     GroupPersistService              = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
     PartyGroupPersistenceService     = new PartyGroupServiceImpl(PartyPersistenceService, GroupPersistService),
+    UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService, PartyGroupPersistenceService),
     ResellerPersistenceService       = new ResellerServiceImpl(PartyGroupPersistenceService),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),

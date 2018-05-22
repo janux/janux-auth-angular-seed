@@ -106,11 +106,10 @@ var createInstance = function (serviceReference) {
 	};
 
 	/**
-	 * Find by isSupplier flag andTypeName
+	 * Find by isSupplier
 	 * @param isSupplier
-	 * @param typeName
 	 * @param callback
-	 * @return {Bluebird<PartyAbstract[]> | *}
+	 * @return {Bluebird<any>}
 	 */
 	PartyService.prototype.findOrganizationByIsSupplier = function (isSupplier, callback) {
 		log.debug("Call to findOrganizationByIsSupplier with isSupplier %j", isSupplier);
@@ -128,7 +127,7 @@ var createInstance = function (serviceReference) {
 	 */
 	PartyService.prototype.insert = function (party, callback) {
 		log.debug("Call to insert with party %j", party);
-		object = PartyServiceImplClass.fromJSON(party);
+		var object = PartyServiceImplClass.fromJSON(party);
 		return partyServiceImpl.insert(object)
 			.then(function (result) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
@@ -142,7 +141,7 @@ var createInstance = function (serviceReference) {
 	 */
 	PartyService.prototype.update = function (party, callback) {
 		log.debug("Call to update with party %j", party);
-		object = PartyServiceImplClass.fromJSON(party);
+		var object = PartyServiceImplClass.fromJSON(party);
 		return partyServiceImpl.update(object)
 			.then(function (result) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);

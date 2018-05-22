@@ -1,9 +1,10 @@
 'user strict';
 
-var log4js      = require('log4js'),
-    _           = require('underscore'),
-    lodash      = require('lodash'),
-    log         = log4js.getLogger('UserService');
+var log4js = require('log4js'),
+    _      = require('underscore'),
+    lodash = require('lodash'),
+    PartyServiceImpl = require('janux-persist').PartyServiceImpl,
+    log    = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
@@ -65,6 +66,13 @@ var createInstance = function (serviceReference) {
 		// return userDAO.prototype.saveOrUpdate.call(this, aUserObj).asCallback(callback);
 		return userServicePersistence.saveOrUpdate(aUserObj).asCallback(callback);
 
+	};
+
+	UserService.prototype.findCompanyInfo = function (userName, callback) {
+		return userServicePersistence.findCompanyInfo(userName)
+			.then(function (result) {
+				return PartyServiceImpl.toJSON(result);
+			}).asCallback(callback);
 	};
 
 	UserService.prototype.deleteUser = function (userId, callback) {

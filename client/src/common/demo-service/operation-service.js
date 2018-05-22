@@ -12,7 +12,7 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security,config) {
 
 		function fromJSON(object) {
 			if (_.isNil(object)) return object;
@@ -278,7 +278,7 @@ module.exports =
 						operation = resultOperations[0];
 
 						//Get glarus company. In order to emulate a vendor.
-						return partyService.findOne('10000');
+						return partyService.findOne(config.glarus);
 					})
 					.then(function (resultCompany) {
 						vendor = resultCompany;
@@ -338,7 +338,7 @@ module.exports =
 
 						// Filter only persons and resources that belongs to glarus.
 						allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
-							return o.type !== 'VEHICLE' && o.vendor.id === '10000';
+							return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
 						});
 
 						return {
@@ -382,11 +382,11 @@ module.exports =
 
 						// Filter only persons and resources that belongs to glarus.
 						var allDriversAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type !== 'VEHICLE' && o.vendor.id === '10000';
+							return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
 						});
 
 						var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type === 'VEHICLE' && o.vendor.id === '10000';
+							return o.type === 'VEHICLE' && o.vendor.id === config.glarus;
 						});
 
 

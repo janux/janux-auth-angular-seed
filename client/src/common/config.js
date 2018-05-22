@@ -1,11 +1,10 @@
 'use strict';
 
-var moment = require('moment');
-
 require('angular').module('config', [])
 	.value('config', {
 		// the state on which we should land by default, or upon login
 		defaultState          : 'operations.drivers',
+		glarus                : '10000',
 		mainMenu              : [
 			{
 				key         : 'peopleOrgs',
@@ -91,6 +90,62 @@ require('angular').module('config', [])
 				}
 			}
 		],
+		mainMenuClient        : [
+			{
+				key         : 'peopleOrgs',
+				translateKey: 'peopleOrgs.title',
+				iconClass   : 'fa-users',
+				state       : 'users',
+				subOptions  : {
+					staff: {
+						state      : 'staffClient',
+						translate  : 'peopleOrgs.contacts',
+						authContext: 'CLIENT_STAFF'
+					}
+				}
+			},
+			{
+				key         : 'operations',
+				translateKey: 'operations.title',
+				iconClass   : 'fa-archive',
+				state       : '',
+				subOptions  : {
+					drivers : {
+						state      : 'operations.drivers',
+						translate  : 'operations.drivers',
+						authContext: 'TIME_ENTRY_DRIVER'
+					},
+					specials: {
+						state      : 'operations.specials',
+						translate  : 'operations.specials',
+						authContext: 'TIME_ENTRY_OPS'
+					},
+					guards  : {
+						state      : 'operations.guards',
+						translate  : 'operations.guards',
+						authContext: 'TIME_ENTRY_GUARD'
+					}
+				}
+			},
+			{
+				key         : 'services',
+				translateKey: 'services.title',
+				iconClass   : 'fa-tachometer',
+				state       : 'services',
+				subOptions  : {}
+			}
+		],
+		functions: {
+			function_driver : "DRIVER",
+			function_agent : "AGENT",
+			function_agent_armed : "AGENT_ARMED",
+			function_coordinator : "COORDINATOR",
+			function_guard : "GUARD",
+			function_guard_support : "GUARD_SUPPORT",
+			function_guard_shift_manager : "GUARD_SHIFT_MANAGER",
+			function_guard_night_shift_maintenance : "GUARD_NIGHT_SHIFT_MAINTENANCE",
+			function_guard_goods_receipt : "GUARD_GOODS_RECEIPT"
+		},
 		periodFilter          : [
 			{
 				key  : 'last7Days',

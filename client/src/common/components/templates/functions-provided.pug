@@ -4,22 +4,22 @@
 	fieldset
 		.container-flex-form
 			div
-				md-checkbox.md-primary(ng-model="enabled.function_driver")
+				md-checkbox.md-primary(ng-model="enabled.function_driver" ng-change="changeFlags(functions.function_driver,enabled.function_driver)")
 					| {{'party.functionsProvided.driver'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_agent")
+				md-checkbox.md-primary(ng-model="enabled.function_agent" ng-change="changeFlags(functions.function_agent,enabled.function_agent)")
 					| {{'party.functionsProvided.agent'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_agent_armed")
+				md-checkbox.md-primary(ng-model="enabled.function_agent_armed" ng-change="changeFlags(functions.function_agent_armed,enabled.function_agent_armed)")
 					| {{'party.functionsProvided.agent_armed'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_coordinator")
+				md-checkbox.md-primary(ng-model="enabled.function_coordinator" ng-change="changeFlags(functions.function_coordinator,enabled.function_coordinator)")
 					| {{'party.functionsProvided.coordinator'  | translate }}
 		.container-flex-form
-				md-checkbox.md-primary(ng-model="enabled.function_guard")
+				md-checkbox.md-primary(ng-model="enabled.function_guard" ng-change="changeFlags(functions.function_guard,enabled.function_guard)")
 					| {{'party.functionsProvided.guard'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_guard_support")
+				md-checkbox.md-primary(ng-model="enabled.function_guard_support" ng-change="changeFlags(functions.function_guard_support,enabled.function_guard_support)")
 					| {{'party.functionsProvided.guard_support'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_guard_shift_manager")
+				md-checkbox.md-primary(ng-model="enabled.function_guard_shift_manager" ng-change="changeFlags(functions.function_guard_shift_manager,enabled.function_guard_shift_manager)")
 					| {{'party.functionsProvided.guard_shift_manager'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_guard_night_shift_maintenance")
+				md-checkbox.md-primary(ng-model="enabled.function_guard_night_shift_maintenance" ng-change="changeFlags(functions.function_guard_night_shift_maintenance,enabled.function_guard_night_shift_maintenance)")
 					| {{'party.functionsProvided.guard_night_shift_maintenance'  | translate }}
-				md-checkbox.md-primary(ng-model="enabled.function_guard_goods_receipt")
+				md-checkbox.md-primary(ng-model="enabled.function_guard_goods_receipt" ng-change="changeFlags(functions.function_guard_goods_receipt,enabled.function_guard_goods_receipt)")
 					| {{'party.functionsProvided.guard_goods_receipt'  | translate }}

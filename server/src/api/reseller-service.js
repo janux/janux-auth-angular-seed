@@ -17,12 +17,9 @@ var createInstance = function (serviceReference) {
 	ResellerService.prototype = Object.create(null);
 	ResellerService.prototype.constructor = ResellerService;
 
-
 	ResellerService.prototype.findResellerContactsByClient = function (idClient, callback) {
 		return resellerServiceImpl.findResellerContactsByClient(idClient).asCallback(callback);
 	};
-
-
 
 	return new ResellerService();
 };

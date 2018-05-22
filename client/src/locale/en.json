@@ -124,6 +124,7 @@
 		"Organization":"Organization",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
+	    "functionsReceived": "Functions provided to the client",
 		"addressesTitle": "Adresses",
 		"country": "Country",
 		"delete": "Delete",
@@ -179,7 +180,8 @@
 		"users": "Users",
 		"staff": "Staff",
 		"clients": "Clients",
-	    "suppliers": "Suppliers"
+	    "suppliers": "Suppliers",
+	    "contacts": "Contacts"
 	},
 	"operations": {
 		"title": "Operations",
@@ -427,6 +429,18 @@
 	  		"guard_night_shift_maintenance": "Guard (night shift maintenance)",
 	  		"guard_goods_receipt": "Guard (goods receipt)"
 	    },
+	  	"functionsReceived":{
+			"title":"Provided functions",
+			"driver": "Diver",
+			"agent": "Agent",
+			"agent_armed": "Agent armed",
+			"coordinator": "Coordinator",
+			"guard": "Guard",
+			"guard_support": "Guard (additional)",
+			"guard_shift_manager": "Guardia (shift manager)",
+			"guard_night_shift_maintenance": "Guard (night shift maintenance)",
+			"guard_goods_receipt": "Guard (goods receipt)"
+	  	},
 		"dialogs": {
 			"editContact": "Editing contact",
 			"contactSaved": "Contact successfully saved",

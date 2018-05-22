@@ -101,6 +101,7 @@
 		"app/permissions":	  "./src/app/permission/index.js",
 		"app/roles":	  	  "./src/app/role/index.js",
 		"app/staff": 		  "./src/app/staff/index.js",
+		"app/staff-client":	  "./src/app/staff-client/index.js",
 		"app/client": 		  "./src/app/client/index.js",
 		"app/supplier": 	  "./src/app/supplier/index.js",
 		"app/operations": "./src/app/operations/index.js",

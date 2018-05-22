@@ -1,0 +1,25 @@
+.section-form
+	p.form-section-glarus
+		| {{ section | translate}}
+	fieldset
+		.container-flex-form
+			div
+				md-checkbox.md-primary(ng-model="enabled.function_driver" ng-change="changeFlags(functions.function_driver,enabled.function_driver)")
+					| {{'party.functionsReceived.driver'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_agent" ng-change="changeFlags(functions.function_agent,enabled.function_agent)")
+					| {{'party.functionsReceived.agent'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_agent_armed" ng-change="changeFlags(functions.function_agent_armed,enabled.function_agent_armed)")
+					| {{'party.functionsReceived.agent_armed'  | translate }}
+				md-checkbox.md-primary(ng-model="enabled.function_coordinator" ng-change="changeFlags(functions.function_coordinator,enabled.function_coordinator)")
+					| {{'party.functionsReceived.coordinator'  | translate }}
+		.container-flex-form
+			md-checkbox.md-primary(ng-model="enabled.function_guard" ng-change="changeFlags(functions.function_guard,enabled.function_guard)")
+				| {{'party.functionsReceived.guard'  | translate }}
+			md-checkbox.md-primary(ng-model="enabled.function_guard_support" ng-change="changeFlags(functions.function_guard_support,enabled.function_guard_support)")
+				| {{'party.functionsReceived.guard_support'  | translate }}
+			md-checkbox.md-primary(ng-model="enabled.function_guard_shift_manager" ng-change="changeFlags(functions.function_guard_shift_manager,enabled.function_guard_shift_manager)")
+				| {{'party.functionsReceived.guard_shift_manager'  | translate }}
+			md-checkbox.md-primary(ng-model="enabled.function_guard_night_shift_maintenance" ng-change="changeFlags(functions.function_guard_night_shift_maintenance,enabled.function_guard_night_shift_maintenance)")
+				| {{'party.functionsReceived.guard_night_shift_maintenance'  | translate }}
+			md-checkbox.md-primary(ng-model="enabled.function_guard_goods_receipt" ng-change="changeFlags(functions.function_guard_goods_receipt,enabled.function_guard_goods_receipt)")
+				| {{'party.functionsReceived.guard_goods_receipt'  | translate }}

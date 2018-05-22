@@ -38,6 +38,7 @@ module.exports =
 				contact.isSupplier = result.isSupplier;
 				contact.isReseller = result.isReseller;
 				contact.functionsProvided = result.functionsProvided;
+				contact.functionsReceived = result.functionsReceived;
 				contact.staff = result.staff;
 				return contact;
 			}
@@ -59,6 +60,7 @@ module.exports =
 				contact.isSupplier = object.isSupplier;
 				contact.isReseller = object.isReseller;
 				contact.functionsProvided = object.functionsProvided;
+				contact.functionsReceived = object.functionsReceived;
 				contact.staff = object.staff;
 				return contact;
 			}

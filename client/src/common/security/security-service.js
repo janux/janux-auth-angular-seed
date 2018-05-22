@@ -7,8 +7,8 @@ var
 ;
 
 module.exports =
-       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper','$rootScope',
-function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper, $rootScope) {
+       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper','$rootScope','userService',
+function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper, $rootScope,userService) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -175,8 +175,9 @@ function($modal , $http , $location , $q , retryQueue , $state, localStorageServ
 				if(jwtHelper.isTokenExpired(token) === false){
 					var tokenPayload = jwtHelper.decodeToken(token);
 					service.currentUser =  hydrateRoles(tokenPayload);
-					//TODO do from json to company also
 					service.currentUser.contact = Person.fromJSON(service.currentUser.contact);
+					// Let's get to company associated to the user.
+
 					console.log("Token decoded");
 				}
 			}

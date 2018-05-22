@@ -67,7 +67,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				if (isExternal === true) {
 					timeEntry.resources[0].isExternal = true;
 					// TODO: Replace this hardcoded id.
-					timeEntry.resources[0].vendor.id = '10000';
+					timeEntry.resources[0].vendor.id = config.glarus;
 				} else {
 					timeEntry.resources[0].isExternal = false;
 				}

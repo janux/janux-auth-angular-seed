@@ -136,15 +136,15 @@ require('angular').module('config', [])
 			}
 		],
 		functions: {
-			function_driver : "DRIVER",
-			function_agent : "AGENT",
-			function_agent_armed : "AGENT_ARMED",
-			function_coordinator : "COORDINATOR",
-			function_guard : "GUARD",
-			function_guard_support : "GUARD_SUPPORT",
-			function_guard_shift_manager : "GUARD_SHIFT_MANAGER",
-			function_guard_night_shift_maintenance : "GUARD_NIGHT_SHIFT_MAINTENANCE",
-			function_guard_goods_receipt : "GUARD_GOODS_RECEIPT"
+			FUNCTION_DRIVER : "DRIVER",
+			FUNCTION_AGENT : "AGENT",
+			FUNCTION_AGENT_ARMED : "AGENT_ARMED",
+			FUNCTION_COORDINATOR : "COORDINATOR",
+			FUNCTION_GUARD : "GUARD",
+			FUNCTION_GUARD_SUPPORT : "GUARD_SUPPORT",
+			FUNCTION_GUARD_SHIFT_MANAGER : "GUARD_SHIFT_MANAGER",
+			FUNCTION_GUARD_NIGHT_SHIFT_MAINTENANCE : "GUARD_NIGHT_SHIFT_MAINTENANCE",
+			FUNCTION_GUARD_GOODS_RECEIPT : "GUARD_GOODS_RECEIPT"
 		},
 		periodFilter          : [
 			{

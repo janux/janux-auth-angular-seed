@@ -320,24 +320,24 @@ function ($rootScope, config, userService, security, partyService) {
 		menu = _.clone(menu);
 		const company = partyService.fromJSON(companyInfo);
 		console.log(company);
-		if(company.functionsReceived.indexOf(config.functions.function_driver) === -1  ){
+		if(company.functionsReceived.indexOf(config.functions.FUNCTION_DRIVER) === -1  ){
 			// Removing drivers section.
 			delete menu[1].subOptions.drivers;
 		}
 
-		if(company.functionsReceived.indexOf(config.functions.function_driver) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_agent) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_agent_armed) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_coordinator) === -1){
+		if(company.functionsReceived.indexOf(config.functions.FUNCTION_DRIVER) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_AGENT) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_AGENT_ARMED) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_COORDINATOR) === -1){
 			// Removing special ops section.
 			delete menu[1].subOptions.specials;
 		}
 
-		if(company.functionsReceived.indexOf(config.functions.function_guard) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_guard_support) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_guard_goods_receipt) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_guard_shift_manager) === -1 &&
-			company.functionsReceived.indexOf(config.functions.function_guard_night_shift_maintenance) === -1){
+		if(company.functionsReceived.indexOf(config.functions.FUNCTION_GUARD) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_GUARD_SUPPORT) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_GUARD_GOODS_RECEIPT) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_GUARD_SHIFT_MANAGER) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_GUARD_NIGHT_SHIFT_MAINTENANCE) === -1){
 			// Removing guards sections.
 			delete menu[1].subOptions.guards;
 		}

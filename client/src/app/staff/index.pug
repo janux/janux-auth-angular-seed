@@ -40,8 +40,8 @@ side-bar
 				tbody
 					tr(ng-repeat='staff in staffList track by staff.id')
 						td {{ staff.name.middle }} {{ staff.name.last }}, {{ staff.name.first }}
-						td {{ staff.phoneNumber('work').number }}
-						td {{ staff.emailAddress('work').address }}
+						td {{ staff.phoneNumber().number }}
+						td {{ staff.emailAddress().address }}
 						td {{ staff.area }}
 						td {{ staff.user }}
 						td.checkbox-center

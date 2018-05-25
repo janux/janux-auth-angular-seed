@@ -9,7 +9,7 @@
 					input(ng-model='data.staff.jobTitle')
 
 			div( ng-show='externalflag' )
-				md-checkbox.inline.md-primary(aria-label='is external' ng-model='data.staff.isExternal') Is external
+				md-checkbox.inline.md-primary(aria-label='is external' ng-model='data.staff.isExternal') {{ 'party.person.isExternal' | translate}}
 
 		.fieldset-flex
 			.an-material.nopadding

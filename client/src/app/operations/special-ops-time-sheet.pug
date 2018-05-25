@@ -44,19 +44,28 @@ side-bar
 
 					.vertical-line
 
-					.element-small.dropdown-wider
+					.element
 						md-autocomplete(md-no-cache='false',
 						md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
 						md-menu-container-class='autocomplete-options-container-wider'
 						md-selected-item='lbRow.operation',
 						md-search-text-change='opsSearchTextChange(lbSearch.operation)',
-						md-search-text='lbSearch.operation',
+						vehmd-search-text='lbSearch.operation',
 						md-selected-item-change='opsSelectedItemChange(item)',
 						md-item-text='item.name',
 						md-min-length='0',
 						md-floating-label="{{ 'operations.specialsTimeLog.operation' | translate }}")
 							md-item-template
 								span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
+
+					.element
+						md-input-container
+							label {{ 'operations.specialsTimeLog.function' | translate }}
+							md-select(ng-model="lbRow.function")
+								md-option(value="DRIVER") {{ 'operations.specialsTimeLog.driver' | translate }}
+								md-option(value="AGENT") {{ 'operations.specialsTimeLog.agent' | translate }}
+								md-option(value="AGENT_ARMED") {{ 'operations.specialsTimeLog.agentArmed' | translate }}
+								md-option(value="COORDINATOR") {{ 'operations.specialsTimeLog.coordinator' | translate }}
 
 					.vertical-line
 
@@ -125,44 +134,11 @@ side-bar
 							md-item-template
 								p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
 
-					.element-small
-						md-input-container
-							label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
-							input(ng-model='lbRow.odometerStart' type="number")
-
-					.element-small
-						md-input-container
-							label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
-							input(ng-model='lbRow.odometerEnd' type="number")
-
-					.element-very-small
-						md-input-container
-							label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
-							md-select(ng-model='lbRow.fuelStart')
-								md-option(value="F") F
-								md-option(value="7/8") 7/8
-								md-option(value="3/4") 3/4
-								md-option(value="5/8") 5/8
-								md-option(value="4/8") 1/2
-								md-option(value="3/8") 3/8
-								md-option(value="2/8") 1/4
-								md-option(value="1/8") 1/8
-
-					.element-very-small
-						md-input-container
-							label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
-							md-select(ng-model='lbRow.fuelEnd')
-								md-option(value="F") F
-								md-option(value="7/8") 7/8
-								md-option(value="3/4") 3/4
-								md-option(value="5/8") 5/8
-								md-option(value="4/8") 1/2
-								md-option(value="3/8") 3/8
-								md-option(value="2/8") 1/4
-								md-option(value="1/8") 1/8
+					.btn-element-small
+						md-button.md-icon-button.stack(ng-click="showVehicleDataPopup()")
+							md-icon.fa.fa-car.fa-lg
 
 					.btn-element-small
-
 						md-button.md-icon-button.stack(aria-label="Grid" ng-click='addRow()')
 							md-icon.fa.fa-plus-square.fa-lg
 

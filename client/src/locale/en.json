@@ -243,7 +243,12 @@
 		  	"odometerEnd": "Km end",
 		  	"vehicle" : "Vehicle",
 		    "fuelStart": "F start",
-		    "fuelEnd": "F end"
+		    "fuelEnd": "F end",
+		    "function": "Function",
+		    "driver": "Driver",
+		    "agent" :"Agent",
+		    "agentArmed": "Agent armed",
+		    "coordinator": "Coordinator"
 		},
 		"guards": "Guards",
 	  	"attendance": "Attendances",
@@ -282,7 +287,8 @@
 			"principalCreated": "Principal inserted correctly",
 			"addingPrincipal": "Adding principal",
 			"addedSpecialOp":"Special operation added correctly",
-		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance"
+		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance",
+		    "odometerStartGreaterThanEnd" : "Invalid values for odometer information"
 		}
 	},
 	"services": {
@@ -315,8 +321,8 @@
 			"staff": "Staff",
 			"function": "Function",
 			"staffDriver": "Driver",
-			"staffGuard": "Guard",
-			"staffGuardArmed": "Armed guard",
+			"staffGuard": "Agent",
+			"staffGuardArmed": "Agent armed",
 			"staffCoordinator": "Coordinator",
 			"vehicle": "Vehicle",
 			"details": "Details",
@@ -393,7 +399,8 @@
 			"maternalName": "Maternal name",
 			"job": "Job Title",
 			"type": "Type",
-			"area": "Area"
+			"area": "Area",
+		    "isExternal" : "External contractor"
 		},
 		"org": {
 			"name": "Business name",

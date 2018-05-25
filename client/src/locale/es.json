@@ -245,7 +245,13 @@
 		    "odometerEnd": "Km fin",
 		    "fuelStart": "G ini",
 		    "fuelEnd": "G fin",
-		    "vehicle" : "Vehículo"
+		    "vehicle" : "Vehículo",
+		    "function": "Función",
+		    "driver": "Chofer",
+		    "agent" :"Agente",
+		    "agentArmed": "Agente armado",
+		    "coordinator": "Coordinador"
+
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",
@@ -284,7 +290,8 @@
 			"clientContactCreated": "Contacto del cliente insertado correctamente",
 			"addingPrincipal": "Agregar principal",
 			"addedSpecialOp":"Operación especial agregada exitosamente",
-            "invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia"
+            "invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia",
+		    "odometerStartGreaterThanEnd" : "Valores inválidos en el kilometraje del vehículo"
 		}
 	},
 	"services": {
@@ -316,9 +323,9 @@
 			"resources": "Recursos",
 			"staff": "Personal",
 			"function": "Función",
-			"staffDriver": "Conductor",
-			"staffGuard": "Guardia",
-			"staffGuardArmed": "Guardia armado",
+			"staffDriver": "Chofer",
+			"staffGuard": "Agente",
+			"staffGuardArmed": "Agente armado",
 			"staffCoordinator": "Coordinador",
 			"vehicle": "Vehículo",
 			"details": "Detalles",
@@ -394,7 +401,8 @@
 			"lastName": "Apellido paterno",
 			"maternalName": "Apellido materno",
 			"job": "Puesto",
-			"type": "Tipo"
+			"type": "Tipo",
+		    "isExternal" : "Externo"
 		},
 		"org": {
 			"name": "Nombre o razón social",

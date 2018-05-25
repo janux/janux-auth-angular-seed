@@ -2,31 +2,18 @@ md-dialog
 	md-dialog-content
 		.md-dialog-content
 			md-content
-				md-autocomplete(md-no-cache='false',
-				md-items="item in agGridVehicleSearch(valueAutoVehicle) | orderBy:'resource.name'",
-				md-search-text='valueAutoVehicle',
-				md-selected-item-change='agGridVehicleSelectedItemChange(item)',
-				md-item-text='item.resource.name + " " +  item.resource.plateNumber',
-				md-min-length='0',
-				ng-attr-placeholder="{{ valueAutoVehiclePlaceholder }}")
-					md-item-template
-						p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
-
-
-
-			md-content
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
-					input(ng-model='odometerStart' type="number" )
+					input(ng-model='lbRow.odometerStart' type="number" )
 				span(flex)
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
-					input(ng-model='odometerEnd' type="number" )
+					input(ng-model='lbRow.odometerEnd' type="number" )
 
 			md-content
 				md-input-container
 					label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
-					md-select(ng-model='fuelStart')
+					md-select(ng-model='lbRow.fuelStart')
 						md-option(value="F") F
 						md-option(value="7/8") 7/8
 						md-option(value="3/4") 3/4
@@ -38,7 +25,7 @@ md-dialog
 				span(flex)
 				md-input-container
 					label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
-					md-select(ng-model='fuelEnd')
+					md-select(ng-model='lbRow.fuelEnd')
 						md-option(value="F") F
 						md-option(value="7/8") 7/8
 						md-option(value="3/4") 3/4
@@ -50,4 +37,4 @@ md-dialog
 
 	md-dialog-actions
 		// TODO : Replace it with a angular material button.
-		button.btn.btn-ok(ng-disabled='odometerStart>odometerEnd' ng-click='ok()') {{ 'label.ok' | translate }}
+		button.btn.btn-ok(ng-click='closeVehiclePopup()') {{ 'label.ok' | translate }}

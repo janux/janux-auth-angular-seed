@@ -289,6 +289,13 @@ angular.module('agGridDirectives',[])
 		templateUrl: 'common/ag-grid-components/templates/guard-extras-cell-editor.html'
 	}
 }])
+.directive('agGridSpecialOpsFunction', [ function() {
+	return {
+		restrict: 'E',
+		scope:false,
+		templateUrl: 'common/ag-grid-components/templates/special-ops-function-cell-editor.html'
+	}
+}])
 .directive('agGridViewOperation', [ function() {
 	return {
 		restrict: 'E',

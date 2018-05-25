@@ -12,7 +12,7 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security,config) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security, config) {
 
 		function fromJSON(object) {
 			if (_.isNil(object)) return object;
@@ -364,13 +364,13 @@ module.exports =
 								return result;
 							});
 
-							driversAssignedToOperations = _.filter(resourcesMarkedAsSpecialOps, function (o) {
+							driversAssignedToOperations = driversAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
 								return o.type !== "VEHICLE";
-							});
+							}));
 
-							vehiclesAssignedToOperations = _.filter(resourcesMarkedAsSpecialOps, function (o) {
+							vehiclesAssignedToOperations = vehiclesAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
 								return o.type === "VEHICLE";
-							});
+							}));
 
 							var opWithOutRes = _.clone(op);
 							delete opWithOutRes.currentResources;
@@ -410,6 +410,7 @@ module.exports =
 						var absence;
 						var timeEntry = operation.schedule[j];
 						var begin = moment(timeEntry.begin);
+						var functionValue;
 
 						var duration = calculateDuration(timeEntry.begin, timeEntry.end);
 						var end = '', endOnlyHour = '';
@@ -458,6 +459,11 @@ module.exports =
 							return o.type === "VEHICLE"
 						});
 
+						//Special ops data. Temporary solution.
+						if (operation.type === 'SPECIAL_OPS') {
+							functionValue = !_.isNil(staff) ?  staff.type : undefined;
+						}
+
 
 						result.push({
 							client       : operation.client.name,
@@ -474,7 +480,8 @@ module.exports =
 							absence      : absence,
 							comment      : timeEntry.comment,
 							extras       : timeEntry.extras,
-							isExternal   : timeEntry.isExternal
+							isExternal   : timeEntry.isExternal,
+							functionValue: functionValue
 						});
 					}
 				}

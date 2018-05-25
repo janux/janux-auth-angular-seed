@@ -18,7 +18,7 @@ var service = {
 
 		UserPersistenceService.findOneByUserId(oid)
 			.then(function (result) {
-				done(null, result);
+				done(null, UserPersistenceService.removeSensitiveData(result));
 			}, function (err) {
 				var msg = util.format('User with oid: "%s" does not exist', oid);
 				log.error(msg);
@@ -63,7 +63,7 @@ var service = {
 				});
 				Promise.all(user.roles).then(function (roles) {
 					user.roles = roles;
-					return done(null, user);
+					return done(null, UserPersistenceService.removeSensitiveData(user));
 				});
 				// RoleService.findOneByName(user.role).then(function(role) {
 				// 	user.roles = role;

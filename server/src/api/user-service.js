@@ -2,7 +2,7 @@
 
 var log4js = require('log4js'),
 	_      = require('underscore'),
-	lodash = require('lodash'),
+	bluebird = require('bluebird');
 	log    = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
@@ -31,24 +31,40 @@ var createInstance = function (serviceReference) {
 	// Find records depending on a particular field
 	UserService.prototype.findBy = function (field, search, callback) {
 		log.info("Call to findBy with field: %j ,search: %j ", field, search);
+		var promise;
 		switch (field) {
 			case 'username':
-				return userServicePersistence.findAllByUserNameMatch(search).asCallback(callback);
+				promise = userServicePersistence.findAllByUserNameMatch(search);
+				// return userServicePersistence.findAllByUserNameMatch(search).asCallback(callback);
 				break;
 			case 'name':
-				return userServicePersistence.findAllByContactNameMatch(search).asCallback(callback);
+				promise = userServicePersistence.findAllByContactNameMatch(search);
+				// return userServicePersistence.findAllByContactNameMatch(search).asCallback(callback);
 				break;
 			case 'email':
-				return userServicePersistence.findAllByEmail(search).asCallback(callback);
+				promise = userServicePersistence.findAllByEmail(search);
+				// return userServicePersistence.findAllByEmail(search).asCallback(callback);
 				break;
 			case 'phone':
-				return userServicePersistence.findAllByPhone(search).asCallback(callback);
+				promise = userServicePersistence.findAllByPhone(search);
+				// return userServicePersistence.findAllByPhone(search).asCallback(callback);
 				break;
 		}
+		return promise
+			.then(function (result) {
+				var filteredResult = _.map(result, function (o) {
+					return userServicePersistence.removeSensitiveData(o);
+				});
+				return bluebird.resolve(filteredResult).asCallback(callback);
+			})
 	};
 
 	UserService.prototype.findById = function (userId, callback) {
-		return userServicePersistence.findOneByUserId(userId).asCallback(callback);
+		return userServicePersistence.findOneByUserId(userId)
+			.then(function (value) {
+				var result = userServicePersistence.removeSensitiveData(value);
+				return bluebird.resolve(result).asCallback(callback);
+			});
 	};
 
 	// Override the method to save users

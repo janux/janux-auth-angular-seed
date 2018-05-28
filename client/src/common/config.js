@@ -4,6 +4,7 @@ require('angular').module('config', [])
 	.value('config', {
 		// the state on which we should land by default, or upon login
 		defaultState          : 'operations.drivers',
+		defaultStateClient    : 'operations.specials',
 		glarus                : '10000',
 		mainMenu              : [
 			{

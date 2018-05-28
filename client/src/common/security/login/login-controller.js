@@ -7,8 +7,8 @@ require('angular-translate-loader-static-files');
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
 // 
 module.exports =
-       ['$scope','security','$translate','$state','config','$stateParams',
-function($scope , security , $translate , $state , config , $stateParams) {
+       ['$scope','security','$translate','$state','config','$stateParams','userService',
+function($scope , security , $translate , $state , config , $stateParams, userService) {
 	// The model for this form 
 	$scope.user = {
 		account: {},
@@ -70,7 +70,15 @@ function($scope , security , $translate , $state , config , $stateParams) {
 				});
 			}
 			else if ($state.current.name === 'login') {
-				$state.go(config.defaultState);
+				// $state.go(config.defaultState);
+				userService.findCompanyInfo(security.currentUser.userName)
+					.then(function (result) {
+						if (result.id === config.glarus) {
+							$state.go(config.defaultState);
+						} else {
+							$state.go(config.defaultStateClient);
+						}
+					});
 			}
 		}, function(err) {
 			// If we get here then there was a problem with the login request to the server

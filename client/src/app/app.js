@@ -260,7 +260,7 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 		controller: ['config','$scope', '$state', 'security', 'userService', function(config,$scope, $state, security, userService) {
 			if (security.isAuthenticated()) {
 
-				userService.findCompanyInfo(security.currentUser.userName)
+				userService.findCompanyInfo(security.currentUser.username)
 					.then(function (result) {
 						if (result.id === config.glarus) {
 							$state.go(config.defaultState);

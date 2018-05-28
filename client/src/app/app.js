@@ -257,9 +257,18 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 			}]
 		},
 
-		controller: ['config','$scope', '$state', 'security', function(config,$scope, $state, security) {
+		controller: ['config','$scope', '$state', 'security', 'userService', function(config,$scope, $state, security, userService) {
 			if (security.isAuthenticated()) {
-				$state.go(config.defaultState);
+
+				userService.findCompanyInfo(security.currentUser.userName)
+					.then(function (result) {
+						if (result.id === config.glarus) {
+							$state.go(config.defaultState);
+						} else {
+							$state.go(config.defaultStateClient);
+						}
+					});
+
 			} else {
 				$state.go('login');
 			}

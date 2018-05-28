@@ -21,14 +21,14 @@ side-bar
 			table.list-glarus.users-list(ng-show='staffList.length')
 				thead
 					tr
-						th {{ 'party.person.name' | translate }}
+						th {{ 'party.pferson.name' | translate }}
 						th {{ 'party.phone' | translate }}
 						th {{ 'party.email' | translate }}
 						th {{ 'party.person.area' | translate }}
 						th {{ 'staff.userName' | translate }}
-						th(ng-show='userRole.can("READ",subOption.authContext);')
+						th(ng-show='userRole.can("READ","CLIENT_CONTACT");')
 							.col-edit-staff {{ 'user.edit' | translate }}
-						th(ng-show='userRole.can("READ",subOption.authContext);') 
+						th(ng-show='userRole.can("READ","CLIENT_CONTACT");')
 							md-button.md-icon-button(aria-label="Trash" style="background:none; margin-left:0px; margin-right:0px  padding-right:0px;")
 								md-icon.fa.fa-trash.fa-lg.trash-center(style="color:#ffffff; background:none; margin-left:15px; padding-right:50px;" )
 				tbody
@@ -38,10 +38,10 @@ side-bar
 						td {{ staff.emailAddress('work').address }}
 						td {{ staff.area }}
 						td {{ staff.user }}
-						td.text-centerth(ng-show='userRole.can("READ",subOption.authContext);')
+						td.text-centerth(ng-show='userRole.can("READ","CLIENT_CONTACT");')
 							a.action-button-glarus
 								span.fa.fa-pencil.fa-lg(ng-click='editStaff(staff.id)' style="margin-left:8px;") 
-						td(style="text-align:center" ng-show='userRole.can("READ",subOption.authContext);' )
+						td(style="text-align:center" ng-show='userRole.can("READ","CLIENT_CONTACT");' )
 							md-checkbox(aria-label="Trash" ng-model='staff.Selected' class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
 
 				

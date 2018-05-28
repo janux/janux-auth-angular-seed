@@ -100,7 +100,7 @@ require('angular').module('config', [])
 					staff: {
 						state      : 'staffClient',
 						translate  : 'peopleOrgs.contacts',
-						authContext: 'CLIENT_STAFF'
+						authContext: 'CLIENT_CONTACT'
 					}
 				}
 			},

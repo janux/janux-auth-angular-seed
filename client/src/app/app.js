@@ -321,8 +321,8 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 'config','userService','security','partyService',
-function ($rootScope, config, userService, security, partyService) {
+.controller('sidebarCtrl', ['$rootScope', 'config','userService','security','partyService','$state',
+function ($rootScope, config, userService, security, partyService, $state) {
 	var options;
 
 	function manageMenuByCompanyInfo(menu, companyInfo){
@@ -352,6 +352,34 @@ function ($rootScope, config, userService, security, partyService) {
 		}
 
 		return menu;
+	}
+
+
+	// This function binds the name of the state with the name of the submenu in config
+	// to obtain the related data and make it available to all templates
+	function loadSubOptionData (stateName) {
+		// console.log('loadSubOptionData state name', stateName);
+		var subOptionName = (stateName.indexOf('.') !== false)?stateName.split('.'):stateName;
+		var findSubOption = false;
+
+		// console.log('$rootScope.mainMenu', $rootScope.mainMenu);
+		_.every($rootScope.mainMenu, function (menu) {
+			findSubOption = _.find(menu.subOptions, function (subOption, iSub) {
+				// console.log('iSub', iSub, 'subOption', subOption);
+				if (subOptionName.length > 0) {
+					return iSub === subOptionName[0] || iSub === subOptionName[1];
+				} else {
+					return iSub === subOptionName;
+				}
+			});
+
+			return _.isNil(findSubOption);
+		});
+
+		if (findSubOption) {
+			$rootScope.subOption = findSubOption;
+		}
+		// console.log('findSubOption', findSubOption);
 	}
 
 	function populateMenu() {
@@ -384,12 +412,17 @@ function ($rootScope, config, userService, security, partyService) {
 							});
 						};
 					});
+					loadSubOptionData($state.current.name);
 				});
 		}
 	}
 
 	$rootScope.$on('AppLogIn', function () {
 		populateMenu();
+	});
+
+	$rootScope.$on('$stateChangeStart', function(event, toState) {
+		loadSubOptionData(toState.name);
 	});
 
 	$rootScope.$on('currentUserCached', function(event, currentUser) {

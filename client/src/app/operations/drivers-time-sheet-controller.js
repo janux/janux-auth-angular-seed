@@ -5,11 +5,11 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
-	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'localStorageService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService) {
 
 		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
-
+		var columnsFiltersKey = 'januxDriversColumnsFilters';
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilter;
@@ -38,12 +38,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 		initRowModel();
 
-		// var refreshStartServiceTime = 60 * 1000;	// 1 minute
-		// // Refresh start time
-		// $interval(function () {
-		// 	$scope.lbRow.start = moment().format(dateTimeFormatString);
-		// }, refreshStartServiceTime);
-
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
 			staff    : '',
@@ -66,11 +60,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			});
 		};
 
-		// Runs every time the text in the field to find the staff member changes
-		// $scope.staffSearchTextChange = function(text) {
-		// 	console.info('Text changed to ' + text);
-		// };
-
 		//
 		// Staff autocomplete
 		//
@@ -89,7 +78,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					var operationId = selectedDriver.opId;
 					var staffOperations = _.filter(operations, {id: operationId});
 
-					console.log('Selected staff operations', staffOperations);
+					// console.log('Selected staff operations', staffOperations);
 					$scope.lbRow.operation = staffOperations[0];
 				}
 			} else {
@@ -136,38 +125,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 
 		$scope.export = function () {
-
-			/*var now = moment();
-
-			var params = {
-				skipHeader: false,
-				columnGroups: false,
-				skipFooters: false,
-				skipGroups: false,
-				skipPinnedTop: true,
-				skipPinnedBottom: true,
-				allColumns: true,
-				onlySelected: false,
-				suppressQuotes: true,
-				fileName: 'bitacora ' + now.format('YYYYMMDDHHmm') + ' .csv',
-				columnSeparator: ',',
-				processCellCallback : function(params) {
-					if (params.value ) {
-						if(params.column.colId === 'staff') {
-							return '"' + params.value + '"';
-						} else if(params.column.colId === 'operation' ){
-							return '"' + params.value + '"';
-						} else  {
-							return '"' +  params.value + '"';
-						}
-					} else {
-						return params.value;
-					}
-				}
-			};
-
-			$scope.gridOptions.api.exportDataAsCsv(params);*/
-
 
 			var ids = [];
 
@@ -312,7 +269,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return result;
 				},
 				cellEditor  : agGridComp.autocompleteStaffCellEditor,
-				filter: 'agTextColumnFilter',
+				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
@@ -325,7 +282,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				cellEditor  : agGridComp.autocompleteOpCellEditor,
 				width       : 110,
-				filter: 'agTextColumnFilter',
+				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
@@ -333,7 +290,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				field       : 'client',
 				editable    : true,
 				cellEditor  : agGridComp.clientCellUpdater,
-				filter: 'agTextColumnFilter',
+				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
@@ -389,20 +346,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					var comment = params.data.comment;
 					return agGridComp.util.truncate(comment, maxLength, '...');
 				}
-				// cellEditor: 'largeText',
-				// cellEditorParams: {
-				// 	maxLength: '300',
-				// 	cols: '50',
-				// 	rows: '6'
-				// }
 			},
-			// {
-			// 	headerName: 'Object',
-			// 	field: 'Object',
-			// 	editable: true,
-			// 	cellRenderer:agGridComp.objectCellRenderer,
-			// 	cellEditor: agGridComp.objectCellEditor
-			// },
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
 				field         : 'absence',
@@ -452,9 +396,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			},
 			{
 				headerName     : '',
-				// headerCheckboxSelection: true,
-				// headerCheckboxSelectionFilteredOnly: true,
-				// checkboxSelection: true,
 				cellRenderer   : agGridComp.checkBoxRowSelection,
 				cellEditor     : agGridComp.rowActions,
 				headerComponent: agGridComp.deleteRowsHeaderComponent,
@@ -493,6 +434,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// of the rows from the header component that does not have access
 				// to the scope.
 				$scope.gridOptions.api.deleteRows = removeSelected;
+
+				// Restore filter model.
+				var filterModel = localStorageService.get(columnsFiltersKey);
+				if (!_.isNil(filterModel)) {
+					$scope.gridOptions.api.setFilterModel(filterModel);
+					$scope.gridOptions.onFilterChanged();
+				}
 			},
 			onRowEditingStarted      : function () {
 				// Nothing to do yet
@@ -537,6 +485,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				var gridKey = 'grid.' + key;
 				var value = $filter('translate')(gridKey);
 				return value === gridKey ? defaultValue : value;
+			},
+			onFilterChanged          : function () {
+				// Save filters to local storage.
+				var savedFilters;
+				savedFilters = $scope.gridOptions.api.getFilterModel();
+				localStorageService.set(columnsFiltersKey, savedFilters);
+				// console.log('savedFilters' + JSON.stringify(savedFilters));
 			}
 			// components:{
 			// 	dateComponent: agGridComp.dateFilter

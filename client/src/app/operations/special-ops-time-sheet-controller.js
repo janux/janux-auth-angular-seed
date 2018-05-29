@@ -5,11 +5,11 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','localStorageService',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService) {
 
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-
+		var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
@@ -530,6 +530,13 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				// of the rows from the header component that does not have access
 				// to the scope.
 				$scope.gridOptions.api.deleteRows = removeSelected;
+
+				// Restore filter model.
+				var filterModel = localStorageService.get(columnsFiltersKey);
+				if (!_.isNil(filterModel)) {
+					$scope.gridOptions.api.setFilterModel(filterModel);
+					$scope.gridOptions.onFilterChanged();
+				}
 			},
 			onRowEditingStarted      : function () {
 				// Nothing to do yet
@@ -596,10 +603,14 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				var gridKey = 'grid.' + key;
 				var value = $filter('translate')(gridKey);
 				return value === gridKey ? defaultValue : value;
+			},
+			onFilterChanged          : function () {
+				// Save filters to local storage.
+				var savedFilters;
+				savedFilters = $scope.gridOptions.api.getFilterModel();
+				localStorageService.set(columnsFiltersKey, savedFilters);
+				// console.log('savedFilters' + JSON.stringify(savedFilters));
 			}
-			// components:{
-			// 	dateComponent: agGridComp.dateFilter
-			// }
 		};
 
 		$scope.findTimeEntries = function (periodKey) {

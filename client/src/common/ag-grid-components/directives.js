@@ -44,18 +44,21 @@ angular.module('agGridDirectives',[])
 							var model = attrs['ngModelToDirective'];
 							var selectedItem = undefined;
 							$scope.data = scope[model];
+
+							// Setting available vehicles for selection.
 							$scope.vehicles = scope.driversAndOps.vehicles;
 
 							$scope.valueAutoVehicle = '';
-							$scope.valueAutoVehiclePlaceholder = $scope.data.resource.name +  " " + $scope.data.resource.plateNumber;
 
-							$scope.odometerStart= $scope.data.odometerStart;
-							$scope.odometerEnd= $scope.data.odometerEnd;
-
-							$scope.fuelStart= $scope.data.fuelStart;
-							$scope.fuelEnd= $scope.data.fuelEnd;
-
-
+							// Setting vehicle value. And validate if there is a vehicle
+							// in the time entry records.
+							if (!_.isNil($scope.data)) {
+								$scope.valueAutoVehiclePlaceholder = $scope.data.resource.name +  " " + $scope.data.resource.plateNumber;
+								$scope.odometerStart= $scope.data.odometerStart;
+								$scope.odometerEnd= $scope.data.odometerEnd;
+								$scope.fuelStart= $scope.data.fuelStart;
+								$scope.fuelEnd= $scope.data.fuelEnd;
+							}
 
 							$scope.agGridVehicleSelectedItemChange = function(item) {
 								console.log(" vehicles item changes to " + JSON.stringify(item));
@@ -79,16 +82,14 @@ angular.module('agGridDirectives',[])
 							$scope.ok = function() {
 								if(_.isNil(selectedItem)) {
 									selectedItem= _.cloneDeep($scope.data);
+									selectedItem.odometerStart = $scope.odometerStart;
+									selectedItem.odometerEnd = $scope.odometerEnd;
+									selectedItem.fuelStart = $scope.fuelStart;
+									selectedItem.fuelEnd = $scope.fuelEnd;
+									// Send the new vehicles as selected record to the ag-grid.
+									scope[model] = selectedItem;
+									scope.$broadcast('agGridVehicleUpdateEvent',selectedItem);
 								}
-
-								selectedItem.odometerStart = $scope.odometerStart;
-								selectedItem.odometerEnd = $scope.odometerEnd;
-								selectedItem.fuelStart = $scope.fuelStart;
-								selectedItem.fuelEnd = $scope.fuelEnd;
-								// Send the new vehicles as selected record to the ag-grid.
-								scope[model] = selectedItem;
-
-								scope.$broadcast('agGridVehicleUpdateEvent',selectedItem);
 
 								$mdDialog.cancel();
 							};

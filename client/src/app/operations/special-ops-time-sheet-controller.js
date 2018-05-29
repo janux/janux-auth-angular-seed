@@ -336,32 +336,38 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 		//
 		var columnDefs = [
 			{
-				headerName : $filter('translate')('operations.specialsTimeLog.staff'),
-				field      : 'staff',
-				editable   : true,
+				headerName  : $filter('translate')('operations.specialsTimeLog.staff'),
+				field       : 'staff',
+				editable    : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
-				valueGetter: function (params) {
+				valueGetter : function (params) {
 					var res = params.data.staff.resource;
 					return res.name.last + ' ' + res.name.first;
 				},
-				cellEditor : agGridComp.autocompleteStaffCellEditor
+				cellEditor  : agGridComp.autocompleteStaffCellEditor,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName : $filter('translate')('operations.specialsTimeLog.operation'),
-				field      : 'operation',
-				editable   : true,
+				headerName  : $filter('translate')('operations.specialsTimeLog.operation'),
+				field       : 'operation',
+				editable    : true,
 				// cellRenderer: agGridComp.operationCellRenderer,
-				valueGetter: function (params) {
+				valueGetter : function (params) {
 					return params.data.operation.name;
 				},
-				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width      : 110
+				cellEditor  : agGridComp.autocompleteOpCellEditor,
+				width       : 110,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.function'),
 				field         : 'functionValue',
 				editable      : true,
 				cellEditor    : agGridComp.specialOpsFunctionCellEditor,
+				filter        : 'agTextColumnFilter',
+				filterParams  : {newRowsAction: 'keep'},
 				valueFormatter: function (params) {
 					var locale;
 					if (!_.isNil(params.data)) {
@@ -388,10 +394,12 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				}
 			},
 			{
-				headerName: $filter('translate')('operations.specialsTimeLog.client'),
-				field     : 'client',
-				editable  : true,
-				cellEditor: agGridComp.clientCellUpdater
+				headerName  : $filter('translate')('operations.specialsTimeLog.client'),
+				field       : 'client',
+				editable    : true,
+				cellEditor  : agGridComp.clientCellUpdater,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
@@ -399,6 +407,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
+					newRowsAction   : 'keep',
 					inRangeInclusive: true,
 					comparator      : agGridComp.dateFilterComparator,
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
@@ -416,7 +425,8 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
-					comparator: agGridComp.dateFilterComparator
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
@@ -469,8 +479,6 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 					} else {
 						return '';
 					}
-
-
 				},
 				cellStyle     : {
 					'white-space': 'normal'
@@ -557,14 +565,24 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 
 				specialOpsTimeEntryToUpdate.resources[0] = setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
 
-				// Assign vehicle.
-				specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
+				if (!_.isNil(rowObj.data.vehicle)) {
 
-				if (!_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerEnd) && !_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerStart) &&
-					_.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerStart) > _.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerEnd)) {
-					infoDialog('operations.dialogs.odometerStartGreaterThanEnd');
-					$scope.findTimeEntries($scope.periodFilterKey);
-				}else{
+					// Assign vehicle.
+					specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
+					// Validate odometer values.
+					if (!_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerEnd) && !_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerStart) &&
+						_.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerStart) > _.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerEnd)) {
+						infoDialog('operations.dialogs.odometerStartGreaterThanEnd');
+						$scope.findTimeEntries($scope.periodFilterKey);
+					} else {
+						// $scope.findTimeEntries($scope.periodFilterKey);
+						timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
+							$scope.findTimeEntries($scope.periodFilterKey);
+							// infoDialog('Time entry successfully updated');
+						});
+					}
+
+				} else {
 					// $scope.findTimeEntries($scope.periodFilterKey);
 					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
 						$scope.findTimeEntries($scope.periodFilterKey);

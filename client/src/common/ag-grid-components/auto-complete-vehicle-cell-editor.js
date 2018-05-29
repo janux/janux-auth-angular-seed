@@ -28,7 +28,9 @@ AutoCompleteVehicle.prototype.init = function (params) {
 	params.$scope.$on('agGridVehicleUpdateEvent', onVehicleUpdateData);
 
 	this.eInput = document.createElement('input');
-	this.eInput.value = params.value.resource.name + ' ' + params.value.resource.plateNumber;
+	if (!_.isNil(params.value)) {
+		this.eInput.value = params.value.resource.name + ' ' + params.value.resource.plateNumber;
+	}
 	this.eInput.setAttribute('ag-grid-vehicle-autocomplete', '');
 	this.eInput.setAttribute('ng-model-to-directive', this.model);
 

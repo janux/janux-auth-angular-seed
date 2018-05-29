@@ -1,6 +1,6 @@
 'use strict';
 
-	var moment = require('moment');
+var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
@@ -224,11 +224,11 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		//
 		var columnDefs = [
 			{
-				headerName : $filter('translate')('operations.attendanceTimeLog.staff'),
-				field      : 'staff',
-				editable   : true,
+				headerName  : $filter('translate')('operations.attendanceTimeLog.staff'),
+				field       : 'staff',
+				editable    : true,
 				// cellRenderer: agGridComp.staffCellRenderer,
-				valueGetter: function (params) {
+				valueGetter : function (params) {
 					var result;
 					if (_.isNil(params.data.staff)) {
 						result = '';
@@ -238,17 +238,21 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					}
 					return result;
 				},
-				cellEditor : agGridComp.autocompleteStaffCellEditor
+				cellEditor  : agGridComp.autocompleteStaffCellEditor,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName : $filter('translate')('operations.attendanceTimeLog.operation'),
-				field      : 'operation',
-				editable   : false,
-				valueGetter: function (params) {
+				headerName  : $filter('translate')('operations.attendanceTimeLog.operation'),
+				field       : 'operation',
+				editable    : false,
+				valueGetter : function (params) {
 					return params.data.operation.name;
 				},
-				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width      : 110
+				cellEditor  : agGridComp.autocompleteOpCellEditor,
+				width       : 110,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 
 			{
@@ -277,14 +281,13 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					return val;
 				}
 			},
-
-
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
 				field         : 'begin',
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
+					newRowsAction   : 'keep',
 					inRangeInclusive: true,
 					comparator      : agGridComp.dateFilterComparator,
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
@@ -302,7 +305,8 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
-					comparator: agGridComp.dateFilterComparator
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
@@ -335,7 +339,6 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				headerName    : $filter('translate')('operations.attendanceTimeLog.absence'),
 				field         : 'absence',
 				editable      : true,
-				// TODO: new absence cell editor for only attendance.
 				cellEditor    : agGridComp.absenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';
@@ -356,6 +359,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					return val;
 				},
 				filterParams  : {
+					newRowsAction: 'keep',
 					textFormatter: function (value) {
 						if (value === 'sin falta') {
 							return 'SF';

@@ -374,11 +374,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		//
 		var columnDefs = [
 			{
-				headerName : $filter('translate')('operations.guardsTimeLog.staff'),
-				field      : 'staff',
-				editable   : true,
-				// cellRenderer: agGridComp.staffCellRenderer,
-				valueGetter: function (params) {
+				headerName  : $filter('translate')('operations.guardsTimeLog.staff'),
+				field       : 'staff',
+				editable    : true,
+				valueGetter : function (params) {
 					var result;
 					if (_.isNil(params.data.staff)) {
 						result = '';
@@ -388,25 +387,30 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					}
 					return result;
 				},
-				cellEditor : agGridComp.autocompleteStaffCellEditor
+				cellEditor  : agGridComp.autocompleteStaffCellEditor,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName : $filter('translate')('operations.guardsTimeLog.operation'),
-				field      : 'operation',
-				editable   : true,
-				// cellRenderer: agGridComp.operationCellRenderer,
-				valueGetter: function (params) {
+				headerName  : $filter('translate')('operations.guardsTimeLog.operation'),
+				field       : 'operation',
+				editable    : true,
+				valueGetter : function (params) {
 					return params.data.operation.name;
 				},
-				cellEditor : agGridComp.autocompleteOpCellEditor,
-				width      : 130
+				cellEditor  : agGridComp.autocompleteOpCellEditor,
+				width       : 130,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName: $filter('translate')('operations.guardsTimeLog.client'),
-				field     : 'client',
-				editable  : true,
-				cellEditor: agGridComp.clientCellUpdater,
-				width     : 110
+				headerName  : $filter('translate')('operations.guardsTimeLog.client'),
+				field       : 'client',
+				editable    : true,
+				cellEditor  : agGridComp.clientCellUpdater,
+				width       : 110,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
 			},
 
 			// Extras
@@ -443,7 +447,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return val;
 				},
 				filterParams  : {
-
+					newRowsAction       : 'keep',
 					textCustomComparator: function (filter, gridValue, filterText) {
 
 						var filterTextLoweCase = filterText.toLowerCase();
@@ -498,6 +502,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
+					newRowsAction   : 'keep',
 					inRangeInclusive: true,
 					comparator      : agGridComp.dateFilterComparator,
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
@@ -515,7 +520,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				editable      : true,
 				filter        : 'date',
 				filterParams  : {
-					comparator: agGridComp.dateFilterComparator
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';

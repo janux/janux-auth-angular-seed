@@ -83,8 +83,8 @@ require('angular').module('config', [])
 						translate  : 'authSchema.roles',
 						authContext: 'ROLE'
 					},
-					authorizations: {
-						state      : 'permissions.auth-contexts',
+					authcontexts: {
+						state      : 'permissions.authcontexts',
 						translate  : 'authSchema.authorizations',
 						authContext: 'AUTH_CONTEXT'
 					}
@@ -98,7 +98,7 @@ require('angular').module('config', [])
 				iconClass   : 'fa-users',
 				state       : 'users',
 				subOptions  : {
-					staff: {
+					staffClient: {
 						state      : 'staffClient',
 						translate  : 'peopleOrgs.contacts',
 						authContext: 'CLIENT_CONTACT'

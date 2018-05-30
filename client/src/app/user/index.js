@@ -23,8 +23,8 @@ require('angular').module('appUsers', [
 		authRequired: true,
 		controller: require('./users-controller.js'),
 		resolve: {
-			users: ['userService', function (userService) {
-				return userService.findBy('username', '').then(function(usersMatch) {
+			users: ['userService','security', function (userService, security) {
+				return userService.findBy('username', '', security.currentUser.username).then(function(usersMatch) {
 					return  _.map(usersMatch,function(user){
 						user.cdate = moment(user.cdate).format('YYYY-MM-DD HH:mm:ss');
 						return user;

@@ -98,6 +98,11 @@ require('angular').module('config', [])
 				iconClass   : 'fa-users',
 				state       : 'users',
 				subOptions  : {
+					users    : {
+						state      : 'users',
+						translate  : 'peopleOrgs.users',
+						authContext: 'USER'
+					},
 					staffClient: {
 						state      : 'staffClient',
 						translate  : 'peopleOrgs.contacts',

@@ -4,8 +4,8 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = [
-'$scope','userService','$state','users','$modal', '$q', '$filter', function(
- $scope , userService , $state , users , $modal, $q, $filter) {
+'$scope','userService','$state','users','$modal', '$q', '$filter', 'security', function(
+ $scope , userService , $state , users , $modal, $q, $filter, security) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
@@ -29,7 +29,7 @@ module.exports = [
 	};
 
 	$scope.findUsers = function() {
-		userService.findBy($scope.searchField, $scope.searchString).then(function(usersMatch) {
+		userService.findBy($scope.searchField, $scope.searchString, security.currentUser.username).then(function(usersMatch) {
 			$scope.usersMatch = _.map(usersMatch,function(user){
 				user.cdate = moment(user.cdate).format('YYYY-MM-DD HH:mm:ss');
 				return user;

@@ -64,7 +64,7 @@ var config                           = require('config'),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
     RolePersistService               = RolePersistence.createInstance(RoleDAO),
-    UserOperationService             = new UserOperationServiceImpl(GlarusUserPersistenceService, OperationPersistService, PartyGroupPersistenceService, PartyPersistenceService);
+    UserOperationService             = new UserOperationServiceImpl(GlarusUserPersistenceService, OperationPersistService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,

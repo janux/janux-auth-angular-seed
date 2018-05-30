@@ -1,11 +1,10 @@
 'user strict';
 
-var log4js = require('log4js'),
-    _      = require('underscore'),
-    lodash = require('lodash'),
+var log4js           = require('log4js'),
+    _                = require('underscore'),
     PartyServiceImpl = require('janux-persist').PartyServiceImpl,
-    bluebird = require('bluebird');
-    log    = log4js.getLogger('UserService');
+    bluebird         = require('bluebird');
+log = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
@@ -31,24 +30,24 @@ var createInstance = function (serviceReference) {
 	//
 
 	// Find records depending on a particular field
-	UserService.prototype.findBy = function (field, search, callback) {
+	UserService.prototype.findBy = function (field, search, authenticatedUserName, callback) {
 		log.info("Call to findBy with field: %j ,search: %j ", field, search);
 		var promise;
 		switch (field) {
 			case 'username':
-				promise = userServicePersistence.findAllByUserNameMatch(search);
+				promise = userServicePersistence.findAllByUserNameMatch(search, authenticatedUserName);
 				// return userServicePersistence.findAllByUserNameMatch(search).asCallback(callback);
 				break;
 			case 'name':
-				promise = userServicePersistence.findAllByContactNameMatch(search);
+				promise = userServicePersistence.findAllByContactNameMatch(search, authenticatedUserName);
 				// return userServicePersistence.findAllByContactNameMatch(search).asCallback(callback);
 				break;
 			case 'email':
-				promise = userServicePersistence.findAllByEmail(search);
+				promise = userServicePersistence.findAllByEmail(search, authenticatedUserName);
 				// return userServicePersistence.findAllByEmail(search).asCallback(callback);
 				break;
 			case 'phone':
-				promise = userServicePersistence.findAllByPhone(search);
+				promise = userServicePersistence.findAllByPhone(search, authenticatedUserName);
 				// return userServicePersistence.findAllByPhone(search).asCallback(callback);
 				break;
 		}

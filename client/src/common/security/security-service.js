@@ -7,8 +7,8 @@ var
 ;
 
 module.exports =
-       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper','$rootScope','userService',
-function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper, $rootScope,userService) {
+       ['$modal','$http','$location','$q','retryQueue','$state', 'localStorageService', 'jwtHelper','$rootScope',
+function($modal , $http , $location , $q , retryQueue , $state, localStorageService, jwtHelper, $rootScope) {
 
 	function redirect(url) {
 		url = url || '/';

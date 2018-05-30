@@ -4,7 +4,7 @@ var Person = require('janux-people').Person;
 
 module.exports =
 ['$q', '$http',
-function( $q ,  $http ){
+function( $q ,  $http){
 
 	// TODO. Improve a better way to cache this information.
 	var cachedCompanyInfo;
@@ -13,12 +13,12 @@ function( $q ,  $http ){
 
 
 		// Find users by specifying the field and search string
-		findBy: function(field, search)
+		findBy: function(field, search, username)
 		{
 			return $http.jsonrpc(
 				'/rpc/2.0/users',
 				'findBy',
-				[ field, search ]
+				[ field, search, username ]
 			).then(function(resp) {
 				var out = resp.data.result;
 				out = (typeof out.length === 'undefined')?[out]:out;

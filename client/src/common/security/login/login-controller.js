@@ -71,7 +71,7 @@ function($scope , security , $translate , $state , config , $stateParams, userSe
 			}
 			else if ($state.current.name === 'login') {
 				// $state.go(config.defaultState);
-				userService.findCompanyInfo(security.currentUser.userName)
+				userService.findCompanyInfo($scope.user.account.name)
 					.then(function (result) {
 						if (result.id === config.glarus) {
 							$state.go(config.defaultState);

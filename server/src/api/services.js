@@ -15,6 +15,7 @@ var UserPersistence                      = require('janux-persist').UserService,
     TimeEntryReportAttendanceServiceImpl = require('glarus-services').TimeEntryReportAttendanceService,
     TimeEntryReportSpecialOpsServiceImpl = require('glarus-services').TimeEntryReportSpecialOpsService,
     VehicleServiceImpl                   = require('glarus-services').VehicleServiceImpl,
+    GlarusUserPersistence                = require('glarus-services').UserServiceImpl,
     UserOperationServiceImpl             = require('glarus-services').UserOperationService;
 
 var config                           = require('config'),
@@ -57,12 +58,13 @@ var config                           = require('config'),
 
     GroupPersistService              = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
     PartyGroupPersistenceService     = new PartyGroupServiceImpl(PartyPersistenceService, GroupPersistService),
-    UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService, PartyGroupPersistenceService),
+    UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
+    GlarusUserPersistenceService     = new GlarusUserPersistence(UserPersistenceService, PartyGroupPersistenceService, PartyPersistenceService),
     ResellerPersistenceService       = new ResellerServiceImpl(PartyGroupPersistenceService),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
     RolePersistService               = RolePersistence.createInstance(RoleDAO),
-    UserOperationService             = new UserOperationServiceImpl(UserPersistenceService, OperationPersistService, PartyGroupPersistenceService, PartyPersistenceService);
+    UserOperationService             = new UserOperationServiceImpl(GlarusUserPersistenceService, OperationPersistService, PartyGroupPersistenceService, PartyPersistenceService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,
@@ -81,5 +83,6 @@ module.exports = {
 	AuthContextPersistService       : AuthContextPersistService,
 	AuthContextGroupPersistService  : AuthContextGroupPersistService,
 	RolePersistService              : RolePersistService,
+	GlarusUserPersistenceService    : GlarusUserPersistenceService,
 	UserOperationService            : UserOperationService
 };

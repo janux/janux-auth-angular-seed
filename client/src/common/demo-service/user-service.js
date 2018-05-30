@@ -6,9 +6,6 @@ module.exports =
 ['$q', '$http',
 function( $q ,  $http){
 
-	// TODO. Improve a better way to cache this information.
-	var cachedCompanyInfo;
-
 	var service = {
 
 
@@ -63,24 +60,16 @@ function( $q ,  $http){
 		},
 
 		findCompanyInfo: function(username){
-			if (_.isNil(cachedCompanyInfo)) {
-				return $http.jsonrpc(
-					'/rpc/2.0/users',
-					'findCompanyInfo',
-					[ username ]
-				).then(function(resp) {
-					// TODO. For some reason, I can't import PartyService, maybe due to some circular dependency.
-					// return PartyService.fromJSON(resp.data.result);
-					if (!_.isNil(resp.data.result)) {
-						cachedCompanyInfo = resp.data.result;
-					}else{
-						cachedCompanyInfo = undefined;
-					}
-					return resp.data.result;
-				});
-			}else{
-				return $q.resolve(cachedCompanyInfo);
-			}
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'findCompanyInfo',
+				[ username ]
+			).then(function(resp) {
+				// TODO. For some reason, I can't import PartyService, maybe due to some circular dependency.
+				// return PartyService.fromJSON(resp.data.result);
+
+				return resp.data.result;
+			});
 		},
 
 		// Add new user

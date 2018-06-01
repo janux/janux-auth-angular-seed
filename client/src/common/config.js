@@ -227,11 +227,6 @@ require('angular').module('config', [])
 				key  : 'lastQuarter',
 				label: 'periodFilter.lastQuarter'
 			},
-
-			{
-				key  : 'lastQuarter',
-				label: 'periodFilter.lastQuarter'
-			},
 			{
 				key  : 'oneYear',
 				label: 'periodFilter.oneYear'

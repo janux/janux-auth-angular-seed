@@ -184,7 +184,7 @@
 	    "contacts": "Contacts"
 	},
 	"operations": {
-		"title": "Operations",
+		"title": "Time sheets",
 		"drivers": "Drivers",
 		"driversTimeLog": {
 			"title": "Drivers Time Log",

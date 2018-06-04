@@ -280,6 +280,7 @@
 		"dialogs":{
 			"endDateError":"End date should be higher than begin date",
 			"invalidOperation":"Invalid operation selected",
+			"invalidFunction":"Invalid function selected",
 			"invalidStaff":"Invalid staff member selected",
 			"noRowSelectedError":"Select at least one row to delete",
 			"confirmDeletion":"Are you sure you want to delete the row selection?",

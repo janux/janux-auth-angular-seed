@@ -284,6 +284,7 @@
 		"dialogs":{
 			"endDateError":"La fecha de término debe ser mayor a la fecha de inicio",
 			"invalidOperation":"La operación seleccionada es invalida",
+			"invalidFunction":"La función seleccionada es invalida",
 			"invalidStaff":"El personal seleccionado es invalido",
 			"noRowSelectedError":"Selecciona al menos un registro para borrar",
 			"confirmDeletion":"De verdad deseas borrar la selección?",

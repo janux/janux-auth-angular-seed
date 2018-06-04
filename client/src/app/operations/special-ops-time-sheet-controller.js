@@ -227,6 +227,11 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				return;
 			}
 
+			if (!$scope.lbRow.function) {
+				infoDialog('operations.dialogs.invalidFunction');
+				return;
+			}
+
 
 			//////
 			if (!!$scope.driverTimeSheet.$valid) {

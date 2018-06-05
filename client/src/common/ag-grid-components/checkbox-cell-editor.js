@@ -15,7 +15,7 @@ CheckBoxCellEditor.prototype.init = function(params) {
 
 	this.eInput = document.createElement('div');
 	this.eInput.align='center';
-	this.eInput.style='padding:0px 5px 5px 14px;';
+	this.eInput.style.cssText='padding:0px 5px 5px 14px;';
 
 	var checkbox = document.createElement('md-checkbox');
 	checkbox.setAttribute('ng-model', this.model);

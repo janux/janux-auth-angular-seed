@@ -31,13 +31,15 @@ side-bar
 								| {{ 'client.tabMenu.tabMenuFirst' | translate | uppercase }}
 							md-nav-item(md-nav-click="changeTab('contacts')" name="contacts")
 								| {{ 'client.tabMenu.tabMenuSecond' | translate | uppercase }}
+							md-nav-item(md-nav-click="changeTab('rates')" name="rates")
+								| {{ 'client.tabMenu.tabMenuRates' | translate | uppercase }}
 
 						span(flex)
 
 						.btn-row
 							button.btn(ng-show='currentNavItem=="client"')
 								i.fa.fa-trash
-							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts"')
+							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="rates"')
 								i.fa.fa-check
 							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
 								i.fa.fa-check
@@ -45,6 +47,8 @@ side-bar
 								i.fa.fa-times
 							button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact)')
 								i.fa.fa-user-plus
+							button.btn(ng-click='updateRateMatrix()' ng-show='currentNavItem=="rates"')
+								i.fa.fa-check
 							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact')
 								i.fa.fa-times
 
@@ -57,4 +61,6 @@ side-bar
 				div(ng-show='currentNavItem=="contacts" && (editContact || addContact )')
 					include ../../common/components/templates/contact
 
+				div(ng-show='currentNavItem=="rates"')
+					include client-rates
 footer-Janux

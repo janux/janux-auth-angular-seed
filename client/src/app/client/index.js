@@ -48,6 +48,9 @@ require('angular').module('appClient', [
 			}],
 			clientGroup: ['client','partyGroupService',function (client,partyGroupService) {
 				return partyGroupService.findOneOwnedByPartyAndType(client.id, 'COMPANY_CONTACTS', true);
+			}],
+			rateMatrix: ['client','rateMatrixService',function (client,rateMatrixService) {
+				return rateMatrixService.findOrInsertDefaultRateMatrix(client.id);
 			}]
 		}
 	});

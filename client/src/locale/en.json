@@ -131,15 +131,43 @@
 		"creation": "Creation",
 		"tabMenu": {
 			"tabMenuFirst":"Organization",
-			"tabMenuSecond":"Contacts"
+			"tabMenuSecond":"Contacts",
+		    "tabMenuRates":"Rates",
+		    "staff":"Staff"
 		},
 		"dialogs": {
 			"noRowSelectedError":"Select at least one client contact to delete",
 			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
 			"successDeletedContacts":"Selected contacts successfully deleted",
 			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
-			"clientSaved": "Client successfully saved"
-		}
+			"clientSaved": "Client successfully saved",
+			"rateSaved": "Rates successfully saved"
+		},
+	    "rates":{
+	 		"specialOps":"Special Ops",
+			"guards":"Guards",
+			"research":"Research",
+			"staff":"Staff",
+			"vehicle":"Vehicle",
+			"vehiclePlusStaff":"Vehicle + Staff",
+		    "function": "Function",
+			"rateDay": "Daily rate",
+			"hoursFullDay": "Hours working day",
+			"rateMinimum": "Minimum rate",
+			"hoursHalfDay":"Minimum hours working day",
+			"rateExtraHour":"Extra time rate",
+		    "driver": "Driver",
+		    "agent": "Agent",
+		    "agentArmed":"Agent (armed)",
+		    "coordinator": "Coordinator",
+		    "vehicleArmored":"Armored vehicle",
+		    "transport":"Transport",
+		    "guard":"Guard",
+		    "guardShiftManager":"Guard (shift manager)",
+		    "guardNightShitMaintenance":"Guard (night shift maintenance)",
+		    "guardsGoodsReceipt":"Guard goods receipt",
+		    "guardSupport":"Guard support"
+	    }
 
 	},
     "supplier":{

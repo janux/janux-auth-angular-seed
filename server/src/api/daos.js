@@ -54,7 +54,10 @@ const VehicleDao            = require("glarus-services").VehicleDao,
       ResourceDao           = require("glarus-services").ResourceDao,
       CurrentResourceDao    = require("glarus-services").CurrentResourceDao,
       TimeEntryAttributeDao = require("glarus-services").TimeEntryAttributeDao,
-      TimeEntryResourceDao  = require("glarus-services").TimeEntryResourceDao;
+      TimeEntryResourceDao  = require("glarus-services").TimeEntryResourceDao,
+      TaskTypeDao           = require('glarus-services').TaskTypeDao,
+      RateDao               = require('glarus-services').RateDao,
+      RateMatrixDao         = require('glarus-services').RateMatrixDao;
 
 
 const VehicleMongooseSchema            = require("glarus-services").VehicleMongooseSchema,
@@ -66,7 +69,10 @@ const VehicleMongooseSchema            = require("glarus-services").VehicleMongo
       ResourceMongooseSchema           = require("glarus-services").ResourceMongooseSchema,
       CurrentResourceMongooseSchema    = require("glarus-services").CurrentResourceMongooseSchema,
       TimeEntryAttributeMongooseSchema = require("glarus-services").TimeEntryAttributeMongooseSchema,
-      TimeEntryResourceMongooseSchema  = require("glarus-services").TimeEntryResourceMongooseSchema;
+      TimeEntryResourceMongooseSchema  = require("glarus-services").TimeEntryResourceMongooseSchema,
+      TaskTypeMongooseSchema           = require('glarus-services').TaskTypeMongooseSchema,
+      RateMongooseSchema               = require('glarus-services').RateMongooseSchema,
+      RateMatrixMongooseSchema         = require('glarus-services').RateMAtrixMongooseSchema;
 
 const VEHICLE_COLLECTION              = "vehicle",
       TIME_ENTRY_COLLECTION           = "timeEntry",
@@ -77,7 +83,10 @@ const VEHICLE_COLLECTION              = "vehicle",
       RESOURCE_COLLECTION             = "resource",
       TIME_ENTRY_ATTRIBUTE_COLLECTION = "timeEntryAttribute",
       CURRENT_RESOURCE_COLLECTION     = "currentResource",
-      TIME_ENTRY_RESOURCE_COLLECTION  = "timeEntryResource";
+      TIME_ENTRY_RESOURCE_COLLECTION  = "timeEntryResource",
+      TASK_TYPE_COLLECTION            = 'taskType',
+      RATE_COLLECTION                 = 'rate',
+      RATE_MATRIX_COLLECTION          = 'rateMatrix';
 
 // End Glarus services DAOs.
 
@@ -104,8 +113,10 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		resourceDao          : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), ResourceMongooseSchema), ResourceDao),
 		currentResourceDao   : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, CURRENT_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), CurrentResourceMongooseSchema), CurrentResourceDao),
 		timeEntryAttributeDao: DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_ATTRIBUTE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TimeEntryAttributeMongooseSchema), TimeEntryAttributeDao),
-		timeEntryResourceDao : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TimeEntryResourceMongooseSchema), TimeEntryResourceDao)
-
+		timeEntryResourceDao : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TimeEntryResourceMongooseSchema), TimeEntryResourceDao),
+		taskTypeDao          : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TASK_TYPE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TaskTypeMongooseSchema), TaskTypeDao),
+		rateDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), RateMongooseSchema), RateDao),
+		rateMatrixDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_MATRIX_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), RateMatrixMongooseSchema), RateMatrixDao)
 	};
 
 } else if (dbEngine === DataSourceHandler.LOKIJS) {
@@ -128,7 +139,10 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		resourceDao          : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), ResourceDao),
 		currentResourceDao   : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, CURRENT_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), CurrentResourceDao),
 		timeEntryAttributeDao: DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_ATTRIBUTE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), TimeEntryAttributeDao),
-		timeEntryResourceDao : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), TimeEntryResourceDao)
+		timeEntryResourceDao : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), TimeEntryResourceDao),
+		taskTypeDao          : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TASK_TYPE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), TaskTypeDao),
+		rateDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), RateDao),
+		rateMatrixDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_MATRIX_COLLECTION, EntityPropertiesImpl.createDefaultProperties()), RateMatrixDao)
 	}
 }
 

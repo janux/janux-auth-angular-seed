@@ -16,7 +16,9 @@ var UserPersistence                      = require('janux-persist').UserService,
     TimeEntryReportSpecialOpsServiceImpl = require('glarus-services').TimeEntryReportSpecialOpsService,
     VehicleServiceImpl                   = require('glarus-services').VehicleServiceImpl,
     GlarusUserPersistence                = require('glarus-services').UserServiceImpl,
-    UserOperationServiceImpl             = require('glarus-services').UserOperationService;
+    UserOperationServiceImpl             = require('glarus-services').UserOperationService,
+    TaskTypeServiceImpl                  = require('glarus-services').TaskTypeServiceImpl,
+    RateMatrixServiceImpl                = require('glarus-services').RateMatrixServiceImpl;
 
 var config                           = require('config'),
     appContext                       = config.serverAppContext,
@@ -42,6 +44,9 @@ var config                           = require('config'),
     CurrentResourceDao               = DAOs[appContext.dao.currentResourceDao],
     TimeEntryAttributeDao            = DAOs[appContext.dao.timeEntryAttributeDao],
     TimeEntryResourceDao             = DAOs[appContext.dao.timeEntryResourceDao],
+    TaskTypeDao                      = DAOs[appContext.dao.taskTypeDao],
+    RateDao                          = DAOs[appContext.dao.rateDao],
+    RateMatrixDao                    = DAOs[appContext.dao.rateMatrixDao],
     // End glarus services DAOs.
 
     // Begin glarus services implementations.
@@ -53,6 +58,8 @@ var config                           = require('config'),
     TimeEntryReportAttendanceService = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
     TimeEntryReportSpecialOpsService = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService),
     VehiclePersistenceService        = new VehicleServiceImpl(VehicleDao),
+    TaskTypeService                  = new TaskTypeServiceImpl(TaskTypeDao),
+    RateMatrixService                = new RateMatrixServiceImpl(PartyPersistenceService, RateMatrixDao, RateDao, TaskTypeDao,TaskTypeService),
 
     // End glarus services implementations.
 
@@ -84,5 +91,7 @@ module.exports = {
 	AuthContextGroupPersistService  : AuthContextGroupPersistService,
 	RolePersistService              : RolePersistService,
 	GlarusUserPersistenceService    : GlarusUserPersistenceService,
-	UserOperationService            : UserOperationService
+	UserOperationService            : UserOperationService,
+	TaskTypeService                 : TaskTypeService,
+	RateMatrixService               : RateMatrixService
 };

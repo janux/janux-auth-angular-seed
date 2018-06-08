@@ -9,8 +9,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-'$scope','partyService','partyGroupService','$state','client','clientGroup','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
- $scope , partyService , partyGroupService , $state , client , clientGroup , $modal , $filter , $mdDialog , $mdToast , $stateParams) {
+'$scope','partyService','partyGroupService','rateMatrixService','$state','client','clientGroup','rateMatrix','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
+ $scope , partyService , partyGroupService , rateMatrixService , $state , client , clientGroup , rateMatrix , $modal , $filter , $mdDialog , $mdToast , $stateParams) {
 
 	var contacts = [];
 	if(!_.isNil(clientGroup)){
@@ -29,6 +29,7 @@ module.exports = [
 	$scope.contacts = contacts;
 	$scope.editContact = false;
 	$scope.addContact = false;
+	$scope.rateForm=rateMatrix;
 
 	var infoDialog = function (translateKey) {
 		$modal.open({
@@ -63,6 +64,18 @@ module.exports = [
 		} else {
 			infoDialog('party.dialogs.noContacts');
 		}
+	};
+
+	$scope.updateRateMatrix = function () {
+		rateMatrixService.update($scope.rateForm)
+			.then(function () {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('client.dialogs.rateSaved'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
+			});
 	};
 
 	var save = function (preventDefault) {
@@ -186,22 +199,23 @@ module.exports = [
 	};
 
 	$scope.changeTab = function (tab) {
+		var saveClientDialogResult;
 		switch (tab) {
 			case 'client':
 				// Possibly client contact editing taking place
 				var saveClientContactDialogResult = checkClientContactBeforeExit().result;
-				if(saveClientContactDialogResult) {
+				if (saveClientContactDialogResult) {
 					saveClientContactDialogResult.then(function (res) {
 						// Saved or not
-						if(res) {
-							$state.go('client.edit', {id: client.id, tab:'client'}, {reload: true});
+						if (res) {
+							$state.go('client.edit', {id: client.id, tab: 'client'}, {reload: true});
 						}
 						// Canceled
 						else {
 							$scope.currentNavItem = 'contacts';
 						}
 					});
-				}else {	// No changes
+				} else {	// No changes
 					$scope.editContact = false;
 					$scope.addContact = false;
 				}
@@ -209,14 +223,31 @@ module.exports = [
 
 			case 'contacts':
 				// Possibly client data editing taking place
-				var saveClientDialogResult = checkClientDataBeforeExit().result;
-				if(saveClientDialogResult) {
+				saveClientDialogResult = checkClientDataBeforeExit().result;
+				if (saveClientDialogResult) {
 					saveClientDialogResult.then(function (res) {
-						if(res) {
+						if (res) {
 							$scope.clientForm.$setPristine();
 							$scope.currentNavItem = 'contacts';
 							// cancel current contact editing
-							$scope.editContact=false;
+							$scope.editContact = false;
+							$scope.addContact = false;
+						} else {
+							$scope.currentNavItem = 'client';
+						}
+					});
+				}
+				break;
+			case 'rates':
+				// Possibly client data editing taking place
+				saveClientDialogResult = checkClientDataBeforeExit().result;
+				if (saveClientDialogResult) {
+					saveClientDialogResult.then(function (res) {
+						if (res) {
+							$scope.clientForm.$setPristine();
+							$scope.currentNavItem = 'rates';
+							// cancel current contact editing
+							$scope.editContact = false;
 							$scope.addContact = false;
 						} else {
 							$scope.currentNavItem = 'client';

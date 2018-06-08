@@ -34,6 +34,9 @@ module.exports = {
 			currentResourceDao    : 'currentResourceDao',
 			timeEntryAttributeDao : 'timeEntryAttributeDao',
 			timeEntryResourceDao  : 'timeEntryResourceDao',
+			taskTypeDao           : 'taskTypeDao',
+			rateDao               : 'rateDao',
+			rateMatrixDao         : 'rateMatrixDao'
 			// End glarus services daos.
 		},
 

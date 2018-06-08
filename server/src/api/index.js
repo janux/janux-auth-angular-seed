@@ -11,7 +11,8 @@ var Services           = require('./services'),
     ResourceService    = require('./resource-service'),
     PartyGroupService  = require('./party-group-service'),
     VehicleService     = require('./vehicle-service'),
-    ResellerService    = require('./reseller-service');
+    ResellerService    = require('./reseller-service'),
+    RateMatrixService  = require('./rate-matrix-service');
 
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
 	RoleService                     : RoleService.create(Services.RolePersistService),
 	UserPersistenceService          : Services.UserPersistenceService,
 	PartyService                    : PartyService.create(Services.PartyPersistenceService),
-	OperationService                : OperationService.create(Services.OperationPersistService,Services.UserOperationService),
+	OperationService                : OperationService.create(Services.OperationPersistService, Services.UserOperationService),
 	TimeEntryService                : TimeEntryService.create(Services.TimeEntryPersistService),
 	ResourceService                 : ResourceService.create(Services.ResourcePersistService),
 	TimeEntryReportService          : Services.TimeEntryReportService,
@@ -29,5 +30,6 @@ module.exports = {
 	TimeEntryReportSpecialOpsService: Services.TimeEntryReportSpecialOpsService,
 	PartyGroupService               : PartyGroupService.create(Services.PartyGroupPersistenceService),
 	VehicleService                  : VehicleService.create(Services.VehiclePersistenceService),
-	ResellerService                 : ResellerService.create(Services.ResellerPersistenceService)
+	ResellerService                 : ResellerService.create(Services.ResellerPersistenceService),
+	RateMatrixService               : RateMatrixService.create(Services.RateMatrixService)
 };

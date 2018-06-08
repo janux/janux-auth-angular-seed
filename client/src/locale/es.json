@@ -133,7 +133,8 @@
 		"creation": "Creación",
 		"tabMenu": {
 		"tabMenuFirst":"Organización",
-		"tabMenuSecond":"Contactos"
+		"tabMenuSecond":"Contactos",
+		"tabMenuRates":"Tarifas"
 		},
 		"dialogs": {
 			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
@@ -141,7 +142,32 @@
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
 			"clientSaved": "Cliente guardado correctamente"
-		}
+		},
+	    "rates":{
+			"specialOps":"Servicios especiales",
+			"guards":"Guardias",
+			"research":"Investigación",
+			"staff":"Personal",
+		    "vehicle":"Vehículo",
+		    "vehiclePlusStaff":"Vehículo + Personal",
+			"function": "Función",
+			"rateDay": "Cargo por día",
+			"hoursFullDay": "Jornada",
+			"rateMinimum": "Cargo mínimo",
+			"hoursHalfDay":"Jornada mínima",
+			"rateExtraHour":"Cargo por hora extra",
+		    "driver": "Chofer",
+		    "agent": "Agente",
+		    "agentArmed":"Agente armado",
+		    "coordinator": "Coordinador",
+		    "vehicleArmored":"Vehículo blindado",
+		    "transport":"Transporte",
+		    "guard":"Guardia",
+			"guardShiftManager":"Jefe de turno",
+			"guardNightShitMaintenance":"Mantenimiento nocturno",
+			"guardsGoodsReceipt":"Recibo de mercancía",
+			"guardSupport":"Guard (soporte)"
+	    }
 	},
     "supplier": {
 		"name": "Nombre del negocio",
@@ -174,7 +200,8 @@
 			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
-			"clientSaved": "Cliente guardado correctamente"
+			"clientSaved": "Cliente guardado correctamente",
+			"rateSaved": "Tarifas guardadas correctamente"
 		}
 	},
 	"peopleOrgs": {

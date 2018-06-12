@@ -147,6 +147,7 @@
 			"specialOps":"Servicios especiales",
 			"guards":"Guardias",
 			"research":"Investigación",
+		    "researchRates":"Costos de investigación",
 			"staff":"Personal",
 		    "vehicle":"Vehículo",
 		    "vehiclePlusStaff":"Vehículo + Personal",
@@ -166,7 +167,15 @@
 			"guardShiftManager":"Jefe de turno",
 			"guardNightShitMaintenance":"Mantenimiento nocturno",
 			"guardsGoodsReceipt":"Recibo de mercancía",
-			"guardSupport":"Guard (soporte)"
+			"guardSupport":"Guard (soporte)",
+		    "researchLegal":"Investigación  legal",
+		    "researchCriminal":"Investigación criminal",
+		    "researchOfficial":"Investigación oficial",
+		    "researchRPP":"Investigación (RPP)",
+		    "researchForeigner":"Investigación foraneo",
+		    "researchSAT":"Investigación (SAT)",
+		    "researchSHCP":"Investigación (SHCP)",
+		    "researchInvestigation":"Investigaciónes"
 	    }
 	},
     "supplier": {

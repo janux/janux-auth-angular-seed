@@ -148,6 +148,7 @@
 			"guards":"Guards",
 			"research":"Research",
 			"staff":"Staff",
+			"researchRates":"Research rates",
 			"vehicle":"Vehicle",
 			"vehiclePlusStaff":"Vehicle + Staff",
 		    "function": "Function",
@@ -166,7 +167,15 @@
 		    "guardShiftManager":"Guard (shift manager)",
 		    "guardNightShitMaintenance":"Guard (night shift maintenance)",
 		    "guardsGoodsReceipt":"Guard goods receipt",
-		    "guardSupport":"Guard support"
+		    "guardSupport":"Guard support",
+		    "researchLegal":"Research (legal)",
+		    "researchCriminal":"Research ( criminal)",
+		    "researchOfficial":"Research (official)",
+		    "researchRPP":"Research (RPP)",
+		    "researchForeigner":"Research foreigner",
+		    "researchSAT":"Research (SAT)",
+		    "researchSHCP":"Research (SHCP)",
+		    "researchInvestigation":"Investigation"
 	    }
 
 	},

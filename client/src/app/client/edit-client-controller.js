@@ -67,16 +67,50 @@ module.exports = [
 	};
 
 	$scope.updateRateMatrix = function () {
-		rateMatrixService.update($scope.rateForm)
-			.then(function () {
-				$mdToast.show(
-					$mdToast.simple()
-						.textContent($filter('translate')('client.dialogs.rateSaved'))
-						.position( 'top right' )
-						.hideDelay(3000)
-				);
-			});
+
+		// Validate info.
+		if ($scope.validateRateForm()) {
+			rateMatrixService.update($scope.rateForm)
+				.then(function () {
+					$mdToast.show(
+						$mdToast.simple()
+							.textContent($filter('translate')('client.dialogs.rateSaved'))
+							.position( 'top right' )
+							.hideDelay(3000)
+					);
+				});
+		}
+
+
+
 	};
+
+	$scope.validateRateForm = function () {
+		var keys = Object.keys($scope.rateForm.rates);
+		for (var i = 0; i < keys.length; i++) {
+			var object = $scope.rateForm.rates[keys[i]];
+			if (!_.isNil(object.inputParameters.hoursFullDay) && !_.isNil(object.inputParameters.hoursHalfDay) && object.inputParameters.hoursHalfDay > object.inputParameters.hoursFullDay) {
+				infoDialog('client.rates.invalidHours');
+				return false;
+			}
+			if (!_.isNil(object.inputParameters.rateExtraHour) && _.isNil(object.inputParameters.hoursFullDay)) {
+				infoDialog('client.rates.missingHoursFullDay');
+				return false;
+			}
+			if (!_.isNil(object.inputParameters.rateMinimum) && _.isNil(object.inputParameters.hoursHalfDay)) {
+				infoDialog('client.rates.missingHoursHalfDay');
+				return false;
+			}
+
+			if ((!_.isNil(object.inputParameters.rateExtraHour) || !_.isNil(object.inputParameters.rateMinimum)) && _.isNil(object.inputParameters.rateDay)){
+				infoDialog('client.rates.missingRateDay');
+				return false;
+			}
+		}
+		return true;
+	};
+
+
 
 	var save = function (preventDefault) {
 		return partyService.update($scope.client).then(function () {

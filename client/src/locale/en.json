@@ -175,7 +175,11 @@
 		    "researchForeigner":"Research foreigner",
 		    "researchSAT":"Research (SAT)",
 		    "researchSHCP":"Research (SHCP)",
-		    "researchInvestigation":"Investigation"
+		    "researchInvestigation":"Investigation",
+		    "invalidHours": "Make sure hours working day and minimum hour are correct",
+		    "missingHoursFullDay": "Make sure hours working day are defined",
+		    "missingHoursHalfDay": "Make sure minimum hours working day are defined",
+		    "missingRateDay": "Make sure daily rate is defined"
 	    }
 
 	},

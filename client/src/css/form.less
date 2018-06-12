@@ -126,6 +126,40 @@ md-toolbar.form-root-toolbar{
 	}
 }
 
+//
+// Material tabs for glarus
+//
+
+md-tabs.glarus {
+
+	border: 1px solid @grey;
+
+	md-tabs-wrapper {
+		background: @glarus-blue;
+		color: @toolbar-glarus;
+		border-top: 1px solid @grey2;
+		z-index: 0;
+		padding-bottom: 1px;
+	}
+
+	.md-tab {
+		color: rgba(255,255,255,0.54);
+	}
+
+	.md-tab.md-active {
+		color: @white;
+	}
+
+	md-ink-bar {
+		background: url('/img/nav-ink-bar.png') no-repeat top center;
+		height:7px;
+	}
+
+	md-content {
+		background: none;
+	}
+}
+
 md-menu-content {
 	.md-button {
 		text-align: left !important;
@@ -444,3 +478,4 @@ md-menu-content {
 	    color: @white;
     }
 }
+

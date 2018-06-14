@@ -386,6 +386,9 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 							case 'AGENT_ARMED':
 								locale = 'operations.specialsTimeLog.agentArmed';
 								break;
+							case 'GREETER':
+								locale = 'operations.specialsTimeLog.greeter';
+								break;
 							case 'COORDINATOR':
 								locale = 'operations.specialsTimeLog.coordinator';
 								break;

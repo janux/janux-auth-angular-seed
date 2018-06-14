@@ -158,6 +158,7 @@ angular.module('commonComponents', [])
 				$scope.functions.function_agent = "AGENT";
 				$scope.functions.function_agent_armed = "AGENT_ARMED";
 				$scope.functions.function_coordinator = "COORDINATOR";
+				$scope.functions.function_greeter = "GREETER";
 				$scope.functions.function_guard = "GUARD";
 				$scope.functions.function_guard_support = "GUARD_SUPPORT";
 				$scope.functions.function_guard_shift_manager = "GUARD_SHIFT_MANAGER";
@@ -169,6 +170,7 @@ angular.module('commonComponents', [])
 				$scope.enabled.function_agent = false;
 				$scope.enabled.function_agent_armed = false;
 				$scope.enabled.function_coordinator = false;
+				$scope.enabled.function_greeter = false;
 				$scope.enabled.function_guard = false;
 				$scope.enabled.function_guard_support = false;
 				$scope.enabled.function_guard_shift_manager = false;
@@ -196,6 +198,7 @@ angular.module('commonComponents', [])
 						$scope.enabled.function_driver = $scope.data.functionsProvided.indexOf($scope.functions.function_driver) >= 0;
 						$scope.enabled.function_agent = $scope.data.functionsProvided.indexOf($scope.functions.function_agent) >= 0;
 						$scope.enabled.function_agent_armed = $scope.data.functionsProvided.indexOf($scope.functions.function_agent_armed) >= 0;
+						$scope.enabled.function_greeter = $scope.data.functionsProvided.indexOf($scope.functions.function_greeter) >= 0;
 						$scope.enabled.function_coordinator = $scope.data.functionsProvided.indexOf($scope.functions.function_coordinator) >= 0;
 						$scope.enabled.function_guard = $scope.data.functionsProvided.indexOf($scope.functions.function_guard) >= 0;
 						$scope.enabled.function_guard_support = $scope.data.functionsProvided.indexOf($scope.functions.function_guard_support) >= 0;
@@ -219,6 +222,7 @@ angular.module('commonComponents', [])
 				$scope.functions.function_agent = "AGENT";
 				$scope.functions.function_agent_armed = "AGENT_ARMED";
 				$scope.functions.function_coordinator = "COORDINATOR";
+				$scope.functions.function_greeter = "GREETER";
 				$scope.functions.function_guard = "GUARD";
 				$scope.functions.function_guard_support = "GUARD_SUPPORT";
 				$scope.functions.function_guard_shift_manager = "GUARD_SHIFT_MANAGER";
@@ -229,6 +233,7 @@ angular.module('commonComponents', [])
 				$scope.enabled.function_driver = false;
 				$scope.enabled.function_agent = false;
 				$scope.enabled.function_agent_armed = false;
+				$scope.enabled.function_greeter = false;
 				$scope.enabled.function_coordinator = false;
 				$scope.enabled.function_guard = false;
 				$scope.enabled.function_guard_support = false;
@@ -257,6 +262,7 @@ angular.module('commonComponents', [])
 						$scope.enabled.function_driver = $scope.data.functionsReceived.indexOf($scope.functions.function_driver) >= 0;
 						$scope.enabled.function_agent = $scope.data.functionsReceived.indexOf($scope.functions.function_agent) >= 0;
 						$scope.enabled.function_agent_armed = $scope.data.functionsReceived.indexOf($scope.functions.function_agent_armed) >= 0;
+						$scope.enabled.function_greeter = $scope.data.functionsReceived.indexOf($scope.functions.function_greeter) >= 0;
 						$scope.enabled.function_coordinator = $scope.data.functionsReceived.indexOf($scope.functions.function_coordinator) >= 0;
 						$scope.enabled.function_guard = $scope.data.functionsReceived.indexOf($scope.functions.function_guard) >= 0;
 						$scope.enabled.function_guard_support = $scope.data.functionsReceived.indexOf($scope.functions.function_guard_support) >= 0;
@@ -291,7 +297,7 @@ angular.module('commonComponents', [])
 					var staff = [];					// Staff members
 					var vehicles = [];				// Available vehicles
 					// All special ops functions.
-					resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR']).then(function (resources) {
+					resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER']).then(function (resources) {
 						// console.log('resources', resources);
 
 

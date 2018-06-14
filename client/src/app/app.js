@@ -337,6 +337,7 @@ function ($rootScope, config, userService, security, partyService, $state) {
 		if(company.functionsReceived.indexOf(config.functions.FUNCTION_DRIVER) === -1 &&
 			company.functionsReceived.indexOf(config.functions.FUNCTION_AGENT) === -1 &&
 			company.functionsReceived.indexOf(config.functions.FUNCTION_AGENT_ARMED) === -1 &&
+			company.functionsReceived.indexOf(config.functions.FUNCTION_GREETER) === -1 &&
 			company.functionsReceived.indexOf(config.functions.FUNCTION_COORDINATOR) === -1){
 			// Removing special ops section.
 			delete menu[1].subOptions.specials;

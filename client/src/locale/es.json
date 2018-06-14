@@ -160,6 +160,7 @@
 		    "driver": "Chofer",
 		    "agent": "Agente",
 		    "agentArmed":"Agente armado",
+		    "greeter":"Greeter",
 		    "coordinator": "Coordinador",
 		    "vehicleArmored":"Vehículo blindado",
 		    "transport":"Transporte",
@@ -213,7 +214,7 @@
 			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
-			"clientSaved": "Cliente guardado correctamente",
+			"supplierSaved": "Proveedor guardado correctamente",
 			"rateSaved": "Tarifas guardadas correctamente"
 		}
 	},
@@ -290,6 +291,7 @@
 		    "driver": "Chofer",
 		    "agent" :"Agente",
 		    "agentArmed": "Agente armado",
+		    "greeter": "Greeter",
 		    "coordinator": "Coordinador"
 
 		},
@@ -368,6 +370,7 @@
 			"staffGuard": "Agente",
 			"staffGuardArmed": "Agente armado",
 			"staffCoordinator": "Coordinador",
+		    "staffGreeter": "Greeter",
 			"vehicle": "Vehículo",
 			"details": "Detalles",
 			"addingPrincipal": "Agregar principal",
@@ -473,6 +476,7 @@
 			"driver": "Chofer",
 			"agent": "Agente",
 			"agent_armed": "Agente armado",
+			"greeter": "Greeter",
 			"coordinator": "Coordinador",
 			"guard": "Guardia",
 			"guard_support": "Guardia adicional",
@@ -485,6 +489,7 @@
 			"driver": "Chofer",
 			"agent": "Agente",
 			"agent_armed": "Agente armado",
+		    "greeter": "Greeter",
 			"coordinator": "Coordinador",
 			"guard": "Guardia",
 			"guard_support": "Guardia adicional",

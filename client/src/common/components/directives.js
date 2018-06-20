@@ -283,6 +283,7 @@ angular.module('commonComponents', [])
 		var specialServiceScope = scopeDefinition;
 		specialServiceScope.cl = "=";
 		specialServiceScope.disabled = "<";
+		specialServiceScope.disableautomaticname="@";
 
 		return {
 			scope      : specialServiceScope,
@@ -313,20 +314,22 @@ angular.module('commonComponents', [])
 					});
 
 					var calculateName = function () {
-						var name = [];
+						if ($scope.disableautomaticname!=='true') {
+							var name = [];
 
-						if (!_.isNil($scope.data.client.object)) {
-							var short = $scope.data.client.object.name.split(' ');
-							name.push(short[0]);
-						}
-						if (!_.isNil($scope.data.principals[0].object)) {
-							name.push($scope.data.principals[0].object.name.last);
-						}
-						if (_.isDate($scope.data.start)) {
-							name.push(moment($scope.data.start).format('YYYYMMDD'));
-						}
+							if (!_.isNil($scope.data.client.object)) {
+								var short = $scope.data.client.object.name.split(' ');
+								name.push(short[0]);
+							}
+							if (!_.isNil($scope.data.principals[0].object)) {
+								name.push($scope.data.principals[0].object.name.last);
+							}
+							if (_.isDate($scope.data.start)) {
+								name.push(moment($scope.data.start).format('YYYYMMDD'));
+							}
 
-						$scope.data.name = name.join('-');
+							$scope.data.name = name.join('-');
+						}
 					};
 
 					$scope.startDateChange = function () {

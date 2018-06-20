@@ -9,7 +9,7 @@ var
 	tokenHandler                     = require("../src/auth/token-handler"),
 	timeEntryReportService           = require("../src/api/index").TimeEntryReportService,
 	timeEntryReportGuardService      = require("../src/api/index").TimeEntryReportGuardService,
-	timeEntryReportAttendanceService  = require("../src/api/index").TimeEntryReportAttendanceService,
+	timeEntryReportAttendanceService = require("../src/api/index").TimeEntryReportAttendanceService,
 	timeEntryReportSpecialOpsService = require("../src/api/index").TimeEntryReportSpecialOpsService;
 
 module.exports = function (app) {

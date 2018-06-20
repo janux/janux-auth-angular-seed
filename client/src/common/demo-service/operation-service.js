@@ -461,7 +461,7 @@ module.exports =
 
 						//Special ops data. Temporary solution.
 						if (operation.type === 'SPECIAL_OPS') {
-							functionValue = !_.isNil(staff) ?  staff.type : undefined;
+							functionValue = !_.isNil(staff) ? staff.type : undefined;
 						}
 
 
@@ -498,8 +498,11 @@ module.exports =
 					const end = (!_.isNil(operation.end)) ? moment(operation.end).format('YYYY-MM-DD') : '';
 
 					var assigned = '';
-					if (operation.currentResources.length > 0) {
-						assigned = operation.currentResources[0].resource;
+					var resourcePerson = _.find(operation.currentResources, function (o) {
+						return o.type !== "VEHICLE";
+					});
+					if (!_.isNil(resourcePerson)) {
+						assigned = resourcePerson.resource;
 						assigned = assigned.name.last + ' ' + assigned.name.first;
 					}
 

@@ -50,9 +50,16 @@ function handleInvalidTokenAuth(err, req, res, next) {
 	}
 }
 
+function retrieveTokenInfo(request) {
+	const headerParam = request.headers.authorization;
+	const token = headerParam.replace("Bearer ", "");
+	return jwt.decode(token);
+}
+
 
 module.exports = {
 	generateToken         : generateToken,
 	authenticate          : authenticate,
-	handleInvalidTokenAuth: handleInvalidTokenAuth
+	handleInvalidTokenAuth: handleInvalidTokenAuth,
+	retrieveTokenInfo     : retrieveTokenInfo
 };

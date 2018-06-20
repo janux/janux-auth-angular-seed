@@ -37,6 +37,7 @@ var config                           = require('config'),
     VehicleDao                       = DAOs[appContext.dao.vehicleDao],
     TimeEntryPrincipalDao            = DAOs[appContext.dao.timeEntryPrincipalDao],
     OperationDao                     = DAOs[appContext.dao.operationDao],
+
     OperationAttributeDao            = DAOs[appContext.dao.operationAttributeDao],
     OperationPrincipalDao            = DAOs[appContext.dao.operationPrincipalDao],
     TimeEntryDao                     = DAOs[appContext.dao.timeEntryDao],
@@ -49,29 +50,26 @@ var config                           = require('config'),
     RateMatrixDao                    = DAOs[appContext.dao.rateMatrixDao],
     // End glarus services DAOs.
 
-    // Begin glarus services implementations.
+
     ResourcePersistService           = new ResourceServiceImpl(ResourceDao, PartyPersistenceService, VehicleDao, CurrentResourceDao, TimeEntryResourceDao),
     TimeEntryPersistService          = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao),
     OperationPersistService          = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao, OperationAttributeDao),
-    TimeEntryReportService           = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService),
-    TimeEntryReportGuardService      = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService),
-    TimeEntryReportAttendanceService = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
-    TimeEntryReportSpecialOpsService = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService),
     VehiclePersistenceService        = new VehicleServiceImpl(VehicleDao),
     TaskTypeService                  = new TaskTypeServiceImpl(TaskTypeDao),
-    RateMatrixService                = new RateMatrixServiceImpl(PartyPersistenceService, RateMatrixDao, RateDao, TaskTypeDao,TaskTypeService),
-
-    // End glarus services implementations.
-
+    RateMatrixService                = new RateMatrixServiceImpl(PartyPersistenceService, RateMatrixDao, RateDao, TaskTypeDao, TaskTypeService),
     GroupPersistService              = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
     PartyGroupPersistenceService     = new PartyGroupServiceImpl(PartyPersistenceService, GroupPersistService),
     UserPersistenceService           = UserPersistence.createInstance(AccountDao, PartyPersistenceService),
-    GlarusUserPersistenceService     = new GlarusUserPersistence(UserPersistenceService, PartyGroupPersistenceService, PartyPersistenceService),
     ResellerPersistenceService       = new ResellerServiceImpl(PartyGroupPersistenceService),
     AuthContextPersistService        = AuthContextPersistence.createInstance(AuthContextDAO),
     AuthContextGroupPersistService   = new AuthContextGroupService(AuthContextPersistService, GroupPersistService),
     RolePersistService               = RolePersistence.createInstance(RoleDAO),
-    UserOperationService             = new UserOperationServiceImpl(GlarusUserPersistenceService, OperationPersistService);
+    GlarusUserPersistenceService     = new GlarusUserPersistence(UserPersistenceService, PartyGroupPersistenceService, PartyPersistenceService, RolePersistService),
+    UserOperationService             = new UserOperationServiceImpl(GlarusUserPersistenceService, OperationPersistService),
+    TimeEntryReportService           = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
+    TimeEntryReportGuardService      = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
+    TimeEntryReportSpecialOpsService = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
+    TimeEntryReportAttendanceService = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,

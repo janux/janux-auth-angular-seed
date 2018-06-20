@@ -14,11 +14,12 @@ var
 
 module.exports = function (app) {
 	app.post('/time-entry-report', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
-
+		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;
 			const timeZone = req.body.timeZone;
-			timeEntryReportService.generateReport(ids, timeZone)
+
+			timeEntryReportService.generateReport(ids, tokenInfo.username, timeZone)
 				.then(function (result) {
 					log.debug("Report at %j ", result);
 					res.download(result, function (err) {
@@ -34,11 +35,11 @@ module.exports = function (app) {
 
 
 	app.post('/time-entry-report-guard', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
-
+		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;
 			const timeZone = req.body.timeZone;
-			timeEntryReportGuardService.generateReport(ids, timeZone)
+			timeEntryReportGuardService.generateReport(ids, tokenInfo.username, timeZone)
 				.then(function (result) {
 					log.debug("Report at %j ", result);
 					res.download(result, function (err) {
@@ -72,11 +73,11 @@ module.exports = function (app) {
 	});
 
 	app.post('/time-entry-report-special-ops', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
-
+		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;
 			const timeZone = req.body.timeZone;
-			timeEntryReportSpecialOpsService.generateReport(ids, timeZone)
+			timeEntryReportSpecialOpsService.generateReport(ids, tokenInfo.username, timeZone)
 				.then(function (result) {
 					log.debug("Report at %j ", result);
 					res.download(result, function (err) {

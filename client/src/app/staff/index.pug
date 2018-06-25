@@ -39,7 +39,7 @@ side-bar
 								md-icon.fa.fa-trash.fa-lg.trash-center(style="color:#ffffff; background:none; margin-left:15px; padding-right:50px;" )
 				tbody
 					tr(ng-repeat='staff in staffList track by staff.id')
-						td {{ staff.name.middle }} {{ staff.name.last }}, {{ staff.name.first }}
+						td {{ staff.name.last }} {{ staff.name.maternal }} {{ staff.name.first }} {{ staff.name.middle }}
 						td {{ staff.phoneNumber().number }}
 						td {{ staff.emailAddress().address }}
 						td {{ staff.area }}

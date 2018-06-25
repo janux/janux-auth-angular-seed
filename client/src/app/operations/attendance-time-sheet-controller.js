@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'localStorageService',
-	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService) {
+module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'localStorageService', 'nameQueryService',
+	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService, nameQueryService) {
 
 		var storedFilterPeriod = jnxStorage.findItem('attendanceTimeLogFilterPeriod', true);
 		var columnsFiltersKey = 'januxAttendanceColumnsFilters';
@@ -96,18 +96,9 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			console.log('item   ' + JSON.stringify(item));
 		};
 
-		function createFilterForStaff(query) {
-			return function filterFn(operationDriver) {
-				var driver = operationDriver.resource;
-				var name = (driver.name.last + ' ' + driver.name.first).toLowerCase()
-					.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-				var contains = name.toLowerCase().includes(query.toLowerCase());
-				return contains;
-			};
-		}
 
 		$scope.staffSearch = function (query) {
-			return query ? allStaff.filter(createFilterForStaff(query)) : allStaff;
+			return query ? allStaff.filter(nameQueryService.createFilterForStaff(query)) : allStaff;
 		};
 
 		$scope.export = function () {
@@ -234,7 +225,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 						result = '';
 					} else {
 						result = params.data.staff.resource;
-						result = result.name.last + ' ' + result.name.first;
+						result = nameQueryService.createLongNameLocalized(result);
 					}
 					return result;
 				},
@@ -467,12 +458,12 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 			},
 
-			localeTextFunc: function (key, defaultValue) {
+			localeTextFunc : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
 				var value = $filter('translate')(gridKey);
 				return value === gridKey ? defaultValue : value;
 			},
-			onFilterChanged          : function () {
+			onFilterChanged: function () {
 				// Save filters to local storage.
 				var savedFilters;
 				savedFilters = $scope.gridOptions.api.getFilterModel();

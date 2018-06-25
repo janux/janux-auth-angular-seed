@@ -118,7 +118,7 @@ angular.module('agGridDirectives',[])
 		restrict: 'E',
 		scope:false,
 		templateUrl: 'common/ag-grid-components/templates/autocomplete-staff-cell-editor.html',
-		controller: ['$scope','$attrs', function($scope,$attrs) {
+		controller: ['$scope','$attrs','nameQueryService', function($scope,$attrs,nameQueryService) {
 			var resource = undefined;
 			$scope.valueAutoStaff = ''; // $scope[$attrs.selectedValueModel];
 			$scope.autoStaffSelectedItem = '';
@@ -152,17 +152,8 @@ angular.module('agGridDirectives',[])
 				}
 			};
 
-			function createFilterForStaff(query) {
-				return function filterFn(operationDriver) {
-					var driver = operationDriver.resource;
-					var name = (driver.name.last+' '+driver.name.first).toLowerCase();
-					var contains = name.toLowerCase().includes(query.toLowerCase());
-					return contains;
-				};
-			}
-
 			$scope.agGridStaffSearch = function(query) {
-				var out = query ? $scope.agGridOperationDrivers.filter( createFilterForStaff(query) ) : $scope.agGridOperationDrivers;
+				var out = query ? $scope.agGridOperationDrivers.filter( nameQueryService.createFilterForStaff(query) ) : $scope.agGridOperationDrivers;
 				console.log('agGridStaffSearch', out);
 				return out;
 			};

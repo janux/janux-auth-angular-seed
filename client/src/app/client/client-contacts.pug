@@ -13,7 +13,7 @@
 						md-icon.fa.fa-trash.fa-lg.trash-center(style="color:#ffffff; background:none; margin-left:15px; padding-right:50px;" )
 		tbody
 			tr(ng-repeat='contact in contacts track by contact.id')
-				td {{ contact.name.middle }} {{ contact.name.last }}, {{ contact.name.first }}
+				td {{ contact.name.last }} {{ contact.name.maternal }} {{ contact.name.first }}  {{ contact.name.middle }}
 				td {{ contact.phoneNumber('work').number }}
 				td {{ contact.emailAddress('work').address }}
 				td {{ contact.area }}

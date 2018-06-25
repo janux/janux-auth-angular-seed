@@ -283,14 +283,14 @@ angular.module('commonComponents', [])
 		var specialServiceScope = scopeDefinition;
 		specialServiceScope.cl = "=";
 		specialServiceScope.disabled = "<";
-		specialServiceScope.disableautomaticname="@";
+		specialServiceScope.disableautomaticname = "@";
 
 		return {
 			scope      : specialServiceScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-service.html',
-			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q',
-				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q) {
+			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService',
+				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService) {
 
 					var clientGroupCode = '';
 					var clientContacts = [];		// Client contacts
@@ -314,7 +314,7 @@ angular.module('commonComponents', [])
 					});
 
 					var calculateName = function () {
-						if ($scope.disableautomaticname!=='true') {
+						if ($scope.disableautomaticname !== 'true') {
 							var name = [];
 
 							if (!_.isNil($scope.data.client.object)) {
@@ -336,18 +336,9 @@ angular.module('commonComponents', [])
 						calculateName();
 					};
 
-					// Client
-					function createFilterForClient(query) {
-						return function filterFn(client) {
-							var name = client.name.toLowerCase()
-								.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-							var contains = name.toLowerCase().includes(query.toLowerCase());
-							return contains;
-						};
-					}
 
 					$scope.clientSearch = function (query) {
-						return query ? $scope.cl.filter(createFilterForClient(query)) : $scope.cl;
+						return query ? $scope.cl.filter(nameQueryService.createFilterForClient(query)) : $scope.cl;
 					};
 
 					$scope.clientSelectedItemChange = function (item, assignContactToList) {
@@ -418,18 +409,8 @@ angular.module('commonComponents', [])
 						$scope.clientSelectedItemChange($scope.data.client.object);
 					}
 
-					// Requester
-					function createFilterForRequester(query) {
-						return function filterFn(interestedParty) {
-							var name = (interestedParty.name.last + ' ' + interestedParty.name.first).toLowerCase()
-								.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-							var contains = name.toLowerCase().includes(query.toLowerCase());
-							return contains;
-						};
-					}
-
 					$scope.requesterSearch = function (query) {
-						var out = query ? possibleRequesters.filter(createFilterForRequester(query)) : possibleRequesters;
+						var out = query ? possibleRequesters.filter(nameQueryService.createFilterForPerson(query)) : possibleRequesters;
 						out = out.concat([{
 							name     : {last: '  '},	// Ensure position on top
 							addOption: true
@@ -455,18 +436,8 @@ angular.module('commonComponents', [])
 						}
 					};
 
-					// Principals
-					function createFilterForPrincipal(query) {
-						return function filterFn(principal) {
-							var name = (principal.name.last + ' ' + principal.name.first).toLowerCase()
-								.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-							var contains = name.toLowerCase().includes(query.toLowerCase());
-							return contains;
-						};
-					}
-
 					$scope.principalSearch = function (query) {
-						var out = query ? clientContacts.filter(createFilterForPrincipal(query)) : clientContacts;
+						var out = query ? clientContacts.filter(nameQueryService.createFilterForPerson(query)) : clientContacts;
 						return out.concat([{
 							name     : {last: '  '},	// Ensure position on top
 							addOption: true
@@ -518,19 +489,9 @@ angular.module('commonComponents', [])
 						return (principalCompleted || $scope.data.principals.length - 1 > index);
 					};
 
-					// Staff
-					function createFilterForStaff(query) {
-						return function filterFn(opStaff) {
-							var resource = opStaff.resource;
-							var name = (resource.name.last + ' ' + resource.name.first).toLowerCase()
-								.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-							var contains = name.toLowerCase().includes(query.toLowerCase());
-							return contains;
-						};
-					}
 
 					$scope.staffSearch = function (query) {
-						return query ? staff.filter(createFilterForStaff(query)) : staff;
+						return query ? staff.filter(nameQueryService.createFilterForStaff(query)) : staff;
 					};
 
 					$scope.staffSelectedItemChange = function (item, index) {

@@ -16,6 +16,7 @@ require('angular').module('demoService', [])
 .factory('vehicleService',require('./vehicle-service'))
 .factory('rateMatrixService',require('./rate-matrix-service'))
 .factory('jnxStorage',require('./storage-service.js'))
+.factory('nameQueryService', require('./name-query-service.js'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

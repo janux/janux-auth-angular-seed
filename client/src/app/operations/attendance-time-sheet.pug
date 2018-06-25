@@ -32,12 +32,12 @@ side-bar
 							md-items="item in staffSearch(lbSearch.staffSearch) | orderBy:'resource.name.last'",
 							md-search-text='lbSearch.staffSearch',
 							md-selected-item-change='staffSearchSelectedItemChange(item)',
-							md-item-text='item.resource.name.last+" "+item.resource.name.first',
+							md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
 							md-min-length='0',
 							md-clear-button='true'
 							class="md-autocomplete-override")
 								md-item-template
-									span() {{item.resource.name.last+', '+item.resource.name.first}}
+									span() {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}
 
 				span(flex)
 
@@ -53,11 +53,11 @@ side-bar
 						md-selected-item='lbRow.staff',
 						md-search-text='lbSearch.staff',
 						md-selected-item-change='staffInsertSelectedItemChange(item)',
-						md-item-text='item.resource.name.last+" "+item.resource.name.first',
+						md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
 						md-min-length='0',
 						md-floating-label="{{ 'operations.attendanceTimeLog.staff' | translate }}")
 							md-item-template
-								span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+								span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}
 
 					.vertical-line
 

@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','localStorageService',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','localStorageService','nameQueryService',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService,nameQueryService) {
 
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 		var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
@@ -153,20 +153,9 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 
 		};
 
-		function createFilterForStaff(query) {
-			return function filterFn(operationDriver) {
-				var driver = operationDriver.resource;
-				var name = (driver.name.last + ' ' + driver.name.first).toLowerCase()
-					.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-				var contains = name.toLowerCase().includes(query.toLowerCase());
-				return contains;
-			};
-		}
-
 		$scope.staffSearch = function (query) {
-			return query ? allDrivers.filter(createFilterForStaff(query)) : allDrivers;
+			return query ? allDrivers.filter(nameQueryService.createFilterForStaff(query)) : allDrivers;
 		};
-
 
 		function createFilterForVehicle(query) {
 			return function filterFn(elementVehicle) {
@@ -347,7 +336,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter : function (params) {
 					var res = params.data.staff.resource;
-					return res.name.last + ' ' + res.name.first;
+					return nameQueryService.createLongNameLocalized(res);
 				},
 				cellEditor  : agGridComp.autocompleteStaffCellEditor,
 				filter      : 'agTextColumnFilter',

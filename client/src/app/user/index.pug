@@ -41,7 +41,7 @@ side-bar
 					tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}" )
 
 						td {{ user.username }}
-						td {{ user.contact.name.shortName }}
+						td {{ user.contact.name.last }} {{ user.contact.name.maternal }} {{ user.contact.name.first }} {{ user.contact.name.middle }}
 						td {{ user.roles[0] }}
 						td {{ user.contact.emailAddress('work').address }}
 						td {{ user.contact.phoneNumber('work').number }}

@@ -3,8 +3,8 @@ md-items="item in agGridStaffSearch(valueAutoStaff) | orderBy:'resource.displayN
 md-selected-item='autoStaffSelectedItem',
 md-search-text='valueAutoStaff',
 md-selected-item-change='agGridStaffSelectedItemChange(item)',
-md-item-text='item.resource.name.last+" "+item.resource.name.first',
+md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
 md-min-length='0',
 ng-attr-placeholder="{{ valueAutoStaffPlaceholder }}")
 	md-item-template
-		span(md-highlight-text='valueAutoStaff', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+		span(md-highlight-text='valueAutoStaff', md-highlight-flags='^i') {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}

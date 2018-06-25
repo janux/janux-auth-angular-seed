@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'localStorageService',
-	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'localStorageService', 'nameQueryService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService, nameQueryService) {
 
 		var storedFilterPeriod = jnxStorage.findItem('guardsTimeLogFilterPeriod', true);
 		var columnsFiltersKey = 'JanuxGuardsColumnsFilters';
@@ -227,18 +227,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			}
 		};
 
-		function createFilterForStaff(query) {
-			return function filterFn(operationDriver) {
-				var driver = operationDriver.resource;
-				var name = (driver.name.last + ' ' + driver.name.first).toLowerCase()
-					.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-				var contains = name.toLowerCase().includes(query.toLowerCase());
-				return contains;
-			};
-		}
 
 		$scope.staffSearch = function (query) {
-			return query ? allGuards.filter(createFilterForStaff(query)) : allGuards;
+			return query ? allGuards.filter(nameQueryService.createFilterForStaff(query)) : allGuards;
 		};
 
 		//
@@ -383,7 +374,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						result = '';
 					} else {
 						result = params.data.staff.resource;
-						result = result.name.last + ' ' + result.name.first;
+						result = nameQueryService.createLongNameLocalized(result);
 					}
 					return result;
 				},

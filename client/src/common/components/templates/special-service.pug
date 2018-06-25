@@ -42,13 +42,13 @@
 							md-search-text-change='requesterSearchTextChange(data.interestedParty.search)',
 							md-search-text='data.interestedParty.search',
 							md-selected-item-change='requesterSelectedItemChange(item)',
-							md-item-text='item.name.last+" "+item.name.first',
+							md-item-text='item.name.last+" "+item.name.maternal+ " " +item.name.first+" " + item.name.middle',
 							md-min-length='0',
 							md-clear-button='!disabled'
 							md-floating-label="{{ 'services.specialForm.requester' | translate }}",
 							ng-disabled='disabled')
 								md-item-template
-									span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+									span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+' '+item.name.maternal + ' '+ item.name.first+' ' + item.name.middle}}
 									span(ng-if='item.addOption')
 										md-icon(style="height:auto;")
 											i.fa.fa-plus-circle
@@ -69,13 +69,13 @@
 									md-search-text-change='principalSearchTextChange(principal.search)',
 									md-search-text='principal.search',
 									md-selected-item-change='principalSelectedItemChange(item)',
-									md-item-text='item.name.last+" "+item.name.first',
+									md-item-text='item.name.last+" "+item.name.maternal+ " " +item.name.first+" " + item.name.middle',
 									md-min-length='0',
 									md-clear-button='!disabled'
 									md-floating-label="{{ 'services.specialForm.principal' | translate }}",
 									ng-disabled='disabled')
 										md-item-template
-											span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+', '+item.name.first}}
+											span(ng-if='!item.addOption' md-highlight-text='principal.search', md-highlight-flags='^i') {{item.name.last+' '+item.name.maternal + ' '+ item.name.first+' ' + item.name.middle}}
 											span(ng-if='item.addOption')
 												md-icon(style="height:auto;")
 													i.fa.fa-plus-circle
@@ -108,13 +108,13 @@
 									md-search-text-change='staffSearchTextChange(staff.search)',
 									md-search-text='staff.search',
 									md-selected-item-change='staffSelectedItemChange(item, $index)',
-									md-item-text='item.resource.name.last+" "+item.resource.name.first',
+									md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
 									md-min-length='0',
 									md-clear-button='!disabled'
 									md-floating-label="{{ 'services.specialForm.staff' | translate }}",
 									ng-disabled='disabled')
 										md-item-template
-											span(md-highlight-text='staff.search', md-highlight-flags='^i') {{item.resource.name.last+', '+item.resource.name.first}}
+											span(md-highlight-text='staff.search', md-highlight-flags='^i') {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}
 							.an-material.nopadding
 								md-input-container.full
 									label {{ 'services.specialForm.function' | translate }}

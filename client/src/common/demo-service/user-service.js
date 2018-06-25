@@ -3,10 +3,33 @@
 var Person = require('janux-people').Person;
 
 module.exports =
-['$q', '$http',
-function( $q ,  $http){
+['$q', '$http','partyService','dateUtilService',
+function( $q ,  $http, partyService, dateUtilService){
+
+	function fromJSON(object) {
+		if (_.isNil(object)) {
+			return object;
+		}
+		var result = _.clone(object);
+		result.mdate = dateUtilService.stringToDate(object.mdate);
+		result.cdate = dateUtilService.stringToDate(object.cdate);
+		result.expire = dateUtilService.stringToDate(object.expire);
+		result.expirePassword = dateUtilService.stringToDate(object.expirePassword);
+		result.contact = partyService.fromJSON(object.contact);
+		return result;
+	}
+
+	function toJSON(object) {
+		if (_.isNil(object)) {
+			return object;
+		}
+		var result = _.clone(object);
+		result.contact = partyService.toJSON(object.contact);
+		return result;
+	}
 
 	var service = {
+
 
 
 		// Find users by specifying the field and search string
@@ -20,9 +43,10 @@ function( $q ,  $http){
 				var out = resp.data.result;
 				out = (typeof out.length === 'undefined')?[out]:out;
 				console.log('findBy', field, search, out);
-				out.forEach(function(user, iUser){
-					out[iUser].contact = Person.fromJSON(out[iUser].contact);
-				});
+				// out.forEach(function(user, iUser){
+				// 	out[iUser].contact = partyService.fromJSON(out[iUser].contact);
+				// });
+
 				return out;
 			});
 		},
@@ -37,7 +61,7 @@ function( $q ,  $http){
 			).then(function(resp) {
 				var out = resp.data.result;
 				var id = out.contact.id;
-				out.contact = Person.fromJSON(out.contact);
+				out.contact = partyService.fromJSON(out.contact);
 				out.contact.id= id;
 				return out;
 			});
@@ -53,7 +77,7 @@ function( $q ,  $http){
 			).then(function(resp) {
 				var out = resp.data.result;
 				out.forEach(function(user, iUser){
-					out[iUser].contact = Person.fromJSON(out[iUser].contact);
+					out[iUser].contact = partyService.fromJSON(out[iUser].contact);
 				});
 				return out;
 			});
@@ -78,7 +102,7 @@ function( $q ,  $http){
 			var userObjClone = _.cloneDeep(userObject);
 			var id = userObjClone.contact.id;
 			var typeName = userObjClone.contact.typeName;
-			userObjClone.contact = userObjClone.contact.toJSON();
+			userObjClone.contact = partyService.toJSON(userObjClone.contact);
 			userObjClone.contact.id = id;
 			userObjClone.contact.typeName= typeName;
 

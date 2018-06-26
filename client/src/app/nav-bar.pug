@@ -7,7 +7,7 @@
         span
           | &nbsp;
 
-    li(ng-repeat='option in mainMenu')
+    li(ng-repeat='option in mainMenu'  ng-show='option.authContext==null ||  userRole.can("READ",option.authContext);')
       .accordion(id="option" ng-if='!menuHasSubOptions(option)')
         .accordion-group
           .accordion-heading

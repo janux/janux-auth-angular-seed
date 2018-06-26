@@ -70,6 +70,7 @@ require('angular').module('config', [])
 				translateKey: 'services.title',
 				iconClass   : 'fa-tachometer',
 				state       : 'services',
+				authContext: 'SERVICE',
 				subOptions  : {}
 			},
 			{

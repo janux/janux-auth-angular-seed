@@ -432,12 +432,18 @@ function ($rootScope, config, userService, security, partyService, $state) {
 		$rootScope.userRole = userRole;
 
 		$rootScope.showOption = function(option){
-		var show = false;
-		_.map(option.subOptions,function(subOption){
-				if(userRole.can('READ',subOption.authContext)){
-					show = true;
-				}
-			});
+			var show = false;
+
+			if (_.isNil(option.authContext) === false && userRole.can('READ', option.authContext) === false) {
+				show = false;
+			}else{
+				_.map(option.subOptions,function(subOption){
+					if(userRole.can('READ',subOption.authContext)){
+						show = true;
+					}
+				});
+			}
+
 		return show;
 		};
 	});

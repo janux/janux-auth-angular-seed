@@ -1,7 +1,7 @@
 .sd-page-sidebar-wrapper
       .sd-page-sidebar.mobile
         ul.sd-page-sidebar-menu
-          li(ng-repeat='option in mainMenu' ng-show='showOption(option)')
+          li(ng-repeat='option in mainMenu' ng-show=' showOption(option)')
             a(ui-sref-active="active")
               span.fa.fa-lg(ng-class='option.iconClass')
               .btn-text &nbsp;&nbsp;{{ option.translateKey | translate }}

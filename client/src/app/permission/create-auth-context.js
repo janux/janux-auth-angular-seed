@@ -39,7 +39,7 @@ module.exports = [
 
 					authContextService.insert($scope.contextGroupCode, authContext.toJSON())
 						.then(function () {
-							$state.go('permissions.auth-contexts');
+							$state.go('permissions.authauthcontexts');
 						});
 				}else{
 					console.error('Select at least one permission bit in order to create an authorization context');

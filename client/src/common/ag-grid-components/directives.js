@@ -299,6 +299,16 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridStaffEdit', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/staff-edit.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.staffId = $attrs.staffId;
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

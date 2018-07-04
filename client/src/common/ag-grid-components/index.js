@@ -27,6 +27,8 @@ module.exports = {
 	objectCellRenderer       : require('./object-cell-renderer'),
 	checkBoxRowSelection     : require('./checkBoxRowSelection'),
 	viewOperationCellRenderer: require('./view-operation-cell-renderer'),
+	editStaffCellRenderer    : require('./staffedit-cell-renderer'),
+	checkBoxStaffAvalability     : require('./checkBoxStaffAvalability'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

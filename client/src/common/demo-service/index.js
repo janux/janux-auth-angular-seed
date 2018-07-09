@@ -15,6 +15,7 @@ require('angular').module('demoService', [])
 .factory('resellerService',require('./reseller-service'))
 .factory('vehicleService',require('./vehicle-service'))
 .factory('rateMatrixService',require('./rate-matrix-service'))
+.factory('invoiceService',require('./invoice-service'))
 .factory('jnxStorage',require('./storage-service.js'))
 .factory('nameQueryService', require('./name-query-service.js'))
 .run(function() {

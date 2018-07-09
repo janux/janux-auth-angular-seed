@@ -57,7 +57,11 @@ const VehicleDao            = require("glarus-services").VehicleDao,
       TimeEntryResourceDao  = require("glarus-services").TimeEntryResourceDao,
       TaskTypeDao           = require('glarus-services').TaskTypeDao,
       RateDao               = require('glarus-services').RateDao,
-      RateMatrixDao         = require('glarus-services').RateMatrixDao;
+      RateMatrixDao         = require('glarus-services').RateMatrixDao,
+      InvoiceDao            = require('glarus-services').InvoiceDao,
+      InvoiceItemDao        = require('glarus-services').InvoiceItemDao,
+      ExpenseDao            = require('glarus-services').ExpenseDao,
+      InvoiceItemTEDao      = require('glarus-services').InvoiceItemTEDao;
 
 
 const VehicleMongooseSchema            = require("glarus-services").VehicleMongooseSchema,
@@ -72,21 +76,29 @@ const VehicleMongooseSchema            = require("glarus-services").VehicleMongo
       TimeEntryResourceMongooseSchema  = require("glarus-services").TimeEntryResourceMongooseSchema,
       TaskTypeMongooseSchema           = require('glarus-services').TaskTypeMongooseSchema,
       RateMongooseSchema               = require('glarus-services').RateMongooseSchema,
-      RateMatrixMongooseSchema         = require('glarus-services').RateMAtrixMongooseSchema;
+      RateMatrixMongooseSchema         = require('glarus-services').RateMAtrixMongooseSchema,
+      InvoiceMongooseSchema            = require('glarus-services').InvoiceMongooseSchema,
+      InvoiceItemMongooseSchema        = require('glarus-services').InvoiceItemMongooseSchema,
+      ExpenseMongooseSchema            = require('glarus-services').ExpenseMongooseSchema,
+      InvoiceItemTEMongooseSchema      = require('glarus-services').InvoiceItemTEMongooseSchema;
 
-const VEHICLE_COLLECTION              = "vehicle",
-      TIME_ENTRY_COLLECTION           = "timeEntry",
-      TIME_ENTRY_PRINCIPAL_COLLECTION = "timeEntryPrincipal",
-      OPERATION_COLLECTION            = "operation",
-      OPERATION_ATTRIBUTE_COLLECTION  = "operationAttribute",
-      OPERATION_PRINCIPAL_COLLECTION  = "operationPrincipal",
-      RESOURCE_COLLECTION             = "resource",
-      TIME_ENTRY_ATTRIBUTE_COLLECTION = "timeEntryAttribute",
-      CURRENT_RESOURCE_COLLECTION     = "currentResource",
-      TIME_ENTRY_RESOURCE_COLLECTION  = "timeEntryResource",
-      TASK_TYPE_COLLECTION            = 'taskType',
-      RATE_COLLECTION                 = 'rate',
-      RATE_MATRIX_COLLECTION          = 'rateMatrix';
+const VEHICLE_COLLECTION                 = "vehicle",
+      TIME_ENTRY_COLLECTION              = "timeEntry",
+      TIME_ENTRY_PRINCIPAL_COLLECTION    = "timeEntryPrincipal",
+      OPERATION_COLLECTION               = "operation",
+      OPERATION_ATTRIBUTE_COLLECTION     = "operationAttribute",
+      OPERATION_PRINCIPAL_COLLECTION     = "operationPrincipal",
+      RESOURCE_COLLECTION                = "resource",
+      TIME_ENTRY_ATTRIBUTE_COLLECTION    = "timeEntryAttribute",
+      CURRENT_RESOURCE_COLLECTION        = "currentResource",
+      TIME_ENTRY_RESOURCE_COLLECTION     = "timeEntryResource",
+      TASK_TYPE_COLLECTION               = 'taskType',
+      RATE_COLLECTION                    = 'rate',
+      RATE_MATRIX_COLLECTION             = 'rateMatrix',
+      INVOICE_COLLECTION                 = 'invoice',
+      INVOICE_ITEM_COLLECTION            = 'invoiceItem',
+      EXPENSE_COLLECTION                 = 'expense',
+      INVOICE_ITEM_TIME_ENTRY_COLLECTION = 'invoiceItemTimeEntry';
 
 // End Glarus services DAOs.
 
@@ -116,7 +128,11 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		timeEntryResourceDao : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TIME_ENTRY_RESOURCE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TimeEntryResourceMongooseSchema), TimeEntryResourceDao),
 		taskTypeDao          : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, TASK_TYPE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), TaskTypeMongooseSchema), TaskTypeDao),
 		rateDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), RateMongooseSchema), RateDao),
-		rateMatrixDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_MATRIX_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), RateMatrixMongooseSchema), RateMatrixDao)
+		rateMatrixDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, RATE_MATRIX_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), RateMatrixMongooseSchema), RateMatrixDao),
+		invoiceDao           : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceMongooseSchema), InvoiceDao),
+		invoiceItemDao       : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_ITEM_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceItemMongooseSchema), InvoiceItemDao),
+		expenseDao           : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, EXPENSE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), ExpenseMongooseSchema), ExpenseDao),
+		invoiceItemTE        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_ITEM_TIME_ENTRY_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceItemTEMongooseSchema), InvoiceItemTEDao)
 	};
 
 } else if (dbEngine === DataSourceHandler.LOKIJS) {

@@ -18,7 +18,8 @@ var UserPersistence                      = require('janux-persist').UserService,
     GlarusUserPersistence                = require('glarus-services').UserServiceImpl,
     UserOperationServiceImpl             = require('glarus-services').UserOperationService,
     TaskTypeServiceImpl                  = require('glarus-services').TaskTypeServiceImpl,
-    RateMatrixServiceImpl                = require('glarus-services').RateMatrixServiceImpl;
+    RateMatrixServiceImpl                = require('glarus-services').RateMatrixServiceImpl,
+    InvoiceServiceImpl                   = require('glarus-services').InvoiceServiceImpl;
 
 var config                           = require('config'),
     appContext                       = config.serverAppContext,
@@ -48,6 +49,10 @@ var config                           = require('config'),
     TaskTypeDao                      = DAOs[appContext.dao.taskTypeDao],
     RateDao                          = DAOs[appContext.dao.rateDao],
     RateMatrixDao                    = DAOs[appContext.dao.rateMatrixDao],
+    InvoiceDao                       = DAOs[appContext.dao.invoiceDao],
+    InvoiceItemDao                   = DAOs[appContext.dao.invoiceItemDao],
+    ExpenseDao                       = DAOs[appContext.dao.expenseDao],
+    InvoiceItemTE                    = DAOs[appContext.dao.invoiceItemTE],
     // End glarus services DAOs.
 
 
@@ -69,7 +74,8 @@ var config                           = require('config'),
     TimeEntryReportService           = new TimeEntryReportServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportGuardService      = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportSpecialOpsService = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
-    TimeEntryReportAttendanceService = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService);
+    TimeEntryReportAttendanceService = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
+    InvoiceService                   = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceItemTE, PartyPersistenceService, TimeEntryPersistService, RateMatrixService, OperationDao);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,
@@ -91,5 +97,6 @@ module.exports = {
 	GlarusUserPersistenceService    : GlarusUserPersistenceService,
 	UserOperationService            : UserOperationService,
 	TaskTypeService                 : TaskTypeService,
-	RateMatrixService               : RateMatrixService
+	RateMatrixService               : RateMatrixService,
+	InvoiceService                  : InvoiceService
 };

@@ -22,7 +22,8 @@ var services = {
 	partyGroupService: require(apiRoot).PartyGroupService,
 	vehicleService   : require(apiRoot).VehicleService,
 	resellerService  : require(apiRoot).ResellerService,
-	rateMatrixService: require(apiRoot).RateMatrixService
+	rateMatrixService: require(apiRoot).RateMatrixService,
+	invoice          : require(apiRoot).InvoiceService
 };
 
 /*

@@ -112,7 +112,8 @@
 		"angular-file-saver": "./bower/angular-file-saver/dist/angular-file-saver.bundle.min.js",
 		"common/time-periods": "./src/common/time-periods.js",
 		"common/security/util": "./src/common/security/util.js",
-		"common/components": "./src/common/components/directives.js"
+		"common/components": "./src/common/components/directives.js",
+	    "big.js":"./bower/big.js/big.min.js"
 	},
 	"browserify-shim": {
 		"jquery": "$",

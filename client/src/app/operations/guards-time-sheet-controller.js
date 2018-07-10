@@ -82,26 +82,20 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			// If night shift maintenance. Whe change the resource type.
 			if (timeEntry.extras === 'NM') {
 				timeEntry.resources[0].type = 'GUARD_NIGHT_SHIFT_MAINTENANCE';
-			}
-
-			//If goods receipt. We change the resource type.
-			if (timeEntry.extras === 'NRM') {
+			} else if (timeEntry.extras === 'NRM') {
+				//If goods receipt. We change the resource type.
 				timeEntry.resources[0].type = 'GUARD_GOODS_RECEIPT';
-			}
-
-			//If guard support. We change the resource type.
-			if (timeEntry.extras === 'AF' || timeEntry.extras === 'A') {
+			} else if (timeEntry.extras === 'AF' || timeEntry.extras === 'A') {
+				//If guard support. We change the resource type.
 				timeEntry.resources[0].type = 'GUARD_SUPPORT';
-			}
-
-			if (timeEntry.extras === 'CLOSED') {
+			} else if (timeEntry.extras === 'CLOSED') {
 				timeEntry.resources = [];
-			}
-
-			if (timeEntry.extras === 'GUARD_SHIFT_MANAGER') {
+			} else if (timeEntry.extras === 'GUARD_SHIFT_MANAGER') {
 				timeEntry.resources[0].type = 'GUARD_SHIFT_MANAGER';
+			} else {
+				// Default : Guard.
+				timeEntry.resources[0].type = 'GUARD';
 			}
-
 			return timeEntry;
 		}
 

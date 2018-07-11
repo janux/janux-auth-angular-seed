@@ -28,7 +28,9 @@ module.exports = {
 	checkBoxRowSelection     : require('./checkBoxRowSelection'),
 	viewOperationCellRenderer: require('./view-operation-cell-renderer'),
 	editStaffCellRenderer    : require('./staffedit-cell-renderer'),
-	checkBoxStaffAvalability     : require('./checkBoxStaffAvalability'),
+	checkBoxStaffAvalability : require('./checkBoxStaffAvalability'),
+	editClientCellRenderer   : require('./clientedit-cell-renderer'),
+	editSupplierCellRenderer : require('./supplieredit-cell-renderer'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

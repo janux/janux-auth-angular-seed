@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 require('common/demoService');
 
 require('angular').module('appClient', [
@@ -21,8 +23,27 @@ require('angular').module('appClient', [
 		authRequired: true,
 		controller: require('./client-controller.js'),
 		resolve: {
-			clientsList:['clientService',function(clientService){
-				return clientService.findAll();
+			clientsList:['partyService',function(partyService){
+				return partyService.findOrganizationByIsSupplier(false)
+				.then(function (result) {
+					console.log('Client list', result);
+					var parties = _.map(result, function (o) {
+
+						var address = '';
+
+						if(_.isArray(o.contactMethods.addresses) &&  o.contactMethods.addresses.length>0 ){
+							address= o.contactMethods.addresses[0].line1;
+						}else{
+							address= '';
+						}
+
+						o.clientDisplayAddress = address;
+						return o;
+
+					});
+					return parties;
+
+				});
 			}]
 		}
 	})
@@ -44,6 +65,7 @@ require('angular').module('appClient', [
 		controller: require('./edit-client-controller.js'),
 		resolve: {
 			client: ['partyService', '$stateParams', function(partyService, $stateParams){
+				// console.log('Id Parametro:',$stateParams.id);
 				return partyService.findOne($stateParams.id);
 			}],
 			clientGroup: ['client','partyGroupService',function (client,partyGroupService) {

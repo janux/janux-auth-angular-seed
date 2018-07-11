@@ -309,6 +309,26 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridClientEdit', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/client-edit.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.clientId = $attrs.clientId;
+		}]
+	}
+}])
+.directive('agGridSupplierEdit', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/supplier-edit.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.supplierId = $attrs.supplierId;
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

@@ -104,11 +104,11 @@ module.exports = [
 				// This function is defined to be able to trigger the deletion
 				// of the rows from the header component that does not have access
 				// to the scope.
-				
+
 				//$scope.gridOptions.api.deleteRows = removeSelected;
 
 				// Restore filter model.
-				
+
 				// var filterModel = localStorageService.get(columnsFiltersKey);
 				// if (!_.isNil(filterModel)) {
 				// 	$scope.gridOptions.api.setFilterModel(filterModel);
@@ -121,7 +121,7 @@ module.exports = [
 			},
 			onRowValueChanged        : function (rowObj) {
 				console.log(rowObj);
-				
+
 			}
 			// localeTextFunc           : function (key, defaultValue) {
 			// 	var gridKey = 'grid.' + key;

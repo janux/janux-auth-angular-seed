@@ -32,6 +32,25 @@ require('angular').module('appSupplier', [
 								return _.filter(result, function (o) {
 									return o.id !== companyInfo.id;
 								});
+							})
+							.then(function (result) {
+								console.log('Supplier list', result);
+								var parties = _.map(result, function (o) {
+
+									var address = '';
+
+									if(_.isArray(o.contactMethods.addresses) &&  o.contactMethods.addresses.length>0 ){
+										address= o.contactMethods.addresses[0].line1;
+									}else{
+										address= '';
+									}
+
+									o.supplierDisplayAddress = address;
+									return o;
+
+								});
+								return parties;
+
 							});
 					}]
 				}

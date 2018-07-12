@@ -395,6 +395,18 @@
 				"contactNameEmpty": "El nombre del contacto no puede estar vacio",
 				"contactLastNameEmpty": "El apellido del contacto no puede estar vacio"
 			}
+		},
+	    "invoice" : {
+		    "title": "Facturas",
+			"invoiceNumber" : "Número",
+		    "grandTotal" : "Total",
+		    "invoiceDate" : "Fecha",
+		    "status" : "Estado",
+   		    "statuses": {
+			  "inRevision" : "En revisión",
+			  "ended": "Terminada"
+		    }
+
 		}
 	},
 	"authSchema": {

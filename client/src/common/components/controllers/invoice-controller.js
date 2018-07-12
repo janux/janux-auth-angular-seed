@@ -3,9 +3,39 @@
 var agGridComp = require('common/ag-grid-components');
 
 module.exports =
-	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'invoices', function (
-		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, invoices) {
-		var columnDefs = [];
+	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'invoices', 'config', function (
+		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, invoices, config) {
+		var columnDefs = [
+			{
+				headerName: $filter('translate')('services.invoice.invoiceNumber'),
+				field     : 'invoiceNumber'
+			},
+			{
+				headerName: $filter('translate')('services.invoice.invoiceDate'),
+				field     : 'invoiceDate',
+				filter    : 'date'
+			},
+			{
+				headerName    : $filter('translate')('services.invoice.status'),
+				field         : 'status',
+				valueFormatter: function (params) {
+					var result = '';
+					switch (params.data.status) {
+						case config.invoice.status.inRevision:
+							result = $filter('translate')('services.invoice.statuses.inRevision');
+							break;
+						case config.invoice.status.ended:
+							result = $filter('translate')('services.invoice.statuses.ended');
+							break;
+					}
+					return result;
+				}
+			},
+			{
+				headerName: $filter('translate')('services.invoice.grandTotal'),
+				field     : 'grandTotal'
+			}
+		];
 
 
 		var infoDialog = function (translateKey) {
@@ -55,8 +85,6 @@ module.exports =
 			}
 		};
 
-
-
 		var agGridSizeToFit = function () {
 			$timeout(function () {
 				$scope.gridOptions.api.sizeColumnsToFit();
@@ -103,8 +131,6 @@ module.exports =
 			console.log('$translateChangeSuccess');
 			$state.reload();
 		});
-
-
 
 
 	}];

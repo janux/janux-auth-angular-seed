@@ -393,6 +393,17 @@
 				"contactNameEmpty": "Contact name can't be empty",
 				"contactLastNameEmpty": "Contact last name can't be empty"
 			}
+		},
+		"invoice" : {
+			"title": "Invoices",
+			"invoiceNumber" : "Invoice number",
+			"grandTotal" : "Total",
+			"invoiceDate" : "Date",
+			"status" : "Status",
+		    "statuses": {
+				"inRevision" : "In revision",
+			    "ended": "Ended"
+			}
 		}
 	},
 	"authSchema": {

@@ -70,7 +70,7 @@ require('angular').module('config', [])
 				translateKey: 'services.title',
 				iconClass   : 'fa-tachometer',
 				state       : 'services',
-				authContext: 'SERVICE',
+				authContext : 'SERVICE',
 				subOptions  : {}
 			},
 			{
@@ -79,7 +79,7 @@ require('angular').module('config', [])
 				iconClass   : 'fa-sitemap',
 				state       : 'permissions',
 				subOptions  : {
-					roles         : {
+					roles       : {
 						state      : 'permissions.roles',
 						translate  : 'authSchema.roles',
 						authContext: 'ROLE'
@@ -99,7 +99,7 @@ require('angular').module('config', [])
 				iconClass   : 'fa-users',
 				state       : 'users',
 				subOptions  : {
-					users    : {
+					users      : {
 						state      : 'users',
 						translate  : 'peopleOrgs.users',
 						authContext: 'USER'
@@ -142,17 +142,17 @@ require('angular').module('config', [])
 				subOptions  : {}
 			}
 		],
-		functions: {
-			FUNCTION_DRIVER : "DRIVER",
-			FUNCTION_AGENT : "AGENT",
-			FUNCTION_AGENT_ARMED : "AGENT_ARMED",
-			FUNCTION_COORDINATOR : "COORDINATOR",
-			FUNCTION_GREETER : "GREETER",
-			FUNCTION_GUARD : "GUARD",
-			FUNCTION_GUARD_SUPPORT : "GUARD_SUPPORT",
-			FUNCTION_GUARD_SHIFT_MANAGER : "GUARD_SHIFT_MANAGER",
-			FUNCTION_GUARD_NIGHT_SHIFT_MAINTENANCE : "GUARD_NIGHT_SHIFT_MAINTENANCE",
-			FUNCTION_GUARD_GOODS_RECEIPT : "GUARD_GOODS_RECEIPT"
+		functions             : {
+			FUNCTION_DRIVER                       : "DRIVER",
+			FUNCTION_AGENT                        : "AGENT",
+			FUNCTION_AGENT_ARMED                  : "AGENT_ARMED",
+			FUNCTION_COORDINATOR                  : "COORDINATOR",
+			FUNCTION_GREETER                      : "GREETER",
+			FUNCTION_GUARD                        : "GUARD",
+			FUNCTION_GUARD_SUPPORT                : "GUARD_SUPPORT",
+			FUNCTION_GUARD_SHIFT_MANAGER          : "GUARD_SHIFT_MANAGER",
+			FUNCTION_GUARD_NIGHT_SHIFT_MAINTENANCE: "GUARD_NIGHT_SHIFT_MAINTENANCE",
+			FUNCTION_GUARD_GOODS_RECEIPT          : "GUARD_GOODS_RECEIPT"
 		},
 		periodFilter          : [
 			{
@@ -242,6 +242,12 @@ require('angular').module('config', [])
 				label: 'periodFilter.lastYear'
 			}
 		],
+		invoice               : {
+			status: {
+				inRevision: 'inRevision',
+				ended     : 'ended'
+			}
+		},
 		jnxStoreKeys : {
 			storeObjectSufix: 'glarusStorage',
 			servicesColumnsFilters: 'servicesColumnsFilters',

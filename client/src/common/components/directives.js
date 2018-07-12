@@ -913,4 +913,16 @@ angular.module('commonComponents', [])
 					});
 				}]
 		};
-	});
+
+	})
+
+	.directive('invoice', function () {
+		var scopeDefinition = {'invoices': '='};
+		return {
+			scope     : scopeDefinition,
+			restrict  : 'E',
+			controller: require('./controllers/invoice-controller')
+		}
+	})
+
+;

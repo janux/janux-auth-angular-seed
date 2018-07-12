@@ -58,6 +58,9 @@ require('angular').module('appServices', [
 			}],
 			driversAndOps: ['operationService', function (operationService) {
 				return operationService.findDriversAndSpecialOps();
+			}],
+			invoices: ['invoiceService', '$stateParams', function (invoiceService, $stateParams) {
+				return invoiceService.findByIdOperation($stateParams.id);
 			}]
 		}
 	});

@@ -136,6 +136,20 @@ module.exports =
 				});
 			},
 
+			findWithTimeEntriesByIdsAndDate: function (ids, initDate, endDate) {
+				var params;
+				params = [ids, initDate, endDate];
+				return $http.jsonrpc(
+					'/rpc/2.0/operation',
+					'findWithTimeEntriesByIdsAndDate',
+					params
+				).then(function (resp) {
+					return _.map(resp.data.result, function (o) {
+						return fromJSON(o);
+					});
+				});
+			},
+
 
 			// findWithoutTimeEntryByAuthenticatedUser: function () {
 			// 	return $http.jsonrpc(

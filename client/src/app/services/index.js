@@ -55,6 +55,9 @@ require('angular').module('appServices', [
 			}],
 			operation: ['operationService','$stateParams', function (operationService, $stateParams) {
 				return operationService.findById($stateParams.id);
+			}],
+			invoices: ['invoiceService', '$stateParams', function (invoiceService, $stateParams) {
+				return invoiceService.findByIdOperation($stateParams.id);
 			}]
 		}
 	});

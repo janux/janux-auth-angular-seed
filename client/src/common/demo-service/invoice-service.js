@@ -90,6 +90,16 @@ module.exports =
 				});
 			},
 
+			findByIdOperation: function (idOperation) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'findByIdOperation',
+					[idOperation]
+				).then(function (resp) {
+					return _.map(resp.data.result, fromJSON);
+				});
+			},
+
 			findOne: function (invoiceNumber) {
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',

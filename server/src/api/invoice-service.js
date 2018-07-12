@@ -24,6 +24,10 @@ var createInstance = function (invoiceServiceReference) {
 	InvoiceService.prototype = Object.create(null);
 	InvoiceService.prototype.constructor = InvoiceService;
 
+	InvoiceService.prototype.findByIdOperation = function (idOperation, callback) {
+		return invoiceServiceReferenceInstance.findByIdOperation(idOperation).asCallback(callback);
+	};
+
 	InvoiceService.prototype.findByClient = function (idClient, callback) {
 		return invoiceServiceReferenceInstance.findByClient(idClient).asCallback(callback);
 	};

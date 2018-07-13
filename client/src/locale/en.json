@@ -350,6 +350,13 @@
 			"GUARD": "Guard",
 			"SPECIAL_OPS": "Special"
 		},
+		"tabs": {
+			"summary": "Summary",
+			"timeSheet": "Time sheet",
+			"invoices": "Invoices"
+		},
+		"delete": "Delete",
+		"addToInvoice": "Add to",
 		"addSpecial":"Add special service",
 		"specialService": "Special service",
 		"specialForm": {

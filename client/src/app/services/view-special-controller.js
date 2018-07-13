@@ -12,6 +12,11 @@ module.exports =
 	console.log('Operation', operation);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
+	var findTimeEntries;
+	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+
+	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 	var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
@@ -19,6 +24,33 @@ module.exports =
 
 	$scope.cl = clientsList;
 	$scope.editMode = false;
+	$scope.currentNavItem = 'summary';
+	$scope.driversAndOps = driversAndOps;
+	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
+	$scope.periodFilterOptions = config.periodFilterSpecialOps;
+
+	function setExtraFlag(resource) {
+		if (resource.resource.isExternal === true) {
+			resource.isExternal = true;
+		}
+		return resource;
+	}
+
+	$scope.periodChange = function () {
+		jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
+		findTimeEntries($scope.periodFilterKey);
+	};
+
+	$scope.changeTab = function (tab) {
+		$scope.currentNavItem = tab;
+
+		if (tab === 'time-sheet') {
+			var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+			var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+
+			findTimeEntries(periodKey);
+		}
+	};
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';

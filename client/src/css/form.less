@@ -1,10 +1,10 @@
 .divider-line,
 .divider-line-glarus
 {
-	padding-bottom:10px; 
+	padding-bottom:10px;
 }
 .divider-line{
-	border-top:2px solid @green2;	
+	border-top:2px solid @green2;
 }
 .divider-line-glarus{
 	border-top:2px solid @glarus-blue;
@@ -56,7 +56,7 @@ md-toolbar.form-root-toolbar{
 	background: @toolbar-glarus;
 	color: @glarus-blue;
 	padding-bottom:5px;
-	padding-right: 20px; 
+	padding-right: 20px;
 	z-index: 0;
 }
 .md-toolbar-tools.form-toolbar .md-button{
@@ -78,6 +78,7 @@ md-toolbar.form-root-toolbar{
 
 	margin: 20px;
 	width:100%;
+	overflow: inherit;
 
 	md-toolbar.options-tabs {
 
@@ -87,6 +88,18 @@ md-toolbar.form-root-toolbar{
 			padding: 0 20px 0 0 !important;
 			height: 48px;
 			max-height: 48px;
+
+			md-truncate.filter {
+				margin-left: 90px;
+			}
+
+			label, span {
+				color: @white;
+			}
+			label {
+				padding-top: 8px;
+				padding-right: 5px;
+			}
 		}
 
 		li.md-nav-item {
@@ -212,7 +225,7 @@ md-menu-content {
 	    font-size: 12px;
 	    line-height: 14px;
 	    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
-	    color: grey; 
+	    color: grey;
 	}
     .full{
     	width: 100%;
@@ -236,7 +249,7 @@ md-menu-content {
 	    font-size: 12px;
 	    line-height: 14px;
 	    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
-	    color: grey; 
+	    color: grey;
 	}
     .full{
     	width: 100%;
@@ -276,17 +289,17 @@ md-menu-content {
 }
 .form-section,
 .form-section-glarus{
-	display:table; 
-	padding:4px 10px 4px 10px; 
+	display:table;
+	padding:4px 10px 4px 10px;
 	margin-bottom: 30px;
 	color:white;
 }
 
 .form-section{
-	background:@green2; 
+	background:@green2;
 }
 .form-section-glarus{
-	background: @footer-glarus; 
+	background: @footer-glarus;
 }
 .staff-form-left,
 .staff-form-right{
@@ -384,8 +397,8 @@ md-menu-content {
 }
 
 .staff-name{
-	background:none; 
-	color:@footer-glarus; 
+	background:none;
+	color:@footer-glarus;
 	margin:10px 25px;
 }
 
@@ -407,7 +420,7 @@ md-menu-content {
    display: -webkit-flex;
    flex-direction: row;
  }
- .masonry { 
+ .masonry {
   display: flex;
   display: -webkit-flex;
   flex-flow: wrap;
@@ -428,17 +441,17 @@ md-menu-content {
 	padding: 3px;
 }
 .btn-row{
-	width:29%; 
-	display:inline-block; 
+	width:29%;
+	display:inline-block;
 	text-align:right;
 }
 
 .btn-row-form{
-	width:100%; 
-	display:inline-block; 
+	width:100%;
+	display:inline-block;
 	text-align:right;
 }
- // Style buttons 
+ // Style buttons
 
 .btn {
     background-color: @glarus-blue;

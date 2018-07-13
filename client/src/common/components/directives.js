@@ -653,7 +653,8 @@ angular.module('commonComponents', [])
 		return {
 			scope     : scopeDefinition,
 			restrict  : 'E',
-			controller: require('./controllers/invoice-controller')
+			controller: require('./controllers/invoice-controller'),
+			templateUrl: 'common/components/templates/invoice.html'
 		}
 	})
 

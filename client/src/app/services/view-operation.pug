@@ -23,7 +23,7 @@ side-bar
 								| {{ 'services.tabs.summary' | translate | uppercase }}
 							md-nav-item(md-nav-click="changeTab('time-sheet')" name="time-sheet")
 								| {{ 'services.tabs.timeSheet' | translate | uppercase }}
-							//md-nav-item(md-nav-click="changeTab('invoices')" name="invoices")
+							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices")
 								| {{ 'services.tabs.invoices' | translate | uppercase }}
 
 						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet"')
@@ -56,4 +56,7 @@ side-bar
 
 				.container-body(ng-show='currentNavItem=="time-sheet"', style="padding-bottom:50px;")
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+
+				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:50px;" )
+					invoice(invoices = "invoices" style='width: 100%')
 footer-Janux

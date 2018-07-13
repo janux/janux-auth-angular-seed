@@ -3,8 +3,8 @@
 var agGridComp = require('common/ag-grid-components');
 
 module.exports =
-	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'invoices', 'config', function (
-		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, invoices, config) {
+	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', function (
+		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config) {
 		var columnDefs = [
 			{
 				headerName: $filter('translate')('services.invoice.invoiceNumber'),
@@ -95,7 +95,7 @@ module.exports =
 
 		$scope.gridOptions = {
 			columnDefs               : columnDefs,
-			rowData                  : invoices,
+			rowData                  : $scope.invoices,
 			enableFilter             : true,
 			enableColResize          : true,
 			angularCompileRows       : true,

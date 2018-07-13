@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps', function(
-  $scope , $rootScope , clientsList , $state , $stateParams , config, operationService , operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps){
+['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps', 'invoices', function(
+  $scope , $rootScope , clientsList , $state , $stateParams , config, operationService , operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps, invoices){
 
 	console.log('Operation', operation);
 
@@ -28,6 +28,9 @@ module.exports =
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
+	$scope.invoices = invoices;
+	$scope.invoices = [{invoiceNumber:'12345'}];
+
 
 	function setExtraFlag(resource) {
 		if (resource.resource.isExternal === true) {

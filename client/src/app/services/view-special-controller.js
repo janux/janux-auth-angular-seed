@@ -320,6 +320,7 @@ module.exports =
 		}
 	];
 
+	var refreshing = false;		// Flag to indicate if ag-grid is in refresh process
 	var agGridSizeToFit = function () {
 		$timeout(function () {
 			$scope.gridOptions.api.sizeColumnsToFit();
@@ -432,6 +433,16 @@ module.exports =
 			savedFilters = $scope.gridOptions.api.getFilterModel();
 			localStorageService.set(columnsFiltersKey, savedFilters);
 			// console.log('savedFilters' + JSON.stringify(savedFilters));
+		},
+		onRowSelected: function () {
+			// Only one refresh at a time
+			if (!refreshing) {
+				refreshing = true;
+				$timeout(function () {
+					$scope.gridOptions.api.sizeColumnsToFit();
+					refreshing = false;
+				},200);
+			}
 		}
 	};
 

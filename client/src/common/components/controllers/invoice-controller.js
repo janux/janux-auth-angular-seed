@@ -1,6 +1,7 @@
 'use strict';
 
 var agGridComp = require('common/ag-grid-components');
+var moment = require('moment');
 
 module.exports =
 	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', function (
@@ -11,9 +12,12 @@ module.exports =
 				field     : 'invoiceNumber'
 			},
 			{
-				headerName: $filter('translate')('services.invoice.invoiceDate'),
-				field     : 'invoiceDate',
-				filter    : 'date'
+				headerName    : $filter('translate')('services.invoice.invoiceDate'),
+				field         : 'invoiceDate',
+				filter        : 'date',
+				valueFormatter: function (params) {
+					return moment(params.data.invoiceDate).format('YYYY/MM/DD')
+				}
 			},
 			{
 				headerName    : $filter('translate')('services.invoice.status'),
@@ -32,8 +36,11 @@ module.exports =
 				}
 			},
 			{
-				headerName: $filter('translate')('services.invoice.grandTotal'),
-				field     : 'grandTotal'
+				headerName    : $filter('translate')('services.invoice.grandTotal'),
+				field         : 'grandTotal',
+				valueFormatter: function (params) {
+					return $filter('currency')(params.data.grandTotal);
+				}
 			}
 		];
 

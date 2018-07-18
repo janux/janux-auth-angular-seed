@@ -6,6 +6,10 @@ require('angular').module('config', [])
 		defaultState          : 'operations.drivers',
 		defaultStateClient    : 'operations.specials',
 		glarus                : '10000',
+		dateFormats            : {
+			dateOnlyFormat: 'YYYY-MM-DD',
+			hourOnlyFormat: 'HH:mm'
+		},
 		mainMenu              : [
 			{
 				key         : 'peopleOrgs',

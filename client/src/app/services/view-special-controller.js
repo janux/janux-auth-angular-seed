@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps', 'invoices', function(
-  $scope , $rootScope , clientsList , $state , $stateParams , config, operationService , operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps, invoices){
+['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService', 'invoiceService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps', 'invoices', function(
+  $scope , $rootScope , clientsList , $state , $stateParams , config, operationService , invoiceService, operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps, invoices){
 
 	console.log('Operation', operation);
 
@@ -30,7 +30,7 @@ module.exports =
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
 	$scope.invoices = invoices;
 	$scope.invoices = [{invoiceNumber:'12345',grandTotal: 100,status: 'inRevision',invoiceDate:new Date()}];
-
+	$scope.invoice = undefined;
 
 	function setExtraFlag(resource) {
 		if (resource.resource.isExternal === true) {
@@ -531,4 +531,20 @@ module.exports =
 		console.log('$translateChangeSuccess');
 		$state.reload();
 	});
+
+	$scope.updateInvoiceList = function () {
+		invoiceService.findByIdOperation($stateParams.id)
+			.then(function (result) {
+				$scope.invoices = result;
+				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated);
+			});
+	};
+
+	$scope.updatedSelectedInvoice = function (invoiceNumber) {
+		invoiceService.findOne(invoiceNumber)
+			.then(function (result) {
+				$scope.invoice = result;
+				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated)
+			});
+	};
 }];

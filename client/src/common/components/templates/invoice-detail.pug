@@ -1,0 +1,12 @@
+invoice-detail-person(invoice='invoice')
+
+p {{ (subTotalPerson | currency) }}
+
+invoice-detail-vehicle(invoice='invoice')
+
+p {{ (subTotalVehicle | currency) }}
+
+invoice-detail-expense(invoice='invoice')
+
+p {{ (subTotalExpense | currency) }}
+

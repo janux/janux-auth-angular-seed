@@ -65,4 +65,7 @@ side-bar
 
 				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:50px;" )
 					invoice(invoices = "invoices" style='width: 100%')
+
+				.container-body(ng-show='currentNavItem=="invoiceDetail"', style="padding-bottom:50px;" )
+					invoice-detail(invoice = 'invoice' style='width: 100%')
 footer-Janux

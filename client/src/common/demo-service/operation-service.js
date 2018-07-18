@@ -534,6 +534,10 @@ module.exports =
 				});
 			},
 
+			calculateDuration: function (begin, end) {
+				return calculateDuration(begin, end);
+			},
+
 			fromJSON: function (object) {
 				return fromJSON(object);
 			},

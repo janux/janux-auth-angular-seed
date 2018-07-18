@@ -403,7 +403,22 @@
 		    "statuses": {
 				"inRevision" : "In revision",
 			    "ended": "Ended"
-			}
+			},
+		    "invoiceDetail":{
+		   		"date": "Date",
+		   		"personName": "Name",
+		   		"vehicle": "Vehicle",
+		   		"function": "Function",
+		   		"hour": "Hour",
+		   		"duration":"Duration",
+		   		"amountDay": "Days",
+		   		"amountHour": "Hours",
+		   		"rateDay": "Day rate",
+		   		"rateHour": "Hour rate",
+		   		"doNotInvoice":"Do not invoice",
+		   		"subTotal": "Subtotal",
+			    "expenseName": "Name"
+		     }
 		}
 	},
 	"authSchema": {

@@ -16,7 +16,7 @@ module.exports =
 				field         : 'invoiceDate',
 				filter        : 'date',
 				valueFormatter: function (params) {
-					return moment(params.data.invoiceDate).format('YYYY/MM/DD')
+					return moment(params.data.invoiceDate).format(config.dateFormats.dateOnlyFormat);
 				}
 			},
 			{
@@ -62,8 +62,6 @@ module.exports =
 
 		function deleteConfirmed(rowsToDelete) {
 			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
-
-			// TODO: Remove services
 		}
 
 		// Remove selected records
@@ -101,32 +99,32 @@ module.exports =
 		$scope.agGridSizeToFit = agGridSizeToFit;
 
 		$scope.gridOptions = {
-			columnDefs               : columnDefs,
-			rowData                  : $scope.invoices,
-			enableFilter             : true,
-			enableColResize          : true,
-			angularCompileRows       : true,
-			suppressRowClickSelection: true,
-			rowSelection             : 'multiple',
-			animateRows              : true,
-			rowHeight                : 40,
-			headerHeight             : 35,
-			enableSorting            : true,
-			pagination               : true,
-			paginationAutoPageSize   : true,
-			onGridReady              : function () {
-				agGridSizeToFit();
+				columnDefs               : columnDefs,
+				rowData                  : $scope.invoices,
+				enableFilter             : true,
+				enableColResize          : true,
+				angularCompileRows       : true,
+				suppressRowClickSelection: true,
+				rowSelection             : 'multiple',
+				animateRows              : true,
+				rowHeight                : 40,
+				headerHeight             : 35,
+				enableSorting            : true,
+				pagination               : true,
+				paginationAutoPageSize   : true,
+				onGridReady              : function () {
+					agGridSizeToFit();
 
-				// This function is defined to be able to trigger the deletion
-				// of the rows from the header component that does not have access
-				// to the scope.
-				$scope.gridOptions.api.deleteRows = removeSelected;
-			},
-			localeTextFunc           : function (key, defaultValue) {
-				var gridKey = 'grid.' + key;
-				var value = $filter('translate')(gridKey);
-				return value === gridKey ? defaultValue : value;
-			}
+					// This function is defined to be able to trigger the deletion
+					// of the rows from the header component that does not have access
+					// to the scope.
+					$scope.gridOptions.api.deleteRows = removeSelected;
+				},
+				localeTextFunc           : function (key, defaultValue) {
+					var gridKey = 'grid.' + key;
+					var value = $filter('translate')(gridKey);
+					return value === gridKey ? defaultValue : value;
+				}
 		};
 
 		$scope.$on('sideMenuSizeChange', function () {

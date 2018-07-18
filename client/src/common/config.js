@@ -6,7 +6,7 @@ require('angular').module('config', [])
 		defaultState          : 'operations.drivers',
 		defaultStateClient    : 'operations.specials',
 		glarus                : '10000',
-		dateFormats            : {
+		dateFormats           : {
 			dateOnlyFormat: 'YYYY-MM-DD',
 			hourOnlyFormat: 'HH:mm'
 		},
@@ -250,6 +250,10 @@ require('angular').module('config', [])
 			status: {
 				inRevision: 'inRevision',
 				ended     : 'ended'
+			},
+			events: {
+				invoiceListUpdated  : 'invoiceListUpdated',
+				invoiceDetailUpdated: 'invoiceDetailUpdated'
 			}
 		}
 	});

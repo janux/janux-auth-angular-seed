@@ -111,5 +111,11 @@ module.exports =
 			$scope.expenses = result;
 			$scope.gridOptions.api.setRowData($scope.expenses);
 		};
+
+		//This event is captured, when the information of the selected invoice changes.
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
+			$scope.filterExpenses();
+		});
+
 		$scope.filterExpenses();
 	}];

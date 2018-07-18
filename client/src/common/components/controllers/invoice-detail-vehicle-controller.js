@@ -145,5 +145,10 @@ module.exports =
 			$state.reload();
 		});
 
+		//This event is captured, when the information of the selected invoice changes.
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
+			$scope.filterExpenses();
+		});
+
 		$scope.filterVehicle();
 	}];

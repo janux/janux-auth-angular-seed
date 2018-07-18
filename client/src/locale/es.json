@@ -405,7 +405,22 @@
    		    "statuses": {
 			  "inRevision" : "En revisión",
 			  "ended": "Terminada"
-		    }
+		    },
+		    "invoiceDetail":{
+			  "date": "Fecha",
+			  "personName": "Personal",
+			  "vehicle": "Vehiculo",
+			  "function": "Función",
+			  "hour": "Hora",
+			  "duration":"Duración",
+			  "amountDay": "Días",
+			  "amountHour": "Horas",
+			  "rateDay": "Costo diario",
+			  "rateHour": "Costo hora",
+			  "doNotInvoice":"No facturar",
+			  "subTotal": "Subtotal",
+			  "expenseName": "Concepto"
+			}
 
 		}
 	},

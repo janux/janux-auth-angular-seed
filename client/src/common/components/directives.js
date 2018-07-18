@@ -919,11 +919,50 @@ angular.module('commonComponents', [])
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};
 		return {
-			scope     : scopeDefinition,
-			restrict  : 'E',
-			controller: require('./controllers/invoice-controller'),
+			scope      : scopeDefinition,
+			restrict   : 'E',
+			controller : require('./controllers/invoice-controller'),
 			templateUrl: 'common/components/templates/invoice.html'
 		}
 	})
 
+	.directive('invoiceDetail', function () {
+		var scopeDefinition = {'invoice': '='};
+		return {
+			scope      : scopeDefinition,
+			restrict   : 'E',
+			controller : require('./controllers/invoice-detail-controller'),
+			templateUrl: 'common/components/templates/invoice-detail.html'
+		}
+	})
+
+	.directive('invoiceDetailPerson', function () {
+		var scopeDefinition = {'invoice': '='};
+		return {
+			scope      : scopeDefinition,
+			restrict   : 'E',
+			controller : require('./controllers/invoice-detail-person-controller'),
+			templateUrl: 'common/components/templates/invoice-detail-person.html'
+		}
+	})
+
+	.directive('invoiceDetailVehicle', function () {
+		var scopeDefinition = {'invoice': '='};
+		return {
+			scope      : scopeDefinition,
+			restrict   : 'E',
+			controller : require('./controllers/invoice-detail-vehicle-controller'),
+			templateUrl: 'common/components/templates/invoice-detail-vehicle.html'
+		}
+	})
+
+	.directive('invoiceDetailExpense', function () {
+		var scopeDefinition = {'invoice': '='};
+		return {
+			scope      : scopeDefinition,
+			restrict   : 'E',
+			controller : require('./controllers/invoice-detail-expense-controller'),
+			templateUrl: 'common/components/templates/invoice-detail-expense.html'
+		}
+	})
 ;

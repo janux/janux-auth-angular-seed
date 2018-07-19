@@ -119,22 +119,25 @@ module.exports =
 			//The invoice is located at $scope.invoice.
 			var result = [];
 
-			for (var i = 0; i < $scope.invoice.items.length; i++) {
-				var item = $scope.invoice.items[i];
-				var itemTimeEntries = _.filter(item.timeEntries, function (o) {
-					return _.filter(o.timeEntry.resources, function (te) {
-						return te.type === 'VEHICLE';
-					}).length > 0;
+			if (!_.isNil($scope.invoice) && !_.isNil($scope.invoice.items)) {
+				for (var i = 0; i < $scope.invoice.items.length; i++) {
+					var item = $scope.invoice.items[i];
+					var itemTimeEntries = _.filter(item.timeEntries, function (o) {
+						return _.filter(o.timeEntry.resources, function (te) {
+							return te.type === 'VEHICLE';
+						}).length > 0;
+					});
+					result = result.concat(itemTimeEntries);
+				}
+
+				result = _.map(result, function (o) {
+					o.timeEntry.vehicle = _.find(o.timeEntry.resources, function (it) {
+						return it.type === 'VEHICLE';
+					});
+					return o;
 				});
-				result = result.concat(itemTimeEntries);
 			}
 
-			result = _.map(result, function (o) {
-				o.timeEntry.vehicle = _.find(o.timeEntry.resources, function (it) {
-					return it.type === 'VEHICLE';
-				});
-				return o;
-			});
 			$scope.vehicles = result;
 			$scope.gridOptions.api.setRowData($scope.vehicles);
 		};
@@ -150,5 +153,5 @@ module.exports =
 			$scope.filterExpenses();
 		});
 
-		$scope.filterVehicle();
+		// $scope.filterVehicle();
 	}];

@@ -139,7 +139,7 @@ module.exports =
 
 
 		// This is a custom event that helps to update the invoice list.
-		$rootScope.onFilterChanged(config.invoice.events.invoiceListUpdated, function () {
+		$rootScope.$on(config.invoice.events.invoiceListUpdated, function () {
 			$scope.gridOptions.api.setRowData($scope.invoices);
 		});
 

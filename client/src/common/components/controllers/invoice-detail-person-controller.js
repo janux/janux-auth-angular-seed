@@ -153,25 +153,27 @@ module.exports =
 		$scope.filterPersons = function () {
 			//The invoice is located at $scope.invoice.
 			var result = [];
+			if (!_.isNil($scope.invoice) && !_.isNil($scope.invoice.items)) {
+				for (var i = 0; i < $scope.invoice.items.length; i++) {
+					var item = $scope.invoice.items[i];
+					var itemTimeEntries = _.filter(item.timeEntries, function (o) {
+						return _.filter(o.timeEntry.resources, function (te) {
+							return te.type !== 'VEHICLE';
+						}).length > 0;
+					});
+					result = result.concat(itemTimeEntries);
+				}
 
-			for (var i = 0; i < $scope.invoice.items.length; i++) {
-				var item = $scope.invoice.items[i];
-				var itemTimeEntries = _.filter(item.timeEntries, function (o) {
-					return _.filter(o.timeEntry.resources, function (te) {
-						return te.type !== 'VEHICLE';
-					}).length > 0;
+
+				result = _.map(result, function (o) {
+					o.timeEntry.staff = _.find(o.timeEntry.resources, function (it) {
+						return it.type !== 'VEHICLE';
+					});
+					o.timeEntry.duration = operationService.calculateDuration(o.timeEntry.begin, o.timeEntry.end);
+					return o;
 				});
-				result = result.concat(itemTimeEntries);
 			}
 
-
-			result = _.map(result, function (o) {
-				o.timeEntry.staff = _.find(o.timeEntry.resources, function (it) {
-					return it.type !== 'VEHICLE';
-				});
-				o.timeEntry.duration = operationService.calculateDuration(o.timeEntry.begin, o.timeEntry.end);
-				return o;
-			});
 			$scope.persons = result;
 			$scope.gridOptions.api.setRowData($scope.persons);
 		};
@@ -181,5 +183,5 @@ module.exports =
 			$scope.filterExpenses();
 		});
 
-		$scope.filterPersons();
+		// $scope.filterPersons();
 	}];

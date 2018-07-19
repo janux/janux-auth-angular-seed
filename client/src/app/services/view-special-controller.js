@@ -28,8 +28,6 @@ module.exports =
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
-	$scope.invoices = invoices;
-	$scope.invoices = [{invoiceNumber:'12345',grandTotal: 100,status: 'inRevision',invoiceDate:new Date()}];
 	$scope.invoice = undefined;
 
 	function setExtraFlag(resource) {

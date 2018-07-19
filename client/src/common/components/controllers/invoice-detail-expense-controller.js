@@ -104,10 +104,13 @@ module.exports =
 
 		$scope.filterExpenses = function () {
 			var result = [];
-			for (var i = 0; i < $scope.invoice.items.length; i++) {
-				var item = $scope.invoice.items[i];
-				result = result.concat(item.expenses);
+			if (!_.isNil($scope.invoice) && !_.isNil($scope.invoice.items)) {
+				for (var i = 0; i < $scope.invoice.items.length; i++) {
+					var item = $scope.invoice.items[i];
+					result = result.concat(item.expenses);
+				}
 			}
+
 			$scope.expenses = result;
 			$scope.gridOptions.api.setRowData($scope.expenses);
 		};
@@ -117,5 +120,5 @@ module.exports =
 			$scope.filterExpenses();
 		});
 
-		$scope.filterExpenses();
+		// $scope.filterExpenses();
 	}];

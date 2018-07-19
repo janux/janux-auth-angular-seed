@@ -480,7 +480,7 @@ module.exports =
 		invoiceService.findOne(invoiceNumber)
 			.then(function (result) {
 				$scope.invoice = result;
-				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated)
+				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated);
 			});
 	};
 }];

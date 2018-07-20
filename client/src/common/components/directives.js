@@ -964,5 +964,4 @@ angular.module('commonComponents', [])
 			controller : require('./controllers/invoice-detail-expense-controller'),
 			templateUrl: 'common/components/templates/invoice-detail-expense.html'
 		}
-	})
-;
+	});

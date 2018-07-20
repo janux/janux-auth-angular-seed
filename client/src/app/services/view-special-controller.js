@@ -15,6 +15,7 @@ module.exports =
 	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 	var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -24,12 +25,13 @@ module.exports =
 
 	$scope.cl = clientsList;
 	$scope.editMode = false;
-	$scope.currentNavItem = 'summary';
+	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
 	$scope.invoices = invoices;
 	$scope.invoice = undefined;
+	$scope.operationId = $stateParams.id;
 
 	function setExtraFlag(resource) {
 		if (resource.resource.isExternal === true) {
@@ -43,14 +45,19 @@ module.exports =
 		findTimeEntries($scope.periodFilterKey);
 	};
 
+	var loadTimeEntries = function () {
+		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+		var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+
+		findTimeEntries(periodKey);
+	};
+
 	$scope.changeTab = function (tab) {
 		$scope.currentNavItem = tab;
+		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
 
 		if (tab === 'time-sheet') {
-			var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-			var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-
-			findTimeEntries(periodKey);
+			loadTimeEntries();
 		}
 	};
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';

@@ -48,12 +48,16 @@ side-bar
 							button.btn( ng-click='removeSelected()')
 								i.fa.fa-trash &nbsp;
 								| {{ 'services.delete' | translate }}
-							button.btn( ng-click='addToInvoice()')
+							button.btn( ng-click='export()')
+								i.fa.fa-download
+							// button.btn( ng-click='addToInvoice()')
 								i.fa.fa-plus-circle &nbsp;
 								| {{ 'services.addToInvoice' | translate }}
 
 				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', disabled='!editMode', disableautomaticname='{{true}}')
 
-				.container-body(ng-show='currentNavItem=="time-sheet"', style="padding-bottom:50px;")
+				.container-body(ng-show='currentNavItem=="time-sheet"')
+					.add-row-section
+						add-special-service
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 footer-Janux

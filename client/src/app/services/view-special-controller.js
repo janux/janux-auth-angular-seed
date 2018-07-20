@@ -16,19 +16,21 @@ module.exports =
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
+	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 	var timeEntries = [];	// Global time entries object
 	var invoiceItemName = 'Total a facturar';
 
 	$scope.cl = clientsList;
 	$scope.editMode = false;
+	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.editModeInvoiceDetail = false;
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
+	$scope.operationId = $stateParams.id;
 	$scope.invoices = invoices;
 	$scope.invoice = undefined;
-	$scope.operationId = $stateParams.id;
 
 	console.log('Invoices', invoices);
 
@@ -46,7 +48,7 @@ module.exports =
 
 	var loadTimeEntries = function () {
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-		var periodKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
+		var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 
 		findTimeEntries(periodKey);
 	};
@@ -205,17 +207,13 @@ module.exports =
 		operation.interestedParty = operation.interestedParty.object;
 		operation.principals = _.chain(operation.principal)
 			.map('object')
-			.filter(function (principal) {
-				return (!_.isNil(principal));
-			})
+			.filter(function (principal) { return (!_.isNil(principal)); })
 			.value();
 
 		var resources = [];
 
 		var staff = _.chain(operation.staff)
-			.filter(function (staff) {
-				return (!_.isNil(staff.object));
-			})
+			.filter(function (staff) { return (!_.isNil(staff.object)); })
 			.map(function (staff) {
 				delete staff.object.id;
 				return staff.object;
@@ -225,9 +223,7 @@ module.exports =
 		resources = resources.concat(staff);
 
 		var vehicles = _.chain(operation.vehicles)
-			.filter(function (vehicle) {
-				return (!_.isNil(vehicle.object));
-			})
+			.filter(function (vehicle) { return (!_.isNil(vehicle.object)); })
 			.map(function (vehicle) {
 				delete vehicle.object.id;
 				return vehicle.object;
@@ -238,7 +234,7 @@ module.exports =
 
 		operation.currentResources = resources;
 		operation.start = moment(operation.start).toDate();
-		operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
+		operation.end = (!_.isNil(operation.end))?moment(operation.end).toDate():null;
 
 		delete operation.staff;
 		delete operation.vehicles;

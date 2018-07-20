@@ -90,6 +90,16 @@ module.exports =
 				});
 			},
 
+			findInvoiceNumbersByIdTimeEntries: function (idTimeEntries) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'findInvoiceNumbersByIdTimeEntries',
+					[idTimeEntries]
+				).then(function (resp) {
+					return resp.data.result;
+				});
+			},
+
 			findByIdOperation: function (idOperation) {
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',

@@ -32,6 +32,10 @@ var createInstance = function (invoiceServiceReference) {
 		return invoiceServiceReferenceInstance.findByClient(idClient).asCallback(callback);
 	};
 
+	InvoiceService.prototype.findInvoiceNumbersByIdTimeEntries = function (idTimeEntries, callback) {
+		return invoiceServiceReferenceInstance.findInvoiceNumbersByIdTimeEntries(idTimeEntries).asCallback(callback);
+	};
+
 	InvoiceService.prototype.findOne = function (invoiceNumber, callback) {
 		return invoiceServiceReferenceInstance.findOne(invoiceNumber).asCallback(callback);
 	};

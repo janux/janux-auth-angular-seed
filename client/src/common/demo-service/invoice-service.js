@@ -150,6 +150,16 @@ module.exports =
 				});
 			},
 
+			insertInvoiceAndItem: function (invObj, invItemObj) {
+				// Insert time entry
+				return service.insert(invObj).then(function (insertedInvoice) {
+					console.log('Inserted invoice', insertedInvoice);
+					return service.insertInvoiceItem(invObj.invoiceNumber, invItemObj).then(function (insertedItem) {
+						console.log('Inserted invoice item', insertedItem);
+					});
+				});
+			},
+
 			insertExpense: function (invoiceNumber, invoiceName, expense) {
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',

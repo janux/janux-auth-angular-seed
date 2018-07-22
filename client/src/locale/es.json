@@ -360,6 +360,7 @@
 		},
 		"delete": "Delete",
 		"addToInvoice": "Add to",
+		"newInvoice": "Factura nueva",
 		"addSpecial":"Agregar servicio especial",
 		"specialService": "Servicio especial",
 		"specialForm": {
@@ -420,8 +421,13 @@
 			  "doNotInvoice":"No facturar",
 			  "subTotal": "Subtotal",
 			  "expenseName": "Concepto"
+			},
+			"dialogs": {
+				"missingInvoiceNumber": "Por favor ingrese un folio de factura",
+				"missingInvoiceDate": "Por favor ingrese una fecha para la factura",
+				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",
+				"insertTimeEntries": "Registros de bitacora agregados a la factura"
 			}
-
 		}
 	},
 	"authSchema": {

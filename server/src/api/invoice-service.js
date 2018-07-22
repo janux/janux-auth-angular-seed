@@ -61,8 +61,10 @@ var createInstance = function (invoiceServiceReference) {
 	};
 
 	InvoiceService.prototype.insertInvoiceItemTimeEntry = function (invoiceNumber, invoiceItemName, invoiceItemTE, callback) {
-		const object = InvoiceServiceImpl.fromJSONItemTimeEntry(invoiceItemTE);
-		return invoiceServiceReferenceInstance.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, object).asCallback(callback);
+		const invoiceItemTEArray = _.map(invoiceItemTE, function(iITE) {
+			return InvoiceServiceImpl.fromJSONItemTimeEntry(iITE);
+		});
+		return invoiceServiceReferenceInstance.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, invoiceItemTEArray).asCallback(callback);
 	};
 
 	return new InvoiceService();

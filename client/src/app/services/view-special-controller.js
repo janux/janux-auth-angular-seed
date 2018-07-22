@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService', 'invoiceService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps', 'invoices', function(
-  $scope , $rootScope , clientsList , $state , $stateParams , config, operationService , invoiceService, operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps, invoices){
+['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService','invoiceService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps','invoices','$mdDialog','$mdToast',function(
+  $scope , $rootScope , clientsList , $state , $stateParams , config , operationService , invoiceService , operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps , invoices , $mdDialog , $mdToast) {
 
 	console.log('Operation', operation);
 
@@ -16,12 +16,8 @@ module.exports =
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
-
-	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-	var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
-	var findTimeEntries;
-	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
+	var timeEntries = [];	// Global time entries object
+	var invoiceItemName = 'Total a facturar';
 
 	$scope.cl = clientsList;
 	$scope.editMode = false;
@@ -32,6 +28,8 @@ module.exports =
 	$scope.invoices = invoices;
 	$scope.invoice = undefined;
 	$scope.operationId = $stateParams.id;
+
+	console.log('Invoices', invoices);
 
 	function setExtraFlag(resource) {
 		if (resource.resource.isExternal === true) {
@@ -516,8 +514,10 @@ module.exports =
 			period = timePeriods.specialOps[period];
 		}
 		// Load data
-		operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (timeEntries) {
-			$scope.gridOptions.api.setRowData(operationService.mapTimeEntryData(timeEntries));
+		operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (timeE) {
+			timeEntries = timeE[0].schedule;
+			console.log('Loaded time entries', timeEntries);
+			$scope.gridOptions.api.setRowData(operationService.mapTimeEntryData(timeE));
 			agGridSizeToFit();
 		});
 	};
@@ -538,7 +538,7 @@ module.exports =
 		$state.reload();
 	});
 
-	$scope.updateInvoiceList = function () {
+	var updateInvoiceList = function () {
 		invoiceService.findByIdOperation($stateParams.id)
 			.then(function (result) {
 				$scope.invoices = result;
@@ -546,11 +546,125 @@ module.exports =
 			});
 	};
 
-	$scope.updatedSelectedInvoice = function (invoiceNumber) {
+	var updatedSelectedInvoice = function (invoiceNumber) {
 		invoiceService.findOne(invoiceNumber)
 			.then(function (result) {
 				$scope.invoice = result;
 				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated);
 			});
+	};
+
+	$scope.openAddToInvoiceMenu = function($mdMenu, ev) {
+		$mdMenu.open(ev);
+	};
+
+	$scope.showAddToNewInvoicePopup = function () {
+		// Show popup.
+		$mdDialog.show({
+			clickOutsideToClose: true,
+			templateUrl        : 'app/services/add-new-invoice.html',
+			scope              : $scope,
+			preserveScope      : true,
+			controller         : ['$scope','$mdDialog','invoiceService','config', function ($scope, $mdDialog, invoiceService, config) {
+				console.log('config.invoice.status.inRevision', config.invoice.status.inRevision);
+				$scope.newInvoiceNumber = '';
+				$scope.newInvoiceDate = '';
+
+				$scope.closeAddNewInvoice = function () {
+					$mdDialog.hide();
+				};
+
+				$scope.createNewInvoice = function () {
+					var selectedRows = $scope.gridOptions.api.getSelectedRows();
+					if (selectedRows.length > 0) {
+						var invoiceItemsTE = [];
+
+						// Map ag-grid rows into item time entry objects
+						selectedRows.forEach(function (agGridRow) {
+							invoiceItemsTE.push( {
+								doNotInvoice: false,
+								doNotInvoiceVehicle: false,
+								timeEntry: _.find(timeEntries, {id: agGridRow.id} ),
+								total: 0
+							} );
+						});
+
+						if ($scope.newInvoiceNumber !== '') {
+							if ($scope.newInvoiceDate !== '') {
+								$mdDialog.hide();
+
+								var newInvoice = {
+									client: operation.client.object,
+									invoiceNumber:$scope.newInvoiceNumber,
+									invoiceDate: $scope.newInvoiceDate,
+									comments: '',
+									items: [],
+									status: config.invoice.status.inRevision,
+									discount: 0,
+									discountPercentage: 0
+								};
+
+								var newItem = {
+									itemNumber: 1,
+									name: invoiceItemName,
+									timeEntries: []
+								};
+
+								// Create invoice and add time entries
+								invoiceService.insertInvoiceAndItem(newInvoice, newItem).then(function (result) {
+									console.log('Invoice created result', result);
+									invoiceService.insertInvoiceItemTimeEntry(newInvoice.invoiceNumber,newItem.name,invoiceItemsTE).then(function (insertedTimeEntries) {
+										console.log('Inserted time entries', insertedTimeEntries);
+										$mdToast.show(
+											$mdToast.simple()
+												.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
+												.position( 'top right' )
+												.hideDelay(3000)
+										);
+									});
+									updateInvoiceList();
+								});
+							} else {
+								infoDialog('services.invoice.dialogs.missingInvoiceDate');
+							}
+						} else {
+							infoDialog('services.invoice.dialogs.missingInvoiceNumber');
+						}
+					} else {
+						infoDialog('services.invoice.dialogs.noRowsSelected');
+					}
+				};
+			}]
+		});
+	};
+
+	$scope.addTimeEntriesToInvoice = function (invoiceNumber) {
+		var selectedRows = $scope.gridOptions.api.getSelectedRows();
+		if (selectedRows.length > 0) {
+			var invoiceItemsTE = [];
+
+			// Map ag-grid rows into item time entry objects
+			selectedRows.forEach(function (agGridRow) {
+				invoiceItemsTE.push({
+					doNotInvoice: false,
+					doNotInvoiceVehicle: false,
+					timeEntry: _.find(timeEntries, {id: agGridRow.id}),
+					total: 0
+				});
+			});
+
+			invoiceService.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, invoiceItemsTE).then(function (insertedTimeEntries) {
+				console.log('Inserted invoice time entries', insertedTimeEntries);
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
+						.position( 'top right' )
+						.hideDelay(3000)
+				);
+				updatedSelectedInvoice(invoiceNumber);
+			});
+		} else {
+			infoDialog('services.invoice.dialogs.noRowsSelected');
+		}
 	};
 }];

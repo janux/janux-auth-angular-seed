@@ -358,6 +358,7 @@
 		},
 		"delete": "Delete",
 		"addToInvoice": "Add to",
+		"newInvoice": "New invoice",
 		"addSpecial":"Add special service",
 		"specialService": "Special service",
 		"specialForm": {
@@ -418,7 +419,13 @@
 		   		"doNotInvoice":"Do not invoice",
 		   		"subTotal": "Subtotal",
 			    "expenseName": "Name"
-		     }
+			},
+			"dialogs": {
+				"missingInvoiceNumber": "Please enter a valid invoice number",
+				"missingInvoiceDate": "Please enter a valid invoice date",
+				"noRowsSelected": "Select at least one row to add",
+				"insertTimeEntries": "Time entries successfully added to the invoice"
+			}
 		}
 	},
 	"authSchema": {

@@ -48,11 +48,18 @@ side-bar
 							button.btn( ng-click='removeSelected()')
 								i.fa.fa-trash &nbsp;
 								| {{ 'services.delete' | translate }}
+
+							md-menu(md-position-mode="target-right target" md-offset="-6 50")
+								button.btn( aria-label="Add" ng-click='openAddToInvoiceMenu($mdMenu, $event);' ng-show='userRole.can("READ",subOption.authContext);' )
+									i.fa.fa-plus-circle &nbsp;
+									| {{ 'services.addToInvoice' | translate }}
+
+								md-menu-content
+									md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
+									md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
+
 							button.btn( ng-click='export()')
 								i.fa.fa-download
-							// button.btn( ng-click='addToInvoice()')
-								i.fa.fa-plus-circle &nbsp;
-								| {{ 'services.addToInvoice' | translate }}
 
 				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', disabled='!editMode', disableautomaticname='{{true}}')
 

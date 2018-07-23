@@ -31,7 +31,7 @@ module.exports =
 				field       : 'vehicle',
 				filter      : 'agTextColumnFilter',
 				valueGetter : function (params) {
-					var vehicle = params.data.vehicle.resource;
+					var vehicle = params.data.timeEntry.vehicle.resource;
 					return vehicle.name + " " + vehicle.plateNumber;
 				},
 				filterParams: {newRowsAction: 'keep'}
@@ -91,7 +91,7 @@ module.exports =
 			}, 1000);
 		};
 
-		$scope.gridOptionsPersons = {
+		$scope.gridOptions = {
 			columnDefs               : columnDefs,
 			rowData                  : $scope.vehicles,
 			enableFilter             : true,
@@ -149,8 +149,9 @@ module.exports =
 		});
 
 		//This event is captured, when the information of the selected invoice changes.
-		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
-			$scope.filterExpenses();
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+			$scope.invoice = invoice;
+			$scope.filterVehicle();
 		});
 
 		// $scope.filterVehicle();

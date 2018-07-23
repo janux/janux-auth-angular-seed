@@ -31,6 +31,7 @@ module.exports = {
 	checkBoxStaffAvalability : require('./checkBoxStaffAvalability'),
 	editClientCellRenderer   : require('./clientedit-cell-renderer'),
 	editSupplierCellRenderer : require('./supplieredit-cell-renderer'),
+	viewInvoiceDetailCellRenderer : require('./view-invoice-detail-cell-renderer'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

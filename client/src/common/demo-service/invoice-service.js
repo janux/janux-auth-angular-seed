@@ -10,7 +10,7 @@ module.exports =
 
 		function fromJSON(object) {
 			const result = _.clone(object);
-			result.clien = partyService.fromJSON(object.client);
+			result.client = partyService.fromJSON(object.client);
 			result.discount = _.isNil(object.discount) ? undefined : Number(object.discount);
 			result.discountPercentage = _.isNil(object.discountPercentage) ? undefined : Number(object.discountPercentage);
 			result.grandTotal = _.isNil(object.grandTotal) ? undefined : Number(object.grandTotal);

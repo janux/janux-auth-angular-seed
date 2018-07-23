@@ -329,6 +329,19 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridViewInvoiceDetails', [ function() {
+	return {
+		restrict   : 'E',
+		scope      : true,
+		templateUrl: 'common/ag-grid-components/templates/view-invoice-detail.html',
+		controller : ['$scope', '$attrs', '$rootScope', 'config', function ($scope, $attrs, $rootScope, config) {
+			$scope.showInvoiceDetail = function () {
+				// console.log('internal with invoice' + $attrs.invoicenumber);
+				$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $attrs.invoicenumber);
+			};
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

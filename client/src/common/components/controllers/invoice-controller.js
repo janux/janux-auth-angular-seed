@@ -8,6 +8,12 @@ module.exports =
 		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config) {
 		var columnDefs = [
 			{
+				headerName  : '',
+				field       : 'view',
+				width       : 50,
+				cellRenderer: agGridComp.viewInvoiceDetailCellRenderer
+			},
+			{
 				headerName: $filter('translate')('services.invoice.invoiceNumber'),
 				field     : 'invoiceNumber'
 			},

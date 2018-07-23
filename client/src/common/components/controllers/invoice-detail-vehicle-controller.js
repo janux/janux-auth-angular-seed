@@ -72,7 +72,7 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
-				width       : 50
+				width       : 120
 			},
 			// Subtotal.
 			{
@@ -81,7 +81,7 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
-				width       : 50
+				width       : 120
 			}
 		];
 

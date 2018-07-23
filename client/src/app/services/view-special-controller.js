@@ -52,8 +52,9 @@ module.exports =
 
 	$scope.changeTab = function (tab) {
 		$scope.currentNavItem = tab;
-		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
-
+		if (tab !== 'invoiceDetail') {
+			jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
+		}
 		if (tab === 'time-sheet') {
 			loadTimeEntries();
 		}
@@ -550,7 +551,7 @@ module.exports =
 		invoiceService.findOne(invoiceNumber)
 			.then(function (result) {
 				$scope.invoice = result;
-				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated);
+				$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated, result);
 			});
 	};
 
@@ -667,4 +668,11 @@ module.exports =
 			infoDialog('services.invoice.dialogs.noRowsSelected');
 		}
 	};
+
+	$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
+		console.log('invoice selected' + invoiceNumber);
+		// Switch tab.
+		$scope.changeTab('invoiceDetail');
+		updatedSelectedInvoice(invoiceNumber);
+	});
 }];

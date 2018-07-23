@@ -32,7 +32,7 @@ module.exports =
 				field       : 'staff',
 				filter      : 'agTextColumnFilter',
 				valueGetter : function (params) {
-					var person = params.data.staff.resource;
+					var person = params.data.timeEntry.staff.resource;
 					return nameQueryService.createLongNameLocalized(person);
 
 				},
@@ -116,7 +116,7 @@ module.exports =
 			}, 1000);
 		};
 
-		$scope.gridOptionsPersons = {
+		$scope.gridOptions = {
 			columnDefs               : columnDefs,
 			rowData                  : $scope.persons,
 			enableFilter             : true,
@@ -179,8 +179,9 @@ module.exports =
 		};
 
 		//This event is captured, when the information of the selected invoice changes.
-		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
-			$scope.filterExpenses();
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+			$scope.invoice = invoice;
+			$scope.filterPersons();
 		});
 
 		// $scope.filterPersons();

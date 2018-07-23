@@ -252,6 +252,7 @@ require('angular').module('config', [])
 				ended     : 'ended'
 			},
 			events: {
+				invoiceDetailSelected  : 'invoiceDetailSelected',
 				invoiceListUpdated  : 'invoiceListUpdated',
 				invoiceDetailUpdated: 'invoiceDetailUpdated'
 			}

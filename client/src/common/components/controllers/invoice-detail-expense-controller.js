@@ -116,7 +116,8 @@ module.exports =
 		};
 
 		//This event is captured, when the information of the selected invoice changes.
-		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+			$scope.invoice = invoice;
 			$scope.filterExpenses();
 		});
 

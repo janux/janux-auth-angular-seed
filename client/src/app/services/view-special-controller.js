@@ -492,7 +492,7 @@ module.exports =
 		invoiceService.findByIdOperation($stateParams.id)
 			.then(function (result) {
 				$scope.invoices = result;
-				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated);
+				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated , result);
 			});
 	};
 
@@ -571,8 +571,8 @@ module.exports =
 												.position( 'top right' )
 												.hideDelay(3000)
 										);
+										updateInvoiceList();
 									});
-									updateInvoiceList();
 								});
 							} else {
 								infoDialog('services.invoice.dialogs.missingInvoiceDate');
@@ -612,6 +612,7 @@ module.exports =
 						.hideDelay(3000)
 				);
 				updatedSelectedInvoice(invoiceNumber);
+				updateInvoiceList();
 			});
 		} else {
 			infoDialog('services.invoice.dialogs.noRowsSelected');

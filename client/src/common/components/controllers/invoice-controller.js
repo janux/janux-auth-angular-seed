@@ -145,8 +145,10 @@ module.exports =
 
 
 		// This is a custom event that helps to update the invoice list.
-		$rootScope.$on(config.invoice.events.invoiceListUpdated, function () {
+		$rootScope.$on(config.invoice.events.invoiceListUpdated, function (event, invoices) {
+			$scope.invoices = invoices;
 			$scope.gridOptions.api.setRowData($scope.invoices);
+			agGridSizeToFit();
 		});
 
 	}];

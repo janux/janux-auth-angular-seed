@@ -86,17 +86,17 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
-				width       : 50
+				width       : 120
 			},
 
 			//Rate hour person.
 			{
 				headerName  : $filter('translate')('services.invoice.invoiceDetail.rateHour'),
-				field       : 'parameters.ratePerson.rateHour',
+				field       : 'parameters.ratePerson.rateExtraHour',
 				filterParams: {
 					newRowsAction: 'keep'
 				},
-				width       : 50
+				width       : 120
 			},
 			// Subtotal.
 			{
@@ -105,7 +105,7 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
-				width       : 50
+				width       : 120
 			}
 
 		];

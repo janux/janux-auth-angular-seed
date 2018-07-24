@@ -208,6 +208,10 @@ module.exports = [
 			// }
 		};
 
+		$scope.$on('sideMenuSizeChange', function () {
+			agGridSizeToFit();
+		});
+
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
 			console.log('$translateChangeSuccess');

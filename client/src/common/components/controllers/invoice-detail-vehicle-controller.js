@@ -94,7 +94,7 @@ module.exports =
 				cellRenderer: agGridComp.doNotInvoiceVehicleCellRenderer,
 				//headerComponent: agGridComp.deleteRowsHeaderComponent,
 				field       : 'doNotInvoiceVehicle',
-				width       : 60
+				width       : 65
 			}
 		];
 
@@ -113,7 +113,7 @@ module.exports =
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 35,
+			rowHeight                : 33,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,

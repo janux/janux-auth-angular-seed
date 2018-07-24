@@ -547,6 +547,12 @@ module.exports =
 			});
 	};
 
+	/**
+	 * This event is called when ..
+	 * An invoice is selected for showing details.
+	 * The selected invoice has been updated.
+	 * @param invoiceNumber
+	 */
 	var updatedSelectedInvoice = function (invoiceNumber) {
 		invoiceService.findOne(invoiceNumber)
 			.then(function (result) {
@@ -690,9 +696,10 @@ module.exports =
 	};
 
 	$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
-		console.log('invoice selected' + invoiceNumber);
+		console.log('invoice selected:' + invoiceNumber);
 		// Switch tab.
 		$scope.changeTab('invoiceDetail');
 		updatedSelectedInvoice(invoiceNumber);
+		updateInvoiceList();
 	});
 }];

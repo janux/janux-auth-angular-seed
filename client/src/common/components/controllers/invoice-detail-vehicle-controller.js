@@ -72,6 +72,9 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
 				width       : 120
 			},
 			// Subtotal.
@@ -81,7 +84,17 @@ module.exports =
 				filterParams: {
 					newRowsAction: 'keep'
 				},
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
 				width       : 120
+			},
+			{
+				headerName  : $filter('translate')('services.invoice.invoiceDetail.doNotInvoice'),
+				cellRenderer: agGridComp.doNotInvoiceVehicleCellRenderer,
+				//headerComponent: agGridComp.deleteRowsHeaderComponent,
+				field       : 'doNotInvoiceVehicle',
+				width       : 60
 			}
 		];
 
@@ -100,7 +113,7 @@ module.exports =
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 40,
+			rowHeight                : 35,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,
@@ -152,7 +165,12 @@ module.exports =
 		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterVehicle();
+			agGridSizeToFit();
 		});
 
-		// $scope.filterVehicle();
+		$scope.$on('sideMenuSizeChange', function () {
+			agGridSizeToFit();
+		});
+
+		$scope.agGridSizeToFit = agGridSizeToFit;
 	}];

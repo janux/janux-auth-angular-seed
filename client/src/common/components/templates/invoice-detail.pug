@@ -1,29 +1,36 @@
+//Header data.
+div
+	strong {{'services.invoice.invoiceNumber' | translate}}:{{invoice.invoiceNumber}}
+div
+	strong {{'services.invoice.status' | translate}}:{{'services.invoice.statuses.' + invoice.status  | translate}}
+
+
 // Detail person
 div(style='height:30%')
 	invoice-detail-person(invoice='invoice')
 
 div(style="text-align: right")
-	| {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (subTotalPerson | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (subTotalPerson | currency) }}
 md-divider.divider-line-glarus
 
 // Detail vehicle.
 div(style='height:30%')
 	invoice-detail-vehicle(invoice='invoice')
 div(style="text-align: right")
-	| {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (subTotalVehicle | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (subTotalVehicle | currency) }}
 md-divider.divider-line-glarus
 
 // Detail expenses
 div(style='height:30%')
 	invoice-detail-expense(invoice='invoice')
 div(style="text-align: right")
-	| {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (subTotalExpense | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (subTotalExpense | currency) }}
 md-divider.divider-line-glarus
 
 // Discounts and totals
 div(style="text-align: right")
-	| {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}} {{(invoice.totalAfterExpenses | currency)}}
+	strong {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}} {{(invoice.totalAfterExpenses | currency)}}
 	br
-	| {{'services.invoice.invoiceDetail.discount' | translate}} {{(invoice.discount | currency)}}
+	strong {{'services.invoice.invoiceDetail.discount' | translate}} {{(invoice.discount | currency)}}
 	br
-	| {{'services.invoice.invoiceDetail.grandTotal' | translate}} {{(invoice.grandTotal | currency)}}
+	strong {{'services.invoice.invoiceDetail.grandTotal' | translate}} {{(invoice.grandTotal | currency)}}

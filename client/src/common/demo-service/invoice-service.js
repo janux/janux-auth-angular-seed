@@ -178,7 +178,18 @@ module.exports =
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
 				});
+			},
+
+			updateInvoiceItemTimeEntry: function (invoiceItemTE) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'updateInvoiceItemTimeEntry',
+					[toJSONItemTimeEntry(invoiceItemTE)]
+				).then(function (resp) {
+					return fromJSONItemTimeEntry(resp.data.result);
+				});
 			}
+
 		};
 		return service;
 	}];

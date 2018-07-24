@@ -18,7 +18,7 @@ side-bar
 			md-content.tabs-glarus
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools
-						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+						md-nav-bar( md-selected-nav-item="currentNavItem==='invoiceDetail' ? 'invoices': currentNavItem" nav-bar-aria-label="links")
 							md-nav-item.active(md-nav-click="changeTab('summary')" name="summary")
 								| {{ 'services.tabs.summary' | translate | uppercase }}
 							md-nav-item(md-nav-click="changeTab('time-sheet')" name="time-sheet")
@@ -60,6 +60,14 @@ side-bar
 								i.fa.fa-download
 
 							button.btn( ng-click='cancel()')
+								i.fa.fa-times
+
+						.btn-row(ng-show='currentNavItem=="invoiceDetail"')
+							button.btn(ng-show='editMode')
+								i.fa.fa-check
+							// button.btn(ng-show='!editMode' ng-click='editMode=!editMode')
+							// 	i.fa.fa-pencil
+							button.btn( ng-click="changeTab('invoices')")
 								i.fa.fa-times
 
 				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', disabled='!editMode', disableautomaticname='{{true}}')

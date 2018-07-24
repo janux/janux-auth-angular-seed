@@ -65,10 +65,18 @@ module.exports =
 					return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
 				}
 			},
+			{
+				headerName  : $filter('translate')('services.invoice.invoiceDetail.duration'),
+				field       : 'timeEntry.duration',
+				filterParams: {
+					newRowsAction: 'keep'
+				},
+				width       : 95
+			},
 			//Rate day vehicle.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.rateDay'),
-				field       : 'parameters.rateVehicle.rateDay',
+				headerName  : $filter('translate')('services.invoice.invoiceDetail.costDay'),
+				field       : 'parameters.rateVehicle.costDay',
 				filterParams: {
 					newRowsAction: 'keep'
 				},

@@ -60,12 +60,13 @@ module.exports =
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
-				field       : 'cost',
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
+				field         : 'cost',
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				filterParams: {newRowsAction: 'keep'}
+				cellStyle: {'text-align': 'right'},
+				filterParams  : {newRowsAction: 'keep'}
 			}
 
 		];

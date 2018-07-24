@@ -1,12 +1,29 @@
-invoice-detail-person(invoice='invoice')
+// Detail person
+div(style='height:30%')
+	invoice-detail-person(invoice='invoice')
 
-p {{ (subTotalPerson | currency) }}
+div(style="text-align: right")
+	| {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (subTotalPerson | currency) }}
+md-divider.divider-line-glarus
 
-invoice-detail-vehicle(invoice='invoice')
+// Detail vehicle.
+div(style='height:30%')
+	invoice-detail-vehicle(invoice='invoice')
+div(style="text-align: right")
+	| {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (subTotalVehicle | currency) }}
+md-divider.divider-line-glarus
 
-p {{ (subTotalVehicle | currency) }}
+// Detail expenses
+div(style='height:30%')
+	invoice-detail-expense(invoice='invoice')
+div(style="text-align: right")
+	| {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (subTotalExpense | currency) }}
+md-divider.divider-line-glarus
 
-invoice-detail-expense(invoice='invoice')
-
-p {{ (subTotalExpense | currency) }}
-
+// Discounts and totals
+div(style="text-align: right")
+	| {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}} {{(invoice.totalAfterExpenses | currency)}}
+	br
+	| {{'services.invoice.invoiceDetail.discount' | translate}} {{(invoice.discount | currency)}}
+	br
+	| {{'services.invoice.invoiceDetail.grandTotal' | translate}} {{(invoice.grandTotal | currency)}}

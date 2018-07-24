@@ -429,7 +429,8 @@
 				"missingInvoiceNumber": "Please enter a valid invoice number",
 				"missingInvoiceDate": "Please enter a valid invoice date",
 				"noRowsSelected": "Select at least one row to add",
-				"insertTimeEntries": "Time entries successfully added to the invoice"
+				"insertTimeEntries": "Time entries successfully added to the invoice",
+				"insertTimeEntriesInvoiceError": "Selected time entries can't be added to the invoice because one or more was already linked to an invoice"
 			}
 		}
 	},

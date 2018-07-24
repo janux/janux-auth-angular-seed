@@ -5,26 +5,13 @@ md-dialog
 				md-input-container
 					label {{ 'services.invoice.invoiceNumber' | translate }}
 					input(ng-model='newInvoiceNumber' type="text", required='')
-				span(flex)
-				md-input-container.jnx-datetime-picker
-					label(style="padding-left:10px;") {{ 'services.invoice.invoiceDate' | translate }}
-					input(mdc-datetime-picker=''
-					date='true'
-					time='true'
-					show-todays-date=''
-					minutes='true'
-					format='YYYY-MM-DD HH:mm'
-					edit-input='true'
-					click-outside-to-close='true'
-					show-icon='true'
-					minute-steps='1'
-					ng-model='newInvoiceDate'
-					ng-model-options="{ debounce: 1000 }"
-					type='text' required='',
-					lang='{{ lang }}',
-					today-text='{{ "label.today" | translate }}',
-					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}')
+
+				md-input-container
+					md-datepicker(
+						lang='{{ lang }}',
+						ng-model="newInvoiceDate",
+						format='YYYY-MM-DD',
+						md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}")
 
 	md-dialog-actions
 		button.btn.btn-ok(ng-click='createNewInvoice()') {{ 'label.ok' | translate }}

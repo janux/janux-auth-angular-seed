@@ -508,6 +508,33 @@ module.exports =
 		$mdMenu.open(ev);
 	};
 
+	// Return true if time entries ids haven't been related to any invoice, otherwise return false
+	var checkTEBeforeInsertToInvoice = function (timeEntriesIds) {
+		return invoiceService.findInvoiceNumbersByIdTimeEntries(timeEntriesIds).then(function (result) {
+			// console.log('Time entries related to invoice', result);
+			return _.every(result, function (timeEntry) {
+				return (_.isNil(timeEntry.invoiceNumber));
+			});
+		});
+	};
+
+	var agGridRowsToTE = function (selectedRows) {
+		var invoiceItemsTE = [];
+		var timeEntryIds = [];
+
+		// Map ag-grid rows into item time entry objects
+		selectedRows.forEach(function (agGridRow) {
+			invoiceItemsTE.push( {
+				doNotInvoice: false,
+				doNotInvoiceVehicle: false,
+				timeEntry: _.find(timeEntries, {id: agGridRow.id} ),
+				total: 0
+			} );
+			timeEntryIds.push(agGridRow.id);
+		});
+		return { timeEntryIds: timeEntryIds, invoiceItemsTE: invoiceItemsTE };
+	};
+
 	$scope.showAddToNewInvoicePopup = function () {
 		// Show popup.
 		$mdDialog.show({
@@ -527,59 +554,55 @@ module.exports =
 				$scope.createNewInvoice = function () {
 					var selectedRows = $scope.gridOptions.api.getSelectedRows();
 					if (selectedRows.length > 0) {
-						var invoiceItemsTE = [];
+						var agRowsToTE = agGridRowsToTE(selectedRows);
 
-						// Map ag-grid rows into item time entry objects
-						selectedRows.forEach(function (agGridRow) {
-							invoiceItemsTE.push( {
-								doNotInvoice: false,
-								doNotInvoiceVehicle: false,
-								timeEntry: _.find(timeEntries, {id: agGridRow.id} ),
-								total: 0
-							} );
-						});
+						checkTEBeforeInsertToInvoice(agRowsToTE.timeEntryIds).then(function (checkTEResult) {
+							if (checkTEResult) {
+								if ($scope.newInvoiceNumber !== '') {
+									if ($scope.newInvoiceDate !== '') {
+										$mdDialog.hide();
 
-						if ($scope.newInvoiceNumber !== '') {
-							if ($scope.newInvoiceDate !== '') {
-								$mdDialog.hide();
+										var newInvoice = {
+											client: operation.client.object,
+											invoiceNumber:$scope.newInvoiceNumber,
+											invoiceDate: $scope.newInvoiceDate,
+											comments: '',
+											items: [],
+											status: config.invoice.status.inRevision,
+											discount: 0,
+											discountPercentage: 0
+										};
 
-								var newInvoice = {
-									client: operation.client.object,
-									invoiceNumber:$scope.newInvoiceNumber,
-									invoiceDate: $scope.newInvoiceDate,
-									comments: '',
-									items: [],
-									status: config.invoice.status.inRevision,
-									discount: 0,
-									discountPercentage: 0
-								};
+										var newItem = {
+											itemNumber: 1,
+											name: invoiceItemName,
+											timeEntries: []
+										};
 
-								var newItem = {
-									itemNumber: 1,
-									name: invoiceItemName,
-									timeEntries: []
-								};
-
-								// Create invoice and add time entries
-								invoiceService.insertInvoiceAndItem(newInvoice, newItem).then(function (result) {
-									console.log('Invoice created result', result);
-									invoiceService.insertInvoiceItemTimeEntry(newInvoice.invoiceNumber,newItem.name,invoiceItemsTE).then(function (insertedTimeEntries) {
-										console.log('Inserted time entries', insertedTimeEntries);
-										$mdToast.show(
-											$mdToast.simple()
-												.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-												.position( 'top right' )
-												.hideDelay(3000)
-										);
-										updateInvoiceList();
-									});
-								});
+										// Create invoice and add time entries
+										invoiceService.insertInvoiceAndItem(newInvoice, newItem).then(function (result) {
+											console.log('Invoice created result', result);
+											invoiceService.insertInvoiceItemTimeEntry(newInvoice.invoiceNumber, newItem.name, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
+												console.log('Inserted time entries', insertedTimeEntries);
+												$mdToast.show(
+													$mdToast.simple()
+														.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
+														.position( 'top right' )
+														.hideDelay(3000)
+												);
+												updateInvoiceList();
+											});
+										});
+									} else {
+										infoDialog('services.invoice.dialogs.missingInvoiceDate');
+									}
+								} else {
+									infoDialog('services.invoice.dialogs.missingInvoiceNumber');
+								}
 							} else {
-								infoDialog('services.invoice.dialogs.missingInvoiceDate');
+								infoDialog('services.invoice.dialogs.insertTimeEntriesInvoiceError');
 							}
-						} else {
-							infoDialog('services.invoice.dialogs.missingInvoiceNumber');
-						}
+						});
 					} else {
 						infoDialog('services.invoice.dialogs.noRowsSelected');
 					}
@@ -591,28 +614,24 @@ module.exports =
 	$scope.addTimeEntriesToInvoice = function (invoiceNumber) {
 		var selectedRows = $scope.gridOptions.api.getSelectedRows();
 		if (selectedRows.length > 0) {
-			var invoiceItemsTE = [];
+			var agRowsToTE = agGridRowsToTE(selectedRows);
 
-			// Map ag-grid rows into item time entry objects
-			selectedRows.forEach(function (agGridRow) {
-				invoiceItemsTE.push({
-					doNotInvoice: false,
-					doNotInvoiceVehicle: false,
-					timeEntry: _.find(timeEntries, {id: agGridRow.id}),
-					total: 0
-				});
-			});
-
-			invoiceService.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, invoiceItemsTE).then(function (insertedTimeEntries) {
-				console.log('Inserted invoice time entries', insertedTimeEntries);
-				$mdToast.show(
-					$mdToast.simple()
-						.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-						.position( 'top right' )
-						.hideDelay(3000)
-				);
-				updatedSelectedInvoice(invoiceNumber);
-				updateInvoiceList();
+			checkTEBeforeInsertToInvoice(agRowsToTE.timeEntryIds).then(function (checkTEResult) {
+				if (checkTEResult) {
+					invoiceService.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
+						console.log('Inserted invoice time entries', insertedTimeEntries);
+						$mdToast.show(
+							$mdToast.simple()
+								.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
+								.position( 'top right' )
+								.hideDelay(3000)
+						);
+						updatedSelectedInvoice(invoiceNumber);
+						updateInvoiceList();
+					});
+				} else {
+					infoDialog('services.invoice.dialogs.insertTimeEntriesInvoiceError');
+				}
 			});
 		} else {
 			infoDialog('services.invoice.dialogs.noRowsSelected');

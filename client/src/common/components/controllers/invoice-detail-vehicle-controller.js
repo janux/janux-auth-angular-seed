@@ -75,27 +75,29 @@ module.exports =
 			},
 			//Rate day vehicle.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.costDay'),
-				field       : 'parameters.rateVehicle.costDay',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.costDay'),
+				field         : 'parameters.rateVehicle.costDay',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				width       : 120
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
 			},
 			// Subtotal.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
-				field       : 'parameters.rateVehicle.totalAfterDiscount',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
+				field         : 'parameters.rateVehicle.totalAfterDiscount',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				width       : 120
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
 			},
 			{
 				headerName  : $filter('translate')('services.invoice.invoiceDetail.doNotInvoice'),

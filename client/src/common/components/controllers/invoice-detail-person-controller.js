@@ -89,7 +89,8 @@ module.exports =
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				width         : 120
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
 			},
 
 			//Rate hour person.
@@ -102,7 +103,8 @@ module.exports =
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				width         : 120
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
 			},
 			// Subtotal.
 			{
@@ -114,7 +116,8 @@ module.exports =
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				width         : 120
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
 			},
 			// Do not invoice.
 			{

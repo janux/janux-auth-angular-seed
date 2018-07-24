@@ -36,8 +36,8 @@ md-divider.divider-line-glarus
 // Discounts and totals
 
 div(style="text-align: right;height:20%" )
-	strong {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}} {{(invoice.totalAfterExpenses | currency)}}
+	strong {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}}:{{(invoice.totalAfterExpenses | currency)}}
 	br
-	strong {{'services.invoice.invoiceDetail.discount' | translate}} {{(invoice.discount | currency)}}
+	strong {{'services.invoice.invoiceDetail.discount' | translate}}:{{(invoice.discount | currency)}}
 	br
-	strong {{'services.invoice.invoiceDetail.grandTotal' | translate}} {{(invoice.grandTotal | currency)}}
+	strong {{'services.invoice.invoiceDetail.grandTotal' | translate}}:{{(invoice.grandTotal | currency)}}

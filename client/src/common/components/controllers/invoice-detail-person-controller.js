@@ -184,5 +184,5 @@ module.exports =
 			$scope.filterPersons();
 		});
 
-		// $scope.filterPersons();
+
 	}];

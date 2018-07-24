@@ -81,8 +81,8 @@ module.exports =
 
 			//Rate day person.
 			{
-				headerName    : $filter('translate')('services.invoice.invoiceDetail.rateDay'),
-				field         : 'parameters.ratePerson.rateDay',
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.costDay'),
+				field         : 'parameters.ratePerson.costDay',
 				filterParams  : {
 					newRowsAction: 'keep'
 				},
@@ -94,8 +94,8 @@ module.exports =
 
 			//Rate hour person.
 			{
-				headerName    : $filter('translate')('services.invoice.invoiceDetail.rateHour'),
-				field         : 'parameters.ratePerson.rateExtraHour',
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.costHour'),
+				field         : 'parameters.ratePerson.costExtraHour',
 				filterParams  : {
 					newRowsAction: 'keep'
 				},

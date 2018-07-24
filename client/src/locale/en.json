@@ -423,7 +423,10 @@
 			    "grandTotal": "Total",
 			    "subTotalPerson": "Total persons",
 			    "subTotalVehicle" : "Total vehicles",
-			    "subTotalExpenses" : "Total expenses"
+			    "subTotalExpenses" : "Total expenses",
+			    "staff": "Staff",
+			    "vehicles" : "Vehicles",
+			    "expenses": "Expenses"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Please enter a valid invoice number",

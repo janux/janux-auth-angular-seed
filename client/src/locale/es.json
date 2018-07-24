@@ -425,7 +425,10 @@
 			  "grandTotal": "Total",
 			  "subTotalPerson": "Total personal",
 			  "subTotalVehicle" : "Total vehículos",
-			  "subTotalExpenses" : "Total gastos"
+			  "subTotalExpenses" : "Total gastos",
+			  "staff": "Personal",
+			  "vehicles" : "Vehículos",
+			  "expenses": "Gastos"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",

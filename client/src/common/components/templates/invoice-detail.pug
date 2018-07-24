@@ -4,8 +4,10 @@ div
 div
 	strong {{'services.invoice.status' | translate}}:{{'services.invoice.statuses.' + invoice.status  | translate}}
 
-
+md-divider.divider-line-glarus
 // Detail person
+div
+	strong {{'services.invoice.invoiceDetail.staff' | translate}}
 div(style='height:30%')
 	invoice-detail-person(invoice='invoice')
 
@@ -14,6 +16,8 @@ div(style="text-align: right")
 md-divider.divider-line-glarus
 
 // Detail vehicle.
+div
+	strong {{'services.invoice.invoiceDetail.vehicles' | translate}}
 div(style='height:30%')
 	invoice-detail-vehicle(invoice='invoice')
 div(style="text-align: right")
@@ -21,6 +25,8 @@ div(style="text-align: right")
 md-divider.divider-line-glarus
 
 // Detail expenses
+div
+	strong {{'services.invoice.invoiceDetail.expenses' | translate}}
 div(style='height:30%')
 	invoice-detail-expense(invoice='invoice')
 div(style="text-align: right")
@@ -28,7 +34,8 @@ div(style="text-align: right")
 md-divider.divider-line-glarus
 
 // Discounts and totals
-div(style="text-align: right")
+
+div(style="text-align: right;height:20%" )
 	strong {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}} {{(invoice.totalAfterExpenses | currency)}}
 	br
 	strong {{'services.invoice.invoiceDetail.discount' | translate}} {{(invoice.discount | currency)}}

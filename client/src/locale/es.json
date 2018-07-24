@@ -353,9 +353,9 @@
 			"SPECIAL_OPS": "Especial"
 		},
 		"tabs": {
-			"summary": "Summary",
-			"timeSheet": "Time sheet",
-			"invoices": "Invoices"
+			"summary": "Resumen",
+			"timeSheet": "Bitacora",
+			"invoices": "Facturas"
 		},
 		"delete": "Delete",
 		"addToInvoice": "Add to",

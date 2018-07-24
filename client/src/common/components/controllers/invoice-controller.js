@@ -46,7 +46,8 @@ module.exports =
 				field         : 'grandTotal',
 				valueFormatter: function (params) {
 					return $filter('currency')(params.data.grandTotal);
-				}
+				},
+				cellStyle     : {'text-align': 'right'}
 			}
 		];
 

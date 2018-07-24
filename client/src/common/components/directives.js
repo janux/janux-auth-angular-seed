@@ -913,8 +913,8 @@ angular.module('commonComponents', [])
 					});
 				}]
 		};
-
 	})
+
 
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};

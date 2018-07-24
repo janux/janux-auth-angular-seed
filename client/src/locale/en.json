@@ -418,7 +418,13 @@
 		   		"rateHour": "Hour rate",
 		   		"doNotInvoice":"Do not invoice",
 		   		"subTotal": "Subtotal",
-			    "expenseName": "Name"
+			    "expenseName": "Name",
+			    "totalBeforeDiscount": "Sub total",
+			    "discount": "Discount",
+			    "grandTotal": "Total",
+			    "subTotalPerson": "Total persons",
+			    "subTotalVehicle" : "Total vehicles",
+			    "subTotalExpenses" : "Total expenses"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Please enter a valid invoice number",

@@ -35,10 +35,11 @@ module.exports =
 			$scope.subTotalVehicle = subTotalVehicle;
 			$scope.subTotalExpense = subTotalExpense;
 
-			//This event is captured, when the information of the selected invoice changes.
-			$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function () {
-				calculateSubtotals();
-			});
-
 		}
+
+		//This event is captured, when the information of the selected invoice changes.
+		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+			$scope.invoice = invoice;
+			calculateSubtotals();
+		});
 	}];

@@ -420,7 +420,13 @@
 			  "rateHour": "Costo hora",
 			  "doNotInvoice":"No facturar",
 			  "subTotal": "Subtotal",
-			  "expenseName": "Concepto"
+			  "expenseName": "Concepto",
+			  "totalBeforeDiscount": "Sub total",
+			  "discount": "Descuento",
+			  "grandTotal": "Total",
+			  "subTotalPerson": "Total persons",
+			  "subTotalVehicle" : "Total vehicles",
+			  "subTotalExpenses" : "Total expenses"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",

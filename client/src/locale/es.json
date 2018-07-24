@@ -423,9 +423,9 @@
 			  "totalBeforeDiscount": "Sub total",
 			  "discount": "Descuento",
 			  "grandTotal": "Total",
-			  "subTotalPerson": "Total persons",
-			  "subTotalVehicle" : "Total vehicles",
-			  "subTotalExpenses" : "Total expenses"
+			  "subTotalPerson": "Total personal",
+			  "subTotalVehicle" : "Total vehículos",
+			  "subTotalExpenses" : "Total gastos"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",

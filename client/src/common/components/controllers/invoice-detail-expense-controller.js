@@ -62,6 +62,9 @@ module.exports =
 			{
 				headerName  : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
 				field       : 'cost',
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
 				filterParams: {newRowsAction: 'keep'}
 			}
 
@@ -75,7 +78,7 @@ module.exports =
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 40,
+			rowHeight                : 35,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,
@@ -119,7 +122,12 @@ module.exports =
 		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterExpenses();
+			agGridSizeToFit();
 		});
 
-		// $scope.filterExpenses();
+		$scope.$on('sideMenuSizeChange', function () {
+			agGridSizeToFit();
+		});
+
+		$scope.agGridSizeToFit = agGridSizeToFit;
 	}];

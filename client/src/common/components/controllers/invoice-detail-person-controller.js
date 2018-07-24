@@ -81,33 +81,49 @@ module.exports =
 
 			//Rate day person.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.rateDay'),
-				field       : 'parameters.ratePerson.rateDay',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.rateDay'),
+				field         : 'parameters.ratePerson.rateDay',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
-				width       : 120
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
+				width         : 120
 			},
 
 			//Rate hour person.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.rateHour'),
-				field       : 'parameters.ratePerson.rateExtraHour',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.rateHour'),
+				field         : 'parameters.ratePerson.rateExtraHour',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
-				width       : 120
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
+				width         : 120
 			},
 			// Subtotal.
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
-				field       : 'parameters.ratePerson.totalAfterDiscount',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.subTotal'),
+				field         : 'parameters.ratePerson.totalAfterDiscount',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
-				width       : 120
+				valueFormatter: function (params) {
+					return $filter('currency')(params.value);
+				},
+				width         : 120
+			},
+			// Do not invoice.
+			{
+				headerName  : $filter('translate')('services.invoice.invoiceDetail.doNotInvoice'),
+				cellRenderer: agGridComp.doNotInvoicePersonCellRenderer,
+				//headerComponent: agGridComp.deleteRowsHeaderComponent,
+				field       : 'doNotInvoice',
+				width       : 60
 			}
-
 		];
 
 		var agGridSizeToFit = function () {
@@ -125,7 +141,7 @@ module.exports =
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 40,
+			rowHeight                : 35,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,
@@ -182,7 +198,13 @@ module.exports =
 		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterPersons();
+			agGridSizeToFit();
 		});
 
+		$scope.$on('sideMenuSizeChange', function () {
+			agGridSizeToFit();
+		});
+
+		$scope.agGridSizeToFit = agGridSizeToFit;
 
 	}];

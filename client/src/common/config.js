@@ -241,5 +241,8 @@ require('angular').module('config', [])
 				key  : 'lastYear',
 				label: 'periodFilter.lastYear'
 			}
-		]
+		],
+		jnxStoreKeys : {
+			servicesColumnsFilters: 'januxServicesColumnsFilters'
+		}
 	});

@@ -246,6 +246,9 @@ require('angular').module('config', [])
 				label: 'periodFilter.lastYear'
 			}
 		],
+		jnxStoreKeys : {
+			servicesColumnsFilters: 'januxServicesColumnsFilters'
+		},
 		invoice               : {
 			status: {
 				inRevision: 'inRevision',

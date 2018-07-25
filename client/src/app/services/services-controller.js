@@ -1,13 +1,15 @@
 'use strict';
 
 var agGridComp = require('common/ag-grid-components');
+var _ = require('lodash');
 
 module.exports =
-['$scope','$modal','$filter','$timeout','operations','$state','$rootScope', function(
-  $scope , $modal , $filter , $timeout , operations , $state , $rootScope){
+['$scope','$modal','$filter','$timeout','operations','$state','$rootScope','config','localStorageService', function(
+  $scope , $modal , $filter , $timeout , operations , $state , $rootScope , config , localStorageService){
 
 	console.log('operations', operations);
 
+	var columnsFiltersKey = config.jnxStoreKeys.servicesColumnsFilters;
 	var infoDialog = function (translateKey) {
 		$modal.open({
 			templateUrl: 'app/dialog-tpl/info-dialog.html',
@@ -83,16 +85,17 @@ module.exports =
 			valueFormatter: function (params) {
 				return $filter('translate')('services.list.'+params.value);
 			},
-			width          : 80
+			width          : 50
 		},
 		{
 			headerName : $filter('translate')('services.list.name'),
 			field      : 'name',
-			width          : 100
+			width          : 160
 		},
 		{
 			headerName : $filter('translate')('services.list.client'),
-			field      : 'client'
+			field      : 'client',
+			width          : 100
 		},
 		{
 			headerName : $filter('translate')('services.list.assigned'),
@@ -150,11 +153,25 @@ module.exports =
 			// of the rows from the header component that does not have access
 			// to the scope.
 			$scope.gridOptions.api.deleteRows = removeSelected;
+
+			// Restore filter model.
+			var filterModel = localStorageService.get(columnsFiltersKey);
+			if (!_.isNil(filterModel)) {
+				$scope.gridOptions.api.setFilterModel(filterModel);
+				$scope.gridOptions.onFilterChanged();
+			}
 		},
 		localeTextFunc: function (key, defaultValue) {
 			var gridKey = 'grid.' + key;
 			var value = $filter('translate')(gridKey);
 			return value === gridKey ? defaultValue : value;
+		},
+		onFilterChanged          : function () {
+			// Save filters to local storage.
+			var savedFilters;
+			savedFilters = $scope.gridOptions.api.getFilterModel();
+			localStorageService.set(columnsFiltersKey, savedFilters);
+			// console.log('savedFilters' + JSON.stringify(savedFilters));
 		}
 	};
 

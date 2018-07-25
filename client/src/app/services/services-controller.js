@@ -86,7 +86,7 @@ module.exports =
 			valueFormatter: function (params) {
 				return $filter('translate')('services.list.' + params.value);
 			},
-			width         : 50
+			width          : 80
 		},
 		{
 			headerName: $filter('translate')('services.list.name'),

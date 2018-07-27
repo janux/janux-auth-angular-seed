@@ -32,8 +32,8 @@ module.exports = {
 	editClientCellRenderer   : require('./clientedit-cell-renderer'),
 	editSupplierCellRenderer : require('./supplieredit-cell-renderer'),
 	viewInvoiceDetailCellRenderer : require('./view-invoice-detail-cell-renderer'),
-	doNotInvoicePersonCellRenderer: require('./do-not-invoice-person-cell-editor'),
-	doNotInvoiceVehicleCellRenderer: require('./do-not-invoice-vehicle-cell-editor'),
+	doNotInvoicePersonCellRenderer: require('./do-not-invoice-person-cell-renderer'),
+	doNotInvoiceVehicleCellRenderer: require('./do-not-invoice-vehicle-cell-renderer'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

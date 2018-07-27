@@ -430,6 +430,17 @@
 			  "vehicles" : "Vehículos",
 			  "expenses": "Gastos"
 			},
+		    "expenses":{
+			  "insert" :"Insertar gasto",
+			  "staff":"Personal",
+			  "name": "Concepto",
+			  "date": "Fecha",
+			  "cost": "Costo",
+			  "invalidCost": "The cost must be a value greater than zero",
+			  "invalidName": "Must define a concept",
+			  "invalidDate": "Must define a date",
+			  "invalidPerson": "Must define a staff from the list"
+		    },
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",
 				"missingInvoiceDate": "Por favor ingrese una fecha para la factura",

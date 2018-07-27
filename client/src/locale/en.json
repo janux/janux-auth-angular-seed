@@ -428,6 +428,17 @@
 			    "vehicles" : "Vehicles",
 			    "expenses": "Expenses"
 			},
+		    "expenses":{
+			    "insert" :"Insert expense",
+			    "staff":"Staff",
+			    "name": "Name",
+			    "date": "Date",
+			    "cost": "Cost",
+			    "invalidCost": "The cost must be a value greater than zero",
+			    "invalidName": "Must define a concept",
+			    "invalidDate": "Must define a date",
+			    "invalidPerson": "Must define a staff from the list"
+			},
 			"dialogs": {
 				"missingInvoiceNumber": "Please enter a valid invoice number",
 				"missingInvoiceDate": "Please enter a valid invoice date",

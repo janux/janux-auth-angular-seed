@@ -24,11 +24,35 @@ require('angular').module('appUsers', [
 		controller: require('./users-controller.js'),
 		resolve: {
 			users: ['userService','security', function (userService, security) {
-				return userService.findBy('username', '', security.currentUser.username).then(function(usersMatch) {
+				return userService.findBy('username', '', security.currentUser.username)
+				.then(function(usersMatch) {
 					return  _.map(usersMatch,function(user){
 						user.cdate = moment(user.cdate).format('YYYY-MM-DD HH:mm:ss');
 						return user;
 					});
+				})
+				.then(function (result) {
+					console.log('Users list', result);
+					var parties = _.map(result, function (o) {
+
+						var name = '';
+						var email = '';
+						var role = '';
+
+						name= o.contact.displayName;
+						email= o.contact.emails[0].address;		
+						role= o.roles;	
+						
+						o.usersDisplayName = name;
+						o.usersDisplayEmail = email;
+						o.usersDisplayRole = role;
+						
+
+						return o;
+
+					});
+					return parties;
+
 				});
 			}]
 		}

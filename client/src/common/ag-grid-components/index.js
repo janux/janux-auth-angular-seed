@@ -36,6 +36,7 @@ module.exports = {
 	doNotInvoiceVehicleCellRenderer: require('./do-not-invoice-vehicle-cell-editor'),
 	editUsersCellRenderer : require('./usersedit-cell-renderer'),
 	contractorStaffCellRenderer : require('./staffcontractor-cell-renderer'),
+	checkBoxRowSelectionExpense: require('./check-box-row-selection-expense'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

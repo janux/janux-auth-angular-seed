@@ -329,6 +329,16 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridUsersEdit', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/users-edit.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.userId = $attrs.userId;
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

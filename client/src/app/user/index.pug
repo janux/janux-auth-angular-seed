@@ -2,7 +2,7 @@ login-toolbar(toolbar-title='peopleOrgs.title')
 
 side-bar
 
-.page-content-wrapper(ng-class="{'page-content-left' : noneStyle}")
+.page-content-wrapper.staff-sheet(ng-class="{'page-content-left' : noneStyle}")
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px;")
 				.md-toolbar-tools.form-toolbar-glarus
@@ -21,47 +21,48 @@ side-bar
 
 					md-button.arrow.md-icon-button(aria-label="Upload")
 						md-icon.fa.fa-upload.fa-lg
-		.container-body
-			table.list-glarus.users-list(ng-show='usersMatch.length')
-				thead
-					tr
+		.container-body(style="margin-top:-20px; padding-bottom:50px;")
+			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+			//- table.list-glarus.users-list(ng-show='usersMatch.length')
+			//- 	thead
+			//- 		tr
 					
-						th {{ 'user.username' | translate }}
-						th {{ 'user.displayName' | translate }}
-						th {{ 'user.role' | translate }}
-						th {{ 'user.email' | translate }}
-						th {{ 'user.phone' | translate }}
-						th.user-renew {{ 'user.renew' | translate }}
-						th.col-edit-user {{ 'user.edit' | translate }}
-						th
-							md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
-								md-icon.fa.fa-trash.fa-lg.trash-center
+			//- 			th {{ 'user.username' | translate }}
+			//- 			th {{ 'user.displayName' | translate }}
+			//- 			th {{ 'user.role' | translate }}
+			//- 			th {{ 'user.email' | translate }}
+			//- 			th {{ 'user.phone' | translate }}
+			//- 			th.user-renew {{ 'user.renew' | translate }}
+			//- 			th.col-edit-user {{ 'user.edit' | translate }}
+			//- 			th
+			//- 				md-button.md-icon-button(aria-label="Trash" style="background:none;" ng-click='openDelete()')
+			//- 					md-icon.fa.fa-trash.fa-lg.trash-center
 						
-				tbody
-					tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}" )
+			//- 	tbody
+			//- 		tr(ng-repeat='user in usersMatch' ng-class="{'user-disabled': !user.enabled}" )
 
-						td {{ user.username }}
-						td {{ user.contact.name.last }} {{ user.contact.name.maternal }} {{ user.contact.name.first }} {{ user.contact.name.middle }}
-						td {{ user.roles[0] }}
-						td {{ user.contact.emailAddress('work').address }}
-						td {{ user.contact.phoneNumber('work').number }}
-						td(style="text-align:center")
-							a.action-button-glarus-lock
-								span.fa.fa-lock.fa-lg 
-						td(style="text-align:center")
-							a.action-button-glarus-pencil(ng-click='editUser(user.userId)')
-								span.fa.fa-pencil.fa-lg
-						td.checkbox-center
-							md-checkbox(aria-label="Trash" ng-model='user.Selected' class="md-primary")
+			//- 			td {{ user.username }}
+			//- 			td {{ user.contact.name.last }} {{ user.contact.name.maternal }} {{ user.contact.name.first }} {{ user.contact.name.middle }}
+			//- 			td {{ user.roles[0] }}
+			//- 			td {{ user.contact.emailAddress('work').address }}
+			//- 			td {{ user.contact.phoneNumber('work').number }}
+			//- 			td(style="text-align:center")
+			//- 				a.action-button-glarus-lock
+			//- 					span.fa.fa-lock.fa-lg 
+			//- 			td(style="text-align:center")
+			//- 				a.action-button-glarus-pencil(ng-click='editUser(user.userId)')
+			//- 					span.fa.fa-pencil.fa-lg
+			//- 			td.checkbox-center
+			//- 				md-checkbox(aria-label="Trash" ng-model='user.Selected' class="md-primary")
 						
 
-			.users-filter
-				form.form-inline
-					.form-group
-						label(for='username') Find by:
-						select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
-						input.form-control(id='username' type='text' ng-model='searchString')
-						button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
+			//- .users-filter
+			//- 	form.form-inline
+			//- 		.form-group
+			//- 			label(for='username') Find by:
+			//- 			select.form-control(ng-model='searchField' ng-options='field as field for field in searchFields')
+			//- 			input.form-control(id='username' type='text' ng-model='searchString')
+			//- 			button.btn.btn-default(type='submit' ng-click='findUsers()') {{ 'label.search' | translate }}
 			
 
 footer-Janux

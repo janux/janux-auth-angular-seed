@@ -188,6 +188,16 @@ module.exports =
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
 				});
+			},
+
+			removeExpenses: function (expensesCodes) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'removeExpenses',
+					[expensesCodes]
+				).then(function (resp) {
+					return resp.data.result;
+				});
 			}
 
 		};

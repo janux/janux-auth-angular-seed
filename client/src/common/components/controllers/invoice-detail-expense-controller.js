@@ -4,8 +4,8 @@ var agGridComp = require('common/ag-grid-components');
 var moment = require('moment');
 
 module.exports =
-	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', 'nameQueryService', function (
-		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config, nameQueryService) {
+	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', 'nameQueryService', '$mdDialog', function (
+		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config, nameQueryService, $mdDialog) {
 
 		$scope.expenses = [];
 
@@ -28,10 +28,10 @@ module.exports =
 		var columnDefs = [
 			{
 				headerName  : $filter('translate')('services.invoice.invoiceDetail.personName'),
-				field       : 'client',
+				field       : 'person',
 				filter      : 'agTextColumnFilter',
 				valueGetter : function (params) {
-					var person = params.data.client;
+					var person = params.data.person;
 					return nameQueryService.createLongNameLocalized(person);
 
 				},
@@ -65,10 +65,21 @@ module.exports =
 				valueFormatter: function (params) {
 					return $filter('currency')(params.value);
 				},
-				cellStyle: {'text-align': 'right'},
+				cellStyle     : {'text-align': 'right'},
 				filterParams  : {newRowsAction: 'keep'}
+			},
+			{
+				headerName     : '',
+				// headerCheckboxSelection: true,
+				// headerCheckboxSelectionFilteredOnly: true,
+				// checkboxSelection: true,
+				cellRenderer   : agGridComp.checkBoxRowSelection,
+				cellEditor     : agGridComp.rowActions,
+				headerComponent: agGridComp.deleteRowsHeaderComponent,
+				editable       : true,
+				field          : 'selected',	// field needed to avoid ag-grid warning
+				width          : 80
 			}
-
 		];
 		$scope.gridOptions = {
 			columnDefs               : columnDefs,
@@ -86,6 +97,11 @@ module.exports =
 			paginationAutoPageSize   : true,
 			onGridReady              : function () {
 				agGridSizeToFit();
+
+				// This function is defined to be able to trigger the deletion
+				// of the rows from the header component that does not have access
+				// to the scope.
+				$scope.gridOptions.api.deleteRows = removeSelected;
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
@@ -130,5 +146,56 @@ module.exports =
 			agGridSizeToFit();
 		});
 
+		$scope.insertNewExpense = function () {
+			$mdDialog.show(
+				{
+					locals             : {invoice: $scope.invoice},
+					controller         : require('../../components/controllers/expense-detail-popup-controller'),
+					templateUrl        : 'common/components/templates/expense-detail-popup.html',
+					parent             : angular.element(document.body),
+					clickOutsideToClose: true,
+					flex               : "66"
+				}
+			).then(function () {
+				// Send a "refresh" event.
+				$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoice.invoiceNumber);
+			});
+		};
+
 		$scope.agGridSizeToFit = agGridSizeToFit;
+
+		var removeSelected = function () {
+			var selectedData = $scope.gridOptions.api.getSelectedRows();
+			if (selectedData.length > 0) {
+				$modal.open({
+					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
+					controller : ['$scope', '$modalInstance',
+						function ($scope, $modalInstance) {
+							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
+
+							$scope.ok = function () {
+								deleteConfirmed(selectedData);
+								$modalInstance.close();
+							};
+
+							$scope.cancel = function () {
+								$modalInstance.close();
+							};
+						}],
+					size       : 'md'
+				});
+			} else {
+				infoDialog('operations.dialogs.noRowSelectedError');
+			}
+		};
+
+		function deleteConfirmed(rowsToDelete) {
+			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
+			var expensesToRemove = _.map(rowsToDelete, 'code');
+			invoiceService.removeExpenses(expensesToRemove)
+				.then(function () {
+					// Send a "refresh" event.
+					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoice.invoiceNumber);
+				})
+		}
 	}];

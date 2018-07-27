@@ -253,8 +253,10 @@ require('angular').module('config', [])
 			},
 			events: {
 				invoiceDetailSelected  : 'invoiceDetailSelected',
-				invoiceListUpdated  : 'invoiceListUpdated',
-				invoiceDetailUpdated: 'invoiceDetailUpdated'
+				invoiceListUpdated     : 'invoiceListUpdated',
+				invoiceDetailUpdated   : 'invoiceDetailUpdated',
+				invoiceEditModeEnabled : 'invoiceEditModeEnabled',
+				invoiceEditModeDisabled: 'invoiceEditModeDisabled'
 			}
 		},
 		jnxStoreKeys : {

@@ -6,10 +6,10 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-['$scope','$rootScope','clientsList','$state','$stateParams','config','operationService','invoiceService','operation','$modal','$filter','timeEntryService','localStorageService','$timeout','nameQueryService','jnxStorage','driversAndOps','invoices','$mdDialog','$mdToast',function(
-  $scope , $rootScope , clientsList , $state , $stateParams , config , operationService , invoiceService , operation , $modal , $filter , timeEntryService , localStorageService , $timeout , nameQueryService , jnxStorage , driversAndOps , invoices , $mdDialog , $mdToast) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast) {
 
-	console.log('Operation', operation);
+		console.log('Operation', operation);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
@@ -539,13 +539,16 @@ module.exports =
 		$state.reload();
 	});
 
-	var updateInvoiceList = function () {
-		invoiceService.findByIdOperation($stateParams.id)
-			.then(function (result) {
-				$scope.invoices = result;
-				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated , result);
-			});
-	};
+		var updateInvoiceList = function () {
+			invoiceService.findByIdOperation($stateParams.id)
+				.then(function (result) {
+					$scope.invoices = result;
+					$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
+					if ($scope.editModeInvoiceDetail) {
+						$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+					}
+				});
+		};
 
 	/**
 	 * This event is called when ..

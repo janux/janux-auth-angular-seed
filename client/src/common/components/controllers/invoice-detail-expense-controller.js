@@ -73,10 +73,9 @@ module.exports =
 				// headerCheckboxSelection: true,
 				// headerCheckboxSelectionFilteredOnly: true,
 				// checkboxSelection: true,
-				cellRenderer   : agGridComp.checkBoxRowSelection,
+				cellRenderer   : agGridComp.checkBoxRowSelectionExpense,
 				cellEditor     : agGridComp.rowActions,
 				headerComponent: agGridComp.deleteRowsHeaderComponent,
-				editable       : true,
 				field          : 'selected',	// field needed to avoid ag-grid warning
 				width          : 80
 			}
@@ -198,4 +197,11 @@ module.exports =
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoice.invoiceNumber);
 				})
 		}
+
+		$scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
+			$scope.editModeInvoiceDetail = true;
+		});
+		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
+			$scope.editModeInvoiceDetail = false;
+		});
 	}];

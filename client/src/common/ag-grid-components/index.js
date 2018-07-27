@@ -33,6 +33,7 @@ module.exports = {
 	editSupplierCellRenderer : require('./supplieredit-cell-renderer'),
 	viewInvoiceDetailCellRenderer : require('./view-invoice-detail-cell-renderer'),
 	doNotInvoicePersonCellRenderer: require('./do-not-invoice-person-cell-renderer'),
+	checkBoxRowSelectionExpense: require('./check-box-row-selection-expense'),
 	doNotInvoiceVehicleCellRenderer: require('./do-not-invoice-vehicle-cell-renderer'),
 
 	// Custom filters

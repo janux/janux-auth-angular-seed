@@ -1,0 +1,35 @@
+md-dialog
+	md-dialog-content
+		.md-dialog-content-invoice-detail-popup
+			md-content
+				md-autocomplete(md-no-cache='false',
+					md-items="item in staffSearch(lbSearch.staff) | orderBy:'name.last'",
+					md-selected-item='form.person',
+					md-search-text-change='staffSearchTextChange(lbSearch.staff)',
+					md-search-text='lbSearch.staff',
+					md-selected-item-change='staffSelectedItemChange(item)',
+					md-item-text='item.name.last+" " +item.name.first',
+					md-min-length='0',
+					md-floating-label="{{ 'services.invoice.expenses.staff' | translate }}")
+						md-item-template
+							span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.name.last+' '+item.name.maternal + ' '+ item.name.first+' ' + item.name.middle}}
+			md-content
+				md-input-container(class="md-block")
+					label {{ 'services.invoice.expenses.name' | translate }}
+					input(ng-model='form.name')
+			md-content
+				md-input-container(class="md-block")
+					label {{ 'services.invoice.expenses.date' | translate }}
+					md-datepicker(
+					lang='{{ lang }}',
+					ng-model="form.date",
+					format='YYYY-MM-DD',
+					md-placeholder="{{ 'services.invoice.expenses.date' | translate }}")
+			md-content
+				md-input-container(class="md-block")
+					label {{ 'services.invoice.expenses.cost' | translate }}
+					input(ng-model='form.cost' type="number" )
+	md-dialog-actions
+		// TODO : Replace it with a angular material button.
+		button.btn.btn-ok(ng-click='insertExpense()') {{ 'label.ok' | translate }}
+		button.btn.btn-ok(ng-click='cancel()') {{ 'label.cancel' | translate }}

@@ -183,4 +183,11 @@ module.exports =
 		});
 
 		$scope.agGridSizeToFit = agGridSizeToFit;
+
+		$scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
+			$scope.editModeInvoiceDetail = true;
+		});
+		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
+			$scope.editModeInvoiceDetail = false;
+		});
 	}];

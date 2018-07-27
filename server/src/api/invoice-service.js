@@ -72,6 +72,10 @@ var createInstance = function (invoiceServiceReference) {
 		return invoiceServiceReferenceInstance.updateInvoiceItemTimeEntry(invoiceItemTEInstance).asCallback(callback);
 	};
 
+	InvoiceService.prototype.removeExpenses = function (expenseCodes, callback) {
+		return invoiceServiceReferenceInstance.removeExpenses(expenseCodes).asCallback(callback);
+	};
+
 	return new InvoiceService();
 };
 

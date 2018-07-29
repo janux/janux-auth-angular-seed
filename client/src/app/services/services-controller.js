@@ -4,8 +4,8 @@ var agGridComp = require('common/ag-grid-components');
 var _ = require('lodash');
 
 module.exports =
-['$scope','$modal','$filter','$timeout','operations','$state','$rootScope','config','localStorageService', function(
-  $scope , $modal , $filter , $timeout , operations , $state , $rootScope , config , localStorageService){
+['$scope','$modal','$filter','$timeout','operations','$state','$rootScope','config','jnxStorage', function(
+  $scope , $modal , $filter , $timeout , operations , $state , $rootScope , config , jnxStorage){
 
 	console.log('operations', operations);
 
@@ -155,7 +155,8 @@ module.exports =
 			$scope.gridOptions.api.deleteRows = removeSelected;
 
 			// Restore filter model.
-			var filterModel = localStorageService.get(columnsFiltersKey);
+			var filterModel = jnxStorage.findItem(columnsFiltersKey, true);
+			// console.log('filterModel', filterModel);
 			if (!_.isNil(filterModel)) {
 				$scope.gridOptions.api.setFilterModel(filterModel);
 				$scope.gridOptions.onFilterChanged();
@@ -168,9 +169,8 @@ module.exports =
 		},
 		onFilterChanged          : function () {
 			// Save filters to local storage.
-			var savedFilters;
-			savedFilters = $scope.gridOptions.api.getFilterModel();
-			localStorageService.set(columnsFiltersKey, savedFilters);
+			var savedFilters = $scope.gridOptions.api.getFilterModel();
+			jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
 			// console.log('savedFilters' + JSON.stringify(savedFilters));
 		}
 	};

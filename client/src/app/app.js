@@ -82,8 +82,8 @@ angular.module('MyApp',[
 	'appSupplier'
 ])
 
-.run([  '$rootScope','$state','$stateParams','security','$anchorScroll','$translate',
-function($rootScope , $state , $stateParams , security , $anchorScroll , $translate ) {
+.run([  '$rootScope','$state','$stateParams','security','$anchorScroll','$translate','jnxStorage',
+function($rootScope , $state , $stateParams , security , $anchorScroll , $translate , jnxStorage) {
 	$rootScope.$state       = $state;
 	$rootScope.$stateParams = $stateParams;
 
@@ -98,15 +98,15 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 		// further down where the abstract 'auth-required' state is defined
 		//
 		// Ensure user authentication when state is changing
-		if(toState.authRequired){
+		if (toState.authRequired) {
 
 			// console.debug('toState before', toState);
 			toState.resolve = angular.extend( toState.resolve || {}, {
-				currentUser: ['$jnxAuth', function($jnxAuth) {
+				currentUser: ['$jnxAuth', 'jnxStorage', function($jnxAuth, jnxStorage) {
+					jnxStorage.setItem('glarusState', { name: toState.name, params: params }, true);
 					return $jnxAuth.requireAuthenticatedUser();
 				}]
 			});
-			// console.log('toState after', toState);
 		}
 
 		if (toState.redirectTo) {
@@ -132,6 +132,7 @@ function($rootScope , $state , $stateParams , security , $anchorScroll , $transl
 			$translate.use(storedLang);
 			moment.locale(storedLang);
 		}
+		jnxStorage.setUsername(currentUser.username);
 	});
 
 	// On page reload, check to see whether the user logged in previously
@@ -257,15 +258,24 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 			}]
 		},
 
-		controller: ['config','$scope', '$state', 'security', 'userService', function(config,$scope, $state, security, userService) {
+		controller: ['config','$scope', '$state', 'security', 'userService','jnxStorage', function(config,$scope, $state, security, userService, jnxStorage) {
 			if (security.isAuthenticated()) {
+				var storedState = jnxStorage.findItem('glarusState', true);
 
 				userService.findCompanyInfo(security.currentUser.username)
 					.then(function (result) {
 						if (result.id === config.glarus) {
-							$state.go(config.defaultState);
+							if (_.isNil(storedState)) {
+								$state.go(config.defaultState);
+							} else {
+								$state.go(storedState.name, storedState.params);
+							}
 						} else {
-							$state.go(config.defaultStateClient);
+							if (_.isNil(storedState)) {
+								$state.go(config.defaultStateClient);
+							} else {
+								$state.go(storedState.name, storedState.params);
+							}
 						}
 					});
 
@@ -321,8 +331,8 @@ function( $stateProvider , $urlRouterProvider , $locationProvider , $translatePr
 }])
 
 
-.controller('sidebarCtrl', ['$rootScope', 'config','userService','security','partyService','$state',
-function ($rootScope, config, userService, security, partyService, $state) {
+.controller('sidebarCtrl', ['$rootScope', 'config','userService','security','partyService','$state','jnxStorage',
+function ($rootScope, config, userService, security, partyService, $state, jnxStorage) {
 	var options;
 
 	function manageMenuByCompanyInfo(menu, companyInfo){
@@ -388,11 +398,6 @@ function ($rootScope, config, userService, security, partyService, $state) {
 			userService.findCompanyInfo(security.currentUser.username)
 				.then(function (companyInfo) {
 
-					$rootScope.noneStyle = true;
-					$rootScope.bodyCon = false;
-					$rootScope.subMenu = [];
-					$rootScope.toggleSubmenu = [];
-					$rootScope.subMenuFlag = [];
 					if (companyInfo.id === config.glarus) {
 						$rootScope.mainMenu = config.mainMenu;
 					}else{
@@ -448,16 +453,22 @@ function ($rootScope, config, userService, security, partyService, $state) {
 		};
 	});
 
-
-
 	$rootScope.noneStyle = true;
 	$rootScope.bodyCon = false;
 	$rootScope.subMenu = [];
 	$rootScope.toggleSubmenu = [];
 	$rootScope.subMenuFlag = [];
 
+	// Get stored menu state
+	security.requestCurrentUser().then(function (currentUser) {
+		if (!_.isNil(currentUser)) {
+			jnxStorage.setUsername(currentUser.username);
 
-
+			var menuState = jnxStorage.findItem('menuState', true);
+			$rootScope.noneStyle = (!_.isNil(menuState)) ? menuState.noneStyle : true;
+			$rootScope.bodyCon = (!_.isNil(menuState)) ? menuState.bodyCon : false;
+		}
+	});
 
 	// All submenus hidden
 	$rootScope.resetSubmenu = function () {
@@ -483,13 +494,13 @@ function ($rootScope, config, userService, security, partyService, $state) {
 		$rootScope.bodyCon = !$rootScope.bodyCon;
 		$rootScope.noneStyle = !$rootScope.noneStyle;
 		$rootScope.$broadcast('sideMenuSizeChange');
+		// Store menu state
+	 	jnxStorage.setItem('menuState', {
+			bodyCon: $rootScope.bodyCon,
+			noneStyle: $rootScope.noneStyle }, true);
 	};
 	populateMenu();
-
-
-
 }])
-
 
 .controller('asideMenu', ['$scope','$aside','security','$translate','jnxStorage',
 function($scope, $aside, security, $translate, jnxStorage) {

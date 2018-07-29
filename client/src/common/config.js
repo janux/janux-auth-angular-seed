@@ -243,6 +243,15 @@ require('angular').module('config', [])
 			}
 		],
 		jnxStoreKeys : {
-			servicesColumnsFilters: 'januxServicesColumnsFilters'
+			storeObjectSufix: 'glarusStorage',
+			servicesColumnsFilters: 'servicesColumnsFilters',
+			specialOpsColumnsFilters: 'specialOpsColumnsFilters',
+			specialOpsTimeLogFilterPeriod: 'specialOpsTimeLogFilterPeriod',
+			attendanceTimeLogFilterPeriod: 'attendanceTimeLogFilterPeriod',
+			attendanceColumnsFilters: 'attendanceColumnsFilters',
+			driversColumnsFilters: 'driversColumnsFilters',
+			driversTimeLogFilterPeriod: 'driversTimeLogFilterPeriod',
+			guardsColumnsFilters: 'guardsColumnsFilters',
+			guardsTimeLogFilterPeriod: 'guardsTimeLogFilterPeriod'
 		}
 	});

@@ -12,7 +12,7 @@ module.exports =
 	console.log('Operation', operation);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
+	var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
@@ -360,7 +360,7 @@ module.exports =
 			$scope.gridOptions.api.deleteRows = removeSelected;
 
 			// Restore filter model.
-			var filterModel = localStorageService.get(columnsFiltersKey);
+			var filterModel = jnxStorage.findItem(columnsFiltersKey, true);
 			if (!_.isNil(filterModel)) {
 				$scope.gridOptions.api.setFilterModel(filterModel);
 				$scope.gridOptions.onFilterChanged();
@@ -438,7 +438,7 @@ module.exports =
 			// Save filters to local storage.
 			var savedFilters;
 			savedFilters = $scope.gridOptions.api.getFilterModel();
-			localStorageService.set(columnsFiltersKey, savedFilters);
+			jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
 			// console.log('savedFilters' + JSON.stringify(savedFilters));
 		},
 		onRowSelected: function () {

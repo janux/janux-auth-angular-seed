@@ -5,11 +5,11 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','localStorageService','nameQueryService',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, localStorageService,nameQueryService) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','nameQueryService',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate,nameQueryService) {
 
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-		var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
+		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
+		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
@@ -293,7 +293,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				$scope.gridOptions.api.deleteRows = removeSelected;
 
 				// Restore filter model.
-				var filterModel = localStorageService.get(columnsFiltersKey);
+				var filterModel = jnxStorage.findItem(columnsFiltersKey, true);
 				if (!_.isNil(filterModel)) {
 					$scope.gridOptions.api.setFilterModel(filterModel);
 					$scope.gridOptions.onFilterChanged();
@@ -369,7 +369,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				// Save filters to local storage.
 				var savedFilters;
 				savedFilters = $scope.gridOptions.api.getFilterModel();
-				localStorageService.set(columnsFiltersKey, savedFilters);
+				jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
 				// console.log('savedFilters' + JSON.stringify(savedFilters));
 			}
 		};

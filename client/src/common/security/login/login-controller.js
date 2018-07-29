@@ -7,9 +7,9 @@ require('angular-translate-loader-static-files');
 // This controller and its template (login/form.tpl.html) are used in a modal dialog box by the security service.
 // 
 module.exports =
-       ['$scope','security','$translate','$state','config','$stateParams','userService',
-function($scope , security , $translate , $state , config , $stateParams, userService) {
-	// The model for this form 
+       ['$scope','security','$translate','$state','config','$stateParams','userService','jnxStorage',
+function($scope , security , $translate , $state , config , $stateParams , userService , jnxStorage) {
+	// The model for this form
 	$scope.user = {
 		account: {},
 		person:  {}
@@ -71,12 +71,22 @@ function($scope , security , $translate , $state , config , $stateParams, userSe
 			}
 			else if ($state.current.name === 'login') {
 				// $state.go(config.defaultState);
+				var storedState = jnxStorage.findItem('glarusState', true);
+
 				userService.findCompanyInfo($scope.user.account.name)
 					.then(function (result) {
 						if (result.id === config.glarus) {
-							$state.go(config.defaultState);
+							if (_.isNil(storedState)) {
+								$state.go(config.defaultState);
+							} else {
+								$state.go(storedState.name, storedState.params);
+							}
 						} else {
-							$state.go(config.defaultStateClient);
+							if (_.isNil(storedState)) {
+								$state.go(config.defaultStateClient);
+							} else {
+								$state.go(storedState.name, storedState.params);
+							}
 						}
 					});
 			}
@@ -88,7 +98,7 @@ function($scope , security , $translate , $state , config , $stateParams, userSe
 			});
 
 			// If we want to interpolate a variable:
-			//	
+			//
 			// $translate('login.error.serverErrorOutput', {parm1: err}).then( function(msg) {
 			//	$scope.authError = msg;
 			// });

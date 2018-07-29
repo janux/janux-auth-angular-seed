@@ -12,7 +12,7 @@ module.exports =
 	console.log('Operation', operation);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
+	var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);

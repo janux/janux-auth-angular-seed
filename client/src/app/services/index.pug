@@ -14,8 +14,8 @@ side-bar
 
 				span(flex)
 
-				md-menu(md-position-mode="target-right target" md-offset="-6 50")
-					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-click='openAddOperationMenu($mdMenu, $event);' ng-show='userRole.can("READ",subOption.authContext);')
+				md-menu(md-position-mode="target-right target" md-offset="-6 50" )
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-click='openAddOperationMenu($mdMenu, $event);' ng-show='userRole.can("CREATE",option.authContext);')
 						md-icon.fa.fa-plus-square.fa-lg
 
 					md-menu-content

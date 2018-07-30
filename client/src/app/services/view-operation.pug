@@ -39,7 +39,7 @@ side-bar
 						.btn-row(ng-show='currentNavItem=="summary"')
 							button.btn(ng-show='editMode' ng-click='save()')
 								i.fa.fa-check
-							button.btn(ng-show='!editMode' ng-click='editMode=!editMode')
+							button.btn(ng-show='userRole.can("UPDATE","SERVICE") && !editMode' ng-click='editMode=!editMode')
 								i.fa.fa-pencil
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times

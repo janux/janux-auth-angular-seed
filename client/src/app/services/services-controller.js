@@ -77,58 +77,60 @@ module.exports =
 			headerName     : '',
 			field          : 'view',
 			width          : 50,
-			cellRenderer: agGridComp.viewOperationCellRenderer
+			cellRenderer: agGridComp.viewOperationCellRenderer,
+			hide        : !$rootScope.userRole.can('READ', 'SERVICE')
 		},
 		{
-			headerName : $filter('translate')('services.list.type'),
-			field      : 'type',
+			headerName    : $filter('translate')('services.list.type'),
+			field         : 'type',
 			valueFormatter: function (params) {
-				return $filter('translate')('services.list.'+params.value);
+				return $filter('translate')('services.list.' + params.value);
 			},
-			width          : 50
+			width         : 50
 		},
 		{
-			headerName : $filter('translate')('services.list.name'),
-			field      : 'name',
-			width          : 160
+			headerName: $filter('translate')('services.list.name'),
+			field     : 'name',
+			width     : 160
 		},
 		{
-			headerName : $filter('translate')('services.list.client'),
-			field      : 'client',
-			width          : 100
+			headerName: $filter('translate')('services.list.client'),
+			field     : 'client',
+			width     : 100
 		},
 		{
-			headerName : $filter('translate')('services.list.assigned'),
-			field      : 'assigned'
+			headerName: $filter('translate')('services.list.assigned'),
+			field     : 'assigned'
 		},
 		{
-			headerName : $filter('translate')('services.list.duration'),
-			field      : 'duration',
+			headerName    : $filter('translate')('services.list.duration'),
+			field         : 'duration',
 			valueFormatter: function (params) {
-				return (params.value)?$filter('amDurationFormat')(params.value, 'millisecond'):'';
+				return (params.value) ? $filter('amDurationFormat')(params.value, 'millisecond') : '';
 			},
-			width          : 80
+			width         : 80
 		},
 		{
-			headerName : $filter('translate')('services.list.begin'),
-			field      : 'start',
-			filter        : 'date',
-			width          : 100,
-			sort          : 'desc'
+			headerName: $filter('translate')('services.list.begin'),
+			field     : 'start',
+			filter    : 'date',
+			width     : 100,
+			sort      : 'desc'
 
 		},
 		{
-			headerName : $filter('translate')('services.list.end'),
-			field      : 'end',
-			filter        : 'date',
-			width          : 100
+			headerName: $filter('translate')('services.list.end'),
+			field     : 'end',
+			filter    : 'date',
+			width     : 100
 		},
 		{
 			headerName     : '',
 			cellRenderer   : agGridComp.checkBoxRowSelection,
 			headerComponent: agGridComp.deleteRowsHeaderComponent,
 			field          : 'selected',	// field needed to avoid ag-grid warning
-			width          : 50
+			width          : 50,
+			hide           : !$rootScope.userRole.can('DELETE', 'SERVICE')
 		}
 	];
 

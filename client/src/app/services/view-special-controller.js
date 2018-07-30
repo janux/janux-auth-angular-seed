@@ -203,6 +203,13 @@ module.exports =
 			$scope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
 		};
 
+		$scope.disableEditModeInvoiceDetail = function () {
+			$scope.editModeInvoiceDetail = false;
+			$scope.$broadcast(config.invoice.events.invoiceEditModeDisabled);
+		};
+
+
+
 		$scope.cancelInvoiceDetail = function () {
 			$scope.editModeInvoiceDetail = false;
 			$scope.changeTab('invoices');
@@ -528,6 +535,15 @@ module.exports =
 				.then(function (result) {
 					$scope.invoice = result;
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailUpdated, result);
+				});
+		};
+
+		$scope.updateInvoiceHeader = function () {
+			// console.log(' inv update ' + JSON.stringify($scope.invoice));
+			invoiceService.update($scope.invoice)
+				.then(function () {
+					updatedSelectedInvoice($scope.invoice.invoiceNumber);
+					$scope.disableEditModeInvoiceDetail();
 				});
 		};
 

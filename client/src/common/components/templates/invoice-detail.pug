@@ -1,8 +1,24 @@
 //Header data.
-div
-	strong {{'services.invoice.invoiceNumber' | translate}}:{{invoice.invoiceNumber}}
-div
-	strong {{'services.invoice.status' | translate}}:{{'services.invoice.statuses.' + invoice.status  | translate}}
+.container-flex-form
+	fieldset.fieldset-flex
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container.full
+					label {{ 'services.invoice.invoiceNumber' | translate}}
+					input(ng-model='invoice.invoiceNumber' ng-disabled='true')
+
+			.an-material.nopadding
+				md-input-container.full
+					label {{'services.invoice.status' | translate}}
+					md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
+						md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
+						md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+
+
+//div
+//	strong {{'services.invoice.invoiceNumber' | translate}}:{{invoice.invoiceNumber}}
+//div
+//	strong {{'servic es.invoice.status' | translate}}:{{'services.invoice.statuses.' + invoice.status  | translate}}
 
 md-divider.divider-line-glarus
 // Detail person

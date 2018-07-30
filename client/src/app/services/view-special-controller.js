@@ -9,7 +9,7 @@ module.exports =
 	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', function (
 		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast) {
 
-		console.log('Operation', operation);
+	console.log('Operation', operation);
 
 	var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 	var columnsFiltersKey = 'januxSpecialOpsColumnsFilters';
@@ -21,6 +21,7 @@ module.exports =
 
 	$scope.cl = clientsList;
 	$scope.editMode = false;
+	$scope.editModeInvoiceDetail = false;
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
@@ -45,7 +46,7 @@ module.exports =
 
 	var loadTimeEntries = function () {
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-		var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		var periodKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 
 		findTimeEntries(periodKey);
 	};
@@ -125,25 +126,25 @@ module.exports =
 	};
 
 	var mapOperationToEditable = function (operation) {
-		operation.client = {object:operation.client, search: ''};
-		operation.interestedParty = {object:operation.interestedParty, search:''};
-		operation.principals = (operation.principals.length>0)?_.map(operation.principals, function(principal){
-			return {object:principal, search:''};
-		}):[{object:null, search:''}];
+		operation.client = {object: operation.client, search: ''};
+		operation.interestedParty = {object: operation.interestedParty, search: ''};
+		operation.principals = (operation.principals.length > 0) ? _.map(operation.principals, function (principal) {
+			return {object: principal, search: ''};
+		}) : [{object: null, search: ''}];
 
 		// Filter Vehicles
-		operation.vehicles = _.filter( operation.currentResources, { type:'VEHICLE' } );
-		operation.vehicles = (operation.vehicles.length>0)?_.map(operation.vehicles,function (vehicle) {
-			return {object:vehicle, search:''};
-		}):[{object:null, search:''}];
+		operation.vehicles = _.filter(operation.currentResources, {type: 'VEHICLE'});
+		operation.vehicles = (operation.vehicles.length > 0) ? _.map(operation.vehicles, function (vehicle) {
+			return {object: vehicle, search: ''};
+		}) : [{object: null, search: ''}];
 
 		// Filter staff
-		operation.staff = _.filter( operation.currentResources, function (resource){
+		operation.staff = _.filter(operation.currentResources, function (resource) {
 			return (resource.type !== 'VEHICLE');
-		} );
-		operation.staff = (operation.staff.length>0)?_.map(operation.staff,function (staff) {
-			return {object:staff, search:''};
-		}):[{object:null, search:''}];
+		});
+		operation.staff = (operation.staff.length > 0) ? _.map(operation.staff, function (staff) {
+			return {object: staff, search: ''};
+		}) : [{object: null, search: ''}];
 
 		return operation;
 	};
@@ -157,7 +158,7 @@ module.exports =
 		var operation = _.clone($scope.data);
 
 		// Validate operation
-		if(operation.name === '') {
+		if (operation.name === '') {
 			infoDialog('services.specialForm.dialogs.nameEmpty');
 			return;
 		} else if (!_.isDate(operation.start)) {
@@ -193,13 +194,17 @@ module.exports =
 		operation.interestedParty = operation.interestedParty.object;
 		operation.principals = _.chain(operation.principal)
 			.map('object')
-			.filter(function (principal) { return (!_.isNil(principal)); })
+			.filter(function (principal) {
+				return (!_.isNil(principal));
+			})
 			.value();
 
 		var resources = [];
 
 		var staff = _.chain(operation.staff)
-			.filter(function (staff) { return (!_.isNil(staff.object)); })
+			.filter(function (staff) {
+				return (!_.isNil(staff.object));
+			})
 			.map(function (staff) {
 				delete staff.object.id;
 				return staff.object;
@@ -209,7 +214,9 @@ module.exports =
 		resources = resources.concat(staff);
 
 		var vehicles = _.chain(operation.vehicles)
-			.filter(function (vehicle) { return (!_.isNil(vehicle.object)); })
+			.filter(function (vehicle) {
+				return (!_.isNil(vehicle.object));
+			})
 			.map(function (vehicle) {
 				delete vehicle.object.id;
 				return vehicle.object;
@@ -220,7 +227,7 @@ module.exports =
 
 		operation.currentResources = resources;
 		operation.start = moment(operation.start).toDate();
-		operation.end = (!_.isNil(operation.end))?moment(operation.end).toDate():null;
+		operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
 
 		delete operation.staff;
 		delete operation.vehicles;
@@ -388,16 +395,16 @@ module.exports =
 			width     : 95
 		},
 		{
-			headerName     : '',
+			headerName             : '',
 			headerCheckboxSelection: true,
 			// headerCheckboxSelectionFilteredOnly: true,
 			// checkboxSelection: true,
-			cellRenderer   : agGridComp.checkBoxRowSelection,
-			cellEditor     : agGridComp.rowActions,
+			cellRenderer           : agGridComp.checkBoxRowSelection,
+			cellEditor             : agGridComp.rowActions,
 			// headerComponent: agGridComp.deleteRowsHeaderComponent,
-			editable       : true,
-			field          : 'selected',	// field needed to avoid ag-grid warning
-			width          : 45
+			editable               : true,
+			field                  : 'selected',	// field needed to avoid ag-grid warning
+			width                  : 45
 		}
 	];
 
@@ -557,16 +564,16 @@ module.exports =
 		$state.reload();
 	});
 
-		var updateInvoiceList = function () {
-			invoiceService.findByIdOperation($stateParams.id)
-				.then(function (result) {
-					$scope.invoices = result;
-					$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
-					if ($scope.editModeInvoiceDetail) {
-						$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
-					}
-				});
-		};
+	var updateInvoiceList = function () {
+		invoiceService.findByIdOperation($stateParams.id)
+			.then(function (result) {
+				$scope.invoices = result;
+				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
+				if ($scope.editModeInvoiceDetail) {
+					$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+				}
+			});
+	};
 
 	/**
 	 * This event is called when ..
@@ -611,15 +618,15 @@ module.exports =
 
 		// Map ag-grid rows into item time entry objects
 		selectedRows.forEach(function (agGridRow) {
-			invoiceItemsTE.push( {
-				doNotInvoice: false,
+			invoiceItemsTE.push({
+				doNotInvoice       : false,
 				doNotInvoiceVehicle: false,
-				timeEntry: _.find(timeEntries, {id: agGridRow.id} ),
-				total: 0
-			} );
+				timeEntry          : _.find(timeEntries, {id: agGridRow.id}),
+				total              : 0
+			});
 			timeEntryIds.push(agGridRow.id);
 		});
-		return { timeEntryIds: timeEntryIds, invoiceItemsTE: invoiceItemsTE };
+		return {timeEntryIds: timeEntryIds, invoiceItemsTE: invoiceItemsTE};
 	};
 
 	$scope.showAddToNewInvoicePopup = function () {
@@ -629,7 +636,7 @@ module.exports =
 			templateUrl        : 'app/services/add-new-invoice.html',
 			scope              : $scope,
 			preserveScope      : true,
-			controller         : ['$scope','$mdDialog','invoiceService','config', function ($scope, $mdDialog, invoiceService, config) {
+			controller         : ['$scope', '$mdDialog', 'invoiceService', 'config', function ($scope, $mdDialog, invoiceService, config) {
 				console.log('config.invoice.status.inRevision', config.invoice.status.inRevision);
 				$scope.newInvoiceNumber = '';
 				$scope.newInvoiceDate = '';
@@ -650,19 +657,19 @@ module.exports =
 										$mdDialog.hide();
 
 										var newInvoice = {
-											client: operation.client.object,
-											invoiceNumber:$scope.newInvoiceNumber,
-											invoiceDate: $scope.newInvoiceDate,
-											comments: '',
-											items: [],
-											status: config.invoice.status.inRevision,
-											discount: 0,
+											client            : operation.client.object,
+											invoiceNumber     : $scope.newInvoiceNumber,
+											invoiceDate       : $scope.newInvoiceDate,
+											comments          : '',
+											items             : [],
+											status            : config.invoice.status.inRevision,
+											discount          : 0,
 											discountPercentage: 0
 										};
 
 										var newItem = {
-											itemNumber: 1,
-											name: invoiceItemName,
+											itemNumber : 1,
+											name       : invoiceItemName,
 											timeEntries: []
 										};
 
@@ -674,7 +681,7 @@ module.exports =
 												$mdToast.show(
 													$mdToast.simple()
 														.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-														.position( 'top right' )
+														.position('top right')
 														.hideDelay(3000)
 												);
 												updateInvoiceList();
@@ -710,7 +717,7 @@ module.exports =
 						$mdToast.show(
 							$mdToast.simple()
 								.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-								.position( 'top right' )
+								.position('top right')
 								.hideDelay(3000)
 						);
 						updatedSelectedInvoice(invoiceNumber);

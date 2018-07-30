@@ -9,6 +9,8 @@ module.exports =
 		$scope.subTotalPerson = 0;
 		$scope.subTotalVehicle = 0;
 		$scope.subTotalExpense = 0;
+		$scope.editModeInvoiceDetail = false;
+
 
 		function calculateSubtotals() {
 
@@ -88,5 +90,12 @@ module.exports =
 			}
 			return invoiceItemTe;
 		}
+
+		$scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
+			$scope.editModeInvoiceDetail = true;
+		});
+		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
+			$scope.editModeInvoiceDetail = false;
+		});
 
 	}];

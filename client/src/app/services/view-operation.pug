@@ -63,7 +63,7 @@ side-bar
 								i.fa.fa-times
 
 						.btn-row(ng-show='currentNavItem=="invoiceDetail"')
-							button.btn(ng-show='editModeInvoiceDetail')
+							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 								i.fa.fa-check
 							button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')
 								i.fa.fa-pencil

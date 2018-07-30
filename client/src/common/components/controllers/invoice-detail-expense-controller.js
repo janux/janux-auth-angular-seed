@@ -8,7 +8,7 @@ module.exports =
 		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config, nameQueryService, $mdDialog) {
 
 		$scope.expenses = [];
-
+		$scope.editModeInvoiceDetail = false;
 		var infoDialog = function (translateKey) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',

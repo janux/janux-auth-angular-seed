@@ -240,6 +240,24 @@ module.exports =
 		$state.go('services.list');
 	};
 
+	$scope.enableEditModeInvoiceDetail = function () {
+		$scope.editModeInvoiceDetail = true;
+		$scope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+	};
+
+	$scope.disableEditModeInvoiceDetail = function () {
+		$scope.editModeInvoiceDetail = false;
+		$scope.$broadcast(config.invoice.events.invoiceEditModeDisabled);
+	};
+
+
+
+	$scope.cancelInvoiceDetail = function () {
+		$scope.editModeInvoiceDetail = false;
+		$scope.changeTab('invoices');
+		$scope.$broadcast(config.invoice.events.invoiceEditModeDisabled);
+	};
+
 	function deleteConfirmed(rowsToDelete) {
 		$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 
@@ -564,7 +582,16 @@ module.exports =
 			});
 	};
 
-	$scope.openAddToInvoiceMenu = function($mdMenu, ev) {
+	$scope.updateInvoiceHeader = function () {
+		// console.log(' inv update ' + JSON.stringify($scope.invoice));
+		invoiceService.update($scope.invoice)
+			.then(function () {
+				updatedSelectedInvoice($scope.invoice.invoiceNumber);
+				$scope.disableEditModeInvoiceDetail();
+			});
+	};
+
+	$scope.openAddToInvoiceMenu = function ($mdMenu, ev) {
 		$mdMenu.open(ev);
 	};
 

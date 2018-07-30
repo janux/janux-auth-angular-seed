@@ -11,7 +11,8 @@ module.exports =
 				headerName  : '',
 				field       : 'view',
 				width       : 50,
-				cellRenderer: agGridComp.viewInvoiceDetailCellRenderer
+				cellRenderer: agGridComp.viewInvoiceDetailCellRenderer,
+				hide        : !$rootScope.userRole.can("UPDATE", "INVOICE")
 			},
 			{
 				headerName: $filter('translate')('services.invoice.invoiceNumber'),
@@ -151,5 +152,4 @@ module.exports =
 			$scope.gridOptions.api.setRowData($scope.invoices);
 			agGridSizeToFit();
 		});
-
 	}];

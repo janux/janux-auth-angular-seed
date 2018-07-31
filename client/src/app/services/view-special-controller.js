@@ -44,10 +44,10 @@ module.exports =
 		if (!_.isNil(operation.end)) {
 			period = {
 				from: function () {
-					return moment(operation.start).startOf('day').toDate();
+					return moment().subtract(100, 'year').startOf('day').toDate();
 				},
 				to: function () {
-					return moment(operation.end).endOf('day').toDate();
+					return moment().add(100, 'year').startOf('day').toDate();
 				}
 			};
 			$scope.showTimeSheetPeriodFilterList = false;

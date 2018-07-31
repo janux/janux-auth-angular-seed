@@ -76,6 +76,17 @@ module.exports =
 		});
 	};
 
+	var updateInvoiceList = function () {
+		invoiceService.findByIdOperation($stateParams.id)
+			.then(function (result) {
+				$scope.invoices = result;
+				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
+				if ($scope.editModeInvoiceDetail) {
+					$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+				}
+			});
+	};
+
 	var mapOperationToEditable = function (operation) {
 		operation.client = {object: operation.client, search: ''};
 		operation.interestedParty = {object: operation.interestedParty, search: ''};
@@ -449,6 +460,9 @@ module.exports =
 					// $scope.findTimeEntries($scope.periodFilterKey);
 					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
 						findTimeEntries($scope.periodFilterKey);
+						// Given this service is called with an interface that also contains
+						// invoices. We have to refresh the invoices content.
+						updateInvoiceList();
 						// infoDialog('Time entry successfully updated');
 					});
 				}
@@ -503,6 +517,8 @@ module.exports =
 		loadTimeEntries();
 	}
 
+
+
 	$scope.$on('sideMenuSizeChange', function () {
 		agGridSizeToFit();
 	});
@@ -512,17 +528,6 @@ module.exports =
 		console.log('$translateChangeSuccess');
 		$state.reload();
 	});
-
-	var updateInvoiceList = function () {
-		invoiceService.findByIdOperation($stateParams.id)
-			.then(function (result) {
-				$scope.invoices = result;
-				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
-				if ($scope.editModeInvoiceDetail) {
-					$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
-				}
-			});
-	};
 
 	/**
 	 * This event is called when ..

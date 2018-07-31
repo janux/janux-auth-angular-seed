@@ -51,7 +51,7 @@ module.exports = [
 						if (authContext.name !== name) {
 							authContextService.insert($scope.contextGroupCode, authContext.toJSON())
 								.then(function () {
-									$state.go('permissions.auth-contexts');
+									$state.go('permissions.authcontexts');
 								});
 						} else {
 							$modal.open({
@@ -69,7 +69,7 @@ module.exports = [
 					} else if ($scope.editing) {
 						authContextService.update(name, $scope.contextGroupCode, authContext.toJSON())
 							.then(function () {
-								$state.go('permissions.auth-contexts');
+								$state.go('permissions.authcontexts');
 							});
 					}
 				} else {

@@ -26,7 +26,7 @@ side-bar
 							//md-nav-item(md-nav-click="changeTab('invoices')" name="invoices")
 								| {{ 'services.tabs.invoices' | translate | uppercase }}
 
-						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet"')
+						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet" && showTimeSheetPeriodFilterList')
 							label {{ 'operations.specialsTimeLog.filterLabel' | translate }}
 							md-input-container
 								//label
@@ -53,6 +53,8 @@ side-bar
 							// button.btn( ng-click='addToInvoice()')
 								i.fa.fa-plus-circle &nbsp;
 								| {{ 'services.addToInvoice' | translate }}
+							button.btn( ng-click='cancel()')
+								i.fa.fa-times
 
 				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', disabled='!editMode', disableautomaticname='{{true}}')
 

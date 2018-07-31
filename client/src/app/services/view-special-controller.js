@@ -16,7 +16,6 @@ module.exports =
 	var findTimeEntries;
 	var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
-	var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 	var timeEntries = [];	// Global time entries object
 	var invoiceItemName = 'Total a facturar';
 
@@ -47,18 +46,33 @@ module.exports =
 	};
 
 	var loadTimeEntries = function () {
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-		var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 
-		findTimeEntries(periodKey);
+		var period;
+
+		if (!_.isNil(operation.end)) {
+			period = {
+				from: function () {
+					return moment(operation.start).startOf('day').toDate();
+				},
+				to: function () {
+					return moment(operation.end).endOf('day').toDate();
+				}
+			};
+			$scope.showTimeSheetPeriodFilterList = false;
+		} else {
+			var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+			period = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		}
+
+		findTimeEntries(period);
 	};
 
 	$scope.changeTab = function (tab) {
 		$scope.currentNavItem = tab;
-		if (tab !== 'invoiceDetail') {
-			jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
-		}
+		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
+
 		if (tab === 'time-sheet') {
+			$scope.showTimeSheetPeriodFilterList = true;
 			loadTimeEntries();
 		}
 	};
@@ -402,16 +416,16 @@ module.exports =
 			width     : 95
 		},
 		{
-			headerName             : '',
+			headerName     : '',
 			headerCheckboxSelection: true,
 			// headerCheckboxSelectionFilteredOnly: true,
 			// checkboxSelection: true,
-			cellRenderer           : agGridComp.checkBoxRowSelection,
-			cellEditor             : agGridComp.rowActions,
+			cellRenderer   : agGridComp.checkBoxRowSelection,
+			cellEditor     : agGridComp.rowActions,
 			// headerComponent: agGridComp.deleteRowsHeaderComponent,
-			editable               : true,
-			field                  : 'selected',	// field needed to avoid ag-grid warning
-			width                  : 45
+			editable       : true,
+			field          : 'selected',	// field needed to avoid ag-grid warning
+			width          : 45
 		}
 	];
 

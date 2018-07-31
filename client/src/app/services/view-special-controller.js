@@ -38,10 +38,25 @@ module.exports =
 	};
 
 	var loadTimeEntries = function () {
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-		var periodKey = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
 
-		findTimeEntries(periodKey);
+		var period;
+
+		if (!_.isNil(operation.end)) {
+			period = {
+				from: function () {
+					return moment(operation.start).startOf('day').toDate();
+				},
+				to: function () {
+					return moment(operation.end).endOf('day').toDate();
+				}
+			};
+			$scope.showTimeSheetPeriodFilterList = false;
+		} else {
+			var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+			period = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
+		}
+
+		findTimeEntries(period);
 	};
 
 	$scope.changeTab = function (tab) {
@@ -49,6 +64,7 @@ module.exports =
 		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
 
 		if (tab === 'time-sheet') {
+			$scope.showTimeSheetPeriodFilterList = true;
 			loadTimeEntries();
 		}
 	};
@@ -454,9 +470,11 @@ module.exports =
 	};
 
 	// Load time entries
-	findTimeEntries = function (periodKey) {
+	findTimeEntries = function (period) {
+		if (_.isString(period)) {
+			period = timePeriods.specialOps[period];
+		}
 		// Load data
-		var period = timePeriods.specialOps[periodKey];
 		operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (timeEntries) {
 			$scope.gridOptions.api.setRowData(operationService.mapTimeEntryData(timeEntries));
 			agGridSizeToFit();

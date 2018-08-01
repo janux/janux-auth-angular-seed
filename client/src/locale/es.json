@@ -108,7 +108,8 @@
 			"tabMenuFirst":"DATOS GENERALES",
 			"tabMenuSecond":"RECURSOS HUMANOS",
 			"tabMenuThird":"BITACORA NÓMINA"
-		}
+		},
+		"contractor":"Externo"
 	},
 	"client": {
 		"name": "Nombre del negocio",

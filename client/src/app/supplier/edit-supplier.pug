@@ -31,21 +31,21 @@ side-bar
 						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
 							md-nav-item.active(md-nav-click="changeTab('supplier')" name="supplier")
 								| {{ 'supplier.tabMenu.tabMenuFirst' | translate | uppercase }}
-							md-nav-item(md-nav-click="changeTab('contacts')" name="contacts")
+							md-nav-item(md-nav-click="changeTab('contacts')" name="contacts" ng-show='userRole.can("READ","SUPPLIER_CONTACTS")')
 								| {{ 'supplier.tabMenu.tabMenuSecond' | translate | uppercase }}
 						span(flex)
 
 						.btn-row
 							button.btn(ng-show='currentNavItem=="supplier"')
 								i.fa.fa-trash
-							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="supplierStaff"')
+							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="supplierStaff" && userRole.can("UPDATE",subOption.authContext)')
 								i.fa.fa-check
 							// Contacts
 							button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
 								i.fa.fa-check
 							button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
 								i.fa.fa-times
-							button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact)')
+							button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact) && userRole.can("CREATE","SUPPLIER_CONTACTS")')
 								i.fa.fa-user-plus
 							// Cancel update supplier data
 							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact && !addStaff && !editStaff')

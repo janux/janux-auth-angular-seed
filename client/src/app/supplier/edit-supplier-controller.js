@@ -9,8 +9,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', 'partyService', 'partyGroupService', 'resourceService', '$state', 'supplier', 'supplierGroup', 'assignableResources', '$modal', '$filter', '$mdDialog', '$mdToast', '$stateParams',
-	function ($scope, partyService, partyGroupService, resourceService, $state, supplier, supplierGroup, assignableResources, $modal, $filter, $mdDialog, $mdToast, $stateParams) {
+	'$scope', '$rootScope', 'partyService', 'partyGroupService', 'resourceService', '$state', 'supplier', 'supplierGroup', 'assignableResources', '$modal', '$filter', '$mdDialog', '$mdToast', '$stateParams',
+	function ($scope, $rootScope, partyService, partyGroupService, resourceService, $state, supplier, supplierGroup, assignableResources, $modal, $filter, $mdDialog, $mdToast, $stateParams) {
 
 		var contacts = [];
 		if (!_.isNil(supplierGroup)) {
@@ -261,15 +261,19 @@ module.exports = [
 		};
 
 		$scope.cancel = function () {
-			// If we are in the supplier tab
-			var saveContactDialogResult = checkClientDataBeforeExit().result;
-			if ($scope.currentNavItem === 'supplier' && saveContactDialogResult) {
-				saveContactDialogResult.then(function (res) {
-					if (res) {
-						// window.history.back();
-						$state.go('supplier.list');
-					}
-				});
+			if ($rootScope.userRole.can('UPDATE', 'SUPPLIERS')) {
+				// If we are in the supplier tab
+				var saveContactDialogResult = checkClientDataBeforeExit().result;
+				if ($scope.currentNavItem === 'supplier' && saveContactDialogResult) {
+					saveContactDialogResult.then(function (res) {
+						if (res) {
+							// window.history.back();
+							$state.go('supplier.list');
+						}
+					});
+				} else {
+					$state.go('supplier.list');
+				}
 			} else {
 				$state.go('supplier.list');
 			}

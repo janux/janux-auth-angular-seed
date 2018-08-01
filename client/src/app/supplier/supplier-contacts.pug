@@ -6,8 +6,9 @@
 				th {{ 'party.phone' | translate }}
 				th {{ 'party.email' | translate }}
 				th {{ 'party.person.area' | translate }}
-				th {{ 'supplier.available' | translate }}
-				th(ng-show='userRole.can("READ",subOption.authContext);')
+				th(ng-show='userRole.can("UPDATE","SUPPLIER_CONTACTS")')
+					| {{ 'supplier.available' | translate }}
+				th(ng-show='userRole.can("UPDATE","SUPPLIER_CONTACTS");')
 					.col-edit-contact {{ 'user.edit' | translate }}
 		tbody
 			tr(ng-repeat='contact in contacts track by contact.id')
@@ -15,11 +16,14 @@
 				td {{ contact.phoneNumber('work').number }}
 				td {{ contact.emailAddress('work').address }}
 				td {{ contact.area }}
-				td.checkbox-center
-					md-checkbox(aria-label="Trash" ng-model='contact.isAvailable' class="md-primary" ng-change='switchAvailability(contact.isAvailable,contact.id)' )
+				td(ng-show='userRole.can("UPDATE","SUPPLIER_CONTACTS")' ).checkbox-center
+					md-checkbox(aria-label="Trash"
+						ng-model='contact.isAvailable'
+						class="md-primary"
+						ng-change='switchAvailability(contact.isAvailable,contact.id)')
 					//a.action-button-glarus
 					//	span.fa.fa-exchange.fa-lg(ng-click='switchAvailability(!contact.isAvailable,contact.id)' style="margin-left:8px;")
-				td.action(ng-show='userRole.can("READ",subOption.authContext);')
+				td.action(ng-show='userRole.can("UPDATE","SUPPLIER_CONTACTS")')
 					a.action-button-glarus
 						span.fa.fa-pencil.fa-lg(ng-click='editClientContact(contact.id)' style="margin-left:8px;")
 

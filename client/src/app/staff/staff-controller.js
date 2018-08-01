@@ -95,10 +95,17 @@ module.exports = [
 		var columnDefs = [
 			{
 				headerName  : $filter('translate')('party.person.name'),
-				field       : 'staffDisplayName',
+				field       : 'staffDisplayFirstName',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
 				sort        : 'asc',
+				filterParams: {newRowsAction: 'keep'}
+			},
+			{
+				headerName  : $filter('translate')('party.person.lastName'),
+				field       : 'staffDisplayLastName',
+				editable    : false,
+				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
@@ -120,6 +127,7 @@ module.exports = [
 				field       : 'staffDisplayArea',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
+				width       : 150,
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
@@ -127,6 +135,15 @@ module.exports = [
 				field       : 'staffDisplayUser',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
+				width       : 150,
+				filterParams: {newRowsAction: 'keep'}
+			},
+			{
+				headerName  : $filter('translate')('staff.contractor'),
+				field       : 'contractor',
+				editable    : false,
+				filter      : 'agTextColumnFilter',
+				width       : 150,
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{

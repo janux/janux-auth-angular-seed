@@ -61,7 +61,8 @@ require('angular').module('appStaff', [
 							email= '';
 						}
 
-						o.party.staffDisplayName = last+' '+maternal+' '+first+' '+middle;
+						o.party.staffDisplayFirstName = first+' '+middle;
+						o.party.staffDisplayLastName = last+' '+maternal;
 						o.party.staffDisplayPhone = phone;
 						o.party.staffDisplayEmail = email;
 						o.party.staffDisplayArea = area;

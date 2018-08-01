@@ -107,11 +107,12 @@
 			"tabMenuFirst":"General Data",
 			"tabMenuSecond":"Human Resources",
 			"tabMenuThird":"Roster Time Log"
-		}
+		},
+		"contractor":"Contractor"
 	},
 	"client": {
 		"name": "Business name",
-		"listTitle": "Supliers",
+		"listTitle": "Clients",
 		"address": "Address",
 		"contact": "Contact",
 		"email": "Email",
@@ -186,7 +187,7 @@
 	},
     "supplier":{
 		"name": "Business name",
-		"listTitle": "Clients",
+		"listTitle": "Suppliers",
 		"address": "Address",
 		"contact": "Contact",
 		"email": "Email",

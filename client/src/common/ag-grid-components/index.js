@@ -32,6 +32,7 @@ module.exports = {
 	editClientCellRenderer   : require('./clientedit-cell-renderer'),
 	editSupplierCellRenderer : require('./supplieredit-cell-renderer'),
 	editUsersCellRenderer : require('./usersedit-cell-renderer'),
+	contractorStaffCellRenderer : require('./staffcontractor-cell-renderer'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

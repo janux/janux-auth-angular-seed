@@ -28,12 +28,13 @@ require('angular').module('appStaff', [
 			assignableResources:['config','resourceService',function(config,resourceService){
 				return resourceService.findAvailableResourcesByVendor(config.glarus);
 			}],
-			staffList:['partyGroupService','assignableResources', function(partyGroupService,assignableResources){
+			staffList:['partyGroupService','assignableResources','userService','security', function(partyGroupService,assignableResources,userService, security){
+				var parties;
 				return partyGroupService.findOne('glarus_staff_group')
 				.then(function (result) {
 					// console.log('result ' + JSON.stringify(result));
 					//console.log('staff list', result.values);
-					var parties = _.map(result.values, function (o) {
+					parties = _.map(result.values, function (o) {
 
 						var resource = _.find(assignableResources, function (res) {
 							return res.resource.id === o.party.id;
@@ -70,7 +71,20 @@ require('angular').module('appStaff', [
 						o.party.availableColumn = {staffId:o.party.id,isAvailable:o.party.isAvailable};
 						
 						return o.party;
+						
 					});
+					// return parties;
+					return userService.findBy('username', '', security.currentUser.username); 
+				})
+				.then(function (users){
+					parties = _.map(parties, function (party) {
+					
+						
+						party.user = _.find(users,function(o){
+							return party.id === o.userId;
+						});
+						return party;	
+					});					
 					return parties;
 				});
 			}]

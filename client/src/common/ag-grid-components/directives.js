@@ -339,6 +339,16 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridStaffContractor', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/staff-contractor.html',
+		controller: ['$scope','$attrs', function($scope,$attrs) {
+			$scope.isExternal = JSON.parse($attrs.isExternal);
+		}]
+	}
+}])
 
 // This attribute takes the function in the parent scope
 // that is responsible for resizing agGrid and executes it

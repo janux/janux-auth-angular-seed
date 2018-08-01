@@ -132,8 +132,17 @@ module.exports = [
 			},
 			{
 				headerName  : $filter('translate')('staff.userName'),
-				field       : 'staffDisplayUser',
+				field       : 'user',
 				editable    : false,
+				valueGetter : function (params) {
+					var result;
+					if (_.isNil(params.data.user)) {
+						result = '';
+					} else {
+						result = params.data.user.username;
+					}
+					return result;
+				},
 				filter      : 'agTextColumnFilter',
 				width       : 150,
 				filterParams: {newRowsAction: 'keep'}
@@ -141,9 +150,19 @@ module.exports = [
 			{
 				headerName  : $filter('translate')('staff.contractor'),
 				field       : 'contractor',
+				cellRenderer   : agGridComp.contractorStaffCellRenderer,
 				editable    : false,
+				valueGetter : function (params) {
+					var result;
+					if (_.isNil(params.data.staff)) {
+						result = false;
+					} else {
+						result = params.data.staff.isExternal;
+					}
+					return result;
+				},
 				filter      : 'agTextColumnFilter',
-				width       : 150,
+				width       : 120,
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{

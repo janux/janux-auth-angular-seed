@@ -653,9 +653,8 @@ angular.module('commonComponents', [])
 			scope      : false,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/add-special-service.html',
-			controller : ['$scope','operationService','timeEntryService','$mdDialog','$timeout','$modal','$filter',
-				function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $modal, $filter) {
-					
+			controller : ['$scope','operationService','timeEntryService','$mdDialog','$timeout','$modal','$filter','nameQueryService',
+				function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $modal, $filter , nameQueryService) {
 					operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 
 						var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -790,6 +789,7 @@ angular.module('commonComponents', [])
 
 						function createFilterForOps (query) {
 							return function filterFn(operation) {
+								console.log('operation', operation);
 								var contains = operation.name.toLowerCase().includes(query.toLowerCase());
 								return contains;
 							};

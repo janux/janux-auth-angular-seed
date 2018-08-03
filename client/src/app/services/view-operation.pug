@@ -59,12 +59,6 @@ side-bar
 									md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
 							button.btn( ng-click='export()')
 								i.fa.fa-download
-							// button.btn( ng-click='addToInvoice()')
-								i.fa.fa-plus-circle &nbsp;
-								| {{ 'services.addToInvoice' | translate }}
-							button.btn( ng-click='cancel()')
-								i.fa.fa-times
-
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
 

@@ -23,7 +23,6 @@ module.exports =
 	$scope.editMode = false;
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.editModeInvoiceDetail = false;
-	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
@@ -33,49 +32,11 @@ module.exports =
 
 	console.log('Invoices', invoices);
 
-	function setExtraFlag(resource) {
-		if (resource.resource.isExternal === true) {
-			resource.isExternal = true;
-		}
-		return resource;
-	}
-
 	$scope.periodChange = function () {
 		jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
 		findTimeEntries($scope.periodFilterKey);
 	};
 
-	var loadTimeEntries = function () {
-
-		var period;
-
-		if (!_.isNil(operation.end)) {
-			period = {
-				from: function () {
-					return moment(operation.start).startOf('day').toDate();
-				},
-				to: function () {
-					return moment(operation.end).endOf('day').toDate();
-				}
-			};
-			$scope.showTimeSheetPeriodFilterList = false;
-		} else {
-			var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-			period = (storedFilterPeriod)?storedFilterPeriod:'last7Days';
-		}
-
-		findTimeEntries(period);
-	};
-
-	$scope.changeTab = function (tab) {
-		$scope.currentNavItem = tab;
-		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
-
-		if (tab === 'time-sheet') {
-			$scope.showTimeSheetPeriodFilterList = true;
-			loadTimeEntries();
-		}
-	};
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
@@ -118,8 +79,9 @@ module.exports =
 
 	$scope.changeTab = function (tab) {
 		$scope.currentNavItem = tab;
-		jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
-
+		if (tab !== 'invoiceDetail') {
+			jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
+		}
 		if (tab === 'time-sheet') {
 			$scope.showTimeSheetPeriodFilterList = true;
 			loadTimeEntries();
@@ -248,7 +210,7 @@ module.exports =
 
 		operation.currentResources = resources;
 		operation.start = moment(operation.start).toDate();
-		operation.end = (!_.isNil(operation.end))?moment(operation.end).toDate():null;
+		operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
 
 		delete operation.staff;
 		delete operation.vehicles;
@@ -416,16 +378,16 @@ module.exports =
 			width     : 95
 		},
 		{
-			headerName     : '',
+			headerName             : '',
 			headerCheckboxSelection: true,
 			// headerCheckboxSelectionFilteredOnly: true,
 			// checkboxSelection: true,
-			cellRenderer   : agGridComp.checkBoxRowSelection,
-			cellEditor     : agGridComp.rowActions,
+			cellRenderer           : agGridComp.checkBoxRowSelection,
+			cellEditor             : agGridComp.rowActions,
 			// headerComponent: agGridComp.deleteRowsHeaderComponent,
-			editable       : true,
-			field          : 'selected',	// field needed to avoid ag-grid warning
-			width          : 45
+			editable               : true,
+			field                  : 'selected',	// field needed to avoid ag-grid warning
+			width                  : 45
 		}
 	];
 
@@ -553,7 +515,7 @@ module.exports =
 				$timeout(function () {
 					$scope.gridOptions.api.sizeColumnsToFit();
 					refreshing = false;
-				},200);
+				}, 200);
 			}
 		}
 	};

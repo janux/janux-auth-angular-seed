@@ -8,15 +8,20 @@ form(name='rateSpecialOpsForm')
 				label {{ 'client.rates.function' | translate}}
 				input(value="{{ 'client.rates.driver' | translate}}" ng-disabled='true')
 			md-input-container
+				label {{ 'client.rates.typeTime' | translate}}
+				md-select(aria-label='type' ng-model='rateForm.rates.DRIVER.inputParameters.type' ng-change='updateRatesValuesSpecialOps()')
+					md-option(value='DAY') {{ 'client.rates.typeTimeDay' | translate }}
+					md-option(value='ONLY_HOUR') {{ 'client.rates.typeTimeHour' | translate }}
+			md-input-container(ng-hide='rateForm.rates.DRIVER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateDay' | translate}}
 				input(ng-model='rateForm.rates.DRIVER.inputParameters.rateDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.DRIVER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursFullDay' | translate}}
 				input(ng-model='rateForm.rates.DRIVER.inputParameters.hoursFullDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.DRIVER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateMinimum' | translate}}
 				input(ng-model='rateForm.rates.DRIVER.inputParameters.rateMinimum' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.DRIVER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursHalfDay' | translate}}
 				input(ng-model='rateForm.rates.DRIVER.inputParameters.hoursHalfDay' type="number")
 			md-input-container
@@ -28,15 +33,20 @@ form(name='rateSpecialOpsForm')
 				label {{ 'client.rates.function' | translate}}
 				input(value="{{ 'client.rates.agent' | translate}}" ng-disabled='true')
 			md-input-container
+				label {{ 'client.rates.typeTime' | translate}}
+				md-select(aria-label='type' ng-model='rateForm.rates.AGENT.inputParameters.type' ng-change='updateRatesValuesSpecialOps()')
+					md-option(value='DAY') {{ 'client.rates.typeTimeDay' | translate }}
+					md-option(value='ONLY_HOUR') {{ 'client.rates.typeTimeHour' | translate }}
+			md-input-container(ng-hide='rateForm.rates.AGENT.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT.inputParameters.rateDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursFullDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT.inputParameters.hoursFullDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateMinimum' | translate}}
 				input(ng-model='rateForm.rates.AGENT.inputParameters.rateMinimum' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursHalfDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT.inputParameters.hoursHalfDay' type="number")
 			md-input-container
@@ -48,15 +58,20 @@ form(name='rateSpecialOpsForm')
 				label {{ 'client.rates.function' | translate}}
 				input(value="{{ 'client.rates.agentArmed' | translate}}" ng-disabled='true')
 			md-input-container
+				label {{ 'client.rates.typeTime' | translate}}
+				md-select(aria-label='type' ng-model='rateForm.rates.AGENT_ARMED.inputParameters.type' ng-change='updateRatesValuesSpecialOps()')
+					md-option(value='DAY') {{ 'client.rates.typeTimeDay' | translate }}
+					md-option(value='ONLY_HOUR') {{ 'client.rates.typeTimeHour' | translate }}
+			md-input-container(ng-hide='rateForm.rates.AGENT_ARMED.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT_ARMED.inputParameters.rateDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT_ARMED.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursFullDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT_ARMED.inputParameters.hoursFullDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT_ARMED.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateMinimum' | translate}}
 				input(ng-model='rateForm.rates.AGENT_ARMED.inputParameters.rateMinimum' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.AGENT_ARMED.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursHalfDay' | translate}}
 				input(ng-model='rateForm.rates.AGENT_ARMED.inputParameters.hoursHalfDay' type="number")
 			md-input-container
@@ -68,15 +83,20 @@ form(name='rateSpecialOpsForm')
 				label {{ 'client.rates.function' | translate}}
 				input(value="{{ 'client.rates.greeter' | translate}}" ng-disabled='true')
 			md-input-container
+				label {{ 'client.rates.typeTime' | translate}}
+				md-select(aria-label='type' ng-model='rateForm.rates.GREETER.inputParameters.type' ng-change='updateRatesValuesSpecialOps()')
+					md-option(value='DAY') {{ 'client.rates.typeTimeDay' | translate }}
+					md-option(value='ONLY_HOUR') {{ 'client.rates.typeTimeHour' | translate }}
+			md-input-container(ng-hide='rateForm.rates.GREETER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateDay' | translate}}
 				input(ng-model='rateForm.rates.GREETER.inputParameters.rateDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.GREETER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursFullDay' | translate}}
 				input(ng-model='rateForm.rates.GREETER.inputParameters.hoursFullDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.GREETER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateMinimum' | translate}}
 				input(ng-model='rateForm.rates.GREETER.inputParameters.rateMinimum' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.GREETER.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursHalfDay' | translate}}
 				input(ng-model='rateForm.rates.GREETER.inputParameters.hoursHalfDay' type="number")
 			md-input-container
@@ -88,15 +108,20 @@ form(name='rateSpecialOpsForm')
 				label {{ 'client.rates.function' | translate}}
 				input(value="{{ 'client.rates.coordinator' | translate}}" ng-disabled='true')
 			md-input-container
+				label {{ 'client.rates.typeTime' | translate}}
+				md-select(aria-label='type' ng-model='rateForm.rates.COORDINATOR.inputParameters.type' ng-change='updateRatesValuesSpecialOps()')
+					md-option(value='DAY') {{ 'client.rates.typeTimeDay' | translate }}
+					md-option(value='ONLY_HOUR') {{ 'client.rates.typeTimeHour' | translate }}
+			md-input-container(ng-hide='rateForm.rates.COORDINATOR.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateDay' | translate}}
 				input(ng-model='rateForm.rates.COORDINATOR.inputParameters.rateDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.COORDINATOR.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursFullDay' | translate}}
 				input(ng-model='rateForm.rates.COORDINATOR.inputParameters.hoursFullDay' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.COORDINATOR.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.rateMinimum' | translate}}
 				input(ng-model='rateForm.rates.COORDINATOR.inputParameters.rateMinimum' type="number")
-			md-input-container
+			md-input-container(ng-hide='rateForm.rates.COORDINATOR.inputParameters.type==="ONLY_HOUR"')
 				label {{ 'client.rates.hoursHalfDay' | translate}}
 				input(ng-model='rateForm.rates.COORDINATOR.inputParameters.hoursHalfDay' type="number")
 			md-input-container

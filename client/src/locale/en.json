@@ -145,6 +145,9 @@
 			"rateSaved": "Rates successfully saved"
 		},
 	    "rates":{
+		    "typeTime": "Type",
+		    "typeTimeDay": "Rate by day",
+		    "typeTimeHour": "Rate by hour",
 	 		"specialOps":"Special Ops",
 			"guards":"Guards",
 			"research":"Research",

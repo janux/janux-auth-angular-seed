@@ -54,13 +54,19 @@ module.exports =
 			infoDialog('services.specialForm.dialogs.startEmpty');
 			return;
 		}
-		else if (!_.isDate(operation.end)) {
-			infoDialog('services.specialForm.dialogs.endEmpty');
-			return;
-		}
-		else if (operation.start > operation.end) {
-			infoDialog('operations.dialogs.endDateError');
-			return;
+		// else if (!_.isDate(operation.end)) {
+		// 	infoDialog('services.specialForm.dialogs.endEmpty');
+		// 	return;
+		// }
+		// else if (operation.start > operation.end) {
+		// 	infoDialog('operations.dialogs.endDateError');
+		// 	return;
+		// }
+		else if(_.isDate(operation.end)){
+			if (operation.start > operation.end) {
+				infoDialog('operations.dialogs.endDateError');
+				return;
+			}
 		}
 		else if (_.isNil(operation.client.object)) {
 			infoDialog('services.specialForm.dialogs.clientEmpty');

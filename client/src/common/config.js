@@ -74,7 +74,7 @@ require('angular').module('config', [])
 				translateKey: 'services.title',
 				iconClass   : 'fa-tachometer',
 				state       : 'services',
-				authContext: 'SERVICE',
+				authContext : 'SERVICE',
 				subOptions  : {}
 			},
 			{
@@ -83,7 +83,7 @@ require('angular').module('config', [])
 				iconClass   : 'fa-sitemap',
 				state       : 'permissions',
 				subOptions  : {
-					roles         : {
+					roles       : {
 						state      : 'permissions.roles',
 						translate  : 'authSchema.roles',
 						authContext: 'ROLE'
@@ -103,7 +103,7 @@ require('angular').module('config', [])
 				iconClass   : 'fa-users',
 				state       : 'users',
 				subOptions  : {
-					users    : {
+					users      : {
 						state      : 'users',
 						translate  : 'peopleOrgs.users',
 						authContext: 'USER'
@@ -270,17 +270,5 @@ require('angular').module('config', [])
 				invoiceEditModeEnabled : 'invoiceEditModeEnabled',
 				invoiceEditModeDisabled: 'invoiceEditModeDisabled'
 			}
-		},
-		jnxStoreKeys : {
-			storeObjectSufix: 'glarusStorage',
-			servicesColumnsFilters: 'servicesColumnsFilters',
-			specialOpsColumnsFilters: 'specialOpsColumnsFilters',
-			specialOpsTimeLogFilterPeriod: 'specialOpsTimeLogFilterPeriod',
-			attendanceTimeLogFilterPeriod: 'attendanceTimeLogFilterPeriod',
-			attendanceColumnsFilters: 'attendanceColumnsFilters',
-			driversColumnsFilters: 'driversColumnsFilters',
-			driversTimeLogFilterPeriod: 'driversTimeLogFilterPeriod',
-			guardsColumnsFilters: 'guardsColumnsFilters',
-			guardsTimeLogFilterPeriod: 'guardsTimeLogFilterPeriod'
 		}
 	});

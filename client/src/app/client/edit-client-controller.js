@@ -66,6 +66,23 @@ module.exports = [
 		}
 	};
 
+	function updateRateValueByType(rate) {
+		if (rate.type === 'ONLY_HOUR') {
+			rate.rateDay = 0;
+			rate.hoursFullDay = 0;
+			rate.rateMinimum = 0;
+			rate.hoursHalfDay = 0;
+		}
+	}
+
+	$scope.updateRatesValuesSpecialOps = function () {
+		updateRateValueByType($scope.rateForm.rates.DRIVER.inputParameters);
+		updateRateValueByType($scope.rateForm.rates.AGENT.inputParameters);
+		updateRateValueByType($scope.rateForm.rates.AGENT_ARMED.inputParameters);
+		updateRateValueByType($scope.rateForm.rates.GREETER.inputParameters);
+		updateRateValueByType($scope.rateForm.rates.CORRDINATOR.inputParameters);
+	};
+
 	$scope.updateRateMatrix = function () {
 
 		// Validate info.

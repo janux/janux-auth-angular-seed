@@ -145,6 +145,9 @@
 			"clientSaved": "Cliente guardado correctamente"
 		},
 	    "rates":{
+		    "typeTime": "Tipo",
+		    "typeTimeDay": "Tarifa por día",
+		    "typeTimeHour": "Tarifa por hora",
 			"specialOps":"Servicios especiales",
 			"guards":"Guardias",
 			"research":"Investigación",

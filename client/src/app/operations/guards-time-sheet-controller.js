@@ -639,8 +639,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
-					$scope.findTimeEntries($scope.periodFilterKey);
+					// $scope.findTimeEntries($scope.periodFilterKey);
 					// infoDialog('Time entry successfully updated');
+				}).finally(function () {
+					$scope.findTimeEntries($scope.periodFilterKey);
 				});
 			},
 			localeTextFunc           : function (key, defaultValue) {

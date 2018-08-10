@@ -20,7 +20,9 @@ var UserPersistence                      = require('janux-persist').UserService,
     TaskTypeServiceImpl                  = require('glarus-services').TaskTypeServiceImpl,
     RateMatrixServiceImpl                = require('glarus-services').RateMatrixServiceImpl,
     InvoiceServiceImpl                   = require('glarus-services').InvoiceServiceImpl,
-    InvoiceCalculatorService             = require('glarus-services').InvoiceCalculatorServiceImpl;
+    InvoiceCalculatorService             = require('glarus-services').InvoiceCalculatorServiceImpl,
+    InvoiceTimeEntryServiceImpl          = require('glarus-services').InvoiceTimeEntryServiceImpl,
+    UserInvoiceServiceImpl               = require('glarus-services').UserInvoiceServiceImpl;
 
 var config                              = require('config'),
     appContext                          = config.serverAppContext,
@@ -53,7 +55,7 @@ var config                              = require('config'),
     InvoiceDao                          = DAOs[appContext.dao.invoiceDao],
     InvoiceItemDao                      = DAOs[appContext.dao.invoiceItemDao],
     ExpenseDao                          = DAOs[appContext.dao.expenseDao],
-    InvoiceItemTE                       = DAOs[appContext.dao.invoiceItemTE],
+    InvoiceItemTEDao                    = DAOs[appContext.dao.invoiceItemTE],
     // End glarus services DAOs.
 
 
@@ -64,9 +66,10 @@ var config                              = require('config'),
 	    InvoiceDao,
 	    InvoiceItemDao,
 	    ExpenseDao,
-	    InvoiceItemTE,
+	    InvoiceItemTEDao,
 	    PartyPersistenceService,
 	    OperationDao,
+	    OperationAttributeDao,
 	    TimeEntryDao,
 	    TimeEntryAttributeDao,
 	    TimeEntryPrincipalDao,
@@ -77,7 +80,7 @@ var config                              = require('config'),
 	    RateDao,
 	    TaskTypeDao,
 	    TaskTypeService),
-    TimeEntryPersistService             = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao, InvoiceCalculatorServicePersistence),
+    TimeEntryPersistService             = new TimeEntryServiceImpl(OperationDao, TimeEntryDao, TimeEntryAttributeDao, TimeEntryPrincipalDao, TimeEntryResourceDao, ResourcePersistService, PartyPersistenceService, VehicleDao, InvoiceCalculatorServicePersistence, OperationAttributeDao, InvoiceItemTEDao),
     OperationPersistService             = new OperationServiceImpl(OperationDao, TimeEntryPersistService, ResourcePersistService, PartyPersistenceService, VehicleDao, CurrentResourceDao, OperationPrincipalDao, OperationAttributeDao),
     RateMatrixService                   = new RateMatrixServiceImpl(PartyPersistenceService, RateMatrixDao, RateDao, TaskTypeDao, TaskTypeService, InvoiceCalculatorServicePersistence),
     GroupPersistService                 = new GroupService(GroupDao, GroupContentDao, GroupAttributeValueDao),
@@ -93,7 +96,9 @@ var config                              = require('config'),
     TimeEntryReportGuardService         = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportSpecialOpsService    = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportAttendanceService    = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
-    InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceItemTE, PartyPersistenceService, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence);
+    InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceItemTEDao, PartyPersistenceService, TimeEntryDao, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence),
+    InvoiceTimeEntryService             = new InvoiceTimeEntryServiceImpl(InvoiceItemTEDao, InvoiceItemDao, InvoiceDao, TimeEntryDao),
+    UserInvoiceService                  = new UserInvoiceServiceImpl(GlarusUserPersistenceService, InvoiceService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,
@@ -116,5 +121,7 @@ module.exports = {
 	UserOperationService            : UserOperationService,
 	TaskTypeService                 : TaskTypeService,
 	RateMatrixService               : RateMatrixService,
-	InvoiceService                  : InvoiceService
+	InvoiceService                  : InvoiceService,
+	InvoiceTimeEntryService         : InvoiceTimeEntryService,
+	UserInvoiceService              : UserInvoiceService
 };

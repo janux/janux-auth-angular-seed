@@ -8,8 +8,10 @@ var _ = require('lodash');
 
 
 module.exports =
-	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob', 'localStorageService',
-		function ($q, $http, partyService, resourceService, dateUtilService, $log, FileSaver, Blob, localStorageService) {
+	['$q', '$http', 'partyService', 'resourceService', 'dateUtilService', '$log', 'FileSaver', 'Blob', 'localStorageService', '$modal', '$filter',
+		function ($q, $http, partyService, resourceService, dateUtilService, $log, FileSaver, Blob, localStorageService, $modal, $filter) {
+
+			var errorMessageCantUpdate = 'Can\'t update invoice idOperation given this record is associated with an invoice';
 
 			//Generate a time-entry instance from a json object
 			function fromJSON(object) {
@@ -46,6 +48,39 @@ module.exports =
 				return result;
 			}
 
+			function infoDialog(translateKey) {
+				$modal.open({
+					templateUrl: 'app/dialog-tpl/info-dialog.html',
+					controller : ['$scope', '$modalInstance',
+						function ($scope, $modalInstance) {
+							$scope.message = $filter('translate')(translateKey);
+
+							$scope.ok = function () {
+								$modalInstance.close();
+							};
+						}],
+					size       : 'md'
+				});
+			}
+
+			/**
+			 * Send an info dialog for the expected error messages.
+			 * For the moment there is only one server message
+			 * necessary to show.
+			 * @param err
+			 */
+			function handleErrorMessage(err) {
+				var message;
+				var error = err.data.error;
+				if (_.isArray(error) && error.length > 0) {
+					message = error[0].message;
+					if (message === errorMessageCantUpdate) {
+						infoDialog('operations.errorMessages.cantUpdateDueInvoiceAssociation');
+					}
+				}
+				return $q.reject(err);
+			}
+
 			var service = {
 				insert     : function (timeEntry) {
 					return $http.jsonrpc(
@@ -63,6 +98,9 @@ module.exports =
 						[toJSON(timeEntry)]
 					).then(function (resp) {
 						return fromJSON(resp.data.result);
+					}, function (err) {
+						// $log.error("Error updating timeEntryService " + JSON.stringify(err));
+						return handleErrorMessage(err);
 					});
 				},
 				removeByIds: function (ids) {
@@ -72,6 +110,8 @@ module.exports =
 						[ids]
 					).then(function (resp) {
 						return resp.data.result;
+					},function (err) {
+						return handleErrorMessage(err);
 					});
 				},
 

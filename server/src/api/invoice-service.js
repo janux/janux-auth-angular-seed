@@ -7,15 +7,16 @@ var InvoiceServiceImpl = require('glarus-services').InvoiceServiceImpl;
 
 
 var log4js = require('log4js'),
-    log    = log4js.getLogger('operation-service');
+    log    = log4js.getLogger('invoice-service');
 
 var invoiceServiceInstance = undefined;
 var invoiceServiceReferenceInstance = undefined;
+var userInvoiceServiceReferenceInstance = undefined;
 
 
-var createInstance = function (invoiceServiceReference) {
+var createInstance = function (invoiceServiceReference, userInvoiceServiceReference) {
 	invoiceServiceReferenceInstance = invoiceServiceReference;
-
+	userInvoiceServiceReferenceInstance = userInvoiceServiceReference;
 
 	function InvoiceService() {
 
@@ -76,14 +77,18 @@ var createInstance = function (invoiceServiceReference) {
 		return invoiceServiceReferenceInstance.removeExpenses(expenseCodes).asCallback(callback);
 	};
 
+	InvoiceService.prototype.findByUserName = function (userName, callback) {
+		return userInvoiceServiceReferenceInstance.findByUserName(userName).asCallback(callback);
+	};
+
 	return new InvoiceService();
 };
 
-module.exports.create = function (invoiceServiceReference, userOperationServiceReference) {
+module.exports.create = function (invoiceServiceReference, userInvoiceServiceReference) {
 	// if the instance does not exist, create it
 	if (!_.isObject(invoiceServiceInstance)) {
 		// userServiceInstance = new UserService(aDAO);
-		invoiceServiceInstance = createInstance(invoiceServiceReference, userOperationServiceReference);
+		invoiceServiceInstance = createInstance(invoiceServiceReference, userInvoiceServiceReference);
 	}
 	return invoiceServiceInstance;
 };

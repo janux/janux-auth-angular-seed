@@ -12,7 +12,12 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security, config) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', '$filter','$log',
+		function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security, config, $filter, $log) {
+
+
+		const INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES = 'invoice.operation.timeEntries';
+		const OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT = 'timeEntry.count';
 
 		function fromJSON(object) {
 			if (_.isNil(object)) return object;
@@ -508,8 +513,8 @@ module.exports =
 				return _.map(operations, function (operation) {
 
 					const duration = (!_.isNil(operation.start)) ? moment(operation.start).diff(moment(operation.end)) : '';
-					const start = (!_.isNil(operation.start)) ? moment(operation.start).format('YYYY-MM-DD') : '';
-					const end = (!_.isNil(operation.end)) ? moment(operation.end).format('YYYY-MM-DD') : '';
+					// const start = (!_.isNil(operation.start)) ? moment(operation.start).format('YYYY-MM-DD') : '';
+					// const end = (!_.isNil(operation.end)) ? moment(operation.end).format('YYYY-MM-DD') : '';
 
 					var assigned = '';
 					var resourcePerson = _.find(operation.currentResources, function (o) {
@@ -521,15 +526,16 @@ module.exports =
 					}
 
 					return {
-						id      : operation.id,
-						view    : {id: operation.id, type: operation.type},
-						type    : operation.type,
-						name    : operation.name,
-						client  : operation.client.name,
-						assigned: assigned,
-						duration: duration,
-						start   : start,
-						end     : end
+						id        : operation.id,
+						view      : {id: operation.id, type: operation.type},
+						type      : operation.type,
+						name      : operation.name,
+						client    : operation.client.name,
+						attributes: operation.attributes,
+						assigned  : assigned,
+						duration  : duration,
+						start     : operation.start,
+						end       : operation.end
 					}
 				});
 			},
@@ -544,6 +550,69 @@ module.exports =
 
 			toJSON: function (object) {
 				return toJSON(object);
+			},
+
+			/**
+			 *
+			 * @param operation The operation to know the status.
+			 * @param invoices The invoices to look for in order to determine the status.
+			 * @return {string} The result.
+			 */
+			generateStatus: function (operation, invoices) {
+				$log.debug("Call to generateStatus with " + operation.id + " invoices " + invoices.length);
+				var result = '';
+				var today = moment().hour(0).minutes(0).seconds(0).toDate();
+				var totalTimeEntriesInvoiced = 0;
+				var totalTimeEntriesPaid = 0;
+				var operationAttribute = _.find(operation.attributes, function (o) {
+					return o.name === OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT;
+				});
+				var totalTimeEntriesOperation = operationAttribute != null ? Number(operationAttribute.value) : 0;
+				var invoicesAssociated = _.filter(invoices, function (invoice) {
+					var result = false;
+					var attribute = _.find(invoice.attributes, function (attribute) {
+						return attribute.name === INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES;
+					});
+					if (attribute) {
+						result = attribute.value[operation.id] && attribute.value[operation.id] > 0;
+						if (result) {
+							totalTimeEntriesInvoiced += attribute.value[operation.id];
+						}
+					}
+					return result;
+				});
+				switch (operation.type) {
+					case 'SPECIAL_OPS':
+						if (invoicesAssociated.length === 0) {
+							// In this case, there are not invoices associated to the operations.
+							// The only thing we can show if if the service has started or ended.
+							if (_.isDate(operation.start) && operation.start.getTime() > today.getTime()) {
+								// Upcoming.
+								result = $filter('translate')('operations.statuses.upcoming');
+							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
+								_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
+								// In progress
+								result = $filter('translate')('operations.statuses.inProgress');
+							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
+								_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
+								// Completed
+								result = $filter('translate')('operations.statuses.completed');
+							}
+						} else if (totalTimeEntriesOperation > 0) {
+							// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
+							// But only show something if the operation has time entries associated.
+							if (totalTimeEntriesOperation === totalTimeEntriesPaid) {
+								result = $filter('translate')('operations.statuses.paid');
+							} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
+								result = $filter('translate')('operations.statuses.invoiced');
+							} else {
+								result = $filter('translate')('operations.statuses.invoicedMissingTimeEntries');
+							}
+						}
+						break;
+				}
+				$log.debug("generateStatus: Returning result " + result);
+				return result;
 			}
 
 		};

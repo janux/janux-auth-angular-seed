@@ -233,6 +233,18 @@
 	"operations": {
 		"title": "Operaciones",
 		"drivers": "Choferes",
+	    "status":"Status",
+	    "statuses" : {
+	        "upcoming":"Upcoming",
+	        "inProgress":"In progress",
+	        "completed": "Completed",
+	        "invoiced": "Invoiced",
+	        "invoicedMissingTimeEntries" : "Invoiced missing time entries",
+	        "paid":"Paid"
+	    },
+	    "errorMessages":{
+		    "cantUpdateDueInvoiceAssociation":"El registro de bitacora no puede ser cambiado de servicio o removido debido a que está asociado a una factura"
+	    },
 		"driversTimeLog": {
 			"title": "Bitácora de Choferes",
 			"staff": "Personal",
@@ -352,6 +364,7 @@
 			"duration": "Duracion",
 			"begin": "Inicio",
 			"end": "Fin",
+		    "status": "Estado",
 			"DRIVER": "Chofer fijo",
 			"GUARD": "Guardia",
 			"SPECIAL_OPS": "Especial"

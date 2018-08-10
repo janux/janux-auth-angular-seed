@@ -33,5 +33,5 @@ module.exports = {
 	VehicleService                  : VehicleService.create(Services.VehiclePersistenceService),
 	ResellerService                 : ResellerService.create(Services.ResellerPersistenceService),
 	RateMatrixService               : RateMatrixService.create(Services.RateMatrixService),
-	InvoiceService                  : InvoiceService.create(Services.InvoiceService)
+	InvoiceService                  : InvoiceService.create(Services.InvoiceService, Services.UserInvoiceService)
 };

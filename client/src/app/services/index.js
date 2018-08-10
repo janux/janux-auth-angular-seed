@@ -26,6 +26,12 @@ require('angular').module('appServices', [
 					// console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations);
 				});
+			}],
+			invoices : ['invoiceService', 'security', function (invoiceService, security) {
+				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
+					// console.log('Operations before mapping', operations);
+					return invoices;
+				});
 			}]
 		}
 	})

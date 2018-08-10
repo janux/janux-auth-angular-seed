@@ -173,11 +173,10 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 		function deleteConfirmed(rowsToDelete) {
 
-			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
-
 			var timeEntryIds = _.map(rowsToDelete, 'id');
 			timeEntryService.removeByIds(timeEntryIds).then(function () {
 				// infoDialog('The records were deleted correctly');
+				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
 		}
 
@@ -448,8 +447,10 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 
 					timeEntryService.update(timeEntryToUpdate).then(function () {
-						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
+						// $scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 						// infoDialog('Time entry successfully updated');
+					}).finally(function () {
+						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 					});
 				} else {
 					infoDialog('operations.dialogs.invalidOperationForAttendance');

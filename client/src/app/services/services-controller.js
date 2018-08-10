@@ -2,10 +2,11 @@
 
 var agGridComp = require('common/ag-grid-components');
 var _ = require('lodash');
+var moment = require('moment');
 
 module.exports =
-['$scope','$modal','$filter','$timeout','operations','$state','$rootScope','config','jnxStorage', function(
-  $scope , $modal , $filter , $timeout , operations , $state , $rootScope , config , jnxStorage){
+['$scope','$modal','$filter','$timeout','operations','invoices','$state','$rootScope','config','jnxStorage','operationService', function(
+  $scope , $modal , $filter , $timeout , operations , invoices , $state , $rootScope , config , jnxStorage,  operationService){
 
 	console.log('operations', operations);
 
@@ -111,18 +112,40 @@ module.exports =
 			width         : 80
 		},
 		{
-			headerName: $filter('translate')('services.list.begin'),
-			field     : 'start',
-			filter    : 'date',
-			width     : 100,
-			sort      : 'desc'
+			headerName    : $filter('translate')('services.list.begin'),
+			field         : 'start',
+			filter        : 'date',
+			width         : 100,
+			sort          : 'desc',
+			valueFormatter: function (params) {
+				if (_.isDate(params.data.start)) {
+					return moment(params.data.start).format(config.dateFormats.dateOnlyFormat);
+				} else {
+					return '';
+				}
+
+			}
 
 		},
 		{
-			headerName: $filter('translate')('services.list.end'),
-			field     : 'end',
-			filter    : 'date',
-			width     : 100
+			headerName    : $filter('translate')('services.list.end'),
+			field         : 'end',
+			filter        : 'date',
+			width         : 100,
+			valueFormatter: function (params) {
+				if (_.isDate(params.data.end)) {
+					return moment(params.data.end).format(config.dateFormats.dateOnlyFormat);
+				} else {
+					return '';
+				}
+			}
+		},
+		{
+			headerName: $filter('translate')('services.list.status'),
+			width     : 80,
+			valueGetter: function (params) {
+				return operationService.generateStatus(params.data, invoices);
+			}
 		},
 		{
 			headerName     : '',

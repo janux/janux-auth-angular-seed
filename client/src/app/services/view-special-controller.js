@@ -256,11 +256,12 @@ module.exports =
 	};
 
 	function deleteConfirmed(rowsToDelete) {
-		$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
+
 
 		var timeEntryIds = _.map(rowsToDelete, 'id');
 		timeEntryService.removeByIds(timeEntryIds).then(function () {
 			// infoDialog('The records were deleted correctly');
+			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 		});
 	}
 
@@ -487,6 +488,8 @@ module.exports =
 				} else {
 					// $scope.findTimeEntries($scope.periodFilterKey);
 					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
+
+					}).finally(function () {
 						findTimeEntries($scope.periodFilterKey);
 						// Given this service is called with an interface that also contains
 						// invoices. We have to refresh the invoices content.
@@ -498,8 +501,10 @@ module.exports =
 			} else {
 				// $scope.findTimeEntries($scope.periodFilterKey);
 				timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-					findTimeEntries($scope.periodFilterKey);
+					// findTimeEntries($scope.periodFilterKey);
 					// infoDialog('Time entry successfully updated');
+				}).finally(function () {
+					findTimeEntries($scope.periodFilterKey);
 				});
 			}
 		},

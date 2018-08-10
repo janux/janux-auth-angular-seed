@@ -205,10 +205,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		function deleteConfirmed(rowsToDelete) {
-			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
+
 
 			var timeEntryIds = _.map(rowsToDelete, 'id');
 			timeEntryService.removeByIds(timeEntryIds).then(function () {
+				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 				// infoDialog('The records were deleted correctly');
 			});
 		}
@@ -467,8 +468,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 
 				timeEntryService.update(timeEntryToUpdate).then(function () {
-					$scope.findTimeEntries($scope.periodFilterKey);
+					// $scope.findTimeEntries($scope.periodFilterKey);
 					// infoDialog('Time entry successfully updated');
+				}).finally(function () {
+					$scope.findTimeEntries($scope.periodFilterKey);
 				});
 			},
 			localeTextFunc           : function (key, defaultValue) {

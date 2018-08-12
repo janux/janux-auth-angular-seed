@@ -577,6 +577,9 @@ module.exports =
 						result = attribute.value[operation.id] && attribute.value[operation.id] > 0;
 						if (result) {
 							totalTimeEntriesInvoiced += attribute.value[operation.id];
+							if (invoice.isPaid === true) {
+								totalTimeEntriesPaid += attribute.value[operation.id];
+							}
 						}
 					}
 					return result;

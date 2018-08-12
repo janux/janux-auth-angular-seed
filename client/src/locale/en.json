@@ -416,6 +416,7 @@
 			"invoiceNumber" : "Invoice number",
 			"grandTotal" : "Total",
 			"invoiceDate" : "Date",
+		    "isPaid" : "Pagada",
 			"status" : "Status",
 		    "statuses": {
 				"inRevision" : "In revision",

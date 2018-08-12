@@ -13,6 +13,10 @@
 					md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
 						md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
 						md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+			.an-material.nopadding
+				md-input-container.full
+					md-checkbox(ng-model='invoice.isPaid' ng-disabled='!editModeInvoiceDetail || invoice.status!=="ended"')
+						| {{'services.invoice.isPaid' | translate}}
 
 
 //div

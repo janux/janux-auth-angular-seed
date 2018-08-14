@@ -517,7 +517,7 @@
 	},
 	"party": {
 		"person": {
-			"name": "Name",
+			"name": "First Name",
 			"middleName": "Middle name",
 			"lastName": "Last name",
 			"maternalName": "Maternal name",

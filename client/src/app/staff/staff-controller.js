@@ -94,16 +94,16 @@ module.exports = [
 		//
 		var columnDefs = [
 			{
-				headerName  : $filter('translate')('party.person.name'),
-				field       : 'staffDisplayFirstName',
+				headerName  : $filter('translate')('party.person.lastName'),
+				field       : 'staffDisplayLastName',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
 				sort        : 'asc',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName  : $filter('translate')('party.person.lastName'),
-				field       : 'staffDisplayLastName',
+				headerName  : $filter('translate')('party.person.name'),
+				field       : 'staffDisplayFirstName',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}

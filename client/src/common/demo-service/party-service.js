@@ -79,6 +79,7 @@ module.exports =
 						[id]
 					).then(function (resp) {
 						var contact = resp.data.result;
+						console.log('partyService findOne', contact);
 						contact = fromJSON(contact);
 						return contact;
 					});
@@ -224,6 +225,22 @@ module.exports =
 						var contact = resp.data.result;
 						contact = fromJSON(contact);
 						return contact;
+					});
+				},
+
+				/**
+				 *
+				 * @param staffId
+				 * @param selectedEmail
+				 * @param assignedRoles
+				 */
+				inviteToCreateAccount: function (id, selectedEmail, assignedRoles) {
+					return $http.jsonrpc(
+						'/rpc/2.0/partyService',
+						'inviteToCreateAccount',
+						[id, selectedEmail, assignedRoles]
+					).then(function (resp) {
+						return resp.data.result;
 					});
 				},
 

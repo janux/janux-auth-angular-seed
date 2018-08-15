@@ -124,8 +124,17 @@ module.exports = [
 			},
 			{
 				headerName  : $filter('translate')('party.person.area'),
-				field       : 'staffDisplayArea',
+				field       : 'jobDepartment',
 				editable    : false,
+				valueGetter : function (params) {
+					var result;
+					if (_.isNil(params.data.staff)) {
+						result = '';
+					} else {
+						result = params.data.staff.jobDepartment;
+					}
+					return result;
+				},
 				filter      : 'agTextColumnFilter',
 				width       : 150,
 				filterParams: {newRowsAction: 'keep'}

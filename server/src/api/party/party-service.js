@@ -6,20 +6,28 @@ var log4js                = require('log4js'),
     _                     = require('lodash'),
     Promise               = require('bluebird'),
     PartyServiceImplClass = require('janux-persist').PartyServiceImpl,
-    log                   = log4js.getLogger('PartyService');
+	PartyServiceDev 	  = require('./party-service.dev'),
+	PartyServiceProd 	  = require('./party-service.prod'),
+    log                   = log4js.getLogger('PartyService'),
+	express        		  = require('express'),
+	env 				  = express().settings.env;
 
 // variable to hold the singleton instance, if used in that manner
 var partyServiceServiceInstance = undefined;
 var partyServiceImpl = undefined;
+var commService = undefined;
 
-var createInstance = function (serviceReference) {
+var createInstance = function (serviceReference, commServiceReference) {
 	partyServiceImpl = serviceReference;
+	commService = commServiceReference;
 
-	function PartyService() {
+	var PartyServiceExt = (env === 'development') ? PartyServiceDev : PartyServiceProd;
 
+	function PartyService(commService) {
+		PartyServiceExt.call(this, commService);
 	}
 
-	PartyService.prototype = Object.create(null);
+	PartyService.prototype = Object.create(PartyServiceExt.prototype);
 	PartyService.prototype.constructor = PartyService;
 
 	function toJSONMany(records) {
@@ -158,14 +166,14 @@ var createInstance = function (serviceReference) {
 		return partyServiceImpl.remove(id).asCallback(callback);
 	};
 
-	return new PartyService();
+	return new PartyService(commService);
 };
 
 
-module.exports.create = function (PartyServiceImpl) {
+module.exports.create = function (PartyServiceImpl, CommService) {
 	// if the instance does not exist, create it
 	if (!_.isObject(partyServiceServiceInstance)) {
-		partyServiceServiceInstance = createInstance(PartyServiceImpl);
+		partyServiceServiceInstance = createInstance(PartyServiceImpl, CommService);
 	}
 	return partyServiceServiceInstance;
 };

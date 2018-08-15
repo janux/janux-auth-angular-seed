@@ -30,6 +30,14 @@ module.exports = [
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
+				headerName  : $filter('translate')('supplier.code'),
+				field       : 'code',
+				editable    : false,
+				width       : 200,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
+			},
+			{
 				headerName  : $filter('translate')('client.address'),
 				field       : 'supplierDisplayAddress',
 				editable    : false,

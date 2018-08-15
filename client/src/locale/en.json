@@ -112,6 +112,7 @@
 	},
 	"client": {
 		"name": "Business name",
+		"code": "Code Name",
 		"listTitle": "Clients",
 		"address": "Address",
 		"contact": "Contact",
@@ -190,6 +191,7 @@
 	},
     "supplier":{
 		"name": "Business name",
+		"code": "Code Name",
 		"listTitle": "Suppliers",
 		"address": "Address",
 		"contact": "Contact",

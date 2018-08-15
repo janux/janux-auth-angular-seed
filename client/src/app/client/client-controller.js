@@ -26,6 +26,14 @@ module.exports = [
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
+				headerName  : $filter('translate')('client.code'),
+				field       : 'code',
+				editable    : false,
+				width       : 200,
+				filter      : 'agTextColumnFilter',
+				filterParams: {newRowsAction: 'keep'}
+			},
+			{
 				headerName  : $filter('translate')('client.address'),
 				field       : 'clientDisplayAddress',
 				editable    : false,
@@ -64,13 +72,14 @@ module.exports = [
 				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
-			{
-				headerName  : $filter('translate')('client.reseller'),
-				field       : 'reseller',
-				editable    : false,
-				filter      : 'agTextColumnFilter',
-				filterParams: {newRowsAction: 'keep'}
-			},
+			// {
+			// 	headerName  : $filter('translate')('client.reseller'),
+			// 	field       : 'reseller',
+			// 	editable    : false,
+			// 	filter      : 'agTextColumnFilter',
+			// 	width       : 100,
+			// 	filterParams: {newRowsAction: 'keep'}
+			// },
 			{
 				headerName     : '',
 				field          : 'id',

@@ -53,7 +53,7 @@ require('angular').module('appStaff', [
 							if(o.party.contactMethods.phones[0].number===undefined){
 								phone= '';
 							}else{
-								phone= o.party.contactMethods.phones[0]._countryCode+' '+o.party.contactMethods.phones[0]._areaCode+' '+o.party.contactMethods.phones[0].number;
+								phone= o.party.phoneNumber().countryCode+' '+o.party.phoneNumber().areaCode+' '+o.party.phoneNumber().number;
 							}							
 						}else{
 							phone= '';

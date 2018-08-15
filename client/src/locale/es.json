@@ -109,7 +109,13 @@
 			"tabMenuSecond":"RECURSOS HUMANOS",
 			"tabMenuThird":"BITACORA NÓMINA"
 		},
-		"contractor":"Externo"
+		"contractor":"Externo",
+		"dialogs": {
+			"inviteTo": "Invitar al sistema a",
+			"inviteContact": "Contacto",
+			"inviteRoles": "Roles a asignar"
+
+		}
 	},
 	"client": {
 		"name": "Nombre del negocio",
@@ -528,7 +534,10 @@
 			"maternalName": "Apellido materno",
 			"job": "Puesto",
 			"type": "Tipo",
-		    "isExternal" : "Externo"
+		    "isExternal" : "Externo",
+			"dialogs": {
+				"noEmail": "Esta persona no tiene dirección de correo electrónico asociada"
+			}
 		},
 		"org": {
 			"name": "Nombre o razón social",

@@ -18,6 +18,7 @@ require('angular').module('demoService', [])
 .factory('invoiceService',require('./invoice-service'))
 .factory('jnxStorage',require('./storage-service.js'))
 .factory('nameQueryService', require('./name-query-service.js'))
+.factory('dialogService', require('./dialog-service.js'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

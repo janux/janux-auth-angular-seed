@@ -108,7 +108,13 @@
 			"tabMenuSecond":"Human Resources",
 			"tabMenuThird":"Roster Time Log"
 		},
-		"contractor":"Contractor"
+		"contractor":"Contractor",
+		"dialogs": {
+			"inviteTo": "Invite to",
+			"inviteContact": "Contact",
+			"inviteRoles": "Roles to assign"
+
+		}
 	},
 	"client": {
 		"name": "Business name",
@@ -527,7 +533,10 @@
 			"job": "Job Title",
 			"type": "Type",
 			"area": "Area",
-		    "isExternal" : "External contractor"
+		    "isExternal" : "External contractor",
+			"dialogs": {
+				"noEmail": "There is no registered email address for this person"
+			}
 		},
 		"org": {
 			"name": "Business name",

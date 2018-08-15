@@ -37,6 +37,7 @@ module.exports = {
 	editUsersCellRenderer : require('./usersedit-cell-renderer'),
 	contractorStaffCellRenderer : require('./staffcontractor-cell-renderer'),
 	checkBoxRowSelectionExpense: require('./check-box-row-selection-expense'),
+	usernameCellRenderer: require('./username-cell-renderer'),
 
 	// Custom filters
 	dateFilter          : require('./date-filter'),

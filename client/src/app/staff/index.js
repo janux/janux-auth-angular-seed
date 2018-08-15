@@ -47,11 +47,14 @@ require('angular').module('appStaff', [
 						var middle=(_.isNil(o.party.name.middle))?'':o.party.name.middle;
 						var phone = '';
 						var email = '';
-						var area=(_.isNil(o.party.area))?'':o.party.area;
 						var user=(_.isNil(o.party.user))?'':o.party.user;
 						
 						if(_.isArray(o.party.contactMethods.phones) &&  o.party.contactMethods.phones.length>0 ){
-							phone= o.party.contactMethods.phones[0].number;
+							if(o.party.contactMethods.phones[0].number===undefined){
+								phone= '';
+							}else{
+								phone= o.party.contactMethods.phones[0]._countryCode+' '+o.party.contactMethods.phones[0]._areaCode+' '+o.party.contactMethods.phones[0].number;
+							}							
 						}else{
 							phone= '';
 						}
@@ -66,7 +69,6 @@ require('angular').module('appStaff', [
 						o.party.staffDisplayLastName = last+' '+maternal;
 						o.party.staffDisplayPhone = phone;
 						o.party.staffDisplayEmail = email;
-						o.party.staffDisplayArea = area;
 						o.party.staffDisplayUser = user;
 						o.party.availableColumn = {staffId:o.party.id,isAvailable:o.party.isAvailable};
 						

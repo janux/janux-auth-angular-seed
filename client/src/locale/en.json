@@ -529,7 +529,8 @@
 		"org": {
 			"name": "Business name",
 			"rfc": "RFC",
-			"reseller": "Reseller"
+			"reseller": "Reseller",
+			"code": "Code Name"
 		},
 		"country": "Country",
 		"email": "Email",

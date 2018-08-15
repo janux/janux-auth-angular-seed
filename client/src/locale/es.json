@@ -530,7 +530,8 @@
 		"org": {
 			"name": "Nombre o razón social",
 			"rfc": "RFC",
-			"reseller": "Revendedor"
+			"reseller": "Revendedor",
+			"code": "Nombre Código"
 		},
 		"area": "Área",
 		"country": "País",

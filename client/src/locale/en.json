@@ -6,6 +6,7 @@
 		"cancel": "Cancel",
 		"save": "Save",
 		"clear": "Clear",
+		"continue": "Continue",
 		"today": "Today",
 		"email": "E-mail",
 		"login": "Log In",
@@ -15,7 +16,9 @@
 		"organizations": "Organizations",
 		"username": "User:",
 		"search": "Search",
-		"staff": "Staff"
+		"staff": "Staff",
+		"back": "Back",
+		"welcome": "Welcome"
 	},
 	"login": {
 		"msg": {
@@ -31,13 +34,20 @@
 			"serverErrorOutput": "Server Error: {{parm1}}"
 		},
 		"forgotPass": "Forgot Password",
-		"copy": "2017 Janux Media LTD. Copyright."
+		"copy": "2017 Janux Media LTD. Copyright.",
+		"requiredFields": "* Required fields",
+		"termsAndCond": "I accept terms and conditions",
+		"dialogs": {
+			"termsAndCondErr": "You must accept the terms and conditions before proceeding"
+		}
 	},
 	"user": {
 		"listTitle": "Users",
 		"user": "User",
+		"access": "Access",
 		"notifications": "Notifications",
 		"password": "Password",
+		"confirmPass": "Confirm password",
 		"contact": "Contact",
 		"editUser": "Edit user",
 		"createUser": "Create user",

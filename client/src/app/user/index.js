@@ -35,21 +35,11 @@ require('angular').module('appUsers', [
 					console.log('Users list', result);
 					var parties = _.map(result, function (o) {
 
-						var name = '';
-						var email = '';
-						var role = '';
-
-						name= o.contact.displayName;
-						email= o.contact.emails[0].address;		
-						role= o.roles;	
-						
-						o.usersDisplayName = name;
-						o.usersDisplayEmail = email;
-						o.usersDisplayRole = role;
-						
+						o.usersDisplayName = o.contact.displayName;
+						o.usersDisplayEmail = o.contact.emails[0].address;
+						o.usersDisplayRole = o.roles;
 
 						return o;
-
 					});
 					return parties;
 
@@ -93,5 +83,13 @@ require('angular').module('appUsers', [
 				});
 			}]
 		}
+	})
+	// Edit specific user
+	.state('register', {
+		url: '/register/{code}',
+		templateUrl: 'app/user/register.html',
+		authRequired: false,
+		controller: require('./register-controller.js'),
+		resolve: { }
 	});
 }]);

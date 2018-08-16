@@ -20,11 +20,11 @@
 				md-checkbox(aria-label="Principal" ng-model='email.principal')
 					| {{ 'party.first' | translate}}
 
-			div
+			div(ng-show='!register')
 				button.btn-trash(ng-click="removeMail($index)")
 					i.fa.fa-trash
 
-	.btn-row-form
+	.btn-row-form(ng-show='!register')
 		md-divider.divider-line-glarus
 		button.btn-plus(ng-click="addNewMail()")
 			i.fa.fa-plus-square

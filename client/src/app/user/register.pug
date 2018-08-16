@@ -1,0 +1,33 @@
+.glarus-bg
+	form.register(name='form', novalidate)
+
+		.login-body-glarus
+			img.logo(src='/img/logo_glarus_color.png')
+
+			.alert.alert-danger(ng-show='registerError') {{registerError}}
+
+			div(ng-show='currentNavItem=="userAccount"')
+				span.welcome {{ 'label.welcome' | translate | uppercase }}
+				user(data="user", section="user.access", register="true")
+				person-name(data="user.contact" section="user.contact")
+				.fieldset-flex
+					div
+						label {{ "login.requiredFields" | translate }}
+
+					.btn-login-cnt
+						button.btn.btn-ok(ng-click='goto("userContact")') {{ 'label.continue' | translate }}
+
+			div(ng-show='currentNavItem=="userContact"')
+				.user-contact
+					emails(data="user.contact", section="staff.mailsTitle", register="true")
+					phones(data="user.contact", section="staff.phonesTitle", register="true")
+					addresses(data="user.contact" section="staff.addressesTitle", register="true")
+				.fieldset-flex
+					div
+						md-checkbox(ng-model='termsAcepted') {{ 'login.termsAndCond' | translate }}
+						br
+						label {{ "login.requiredFields" | translate }}
+
+					.btn-login-cnt
+						button.btn.btn-ok(ng-click='goto("userAccount")') {{ 'label.back' | translate }}
+						button.btn.btn-ok(ng-click='register()') {{ 'label.ok' | translate }}

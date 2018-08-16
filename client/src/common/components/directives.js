@@ -28,6 +28,8 @@ angular.module('commonComponents', [])
 	.directive('user', function () {
 		var userComponentScope = scopeDefinition;
 		userComponentScope.password = "<";
+		userComponentScope.register = "<";
+
 		return {
 			scope      : scopeDefinition,
 			restrict   : 'E',
@@ -95,8 +97,11 @@ angular.module('commonComponents', [])
 	})
 
 	.directive('phones', function () {
+		var customComponentScope = scopeDefinition;
+		customComponentScope.register = "<";
+
 		return {
-			scope      : scopeDefinition,
+			scope      : customComponentScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/phones.html',
 			controller : function ($scope) {
@@ -113,8 +118,11 @@ angular.module('commonComponents', [])
 		};
 	})
 	.directive('emails', function () {
+		var customComponentScope = scopeDefinition;
+		customComponentScope.register = "<";
+
 		return {
-			scope      : scopeDefinition,
+			scope      : customComponentScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/emails.html',
 			controller : function ($scope) {
@@ -131,8 +139,11 @@ angular.module('commonComponents', [])
 		};
 	})
 	.directive('addresses', function () {
+		var customComponentScope = scopeDefinition;
+		customComponentScope.register = "<";
+
 		return {
-			scope      : scopeDefinition,
+			scope      : customComponentScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/addresses.html',
 			controller : function ($scope) {

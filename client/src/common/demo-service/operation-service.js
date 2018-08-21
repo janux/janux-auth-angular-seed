@@ -486,6 +486,7 @@ module.exports =
 
 						result.push({
 							client       : operation.client.name,
+							code         : operation.client.code,
 							id           : timeEntry.id,
 							operation    : operation,
 							staff        : staff,
@@ -531,6 +532,7 @@ module.exports =
 						type      : operation.type,
 						name      : operation.name,
 						client    : operation.client.name,
+						code      : operation.client.code,
 						attributes: operation.attributes,
 						assigned  : assigned,
 						duration  : duration,

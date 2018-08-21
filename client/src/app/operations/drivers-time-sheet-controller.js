@@ -278,11 +278,20 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			},
 			{
 				headerName  : $filter('translate')('operations.driversTimeLog.client'),
-				field       : 'client',
+				field       : 'code',
 				editable    : true,
 				cellEditor  : agGridComp.clientCellUpdater,
 				filter      : 'agTextColumnFilter',
-				filterParams: {newRowsAction: 'keep'}
+				filterParams: {newRowsAction: 'keep'},
+				valueGetter : function (params) {
+					var result;
+					if (_.isNil(params.data.code)) {
+						result = params.data.client;
+					} else {
+						result = params.data.code;
+					}
+					return result;
+				}
 			},
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.begin'),

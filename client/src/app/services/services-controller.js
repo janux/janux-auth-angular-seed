@@ -96,8 +96,17 @@ module.exports =
 		},
 		{
 			headerName: $filter('translate')('services.list.client'),
-			field     : 'client',
-			width     : 100
+			field     : 'code',
+			width     : 100,
+			valueGetter : function (params) {
+				var result;
+				if (_.isNil(params.data.code)) {
+					result = params.data.client;
+				} else {
+					result = params.data.code;
+				}
+				return result;
+			}
 		},
 		{
 			headerName: $filter('translate')('services.list.assigned'),

@@ -155,11 +155,20 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 			},
 			{
 				headerName  : $filter('translate')('operations.specialsTimeLog.client'),
-				field       : 'client',
+				field       : 'code',
 				editable    : true,
 				cellEditor  : agGridComp.clientCellUpdater,
 				filter      : 'agTextColumnFilter',
-				filterParams: {newRowsAction: 'keep'}
+				filterParams: {newRowsAction: 'keep'},
+				valueGetter : function (params) {
+					var result;
+					if (_.isNil(params.data.code)) {
+						result = params.data.client;
+					} else {
+						result = params.data.code;
+					}
+					return result;
+				}
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),

@@ -112,7 +112,7 @@
 	},
 	"client": {
 		"name": "Business name",
-		"code": "Code Name",
+		"code": "Code",
 		"listTitle": "Clients",
 		"address": "Address",
 		"contact": "Contact",
@@ -191,7 +191,7 @@
 	},
     "supplier":{
 		"name": "Business name",
-		"code": "Code Name",
+		"code": "Code",
 		"listTitle": "Suppliers",
 		"address": "Address",
 		"contact": "Contact",
@@ -200,8 +200,8 @@
 		"cellphone": "Cellphone",
 		"reseller": "Reseller",
 		"edit": "Edit",
-		"createClient": "Create client",
-		"editClient": "Edit client",
+		"createSupplier": "Create supplier",
+		"editClient": "Edit supplier",
 		"Organization":"Organization",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
@@ -360,6 +360,7 @@
 			"type":"Type",
 			"name":"Name",
 			"client":"Client",
+			"code":"Code",
 			"assigned":"Assigned personal",
 			"duration": "Duration",
 			"begin": "Begin",
@@ -532,7 +533,7 @@
 			"name": "Business name",
 			"rfc": "RFC",
 			"reseller": "Reseller",
-			"code": "Code Name"
+			"code": "Code"
 		},
 		"country": "Country",
 		"email": "Email",

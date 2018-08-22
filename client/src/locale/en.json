@@ -6,6 +6,7 @@
 		"cancel": "Cancel",
 		"save": "Save",
 		"clear": "Clear",
+		"continue": "Continue",
 		"today": "Today",
 		"email": "E-mail",
 		"login": "Log In",
@@ -15,7 +16,9 @@
 		"organizations": "Organizations",
 		"username": "User:",
 		"search": "Search",
-		"staff": "Staff"
+		"staff": "Staff",
+		"back": "Back",
+		"welcome": "Welcome"
 	},
 	"login": {
 		"msg": {
@@ -31,13 +34,20 @@
 			"serverErrorOutput": "Server Error: {{parm1}}"
 		},
 		"forgotPass": "Forgot Password",
-		"copy": "2017 Janux Media LTD. Copyright."
+		"copy": "2017 Janux Media LTD. Copyright.",
+		"requiredFields": "* Required fields",
+		"termsAndCond": "I accept terms and conditions",
+		"dialogs": {
+			"termsAndCondErr": "You must accept the terms and conditions before proceeding"
+		}
 	},
 	"user": {
 		"listTitle": "Users",
 		"user": "User",
+		"access": "Access",
 		"notifications": "Notifications",
 		"password": "Password",
+		"confirmPass": "Confirm password",
 		"contact": "Contact",
 		"editUser": "Edit user",
 		"createUser": "Create user",
@@ -108,7 +118,13 @@
 			"tabMenuSecond":"Human Resources",
 			"tabMenuThird":"Roster Time Log"
 		},
-		"contractor":"Contractor"
+		"contractor":"Contractor",
+		"dialogs": {
+			"inviteTo": "Invite to",
+			"inviteContact": "Contact",
+			"inviteRoles": "Roles to assign",
+			"noRoleSel": "You must select at least one role"
+		}
 	},
 	"client": {
 		"name": "Business name",
@@ -528,7 +544,10 @@
 			"job": "Job Title",
 			"type": "Type",
 			"area": "Area",
-		    "isExternal" : "External contractor"
+		    "isExternal" : "External contractor",
+			"dialogs": {
+				"noEmail": "There is no registered email address for this person"
+			}
 		},
 		"org": {
 			"name": "Business name",
@@ -596,5 +615,8 @@
 			"FAX": "Fax",
 			"OTHER": "Other"
 		}
+	},
+	"dialogs": {
+		"accessDenied": "You do not have enough access privileges for this operation"
 	}
 }

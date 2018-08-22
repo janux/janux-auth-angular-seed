@@ -33,12 +33,12 @@
 			div
 				md-checkbox.md-primary(aria-label="WSP" ng-model='phone.wsp')
 					| {{ 'party.wsp' | translate}}
-			div
+			div(ng-show='!register')
 				button.btn-trash(ng-click="removePhone($index)")
 					i.fa.fa-trash
 
 
-	.btn-row-form
+	.btn-row-form(ng-show='!register')
 		md-divider.divider-line-glarus
 		button.btn-plus(ng-click="addNewPhone()")
 			i.fa.fa-plus-square

@@ -7,7 +7,9 @@ var UserPersistence                      = require('janux-persist').UserService,
     GroupService                         = require('janux-persist').GroupServiceImpl,
     PartyGroupServiceImpl                = require('janux-persist').PartyGroupServiceImpl,
     ResellerServiceImpl                  = require('janux-persist').ResellerServiceImpl,
-    OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
+	// CommServiceImpl					 = require('janux-persist').CommService,
+    CommServiceImpl						 = { createInstance: function () {} },
+	OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
     ResourceServiceImpl                  = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl                 = require('glarus-services').TimeEntryServiceImpl,
     TimeEntryReportServiceImpl           = require('glarus-services').TimeEntryReportService,
@@ -36,6 +38,7 @@ var config                              = require('config'),
     GroupDao                            = DAOs[appContext.dao.groupDao],
     GroupAttributeValueDao              = DAOs[appContext.dao.groupAttributeValueDao],
     PartyPersistenceService             = new PartyServiceImpl(PartyDao, StaffDao),
+	CommService 						= CommServiceImpl.createInstance(),
 
     // Begin glarus services DAOs.
     VehicleDao                          = DAOs[appContext.dao.vehicleDao],
@@ -123,5 +126,6 @@ module.exports = {
 	RateMatrixService               : RateMatrixService,
 	InvoiceService                  : InvoiceService,
 	InvoiceTimeEntryService         : InvoiceTimeEntryService,
-	UserInvoiceService              : UserInvoiceService
+	UserInvoiceService              : UserInvoiceService,
+	CommService						: CommService
 };

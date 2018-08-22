@@ -2,7 +2,7 @@
 
 
 var Services           = require('./services'),
-    UserService        = require('./user-service'),
+    UserService        = require('./user/user-service'),
     AuthContextService = require('./auth-context-service'),
     RoleService        = require('./role-service'),
     OperationService   = require('./operation-service'),
@@ -17,7 +17,7 @@ var Services           = require('./services'),
 
 
 module.exports = {
-	UserService                     : UserService.create(Services.GlarusUserPersistenceService),
+	UserService                     : UserService.create(Services.GlarusUserPersistenceService, Services.CommService),
 	AuthContextService              : AuthContextService.create(Services.AuthContextPersistService, Services.AuthContextGroupPersistService),
 	RoleService                     : RoleService.create(Services.RolePersistService),
 	UserPersistenceService          : Services.UserPersistenceService,

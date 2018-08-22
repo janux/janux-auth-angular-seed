@@ -152,6 +152,7 @@ module.exports = [
 					}
 					return result;
 				},
+				cellRenderer: agGridComp.usernameCellRenderer,
 				filter      : 'agTextColumnFilter',
 				width       : 150,
 				filterParams: {newRowsAction: 'keep'}

@@ -20,7 +20,7 @@
 			div
 				md-checkbox.md-primary(aria-label="Fiscal" ng-model="address.fiscal")
 					| {{ 'party.fiscal' | translate}}
-			div
+			div(ng-show='!register')
 				button.btn-trash(ng-click="removeAddress($index)")
 					i.fa.fa-trash
 
@@ -49,7 +49,7 @@
 					label {{ 'party.zip' | translate}}
 					input(ng-model='address.postalCode')
 
-	.btn-row-form
+	.btn-row-form(ng-show='!register')
 		md-divider.divider-line-glarus
 		button.btn-plus(ng-click="addNewAddress()")
 			i.fa.fa-plus-square

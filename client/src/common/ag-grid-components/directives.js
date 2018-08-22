@@ -342,6 +342,81 @@ angular.module('agGridDirectives',[])
 		}]
 	}
 }])
+.directive('agGridStaffInvite', [ function() {
+	return {
+		restrict: 'E',
+		scope: true,
+		templateUrl: 'common/ag-grid-components/templates/staff-invite.html',
+		controller: ['$rootScope','$scope','$attrs','$mdDialog','roleService','partyService','dialogService','userService',
+			function( $rootScope , $scope , $attrs , $mdDialog , roleService , partyService , dialogService , userService) {
+			$scope.staffId = $attrs.staffId;
+
+			var staff = {};
+			var emails = [];
+
+			$scope.staffInviteDialog = function () {
+				roleService.findAll().then(function (roles) {
+					partyService.findOne($scope.staffId).then(function (respStaff) {
+						staff = respStaff;
+						emails = respStaff.contactMethods.emails;
+						// console.log('staff contact emails',$scope.staffId, emails);
+
+						$scope.roles = _.chain(roles).sortBy('sortOrder').mapValues(function (role) {
+							role.selected = false;
+							return role;
+						}).value();
+
+						if (!$rootScope.userRole.isAlmighty) {
+							dialogService.info('dialogs.accessDenied');
+							return;
+						}
+
+						if ((!_.isNil(emails) && emails.length > 0) && (!_.isNil(emails[0].address) && emails[0].address !== '')) {
+							$scope.selectedEmail = emails[0].address;
+							$scope.emails = emails;
+
+							$mdDialog.show({
+								clickOutsideToClose: true,
+								templateUrl        : 'common/components/templates/staff-invite-dialog.html',
+								scope              : $scope,
+								preserveScope      : true,
+								controller         : ['$scope', '$mdDialog', 'userService',
+									function ($scope, $mdDialog, userService) {
+
+									$scope.inviteStaff = function () {
+										// Get array with selected roles
+										var selectedRoles = _.reduce($scope.roles, function (result, role) {
+											if (role.selected) {
+												result.push(role.name);
+											}
+											return result;
+										}, []);
+
+										if (selectedRoles.length > 0) {
+											console.log('selected roles', selectedRoles);
+											userService.inviteToCreateAccount(staff.id,  $scope.selectedEmail, selectedRoles);
+											$mdDialog.hide();
+										} else {
+											dialogService.info('staff.dialogs.noRoleSel');
+										}
+									};
+
+									$scope.closeStaffInviteDialog = function () {
+										$mdDialog.hide();
+									};
+								}]
+							});
+						} else {
+							dialogService.info('party.person.dialogs.noEmail');
+						}
+					});
+
+					// console.log('roles', $scope.roles);
+				});
+			};
+		}]
+	}
+}])
 .directive('agGridUsersEdit', [ function() {
 	return {
 		restrict: 'E',

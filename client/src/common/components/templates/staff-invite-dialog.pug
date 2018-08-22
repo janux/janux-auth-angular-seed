@@ -1,0 +1,16 @@
+md-dialog.account-invitation
+	md-dialog-content
+		.md-dialog-content
+			h3 {{ 'staff.dialogs.inviteTo' | translate }}:
+			md-content
+				label {{ 'staff.dialogs.inviteContact' | translate }}:
+					md-select(aria-label='type' ng-model='selectedEmail')
+						md-option(ng-value='email.address', ng-repeat='email in emails') {{ email.address }}
+
+				p: label {{ 'staff.dialogs.inviteRoles' | translate }}:
+				div(flex='100' ng-repeat='role in roles')
+					md-checkbox(ng-checked='false' ng-model='role.selected') {{ role.name }}
+
+	md-dialog-actions
+		button.btn.btn-ok(ng-click='inviteStaff()') {{ 'label.ok' | translate }}
+		button.btn.btn-cancel(ng-click='closeStaffInviteDialog()') {{ 'label.cancel' | translate }}

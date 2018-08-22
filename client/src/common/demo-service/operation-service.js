@@ -527,17 +527,18 @@ module.exports =
 					}
 
 					return {
-						id        : operation.id,
-						view      : {id: operation.id, type: operation.type},
-						type      : operation.type,
-						name      : operation.name,
-						client    : operation.client.name,
-						code      : operation.client.code,
-						attributes: operation.attributes,
-						assigned  : assigned,
-						duration  : duration,
-						start     : operation.start,
-						end       : operation.end
+						id          : operation.id,
+						view        : {id: operation.id, type: operation.type},
+						type        : operation.type,
+						name        : operation.name,
+						client      : operation.client.name,
+						code        : operation.client.code,
+						attributes  : operation.attributes,
+						assigned    : assigned,
+						duration    : duration,
+						start       : operation.start,
+						end         : operation.end,
+						description : operation.description
 					}
 				});
 			},

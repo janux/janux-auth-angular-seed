@@ -3,26 +3,36 @@
 var log4js           = require('log4js'),
     _                = require('underscore'),
     PartyServiceImpl = require('janux-persist').PartyServiceImpl,
-    bluebird         = require('bluebird');
-log = log4js.getLogger('UserService');
+	UserServiceDev 	 = require('./user-service.ext.dev'),
+	UserServiceProd  = require('./user-service.ext.prod'),
+	// env 		     = express().settings.env;
+	env 			 = 'development',
+    bluebird         = require('bluebird'),
+	log = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
 var userServicePersistence = undefined;
+var commService = undefined;
+
 //
 // Example of user service
 //
 
-var createInstance = function (serviceReference) {
+var createInstance = function (serviceReference, commServiceReference) {
 
 	userServicePersistence = serviceReference;
+	commService = commServiceReference;
+
+	// TODO: Move method logic to janux-persist
+	var UserServiceExt = (env === 'development') ? UserServiceDev : UserServiceProd;
 
 	// Constructor
-	function UserService() {
-		//userDAO.call(this);
+	function UserService(commService) {
+		UserServiceExt.call(this, commService);
 	}
 
-	UserService.prototype = Object.create(null);
+	UserService.prototype = Object.create(UserServiceExt.prototype);
 	UserService.prototype.constructor = UserService;
 
 	//
@@ -99,14 +109,14 @@ var createInstance = function (serviceReference) {
 		return userServicePersistence.deleteUserByUserId(userId).asCallback(callback);
 	};
 
-	return new UserService();
+	return new UserService(commService);
 };
 
-module.exports.create = function (UserDAO) {
+module.exports.create = function (UserDAO, CommService) {
 	// if the instance does not exist, create it
 	if (!_.isObject(userServiceInstance)) {
 		// userServiceInstance = new UserService(aDAO);
-		userServiceInstance = createInstance(UserDAO);
+		userServiceInstance = createInstance(UserDAO, CommService);
 	}
 	return userServiceInstance;
 };

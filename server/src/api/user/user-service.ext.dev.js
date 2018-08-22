@@ -3,13 +3,13 @@
  * Created by hielo on 2018-08-10
  */
 var log4js                = require('log4js'),
-	logInvitations        = log4js.getLogger('StaffInvitations'),
-	log                   = log4js.getLogger('PartyService'),
+	logInvitations        = log4js.getLogger('UserInvitations'),
+	log                   = log4js.getLogger('UserService'),
 	Promise               = require('bluebird'),
 	pug 				  = require('pug'),
-	randomstring = require("randomstring");
+	randomstring 		  = require("randomstring");
 
-function PartyService (commServiceRef) {
+function UserService (commServiceRef) {
 	this.commService = commServiceRef;
 }
 
@@ -19,7 +19,7 @@ function PartyService (commServiceRef) {
  * @param selectedEmail
  * @param assignedRoles
  */
-PartyService.prototype.inviteToCreateAccount = function (id, selectedEmail, assignedRoles, callback) {
+UserService.prototype.inviteToCreateAccount = function (id, selectedEmail, assignedRoles, callback) {
 	log.debug("Call to inviteToCreateAccount with id %j and email %j", id, selectedEmail);
 
 	var params = {
@@ -31,7 +31,7 @@ PartyService.prototype.inviteToCreateAccount = function (id, selectedEmail, assi
 		})
 	};
 
-	var myTemplate = pug.compileFile('../server/src/templates/staff-invitation.pug');
+	var myTemplate = pug.compileFile('../server/src/templates/user-invitation.pug');
 	var out = myTemplate(params);
 
 	logInvitations.debug('Invitation for a staff member to create their account ' + out);
@@ -39,4 +39,4 @@ PartyService.prototype.inviteToCreateAccount = function (id, selectedEmail, assi
 	Promise.resolve(params).asCallback(callback);
 };
 
-module.exports = PartyService;
+module.exports = UserService;

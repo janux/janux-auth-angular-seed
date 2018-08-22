@@ -122,8 +122,8 @@
 		"dialogs": {
 			"inviteTo": "Invite to",
 			"inviteContact": "Contact",
-			"inviteRoles": "Roles to assign"
-
+			"inviteRoles": "Roles to assign",
+			"noRoleSel": "You must select at least one role"
 		}
 	},
 	"client": {
@@ -614,5 +614,8 @@
 			"FAX": "Fax",
 			"OTHER": "Other"
 		}
+	},
+	"dialogs": {
+		"accessDenied": "You do not have enough access privileges for this operation"
 	}
 }

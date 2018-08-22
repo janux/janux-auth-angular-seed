@@ -228,22 +228,6 @@ module.exports =
 					});
 				},
 
-				/**
-				 *
-				 * @param staffId
-				 * @param selectedEmail
-				 * @param assignedRoles
-				 */
-				inviteToCreateAccount: function (id, selectedEmail, assignedRoles) {
-					return $http.jsonrpc(
-						'/rpc/2.0/partyService',
-						'inviteToCreateAccount',
-						[id, selectedEmail, assignedRoles]
-					).then(function (resp) {
-						return resp.data.result;
-					});
-				},
-
 				fromJSON: function (object) {
 					return fromJSON(object);
 				},

@@ -370,7 +370,8 @@
 		    "status": "Estado",
 			"DRIVER": "Chofer fijo",
 			"GUARD": "Guardia",
-			"SPECIAL_OPS": "Especial"
+			"SPECIAL_OPS": "Especial",
+			"details": "Detalles"
 		},
 		"tabs": {
 			"summary": "Resumen",

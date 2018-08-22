@@ -299,7 +299,7 @@ module.exports =
 		{
 			headerName  : $filter('translate')('operations.specialsTimeLog.staff'),
 			field       : 'staff',
-			editable    : true,
+			editable    : false,
 			// cellRenderer: agGridComp.staffCellRenderer,
 			valueGetter : function (params) {
 				var res = params.data.staff.resource;
@@ -312,7 +312,7 @@ module.exports =
 		{
 			headerName    : $filter('translate')('operations.specialsTimeLog.function'),
 			field         : 'functionValue',
-			editable      : true,
+			editable      : false,
 			cellEditor    : agGridComp.specialOpsFunctionCellEditor,
 			filter        : 'agTextColumnFilter',
 			filterParams  : {newRowsAction: 'keep'},
@@ -348,7 +348,7 @@ module.exports =
 		{
 			headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 			field         : 'begin',
-			editable      : true,
+			editable      : false,
 			filter        : 'date',
 			filterParams  : {
 				newRowsAction   : 'keep',
@@ -366,7 +366,7 @@ module.exports =
 		{
 			headerName    : $filter('translate')('operations.specialsTimeLog.end'),
 			field         : 'end',
-			editable      : true,
+			editable      : false,
 			filter        : 'date',
 			filterParams  : {
 				newRowsAction: 'keep',
@@ -381,21 +381,19 @@ module.exports =
 		{
 			headerName: $filter('translate')('operations.specialsTimeLog.duration'),
 			field     : 'duration',
-			editable  : true,
+			editable  : false,
 			cellEditor: agGridComp.durationCellUpdater,
 			width     : 95
 		},
 		{
-			headerName             : '',
-			headerCheckboxSelection: true,
-			// headerCheckboxSelectionFilteredOnly: true,
-			// checkboxSelection: true,
-			cellRenderer           : agGridComp.checkBoxRowSelection,
-			cellEditor             : agGridComp.rowActions,
-			// headerComponent: agGridComp.deleteRowsHeaderComponent,
-			editable               : true,
-			field                  : 'selected',	// field needed to avoid ag-grid warning
-			width                  : 45
+			headerName    : $filter('translate')('operations.specialsTimeLog.comment'),
+			field         : 'comment',
+			editable      : false,
+			cellEditor    : agGridComp.commentCellEditor,
+			cellStyle     : {
+				'white-space': 'normal',
+				'padding-top': '0'
+			}
 		}
 	];
 
@@ -412,7 +410,6 @@ module.exports =
 		columnDefs               : columnDefs,
 		rowData                  : [],
 		enableFilter             : true,
-		editType                 : 'fullRow',
 		angularCompileRows       : true,
 		enableColResize          : true,
 		suppressRowClickSelection: true,
@@ -437,6 +434,10 @@ module.exports =
 				$scope.gridOptions.api.setFilterModel(filterModel);
 				$scope.gridOptions.onFilterChanged();
 			}
+		},
+		getRowHeight: function(rowObj) {
+		    // assuming 50 characters per line, working how how many lines we need
+		    return 18 * (Math.floor(rowObj.data.comment.length / 15) + 1);
 		},
 		onRowEditingStarted      : function (rowObj) {
 			// Nothing to do yet

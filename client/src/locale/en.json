@@ -368,7 +368,8 @@
 		     "status": "Status",
 			"DRIVER": "Fixed driver",
 			"GUARD": "Guard",
-			"SPECIAL_OPS": "Special"
+			"SPECIAL_OPS": "Special",
+			"details": "Details"
 		},
 		"tabs": {
 			"summary": "Summary",

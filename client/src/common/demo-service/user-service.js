@@ -134,7 +134,24 @@ function( $q ,  $http, partyService, dateUtilService){
 			).then(function(resp) {
 				return resp.data.result;
 			});
-		}
+		},
+
+
+		/**
+		 *
+		 * @param contactId
+		 * @param selectedEmail
+		 * @param assignedRoles
+		 */
+		inviteToCreateAccount: function (id, selectedEmail, assignedRoles) {
+			return $http.jsonrpc(
+				'/rpc/2.0/users',
+				'inviteToCreateAccount',
+				[id, selectedEmail, assignedRoles]
+			).then(function (resp) {
+				return resp.data.result;
+			});
+		},
 	};
 	return service;
 }];

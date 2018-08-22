@@ -123,8 +123,8 @@
 		"dialogs": {
 			"inviteTo": "Invitar al sistema a",
 			"inviteContact": "Contacto",
-			"inviteRoles": "Roles a asignar"
-
+			"inviteRoles": "Roles a asignar",
+			"noRoleSel": "Debe seleccionar al menos un rol"
 		}
 	},
 	"client": {
@@ -616,5 +616,8 @@
 			"FAX": "Fax",
 			"OTHER": "Otro"
 		}
+	},
+	"dialogs": {
+		"accessDenied": "No tiene suficientes permisos para realizar esta operación"
 	}
 }

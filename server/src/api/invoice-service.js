@@ -56,6 +56,10 @@ var createInstance = function (invoiceServiceReference, userInvoiceServiceRefere
 		return invoiceServiceReferenceInstance.insertInvoiceItem(invoiceNumber, object).asCallback(callback);
 	};
 
+	InvoiceService.prototype.insertInvoiceItemAllTimeEntries = function (invoiceNumber, invoiceItemName, idOperation, callback) {
+		return invoiceServiceReferenceInstance.insertInvoiceItemAllTimeEntries(invoiceNumber, invoiceItemName, idOperation).asCallback(callback);
+	};
+
 	InvoiceService.prototype.insertExpense = function (invoiceNumber, invoiceItemName, expense, callback) {
 		const object = InvoiceServiceImpl.fromJSONExpense(expense);
 		return invoiceServiceReferenceInstance.insertExpense(invoiceNumber, invoiceItemName, object).asCallback(callback);

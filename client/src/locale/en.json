@@ -452,6 +452,7 @@
 			"invoiceDate" : "Date",
 		    "isPaid" : "Pagada",
 			"status" : "Status",
+		    "insertManual":"Insert invoice already paid",
 		    "statuses": {
 				"inRevision" : "In revision",
 			    "ended": "Ended"

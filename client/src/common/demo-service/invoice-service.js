@@ -193,6 +193,16 @@ module.exports =
 				});
 			},
 
+			insertInvoiceItemAllTimeEntries: function (invoiceNumber, invoiceName, idOperation) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'insertInvoiceItemAllTimeEntries',
+					[invoiceNumber, invoiceName, idOperation]
+				).then(function (resp) {
+					return fromJSONItemTimeEntry(resp.data.result);
+				});
+			},
+
 			updateInvoiceItemTimeEntry: function (invoiceItemTE) {
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',

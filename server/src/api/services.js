@@ -7,9 +7,12 @@ var UserPersistence                      = require('janux-persist').UserService,
     GroupService                         = require('janux-persist').GroupServiceImpl,
     PartyGroupServiceImpl                = require('janux-persist').PartyGroupServiceImpl,
     ResellerServiceImpl                  = require('janux-persist').ResellerServiceImpl,
-	// CommServiceImpl					 = require('janux-persist').CommService,
-    CommServiceImpl						 = { createInstance: function () {} },
-	OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
+    // CommServiceImpl					 = require('janux-persist').CommService,
+    CommServiceImpl                      = {
+	    createInstance: function () {
+	    }
+    },
+    OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
     ResourceServiceImpl                  = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl                 = require('glarus-services').TimeEntryServiceImpl,
     TimeEntryReportServiceImpl           = require('glarus-services').TimeEntryReportService,
@@ -38,7 +41,7 @@ var config                              = require('config'),
     GroupDao                            = DAOs[appContext.dao.groupDao],
     GroupAttributeValueDao              = DAOs[appContext.dao.groupAttributeValueDao],
     PartyPersistenceService             = new PartyServiceImpl(PartyDao, StaffDao),
-	CommService 						= CommServiceImpl.createInstance(),
+    CommService                         = CommServiceImpl.createInstance(),
 
     // Begin glarus services DAOs.
     VehicleDao                          = DAOs[appContext.dao.vehicleDao],
@@ -56,6 +59,7 @@ var config                              = require('config'),
     RateDao                             = DAOs[appContext.dao.rateDao],
     RateMatrixDao                       = DAOs[appContext.dao.rateMatrixDao],
     InvoiceDao                          = DAOs[appContext.dao.invoiceDao],
+    InvoiceOperationDao                 = DAOs[appContext.dao.invoiceOperationDao],
     InvoiceItemDao                      = DAOs[appContext.dao.invoiceItemDao],
     ExpenseDao                          = DAOs[appContext.dao.expenseDao],
     InvoiceItemTEDao                    = DAOs[appContext.dao.invoiceItemTE],
@@ -99,7 +103,7 @@ var config                              = require('config'),
     TimeEntryReportGuardService         = new TimeEntryReportGuardServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportSpecialOpsService    = new TimeEntryReportSpecialOpsServiceImpl(OperationPersistService, TimeEntryPersistService, RateMatrixService, GlarusUserPersistenceService),
     TimeEntryReportAttendanceService    = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
-    InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceItemTEDao, PartyPersistenceService, TimeEntryDao, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence),
+    InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceOperationDao, InvoiceItemTEDao, PartyPersistenceService, TimeEntryDao, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence),
     InvoiceTimeEntryService             = new InvoiceTimeEntryServiceImpl(InvoiceItemTEDao, InvoiceItemDao, InvoiceDao, TimeEntryDao),
     UserInvoiceService                  = new UserInvoiceServiceImpl(GlarusUserPersistenceService, InvoiceService);
 
@@ -127,5 +131,5 @@ module.exports = {
 	InvoiceService                  : InvoiceService,
 	InvoiceTimeEntryService         : InvoiceTimeEntryService,
 	UserInvoiceService              : UserInvoiceService,
-	CommService						: CommService
+	CommService                     : CommService
 };

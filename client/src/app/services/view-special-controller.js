@@ -394,6 +394,18 @@ module.exports =
 				'white-space': 'normal',
 				'padding-top': '0'
 			}
+		},
+		{
+			headerName             : '',
+			headerCheckboxSelection: true,
+			// headerCheckboxSelectionFilteredOnly: true,
+			// checkboxSelection: true,
+			cellRenderer           : agGridComp.checkBoxRowSelection,
+			cellEditor             : agGridComp.rowActions,
+			// headerComponent: agGridComp.deleteRowsHeaderComponent,
+			editable               : true,
+			field                  : 'selected',	// field needed to avoid ag-grid warning
+			width                  : 45
 		}
 	];
 

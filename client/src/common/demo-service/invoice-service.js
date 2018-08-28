@@ -6,7 +6,7 @@ var big = require('big.js');
 
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', function ($q, $http, partyService, timeEntryService, dateUtilService) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService) {
 
 		function fromJSON(object) {
 			const result = _.clone(object);
@@ -19,6 +19,7 @@ module.exports =
 			result.grandTotal = _.isNil(object.grandTotal) ? undefined : Number(object.grandTotal);
 			result.invoiceDate = dateUtilService.stringToDate(object.invoiceDate);
 			result.items = _.isNil(object.items) ? [] : _.map(result.items, fromJSONItem);
+			result.defaultOperation = operationService.fromJSON(result.defaultOperation);
 			return result;
 		}
 
@@ -50,6 +51,7 @@ module.exports =
 			const result = _.clone(object);
 			result.client = partyService.toJSON(object.client);
 			result.items = _.map(object.items, toJSONItem);
+			result.defaultOperation = operationService.toJSON(object.defaultOperation);
 			return result;
 		}
 
@@ -148,6 +150,16 @@ module.exports =
 					'/rpc/2.0/invoice',
 					'insert',
 					[toJSON(invoice)]
+				).then(function (resp) {
+					return fromJSON(resp.data.result);
+				});
+			},
+
+			insertPaid: function (invoice, invoiceItem) {
+				return $http.jsonrpc(
+					'/rpc/2.0/invoice',
+					'insertPaid',
+					[toJSON(invoice), toJSONItem(invoiceItem)]
 				).then(function (resp) {
 					return fromJSON(resp.data.result);
 				});

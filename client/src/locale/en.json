@@ -325,7 +325,8 @@
 		    "agent" :"Agent",
 		    "agentArmed": "Agent armed",
 		    "greeter": "Greeter",
-		    "coordinator": "Coordinator"
+		    "coordinator": "Coordinator",
+		    "invoiceNumber": "Invoice number"
 		},
 		"guards": "Guards",
 	  	"attendance": "Attendances",

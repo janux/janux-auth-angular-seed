@@ -221,8 +221,17 @@ module.exports =
 				).then(function (resp) {
 					return resp.data.result;
 				});
-			}
+			},
 
+			mapTimeEntryDataAndInvoices: function (timeEntries, invoiceTimeEntryAssociation) {
+				for (var i = 0; i < timeEntries.length; i++) {
+					var timeEntry = timeEntries[i];
+					timeEntry.invoiceInfo = _.find(invoiceTimeEntryAssociation, function (o) {
+						return o.idTimeEntry === timeEntry.id;
+					});
+				}
+				return timeEntries;
+			}
 		};
 		return service;
 	}];

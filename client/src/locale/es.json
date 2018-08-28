@@ -455,7 +455,7 @@
 		    "invoiceDate" : "Fecha",
 		    "isPaid" : "Pagada",
 		    "status" : "Estado",
-		    "insertManual":"Insertar faturar ya pagada",
+		    "insertManual":"Insertar fatura ya pagada",
    		    "statuses": {
 			  "inRevision" : "En revisión",
 			  "ended": "Terminada"

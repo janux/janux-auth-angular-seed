@@ -51,6 +51,12 @@ var createInstance = function (invoiceServiceReference, userInvoiceServiceRefere
 		return invoiceServiceReferenceInstance.insert(object).asCallback(callback);
 	};
 
+	InvoiceService.prototype.insertPaid = function (invoice, invoiceItem, callback) {
+		const objectInvoice = InvoiceServiceImpl.fromJSON(invoice);
+		const objectInvoiceItem = InvoiceServiceImpl.fromJSONInvoiceItem(invoiceItem);
+		return invoiceServiceReferenceInstance.insertPaid(objectInvoice, objectInvoiceItem).asCallback(callback);
+	};
+
 	InvoiceService.prototype.insertInvoiceItem = function (invoiceNumber, invoiceItem, callback) {
 		const object = InvoiceServiceImpl.fromJSONInvoiceItem(invoiceItem);
 		return invoiceServiceReferenceInstance.insertInvoiceItem(invoiceNumber, object).asCallback(callback);

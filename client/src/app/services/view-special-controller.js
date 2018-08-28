@@ -55,6 +55,7 @@ module.exports =
 		findTimeEntries($scope.periodFilterKey);
 	};
 
+
 	var loadTimeEntries = function () {
 
 		var period;
@@ -153,7 +154,7 @@ module.exports =
 		} else if (!_.isDate(operation.start)) {
 			infoDialog('services.specialForm.dialogs.startEmpty');
 			return;
-		} 
+		}
 		else if(_.isDate(operation.end)){
 			if (operation.start > operation.end) {
 				infoDialog('operations.dialogs.endDateError');
@@ -396,6 +397,17 @@ module.exports =
 			}
 		},
 		{
+			headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
+			editable   : false,
+			valueGetter: function (params) {
+				var result = '';
+				if (!_.isNil(params.data.invoiceInfo)) {
+					result = params.data.invoiceInfo.invoice.invoiceNumber;
+				}
+				return result;
+			}
+		},
+		{
 			headerName             : '',
 			headerCheckboxSelection: true,
 			// headerCheckboxSelectionFilteredOnly: true,
@@ -547,14 +559,24 @@ module.exports =
 
 	// Load time entries
 	findTimeEntries = function (period) {
+		var operationsWithTimeEntries;
 		if (_.isString(period)) {
 			period = timePeriods.specialOps[period];
 		}
 		// Load data
-		operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (timeE) {
-			timeEntries = timeE[0].schedule;
+		operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
+			operationsWithTimeEntries = result;
+			timeEntries = result[0].schedule;
 			console.log('Loaded time entries', timeEntries);
-			$scope.gridOptions.api.setRowData(operationService.mapTimeEntryData(timeE));
+			const ids = _.map(timeEntries, function (o) {
+				return o.id;
+			});
+			return invoiceService.findInvoiceNumbersByIdTimeEntries(ids);
+		}).then(function (result) {
+			// timeEntries = invoiceService.mapTimeEntryDataAndInvoices(timeEntries, result);
+			var mappedValuesForAgGrid = operationService.mapTimeEntryData(operationsWithTimeEntries);
+			var mappedValuesWithInvoiceInfo = invoiceService.mapTimeEntryDataAndInvoices(mappedValuesForAgGrid, result);
+			$scope.gridOptions.api.setRowData(mappedValuesWithInvoiceInfo);
 			agGridSizeToFit();
 		});
 	};

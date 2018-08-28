@@ -340,7 +340,8 @@
 		    "agent" :"Agente",
 		    "agentArmed": "Agente armado",
 		    "greeter": "Greeter",
-		    "coordinator": "Coordinador"
+		    "coordinator": "Coordinador",
+		    "invoiceNumber": "Número de factura"
 
 		},
 		"specials": "Especiales",

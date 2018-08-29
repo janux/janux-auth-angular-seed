@@ -42,6 +42,7 @@ module.exports = {
 			invoiceItemDao        : 'invoiceItemDao',
 			expenseDao            : 'expenseDao',
 			invoiceItemTE         : 'invoiceItemTE',
+			commDataSource		  : 'commDataSource',
 			invoiceOperationDao   : 'invoiceOperationDao'
 			// End glarus services daos.
 		},

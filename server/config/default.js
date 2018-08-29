@@ -72,6 +72,10 @@ module.exports = {
 			mongoConnUrl: "mongodb://localhost/opsGlarus",
 			//If lokijs is defined for user generation and daos, you must define the path of the file database.
 			lokiJsDBPath: "../server/janux-people.db"
+		},
+
+		system:{
+			environment: "development"
 		}
 	}
 };

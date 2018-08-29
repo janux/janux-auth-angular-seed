@@ -14,8 +14,8 @@ var _              = require('lodash'),
 	livereload     = require('connect-livereload'),
 	// flash         = require('connect-flash'),
 	http           = require('http'),
-	log4js         = require('log4js')
-;
+	log4js         = require('log4js'),
+	config         = require('config');
 
 var
 	authenticate = require('./route/auth').authenticate,
@@ -91,4 +91,4 @@ server.on('listening', function () {
 server.listen(app.get('port'));
 
 log.trace('app.routes: ', app.routes);
-
+console.log("System running with config environment:", config.serverAppContext.system.environment);

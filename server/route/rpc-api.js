@@ -12,7 +12,7 @@ var apiRoot = '../src/api/index';
 
 var services = {
 	users            : require(apiRoot).UserService,
-	userInvitation	 : require(apiRoot).UserInvService,
+	userInvitation   : require(apiRoot).UserInvService,
 	authContext      : require(apiRoot).AuthContextService,
 	role             : require(apiRoot).RoleService,
 	operation        : require(apiRoot).OperationService,
@@ -24,7 +24,8 @@ var services = {
 	vehicleService   : require(apiRoot).VehicleService,
 	resellerService  : require(apiRoot).ResellerService,
 	rateMatrixService: require(apiRoot).RateMatrixService,
-	invoice          : require(apiRoot).InvoiceService
+	invoice          : require(apiRoot).InvoiceService,
+	environment      : require(apiRoot).EnvironmentService
 };
 
 /*

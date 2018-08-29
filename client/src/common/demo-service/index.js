@@ -20,6 +20,7 @@ require('angular').module('demoService', [])
 .factory('nameQueryService', require('./name-query-service.js'))
 .factory('dialogService', require('./dialog-service.js'))
 .factory('userInvService', require('./user-inv-service'))
+.factory('environmentService', require('./environment-service'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

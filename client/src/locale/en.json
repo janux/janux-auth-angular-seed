@@ -77,7 +77,11 @@
 			"noRoles": "You must select at least one role from the list",
 			"invalidInvitation": "This invitation code is invalid",
 			"invitationExpired": "This invitation has expired",
-			"invPrevCompl": "This invitation has been previously completed"
+			"invPrevCompl": "This invitation has been previously completed",
+			"passConfMatch": "Password must match confirmation",
+			"userEmpty": "User name can't be empty",
+			"passEmpty": "Password can't be empty",
+			"passStrength": "The password must be alphanumeric and contain between 8 and 20 characters"
 		}
 	},
 	"role": {

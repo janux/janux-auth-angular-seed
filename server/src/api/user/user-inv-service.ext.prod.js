@@ -58,7 +58,7 @@ UserInvService.prototype.inviteToCreateAccount = function (id, selectedEmail, as
 		// Create account with random values
 		var account = {
 			userId: id,
-			enabled: true,
+			enabled: false,
 			username: 'xxxx-' + randomstring.generate({
 				length: 12,
 				charset: 'alphanumeric'

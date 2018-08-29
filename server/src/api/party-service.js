@@ -6,13 +6,11 @@ var log4js                = require('log4js'),
     _                     = require('lodash'),
     Promise               = require('bluebird'),
     PartyServiceImplClass = require('janux-persist').PartyServiceImpl,
-    log                   = log4js.getLogger('PartyService'),
-	express        		  = require('express');
+    log                   = log4js.getLogger('PartyService');
 
 // variable to hold the singleton instance, if used in that manner
 var partyServiceServiceInstance = undefined;
 var partyServiceImpl = undefined;
-var commService = undefined;
 
 var createInstance = function (serviceReference) {
 	partyServiceImpl = serviceReference;

@@ -3,36 +3,27 @@
 var log4js           = require('log4js'),
     _                = require('underscore'),
     PartyServiceImpl = require('janux-persist').PartyServiceImpl,
-	UserServiceDev 	 = require('./user-service.ext.dev'),
-	UserServiceProd  = require('./user-service.ext.prod'),
-	// env 		     = express().settings.env;
-	env 			 = 'development',
-    bluebird         = require('bluebird'),
+    Promise         = require('bluebird'),
 	log = log4js.getLogger('UserService');
 
 // variable to hold the singleton instance, if used in that manner
 var userServiceInstance = undefined;
 var userServicePersistence = undefined;
-var commService = undefined;
 
 //
 // Example of user service
 //
 
-var createInstance = function (serviceReference, commServiceReference) {
+var createInstance = function (serviceReference) {
 
 	userServicePersistence = serviceReference;
-	commService = commServiceReference;
-
-	// TODO: Move method logic to janux-persist
-	var UserServiceExt = (env === 'development') ? UserServiceDev : UserServiceProd;
 
 	// Constructor
-	function UserService(commService) {
-		UserServiceExt.call(this, commService);
+	function UserService() {
+		// UserService.call(this);
 	}
 
-	UserService.prototype = Object.create(UserServiceExt.prototype);
+	UserService.prototype = Object.create(null);
 	UserService.prototype.constructor = UserService;
 
 	//
@@ -66,7 +57,7 @@ var createInstance = function (serviceReference, commServiceReference) {
 				var filteredResult = _.map(result, function (o) {
 					return userServicePersistence.removeSensitiveData(o);
 				});
-				return bluebird.resolve(filteredResult).asCallback(callback);
+				return Promise.resolve(filteredResult).asCallback(callback);
 			})
 	};
 
@@ -74,7 +65,7 @@ var createInstance = function (serviceReference, commServiceReference) {
 		return userServicePersistence.findOneByUserId(userId)
 			.then(function (value) {
 				var result = userServicePersistence.removeSensitiveData(value);
-				return bluebird.resolve(result).asCallback(callback);
+				return Promise.resolve(result).asCallback(callback);
 			});
 	};
 
@@ -109,14 +100,14 @@ var createInstance = function (serviceReference, commServiceReference) {
 		return userServicePersistence.deleteUserByUserId(userId).asCallback(callback);
 	};
 
-	return new UserService(commService);
+	return new UserService();
 };
 
-module.exports.create = function (UserDAO, CommService) {
+module.exports.create = function (UserDAO) {
 	// if the instance does not exist, create it
 	if (!_.isObject(userServiceInstance)) {
 		// userServiceInstance = new UserService(aDAO);
-		userServiceInstance = createInstance(UserDAO, CommService);
+		userServiceInstance = createInstance(UserDAO);
 	}
 	return userServiceInstance;
 };

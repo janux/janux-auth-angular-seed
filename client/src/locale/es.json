@@ -74,7 +74,10 @@
 			"confirmDeletion":"De verdad deseas borrar la selección?",
 			"nameEmpty": "El nombre del contacto del usuario no puede estar vacio",
 			"emailEmpty": "El correo electrónico del usuario no puede estar vacio",
-			"noRoles": "Debe seleccionar al menos un role de la lista"
+			"noRoles": "Debe seleccionar al menos un role de la lista",
+			"invalidInvitation": "El código esta invitación es invalido",
+			"invitationExpired": "Esta invitación ha expirado",
+			"invPrevCompl": "Esta invitación ha sido completada previamente"
 		}
 	},
 	"role": {
@@ -124,7 +127,8 @@
 			"inviteTo": "Invitar al sistema a",
 			"inviteContact": "Contacto",
 			"inviteRoles": "Roles a asignar",
-			"noRoleSel": "Debe seleccionar al menos un rol"
+			"noRoleSel": "Debe seleccionar al menos un rol",
+			"invSent": "The invitation has been sent"
 		}
 	},
 	"client": {

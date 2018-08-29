@@ -347,8 +347,8 @@ angular.module('agGridDirectives',[])
 		restrict: 'E',
 		scope: true,
 		templateUrl: 'common/ag-grid-components/templates/staff-invite.html',
-		controller: ['$rootScope','$scope','$attrs','$mdDialog','roleService','partyService','dialogService','userService',
-			function( $rootScope , $scope , $attrs , $mdDialog , roleService , partyService , dialogService , userService) {
+		controller: ['$rootScope','$scope','$attrs','$mdDialog','roleService','partyService','dialogService','userService','$mdToast','$filter',
+			function( $rootScope , $scope , $attrs , $mdDialog , roleService , partyService , dialogService , userService , $mdToast , $filter) {
 			$scope.staffId = $attrs.staffId;
 
 			var staff = {};
@@ -380,8 +380,8 @@ angular.module('agGridDirectives',[])
 								templateUrl        : 'common/components/templates/staff-invite-dialog.html',
 								scope              : $scope,
 								preserveScope      : true,
-								controller         : ['$scope', '$mdDialog', 'userService',
-									function ($scope, $mdDialog, userService) {
+								controller         : ['$scope', '$mdDialog', 'userInvService',
+									function ($scope, $mdDialog, userInvService) {
 
 									$scope.inviteStaff = function () {
 										// Get array with selected roles
@@ -394,7 +394,15 @@ angular.module('agGridDirectives',[])
 
 										if (selectedRoles.length > 0) {
 											console.log('selected roles', selectedRoles);
-											userService.inviteToCreateAccount(staff.id,  $scope.selectedEmail, selectedRoles);
+											userInvService.inviteToCreateAccount(staff.id,  $scope.selectedEmail, selectedRoles).then(function (responseInv) {
+												console.log('staff invitation', responseInv);
+												$mdToast.show(
+													$mdToast.simple()
+														.textContent($filter('translate')('staff.dialogs.invSent'))
+														.position( 'top right' )
+														.hideDelay(3000)
+												);
+											});
 											$mdDialog.hide();
 										} else {
 											dialogService.info('staff.dialogs.noRoleSel');

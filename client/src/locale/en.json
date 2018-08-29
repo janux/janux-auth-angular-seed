@@ -74,7 +74,10 @@
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
 			"nameEmpty": "The user's contact name can not be empty",
 			"emailEmpty": "The user's contact email can not be empty",
-			"noRoles": "You must select at least one role from the list"
+			"noRoles": "You must select at least one role from the list",
+			"invalidInvitation": "This invitation code is invalid",
+			"invitationExpired": "This invitation has expired",
+			"invPrevCompl": "This invitation has been previously completed"
 		}
 	},
 	"role": {
@@ -123,7 +126,8 @@
 			"inviteTo": "Invite to",
 			"inviteContact": "Contact",
 			"inviteRoles": "Roles to assign",
-			"noRoleSel": "You must select at least one role"
+			"noRoleSel": "You must select at least one role",
+			"invSent": "La invitación se ha enviado"
 		}
 	},
 	"client": {

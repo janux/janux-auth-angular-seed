@@ -21,12 +21,15 @@ const PartyDaoMongooseImpl       = require('janux-persist').PartyDaoMongooseImpl
       PartyDaoLokiJsImpl         = require('janux-persist').PartyDaoLokiJsImpl,
       AccountDaoLokiJsImpl       = require('janux-persist').AccountDaoLokiJsImpl,
       AuthContextDaoLokiJsImpl   = require('janux-persist').AuthContextDaoLokiJsImpl,
-      RoleDaoLokiJsImpl          = require('janux-persist').RoleDaoLokiJsImpl;
+      RoleDaoLokiJsImpl          = require('janux-persist').RoleDaoLokiJsImpl,
+	  AccountInvDaoLokiJsImpl  	 = require('janux-persist').AccountInvitationDaoLokiJsImpl,
+	  AccountInvDaoMongooseImpl  = require('janux-persist').AccountInvitationDaoMongooseImpl;
 
 
 const PartyMongooseSchema               = require('janux-persist').PartyMongooseSchema,
       StaffDataMongooseDbSchema         = require('janux-persist').StaffDataMongooseDbSchema,
       AccountMongooseDbSchema           = require('janux-persist').AccountMongooseDbSchema,
+	  AccountInvMongooseDbSchema		= require('janux-persist').AccountInvitationMongooseDbSchema,
       AuthContextMongooseDbSchema       = require('janux-persist').AuthContextMongooseDbSchema,
       RoleMongooseDbSchema              = require('janux-persist').RoleMongooseDbSchema,
       GroupMongooseSchema               = require('janux-persist').GroupMongooseSchema,
@@ -36,6 +39,7 @@ const PartyMongooseSchema               = require('janux-persist').PartyMongoose
 const PARTY_DEFAULT_COLLECTION_NAME            = 'contact',
       STAFF_COLLECTION_NAME                    = 'staff',
       ACCOUNT_DEFAULT_COLLECTION_NAME          = 'account',
+      ACCOUNT_INV_DEFAULT_COLLECTION_NAME      = 'accountInvitation',
       AUTHCONTEXT_DEFAULT_COLLECTION_NAME      = 'authcontext',
       ROLE_DEFAULT_COLLECTION_NAME             = 'role',
       GROUP_DEFAULT_COLLECTION_NAME            = 'group',
@@ -110,6 +114,7 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		partyDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, PARTY_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), PartyMongooseSchema), PartyDaoMongooseImpl),
 		staffDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, STAFF_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), StaffDataMongooseDbSchema), StaffDao),
 		accountDao            : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, ACCOUNT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), AccountMongooseDbSchema), AccountDaoMongooseImpl),
+		accountInvDao         : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, ACCOUNT_INV_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), AccountInvMongooseDbSchema), AccountInvDaoMongooseImpl),
 		authContextDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, AUTHCONTEXT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), AuthContextMongooseDbSchema), AuthContextDaoMongooseImpl),
 		roleDao               : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, ROLE_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), RoleMongooseDbSchema), RoleDaoMongooseImpl),
 		groupDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, GROUP_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties(), GroupMongooseSchema), GroupDao),
@@ -132,7 +137,8 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		invoiceDao           : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceMongooseSchema), InvoiceDao),
 		invoiceItemDao       : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_ITEM_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceItemMongooseSchema), InvoiceItemDao),
 		expenseDao           : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, EXPENSE_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), ExpenseMongooseSchema), ExpenseDao),
-		invoiceItemTE        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_ITEM_TIME_ENTRY_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceItemTEMongooseSchema), InvoiceItemTEDao)
+		invoiceItemTE        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathMongo, INVOICE_ITEM_TIME_ENTRY_COLLECTION, EntityPropertiesImpl.createDefaultProperties(), InvoiceItemTEMongooseSchema), InvoiceItemTEDao),
+		commDataSource		 : { dbEngine: dbEngine, dbPath: pathMongo }
 	};
 
 } else if (dbEngine === DataSourceHandler.LOKIJS) {
@@ -140,6 +146,7 @@ if (dbEngine === DataSourceHandler.MONGOOSE) {
 		partyDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, PARTY_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), PartyDaoLokiJsImpl),
 		staffDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, STAFF_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), StaffDao),
 		accountDao            : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, ACCOUNT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), AccountDaoLokiJsImpl),
+		accountInvDao         : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, ACCOUNT_INV_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), AccountInvDaoLokiJsImpl),
 		authContextDao        : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, AUTHCONTEXT_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), AuthContextDaoLokiJsImpl),
 		roleDao               : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, ROLE_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), RoleDaoLokiJsImpl),
 		groupDao              : DaoFactory.subscribeDao(new DaoSettings(dbEngine, pathLoki, GROUP_DEFAULT_COLLECTION_NAME, EntityPropertiesImpl.createDefaultProperties()), GroupDao),

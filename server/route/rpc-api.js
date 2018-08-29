@@ -12,6 +12,7 @@ var apiRoot = '../src/api/index';
 
 var services = {
 	users            : require(apiRoot).UserService,
+	userInvitation	 : require(apiRoot).UserInvService,
 	authContext      : require(apiRoot).AuthContextService,
 	role             : require(apiRoot).RoleService,
 	operation        : require(apiRoot).OperationService,
@@ -29,7 +30,7 @@ var services = {
 /*
 var jsonrpcServer = new jsonrpc.server(
 	new jsonrpc.transports.server.middleware(), {
-		findByAccountName: userService.findByAccountName 
+		findByAccountName: userService.findByAccountName
 	});
 */
 

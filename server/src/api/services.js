@@ -1,5 +1,6 @@
 'use strict';
 var UserPersistence                      = require('janux-persist').UserService,
+	UserInvitationService				 = require('janux-persist').UserInvitationService,
     PartyServiceImpl                     = require('janux-persist').PartyServiceImpl,
     AuthContextPersistence               = require('janux-persist').AuthContextService,
     AuthContextGroupService              = require('janux-persist').AuthContextGroupServiceImpl,
@@ -7,8 +8,7 @@ var UserPersistence                      = require('janux-persist').UserService,
     GroupService                         = require('janux-persist').GroupServiceImpl,
     PartyGroupServiceImpl                = require('janux-persist').PartyGroupServiceImpl,
     ResellerServiceImpl                  = require('janux-persist').ResellerServiceImpl,
-	// CommServiceImpl					 = require('janux-persist').CommService,
-    CommServiceImpl						 = { createInstance: function () {} },
+	CommServiceImpl					 	 = require('janux-persist').CommService,
 	OperationServiceImpl                 = require('glarus-services').OperationServiceImpl,
     ResourceServiceImpl                  = require('glarus-services').ResourceServiceImpl,
     TimeEntryServiceImpl                 = require('glarus-services').TimeEntryServiceImpl,
@@ -30,6 +30,7 @@ var config                              = require('config'),
     appContext                          = config.serverAppContext,
     DAOs                                = require('./daos'),
     AccountDao                          = DAOs[appContext.dao.accountDao],
+    AccountInvDao                       = DAOs[appContext.dao.accountInvDao],
     StaffDao                            = DAOs[appContext.dao.staffDao],
     PartyDao                            = DAOs[appContext.dao.partyDao],
     AuthContextDAO                      = DAOs[appContext.dao.authContextDao],
@@ -38,7 +39,7 @@ var config                              = require('config'),
     GroupDao                            = DAOs[appContext.dao.groupDao],
     GroupAttributeValueDao              = DAOs[appContext.dao.groupAttributeValueDao],
     PartyPersistenceService             = new PartyServiceImpl(PartyDao, StaffDao),
-	CommService 						= CommServiceImpl.createInstance(),
+	CommDataSource						= DAOs[appContext.dao.commDataSource],
 
     // Begin glarus services DAOs.
     VehicleDao                          = DAOs[appContext.dao.vehicleDao],
@@ -101,7 +102,9 @@ var config                              = require('config'),
     TimeEntryReportAttendanceService    = new TimeEntryReportAttendanceServiceImpl(OperationPersistService, TimeEntryPersistService),
     InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceItemTEDao, PartyPersistenceService, TimeEntryDao, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence),
     InvoiceTimeEntryService             = new InvoiceTimeEntryServiceImpl(InvoiceItemTEDao, InvoiceItemDao, InvoiceDao, TimeEntryDao),
-    UserInvoiceService                  = new UserInvoiceServiceImpl(GlarusUserPersistenceService, InvoiceService);
+    UserInvoiceService                  = new UserInvoiceServiceImpl(GlarusUserPersistenceService, InvoiceService),
+	CommService 						= CommServiceImpl.createInstance(CommDataSource, config.serverAppContext.smtp),
+	UserInvitationPersistenceService    = UserInvitationService.createInstance(AccountInvDao, UserPersistenceService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,
@@ -127,5 +130,6 @@ module.exports = {
 	InvoiceService                  : InvoiceService,
 	InvoiceTimeEntryService         : InvoiceTimeEntryService,
 	UserInvoiceService              : UserInvoiceService,
-	CommService						: CommService
+	CommService						: CommService,
+	UserInvitationService			: UserInvitationPersistenceService
 };

@@ -5,15 +5,15 @@ var agGridComp = require('common/ag-grid-components');
 
 
 module.exports = [
-	'$scope', '$rootScope', '$state', 'partyService', 'partyGroupService', 'resourceService', 'config', '$timeout','$filter', 'staffList', 'assignableResources','supplier', 
+	'$scope', '$rootScope', '$state', 'partyService', 'partyGroupService', 'resourceService', 'config', '$timeout','$filter', 'staffList', 'assignableResources','supplier',
 	function ($scope, $rootScope, $state, partyService, partyGroupService, resourceService, config, $timeout, $filter, staffList, assignableResources, supplier) {
-		
+
 		$scope.editStaff = function (id) {
 			$state.go('staff.edit', {id: id});
 		};
 
-		console.log('Cadena Staff List',staffList);
-		console.log('supplier', supplier);
+		// console.log('Cadena Staff List',staffList);
+		// console.log('supplier', supplier);
 
 		$scope.$on('agGridAvalabilityCheckboxChange',function(event,value){
 			console.log('agGridAvalabilityCheckboxChange',value);
@@ -148,7 +148,19 @@ module.exports = [
 					if (_.isNil(params.data.user)) {
 						result = '';
 					} else {
-						result = params.data.user.username;
+						var inv = params.data.user.invitation;
+						if (!_.isNil(inv)) {
+							switch (inv.status) {
+								case 'pending':
+									result = '';
+								break;
+								case 'completed':
+									result = params.data.user.username;
+								break;
+							}
+						} else {
+							result = params.data.user.username;
+						}
 					}
 					return result;
 				},
@@ -179,7 +191,7 @@ module.exports = [
 				headerName     : $filter('translate')('supplier.available'),
 				cellRenderer   : agGridComp.checkBoxStaffAvalability,
 				//headerComponent: agGridComp.deleteRowsHeaderComponent,
-				field          : 'availableColumn',	
+				field          : 'availableColumn',
 				width          : 100
 			},
 			{
@@ -218,11 +230,11 @@ module.exports = [
 				// This function is defined to be able to trigger the deletion
 				// of the rows from the header component that does not have access
 				// to the scope.
-				
+
 				//$scope.gridOptions.api.deleteRows = removeSelected;
 
 				// Restore filter model.
-				
+
 				// var filterModel = localStorageService.get(columnsFiltersKey);
 				// if (!_.isNil(filterModel)) {
 				// 	$scope.gridOptions.api.setFilterModel(filterModel);
@@ -235,7 +247,7 @@ module.exports = [
 			},
 			onRowValueChanged        : function (rowObj) {
 				console.log(rowObj);
-				
+
 			}
 			// localeTextFunc           : function (key, defaultValue) {
 			// 	var gridKey = 'grid.' + key;

@@ -1,6 +1,6 @@
 'use strict';
 
-var 
+var
 	log = require('log4js').getLogger('Server'),
 	appContext   = require('../app-context')
 	// authenticate = require('../app-context').authenticate
@@ -8,7 +8,7 @@ var
 
 var index = function(req, res) {
 		/*
-		if (req.user) { 
+		if (req.user) {
 			log.debug('adding user to response cookie');
 			res.cookie('user', JSON.stringify(req.user));
 		};
@@ -24,6 +24,7 @@ module.exports = function(app) {
 	require('./auth')(app);
 	require('./rpc-api')(app);
 	require('./time-entry-report')(app);
+	require('./invitation')(app);
 
 	// partials are served by their name
 	/*

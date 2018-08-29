@@ -16,6 +16,7 @@ module.exports = {
 		dao: {
 			//Daos to be used by the services.
 			accountDao            : 'accountDao',
+			accountInvDao         : 'accountInvDao',
 			partyDao              : 'partyDao',
 			authContextDao        : 'authContextDao',
 			roleDao               : 'roleDao',
@@ -40,8 +41,19 @@ module.exports = {
 			invoiceDao            : 'invoiceDao',
 			invoiceItemDao        : 'invoiceItemDao',
 			expenseDao            : 'expenseDao',
-			invoiceItemTE         : 'invoiceItemTE'
+			invoiceItemTE         : 'invoiceItemTE',
+			commDataSource		  : 'commDataSource'
 			// End glarus services daos.
+		},
+
+		smtp: {
+			host: 'mail.espaciomexico.net',
+			from: 'glarus@espaciomexico.net',
+			port: 465,
+			auth: {
+				user: 'glarus@espaciomexico.net',
+				pass: '!m*Ej;@$6x#N'
+			}
 		},
 
 		log4js: {

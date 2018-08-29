@@ -90,6 +90,17 @@ require('angular').module('appUsers', [
 		templateUrl: 'app/user/register.html',
 		authRequired: false,
 		controller: require('./register-controller.js'),
-		resolve: { }
+		resolve: {
+			invitation: ['userInvService','$stateParams','$state','dialogService', function (userInvService,$stateParams,$state,dialogService) {
+				return userInvService.findByCode($stateParams.code).then(function (invitation) {
+					// console.log('find invitation by code', $stateParams.code, invitation);
+					return invitation;
+				}, function () {
+					dialogService.info('user.dialogs.invalidInvitation');
+					$state.go('login');
+					return null;
+				});
+			}]
+		}
 	});
 }]);

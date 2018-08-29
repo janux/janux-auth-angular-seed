@@ -123,6 +123,7 @@
 			"tabMenuThird":"BITACORA NÓMINA"
 		},
 		"contractor":"Externo",
+		"inviteTip": "Invitar usuario al sistema",
 		"dialogs": {
 			"inviteTo": "Invitar al sistema a",
 			"inviteContact": "Contacto",

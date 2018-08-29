@@ -1,1 +1,2 @@
-span.fa.fa-envelope(ng-click='staffInviteDialog({userId:userId})')
+span.fa.fa-envelope(ng-class="{'icon-disabled': iconDisabled}" ng-click='staffInviteDialog({userId:userId})')
+	md-tooltip {{ 'staff.inviteTip' | translate }}

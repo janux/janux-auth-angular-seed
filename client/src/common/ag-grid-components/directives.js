@@ -350,6 +350,14 @@ angular.module('agGridDirectives',[])
 		controller: ['$rootScope','$scope','$attrs','$mdDialog','roleService','partyService','dialogService','userService','$mdToast','$filter',
 			function( $rootScope , $scope , $attrs , $mdDialog , roleService , partyService , dialogService , userService , $mdToast , $filter) {
 			$scope.staffId = $attrs.staffId;
+			$scope.iconDisabled = true;
+
+			partyService.findOne($scope.staffId).then(function (respStaff) {
+				var emails = respStaff.contactMethods.emails;
+				if ((!_.isNil(emails) && emails.length > 0) && (!_.isNil(emails[0].address) && emails[0].address !== '')) {
+					$scope.iconDisabled = false;
+				}
+			});
 
 			var staff = {};
 			var emails = [];
@@ -415,7 +423,7 @@ angular.module('agGridDirectives',[])
 								}]
 							});
 						} else {
-							dialogService.info('party.person.dialogs.noEmail');
+							// dialogService.info('party.person.dialogs.noEmail');
 						}
 					});
 

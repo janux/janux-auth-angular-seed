@@ -122,6 +122,7 @@
 			"tabMenuThird":"Roster Time Log"
 		},
 		"contractor":"Contractor",
+		"inviteTip": "Invite user to the system",
 		"dialogs": {
 			"inviteTo": "Invite to",
 			"inviteContact": "Contact",

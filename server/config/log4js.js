@@ -1,8 +1,17 @@
 module.exports = {
 	appenders: [
-		{ 
+		{
 			type: 'file',
 			filename: 'server.log',
+			layout : {
+				type : 'pattern',
+				pattern : '%d | %p | %c | %m'
+			}
+		},
+		{
+			type: 'file',
+			category: 'UserInvitations',
+			filename: 'user-invitations.log',
 			layout : {
 				type : 'pattern',
 				pattern : '%d | %p | %c | %m'

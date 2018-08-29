@@ -13,5 +13,5 @@ var resource = new jsonrpc.server(
 	});
 
 module.exports = function (app) {
-	app.use('/invitation', resource.transport.middleware);
+	app.use('/rpc/public/invitation', resource.transport.middleware);
 };

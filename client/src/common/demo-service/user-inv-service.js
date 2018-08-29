@@ -33,7 +33,7 @@ function( $q ,  $http, partyService, dateUtilService){
 		findByCode: function(code)
 		{
 			return $http.jsonrpc(
-				'/invitation',
+				'/rpc/public/invitation',
 				'findOneByCode',
 				[ code ]
 			).then(function(resp) {
@@ -80,7 +80,7 @@ function( $q ,  $http, partyService, dateUtilService){
 			userInvObjClone.account.contact.typeName= typeName;
 
 			return $http.jsonrpc(
-				'/invitation',
+				'/rpc/public/invitation',
 				'update',
 				[ userInvObjClone ]
 			).then(function(resp) {

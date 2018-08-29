@@ -52,7 +52,7 @@ UserInvService.prototype.inviteToCreateAccount = function (id, selectedEmail, as
 		// Adding email sent event listener
 		that.commService.on(that.commService.events.EMAIL_SUCCESS_SENT_EVENT, function(resp) {
 			log.info('Invitation Email successfully sent ' + out);
-			logInvitations.debug('Invitation for a staff member to create their account ' + out);
+			logInvitations.info('User invitation created ' + out);
 		});
 
 		// Create account with random values

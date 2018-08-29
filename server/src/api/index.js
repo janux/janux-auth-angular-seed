@@ -3,7 +3,7 @@
 
 var Services           = require('./services'),
     UserService        = require('./user/user-service'),
-	UserInvService	   = require('./user/user-inv-service'),
+    UserInvService     = require('./user/user-inv-service'),
     AuthContextService = require('./auth-context-service'),
     RoleService        = require('./role-service'),
     OperationService   = require('./operation-service'),
@@ -14,12 +14,13 @@ var Services           = require('./services'),
     VehicleService     = require('./vehicle-service'),
     ResellerService    = require('./reseller-service'),
     RateMatrixService  = require('./rate-matrix-service'),
-    InvoiceService     = require('./invoice-service');
+    InvoiceService     = require('./invoice-service'),
+    EnvironmentService = require('./enviroment-service');
 
 
 module.exports = {
 	UserService                     : UserService.create(Services.GlarusUserPersistenceService),
-	UserInvService					: UserInvService.create(Services.UserPersistenceService, Services.PartyPersistenceService, Services.CommService, Services.UserInvitationService),
+	UserInvService                  : UserInvService.create(Services.UserPersistenceService, Services.PartyPersistenceService, Services.CommService, Services.UserInvitationService),
 	AuthContextService              : AuthContextService.create(Services.AuthContextPersistService, Services.AuthContextGroupPersistService),
 	RoleService                     : RoleService.create(Services.RolePersistService),
 	UserPersistenceService          : Services.UserPersistenceService,
@@ -35,5 +36,6 @@ module.exports = {
 	VehicleService                  : VehicleService.create(Services.VehiclePersistenceService),
 	ResellerService                 : ResellerService.create(Services.ResellerPersistenceService),
 	RateMatrixService               : RateMatrixService.create(Services.RateMatrixService),
-	InvoiceService                  : InvoiceService.create(Services.InvoiceService, Services.UserInvoiceService)
+	InvoiceService                  : InvoiceService.create(Services.InvoiceService, Services.UserInvoiceService),
+	EnvironmentService              : EnvironmentService.create()
 };

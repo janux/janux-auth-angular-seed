@@ -62,11 +62,11 @@ side-bar
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
 
-						.btn-row(ng-show='currentNavItem=="invoices"')
-							md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","INVOICE");')
-								button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
-									i.fa.fa-plus-circle &nbsp;
-									| {{ 'services.invoice.insertManual' | translate }}
+						// .btn-row(ng-show='currentNavItem=="invoices"')
+						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","INVOICE");')
+						// 		button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
+						// 			i.fa.fa-plus-circle &nbsp;
+						// 			| {{ 'services.invoice.insertManual' | translate }}
 
 						.btn-row(ng-show='currentNavItem=="invoiceDetail"')
 							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
@@ -76,7 +76,7 @@ side-bar
 							button.btn( ng-click="cancelInvoiceDetail('invoices')")
 								i.fa.fa-times
 
-				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', disabled='!editMode', disableautomaticname='{{true}}')
+				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', invoices='invoices', disabled='!editMode', disableautomaticname='{{true}}')
 
 				.container-body(ng-show='currentNavItem=="time-sheet"')
 					.add-row-section

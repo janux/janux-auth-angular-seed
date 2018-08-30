@@ -399,6 +399,7 @@ module.exports =
 		{
 			headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
 			editable   : false,
+			hide       : !$rootScope.userRole.can('READ', 'INVOICE'),
 			valueGetter: function (params) {
 				var result = '';
 				if (!_.isNil(params.data.invoiceInfo) && !_.isNil(params.data.invoiceInfo.invoice)) {
@@ -763,19 +764,5 @@ module.exports =
 		updatedSelectedInvoice(invoiceNumber);
 		updateInvoiceList();
 	});
-
-	$scope.insertManualInvoice = function () {
-		$mdDialog.show({
-			locals             : {operation: $scope.data},
-			controller         : require('../../common/components/controllers/invoice-manual-popup-controller'),
-			templateUrl        : 'common/components/templates/invoice-manual-popup.html',
-			parent             : angular.element(document.body),
-			clickOutsideToClose: true
-		}).then(function () {
-			// We have to get all invoices of the operation and send an event.
-			// This is necessary in order to update the invoices of the "invoice" tab.
-			updateInvoiceList();
-		});
-	};
 
 }];

@@ -166,6 +166,47 @@
 						//	//md-divider.divider-line-glarus
 						//	button.btn-plus(ng-click="addVehicle()")
 						//		i.fa.fa-plus-square
+		// Invoice section form.
+		div(ng-show='userRole.can("UPDATE","INVOICE")').section-form
+			p.form-section-glarus
+				| {{ 'services.invoice.invoice' | translate }}
+			fieldset.fieldset-flex
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							|    {{ 'operations.status' | translate }}:{{operationStatus}}
+			fieldset.fieldset-flex(ng-show='invoices!=null && invoices.length==1')
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							|    {{ 'services.invoice.invoiceNumber' | translate }} : {{invoices[0].invoiceNumber}}
+					.an-material.nopadding
+						md-input-container.full
+							|    {{ 'services.invoice.grandTotal' | translate }} : {{invoices[0].grandTotal | currency}}
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="RESEARCH")')
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.invoice.invoiceNumber' | translate }}
+							input(ng-model='invoiceManualForm.invoiceNumber' type="text", required='' id="invoiceNumber")
+
+					.an-material.nopadding
+						md-input-container.full
+							md-datepicker(
+							lang='{{ lang }}',
+							ng-model="invoiceManualForm.invoiceDate",
+							format='YYYY-MM-DD',
+							md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}"
+							id="invoiceDate")
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="RESEARCH")')
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.invoice.grandTotal' | translate }}
+							input(type="number" ng-model='invoiceManualForm.grandTotal' id="grandTotal")
+					.an-material.nopadding
+						md-input-container.full
+							button.btn.btn-ok(ng-click='createNewInvoiceManual()') {{ 'services.invoice.insertManual' | translate }}
 
 	.special-right
 		.section-form

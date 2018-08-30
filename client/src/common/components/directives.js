@@ -294,6 +294,7 @@ angular.module('commonComponents', [])
 	.directive('specialService', function () {
 		var specialServiceScope = scopeDefinition;
 		specialServiceScope.cl = "=";
+		specialServiceScope.invoices = "=";
 		specialServiceScope.disabled = "<";
 		specialServiceScope.disableautomaticname = "@";
 
@@ -301,14 +302,18 @@ angular.module('commonComponents', [])
 			scope      : specialServiceScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-service.html',
-			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config',
-				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config) {
+			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService',
+				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService) {
+
+					// console.log("invoices in directive " + $scope.invoices);
 
 					var clientGroupCode = '';
 					var clientContacts = [];		// Client contacts
 					var possibleRequesters = [];	// Client contacts + reseller contacts
 					var staff = [];					// Staff members
 					var vehicles = [];				// Available vehicles
+
+
 					// All special ops functions.
 					resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER']).then(function (resources) {
 						// console.log('resources', resources);
@@ -582,15 +587,6 @@ angular.module('commonComponents', [])
 						e.hidePreview();
 					};
 
-					var refreshClientContactsList = function (type, insertedContact) {
-						if ($scope.data.client.object) {
-							$scope.clientSelectedItemChange(
-								$scope.data.client.object,
-								{contact: insertedContact, type: type}
-							);
-						}
-					};
-
 					// Add principal dialog
 					var createContact = function (type) {
 						$mdDialog.show({
@@ -656,6 +652,99 @@ angular.module('commonComponents', [])
 							clickOutsideToClose: true
 						});
 					};
+
+					//******************
+					// Invoice section.
+					//******************
+
+					// A little hack. For some reason the html file
+					// does not have access to usesRole via $rootScope.
+					$scope.userRole = $rootScope.userRole;
+
+					console.log( "can "  + $rootScope.userRole.can("UPDATE", "INVOICE"));
+
+					$scope.operationStatus = operationService.generateStatus($scope.data, $scope.invoices);
+					$scope.invoiceManualForm = {
+						invoiceNumber: '',
+						invoiceDate  : undefined,
+						grandTotal   : 0
+					};
+
+					$scope.createNewInvoiceManual = function () {
+						var invoiceItemName = "Total";
+						if (validateFormInvoiceData()) {
+							var operationReference = _.cloneDeep($scope.data);
+							// Given this operation object is an object associated to an ui
+							// some attributes are dirty or altered. In this case we  fix it or get rid of them.
+							// For the purpose to insert an invoice we can alter this object.
+							operationReference.client = operationReference.client.object;
+							operationReference.principals = [];
+							operationReference.currentResources = [];
+							operationReference.schedule = [];
+							operationReference.interestedParty = null;
+							var newInvoice = {
+								client             : operationReference.client,
+								invoiceNumber      : $scope.invoiceManualForm .invoiceNumber,
+								invoiceDate        : $scope.invoiceManualForm .invoiceDate,
+								comments           : '',
+								items              : [],
+								status             : config.invoice.status.inRevision,
+								isPaid             : false,
+								discount           : 0,
+								discountPercentage : 0,
+								totalBeforeExpenses: $scope.invoiceManualForm .grandTotal,
+								totalAfterExpenses : $scope.invoiceManualForm .grandTotal,
+								totalExpenses      : 0,
+								grandTotal         : $scope.invoiceManualForm .grandTotal,
+								userDefinedValues  : true,
+								defaultOperation   : operationReference
+							};
+							var newItem = {
+								itemNumber : 1,
+								name       : invoiceItemName,
+								total      : 0,
+								timeEntries: [],
+								expenses   : []
+							};
+							invoiceService.insertPaid(newInvoice, newItem)
+								.then(function () {
+									invoiceService.findByIdOperation(operationReference.id)
+										.then(function (result) {
+											$scope.operationStatus = operationService.generateStatus($scope.data, result);
+											$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
+										});
+								});
+						}
+					};
+
+					var validateFormInvoiceData = function () {
+						var result = true;
+						if (!_.isString($scope.invoiceManualForm.invoiceNumber) || $scope.invoiceManualForm.invoiceNumber.trim()==='' ) {
+							infoDialog('services.invoice.dialogs.missingInvoiceNumber', $scope, $filter);
+						}
+						if (!_.isDate($scope.invoiceManualForm.invoiceDate)) {
+							infoDialog('services.invoice.dialogs.missingInvoiceDate', $scope, $filter);
+						}
+						if (!_.isNumber($scope.invoiceManualForm.grandTotal) && $scope.invoiceManualForm.grandTotal <= 0) {
+							infoDialog('services.invoice.dialogs.missingInvoiceDate', $scope, $filter);
+						}
+						return result;
+					};
+
+					//******************
+					// End invoice section.
+					//******************
+
+					var refreshClientContactsList = function (type, insertedContact) {
+						if ($scope.data.client.object) {
+							$scope.clientSelectedItemChange(
+								$scope.data.client.object,
+								{contact: insertedContact, type: type}
+							);
+						}
+					};
+
+
 				}]
 		};
 	})

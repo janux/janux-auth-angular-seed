@@ -47,12 +47,12 @@ module.exports = {
 		},
 
 		smtp: {
-			host: 'mail.espaciomexico.net',
-			from: 'glarus@espaciomexico.net',
-			port: 465,
+			host: 'smtp.sendgrid.net',
+			from: 'glarus@glarus.com.mx',
+			port: 587,
 			auth: {
-				user: 'glarus@espaciomexico.net',
-				pass: '!m*Ej;@$6x#N'
+				user: 'apikey',
+				pass: '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'
 			}
 		},
 

@@ -1,14 +1,14 @@
 |
-| Hola #{ name },
-|
-| #{ email } te hemos agregado al App de Grupo Glarus
-|
-| Código de Autorización: #{ invitationCode }
-|
-| Ingresa a: http://ops-staging.glarus.com.mx/register/#{ invitationCode } para completar tu registro
-|
-| Saludos
-|
+p Hola #{ name },
+p #{ email } te hemos agregado al App de Grupo Glarus
+p Código de Autorización: #{ invitationCode }
+| Ingresa a: &nbsp;
+a(href="http://ops-staging.glarus.com.mx/register/#{ invitationCode }") http://ops-staging.glarus.com.mx/register/#{ invitationCode }
+| &nbsp; para completar tu registro
+p Saludos
+br
 | Grupo Glarus
+br
 | Consultoria en Riesgos
+br
 | Seguridad e Inteligencia

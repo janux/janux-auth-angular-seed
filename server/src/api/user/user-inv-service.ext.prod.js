@@ -26,7 +26,7 @@ function UserInvService (userServiceRef, partyServiceRef, commServiceRef, userIn
  * @param assignedRoles
  */
 UserInvService.prototype.inviteToCreateAccount = function (id, selectedEmail, assignedRoles, callback) {
-	log.info("Call to inviteToCreateAccount with id %j and email %j", id, selectedEmail);
+	log.debug("Call to inviteToCreateAccount with id %j and email %j", id, selectedEmail);
 
 	var that = this;
 
@@ -53,6 +53,12 @@ UserInvService.prototype.inviteToCreateAccount = function (id, selectedEmail, as
 		that.commService.on(that.commService.events.EMAIL_SUCCESS_SENT_EVENT, function(resp) {
 			log.info('Invitation Email successfully sent ' + out);
 			logInvitations.info('User invitation created ' + out);
+		});
+
+		// Adding email error event listener
+		that.commService.on(that.commService.events.EMAIL_SENT_ERROR_EVENT, function(error) {
+			log.info('Error sending invitation ' + error);
+			// logInvitations.info('User invitation created ' + out);
 		});
 
 		// Create account with random values

@@ -265,14 +265,14 @@
 	"operations": {
 		"title": "Operaciones",
 		"drivers": "Choferes",
-	    "status":"Status",
+	    "status":"Estado",
 	    "statuses" : {
-	        "upcoming":"Upcoming",
-	        "inProgress":"In progress",
-	        "completed": "Completed",
-	        "invoiced": "Invoiced",
-	        "invoicedMissingTimeEntries" : "Invoiced missing time entries",
-	        "paid":"Paid"
+	        "upcoming":"Pendiente",
+	        "inProgress":"En progreso",
+	        "completed": "Completo",
+	        "invoiced": "Facturado",
+	        "invoicedMissingTimeEntries" : "Registros de bitacoran pendientes por asignar a factura",
+	        "paid":"Pagada"
 	    },
 	    "errorMessages":{
 		    "cantUpdateDueInvoiceAssociation":"El registro de bitacora no puede ser cambiado de servicio o removido debido a que está asociado a una factura"
@@ -449,13 +449,14 @@
 			}
 		},
 	    "invoice" : {
+		    "invoice" : "Factura",
 		    "title": "Facturas",
 			"invoiceNumber" : "Número",
 		    "grandTotal" : "Total",
 		    "invoiceDate" : "Fecha",
 		    "isPaid" : "Pagada",
 		    "status" : "Estado",
-		    "insertManual":"Insertar fatura ya pagada",
+		    "insertManual":"Insertar factura ya pagada",
    		    "statuses": {
 			  "inRevision" : "En revisión",
 			  "ended": "Terminada"
@@ -498,6 +499,7 @@
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",
 				"missingInvoiceDate": "Por favor ingrese una fecha para la factura",
+			    "invalidGrandTotal" : "Por favor defina un importe correcto para la factura",
 				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",
 				"insertTimeEntries": "Registros de bitacora agregados a la factura",
 				"insertTimeEntriesInvoiceError": "Los registros de la bitacora seleccionados no se pueden agregar a la factura debido a que uno o mas ya fue relacionado con una factura."

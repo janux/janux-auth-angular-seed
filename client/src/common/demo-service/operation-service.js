@@ -557,7 +557,7 @@ module.exports =
 
 			/**
 			 *
-			 * @param operation The operation to know the status.
+			 * @param operation The operation to know the stats.
 			 * @param invoices The invoices to look for in order to determine the status.
 			 * @return {string} The result.
 			 */

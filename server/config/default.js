@@ -47,12 +47,12 @@ module.exports = {
 		},
 
 		smtp: {
-			host: 'smtp.sendgrid.net',
-			from: 'glarus@glarus.com.mx',
+			host: 'smtp.server.com',
+			from: 'test@email.com',
 			port: 587,
 			auth: {
-				user: 'apikey',
-				pass: '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'
+				user: 'user',
+				pass: 'pass'
 			}
 		},
 

@@ -4,7 +4,7 @@
 // The loginToolbar directive is a reusable widget that can show login or logout buttons
 // and information the current authenticated user
 //
-module.exports = ['security', function(security) {
+module.exports = ['security','environmentService', function(security, environmentService) {
 	var directive = {
 		templateUrl: '/common/security/login/toolbar.html',
 		restrict: 'E',
@@ -19,6 +19,10 @@ module.exports = ['security', function(security) {
 				return security.currentUser;
 			}, function(currentUser) {
 				$scope.currentUser = currentUser;
+			});
+
+			environmentService.getEnvironmentInfo().then(function (envInfo) {
+				$scope.devEnv = (envInfo.environment==='development');
 			});
 		}
 	};

@@ -32,15 +32,15 @@ module.exports = ['$scope','$state','dialogService','userInvService','invitation
 			$scope.user.confirmPass = '';
 
 			// Add default phone if needed
-			if (_.isNil($scope.user.contact.phoneNumbers())) {
+			if (_.isNil($scope.user.contact.phoneNumbers()) || $scope.user.contact.phoneNumbers().length===0) {
 				$scope.user.contact.setContactMethod('HOME', new PhoneNumber());
 			}
 			// Add default postal address if needed
-			if (_.isNil($scope.user.contact.postalAddresses())) {
+			if (_.isNil($scope.user.contact.postalAddresses()) || $scope.user.contact.postalAddresses().length===0) {
 				$scope.user.contact.setContactMethod('HOME', new PostalAddress());
 			}
 			// Add default email if needed
-			if (_.isNil($scope.user.contact.emailAddresses())) {
+			if (_.isNil($scope.user.contact.emailAddresses()) || $scope.user.contact.emailAddresses().length===0) {
 				$scope.user.contact.setContactMethod('PERSONAL', new Email());
 			}
 		}

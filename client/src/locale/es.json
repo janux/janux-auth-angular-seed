@@ -18,7 +18,8 @@
 		"search": "Buscar",
 		"staff": "Personal",
 		"back": "Atras",
-		"welcome": "Bienvenido"
+		"welcome": "Bienvenido",
+		"devEnv": "App de prueba"
 	},
 	"login": {
 		"msg": {

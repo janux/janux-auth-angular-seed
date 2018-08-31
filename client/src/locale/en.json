@@ -18,7 +18,8 @@
 		"search": "Search",
 		"staff": "Staff",
 		"back": "Back",
-		"welcome": "Welcome"
+		"welcome": "Welcome",
+		"devEnv": "Staging App"
 	},
 	"login": {
 		"msg": {

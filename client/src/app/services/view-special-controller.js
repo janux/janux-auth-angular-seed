@@ -248,8 +248,6 @@ module.exports =
 		$scope.$broadcast(config.invoice.events.invoiceEditModeDisabled);
 	};
 
-
-
 	$scope.cancelInvoiceDetail = function () {
 		$scope.editModeInvoiceDetail = false;
 		$scope.changeTab('invoices');

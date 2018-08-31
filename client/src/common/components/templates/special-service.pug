@@ -166,8 +166,8 @@
 						//	//md-divider.divider-line-glarus
 						//	button.btn-plus(ng-click="addVehicle()")
 						//		i.fa.fa-plus-square
-		// Invoice section form.
-		div(ng-show='userRole.can("UPDATE","INVOICE")').section-form
+		// Begin invoice section form.
+		div(ng-show='userRole.can("UPDATE","INVOICE") && showinvoicemanual==="true"').section-form
 			p.form-section-glarus
 				| {{ 'services.invoice.invoice' | translate }}
 			fieldset.fieldset-flex
@@ -207,6 +207,7 @@
 					.an-material.nopadding
 						md-input-container.full
 							button.btn.btn-ok(ng-click='createNewInvoiceManual()') {{ 'services.invoice.insertManual' | translate }}
+		// End invoice section form.
 
 	.special-right
 		.section-form

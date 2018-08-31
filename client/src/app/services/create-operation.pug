@@ -20,12 +20,11 @@ side-bar
 				.form-mid-toolbar-glarus.form-group
 					.text-only
 						span {{ 'services.specialService' | translate | uppercase }}
-
 					.btn-row
 						button.btn(ng-click='save()')
 							i.fa.fa-check
 						button.btn(ng-click='cancel()')
 							i.fa.fa-times
 
-				special-service(data="data", cl='cl')
+				special-service(data="data", cl='cl' , showinvoicemanual = "{{false}}")
 footer-Janux

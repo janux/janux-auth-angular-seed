@@ -76,7 +76,7 @@ side-bar
 							button.btn( ng-click="cancelInvoiceDetail('invoices')")
 								i.fa.fa-times
 
-				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', invoices='invoices', disabled='!editMode', disableautomaticname='{{true}}')
+				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', invoices='invoices', disabled='!editMode', disableautomaticname='{{true}}' ,showinvoicemanual='{{true}}')
 
 				.container-body(ng-show='currentNavItem=="time-sheet"')
 					.add-row-section

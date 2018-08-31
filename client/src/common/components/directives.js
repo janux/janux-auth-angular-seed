@@ -295,6 +295,7 @@ angular.module('commonComponents', [])
 		var specialServiceScope = scopeDefinition;
 		specialServiceScope.cl = "=";
 		specialServiceScope.invoices = "=";
+		specialServiceScope.showinvoicemanual = "@";
 		specialServiceScope.disabled = "<";
 		specialServiceScope.disableautomaticname = "@";
 
@@ -661,9 +662,12 @@ angular.module('commonComponents', [])
 					// does not have access to usesRole via $rootScope.
 					$scope.userRole = $rootScope.userRole;
 
-					console.log( "can "  + $rootScope.userRole.can("UPDATE", "INVOICE"));
+					// Giver the value showinvoicemanual comes from a directive.
+					// We need to compare the value a  string.
+					if ($scope.showinvoicemanual === 'true') {
+						$scope.operationStatus = operationService.generateStatus($scope.data, $scope.invoices);
+					}
 
-					$scope.operationStatus = operationService.generateStatus($scope.data, $scope.invoices);
 					$scope.invoiceManualForm = {
 						invoiceNumber: '',
 						invoiceDate  : undefined,

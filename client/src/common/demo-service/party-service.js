@@ -79,7 +79,7 @@ module.exports =
 						[id]
 					).then(function (resp) {
 						var contact = resp.data.result;
-						console.log('partyService findOne', contact);
+						// console.log('partyService findOne', contact);
 						contact = fromJSON(contact);
 						return contact;
 					});

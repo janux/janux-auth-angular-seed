@@ -722,6 +722,19 @@ angular.module('commonComponents', [])
 						}
 					};
 
+					$scope.updateInvoicePaid = function () {
+						var invoiceToUpdate = $scope.invoices[0];
+						invoiceToUpdate.isPaid = $scope.invoiceManualForm.isPaid;
+						invoiceService.update(invoiceToUpdate)
+							.then(function () {
+								invoiceService.findByIdOperation($scope.data.id)
+									.then(function (result) {
+										$scope.operationStatus = operationService.generateStatus($scope.data, result);
+										$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
+									});
+							});
+					};
+
 					var validateFormInvoiceData = function () {
 						var result = true;
 						if (!_.isString($scope.invoiceManualForm.invoiceNumber) || $scope.invoiceManualForm.invoiceNumber.trim() === '') {

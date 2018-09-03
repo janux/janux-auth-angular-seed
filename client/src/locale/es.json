@@ -270,7 +270,7 @@
 	        "upcoming":"Pendiente",
 	        "inProgress":"En progreso",
 	        "completed": "Completo",
-	        "invoiced": "Facturado (no pagado)",
+	        "invoiced": "Facturado",
 	        "invoicedMissingTimeEntries" : "Registros de bitacoran pendientes por asignar a factura",
 	        "paid":"Pagada"
 	    },
@@ -459,6 +459,7 @@
 		    "isPaid" : "Pagada",
 		    "status" : "Estado",
 		    "insertManual":"Insertar factura",
+		    "updatePaid" : "Actualizar",
    		    "statuses": {
 			  "inRevision" : "En revisión",
 			  "ended": "Terminada"

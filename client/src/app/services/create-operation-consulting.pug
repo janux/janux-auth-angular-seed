@@ -1,0 +1,30 @@
+login-toolbar(toolbar-title='services.title')
+
+side-bar
+
+.page-content-wrapper.operations-page(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum
+						| {{ 'services.title' | translate }}
+					h2.title-bar-txt
+						| {{ 'services.addSpecial' | translate }}
+				span(flex)
+
+
+		.container-fluid-flex.spacing-bottom
+
+			md-content.spacing-ls(style="margin-top:20px")
+				.form-mid-toolbar-glarus.form-group
+					.text-only
+						span {{ 'services.consultingService' | translate | uppercase }}
+					.btn-row
+						button.btn(ng-click='save()')
+							i.fa.fa-check
+						button.btn(ng-click='cancel()')
+							i.fa.fa-times
+
+				special-service(data="data", cl='cl' , showinvoicemanual = "{{false}}" )
+footer-Janux

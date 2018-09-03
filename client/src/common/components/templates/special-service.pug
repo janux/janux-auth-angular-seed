@@ -54,7 +54,8 @@
 											i.fa.fa-plus-circle
 										strong {{ 'services.specialForm.addRequester' | translate }}
 
-		.section-form
+		// Principals section
+		.section-form(ng-show='data.type==="SPECIAL_OPS"')
 			fieldset.fieldset-flex
 				p.form-section-glarus
 					| {{ 'services.specialForm.principal' | translate}}
@@ -93,7 +94,8 @@
 						//	button.btn-plus(ng-click="addPrincipal()")
 						//		i.fa.fa-plus-square
 
-		.section-form
+		// Resources section.
+		.section-form(ng-show='data.type==="SPECIAL_OPS"')
 			fieldset.fieldset-flex
 				p.form-section-glarus
 					| {{ 'services.specialForm.resources' | translate }}
@@ -183,7 +185,7 @@
 					.an-material.nopadding
 						md-input-container.full
 							|    {{ 'services.invoice.grandTotal' | translate }} : {{invoices[0].grandTotal | currency}}
-			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="RESEARCH")')
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
 				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full
@@ -198,12 +200,17 @@
 							format='YYYY-MM-DD',
 							md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}"
 							id="invoiceDate")
-			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="RESEARCH")')
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
 				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full
 							label {{ 'services.invoice.grandTotal' | translate }}
 							input(type="number" ng-model='invoiceManualForm.grandTotal' id="grandTotal")
+					.an-material.nopadding
+						md-input-container.full
+							md-checkbox(ng-model="invoiceManualForm.isPaid" id="isPaid") {{ 'services.invoice.isPaid' | translate }}
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
+				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full
 							button.btn.btn-ok(ng-click='createNewInvoiceManual()') {{ 'services.invoice.insertManual' | translate }}

@@ -19,7 +19,7 @@ module.exports =
 			result.grandTotal = _.isNil(object.grandTotal) ? undefined : Number(object.grandTotal);
 			result.invoiceDate = dateUtilService.stringToDate(object.invoiceDate);
 			result.items = _.isNil(object.items) ? [] : _.map(result.items, fromJSONItem);
-			result.defaultOperation = operationService.fromJSON(result.defaultOperation);
+			result.defaultOperation = _.isNil(object.defaultOperation) ? undefined : operationService.fromJSON(object.defaultOperation);
 			return result;
 		}
 
@@ -51,7 +51,7 @@ module.exports =
 			const result = _.clone(object);
 			result.client = partyService.toJSON(object.client);
 			result.items = _.map(object.items, toJSONItem);
-			result.defaultOperation = operationService.toJSON(object.defaultOperation);
+			result.defaultOperation = _.isNil(object.defaultOperation) ? undefined : operationService.toJSON(object.defaultOperation);
 			return result;
 		}
 

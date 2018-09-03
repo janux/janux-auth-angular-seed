@@ -9,8 +9,10 @@ side-bar
 				md-truncate
 					span.title-breadcrum
 						| {{ 'services.title' | translate }}
-					h2.title-bar-txt
+					h2.title-bar-txt(ng-show='data.type==="SPECIAL_OPS"')
 						| {{ 'services.specialService' | translate }}: {{ data.name }}
+					h2.title-bar-txt(ng-show='data.type==="CONSULTING"')
+						| {{ 'services.consultingService' | translate }}: {{ data.name }}
 				span(flex)
 
 
@@ -21,7 +23,7 @@ side-bar
 						md-nav-bar( md-selected-nav-item="currentNavItem==='invoiceDetail' ? 'invoices': currentNavItem" nav-bar-aria-label="links")
 							md-nav-item.active(md-nav-click="changeTab('summary')" name="summary")
 								| {{ 'services.tabs.summary' | translate | uppercase }}
-							md-nav-item(md-nav-click="changeTab('time-sheet')" name="time-sheet")
+							md-nav-item(md-nav-click="changeTab('time-sheet')" name="time-sheet" ng-show='data.type!=="CONSULTING"')
 								| {{ 'services.tabs.timeSheet' | translate | uppercase }}
 							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","INVOICE");')
 								| {{ 'services.tabs.invoices' | translate | uppercase }}

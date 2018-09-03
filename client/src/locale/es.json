@@ -270,7 +270,7 @@
 	        "upcoming":"Pendiente",
 	        "inProgress":"En progreso",
 	        "completed": "Completo",
-	        "invoiced": "Facturado",
+	        "invoiced": "Facturado (no pagado)",
 	        "invoicedMissingTimeEntries" : "Registros de bitacoran pendientes por asignar a factura",
 	        "paid":"Pagada"
 	    },
@@ -402,6 +402,7 @@
 			"DRIVER": "Chofer fijo",
 			"GUARD": "Guardia",
 			"SPECIAL_OPS": "Especial",
+		    "CONSULTING" : "Consultoría",
 			"details": "Detalles"
 		},
 		"tabs": {
@@ -414,6 +415,7 @@
 		"newInvoice": "Factura nueva",
 		"addSpecial":"Agregar servicio especial",
 		"specialService": "Servicio especial",
+	    "consultingService": "Consulting service",
 		"specialForm": {
 			"name": "Nombre del servicio",
 			"begin": "Inicio",
@@ -456,7 +458,7 @@
 		    "invoiceDate" : "Fecha",
 		    "isPaid" : "Pagada",
 		    "status" : "Estado",
-		    "insertManual":"Insertar factura ya pagada",
+		    "insertManual":"Insertar factura",
    		    "statuses": {
 			  "inRevision" : "En revisión",
 			  "ended": "Terminada"

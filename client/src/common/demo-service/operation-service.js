@@ -623,6 +623,13 @@ module.exports =
 							} else {
 								result = $filter('translate')('operations.statuses.invoicedMissingTimeEntries');
 							}
+						} else if (totalTimeEntriesOperation === 0 && invoicesAssociated.length === 1) {
+							// It seems it is a historical operation.
+							if (invoicesAssociated[0].isPaid === true) {
+								result = $filter('translate')('operations.statuses.paid');
+							}else{
+								result = $filter('translate')('operations.statuses.invoiced');
+							}
 						}
 						break;
 					case 'CONSULTING':

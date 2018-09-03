@@ -200,20 +200,26 @@
 							format='YYYY-MM-DD',
 							md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}"
 							id="invoiceDate")
-			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
+			fieldset.fieldset-flex
 				.fieldset-flex
-					.an-material.nopadding
+					.an-material.nopadding(ng-show='(invoices==null || invoices.length===0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
 						md-input-container.full
 							label {{ 'services.invoice.grandTotal' | translate }}
 							input(type="number" ng-model='invoiceManualForm.grandTotal' id="grandTotal")
-					.an-material.nopadding
+					.an-material.nopadding(ng-show='(invoices!=null || invoices.length===1) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING" ) && invoices[0].isPaid!==true')
 						md-input-container.full
 							md-checkbox(ng-model="invoiceManualForm.isPaid" id="isPaid") {{ 'services.invoice.isPaid' | translate }}
-			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length==0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
+			fieldset.fieldset-flex(ng-show='(invoices==null || invoices.length===0) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING")')
 				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full
 							button.btn.btn-ok(ng-click='createNewInvoiceManual()') {{ 'services.invoice.insertManual' | translate }}
+			fieldset.fieldset-flex(ng-show='(invoices!=null && invoices.length===1) && (data.type=="SPECIAL_OPS" || data.type=="CONSULTING") && invoices[0].isPaid!==true')
+				.fieldset-flex
+					.an-material.nopadding
+						md-input-container.full
+							button.btn.btn-ok(ng-click='updateInvoicePaid()') {{ 'services.invoice.updatePaid' | translate }}
+
 		// End invoice section form.
 
 	.special-right

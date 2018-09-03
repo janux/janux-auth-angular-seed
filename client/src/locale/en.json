@@ -269,7 +269,7 @@
 	  	    "upcoming":"Upcoming",
 	  	    "inProgress":"In progress",
 	  	    "completed": "Completed",
-	  	    "invoiced": "Invoiced (not payed)",
+	  	    "invoiced": "Invoiced",
 	  	    "invoicedMissingTimeEntries" : "Invoiced missing time entries",
 	  	    "paid":"Paid"
 	    },
@@ -457,6 +457,7 @@
 		    "isPaid" : "Pagada",
 			"status" : "Status",
 		    "insertManual":"Insert invoice",
+		    "updatePaid" : "Update",
 		    "statuses": {
 				"inRevision" : "In revision",
 			    "ended": "Ended"

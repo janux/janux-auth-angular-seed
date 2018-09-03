@@ -671,7 +671,8 @@ angular.module('commonComponents', [])
 					$scope.invoiceManualForm = {
 						invoiceNumber: '',
 						invoiceDate  : undefined,
-						grandTotal   : 0
+						grandTotal   : 0,
+						isPaid       : false
 					};
 
 					$scope.createNewInvoiceManual = function () {
@@ -688,18 +689,18 @@ angular.module('commonComponents', [])
 							operationReference.interestedParty = null;
 							var newInvoice = {
 								client             : operationReference.client,
-								invoiceNumber      : $scope.invoiceManualForm .invoiceNumber,
-								invoiceDate        : $scope.invoiceManualForm .invoiceDate,
+								invoiceNumber      : $scope.invoiceManualForm.invoiceNumber,
+								invoiceDate        : $scope.invoiceManualForm.invoiceDate,
 								comments           : '',
 								items              : [],
 								status             : config.invoice.status.inRevision,
-								isPaid             : false,
+								isPaid             : $scope.invoiceManualForm.isPaid,
 								discount           : 0,
 								discountPercentage : 0,
-								totalBeforeExpenses: $scope.invoiceManualForm .grandTotal,
-								totalAfterExpenses : $scope.invoiceManualForm .grandTotal,
+								totalBeforeExpenses: $scope.invoiceManualForm.grandTotal,
+								totalAfterExpenses : $scope.invoiceManualForm.grandTotal,
 								totalExpenses      : 0,
-								grandTotal         : $scope.invoiceManualForm .grandTotal,
+								grandTotal         : $scope.invoiceManualForm.grandTotal,
 								userDefinedValues  : true,
 								defaultOperation   : operationReference
 							};
@@ -723,7 +724,7 @@ angular.module('commonComponents', [])
 
 					var validateFormInvoiceData = function () {
 						var result = true;
-						if (!_.isString($scope.invoiceManualForm.invoiceNumber) || $scope.invoiceManualForm.invoiceNumber.trim()==='' ) {
+						if (!_.isString($scope.invoiceManualForm.invoiceNumber) || $scope.invoiceManualForm.invoiceNumber.trim() === '') {
 							infoDialog('services.invoice.dialogs.missingInvoiceNumber', $scope, $filter);
 						}
 						if (!_.isDate($scope.invoiceManualForm.invoiceDate)) {
@@ -757,8 +758,8 @@ angular.module('commonComponents', [])
 			scope      : false,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/add-special-service.html',
-			controller : ['$scope','operationService','timeEntryService','$mdDialog','$timeout','$modal','$filter','nameQueryService',
-				function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $modal, $filter , nameQueryService) {
+			controller : ['$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'nameQueryService',
+				function ($scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, nameQueryService) {
 					operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 
 						var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -868,7 +869,7 @@ angular.module('commonComponents', [])
 							return query ? allDrivers.filter(nameQueryService.createFilterForStaff(query)) : allDrivers;
 						};
 
-						function createFilterForVehicle (query) {
+						function createFilterForVehicle(query) {
 							return function filterFn(elementVehicle) {
 								var displayName = elementVehicle.resource.name + elementVehicle.resource.plateNumber;
 								return displayName.toLowerCase().includes(query.toLowerCase());
@@ -891,7 +892,7 @@ angular.module('commonComponents', [])
 							}
 						};
 
-						function createFilterForOps (query) {
+						function createFilterForOps(query) {
 							return function filterFn(operation) {
 								console.log('operation', operation);
 								var contains = operation.name.toLowerCase().includes(query.toLowerCase());

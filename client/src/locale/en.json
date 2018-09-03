@@ -269,7 +269,7 @@
 	  	    "upcoming":"Upcoming",
 	  	    "inProgress":"In progress",
 	  	    "completed": "Completed",
-	  	    "invoiced": "Invoiced",
+	  	    "invoiced": "Invoiced (not payed)",
 	  	    "invoicedMissingTimeEntries" : "Invoiced missing time entries",
 	  	    "paid":"Paid"
 	    },
@@ -396,10 +396,11 @@
 			"duration": "Duration",
 			"begin": "Begin",
 			"end": "End",
-		     "status": "Status",
+		    "status": "Status",
 			"DRIVER": "Fixed driver",
 			"GUARD": "Guard",
 			"SPECIAL_OPS": "Special",
+		    "CONSULTING" : "Consulting",
 			"details": "Details"
 		},
 		"tabs": {
@@ -412,6 +413,7 @@
 		"newInvoice": "New invoice",
 		"addSpecial":"Add special service",
 		"specialService": "Special service",
+		"consultingService": "Consulting service",
 		"specialForm": {
 			"name": "Service name",
 			"begin": "Begin",
@@ -454,7 +456,7 @@
 			"invoiceDate" : "Date",
 		    "isPaid" : "Pagada",
 			"status" : "Status",
-		    "insertManual":"Insert invoice already paid",
+		    "insertManual":"Insert invoice",
 		    "statuses": {
 				"inRevision" : "In revision",
 			    "ended": "Ended"

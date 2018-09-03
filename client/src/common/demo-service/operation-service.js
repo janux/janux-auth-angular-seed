@@ -573,6 +573,10 @@ module.exports =
 				var totalTimeEntriesOperation = operationAttribute != null ? Number(operationAttribute.value) : 0;
 				var invoicesAssociated = _.filter(invoices, function (invoice) {
 					var result = false;
+
+					// Validate for default operation.
+
+
 					var attribute = _.find(invoice.attributes, function (attribute) {
 						return attribute.name === INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES;
 					});
@@ -585,6 +589,11 @@ module.exports =
 							}
 						}
 					}
+
+					if (!_.isNil(invoice.defaultOperation) && invoice.defaultOperation.id === operation.id) {
+						result = true;
+					}
+
 					return result;
 				});
 				switch (operation.type) {
@@ -613,6 +622,33 @@ module.exports =
 								result = $filter('translate')('operations.statuses.invoiced');
 							} else {
 								result = $filter('translate')('operations.statuses.invoicedMissingTimeEntries');
+							}
+						}
+						break;
+					case 'CONSULTING':
+						if (invoicesAssociated.length === 0) {
+							// In this case, there are not invoices associated to the operations.
+							// The only thing we can show if if the service has started or ended.
+							if (_.isDate(operation.start) && operation.start.getTime() > today.getTime()) {
+								// Upcoming.
+								result = $filter('translate')('operations.statuses.upcoming');
+							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
+								_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
+								// In progress
+								result = $filter('translate')('operations.statuses.inProgress');
+							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
+								_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
+								// Completed
+								result = $filter('translate')('operations.statuses.completed');
+							}
+						} else {
+							var onlyInvoice = invoicesAssociated[0];
+							// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
+							// But only show something if the operation has time entries associated.
+							if (onlyInvoice.isPaid===true) {
+								result = $filter('translate')('operations.statuses.paid');
+							} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
+								result = $filter('translate')('operations.statuses.invoiced');
 							}
 						}
 						break;

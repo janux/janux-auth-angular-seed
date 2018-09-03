@@ -38,6 +38,7 @@
 		"copy": "2017 Janux Media LTD. Copyright.",
 		"requiredFields": "* Campos obligatorios",
 		"termsAndCond": "Acepto términos y condiciones",
+		"recoverText": "Ingrese su nombre de usuario para recuperar su contraseña",
 		"dialogs": {
 			"termsAndCondErr": "Debe aceptar los términos y condiciones antes de proceder"
 		}
@@ -114,6 +115,9 @@
 		"jobTitle": "Funciones",
 		"phonesTitle": "Teléfonos",
 		"mailsTitle": "Correos",
+		"addressTitle": "Dirección",
+		"phoneTitle": "Telefono",
+		"mailTitle": "Correo",
 	    "functionsReceived": "Funciones que se le proveen al cliente",
 		"email": "E-mail",
 		"edit": "Editar",

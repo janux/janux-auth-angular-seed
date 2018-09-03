@@ -19,9 +19,9 @@
 
 			div(ng-show='currentNavItem=="userContact"')
 				.user-contact
-					emails(data="user.contact", section="staff.mailsTitle", register="true")
-					phones(data="user.contact", section="staff.phonesTitle", register="true")
-					addresses(data="user.contact" section="staff.addressesTitle", register="true")
+					emails(data="user.contact", section="staff.mailTitle", register="true")
+					phones(data="user.contact", section="staff.phoneTitle", register="true")
+					addresses(data="user.contact" section="staff.addressTitle", register="true")
 				.fieldset-flex
 					div
 						md-checkbox(ng-model='termsAcepted') {{ 'login.termsAndCond' | translate }}

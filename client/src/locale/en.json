@@ -38,6 +38,7 @@
 		"copy": "2017 Janux Media LTD. Copyright.",
 		"requiredFields": "* Required fields",
 		"termsAndCond": "I accept terms and conditions",
+		"recoverText": "Enter your username to recover your password",
 		"dialogs": {
 			"termsAndCondErr": "You must accept the terms and conditions before proceeding"
 		}
@@ -110,10 +111,13 @@
 		"editStaff": "Edit staff",
 		"createStaff": "Create staff",
 		"employeeTitle": "Employee",
-		"addressesTitle": "Adresses",
+		"addressesTitle": "Addresses",
 		"jobTitle": "Activities",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
+		"addressTitle": "Address",
+		"phoneTitle": "Phone",
+		"mailTitle": "Email",
 		"email": "Email",
 		"edit": "Edit",
 		"delete": "Delete",

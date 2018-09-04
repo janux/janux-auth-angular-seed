@@ -317,7 +317,8 @@
 				"NM": "Nocturno mantenimiento (NM)",
 				"NRM": "Nocturno recibo mercancia (NRM)",
 			    "CLOSED" : "Tienda cerrada (CLOSED)",
-			    "GUARD_SHIFT_MANAGER": "Jefe de turno"
+			    "GUARD_SHIFT_MANAGER": "Jefe de turno",
+			    "NOT_COVERED" : "No se cubrió (NOT COVERED)"
 			}
 		},
 	  	"specialsTimeLog":{

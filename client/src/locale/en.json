@@ -316,7 +316,8 @@
 				"NM": "Night shift maintenance (NM)",
 				"NRM": "Night shift goods receipt (NRM)",
 			    "CLOSED" : "Closed store (CLOSED)",
-			    "GUARD_SHIFT_MANAGER": "Shift manager"
+			    "GUARD_SHIFT_MANAGER": "Shift manager",
+			    "NOT_COVERED":"Not covered (NOT COVERED)"
 			}
 		}, "specials": "Specials",
 		"specialsTimeLog":{

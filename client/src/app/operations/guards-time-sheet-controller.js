@@ -47,7 +47,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		// Set isBillableFlag given the user input.
 		function setBillableFlag(timeEntry) {
-			if (timeEntry.extras === 'A' || timeEntry.extras === 'CLOSED') {
+			if (timeEntry.extras === 'A' || timeEntry.extras === 'CLOSED' || timeEntry.extras === 'NOT COVERED') {
 				timeEntry.billable = false;
 			}
 			return timeEntry;
@@ -89,6 +89,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				//If guard support. We change the resource type.
 				timeEntry.resources[0].type = 'GUARD_SUPPORT';
 			} else if (timeEntry.extras === 'CLOSED') {
+				// If the store is closed. We remove the assigned resource/
+				timeEntry.resources = [];
+			} else if (timeEntry.extras === 'NOT COVERED') {
+				// If the record is "Not covered". We remove the assigned resource.
 				timeEntry.resources = [];
 			} else if (timeEntry.extras === 'GUARD_SHIFT_MANAGER') {
 				timeEntry.resources[0].type = 'GUARD_SHIFT_MANAGER';
@@ -264,7 +268,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		// Add new record
 		$scope.addRow = function () {
 			// Selected person
-			if ($scope.lbRow.extras === 'CLOSED' || !!$scope.lbRow.staff) {
+			if ($scope.lbRow.extras === 'CLOSED' || $scope.lbRow.extras === 'NOT COVERED' || !!$scope.lbRow.staff) {
 				if (!!$scope.lbRow.operation) {
 					if (!!$scope.driverTimeSheet.$valid) {
 						var begin = moment($scope.lbRow.start);
@@ -430,6 +434,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 							break;
 						case 'CLOSED':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.CLOSED');
+							break;
+						case 'NOT COVERED':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NOT_COVERED');
 							break;
 						case 'GUARD_SHIFT_MANAGER':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.GUARD_SHIFT_MANAGER');
@@ -623,11 +630,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 				var resource = _.clone(rowObj.data.staff);
 				// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-				delete resource.opId;
+				if (!_.isNil(resource)) {
+					delete resource.opId;
+				}
+
 
 				var timeEntryToUpdate = {
 					'id'         : rowObj.data.id,
-					'resources'  : [_.clone(resource)],
+					'resources'  : _.isNil(resource) ? [] : [_.clone(resource)],
 					'principals' : [],
 					'attributes' : [],
 					'type'       : 'GUARD',

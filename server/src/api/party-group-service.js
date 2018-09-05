@@ -87,6 +87,9 @@ var createInstance = function (partyGroupServiceReference) {
 		return partyGroupServiceReferenceInstance.addItemNewParty(code, partyObject, attributes)
 			.then(function (result) {
 				return Promise.resolve(result).asCallback(callback);
+			})
+			.catch(function (err) {
+				callback(new Error(err[0].message));
 			});
 	};
 

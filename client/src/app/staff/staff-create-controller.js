@@ -5,8 +5,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-'$scope','partyService', 'partyGroupService', function(
- $scope , partyService , partyGroupService) {
+'$scope','partyService','partyGroupService','dialogService', function(
+ $scope , partyService , partyGroupService , dialogService) {
 
  		// Create a new staff
 		var staff = new Person();
@@ -27,6 +27,8 @@ module.exports = [
 				.then(function (result) {
 					console.log('Staff has been saved!', result);
 					window.history.back();
+				}).catch(function (err) {
+					dialogService.info(err, true);
 				});
 		};
 

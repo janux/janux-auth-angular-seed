@@ -145,6 +145,9 @@ var createInstance = function (serviceReference) {
 		return partyServiceImpl.update(object)
 			.then(function (result) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
+			})
+			.catch(function (err) {
+				callback(new Error(err[0].message));
 			});
 	};
 

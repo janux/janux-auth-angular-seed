@@ -9,12 +9,12 @@ module.exports = ['$modal','$filter', function ($modal, $filter) {
 
 	var service = {
 
-		info: function (translateKey) {
+		info: function (translateKey, skipTranslate) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',
 				controller: ['$scope', '$modalInstance',
 					function ($scope, $modalInstance) {
-						$scope.message = $filter('translate')(translateKey);
+						$scope.message = (skipTranslate)?translateKey:$filter('translate')(translateKey);
 
 						$scope.ok = function () {
 							$modalInstance.close();

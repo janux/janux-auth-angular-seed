@@ -168,6 +168,8 @@ module.exports =
 						[code, partyService.toJSON(party), attributes]
 					).then(function (resp) {
 						return resp.data.result;
+					}).catch(function (err) {
+						return Promise.reject(err.data.error.message);
 					});
 				},
 

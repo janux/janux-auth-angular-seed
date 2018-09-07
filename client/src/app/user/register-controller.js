@@ -7,8 +7,8 @@ var PostalAddress = require('janux-people').PostalAddress;
 var _ = require('lodash');
 var md5 = require('md5');
 
-module.exports = ['$scope','$state','dialogService','userInvService','invitation','security','config','userService','$translate','jnxStorage',
-		  function($scope , $state , dialogService , userInvService , invitation , security,config,userService,$translate,jnxStorage) {
+module.exports = ['$scope','$state','dialogService','userInvService','invitation','security','config','userService','$translate','jnxStorage','validationService',
+		  function($scope , $state , dialogService , userInvService , invitation , security,config,userService,$translate,jnxStorage,validationService) {
 
 	var invObj = invitation;
 	console.log('invitation', invObj);
@@ -52,6 +52,7 @@ module.exports = ['$scope','$state','dialogService','userInvService','invitation
 	// 	confirmPass: '',
 	// 	enabled: true
 	// };
+	// $scope.user = user;
 
 	$scope.termsAcepted = false;
 	$scope.currentNavItem = 'userAccount';
@@ -65,25 +66,29 @@ module.exports = ['$scope','$state','dialogService','userInvService','invitation
 	// user.contact = person;
 
 	$scope.goto = function (tab) {
-		// Save invitation + account
 		if ($scope.user.username === '') {
 			dialogService.info('user.dialogs.userEmpty');
 			return;
-		} if ($scope.user.password === '') {
-			dialogService.info('user.dialogs.passEmpty');
-			return;
-		} else if ($scope.user.password !== $scope.user.confirmPass) {
-			dialogService.info('user.dialogs.passConfMatch');
-			return;
-		} else if (!$scope.user.password.match(/^[a-zA-Z0-9_-]{8,20}$/)) {
-			dialogService.info('user.dialogs.passStrength');
-			return;
+		}
+
+		try {
+			validationService.password($scope.user.password, $scope.user.confirmPass);
+		} catch (err) {
+			switch (err) {
+				case 'notMatch':
+					dialogService.info('user.dialogs.passConfMatch');
+					return;
+				case 'strength':
+					dialogService.info('user.dialogs.passStrength');
+					return;
+			}
 		}
 
 		$scope.currentNavItem = tab;
 	};
 
 	$scope.register = function () {
+		// Save invitation + account
 		if ($scope.termsAcepted) {
 			var username = $scope.user.username;
 			var password = $scope.user.password;

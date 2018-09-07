@@ -1,8 +1,10 @@
 'use strict';
 
+var _ = require('lodash');
+
 module.exports = [
-'$scope','userService','$state','user','roles','$modal', function(
- $scope , userService , $state , user , roles , $modal) {
+'$scope','userService','$state','user','roles','$modal','dialogService','validationService',function(
+ $scope , userService , $state , user , roles , $modal , dialogService , validationService) {
 
 	console.log('user being edited', user);
 
@@ -12,6 +14,19 @@ module.exports = [
 	$scope.currentNavItem = 'user';
 	
 	$scope.save = function () {
+
+		if (!_.isNil($scope.user.contact.emailAddresses(false)) &&
+			$scope.user.contact.emailAddresses(false).length > 0) {
+			if(!_.every($scope.user.contact.emailAddresses(false), function (email) {
+				if (!validationService.email(email.address)) {
+					dialogService.info('party.dialogs.invalidEmail');
+					return false;
+				}
+				return true;
+			})) {
+				return false;
+			}
+		}
 
 		$scope.user.roles = [];
 

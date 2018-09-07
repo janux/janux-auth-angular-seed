@@ -563,7 +563,8 @@
 	    "lastYear":"Last year"
 	},
 	"dialogs":{
-		"delete":"Are you sure to delete the "
+		"delete":"Are you sure to delete the ",
+		"accessDenied": "You do not have enough access privileges for this operation"
 	},
 	"party": {
 		"person": {
@@ -635,7 +636,8 @@
 			"contactLastNameEmpty": "Contact last name can't be empty",
 			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
 			"noContacts": "There is no associated group of contacts",
-			"addingContact": "Adding contact"
+			"addingContact": "Adding contact",
+			"invalidEmail": "The email address you entered is invalid"
 		},
 		"contactType": {
 			"HOME": "Home",
@@ -645,8 +647,5 @@
 			"FAX": "Fax",
 			"OTHER": "Other"
 		}
-	},
-	"dialogs": {
-		"accessDenied": "You do not have enough access privileges for this operation"
 	}
 }

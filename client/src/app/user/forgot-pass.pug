@@ -1,0 +1,22 @@
+.glarus-bg
+	form.glarus-login(name='recoverForm', novalidate)
+
+		.login-body-glarus
+			img.logo(src='/img/logo_glarus_color.png')
+
+			.label-text {{ 'login.recoverText' | translate }}
+
+			.alert.alert-danger(ng-show='recoverError') {{recoverError}}
+
+			div.an-material-login
+				md-input-container.full
+					label(translate='label.username')
+					input(name='login', ng-model='searchToRecover', required, autofocus, novalidate='')
+
+				.btn-login-cnt
+					button.btn-glarus(ng-click='recover()', ng-disabled='recoverForm.$invalid', translate='label.ok')
+					button.btn-glarus(ui-sref='login', translate='label.cancel')
+
+			div.text-center-legal
+				.copy &copy; {{ "login.copy" | translate }}
+

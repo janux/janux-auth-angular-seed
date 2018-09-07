@@ -39,8 +39,12 @@
 		"requiredFields": "* Required fields",
 		"termsAndCond": "I accept terms and conditions",
 		"recoverText": "Enter your username to recover your password",
+		"recoverPassword": "Please enter your new password",
 		"dialogs": {
-			"termsAndCondErr": "You must accept the terms and conditions before proceeding"
+			"termsAndCondErr": "You must accept the terms and conditions before proceeding",
+			"usernameNotFound": "Specified username or email does not belong to the system",
+			"recoverEmailNotFound": "Unable to recover this account: invalid or non-existent email address.",
+			"recoverEmailSent": "Instructions to recover your access were sent to your email address"
 		}
 	},
 	"user": {
@@ -83,7 +87,11 @@
 			"passConfMatch": "Password must match confirmation",
 			"userEmpty": "User name can't be empty",
 			"passEmpty": "Password can't be empty",
-			"passStrength": "The password must be alphanumeric and contain between 8 and 20 characters"
+			"passStrength": "The password must be alphanumeric and contain between 8 and 20 characters",
+			"invalidCode": "This code is no longer valid",
+			"codeExpired": "This code has expired",
+			"recoveryPrevCompl": "This password recovery has been previously completed",
+			"recoveryDataSent": "Instructions to reset your password has been sent to your email"
 		}
 	},
 	"role": {

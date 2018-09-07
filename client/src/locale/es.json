@@ -39,8 +39,12 @@
 		"requiredFields": "* Campos obligatorios",
 		"termsAndCond": "Acepto términos y condiciones",
 		"recoverText": "Ingrese su nombre de usuario para recuperar su contraseña",
+		"recoverPassword": "Please enter your new password",
 		"dialogs": {
-			"termsAndCondErr": "Debe aceptar los términos y condiciones antes de proceder"
+			"termsAndCondErr": "Debe aceptar los términos y condiciones antes de proceder",
+			"usernameNotFound": "El usuario o correo indicado no pertenece al sistema",
+			"recoverEmailNotFound": "No se puede realizar la recuperación de esta cuenta: dirección de correo electrónico invalida o inexistente.",
+			"recoverEmailSent": "Las instrucciones para recuperar su acceso fueron enviadas a su dirección de correo electrónico"
 		}
 	},
 	"user": {
@@ -83,7 +87,9 @@
 			"passConfMatch": "La contraseña debe coincidir con la confirmación",
 			"userEmpty": "El nombre de usuario no puede estar vacio",
 			"passEmpty": "Debe ingresar una contraseña",
-			"passStrength": "La contraseña debe ser alfanumerica y contener entre 8 y 20 caracteres"
+			"passStrength": "La contraseña debe ser alfanumerica y contener entre 8 y 20 caracteres",
+			"invalidCode": "Este código es inválido",
+			"recoveryDataSent": "Las instrucciones para recuperar la contraseña se han enviado a su correo"
 		}
 	},
 	"role": {

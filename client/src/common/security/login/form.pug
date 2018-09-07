@@ -19,7 +19,7 @@
 
 			.fieldset-flex
 				div
-					a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
+					a.forgot-pass(ui-sref="forgot-password") {{ "login.forgotPass" | translate }}
 
 				.btn-login-cnt
 					button.btn-glarus(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')

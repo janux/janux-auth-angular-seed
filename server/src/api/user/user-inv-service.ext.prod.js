@@ -20,6 +20,89 @@ function UserInvService (userServiceRef, partyServiceRef, commServiceRef, userIn
 }
 
 /**
+ *
+ * @param accountId
+ * @param contactId
+ * @param selectedEmail
+ */
+UserInvService.prototype.recoverPassword = function (accountId, contactId, selectedEmail, callback) {
+	log.debug("Call to recoverPassword with id %j and email %j", contactId, selectedEmail);
+
+	var that = this;
+
+	// Template variables
+	var params = {
+		name: '',
+		email: selectedEmail,
+		recoveryCode: randomstring.generate({
+			length: 12,
+			charset: 'alphanumeric'
+		})
+	};
+
+	return this.partyService.findOne(contactId).then(function (result) {
+		params.name = result.name.first + ' ' + result.name.last;
+
+		// Compile template
+		var myTemplate = pug.compileFile('../server/src/templates/recover-email.pug');
+		var out = myTemplate(params);
+
+		logInvitations.debug('Sending recovery email width params: ' + JSON.stringify(params));
+
+		// Adding email sent event listener
+		that.commService.on(that.commService.events.EMAIL_SUCCESS_SENT_EVENT, function(resp) {
+			log.info('Password recovery email successfully sent ' + out);
+			logInvitations.info('Password recovery created ' + out);
+		});
+
+		// Adding email error event listener
+		that.commService.on(that.commService.events.EMAIL_SENT_ERROR_EVENT, function(error) {
+			log.info('Error sending password recovery ' + error);
+			// logInvitations.info('User invitation created ' + out);
+		});
+
+		var emailParams = {
+			to: selectedEmail,
+			subject: 'Recuperación de contraseña para el sistema Glarus',
+			text: out,
+			html: out
+		};
+
+		// Send email in an asynchronous way
+		that.commService.sendEmail(emailParams);
+
+		// Insert recovery
+		var recoveryRecord = {
+			accountId: accountId,
+			code: params.recoveryCode,
+			expire: moment().add(5, 'days').toDate(),
+			status: 'pending'
+		};
+
+		return that.userInvService.findOneByAccountId(accountId).then(function (recFound) {
+			if (_.isNil(recFound)) {
+				return that.userInvService.insert(recoveryRecord).asCallback(callback);
+			} else {
+				var invReturn = null;
+				switch (recFound.status) {
+					case 'pending':
+						// Update expire and code date of the recovery
+						recFound.code = recoveryRecord.code;
+						recFound.expire = recoveryRecord.expire;
+						log.info('Recovery found ' + JSON.stringify(recFound));
+						invReturn = that.userInvService.update(recFound, true).asCallback(callback);
+						break;
+					case 'completed':
+						invReturn = Promise.resolve(recFound).asCallback(callback);
+						break;
+				}
+				return invReturn;
+			}
+		});
+	});
+};
+
+/**
  * Invite person to create account
  * @param id
  * @param selectedEmail

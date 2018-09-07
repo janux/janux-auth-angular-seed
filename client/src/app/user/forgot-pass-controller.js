@@ -27,7 +27,7 @@ module.exports = ['$scope','dialogService','userInvService','userService','$mdTo
 								userInvService.recoverPassword(userFound.userId, userFound.contact.id, recoverEmail).then(function(resp) {
 									$mdToast.show(
 										$mdToast.simple()
-											.textContent($filter('translate')('staff.dialogs.invSent'))
+											.textContent($filter('translate')('user.dialogs.recoveryDataSent'))
 											.position( 'top right' )
 											.hideDelay(3000)
 									);

@@ -95,7 +95,10 @@ UserInvService.prototype.recoverPassword = function (accountId, contactId, selec
 						invReturn = that.userInvService.update(recFound, true).asCallback(callback);
 						break;
 					case 'completed':
-						invReturn = Promise.resolve(recFound).asCallback(callback);
+						recFound.code = recoveryRecord.code;
+						recFound.expire = recoveryRecord.expire;
+						recFound.status = 'pending';
+						invReturn = that.userInvService.update(recFound, true).asCallback(callback);
 						break;
 				}
 				return invReturn;

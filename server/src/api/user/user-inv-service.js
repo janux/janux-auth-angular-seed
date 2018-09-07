@@ -5,10 +5,9 @@ var log4js           = require('log4js'),
 	PartyServiceImpl = require('janux-persist').PartyServiceImpl,
 	UserInvServiceDev 	= require('./user-inv-service.ext.dev'),
 	UserInvServiceProd  = require('./user-inv-service.ext.prod'),
-	// env 		     = express().settings.env;
-	env 			 = 'production',
 	bluebird         = require('bluebird'),
-	log = log4js.getLogger('UserInvService');
+	log = log4js.getLogger('UserInvService'),
+	JanuxEnvironmentService = require('janux-persist').EnvironmentService;
 
 // variable to hold the singleton instance, if used in that manner
 var userInvServiceInstance = undefined;
@@ -30,6 +29,8 @@ var createInstance = function (userServiceReference, partyServiceReference, comm
 	userInvServicePersistence = userInvitationServiceReference;
 
 	// TODO: Move method logic to janux-persist
+	// var env = JanuxEnvironmentService.getEnvironmentInfo().environment;
+	var env = 'production'; // Needed because we are testing production methods en ops-staging
 	var UserInvServiceExt = (env === 'development') ? UserInvServiceDev : UserInvServiceProd;
 	var that;
 

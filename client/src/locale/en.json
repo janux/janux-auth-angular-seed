@@ -15,6 +15,7 @@
 		"people": "People",
 		"organizations": "Organizations",
 		"username": "User:",
+		"userEmail": "Username or email",
 		"search": "Search",
 		"staff": "Staff",
 		"back": "Back",
@@ -38,7 +39,7 @@
 		"copy": "2017 Janux Media LTD. Copyright.",
 		"requiredFields": "* Required fields",
 		"termsAndCond": "I accept terms and conditions",
-		"recoverText": "Enter your username to recover your password",
+		"recoverText": "Enter your username or email to recover your password",
 		"recoverPassword": "Please enter your new password",
 		"dialogs": {
 			"termsAndCondErr": "You must accept the terms and conditions before proceeding",

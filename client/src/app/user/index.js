@@ -106,7 +106,7 @@ require('angular').module('appUsers', [
 
 	// Recover password
 	.state('forgot-password', {
-		url: '/forgot-password/',
+		url: '/forgot-password',
 		templateUrl: 'app/user/forgot-pass.html',
 		authRequired: false,
 		controller: require('./forgot-pass-controller.js'),
@@ -128,7 +128,7 @@ require('angular').module('appUsers', [
 				}, function (err) {
 					console.log('Error retriving recovery', err, $stateParams.code);
 					dialogService.info('user.dialogs.invalidCode');
-					// $state.go('login');
+					$state.go('forgot-password');
 					return null;
 				});
 			}]

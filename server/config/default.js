@@ -10,7 +10,8 @@ module.exports = {
 			staticUrl : '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
-			secret    : 'jules cyril value 238947 239800 239048 2309483 '
+			secret    : 'jules cyril value 238947 239800 239048 2309483 ',
+			hostname  : 'ops.glarus.com.mx'
 		},
 
 		dao: {

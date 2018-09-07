@@ -10,7 +10,8 @@ var log4js                = require('log4js'),
 	pug 				  = require('pug'),
 	randomstring 		  = require("randomstring"),
 	_					  = require("lodash"),
-	Promise				  = require("bluebird");
+	Promise				  = require("bluebird"),
+	config				  = require('config').serverAppContext;
 
 function UserInvService (userServiceRef, partyServiceRef, commServiceRef, userInvService) {
 	this.userServicePersistence = userServiceRef;
@@ -34,6 +35,7 @@ UserInvService.prototype.recoverPassword = function (accountId, contactId, selec
 	var params = {
 		name: '',
 		email: selectedEmail,
+		hostname: config.server.hostname,
 		recoveryCode: randomstring.generate({
 			length: 12,
 			charset: 'alphanumeric'
@@ -117,6 +119,7 @@ UserInvService.prototype.inviteToCreateAccount = function (id, selectedEmail, as
 	var params = {
 		name: '',
 		email: selectedEmail,
+		hostname: config.server.hostname,
 		invitationCode: randomstring.generate({
 			length: 12,
 			charset: 'alphanumeric'

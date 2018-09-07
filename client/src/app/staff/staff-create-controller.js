@@ -3,10 +3,11 @@ var Person = require('janux-people').Person;
 var PhoneNumber = require('janux-people').PhoneNumber;
 var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
+var _ = require('lodash');
 
 module.exports = [
-'$scope','partyService','partyGroupService','dialogService', function(
- $scope , partyService , partyGroupService , dialogService) {
+'$scope','partyService','partyGroupService','dialogService','validationService', function(
+ $scope , partyService , partyGroupService , dialogService , validationService) {
 
  		// Create a new staff
 		var staff = new Person();
@@ -18,7 +19,20 @@ module.exports = [
 		console.log('Staff: ',$scope.staff);
 
 		$scope.save = function () {
-			console.log('user created', $scope.staff);
+			if (!_.isNil($scope.staff.emailAddresses(false)) &&
+				$scope.staff.emailAddresses(false).length > 0) {
+				if(!_.every($scope.staff.emailAddresses(false), function (email) {
+						if (!validationService.email(email.address)) {
+							dialogService.info('party.dialogs.invalidEmail');
+							return false;
+						}
+						return true;
+					})) {
+					return false;
+				}
+			}
+
+			// console.log('staff about to save', $scope.staff);
 			// partyService.insert($scope.staff).then(function (resp) {
 			// 	console.log('Staff has been saved!', resp);
 			// 	window.history.back();

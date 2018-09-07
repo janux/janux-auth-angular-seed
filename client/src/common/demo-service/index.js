@@ -21,6 +21,7 @@ require('angular').module('demoService', [])
 .factory('dialogService', require('./dialog-service.js'))
 .factory('userInvService', require('./user-inv-service'))
 .factory('environmentService', require('./environment-service'))
+.factory('validationService', require('./validation-service'))
 .run(function() {
 	console.log('janux auth seed correctly instantiated services');
 });

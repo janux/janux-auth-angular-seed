@@ -563,7 +563,8 @@
 	    "lastYear":"Año pasado"
 	},
 	"dialogs":{
-		"delete":"Estas seguro que quieres borrar "
+		"delete":"Estas seguro que quieres borrar ",
+		"accessDenied": "No tiene suficientes permisos para realizar esta operación"
 	},
 	"party": {
 		"person": {
@@ -635,7 +636,8 @@
 			"contactLastNameEmpty": "El apellido del contacto no puede estar vacio",
 			"unsavedContact": "Tiene cambios sin guardar para este contacto. Desea guardarlos?",
 			"noContacts": "No hay grupo de contactos asociado",
-			"addingContact": "Agregar contacto"
+			"addingContact": "Agregar contacto",
+			"invalidEmail": "El correo electrónico ingresado es invalido"
 		},
 		"contactType": {
 			"HOME": "Residencia",
@@ -645,8 +647,5 @@
 			"FAX": "Fax",
 			"OTHER": "Otro"
 		}
-	},
-	"dialogs": {
-		"accessDenied": "No tiene suficientes permisos para realizar esta operación"
 	}
 }

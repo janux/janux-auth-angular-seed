@@ -4,7 +4,7 @@ var Person = require('janux-people').Person;
 
 module.exports =
 ['$q', '$http','partyService','dateUtilService',
-function( $q ,  $http, partyService, dateUtilService){
+function ( $q ,  $http, partyService, dateUtilService) {
 
 	function fromJSON(object) {
 		if (_.isNil(object)) {
@@ -96,13 +96,29 @@ function( $q ,  $http, partyService, dateUtilService){
 		 * @param selectedEmail
 		 * @param assignedRoles
 		 */
-		inviteToCreateAccount: function (id, selectedEmail, assignedRoles) {
+		inviteToCreateAccount: function (contactId, selectedEmail, assignedRoles) {
 			return $http.jsonrpc(
 				'/rpc/2.0/userInvitation',
 				'inviteToCreateAccount',
-				[id, selectedEmail, assignedRoles]
+				[contactId, selectedEmail, assignedRoles]
 			).then(function (resp) {
 				return resp.data.result;
+			});
+		},
+
+		/**
+		 *
+		 * @param accountId
+		 * @param selectedEmail
+		 */
+		recoverPassword: function (accountId, contactId, selectedEmail) {
+			return $http.jsonrpc(
+				'/rpc/public/invitation',
+				'recoverPassword',
+				[ accountId, contactId, selectedEmail ]
+			).then(function (resp) {
+				var out = resp.data.result;
+				return out;
 			});
 		}
 	};

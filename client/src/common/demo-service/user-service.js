@@ -83,6 +83,25 @@ function( $q ,  $http, partyService, dateUtilService){
 			});
 		},
 
+		findOneByUsernameOrEmail: function(subject)
+		{
+			return $http.jsonrpc(
+				'/rpc/public/invitation',
+				'findOneByUsernameOrEmail',
+				[ subject ]
+			).then(function(resp) {
+				console.log('user found', resp);
+				var out = resp.data.result;
+				var id = out.contact.id;
+				out.contact = partyService.fromJSON(out.contact);
+				out.contact.id = id;
+				return out;
+			}).catch(function (err) {
+				console.error('findOneByUsernameOrEmail Error'+ err.data.error.message);
+				return null;
+			});
+		},
+
 		findCompanyInfo: function(username){
 			return $http.jsonrpc(
 				'/rpc/2.0/users',

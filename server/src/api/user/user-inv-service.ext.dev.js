@@ -17,6 +17,16 @@ function UserInvService (userServicePersistence, partyServiceRef, commServiceRef
 }
 
 /**
+ *
+ * @param accountId
+ * @param contactId
+ * @param selectedEmail
+ */
+UserInvService.prototype.recoverPassword = function (accountId, contactId, selectedEmail) {
+	log.debug("Call to recoverPassword with id %j and email %j", contactId, selectedEmail);
+};
+
+/**
  * Invite person to create account
  * @param id
  * @param selectedEmail

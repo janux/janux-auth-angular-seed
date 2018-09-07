@@ -31,10 +31,12 @@ var createInstance = function (userServiceReference, partyServiceReference, comm
 
 	// TODO: Move method logic to janux-persist
 	var UserInvServiceExt = (env === 'development') ? UserInvServiceDev : UserInvServiceProd;
+	var that;
 
 	// Constructor
 	function UserInvService(userService, partyService, commService, userInvService) {
 		UserInvServiceExt.call(this, userService, partyService, commService, userInvService);
+		that = this;
 	}
 
 	UserInvService.prototype = Object.create(UserInvServiceExt.prototype);
@@ -62,6 +64,10 @@ var createInstance = function (userServiceReference, partyServiceReference, comm
 
 	UserInvService.prototype.deleteById = function (invitationId, callback) {
 		return userInvServicePersistence.deleteInvitationById(invitationId).asCallback(callback);
+	};
+
+	UserInvService.prototype.recoverPassword = function (accountId, contactId, selectedEmail, callback) {
+		return UserInvServiceExt.prototype.recoverPassword.call(that, accountId, contactId, selectedEmail).asCallback(callback);
 	};
 
 	return new UserInvService(userServicePersistence, partyServicePersistence, commServicePersistence, userInvServicePersistence);

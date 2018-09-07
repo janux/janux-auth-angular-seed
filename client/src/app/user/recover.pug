@@ -1,0 +1,27 @@
+.glarus-bg
+	form.glarus-login(name='recoverForm', novalidate)
+
+		.login-body-glarus
+			img.logo(src='/img/logo_glarus_color.png')
+
+			.label-text {{ 'login.recoverPassword' | translate }}
+
+			.alert.alert-danger(ng-show='recoverError') {{recoverError}}
+
+			div.an-material-login
+				md-input-container.full
+					label(translate='label.password')
+					input(name="pass", type='password', ng-model='user.password', required, novalidate='')
+
+			div.an-material-login
+				md-input-container.full
+					label(translate='user.confirmPass')
+					input(name="confirmPass", type='password', ng-model='user.confirmPass', required, novalidate='')
+
+				.btn-login-cnt
+					button.btn-glarus(ng-click='recover()', translate='label.ok')
+					button.btn-glarus(ui-sref='login', translate='label.cancel')
+
+			div.text-center-legal
+				.copy &copy; {{ "login.copy" | translate }}
+

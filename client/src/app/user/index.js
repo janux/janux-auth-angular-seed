@@ -84,7 +84,7 @@ require('angular').module('appUsers', [
 			}]
 		}
 	})
-	// Edit specific user
+	// Complete user registration
 	.state('register', {
 		url: '/register/{code}',
 		templateUrl: 'app/user/register.html',
@@ -98,6 +98,37 @@ require('angular').module('appUsers', [
 				}, function () {
 					dialogService.info('user.dialogs.invalidInvitation');
 					$state.go('login');
+					return null;
+				});
+			}]
+		}
+	})
+
+	// Recover password
+	.state('forgot-password', {
+		url: '/forgot-password/',
+		templateUrl: 'app/user/forgot-pass.html',
+		authRequired: false,
+		controller: require('./forgot-pass-controller.js'),
+		resolve: {}
+	})
+
+	// Recover password
+	.state('recover', {
+		url: '/recover/{code}',
+		templateUrl: 'app/user/recover.html',
+		authRequired: false,
+		controller: require('./recover-pass-controller.js'),
+		resolve: {
+			recovery: ['userInvService','$stateParams','$state','dialogService',
+				function (userInvService, $stateParams, $state, dialogService) {
+				return userInvService.findByCode($stateParams.code).then(function (invitation) {
+					// console.log('find invitation by code', $stateParams.code, invitation);
+					return invitation;
+				}, function (err) {
+					console.log('Error retriving recovery', err, $stateParams.code);
+					dialogService.info('user.dialogs.invalidCode');
+					// $state.go('login');
 					return null;
 				});
 			}]

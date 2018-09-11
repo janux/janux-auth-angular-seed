@@ -1,6 +1,7 @@
 'use strict';
 var UserPersistence                      = require('janux-persist').UserService,
-	UserInvitationService				 = require('janux-persist').UserInvitationService,
+	UserActionServiceDev				 = require('janux-persist').UserActionServiceDev,
+	UserActionServiceProd				 = require('janux-persist').UserActionServiceProd,
     PartyServiceImpl                     = require('janux-persist').PartyServiceImpl,
     AuthContextPersistence               = require('janux-persist').AuthContextService,
     AuthContextGroupService              = require('janux-persist').AuthContextGroupServiceImpl,
@@ -104,8 +105,10 @@ var config                              = require('config'),
     InvoiceService                      = new InvoiceServiceImpl(InvoiceDao, InvoiceItemDao, ExpenseDao, InvoiceOperationDao, InvoiceItemTEDao, PartyPersistenceService, TimeEntryDao, TimeEntryPersistService, RateMatrixService, OperationDao, InvoiceCalculatorServicePersistence, OperationPersistService),
     InvoiceTimeEntryService             = new InvoiceTimeEntryServiceImpl(InvoiceItemTEDao, InvoiceItemDao, InvoiceDao, TimeEntryDao),
     UserInvoiceService                  = new UserInvoiceServiceImpl(GlarusUserPersistenceService, InvoiceService),
-	CommService 						= CommServiceImpl.createInstance(CommDataSource, config.serverAppContext.smtp),
-	UserInvitationPersistenceService    = UserInvitationService.createInstance(AccountInvDao, UserPersistenceService);
+	CommService 						= CommServiceImpl.createInstance(CommDataSource, config.serverAppContext.smtp);
+
+// var	UserInvitationPersistenceService    = UserActionServiceDev.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService);
+var	UserInvitationPersistenceService    = UserActionServiceProd.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService);
 
 module.exports = {
 	PartyPersistenceService         : PartyPersistenceService,

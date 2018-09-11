@@ -3,7 +3,7 @@ p Hola #{ name },
 p Se ha relalizado la solicitud de recuperación de contraseña para tu correo #{ email }
 p Código de Autorización: #{ recoveryCode }
 | Por favor ingresa a: &nbsp;
-a(href="https://#{ hostname }/recover/#{ recoveryCode }") https://#{ hostname }/recover/#{ recoveryCode }
+a(href='https://' + hostname + '/recover/' + recoveryCode) https://#{ hostname }/recover/#{ recoveryCode }
 | &nbsp; para completar la recuperación de tu acceso.
 p Saludos
 br

@@ -31,9 +31,9 @@ module.exports =
 			if (validateForm()) {
 				var expenseToInsert = {
 					name  : $scope.form.name,
-					date  : $scope.form.date,
+					// date  : $scope.form.date,
 					cost  : $scope.form.cost,
-					person: $scope.form.person,
+					// person: $scope.form.person,
 					client: $scope.invoice.client
 				};
 				return invoiceService.insertExpense($scope.invoice.invoiceNumber, $scope.invoice.items[0].name, expenseToInsert)
@@ -66,12 +66,6 @@ module.exports =
 			} else if ($scope.form.name.trim() === '') {
 				isValid = false;
 				infoDialog('services.invoice.expenses.invalidName');
-			} else if (!_.isDate($scope.form.date)) {
-				isValid = false;
-				infoDialog('services.invoice.expenses.invalidDate');
-			} else if (_.isNil($scope.form.person)) {
-				isValid = false;
-				infoDialog('services.invoice.expenses.invalidPerson');
 			}
 			return isValid;
 		}

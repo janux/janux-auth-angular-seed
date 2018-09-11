@@ -13,7 +13,7 @@ var
 	timeEntryReportSpecialOpsService = require("../src/api/index").TimeEntryReportSpecialOpsService;
 
 module.exports = function (app) {
-	app.post('/time-entry-report', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
+	app.post('/report/time-entry-report', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
 		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;
@@ -34,7 +34,7 @@ module.exports = function (app) {
 	});
 
 
-	app.post('/time-entry-report-guard', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
+	app.post('/report/time-entry-report-guard', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
 		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;
@@ -53,7 +53,7 @@ module.exports = function (app) {
 		}
 	});
 
-	app.post('/time-entry-report-attendance', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
+	app.post('/report/time-entry-report-attendance', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
 
 		try {
 			const ids = req.body.ids;
@@ -72,7 +72,7 @@ module.exports = function (app) {
 		}
 	});
 
-	app.post('/time-entry-report-special-ops', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
+	app.post('/report/time-entry-report-special-ops', tokenHandler.authenticate, tokenHandler.handleInvalidTokenAuth, function (req, res) {
 		const tokenInfo = tokenHandler.retrieveTokenInfo(req);
 		try {
 			const ids = req.body.ids;

@@ -71,6 +71,8 @@ side-bar
 						// 			| {{ 'services.invoice.insertManual' | translate }}
 
 						.btn-row(ng-show='currentNavItem=="invoiceDetail"')
+							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
+								md-icon.fa.fa-download.fa-lg
 							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 								i.fa.fa-check
 							button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')

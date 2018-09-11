@@ -24,6 +24,7 @@ module.exports = function(app) {
 	require('./auth')(app);
 	require('./rpc-api')(app);
 	require('./time-entry-report')(app);
+	require('./invoice-report')(app);
 	require('./invitation')(app);
 
 	// partials are served by their name

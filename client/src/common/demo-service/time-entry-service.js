@@ -137,7 +137,7 @@ module.exports =
 					}
 
 					$http({
-						url         : '/time-entry-report',
+						url         : '/report/time-entry-report',
 						method      : 'POST',
 						responseType: 'arraybuffer',
 						data        : {ids: ids, timeZone: timeZone},
@@ -165,7 +165,7 @@ module.exports =
 					}
 
 					$http({
-						url         : '/time-entry-report-guard',
+						url         : '/report/time-entry-report-guard',
 						method      : 'POST',
 						responseType: 'arraybuffer',
 						data        : {ids: ids, timeZone: timeZone},
@@ -193,7 +193,7 @@ module.exports =
 					}
 
 					$http({
-						url         : '/time-entry-report-attendance',
+						url         : '/report/time-entry-report-attendance',
 						method      : 'POST',
 						responseType: 'arraybuffer',
 						data        : {ids: ids, timeZone: timeZone},
@@ -221,7 +221,7 @@ module.exports =
 					}
 
 					$http({
-						url         : '/time-entry-report-special-ops',
+						url         : '/report/time-entry-report-special-ops',
 						method      : 'POST',
 						responseType: 'arraybuffer',
 						data        : {ids: ids, timeZone: timeZone},

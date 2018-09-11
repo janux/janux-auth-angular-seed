@@ -755,6 +755,10 @@ module.exports =
 		}
 	};
 
+	$scope.generateReport = function (){
+		invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber);
+	};
+
 	$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
 		console.log('invoice selected:' + invoiceNumber);
 		// Switch tab.

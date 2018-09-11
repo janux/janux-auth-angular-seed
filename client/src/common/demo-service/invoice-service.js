@@ -6,7 +6,7 @@ var big = require('big.js');
 
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', 'FileSaver', 'localStorageService', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService, FileSaver, localStorageService) {
 
 		function fromJSON(object) {
 			const result = _.clone(object);
@@ -65,7 +65,7 @@ module.exports =
 		function toJSONExpense(object) {
 			const result = _.clone(object);
 			result.client = partyService.toJSON(object.client);
-			result.person = partyService.toJSON(object.person);
+			result.person = _.isNil(object.person) ? undefined : partyService.toJSON(object.person);
 			return result;
 		}
 
@@ -243,7 +243,36 @@ module.exports =
 					});
 				}
 				return timeEntries;
+			},
+
+			specialOpsInvoiceReport: function (invoiceNumber) {
+				var headers = {
+					'Content-type': 'application/json',
+					'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+				};
+
+				var token = localStorageService.get("token");
+				var timeZone = dateUtilService.getBrowserTimeZone();
+
+				if (_.isNil(token) === false) {
+					headers['Authorization'] = 'Bearer ' + token
+				}
+
+				$http({
+					url         : '/report/specialOpsInvoiceReport',
+					method      : 'POST',
+					responseType: 'arraybuffer',
+					data        : {invoiceNumber: invoiceNumber, timeZone: timeZone},
+					headers     : headers
+				}).then(function (result) {
+					var now = moment();
+					var blob = new Blob([result.data], {
+						type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					});
+					FileSaver.saveAs(blob, 'anexo-factura-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx');
+				});
 			}
+
 		};
 		return service;
 	}];

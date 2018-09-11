@@ -26,33 +26,33 @@ module.exports =
 		//The invoice is located at $scope.invoice.
 
 		var columnDefs = [
-			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.personName'),
-				field       : 'person',
-				filter      : 'agTextColumnFilter',
-				valueGetter : function (params) {
-					var person = params.data.person;
-					return nameQueryService.createLongNameLocalized(person);
-
-				},
-				filterParams: {newRowsAction: 'keep'}
-			},
-			{
-				headerName    : $filter('translate')('services.invoice.invoiceDetail.date'),
-				field         : 'date',
-				sort          : 'desc',
-				width         : 100,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction   : 'keep',
-					inRangeInclusive: true,
-					comparator      : agGridComp.dateFilterComparator,
-					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
-				},
-				valueFormatter: function (params) {
-					return (params.data.date) ? moment(params.data.date).format(config.dateFormats.dateOnlyFormat) : '';
-				}
-			},
+			// {
+			// 	headerName  : $filter('translate')('services.invoice.invoiceDetail.personName'),
+			// 	field       : 'person',
+			// 	filter      : 'agTextColumnFilter',
+			// 	valueGetter : function (params) {
+			// 		var person = params.data.person;
+			// 		return nameQueryService.createLongNameLocalized(person);
+			//
+			// 	},
+			// 	filterParams: {newRowsAction: 'keep'}
+			// },
+			// {
+			// 	headerName    : $filter('translate')('services.invoice.invoiceDetail.date'),
+			// 	field         : 'date',
+			// 	sort          : 'desc',
+			// 	width         : 100,
+			// 	filter        : 'date',
+			// 	filterParams  : {
+			// 		newRowsAction   : 'keep',
+			// 		inRangeInclusive: true,
+			// 		comparator      : agGridComp.dateFilterComparator,
+			// 		filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
+			// 	},
+			// 	valueFormatter: function (params) {
+			// 		return (params.data.date) ? moment(params.data.date).format(config.dateFormats.dateOnlyFormat) : '';
+			// 	}
+			// },
 			{
 				headerName  : $filter('translate')('services.invoice.invoiceDetail.expenseName'),
 				field       : 'name',

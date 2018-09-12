@@ -20,7 +20,7 @@ var Services           = require('./services'),
 
 module.exports = {
 	UserService                       : UserService.create(Services.GlarusUserPersistenceService),
-	UserInvService                    : UserInvService.create(Services.UserPersistenceService, Services.PartyPersistenceService, Services.CommService, Services.UserInvitationService),
+	UserInvService                    : UserInvService.create(Services.UserInvitationService),
 	AuthContextService                : AuthContextService.create(Services.AuthContextPersistService, Services.AuthContextGroupPersistService),
 	RoleService                       : RoleService.create(Services.RolePersistService),
 	UserPersistenceService            : Services.UserPersistenceService,

@@ -123,7 +123,7 @@ module.exports =
 			suppressRowClickSelection: true,
 			rowSelection             : 'multiple',
 			animateRows              : true,
-			rowHeight                : 33,
+			rowHeight                : 30,
 			headerHeight             : 35,
 			enableSorting            : true,
 			pagination               : true,

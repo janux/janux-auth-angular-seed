@@ -20,7 +20,7 @@ md-divider.divider-line-glarus
 // Detail person
 div
 	strong {{'services.invoice.invoiceDetail.staff' | translate}}
-div(style='height:45%')
+div(style='height:40%')
 	invoice-detail-person(invoice='invoice')
 
 div(style="text-align: right")
@@ -30,7 +30,7 @@ md-divider.divider-line-glarus
 // Detail vehicle.
 div
 	strong {{'services.invoice.invoiceDetail.vehicles' | translate}}
-div(style='height:45%')
+div(style='height:40%')
 	invoice-detail-vehicle(invoice='invoice')
 div(style="text-align: right")
 	strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (subTotalVehicle | currency) }}

@@ -1,0 +1,10 @@
+|
+p Hi #{ name },
+p A password recovery request was made for your email #{ email }
+p Authorization code: #{ recoveryCode }
+| Click on the following link: &nbsp;
+a(href='https://' + hostname + '/recover/' + recoveryCode) https://#{ hostname }/recover/#{ recoveryCode }
+| &nbsp; to reset your password.
+p Best regards
+br
+| Januxmedia

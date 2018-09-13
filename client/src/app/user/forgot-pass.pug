@@ -1,0 +1,29 @@
+form.login-form(name='recoverForm', novalidate)
+
+	.login-body
+
+		img.logo(src='/img/janux_logo.png')
+		.brand
+			span.janux janux
+		.brand
+			span.people people
+		.brand
+			hr.line
+
+		div.recover-text
+			p {{ 'login.recoverText' | translate }}
+
+		.alert.alert-warning(ng-show='authReason') {{authReason}}
+		.alert.alert-danger(ng-show='authError') {{authError}}
+		//.alert.alert-info(translate='login.msg.enterCredentials')
+
+		.recover-field-box
+			input.recover-field(name='login', ng-model='searchToRecover', required, autofocus, novalidate='')
+
+		.btn-login-cnt
+			button.btn.btn-login(ng-click='recover()', translate='label.ok')
+
+		hr.line
+
+		div.text-center
+			.copy &copy; {{ "login.copy" | translate }}

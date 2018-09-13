@@ -23,6 +23,7 @@ module.exports = function(app) {
 	// module-specific routes
 	require('./auth')(app);
 	require('./rpc-api')(app);
+	require('./user-action')(app);
 
 	// partials are served by their name
 	/*

@@ -1,10 +1,11 @@
 'use strict';
 
 var Person = require('janux-people').Person;
+var _ = require('lodash');
 
 module.exports =
-['$q', '$http',
-function( $q ,  $http){
+['$q', '$http','partyService',
+function( $q ,  $http , partyService){
 
 	var service = {
 
@@ -55,6 +56,29 @@ function( $q ,  $http){
 					out[iUser].contact = Person.fromJSON(out[iUser].contact);
 				});
 				return out;
+			});
+		},
+
+		findOneByUsernameOrEmail: function(subject)
+		{
+			return $http.jsonrpc(
+				'/rpc/public/userAction',
+				'findOneByUsernameOrEmail',
+				[ subject ]
+			).then(function(resp) {
+				console.log('user found', resp);
+				var out = resp.data.result;
+				var id = out.contact.id;
+				out.contact = partyService.fromJSON(out.contact);
+				out.contact.id = id;
+				return out;
+			}).catch(function (err) {
+				if(!_.isNil(err.data)) {
+					console.error('findOneByUsernameOrEmail Error'+ err.data.error.message);
+				} else {
+					console.error('findOneByUsernameOrEmail Error'+ err);
+				}
+				return null;
 			});
 		},
 

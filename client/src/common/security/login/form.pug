@@ -30,7 +30,7 @@ form.login-form(name='form', novalidate)
 			input.login-field(name="pass", type='password', ng-model='user.account.password', required, novalidate='')
 
 		div.text-right
-			a.forgot-pass(href="#") {{ "login.forgotPass" | translate }}
+			a.forgot-pass(ui-sref="forgot-password") {{ "login.forgotPass" | translate }}
 
 		.btn-login-cnt
 			button.btn.btn-login(ng-click='login()', ng-disabled='form.$invalid', translate='label.login')

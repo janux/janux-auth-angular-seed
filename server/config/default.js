@@ -10,19 +10,32 @@ module.exports = {
 			staticUrl: '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
-			secret: 'jules cyril value main why latex'
+			secret: 'jules cyril value main why latex',
+			hostname  : 'localhost:9000'
 		},
 
 		dao: {
 			//Daos to be used by the services.
 			accountDao: 'accountDao',
+			accountActionDao: 'accountActionDao',
 			partyDao: 'partyDao',
 			authContextDao: 'authContextDao',
 			roleDao: 'roleDao',
 			groupContentDao: 'groupContentDao',
 			groupDao: 'groupDao',
 			groupAttributeValueDao: 'groupAttributeValueDao',
-			staffDao              : 'staffDao'
+			staffDao              : 'staffDao',
+			commDataSource		  : 'commDataSource'
+		},
+
+		smtp: {
+			host: 'smtp.server.com',
+			from: 'test@email.com',
+			port: 587,
+			auth: {
+				user: 'user',
+				pass: 'pass'
+			}
 		},
 
 		log4js: {

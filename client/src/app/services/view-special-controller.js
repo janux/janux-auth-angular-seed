@@ -397,7 +397,7 @@ module.exports =
 		{
 			headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
 			editable   : false,
-			hide       : !$rootScope.userRole.can('READ', 'INVOICE'),
+			hide       : !$rootScope.userRole.can('READ', 'FINANCE'),
 			valueGetter: function (params) {
 				var result = '';
 				if (!_.isNil(params.data.invoiceInfo) && !_.isNil(params.data.invoiceInfo.invoice)) {

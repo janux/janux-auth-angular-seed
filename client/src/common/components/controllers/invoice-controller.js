@@ -12,7 +12,7 @@ module.exports =
 				field       : 'view',
 				width       : 50,
 				cellRenderer: agGridComp.viewInvoiceDetailCellRenderer,
-				hide        : !$rootScope.userRole.can("UPDATE", "INVOICE")
+				hide        : !$rootScope.userRole.can("UPDATE", "FINANCE")
 			},
 			{
 				headerName: $filter('translate')('services.invoice.invoiceNumber'),

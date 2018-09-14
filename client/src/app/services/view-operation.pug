@@ -25,7 +25,7 @@ side-bar
 								| {{ 'services.tabs.summary' | translate | uppercase }}
 							md-nav-item(md-nav-click="changeTab('time-sheet')" name="time-sheet" ng-show='data.type!=="CONSULTING"')
 								| {{ 'services.tabs.timeSheet' | translate | uppercase }}
-							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","INVOICE");')
+							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
 								| {{ 'services.tabs.invoices' | translate | uppercase }}
 
 						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet" && showTimeSheetPeriodFilterList')
@@ -51,7 +51,7 @@ side-bar
 								i.fa.fa-trash &nbsp;
 								| {{ 'services.delete' | translate }}
 
-							md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","INVOICE");')
+							md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","FINANCE");')
 								button.btn( aria-label="Add" ng-click='openAddToInvoiceMenu($mdMenu, $event);'  )
 									i.fa.fa-plus-circle &nbsp;
 									| {{ 'services.addToInvoice' | translate }}
@@ -65,7 +65,7 @@ side-bar
 								i.fa.fa-times
 
 						// .btn-row(ng-show='currentNavItem=="invoices"')
-						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","INVOICE");')
+						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","FINANCE");')
 						// 		button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
 						// 			i.fa.fa-plus-circle &nbsp;
 						// 			| {{ 'services.invoice.insertManual' | translate }}

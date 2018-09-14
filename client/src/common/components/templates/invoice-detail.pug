@@ -24,7 +24,14 @@ div(style='height:40%')
 	invoice-detail-person(invoice='invoice')
 
 div(style="text-align: right")
-	strong {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (subTotalPerson | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (invoice.totalPerson | currency) }}
+	br
+	label {{ 'services.invoice.invoiceDetail.discountPercentage' | translate}}
+	input(type="number" ng-model='invoice.discountPersonPercentage' ng-disabled='!editModeInvoiceDetail' ng-hide='!editModeInvoiceDetail' min="0" max="100")
+	strong(ng-show='!editModeInvoiceDetail') {{invoice.discountPersonPercentage }}
+	strong %
+	br
+	strong {{'services.invoice.invoiceDetail.totalPersonAfterDiscount' | translate}}:{{(invoice.totalPersonAfterDiscount | currency)}}
 md-divider.divider-line-glarus
 
 // Detail vehicle.
@@ -33,7 +40,9 @@ div
 div(style='height:40%')
 	invoice-detail-vehicle(invoice='invoice')
 div(style="text-align: right")
-	strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (subTotalVehicle | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (invoice.totalVehicle | currency) }}
+	br
+	strong {{'services.invoice.invoiceDetail.totalBeforeExpenses' | translate}}:{{(invoice.totalBeforeExpenses | currency)}}
 md-divider.divider-line-glarus
 
 // Detail expenses
@@ -42,14 +51,10 @@ div
 div(style='height:30%')
 	invoice-detail-expense(invoice='invoice')
 div(style="text-align: right; margin-top:20px")
-	strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (subTotalExpense | currency) }}
+	strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (invoice.totalExpenses | currency) }}
 md-divider.divider-line-glarus
 
 // Discounts and totals
 
 div(style="text-align: right;height:20%" )
-	strong {{'services.invoice.invoiceDetail.totalBeforeDiscount' | translate}}:{{(invoice.totalAfterExpenses | currency)}}
-	br
-	strong {{'services.invoice.invoiceDetail.discount' | translate}}:{{(invoice.discount | currency)}}
-	br
 	strong {{'services.invoice.invoiceDetail.grandTotal' | translate}}:{{(invoice.grandTotal | currency)}}

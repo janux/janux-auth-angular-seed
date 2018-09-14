@@ -688,21 +688,24 @@ angular.module('commonComponents', [])
 							operationReference.schedule = [];
 							operationReference.interestedParty = null;
 							var newInvoice = {
-								client             : operationReference.client,
-								invoiceNumber      : $scope.invoiceManualForm.invoiceNumber,
-								invoiceDate        : $scope.invoiceManualForm.invoiceDate,
-								comments           : '',
-								items              : [],
-								status             : config.invoice.status.inRevision,
-								isPaid             : $scope.invoiceManualForm.isPaid,
-								discount           : 0,
-								discountPercentage : 0,
-								totalBeforeExpenses: $scope.invoiceManualForm.grandTotal,
-								totalAfterExpenses : $scope.invoiceManualForm.grandTotal,
-								totalExpenses      : 0,
-								grandTotal         : $scope.invoiceManualForm.grandTotal,
-								userDefinedValues  : true,
-								defaultOperation   : operationReference
+								client                  : operationReference.client,
+								invoiceNumber           : $scope.invoiceManualForm.invoiceNumber,
+								invoiceDate             : $scope.invoiceManualForm.invoiceDate,
+								comments                : '',
+								items                   : [],
+								status                  : config.invoice.status.inRevision,
+								isPaid                  : $scope.invoiceManualForm.isPaid,
+								discount                : 0,
+								discountPercentage      : 0,
+								totalBeforeExpenses     : $scope.invoiceManualForm.grandTotal,
+								totalAfterExpenses      : $scope.invoiceManualForm.grandTotal,
+								totalExpenses           : 0,
+								grandTotal              : $scope.invoiceManualForm.grandTotal,
+								userDefinedValues       : true,
+								totalPersonAfterDiscount: 0,
+								discountPersonPercentage: 0,
+								totalPerson             : 0,
+								defaultOperation        : operationReference
 							};
 							var newItem = {
 								itemNumber : 1,
@@ -738,13 +741,14 @@ angular.module('commonComponents', [])
 					var validateFormInvoiceData = function () {
 						var result = true;
 						if (!_.isString($scope.invoiceManualForm.invoiceNumber) || $scope.invoiceManualForm.invoiceNumber.trim() === '') {
-							infoDialog('services.invoice.dialogs.missingInvoiceNumber', $scope, $filter);
-						}
-						if (!_.isDate($scope.invoiceManualForm.invoiceDate)) {
-							infoDialog('services.invoice.dialogs.missingInvoiceDate', $scope, $filter);
-						}
-						if (!_.isNumber($scope.invoiceManualForm.grandTotal) && $scope.invoiceManualForm.grandTotal <= 0) {
-							infoDialog('services.invoice.dialogs.missingInvoiceDate', $scope, $filter);
+							infoDialog('services.invoice.dialogs.missingInvoiceNumber', $modal, $filter);
+							result = false;
+						}else if (!_.isDate($scope.invoiceManualForm.invoiceDate)) {
+							infoDialog('services.invoice.dialogs.missingInvoiceDate', $modal, $filter);
+							result = false;
+						}else if (!_.isNumber($scope.invoiceManualForm.grandTotal) && $scope.invoiceManualForm.grandTotal <= 0) {
+							infoDialog('services.invoice.dialogs.missingInvoiceDate', $modal, $filter);
+							result = false;
 						}
 						return result;
 					};

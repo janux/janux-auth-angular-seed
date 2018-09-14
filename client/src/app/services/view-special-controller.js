@@ -614,11 +614,16 @@ module.exports =
 
 	$scope.updateInvoiceHeader = function () {
 		// console.log(' inv update ' + JSON.stringify($scope.invoice));
-		invoiceService.update($scope.invoice)
-			.then(function () {
-				updatedSelectedInvoice($scope.invoice.invoiceNumber);
-				$scope.disableEditModeInvoiceDetail();
-			});
+		// Validate if percentage is greater then zero.
+		if (_.isNumber($scope.invoice.discountPersonPercentage) === false || $scope.invoice.discountPersonPercentage < 0 || $scope.invoice.discountPersonPercentage > 100) {
+			infoDialog('services.invoice.dialogs.invalidPercentage');
+		}else{
+			invoiceService.update($scope.invoice)
+				.then(function () {
+					updatedSelectedInvoice($scope.invoice.invoiceNumber);
+					$scope.disableEditModeInvoiceDetail();
+				});
+		}
 	};
 
 	$scope.openAddToInvoiceMenu = function ($mdMenu, ev) {

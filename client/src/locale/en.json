@@ -488,10 +488,13 @@
 			    "expenseName": "Name",
 			    "totalBeforeDiscount": "Sub total",
 			    "discount": "Discount",
+			    "discountPercentage": "Descuento",
+			    "totalPersonAfterDiscount": "Subtotal",
 			    "grandTotal": "Total",
 			    "subTotalPerson": "Total persons",
 			    "subTotalVehicle" : "Total vehicles",
 			    "subTotalExpenses" : "Total expenses",
+			    "totalBeforeExpenses" : "Subtotal",
 			    "staff": "Staff",
 			    "vehicles" : "Vehicles",
 			    "expenses": "Expenses"
@@ -513,7 +516,8 @@
 			    "invalidGrandTotal" : "Please enter the total of the invoice",
 				"noRowsSelected": "Select at least one row to add",
 				"insertTimeEntries": "Time entries successfully added to the invoice",
-				"insertTimeEntriesInvoiceError": "Selected time entries can't be added to the invoice because one or more was already linked to an invoice"
+				"insertTimeEntriesInvoiceError": "Selected time entries can't be added to the invoice because one or more was already linked to an invoice",
+			    "invalidPercentage": "The percentage value is invalid"
 			}
 		}
 	},

@@ -418,8 +418,8 @@
 			"timeSheet": "Bitacora",
 			"invoices": "Facturas"
 		},
-		"delete": "Delete",
-		"addToInvoice": "Add to",
+		"delete": "Borrar",
+		"addToInvoice": "Agregar a",
 		"newInvoice": "Factura nueva",
 		"addSpecial":"Agregar servicio especial",
 		"specialService": "Servicio especial",
@@ -488,10 +488,13 @@
 			  "expenseName": "Concepto",
 			  "totalBeforeDiscount": "Sub total",
 			  "discount": "Descuento",
+			  "discountPercentage": "Descuento",
+			  "totalPersonAfterDiscount": "Subtotal",
 			  "grandTotal": "Total",
 			  "subTotalPerson": "Total personal",
 			  "subTotalVehicle" : "Total vehículos",
 			  "subTotalExpenses" : "Total gastos",
+			  "totalBeforeExpenses" : "Subtotal",
 			  "staff": "Personal",
 			  "vehicles" : "Vehículos",
 			  "expenses": "Gastos"
@@ -513,7 +516,8 @@
 			    "invalidGrandTotal" : "Por favor defina un importe correcto para la factura",
 				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",
 				"insertTimeEntries": "Registros de bitacora agregados a la factura",
-				"insertTimeEntriesInvoiceError": "Los registros de la bitacora seleccionados no se pueden agregar a la factura debido a que uno o mas ya fue relacionado con una factura."
+				"insertTimeEntriesInvoiceError": "Los registros de la bitacora seleccionados no se pueden agregar a la factura debido a que uno o mas ya fue relacionado con una factura.",
+			    "invalidPercentage": "El valor del porcentaje es inválido"
 			}
 		}
 	},

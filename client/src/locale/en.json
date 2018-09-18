@@ -350,6 +350,7 @@
 		    "agentArmed": "Agent armed",
 		    "greeter": "Greeter",
 		    "coordinator": "Coordinator",
+		    "transport": "Transport",
 		    "invoiceNumber": "Invoice number"
 		},
 		"guards": "Guards",
@@ -441,6 +442,7 @@
 			"staffGuardArmed": "Agent armed",
 			"staffCoordinator": "Coordinator",
 			"staffGreeter": "Greeter",
+		    "staffTransport": "Transport",
 			"vehicle": "Vehicle",
 			"details": "Details",
 			"addingPrincipal": "Add principal",

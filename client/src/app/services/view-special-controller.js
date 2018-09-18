@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast','operationUtilService', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast,operationUtilService) {
 
 	console.log('Operation', operation);
 
@@ -42,13 +42,6 @@ module.exports =
 	$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 	$scope.periodFilterOptions = config.periodFilterSpecialOps;
 	$scope.operationId = $stateParams.id;
-
-	function setExtraFlag(resource) {
-		if (resource.resource.isExternal === true) {
-			resource.isExternal = true;
-		}
-		return resource;
-	}
 
 	$scope.periodChange = function () {
 		jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
@@ -335,6 +328,9 @@ module.exports =
 						case 'COORDINATOR':
 							locale = 'operations.specialsTimeLog.coordinator';
 							break;
+						case 'TRANSPORT':
+							locale = 'operations.specialsTimeLog.transport';
+							break;
 					}
 				}
 				if (!_.isNil(locale)) {
@@ -458,79 +454,65 @@ module.exports =
 				$scope.gridOptions.onFilterChanged();
 			}
 		},
-		getRowHeight: function(rowObj) {
+
+		getRowHeight: function (rowObj) {
 		    // assuming 50 characters per line, working how how many lines we need
 		    return 18 * (Math.floor(rowObj.data.comment.length / 15) + 1);
 		},
-		onRowEditingStarted      : function (rowObj) {
+
+		onRowEditingStarted: function (rowObj) {
 			// Nothing to do yet
 			console.log('Row edition started', rowObj);
 			// rowObj.node.setRowHeight('45');
 			// $scope.gridOptions.api.onRowHeightChanged();
 		},
-		onRowValueChanged        : function (rowObj) {
+
+		onRowValueChanged: function (rowObj) {
 			// console.log('Row data changed', rowObj);
 			// rowObj.node.setRowHeight('25');
 			// $scope.gridOptions.api.onRowHeightChanged();
 
-			var endToUpdate;
+			// var endToUpdate;
+			//
+			// if (rowObj.data.end) {
+			// 	endToUpdate = moment(rowObj.data.end).toDate();
+			// }
+			//
+			// var resource = _.clone(rowObj.data.staff);
+			// // TODO: Temporary solution, remove once we obtain the list of operations and staff separately
+			// delete resource.opId;
+			//
+			// var specialOpsTimeEntryToUpdate = {
+			// 	'id'         : rowObj.data.id,
+			// 	'resources'  : [_.clone(resource)],
+			// 	'principals' : [],
+			// 	'attributes' : [],
+			// 	'type'       : 'SPECIAL_OPS',
+			// 	'comment'    : rowObj.data.comment,
+			// 	'begin'      : moment(rowObj.data.begin).toDate(),
+			// 	'end'        : endToUpdate,
+			// 	'billable'   : true,
+			// 	'idOperation': rowObj.data.operation.id
+			// };
+			//
+			// specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
+			// specialOpsTimeEntryToUpdate.resources[0] =  operationUtilService.setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
+			var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj, infoDialog);
 
-			if (rowObj.data.end) {
-				endToUpdate = moment(rowObj.data.end).toDate();
-			}
-
-			var resource = _.clone(rowObj.data.staff);
-			// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-			delete resource.opId;
-
-			var specialOpsTimeEntryToUpdate = {
-				'id'         : rowObj.data.id,
-				'resources'  : [_.clone(resource)],
-				'principals' : [],
-				'attributes' : [],
-				'type'       : 'SPECIAL_OPS',
-				'comment'    : rowObj.data.comment,
-				'begin'      : moment(rowObj.data.begin).toDate(),
-				'end'        : endToUpdate,
-				'billable'   : true,
-				'idOperation': rowObj.data.operation.id
-			};
-
-			specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
-
-			specialOpsTimeEntryToUpdate.resources[0] = setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
-
-			if (!_.isNil(rowObj.data.vehicle)) {
-
-				// Assign vehicle.
-				specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
-				// Validate odometer values.
-				if (!_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerEnd) && !_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerStart) &&
-					_.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerStart) > _.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerEnd)) {
-					infoDialog('operations.dialogs.odometerStartGreaterThanEnd');
-					findTimeEntries($scope.periodFilterKey);
-				} else {
-					// $scope.findTimeEntries($scope.periodFilterKey);
-					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-
-					}).finally(function () {
-						findTimeEntries($scope.periodFilterKey);
-						// Given this service is called with an interface that also contains
-						// invoices. We have to refresh the invoices content.
-						updateInvoiceList();
-						// infoDialog('Time entry successfully updated');
-					});
-				}
-
-			} else {
-				// $scope.findTimeEntries($scope.periodFilterKey);
+			if (!_.isNil(specialOpsTimeEntryToUpdate)) {
 				timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-					// findTimeEntries($scope.periodFilterKey);
-					// infoDialog('Time entry successfully updated');
+
 				}).finally(function () {
 					findTimeEntries($scope.periodFilterKey);
+					// Given this service is called with an interface that also contains
+					// invoices. We have to refresh the invoices content.
+					updateInvoiceList();
+					// infoDialog('Time entry successfully updated');
 				});
+			} else {
+				findTimeEntries($scope.periodFilterKey);
 			}
+
 		},
 		localeTextFunc           : function (key, defaultValue) {
 			var gridKey = 'grid.' + key;

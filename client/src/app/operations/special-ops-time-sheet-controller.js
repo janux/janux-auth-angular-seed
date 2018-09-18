@@ -5,11 +5,12 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate','nameQueryService',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate,nameQueryService) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilService',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
+		var findTimeEntries;
 		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
@@ -17,17 +18,10 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 
 		$scope.periodChange = function () {
 			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
-			$scope.findTimeEntries($scope.periodFilterKey);
+			findTimeEntries($scope.periodFilterKey);
 		};
 
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-
-		function setExtraFlag(resource) {
-			if (resource.resource.isExternal === true) {
-				resource.isExternal = true;
-			}
-			return resource;
-		}
 
 		var infoDialog = function (translateKey) {
 			$modal.open({
@@ -143,6 +137,9 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 								break;
 							case 'COORDINATOR':
 								locale = 'operations.specialsTimeLog.coordinator';
+								break;
+							case 'TRANSPORT':
+								locale = 'operations.specialsTimeLog.transport';
 								break;
 						}
 					}
@@ -314,59 +311,40 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 			onRowValueChanged        : function (rowObj) {
 				// console.log('Row data changed', rowObj);
 
-				var endToUpdate;
+				// var endToUpdate;
+				//
+				// if (rowObj.data.end) {
+				// 	endToUpdate = moment(rowObj.data.end).toDate();
+				// }
+				//
+				// var resource = _.clone(rowObj.data.staff);
+				// // TODO: Temporary solution, remove once we obtain the list of operations and staff separately
+				// delete resource.opId;
+				//
+				// var specialOpsTimeEntryToUpdate = {
+				// 	'id'         : rowObj.data.id,
+				// 	'resources'  : [_.clone(resource)],
+				// 	'principals' : [],
+				// 	'attributes' : [],
+				// 	'type'       : 'SPECIAL_OPS',
+				// 	'comment'    : rowObj.data.comment,
+				// 	'begin'      : moment(rowObj.data.begin).toDate(),
+				// 	'end'        : endToUpdate,
+				// 	'billable'   : true,
+				// 	'idOperation': rowObj.data.operation.id
+				// };
+				//
+				// specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
+				// specialOpsTimeEntryToUpdate.resources[0] = operationUtilService.setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
+				var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj, infoDialog);
 
-				if (rowObj.data.end) {
-					endToUpdate = moment(rowObj.data.end).toDate();
-				}
-
-				var resource = _.clone(rowObj.data.staff);
-				// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-				delete resource.opId;
-
-				var specialOpsTimeEntryToUpdate = {
-					'id'         : rowObj.data.id,
-					'resources'  : [_.clone(resource)],
-					'principals' : [],
-					'attributes' : [],
-					'type'       : 'SPECIAL_OPS',
-					'comment'    : rowObj.data.comment,
-					'begin'      : moment(rowObj.data.begin).toDate(),
-					'end'        : endToUpdate,
-					'billable'   : true,
-					'idOperation': rowObj.data.operation.id
-				};
-
-				specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
-
-				specialOpsTimeEntryToUpdate.resources[0] = setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
-
-				if (!_.isNil(rowObj.data.vehicle)) {
-
-					// Assign vehicle.
-					specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
-					// Validate odometer values.
-					if (!_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerEnd) && !_.isNil(specialOpsTimeEntryToUpdate.resources[1].odometerStart) &&
-						_.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerStart) > _.toNumber(specialOpsTimeEntryToUpdate.resources[1].odometerEnd)) {
-						infoDialog('operations.dialogs.odometerStartGreaterThanEnd');
-						$scope.findTimeEntries($scope.periodFilterKey);
-					} else {
-						// $scope.findTimeEntries($scope.periodFilterKey);
-						timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-							// infoDialog('Time entry successfully updated');
-						}).finally(function () {
-							$scope.findTimeEntries($scope.periodFilterKey);
-						});
-					}
-
-				} else {
-					// $scope.findTimeEntries($scope.periodFilterKey);
+				if (!_.isNil(specialOpsTimeEntryToUpdate)) {
 					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-						// $scope.findTimeEntries($scope.periodFilterKey);
-						// infoDialog('Time entry successfully updated');
 					}).finally(function () {
-						$scope.findTimeEntries($scope.periodFilterKey);
+						findTimeEntries($scope.periodFilterKey);
 					});
+				} else {
+					findTimeEntries($scope.periodFilterKey);
 				}
 
 
@@ -385,7 +363,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 			}
 		};
 
-		$scope.findTimeEntries = function (periodKey) {
+		findTimeEntries = function (periodKey) {
 			var period = timePeriods.specialOps[periodKey];
 
 			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
@@ -398,6 +376,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				});
 
 		};
+		$scope.findTimeEntries = findTimeEntries;
 
 		$scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();

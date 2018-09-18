@@ -349,6 +349,7 @@
 		    "agentArmed": "Agente armado",
 		    "greeter": "Greeter",
 		    "coordinator": "Coordinador",
+		    "transport": "Transporte",
 		    "invoiceNumber": "Número de factura"
 
 		},
@@ -441,6 +442,7 @@
 			"staffGuardArmed": "Agente armado",
 			"staffCoordinator": "Coordinador",
 		    "staffGreeter": "Greeter",
+		    "staffTransport": "Transporte",
 			"vehicle": "Vehículo",
 			"details": "Detalles",
 			"addingPrincipal": "Agregar principal",

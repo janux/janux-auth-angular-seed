@@ -79,6 +79,46 @@ module.exports =
 				width       : 95
 			},
 
+			//Type
+			{
+				headerName    : $filter('translate')('operations.specialsTimeLog.function'),
+				editable      : false,
+				filter        : 'agTextColumnFilter',
+				filterParams  : {newRowsAction: 'keep'},
+				valueFormatter: function (params) {
+					var locale
+					const resourcePerson = _.find(params.data.timeEntry.resources, function (it) {
+						return it.type !== 'VEHICLE'
+					});
+					switch (resourcePerson.type) {
+						case 'DRIVER':
+							locale = 'operations.specialsTimeLog.driver';
+							break;
+						case 'AGENT':
+							locale = 'operations.specialsTimeLog.agent';
+							break;
+						case 'AGENT_ARMED':
+							locale = 'operations.specialsTimeLog.agentArmed';
+							break;
+						case 'GREETER':
+							locale = 'operations.specialsTimeLog.greeter';
+							break;
+						case 'COORDINATOR':
+							locale = 'operations.specialsTimeLog.coordinator';
+							break;
+						case 'TRANSPORT':
+							locale = 'operations.specialsTimeLog.transport';
+							break;
+					}
+					if (!_.isNil(locale)) {
+						return $filter('translate')(locale);
+					} else {
+						return '';
+					}
+
+				}
+			},
+
 			//Rate day person.
 			{
 				headerName    : $filter('translate')('services.invoice.invoiceDetail.costDay'),

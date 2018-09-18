@@ -397,7 +397,7 @@ module.exports =
 						}
 					});
 
-					return resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER']).then(function (allResources) {
+					return resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER', 'TRANSPORT']).then(function (allResources) {
 
 						// Filter only persons and resources that belongs to glarus.
 						var allDriversAvailableForSelection = _.filter(allResources, function (o) {

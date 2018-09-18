@@ -258,7 +258,7 @@ require('angular').module('config', [])
 			guardsColumnsFilters: 'guardsColumnsFilters',
 			guardsTimeLogFilterPeriod: 'guardsTimeLogFilterPeriod'
 		},
-		invoice               : {
+		invoice: {
 			status: {
 				inRevision: 'inRevision',
 				ended     : 'ended'
@@ -270,5 +270,8 @@ require('angular').module('config', [])
 				invoiceEditModeEnabled : 'invoiceEditModeEnabled',
 				invoiceEditModeDisabled: 'invoiceEditModeDisabled'
 			}
+		},
+		timeEntry:{
+			attributeTransport: 'isTransport'
 		}
 	});

@@ -4,8 +4,8 @@ var infoDialog = require('./info-dialog');
 var agGridComp = require('common/ag-grid-components');
 var _ = require('lodash');
 
-module.exports = ['$scope','operationService','timeEntryService','$mdDialog','$timeout','$modal','$filter',
-function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $modal, $filter) {
+module.exports = ['$scope','operationService','timeEntryService','$mdDialog','$timeout','$modal','$filter','operationUtilService',
+function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $modal, $filter, operationUtilService) {
 
 	operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 
@@ -16,13 +16,6 @@ function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $
 		var allVehicles = driversAndOps.vehicles;
 		var operations = driversAndOps.operations;
 		var selectedDriver;
-
-		function setExtraFlag(resource) {
-			if (resource.resource.isExternal === true) {
-				resource.isExternal = true;
-			}
-			return resource;
-		}
 
 		var initRowModel = function () {
 			$scope.lbRow = {
@@ -169,87 +162,9 @@ function ($scope , operationService , timeEntryService , $mdDialog , $timeout, $
 
 		// Add new record
 		$scope.addRow = function () {
-			// Selected person
-
-			if (!$scope.lbRow.staff) {
-				infoDialog('operations.dialogs.invalidStaff', $modal, $filter);
-				return;
-			}
-
-			if (!$scope.lbRow.operation && !$scope.operationId) {
-				infoDialog('operations.dialogs.invalidOperation', $modal, $filter);
-				return;
-			}
-
-			if (!$scope.lbRow.function) {
-				infoDialog('operations.dialogs.invalidFunction', $modal, $filter);
-				return;
-			}
-
-			//////
-			if (!!$scope.specialServiceAddForm.$valid) {
-				var begin = moment($scope.lbRow.start);
-				var end = '', endToInsert;
-				var vehicle;
-
-				if (_.isNil($scope.lbRow.end) === false) {
-					end = moment($scope.lbRow.end);
-					endToInsert = end.toDate();
-
-					if (begin > end) {
-						infoDialog('operations.dialogs.endDateError', $modal, $filter);
-						return;
-					}
-				}
-
-				if (!_.isNil($scope.lbRow.odometerEnd) && !_.isNil($scope.lbRow.odometerStart) &&
-					_.toNumber($scope.lbRow.odometerStart) > _.toNumber($scope.lbRow.odometerEnd)) {
-					infoDialog('operations.dialogs.odometerStartGreaterThanEnd', $modal, $filter);
-					return;
-				}
-
-				var specialOpsTimeEntryToInsert = {
-					'resources'  : [_.clone($scope.lbRow.staff)],
-					'principals' : [],
-					'attributes' : [],
-					'type'       : 'SPECIAL_OPS',
-					'comment'    : $scope.lbRow.location,
-					'begin'      : begin.toDate(),
-					'end'        : endToInsert,
-					'billable'   : true,
-					'idOperation': $scope.operationId || $scope.lbRow.operation.id
-				};
-
-
-				specialOpsTimeEntryToInsert.resources[0].type = $scope.lbRow.function;
-				specialOpsTimeEntryToInsert.resources[0] = setExtraFlag(specialOpsTimeEntryToInsert.resources[0]);
-
-				// Adding the vehicle resource.
-				if (!_.isNil($scope.lbRow.vehicle)) {
-					vehicle = _.clone($scope.lbRow.vehicle);
-					// Adding the vehicle fuel and odometer values.
-					vehicle.odometerStart = $scope.lbRow.odometerStart;
-					vehicle.odometerEnd = $scope.lbRow.odometerEnd;
-					vehicle.fuelStart = $scope.lbRow.fuelStart;
-					vehicle.fuelEnd = $scope.lbRow.fuelEnd;
-
-					specialOpsTimeEntryToInsert.resources[1] = vehicle;
-				}
-				console.log('specialOpsTimeEntryToInsert', specialOpsTimeEntryToInsert);
-
-				timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
-					$scope.findTimeEntries($scope.periodFilterKey);
-
-					// Wait before performing the form reset
-					$timeout(function () {
-						initRowModel();
-						$scope.specialServiceAddForm.$setUntouched(true);
-						$scope.specialServiceAddForm.$setPristine(true);
-						// Go to last page
-						// $scope.gridOptions.api.paginationGoToLastPage();
-					}, 10);
-				});
-			}
+			operationUtilService.createAndInsertSpecialOpsTimeEntry(
+				infoDialog, $modal, $scope, timeEntryService, $timeout, initRowModel, $filter
+			);
 		};
 
 		$scope.export = function () {

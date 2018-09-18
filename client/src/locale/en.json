@@ -567,7 +567,11 @@
 		"lastQuarter": "Last quarter",
 	  	"oneYear":"One year",
 	    "yearToDate":"Year to date",
-	    "lastYear":"Last year"
+	    "lastYear":"Last year",
+	    "firstBiWeekCurrentMonth": "First bi week of the current month",
+	    "secondBiWeekCurrentMonth": "Second bi week of the current month",
+	    "firstBiWeekPreviousMonth": "First bi week of the previous month",
+	    "secondBiWeekPreviousMonth": "Second bi week of the previous month"
 	},
 	"dialogs":{
 		"delete":"Are you sure to delete the ",

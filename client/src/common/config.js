@@ -194,7 +194,24 @@ require('angular').module('config', [])
 			{
 				key  : 'lastQuarter',
 				label: 'periodFilter.lastQuarter'
+			},
+			{
+				key  : 'firstBiWeekCurrentMonth',
+				label: 'periodFilter.firstBiWeekCurrentMonth'
+			},
+			{
+				key  : 'secondBiWeekCurrentMonth',
+				label: 'periodFilter.secondBiWeekCurrentMonth'
+			},
+			{
+				key  : 'firstBiWeekPreviousMonth',
+				label: 'periodFilter.firstBiWeekPreviousMonth'
+			},
+			{
+				key  : 'secondBiWeekPreviousMonth',
+				label: 'periodFilter.secondBiWeekPreviousMonth'
 			}
+
 		],
 		periodFilterSpecialOps: [
 			{
@@ -244,21 +261,37 @@ require('angular').module('config', [])
 			{
 				key  : 'lastYear',
 				label: 'periodFilter.lastYear'
+			},
+			{
+				key  : 'firstBiWeekCurrentMonth',
+				label: 'periodFilter.firstBiWeekCurrentMonth'
+			},
+			{
+				key  : 'secondBiWeekCurrentMonth',
+				label: 'periodFilter.secondBiWeekCurrentMonth'
+			},
+			{
+				key  : 'firstBiWeekPreviousMonth',
+				label: 'periodFilter.firstBiWeekPreviousMonth'
+			},
+			{
+				key  : 'secondBiWeekPreviousMonth',
+				label: 'periodFilter.secondBiWeekPreviousMonth'
 			}
 		],
-		jnxStoreKeys : {
-			storeObjectSufix: 'glarusStorage',
-			servicesColumnsFilters: 'servicesColumnsFilters',
-			specialOpsColumnsFilters: 'specialOpsColumnsFilters',
+		jnxStoreKeys          : {
+			storeObjectSufix             : 'glarusStorage',
+			servicesColumnsFilters       : 'servicesColumnsFilters',
+			specialOpsColumnsFilters     : 'specialOpsColumnsFilters',
 			specialOpsTimeLogFilterPeriod: 'specialOpsTimeLogFilterPeriod',
 			attendanceTimeLogFilterPeriod: 'attendanceTimeLogFilterPeriod',
-			attendanceColumnsFilters: 'attendanceColumnsFilters',
-			driversColumnsFilters: 'driversColumnsFilters',
-			driversTimeLogFilterPeriod: 'driversTimeLogFilterPeriod',
-			guardsColumnsFilters: 'guardsColumnsFilters',
-			guardsTimeLogFilterPeriod: 'guardsTimeLogFilterPeriod'
+			attendanceColumnsFilters     : 'attendanceColumnsFilters',
+			driversColumnsFilters        : 'driversColumnsFilters',
+			driversTimeLogFilterPeriod   : 'driversTimeLogFilterPeriod',
+			guardsColumnsFilters         : 'guardsColumnsFilters',
+			guardsTimeLogFilterPeriod    : 'guardsTimeLogFilterPeriod'
 		},
-		invoice: {
+		invoice               : {
 			status: {
 				inRevision: 'inRevision',
 				ended     : 'ended'
@@ -271,7 +304,7 @@ require('angular').module('config', [])
 				invoiceEditModeDisabled: 'invoiceEditModeDisabled'
 			}
 		},
-		timeEntry:{
+		timeEntry             : {
 			attributeTransport: 'isTransport'
 		}
 	});

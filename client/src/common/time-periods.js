@@ -37,6 +37,43 @@ var last30Days = {
 	}
 };
 
+var firstBiWeekCurrentMonth = {
+	from: function () {
+		return moment().startOf('month').toDate();
+	},
+	to  : function () {
+		return moment().date(16).hours(0).minutes(0).seconds(0).milliseconds(0).toDate();
+	}
+};
+
+var secondBiWeekCurrentMonth = {
+	from: function () {
+		return moment().date(16).hours(0).minutes(0).seconds(0).milliseconds(0).toDate();
+	},
+	to  : function () {
+		return moment().endOf('month').toDate();
+	}
+};
+
+var firstBiWeekPreviousMonth = {
+	from: function () {
+		return moment().subtract(1, 'months').startOf('month').toDate();
+	},
+	to  : function () {
+		return moment().subtract(1, 'months').date(16).hours(0).minutes(0).seconds(0).milliseconds(0).toDate();
+	}
+};
+
+var secondBiWeekPreviousMonth = {
+	from: function () {
+		return moment().subtract(1, 'months').date(16).hours(0).minutes(0).seconds(0).milliseconds(0).toDate();
+	},
+	to  : function () {
+		return moment().subtract(1, 'months').endOf('month').toDate();
+	}
+};
+
+
 var currentMonth = {
 	from: function () {
 		return moment().startOf('month').toDate();
@@ -112,28 +149,36 @@ var lastYear = {
 
 module.exports = {
 	specialOps   : {
-		'last7Days'     : last7Days,
-		'currentWeek'   : currentWeek,
-		'lastWeek'      : lastWeek,
-		'last30Days'    : last30Days,
-		'currentMonth'  : currentMonth,
-		'lastMonth'     : lastMonth,
-		'last90Days'    : last90Days,
-		'currentQuarter': currentQuarter,
-		'lastQuarter'   : lastQuarter,
-		'oneYear'       : oneYear,
-		'yearToDate'    : yearToDate,
-		'lastYear'      : lastYear
+		'last7Days'                : last7Days,
+		'currentWeek'              : currentWeek,
+		'lastWeek'                 : lastWeek,
+		'last30Days'               : last30Days,
+		'currentMonth'             : currentMonth,
+		'lastMonth'                : lastMonth,
+		'last90Days'               : last90Days,
+		'currentQuarter'           : currentQuarter,
+		'lastQuarter'              : lastQuarter,
+		'oneYear'                  : oneYear,
+		'yearToDate'               : yearToDate,
+		'lastYear'                 : lastYear,
+		'firstBiWeekCurrentMonth'  : firstBiWeekCurrentMonth,
+		'secondBiWeekCurrentMonth' : secondBiWeekCurrentMonth,
+		'firstBiWeekPreviousMonth' : firstBiWeekPreviousMonth,
+		'secondBiWeekPreviousMonth': secondBiWeekPreviousMonth
 	},
 	nonSpecialOps: {
-		'last7Days'     : last7Days,
-		'currentWeek'   : currentWeek,
-		'lastWeek'      : lastWeek,
-		'last30Days'    : last30Days,
-		'currentMonth'  : currentMonth,
-		'lastMonth'     : lastMonth,
-		'last90Days'    : last90Days,
-		'currentQuarter': currentQuarter,
-		'lastQuarter'   : lastQuarter
+		'last7Days'                : last7Days,
+		'currentWeek'              : currentWeek,
+		'lastWeek'                 : lastWeek,
+		'last30Days'               : last30Days,
+		'currentMonth'             : currentMonth,
+		'lastMonth'                : lastMonth,
+		'last90Days'               : last90Days,
+		'currentQuarter'           : currentQuarter,
+		'lastQuarter'              : lastQuarter,
+		'firstBiWeekCurrentMonth'  : firstBiWeekCurrentMonth,
+		'secondBiWeekCurrentMonth' : secondBiWeekCurrentMonth,
+		'firstBiWeekPreviousMonth' : firstBiWeekPreviousMonth,
+		'secondBiWeekPreviousMonth': secondBiWeekPreviousMonth
 	}
 };

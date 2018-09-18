@@ -567,7 +567,11 @@
 		"lastQuarter": "Trimestre pasado",
 	    "oneYear": "Últimos 365 días",
 	    "yearToDate":"Este año",
-	    "lastYear":"Año pasado"
+	    "lastYear":"Año pasado",
+	    "firstBiWeekCurrentMonth": "Primera quincena del mes actual",
+	    "secondBiWeekCurrentMonth": "Segunda quincena del mes actual",
+	    "firstBiWeekPreviousMonth": "Primera quincena del mes anterior",
+	    "secondBiWeekPreviousMonth": "Segunda quincena del mes anterior"
 	},
 	"dialogs":{
 		"delete":"Estas seguro que quieres borrar ",

@@ -5,8 +5,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-'$scope','partyService', function(
- $scope , partyService ) {
+'$scope','partyService','validationService','dialogService', function(
+ $scope , partyService , validationService , dialogService) {
 
  		// Create a new client
 		var client = new Organization();
@@ -14,9 +14,9 @@ module.exports = [
 		client.setContactMethod('work', new Email());
 		client.setContactMethod('work', new PostalAddress());
 
-		$scope.client = client;	
+		$scope.client = client;
 		console.log('Staff: ',$scope.client);
-  
+
 		$scope.addNewAddress = function() {
 		    $scope.client.setContactMethod('work', new PostalAddress());
 		};
@@ -24,7 +24,7 @@ module.exports = [
 		$scope.removeAddress = function(z) {
 		    $scope.client.contactMethods.addresses.splice(z,1);
 		};
-  
+
 		$scope.addNewPhone = function() {
 			$scope.client.setContactMethod('work', new PhoneNumber());
 		};
@@ -32,7 +32,7 @@ module.exports = [
 		$scope.removePhone = function(z) {
 		    $scope.client.contactMethods.phones.splice(z,1);
 		};
-  
+
 		$scope.addNewMail = function() {
 		    $scope.client.setContactMethod('work', new Email());
 		};
@@ -41,16 +41,20 @@ module.exports = [
 		    $scope.client.contactMethods.emails.splice(z,1);
 		};
 
-		
-		
-
 		$scope.save = function () {
+			if (!validationService.everyEmailAddress($scope.client.emailAddresses(false))) {
+				dialogService.info('party.dialogs.invalidEmail');
+				return false;
+			}
+
 			console.log('client created', $scope.client);
 			//Setting the supplier flag as false.
 			$scope.client.isSupplier = false;
 			partyService.insert($scope.client).then(function (resp) {
 				console.log('Client has been saved!', resp);
 				window.history.back();
+			}).catch(function (err) {
+				dialogService.info(err, true);
 			});
 		};
 

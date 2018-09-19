@@ -9,8 +9,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', '$rootScope', 'partyService', 'partyGroupService', 'resourceService', '$state', 'supplier', 'supplierGroup', 'assignableResources', '$modal', '$filter', '$mdDialog', '$mdToast', '$stateParams',
-	function ($scope, $rootScope, partyService, partyGroupService, resourceService, $state, supplier, supplierGroup, assignableResources, $modal, $filter, $mdDialog, $mdToast, $stateParams) {
+	'$scope', '$rootScope', 'partyService', 'partyGroupService', 'resourceService', '$state', 'supplier', 'supplierGroup', 'assignableResources', '$modal', '$filter', '$mdDialog', '$mdToast', '$stateParams','validationService','dialogService',
+	function ($scope, $rootScope, partyService, partyGroupService, resourceService, $state, supplier, supplierGroup, assignableResources, $modal, $filter, $mdDialog, $mdToast, $stateParams, validationService , dialogService) {
 
 		var contacts = [];
 		if (!_.isNil(supplierGroup)) {
@@ -74,6 +74,11 @@ module.exports = [
 		};
 
 		var save = function (preventDefault) {
+			if (!validationService.everyEmailAddress($scope.supplier.emailAddresses(false))) {
+				dialogService.info('party.dialogs.invalidEmail');
+				return false;
+			}
+
 			return partyService.update($scope.supplier).then(function () {
 				console.log('Client has been saved!');
 				$mdToast.show(
@@ -85,6 +90,8 @@ module.exports = [
 				if (!preventDefault) {
 					window.history.back();
 				}
+			}).catch(function (err) {
+				dialogService.info(err, true);
 			});
 		};
 		$scope.save = save;
@@ -132,6 +139,11 @@ module.exports = [
 				return;
 			}
 
+			if (!validationService.everyEmailAddress($scope.contact.emailAddresses(false))) {
+				dialogService.info('party.dialogs.invalidEmail');
+				return false;
+			}
+
 			if ($scope.editContact) {
 				// Save supplier contact
 				partyService.update($scope.contact).then(function (result) {
@@ -145,6 +157,8 @@ module.exports = [
 					if (!preventDefault) {
 						$state.go('supplier.edit', {id: supplier.id, tab: 'contacts'}, {reload: true});
 					}
+				}).catch(function (err) {
+					dialogService.info(err, true);
 				});
 			} else if ($scope.addContact) {
 				// Insert supplier contact
@@ -160,6 +174,8 @@ module.exports = [
 						if (!preventDefault) {
 							$state.go('supplier.edit', {id: supplier.id, tab: 'contacts'}, {reload: true});
 						}
+					}).catch(function (err) {
+						dialogService.info(err, true);
 					});
 			}
 		};

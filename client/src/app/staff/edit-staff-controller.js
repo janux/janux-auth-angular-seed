@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 
 module.exports = [
 '$scope','partyService','$state','staff','dialogService','validationService',function(
@@ -11,17 +11,9 @@ module.exports = [
 	$scope.staff = staff;
 
 	$scope.save = function () {
-		if (!_.isNil($scope.staff.emailAddresses(false)) &&
-			$scope.staff.emailAddresses(false).length > 0) {
-			if(!_.every($scope.staff.emailAddresses(false), function (email) {
-					if (!validationService.email(email.address)) {
-						dialogService.info('party.dialogs.invalidEmail');
-						return false;
-					}
-					return true;
-				})) {
-				return false;
-			}
+		if (!validationService.everyEmailAddress($scope.staff.emailAddresses(false))) {
+			dialogService.info('party.dialogs.invalidEmail');
+			return false;
 		}
 
 		partyService.update($scope.staff).then(function () {

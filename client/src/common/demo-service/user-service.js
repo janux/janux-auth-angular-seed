@@ -140,6 +140,8 @@ function( $q ,  $http, partyService, dateUtilService){
 				var out = resp.data.result;
 				console.log('saveOrUpdate', out);
 				return out;
+			}).catch(function (err) {
+				return Promise.reject(err.data.error[0].message);
 			});
 		},
 

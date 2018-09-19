@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 
 module.exports = [
 '$scope','userService','$state','user','roles','$modal','dialogService','validationService',function(
@@ -12,20 +12,12 @@ module.exports = [
 	$scope.roles = roles;
 
 	$scope.currentNavItem = 'user';
-	
+
 	$scope.save = function () {
 
-		if (!_.isNil($scope.user.contact.emailAddresses(false)) &&
-			$scope.user.contact.emailAddresses(false).length > 0) {
-			if(!_.every($scope.user.contact.emailAddresses(false), function (email) {
-				if (!validationService.email(email.address)) {
-					dialogService.info('party.dialogs.invalidEmail');
-					return false;
-				}
-				return true;
-			})) {
-				return false;
-			}
+		if (!validationService.everyEmailAddress($scope.user.contact.emailAddresses(false))) {
+			dialogService.info('party.dialogs.invalidEmail');
+			return false;
 		}
 
 		$scope.user.roles = [];
@@ -40,9 +32,11 @@ module.exports = [
 		userService.saveOrUpdate($scope.user).then(function () {
 			console.log('User has been saved!');
 			window.history.back();
+		}).catch(function (err) {
+			dialogService.info(err, true);
 		});
 	};
-		
+
 	$scope.cancel = function () {
 		window.history.back();
 	};

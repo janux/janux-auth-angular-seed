@@ -3,7 +3,7 @@ var Person = require('janux-people').Person;
 var PhoneNumber = require('janux-people').PhoneNumber;
 var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
-var _ = require('lodash');
+// var _ = require('lodash');
 
 module.exports = [
 '$scope','partyService','partyGroupService','dialogService','validationService', function(
@@ -19,17 +19,9 @@ module.exports = [
 		console.log('Staff: ',$scope.staff);
 
 		$scope.save = function () {
-			if (!_.isNil($scope.staff.emailAddresses(false)) &&
-				$scope.staff.emailAddresses(false).length > 0) {
-				if(!_.every($scope.staff.emailAddresses(false), function (email) {
-						if (!validationService.email(email.address)) {
-							dialogService.info('party.dialogs.invalidEmail');
-							return false;
-						}
-						return true;
-					})) {
-					return false;
-				}
+			if (!validationService.everyEmailAddress($scope.staff.emailAddresses(false))) {
+				dialogService.info('party.dialogs.invalidEmail');
+				return false;
 			}
 
 			// console.log('staff about to save', $scope.staff);

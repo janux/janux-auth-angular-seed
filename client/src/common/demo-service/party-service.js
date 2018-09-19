@@ -208,6 +208,8 @@ module.exports =
 						var contact = resp.data.result;
 						contact = fromJSON(contact);
 						return contact;
+					}).catch(function (err) {
+						return Promise.reject(err.data.error.message);
 					});
 				},
 

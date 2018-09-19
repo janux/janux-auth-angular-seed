@@ -5,8 +5,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', 'partyService', function (
-		$scope, partyService) {
+	'$scope', 'partyService','validationService','dialogService', function (
+		$scope, partyService, validationService , dialogService) {
 
 		// Create a new supplier
 		var supplier = new Organization();
@@ -43,12 +43,19 @@ module.exports = [
 
 
 		$scope.save = function () {
+			if (!validationService.everyEmailAddress($scope.supplier.emailAddresses(false))) {
+				dialogService.info('party.dialogs.invalidEmail');
+				return false;
+			}
+
 			console.log('supplier created', $scope.supplier);
 			//Adding the falgs.
 			$scope.supplier.isSupplier = true;
 			partyService.insert($scope.supplier).then(function (resp) {
 				console.log('Client has been saved!', resp);
 				window.history.back();
+			}).catch(function (err) {
+				dialogService.info(err, true);
 			});
 		};
 

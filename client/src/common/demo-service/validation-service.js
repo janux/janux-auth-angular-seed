@@ -40,6 +40,21 @@ module.exports = [ function () {
 		 */
 		email: function (email) {
 			return (isEmail.test(email));
+		},
+
+		/**
+		 *
+		 * @param emails
+		 * @return {boolean} return false only if any of the emails is invalid, otherwise return true
+		 */
+		everyEmailAddress: function (emails) {
+			if (!_.isNil(emails) && emails.length > 0) {
+				var validEmailCallback = function (email) {
+					return service.email(email.address);
+				};
+				return _.every(emails, validEmailCallback);
+			}
+			return true;
 		}
 	};
 	return service;

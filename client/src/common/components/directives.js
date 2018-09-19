@@ -303,8 +303,8 @@ angular.module('commonComponents', [])
 			scope      : specialServiceScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-service.html',
-			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService',
-				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService) {
+			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService','dialogService','validationService',
+				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService,dialogService,validationService) {
 
 					// console.log("invoices in directive " + $scope.invoices);
 
@@ -615,6 +615,11 @@ angular.module('commonComponents', [])
 											return;
 										}
 
+										if (!validationService.everyEmailAddress($scope.contact.emailAddresses(false))) {
+											dialogService.info('party.dialogs.invalidEmail');
+											return false;
+										}
+
 										console.log('clientGroupCode', clientGroupCode);
 										// Insert principal
 										partyGroupService.addItemNewParty(clientGroupCode, $scope.contact, {})
@@ -629,6 +634,8 @@ angular.module('commonComponents', [])
 												refreshClientContactsList(type, result);
 
 												$mdDialog.cancel();
+											}).catch(function (err) {
+												dialogService.info(err, true);
 											});
 									} else {
 										infoDialog('party.dialogs.noContacts', $scope, $filter);

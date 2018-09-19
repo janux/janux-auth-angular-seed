@@ -9,8 +9,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-'$scope','partyService','partyGroupService','rateMatrixService','$state','client','clientGroup','rateMatrix','$modal','$filter','$mdDialog','$mdToast','$stateParams', function(
- $scope , partyService , partyGroupService , rateMatrixService , $state , client , clientGroup , rateMatrix , $modal , $filter , $mdDialog , $mdToast , $stateParams) {
+'$scope','partyService','partyGroupService','rateMatrixService','$state','client','clientGroup','rateMatrix','$modal','$filter','$mdDialog','$mdToast','$stateParams','validationService','dialogService', function(
+ $scope , partyService , partyGroupService , rateMatrixService , $state , client , clientGroup , rateMatrix , $modal , $filter , $mdDialog , $mdToast , $stateParams , validationService , dialogService) {
 
 	var contacts = [];
 	if(!_.isNil(clientGroup)){
@@ -130,6 +130,11 @@ module.exports = [
 
 
 	var save = function (preventDefault) {
+		if (!validationService.everyEmailAddress($scope.client.emailAddresses(false))) {
+			dialogService.info('party.dialogs.invalidEmail');
+			return false;
+		}
+
 		return partyService.update($scope.client).then(function () {
 			console.log('Client has been saved!');
 			$mdToast.show(
@@ -141,6 +146,8 @@ module.exports = [
 			if(!preventDefault){
 				window.history.back();
 			}
+		}).catch(function (err) {
+			dialogService.info(err, true);
 		});
 	};
 	$scope.save = save;
@@ -187,6 +194,11 @@ module.exports = [
 			return;
 		}
 
+		if (!validationService.everyEmailAddress($scope.contact.emailAddresses(false))) {
+			dialogService.info('party.dialogs.invalidEmail');
+			return false;
+		}
+
 		if($scope.editContact) {
 			// Save client contact
 			partyService.update($scope.contact).then(function (result) {
@@ -200,6 +212,8 @@ module.exports = [
 				if(!preventDefault){
 					$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
 				}
+			}).catch(function (err) {
+				dialogService.info(err, true);
 			});
 		} else if($scope.addContact) {
 			// Insert client contact
@@ -215,6 +229,8 @@ module.exports = [
 				if(!preventDefault){
 					$state.go('client.edit', {id: client.id, tab:'contacts'}, {reload: true});
 				}
+			}).catch(function (err) {
+				dialogService.info(err, true);
 			});
 		}
 	};

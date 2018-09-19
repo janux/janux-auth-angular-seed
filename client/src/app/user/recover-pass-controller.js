@@ -31,15 +31,17 @@ module.exports =
 
 			$scope.recover = function () {
 				// Save recovery + account
-				if ($scope.user.password === '') {
-					dialogService.info('user.dialogs.passEmpty');
-					return;
-				} else if ($scope.user.password !== $scope.user.confirmPass) {
-					dialogService.info('user.dialogs.passConfMatch');
-					return;
-				} else if (!$scope.user.password.match(/^[a-zA-Z0-9_-]{8,20}$/)) {
-					dialogService.info('user.dialogs.passStrength');
-					return;
+				try {
+					validationService.password($scope.user.password, $scope.user.confirmPass);
+				} catch (err) {
+					switch (err) {
+						case 'notMatch':
+							dialogService.info('user.dialogs.passConfMatch');
+							return;
+						case 'strength':
+							dialogService.info('user.dialogs.passStrength');
+							return;
+					}
 				}
 
 				var username = $scope.user.username;

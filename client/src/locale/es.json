@@ -222,7 +222,12 @@
 		    "invalidHours": "Revise que las horas de jornada y jornada mínima sean correctas",
 		    "missingHoursFullDay": "Revise que las horas de jordana estén definidas",
 		    "missingHoursHalfDay": "Revise que las horas de jordana mínimia estén definidas",
-		    "missingRateDay": "Revise que las tarifa diaria esté definida"
+		    "missingRateDay": "Revise que las tarifa diaria esté definida",
+		    "discount" : "Descuentos",
+		    "discountsClient": "Descuentos cliente",
+		    "discountsReseller": "Descuentos revendedor",
+		    "staffDiscount": "Descuento personal",
+		    "discountPercentage": "Descuento"
 	    }
 	},
     "supplier": {

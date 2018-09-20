@@ -227,7 +227,8 @@
 		    "discountsClient": "Descuentos cliente",
 		    "discountsReseller": "Descuentos revendedor",
 		    "staffDiscount": "Descuento personal",
-		    "discountPercentage": "Descuento"
+		    "discountPercentage": "Descuento",
+		    "invalidDiscount":"Revise que los descuentos sean correctos"
 	    }
 	},
     "supplier": {

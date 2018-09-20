@@ -229,7 +229,8 @@
 		    "discountsClient": "Discount client",
 		    "discountsReseller": "Discount client",
 		    "staffDiscount": "Staff discount",
-		    "discountPercentage": "Discount"
+		    "discountPercentage": "Discount",
+		    "invalidDiscount":"Make sure the discount values are correct"
 	    }
 
 	},

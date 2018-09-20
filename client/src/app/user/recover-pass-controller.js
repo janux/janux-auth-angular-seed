@@ -4,8 +4,8 @@ var _ = require('lodash');
 var md5 = require('md5');
 
 module.exports =
-	['$scope','dialogService','userActionService','$mdToast','$filter','recovery','$state','userService','security','config','$translate',
-		function ($scope , dialogService , userActionService , $mdToast , $filter , recovery , $state, userService , security , config , $translate) {
+	['$scope','dialogService','userActionService','$mdToast','$filter','recovery','$state','userService','security','config','$translate','validationService',
+		function ($scope , dialogService , userActionService , $mdToast , $filter , recovery , $state, userService , security , config , $translate, validationService) {
 
 			var recObj = recovery;
 			console.log('recovery', recObj);

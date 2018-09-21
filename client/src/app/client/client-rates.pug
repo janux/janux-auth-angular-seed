@@ -12,6 +12,6 @@
 			md-content
 				include rates-tabs/research
 
-		md-tab(label="{{ 'client.rates.discount' | translate }}")
+		md-tab(label="{{ 'client.rates.discount' | translate }}" ng-if="client.isReseller===true")
 			md-content
 				include rates-tabs/discounts

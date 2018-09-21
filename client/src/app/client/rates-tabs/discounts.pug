@@ -1,21 +1,21 @@
 form(name='rateDiscountForm')
 	// Discount. client
-	.section-form
-		p.form-section-glarus
-			| {{ 'client.rates.discountsClient' | translate }}
-
-		fieldset.fieldset-flex
-			.fieldset-flex
-
-				.an-material.nopadding
-					md-input-container.full
-						label {{ 'client.rates.function' | translate}}
-						input(value="{{ 'client.rates.staffDiscount' | translate}}" ng-disabled='true')
-
-				.an-material.nopadding
-					md-input-container.full
-						label {{ 'client.rates.discountPercentage' | translate}}
-						input(ng-model='rateForm.rates.STAFF_DISCOUNT.inputParameters.discountPercentage' type="number")
+	//.section-form
+	//	p.form-section-glarus
+	//		| {{ 'client.rates.discountsClient' | translate }}
+	//
+	//	fieldset.fieldset-flex
+	//		.fieldset-flex
+	//
+	//			.an-material.nopadding
+	//				md-input-container.full
+	//					label {{ 'client.rates.function' | translate}}
+	//					input(value="{{ 'client.rates.staffDiscount' | translate}}" ng-disabled='true')
+	//
+	//			.an-material.nopadding
+	//				md-input-container.full
+	//					label {{ 'client.rates.discountPercentage' | translate}}
+	//					input(ng-model='rateForm.rates.STAFF_DISCOUNT.inputParameters.discountPercentage' type="number")
 
 	// Discount reseller.
 	.section-form(ng-show='client.isReseller===true')

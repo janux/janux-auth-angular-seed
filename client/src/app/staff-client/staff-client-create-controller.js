@@ -5,8 +5,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', 'userService', 'security', 'partyGroupService','dialogService','validationService', function (
-		$scope, userService, security, partyGroupService , dialogService, validationService) {
+	'$scope', 'userService', 'security', 'partyGroupService','dialogService','validationService','partyService', function (
+		$scope, userService, security, partyGroupService , dialogService, validationService, partyService) {
 
 		// Create a new staff
 		var staff = new Person();
@@ -19,7 +19,7 @@ module.exports = [
 
 		$scope.save = function () {
 			console.log('user created', $scope.staff);
-
+			$scope.staff = partyService.clean($scope.staff);
 			if (!validationService.everyEmailAddress($scope.staff.emailAddresses(false))) {
 				dialogService.info('party.dialogs.invalidEmail');
 				return false;

@@ -9,6 +9,7 @@ module.exports = [
 	$scope.staff = staff;
 
 	$scope.save = function () {
+		$scope.staff = partyService.clean($scope.staff);
 		if (!validationService.everyEmailAddress($scope.staff.emailAddresses(false))) {
 			dialogService.info('party.dialogs.invalidEmail');
 			return false;

@@ -133,6 +133,7 @@ module.exports = [
 
 
 		var save = function (preventDefault) {
+			$scope.client = partyService.clean($scope.client);
 			if (!validationService.everyEmailAddress($scope.client.emailAddresses(false))) {
 				dialogService.info('party.dialogs.invalidEmail');
 				return false;
@@ -197,6 +198,7 @@ module.exports = [
 				return;
 			}
 
+			$scope.contact = partyService.clean($scope.contact);
 			if (!validationService.everyEmailAddress($scope.contact.emailAddresses(false))) {
 				dialogService.info('party.dialogs.invalidEmail');
 				return false;

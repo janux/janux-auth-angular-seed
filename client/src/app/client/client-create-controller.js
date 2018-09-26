@@ -42,6 +42,7 @@ module.exports = [
 		};
 
 		$scope.save = function () {
+			$scope.client = partyService.clean($scope.client);
 			if (!validationService.everyEmailAddress($scope.client.emailAddresses(false))) {
 				dialogService.info('party.dialogs.invalidEmail');
 				return false;

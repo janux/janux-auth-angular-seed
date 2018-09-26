@@ -100,10 +100,10 @@ module.exports =
 			width     : 100,
 			valueGetter : function (params) {
 				var result;
-				if (_.isNil(params.data.code)) {
-					result = params.data.client;
-				} else {
+				if (_.isString(params.data.code) && params.data.code.trim() !== '') {
 					result = params.data.code;
+				}else{
+					result = params.data.client;
 				}
 				return result;
 			}

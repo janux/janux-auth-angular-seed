@@ -14,7 +14,7 @@ const backupPathArg = 'backup-path';
 const postCommandArg = 'post-command';
 const sshKeyArg = 'ssh-key';
 const sshPortArg = 'ssh-port';
-const passwordArg = 'password';
+
 
 module.exports = function (gulp) {
 	var username;
@@ -26,7 +26,7 @@ module.exports = function (gulp) {
 	var sshDefaultPort = 22;
 	var sshPort;
 	var compressedFileName;
-	var password;
+
 	var cfg = gulp.cfg;
 
 	/**
@@ -48,14 +48,9 @@ module.exports = function (gulp) {
 			isValid = false;
 		}
 
-		if (_.isString(password) && password.trim() !== '') {
-			console.log("Using password as auth mechanism")
-		} else {
-			console.log("Using ssh private key as auth mechanism");
-			if (_.isNil(sshKeyPath) || !_.isString(sshKeyPath) || sshKeyPath.trim() === '') {
-				console.error("No " + sshKeyArg + " defined ... aborting");
-				isValid = false;
-			}
+		if (_.isNil(sshKeyPath) || !_.isString(sshKeyPath) || sshKeyPath.trim() === '') {
+			console.error("No " + sshKeyArg + " defined ... aborting");
+			isValid = false;
 		}
 
 		// If there is a backup path. Validate is there is directory
@@ -95,21 +90,13 @@ module.exports = function (gulp) {
 
 	function createSshGulp() {
 		var config;
-		if (_.isString(password)) {
-			config = {
-				host    : host,
-				port    : sshPort,
-				password: password,
-				username: username
-			};
-		} else {
-			config = {
-				host      : host,
-				port      : sshPort,
-				privateKey: fs.readFileSync(sshKeyPath),
-				username  : username
-			};
-		}
+		config = {
+			host      : host,
+			port      : sshPort,
+			privateKey: fs.readFileSync(sshKeyPath),
+			username  : username
+		};
+
 		var gulpSsh = new GulpSSH({
 			ignoreErrors: false,
 			sshConfig   : config
@@ -117,7 +104,7 @@ module.exports = function (gulp) {
 		return gulpSsh;
 	}
 
-	gulp.task('validateArgs', function (cb) {
+	gulp.task('validateArgsAndSystem', function (cb) {
 		host = argv[hostArg];
 		path = argv[pathArg];
 		sshKeyPath = argv[sshKeyArg];
@@ -125,7 +112,7 @@ module.exports = function (gulp) {
 		postCommand = argv[postCommandArg];
 		sshPort = argv[sshPortArg];
 		username = argv[usernameArg];
-		password = argv[passwordArg];
+
 
 		console.log("Deploy given the arguments " +
 			"\nhost: " + host +
@@ -147,7 +134,7 @@ module.exports = function (gulp) {
 	/**
 	 * Compress the remote path and put in in a file.
 	 */
-	gulp.task('compressCurrentProject', ['validateArgs'], function () {
+	gulp.task('compressCurrentProject', ['validateArgsAndSystem'], function () {
 		if (!_.isString(backupPath)) {
 			return gulp.util.noop();
 		}
@@ -178,52 +165,56 @@ module.exports = function (gulp) {
 	});
 
 
-	gulp.task('syncProject', ['backup'], function () {
-		var gulpSsh = createSshGulp();
+	gulp.task('syncProject', ['backup'], function (cb) {
 		var rsyncCommand;
-		if (_.isString(password)) {
-			rsyncCommand = '';
-		} else {
-			rsyncCommand = 'rsync -az -e "ssh  -p ' + sshPort + '-i ' + sshKeyPath + '  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./* ' + username + '@' + host + ':' + path + ' --delete';
-		}
-
-		return gulpSsh.exec([rsyncCommand])
-			.pipe(gulp.dest('logs'))
-			.on('end', function () {
-				gulpSsh.close();
-			});
+		rsyncCommand = 'rsync -az -e "ssh  -p ' + sshPort + ' -i ' + sshKeyPath + '  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ../* ' + username + '@' + host + ':' + path + ' --delete';
+		shell.exec(rsyncCommand, function (code, stdout, stderr) {
+			if (code === 0) {
+				console.log("Rsync executed successfully");
+				cb()
+			} else {
+				console.error("Error running rsync \n" + stdout + "\n" + stderr);
+				cb(stdout);
+			}
+		});
 	});
 
-
-	gulp.task('remoteCommand', function (cb) {
-		return cb();
-	});
 
 	/**
 	 * Deploy the project to a remote server.
 	 * This task assumes the project has been built correctly.
 	 *
 	 */
-	gulp.task('deploy', ['validateArgs', 'backup', 'syncProject'], function () {
-		// host = argv[hostArg];
-		// path = argv[pathArg];
-		// sshKeyPath = argv[sshKeyArg];
-		// backupPath = argv[backupPathArg];
-		// postCommand = argv[postCommandArg];
-		// sshPort = argv[sshPortArg];
+	gulp.task('deploy', ['validateArgsAndSystem', 'backup', 'syncProject'], function (cb) {
+		// Sending custom parameter.
+		if (_.isString(postCommand)) {
+			const postRemoteCommand = "ssh " + username + "@" + host + " -i " + sshKeyPath + " '" + postCommand + "'";
+			shell.exec(postRemoteCommand, function (code, stdout, stderr) {
+				if (code === 0) {
+					console.log("Post command executed successful");
+					cb()
+				} else {
+					console.error("Error running rsync \n" + stdout + "\n" + stderr);
+					cb(stdout);
+				}
+			});
+		} else {
+			console.log("Ending deploy....");
+			return cb();
+		}
 
 
-		// if (!validateArguments()) {
-		// 	return;
-		// }
-		// sshConfig = {
-		// 	host      : host,
-		// 	port      : sshPort,
-		// 	privateKey: sshKeyPath
-		// };
-		console.log("Ending ....");
-		// backup();
-		// rsyncToDestiny();
-
+		//if (_.isString(postCommand)) {
+		//	console.log("Sending command");
+		//	const gulpSsh = createSshGulp();
+		//	return gulpSsh.exec([postCommand])
+		//		.pipe(gulp.dest('logs'))
+		//		.on('end', function () {
+		//			gulpSsh.close();
+		//		});
+		//} else {
+		//	console.log("Ending deploy....");
+		//	return gulp.util.noop();
+		//}
 	});
 };

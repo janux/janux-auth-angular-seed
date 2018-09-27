@@ -6,6 +6,7 @@ const GulpSSH = require('gulp-ssh');
 const _ = require('lodash');
 const fs = require('fs');
 const shell = require('shelljs');
+const gutil = require('gulp-util');
 
 const hostArg = 'host';
 const usernameArg = 'username';
@@ -134,9 +135,9 @@ module.exports = function (gulp) {
 	/**
 	 * Compress the remote path and put in in a file.
 	 */
-	gulp.task('compressCurrentProject', ['validateArgsAndSystem'], function () {
+	gulp.task('compressCurrentProject', ['validateArgsAndSystem'], function (cb) {
 		if (!_.isString(backupPath)) {
-			return gulp.util.noop();
+			return cb();
 		}
 		compressedFileName = "backup-" + moment().format("YYYY-MM-DD-HH-mm") + ".tar.gz";
 		var compressCommand = "tar  -czvf  /tmp/" + compressedFileName + " -C " + path + " . ";
@@ -145,15 +146,16 @@ module.exports = function (gulp) {
 			.pipe(gulp.dest('logs'))
 			.on('end', function () {
 				gulpSsh.close();
+				cb();
 			});
 	});
 
 	/**
 	 * Copy the compressed file to the local path.
 	 */
-	gulp.task('backup', ['compressCurrentProject'], function () {
+	gulp.task('backup', ['compressCurrentProject'], function (cb) {
 		if (!_.isString(backupPath)) {
-			return gulp.util.noop();
+			return cb();
 		}
 		console.log(compressedFileName);
 		var gulpSsh = createSshGulp();
@@ -161,6 +163,7 @@ module.exports = function (gulp) {
 			.pipe(gulp.dest(backupPath))
 			.on('end', function () {
 				gulpSsh.close();
+				cb();
 			});
 	});
 
@@ -188,7 +191,7 @@ module.exports = function (gulp) {
 	gulp.task('deploy', ['validateArgsAndSystem', 'backup', 'syncProject'], function (cb) {
 		// Sending custom parameter.
 		if (_.isString(postCommand)) {
-			const postRemoteCommand = "ssh " + username + "@" + host + " -i " + sshKeyPath + " '" + postCommand + "'";
+			const postRemoteCommand = "ssh -p" + sshPort + ' ' + username + "@" + host + " -i " + sshKeyPath + " '" + postCommand + "'";
 			shell.exec(postRemoteCommand, function (code, stdout, stderr) {
 				if (code === 0) {
 					console.log("Post command executed successful");

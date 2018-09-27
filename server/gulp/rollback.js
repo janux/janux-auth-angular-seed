@@ -1,6 +1,5 @@
 const argv = require('yargs').argv;
 const moment = require('moment');
-const GulpSSH = require('gulp-ssh');
 const _ = require('lodash');
 const fs = require('fs');
 const shell = require('shelljs');
@@ -19,7 +18,6 @@ module.exports = function (gulp) {
 	var host;
 	var path;
 	var sshKeyPath;
-	var backupPath;
 	var postCommand;
 	var sshDefaultPort = 22;
 	var sshPort;
@@ -107,12 +105,32 @@ module.exports = function (gulp) {
 		shell.exec(rsyncCommand, function (code, stdout, stderr) {
 			if (code === 0) {
 				console.log("Rsync executed successfully");
-				cb()
+				executePostCommand();
 			} else {
 				console.error("Error running rsync \n" + stdout + "\n" + stderr);
 				cb(stdout);
 			}
 		});
+
+		function executePostCommand() {
+
+			if (_.isString(postCommand)) {
+				const postRemoteCommand = "ssh -p" + sshPort + ' ' + username + "@" + host + " -i " + sshKeyPath + " '" + postCommand + "'";
+				shell.exec(postRemoteCommand, function (code, stdout, stderr) {
+					if (code === 0) {
+						console.log("Post command executed successful");
+						cb()
+					} else {
+						console.error("Error running rsync \n" + stdout + "\n" + stderr);
+						cb(stdout);
+					}
+				});
+			} else {
+				console.log("Ending deploy....");
+				cb();
+			}
+		}
+
 	});
 
 	gulp.task('validateArgsAndSystemRollBack', function (cb) {
@@ -135,9 +153,9 @@ module.exports = function (gulp) {
 
 		const isValid = validateArguments();
 		if (isValid === false) {
-			return cb("Error in arguments");
+			cb("Error in arguments");
 		} else {
-			return cb();
+			cb();
 		}
 	});
 

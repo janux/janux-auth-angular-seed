@@ -120,7 +120,7 @@ module.exports = function (gulp) {
 			"\npath: " + path +
 			"\nssh key: " + sshKeyPath +
 			"\nssh port: " + sshPort +
-			"\nbackup path: " + (backupPath ? backupPath : 'NO BACKUP PATH DEFINED NOT PERFORMING BACKUP') +
+			"\nbackup path: " + (backupPath ? backupPath : 'NO BACKUP PATH DEFINED NOT ... PERFORMING BACKUP') +
 			"\npost command: " + (postCommand ? postCommand : 'NO COMMAND DEFINED')
 		);
 

@@ -1,11 +1,11 @@
 'use strict';
 
-var argv = require('yargs').argv;
-var moment = require('moment');
-var GulpSSH = require('gulp-ssh');
-var _ = require('lodash');
-var fs = require('fs');
-var shell = require('shelljs');
+const argv = require('yargs').argv;
+const moment = require('moment');
+const GulpSSH = require('gulp-ssh');
+const _ = require('lodash');
+const fs = require('fs');
+const shell = require('shelljs');
 
 const hostArg = 'host';
 const usernameArg = 'username';

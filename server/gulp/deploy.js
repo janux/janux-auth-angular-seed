@@ -7,13 +7,14 @@ const _ = require('lodash');
 const fs = require('fs');
 const shell = require('shelljs');
 
-const hostArg = 'host';
-const usernameArg = 'username';
-const pathArg = 'path';
-const backupPathArg = 'backup-path';
-const postCommandArg = 'post-command';
-const sshKeyArg = 'ssh-key';
-const sshPortArg = 'ssh-port';
+const hostJSONArg = 'host';
+const usernameJSONArg = 'username';
+const pathJSONArg = 'path';
+const backupPathJSONArg = 'backup-path';
+const postCommandJSONArg = 'post-command';
+const sshKeyJSONArg = 'ssh-key';
+const sshPortJSONArg = 'ssh-port';
+const configFileArg = 'config-file';
 
 
 module.exports = function (gulp) {
@@ -26,8 +27,8 @@ module.exports = function (gulp) {
 	var sshDefaultPort = 22;
 	var sshPort;
 	var compressedFileName;
+	var configFile;
 
-	var cfg = gulp.cfg;
 
 	/**
 	 * Validate arguments
@@ -36,20 +37,20 @@ module.exports = function (gulp) {
 	function validateArguments() {
 		var isValid = true;
 		if (_.isNil(host) || !_.isString(host) || host.trim() === '') {
-			console.error("No " + hostArg + " defined ... aborting");
+			console.error("No " + hostJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 		if (_.isNil(path) || !_.isString(path) || path.trim() === '') {
-			console.error("No " + pathArg + " defined ... aborting");
+			console.error("No " + pathJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 		if (_.isNil(username) || !_.isString(username) || username.trim() === '') {
-			console.error("No " + usernameArg + " defined ... aborting");
+			console.error("No " + usernameJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 
 		if (_.isNil(sshKeyPath) || !_.isString(sshKeyPath) || sshKeyPath.trim() === '') {
-			console.error("No " + sshKeyArg + " defined ... aborting");
+			console.error("No " + sshKeyJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 
@@ -57,7 +58,7 @@ module.exports = function (gulp) {
 		// and the task has write permission.
 		if (_.isString(backupPath)) {
 			if (fs.existsSync(backupPath) === false || fs.lstatSync(backupPath).isDirectory() === false) {
-				console.error(argv[backupPathArg] + " is not a directory ... aborting");
+				console.error(argv[backupPathJSONArg] + " is not a directory ... aborting");
 				isValid = false;
 			} else if (validateWritePermissionPath(backupPath) === false) {
 				console.error("This task does not have write permissions to path " + backupPath + "... aborting");
@@ -105,30 +106,45 @@ module.exports = function (gulp) {
 	}
 
 	gulp.task('validateArgsAndSystem', function (cb) {
-		host = argv[hostArg];
-		path = argv[pathArg];
-		sshKeyPath = argv[sshKeyArg];
-		backupPath = argv[backupPathArg];
-		postCommand = argv[postCommandArg];
-		sshPort = argv[sshPortArg];
-		username = argv[usernameArg];
 
-
-		console.log("Deploy given the arguments " +
-			"\nhost: " + host +
-			"\npath: " + path +
-			"\nssh key: " + sshKeyPath +
-			"\nssh port: " + sshPort +
-			"\nbackup path: " + (backupPath ? backupPath : 'NO BACKUP PATH DEFINED ... NOT PERFORMING BACKUP BEFORE DEPLOY') +
-			"\npost command: " + (postCommand ? postCommand : 'NO COMMAND DEFINED')
-		);
-
-		var isValid = validateArguments();
-		if (isValid === false) {
-			return cb("Error in arguments");
-		} else {
-			return cb();
+		configFile = argv[configFileArg];
+		if (!_.isString(configFile)) {
+			return cb(configFileArg + "is not a valid argument");
 		}
+
+		if (fs.existsSync(configFile) === false || fs.lstatSync(configFile).isFile() === false) {
+			return cb(configFile + "is not a valid file");
+		}
+
+		fs.readFile(configFile, 'utf8', function (err, data) {
+			if (err) cb("Error reading file");
+			var obj = JSON.parse(data);
+			host = obj[hostJSONArg];
+			path = obj[pathJSONArg];
+			sshKeyPath = obj[sshKeyJSONArg];
+			backupPath = obj[backupPathJSONArg];
+			postCommand = obj[postCommandJSONArg];
+			sshPort = obj[sshPortJSONArg];
+			username = obj[usernameJSONArg];
+
+			console.log("Deploy given the arguments " +
+				"\nhost: " + host +
+				"\npath: " + path +
+				"\nssh key: " + sshKeyPath +
+				"\nssh port: " + sshPort +
+				"\nbackup path: " + (backupPath ? backupPath : 'NO BACKUP PATH DEFINED ... NOT PERFORMING BACKUP BEFORE DEPLOY') +
+				"\npost command: " + (postCommand ? postCommand : 'NO COMMAND DEFINED')
+			);
+
+			var isValid = validateArguments();
+			if (isValid === false) {
+				return cb("Error in arguments");
+			} else {
+				return cb();
+			}
+		});
+
+
 	});
 
 	/**
@@ -229,19 +245,5 @@ module.exports = function (gulp) {
 			console.log("Ending deploy....");
 			cb();
 		}
-
-
-		//if (_.isString(postCommand)) {
-		//	console.log("Sending command");
-		//	const gulpSsh = createSshGulp();
-		//	return gulpSsh.exec([postCommand])
-		//		.pipe(gulp.dest('logs'))
-		//		.on('end', function () {
-		//			gulpSsh.close();
-		//		});
-		//} else {
-		//	console.log("Ending deploy....");
-		//	return gulp.util.noop();
-		//}
 	});
 };

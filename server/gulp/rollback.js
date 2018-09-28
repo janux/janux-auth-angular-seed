@@ -4,13 +4,17 @@ const _ = require('lodash');
 const fs = require('fs');
 const shell = require('shelljs');
 
-const hostArg = 'host';
-const usernameArg = 'username';
+// Command arguments.
 const backupFileArg = 'backup-file';
-const postCommandArg = 'post-command';
-const sshKeyArg = 'ssh-key';
-const sshPortArg = 'ssh-port';
-const pathArg = 'path';
+const configFileArg = 'config-file';
+
+// Config file arguments.
+const hostJSONArg = 'host';
+const usernameJSONArg = 'username';
+const postCommandJSONArg = 'post-command';
+const sshKeyJSONArg = 'ssh-key';
+const sshPortJSONArg = 'ssh-port';
+const pathJSONArg = 'path';
 
 module.exports = function (gulp) {
 
@@ -23,7 +27,7 @@ module.exports = function (gulp) {
 	var sshPort;
 	var backupFilePath;
 	var tempDirectory;
-
+	var configFile;
 
 	/**
 	 * Validate arguments
@@ -32,20 +36,20 @@ module.exports = function (gulp) {
 	function validateArguments() {
 		var isValid = true;
 		if (_.isNil(host) || !_.isString(host) || host.trim() === '') {
-			console.error("No " + hostArg + " defined ... aborting");
+			console.error("No " + hostJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 		if (_.isNil(path) || !_.isString(path) || path.trim() === '') {
-			console.error("No " + pathArg + " defined ... aborting");
+			console.error("No " + pathJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 		if (_.isNil(username) || !_.isString(username) || username.trim() === '') {
-			console.error("No " + usernameArg + " defined ... aborting");
+			console.error("No " + usernameJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 
 		if (_.isNil(sshKeyPath) || !_.isString(sshKeyPath) || sshKeyPath.trim() === '') {
-			console.error("No " + sshKeyArg + " defined ... aborting");
+			console.error("No " + sshKeyJSONArg + " defined ... aborting");
 			isValid = false;
 		}
 		if (_.isNil(backupFilePath) || !_.isString(backupFilePath) || backupFilePath.trim() === '') {
@@ -76,6 +80,7 @@ module.exports = function (gulp) {
 		// console.log("commandMkDir:" + commandMkDir);
 		const commandExtract = 'tar -xvzf ' + backupFilePath + " -C " + tempDirectory;
 		console.log("commandExtract:" + commandExtract);
+
 		function commandMkDirExecuted(code, stdout, stderr) {
 			if (code === 0) {
 				executeCommandExtract();
@@ -134,29 +139,45 @@ module.exports = function (gulp) {
 	});
 
 	gulp.task('validateArgsAndSystemRollBack', function (cb) {
-		host = argv[hostArg];
-		path = argv[pathArg];
-		sshKeyPath = argv[sshKeyArg];
-		postCommand = argv[postCommandArg];
-		sshPort = argv[sshPortArg];
-		username = argv[usernameArg];
+		configFile = argv[configFileArg];
 		backupFilePath = argv[backupFileArg];
-
-		console.log("Deploy given the arguments " +
-			"\nhost: " + host +
-			"\npath: " + path +
-			"\nssh key: " + sshKeyPath +
-			"\nssh port: " + sshPort +
-			"\nbackup file: " + backupFilePath +
-			"\npost command: " + (postCommand ? postCommand : 'NO COMMAND DEFINED')
-		);
-
-		const isValid = validateArguments();
-		if (isValid === false) {
-			cb("Error in arguments");
-		} else {
-			cb();
+		if (!_.isString(configFile)) {
+			return cb(configFileArg + "is not a valid argument");
 		}
+
+		if (fs.existsSync(configFile) === false || fs.lstatSync(configFile).isFile() === false) {
+			return cb(configFile + "is not a valid file");
+		}
+
+		fs.readFile(configFile, 'utf8', function (err, data) {
+			if (err) cb("Error reading file");
+			var obj = JSON.parse(data);
+			host = obj[hostJSONArg];
+			path = obj[pathJSONArg];
+			sshKeyPath = obj[sshKeyJSONArg];
+			postCommand = obj[postCommandJSONArg];
+			sshPort = obj[sshPortJSONArg];
+			username = obj[usernameJSONArg];
+
+
+			console.log("Deploy given the arguments " +
+				"\nhost: " + host +
+				"\npath: " + path +
+				"\nssh key: " + sshKeyPath +
+				"\nssh port: " + sshPort +
+				"\nbackup file: " + backupFilePath +
+				"\npost command: " + (postCommand ? postCommand : 'NO COMMAND DEFINED')
+			);
+
+			const isValid = validateArguments();
+			if (isValid === false) {
+				cb("Error in arguments");
+			} else {
+				cb();
+			}
+		});
+
+
 	});
 
 };

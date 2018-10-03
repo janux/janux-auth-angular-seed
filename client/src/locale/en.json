@@ -75,7 +75,7 @@
 		"expirationDate": "Expiration Date",
 		"passExpirationDate": "Password Expiration Date",
 		"renew": "Renew password",
-		"title": "People & Organizations ...",
+		"title": "People & Organizations",
 		"dialogs":{
 			"noRowSelectedError":"Select at least one row to delete",
 			"confirmDeletion":"Are you sure you want to delete the row selection?",
@@ -269,7 +269,7 @@
 		}
 	},
 	"peopleOrgs": {
-		"title": "People & Organizations ...",
+		"title": "People & Organizations",
 		"users": "Users",
 		"staff": "Staff",
 		"clients": "Clients",

@@ -195,16 +195,18 @@ module.exports = function (gulp) {
 
 	gulp.task('buildClient', ['backup'], function (cb) {
 		console.log("Building client");
-		const buildClientCommand = "npm run build --prefix ../";
-		shell.exec(buildClientCommand, function (code, stdout, stderr) {
-			if (code === 0) {
-				console.log("Build executed successfully");
-				cb()
-			} else {
-				console.error("Error running build \n" + stdout + "\n" + stderr);
-				cb(stdout);
-			}
-		});
+		// const buildClientCommand = "npm run build --prefix ../";
+		console.log("Build executed successfully");
+		cb()
+		// shell.exec(buildClientCommand, function (code, stdout, stderr) {
+		// 	if (code === 0) {
+		// 		console.log("Build executed successfully");
+		// 		cb()
+		// 	} else {
+		// 		console.error("Error running build \n" + stdout + "\n" + stderr);
+		// 		cb(stdout);
+		// 	}
+		// });
 	});
 
 

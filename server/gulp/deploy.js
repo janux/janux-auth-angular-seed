@@ -211,6 +211,7 @@ module.exports = function (gulp) {
 	gulp.task('syncProject', ['buildClient'], function (cb) {
 		var rsyncCommand;
 		rsyncCommand = 'rsync -az -e "ssh  -p ' + sshPort + ' -i ' + sshKeyPath + '  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ../* ' + username + '@' + host + ':' + path + ' --delete';
+		console.log("executing " + rsyncCommand);
 		shell.exec(rsyncCommand, function (code, stdout, stderr) {
 			if (code === 0) {
 				console.log("Rsync executed successfully");

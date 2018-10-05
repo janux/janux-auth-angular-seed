@@ -231,3 +231,69 @@ md-checkbox.md-checked .md-icon {
 	}
 }
 
+.list-services{
+	width: 100%;
+	margin-top: 0px;
+	margin-bottom: 25px;
+	height: ~"calc( 100% - @{toolbar-height} )";
+}
+
+.service-item{
+	background: @grey3;
+	height: auto;
+	border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #cacaca;
+}
+.service-title{
+	height:auto;
+	background: @glarus-blue;
+	padding: 5px 10px 5px 10px;
+	overflow:auto;
+	.service-name{
+		a,span{
+			float: left;
+			color: @white;
+			font-weight: bold;
+			font-size:14px;
+			width: 70%;
+			&::before{
+				font-family: @font-awesome;
+				content: " \f0da \00a0";
+			}
+			&:hover{
+			text-decoration:none;
+			cursor: pointer;
+			}
+		}		
+	}
+	.service-status{
+		float: right;
+		width: 30%;
+		text-align: right;
+		color: @white;
+		font-size:12px;
+		padding-top: 2px;
+	}
+}
+.service-detail{
+	height:auto;
+	overflow: auto;
+	background:@grey3;
+	padding: 5px 15px 10px 15px;
+	.service-info{
+		color:@glarus-blue;
+		font-size:14px;
+		width: 90%;
+		float: left;
+	}
+	.service-tools{
+		float: right;
+		width: 10%;
+		text-align: right;
+		color: @white;
+		font-size:12px;
+		padding-top: 2px;
+		border-left:1px dotted @grey2;
+	}
+}
+

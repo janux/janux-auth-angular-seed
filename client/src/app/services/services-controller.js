@@ -10,6 +10,8 @@ module.exports =
 
 	console.log('operations', operations);
 
+	$scope.operations = operations;
+
 	var columnsFiltersKey = config.jnxStoreKeys.servicesColumnsFilters;
 	var infoDialog = function (translateKey) {
 		$modal.open({

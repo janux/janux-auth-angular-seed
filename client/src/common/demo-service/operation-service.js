@@ -509,7 +509,7 @@ module.exports =
 			},
 
 			// Map operations properties in order to create a list with ag-grid or similar
-			mapOperations: function (operations) {
+			mapOperations: function (operations,invoices) {
 
 				return _.map(operations, function (operation) {
 
@@ -538,7 +538,8 @@ module.exports =
 						duration    : duration,
 						start       : operation.start,
 						end         : operation.end,
-						description : operation.description
+						description : operation.description,
+						status      : service.generateStatus(operation, invoices)
 					}
 				});
 			},

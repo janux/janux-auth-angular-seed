@@ -21,10 +21,10 @@ require('angular').module('appServices', [
 		authRequired: true,
 		controller: require('./services-controller.js'),
 		resolve: {
-			operations: ['operationService', function (operationService) {
+			operations: ['operationService','invoices', function (operationService,invoices) {
 				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
 					console.log('Operations before mapping', operations);
-					return operationService.mapOperations(operations);
+					return operationService.mapOperations(operations,invoices);
 				});
 			}],
 			invoices : ['invoiceService', 'security', function (invoiceService, security) {

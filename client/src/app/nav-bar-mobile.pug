@@ -1,12 +1,18 @@
 .sd-page-sidebar-wrapper
       .sd-page-sidebar.mobile
         ul.sd-page-sidebar-menu
-          li(ng-repeat='option in mainMenu' ng-show=' showOption(option)')
-            a(ui-sref-active="active")
+          li(ng-repeat='option in mainMenu' ng-show='option.authContext==null ||  userRole.can("READ",option.authContext);')
+            a(ui-sref-active="active" ng-show='menuHasSubOptions(option)')
               span.fa.fa-lg(ng-class='option.iconClass')
               .btn-text &nbsp;&nbsp;{{ option.translateKey | translate }}
-            ul 
+
+            a(ui-sref='services' ui-sref-active="active" ng-click='ok()' ng-show='!menuHasSubOptions(option)')
+              span.fa.fa-lg(ng-class='option.iconClass')
+              .btn-text &nbsp;&nbsp;{{ option.translateKey | translate }}
+
+            ul(ng-show='menuHasSubOptions(option)') 
               li(ng-repeat='subOption in option.subOptions')
                 a.active(ui-sref-active="active" ui-sref='{{subOption.state}}' ng-click='ok()' ng-show='userRole.can("READ",subOption.authContext);')
                   span.fa.fa-angle-right
                   | &nbsp;&nbsp; {{ subOption.translate | translate }}
+            

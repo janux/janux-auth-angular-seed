@@ -53,7 +53,7 @@ side-bar
 					md-button(ui-sref='services.create-research') {{ 'services.consultingService' | translate }}
 					//md-button Guards
 
-	.service-item(ng-repeat="operation in operations")
+	.service-item(ng-repeat="operation in operations | orderBy:'-start'")
 		.service-title
 			.service-name
 				span(ng-show='operation.type!="SPECIAL_OPS"') {{operation.name}}
@@ -74,8 +74,8 @@ side-bar
 				| {{ 'services.list.duration' | translate }}: {{operation.duration | amDurationFormat}}
 				br 
 				| {{ 'services.list.assigned' | translate }}: {{operation.assigned}}
-			.service-tools
-				md-checkbox(aria-label="Trash" class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
+			//- .service-tools
+			//- 	md-checkbox(aria-label="Trash" class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
 
 
 footer-Janux

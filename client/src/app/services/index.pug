@@ -53,7 +53,12 @@ side-bar
 					md-button(ui-sref='services.create-research') {{ 'services.consultingService' | translate }}
 					//md-button Guards
 
-	.service-item(ng-repeat="operation in operations | orderBy:'-start'")
+			//- md-menu(md-position-mode="target-right target" md-offset="-6 50")
+			//- 	md-button.md-icon-button.options(aria-label="Options")
+			//- 		md-icon.fa.fa-ellipsis-v.fa-lg.points
+
+
+	.service-item(ng-repeat="operation in operations | orderBy:'-start'" ng-if="operation.type=='SPECIAL_OPS'")
 		.service-title
 			.service-name
 				span(ng-show='operation.type!="SPECIAL_OPS"') {{operation.name}}

@@ -52,12 +52,30 @@ md-toolbar.form-mid-toolbar{
 .md-button.cancel{
 	background: #d0021b;
 }
+.md-icon-button.options{
+	background: none;
+	width: 20px !important; 
+	padding: 0px !important;; 
+	margin:0px !important;
+	&:hover{
+		background: none !important;
+	}
+}
+.points{
+	color:@grey1 !important; 
+	padding-right: 5px;
+	&:hover{
+		color: @white !important;
+	}
+}
 md-toolbar.form-root-toolbar{
 	background: @toolbar-glarus;
 	color: @glarus-blue;
 	padding-bottom:5px;
 	padding-right: 20px;
 	z-index: 0;
+	.small-device({ padding-right: 0px;});
+	.smallest-device({ padding-right: 0px;});
 }
 .md-toolbar-tools.form-toolbar .md-button{
 	border-radius: 10%;
@@ -195,6 +213,7 @@ md-menu-content {
 		background: @hover-glarus !important;
 	}
 }
+
 
 .md-button.grid{
 	color: @white;

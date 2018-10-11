@@ -1,4 +1,5 @@
 'use strict';
+var _ = require('lodash');
 
 // function to act as a class
 function AutoCompleteVehicle() {

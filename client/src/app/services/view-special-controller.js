@@ -561,7 +561,7 @@ module.exports =
 			agGridSizeToFit();
 		});
 	};
-	$scope.findTimeEntries = findTimeEntries;
+	$scope.findTimeEntries = loadTimeEntries;
 
 	// If we are on time sheet tab initially
 	if ($scope.currentNavItem === 'time-sheet') {

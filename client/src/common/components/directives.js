@@ -5,7 +5,7 @@ var PhoneNumber = require('janux-people').PhoneNumber;
 var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 var agGridComp = require('common/ag-grid-components');
-
+var _ = require('lodash');
 var scopeDefinition = {"data": "=", "section": "@"};
 
 var infoDialog = function (translateKey, $modal, $filter) {

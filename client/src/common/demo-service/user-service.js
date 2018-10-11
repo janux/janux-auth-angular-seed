@@ -1,7 +1,7 @@
 'use strict';
 
 var Person = require('janux-people').Person;
-
+var _ = require('lodash');
 module.exports =
 ['$q', '$http','partyService','dateUtilService',
 function( $q ,  $http, partyService, dateUtilService){

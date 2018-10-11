@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 
 module.exports =
 	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', '$log', function (

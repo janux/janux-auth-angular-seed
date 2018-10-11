@@ -1,6 +1,7 @@
 'use strict';
 
 require('angular-translate-loader-static-files');
+var _ = require('lodash');
 
 //
 // The loginController provides the behaviour behind a reusable form to allow users to authenticate.

@@ -1,7 +1,7 @@
 'use strict';
 
 var agGridComp = require('common/ag-grid-components');
-var moment = require('moment');
+var _ = require('lodash');
 
 module.exports =
 	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', 'nameQueryService', '$mdDialog', function (

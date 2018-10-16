@@ -303,8 +303,8 @@ angular.module('commonComponents', [])
 			scope      : specialServiceScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-service.html',
-			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService','dialogService','validationService',
-				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService,dialogService,validationService) {
+			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService','dialogService','validationService','partyService',
+				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService,dialogService,validationService, partyService) {
 
 					// console.log("invoices in directive " + $scope.invoices);
 

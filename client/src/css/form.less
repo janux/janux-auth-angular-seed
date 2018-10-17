@@ -24,6 +24,17 @@ md-toolbar.form-mid-toolbar{
 	}
 }
 
+.btn-row-fixed{
+	position:fixed; 
+	left:0; 
+	bottom:30px; 
+	height:50px; 
+	background:@glarus-blue; 
+	width:100%; 
+	z-index:9999; 
+	padding:7px
+}
+
 .form-mid-toolbar-glarus{
 	background: @glarus-blue;
 	padding: 8px;
@@ -97,6 +108,8 @@ md-toolbar.form-root-toolbar{
 	margin: 20px;
 	width:100%;
 	overflow: inherit;
+	.small-device({ margin: 0px;});
+	.smallest-device({ margin: 0px;});
 
 	md-toolbar.options-tabs {
 
@@ -122,6 +135,8 @@ md-toolbar.form-root-toolbar{
 
 		li.md-nav-item {
 			margin-left:0;
+			.small-device({ max-width: 100px;});
+			.smallest-device({ max-width: 100px;});
 		}
 
 		.md-button.md-icon-button {
@@ -460,9 +475,10 @@ md-menu-content {
 	padding: 3px;
 }
 .btn-row{
-	width:29%;
+	width:100% !important;
 	display:inline-block;
 	text-align:right;
+	float: right;
 }
 
 .btn-row-form{

@@ -59,10 +59,10 @@ side-bar
 
 
 	.service-item(ng-repeat="operation in operations | orderBy:'-start'" ng-if="operation.type=='SPECIAL_OPS'")
-		.service-title
+		.service-title(ui-sref='services.view-special({id:operation.id})')
 			.service-name
 				span(ng-show='operation.type!="SPECIAL_OPS"') {{operation.name}}
-				a(ui-sref='services.view-special({id:operation.id})' ng-show='operation.type=="SPECIAL_OPS"') 
+				a(ng-show='operation.type=="SPECIAL_OPS"') 
 					| {{operation.name}}
 			.service-status
 				| {{operation.status}}

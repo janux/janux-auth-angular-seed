@@ -7,7 +7,7 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					span.title-breadcrum
+					span.title-breadcrum(ng-click='cancel()')
 						| {{ 'services.title' | translate }}
 					h2.title-bar-txt
 						| {{ 'services.addSpecial' | translate }}
@@ -20,6 +20,13 @@ side-bar
 				.form-mid-toolbar-glarus.form-group
 					.text-only
 						span {{ 'services.specialService' | translate | uppercase }}
+					.btn-row.hide-mobile
+						button.btn(ng-click='save()')
+							i.fa.fa-check
+						button.btn(ng-click='cancel()')
+							i.fa.fa-times
+
+				.btn-row-fixed.hide-desktop
 					.btn-row
 						button.btn(ng-click='save()')
 							i.fa.fa-check

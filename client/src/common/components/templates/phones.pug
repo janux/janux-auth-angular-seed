@@ -2,8 +2,8 @@
 	p.form-section-glarus
 		| {{ section | translate}}
 	fieldset.fieldset-flex(data-ng-repeat="phone in data.contactMethods.phones track by $index")
-		.fieldset-flex
-			.an-material.nopadding
+		.fieldset-flex.flex-mobile
+			.an-material.nopadding(style="padding-bottom:20px !important")
 				md-input-container.full
 					//label {{ 'party.type' | translate}}
 					//input(ng-model="phone.type")

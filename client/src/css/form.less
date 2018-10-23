@@ -31,7 +31,7 @@ md-toolbar.form-mid-toolbar{
 	height:50px; 
 	background:@glarus-blue; 
 	width:100%; 
-	z-index:9999; 
+	z-index:70; 
 	padding:7px
 }
 
@@ -477,6 +477,10 @@ md-menu-content {
 .fieldset-flex>div{
 	padding: 3px;
 }
+.flex-mobile{
+	.small-device({ flex-direction: row; flex-wrap: wrap;});
+	.smallest-device({ flex-direction: row; flex-wrap: wrap;});
+}
 .btn-row{
 	width:100% !important;
 	display:inline-block;
@@ -535,5 +539,12 @@ md-menu-content {
     	border: none;
 	    color: @white;
     }
+}
+
+//material dialog for mobile
+
+md-dialog {
+	.small-device({ max-width: 97% !important;});
+	.smallest-device({ max-width: 97% !important;});
 }
 

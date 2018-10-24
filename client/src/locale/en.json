@@ -603,6 +603,7 @@
 			"reseller": "Reseller",
 			"code": "Code"
 		},
+		"area": "Area",
 		"country": "Country",
 		"email": "Email",
 		"phone": "Phone Number",

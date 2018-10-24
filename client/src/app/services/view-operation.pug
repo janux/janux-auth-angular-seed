@@ -70,7 +70,7 @@ side-bar
 						// 			i.fa.fa-plus-circle &nbsp;
 						// 			| {{ 'services.invoice.insertManual' | translate }}
 
-						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"' style='display:none')
+						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
 							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
 								md-icon.fa.fa-download.fa-lg
 							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
@@ -109,9 +109,9 @@ side-bar
 						button.btn( ng-click='cancel()')
 							i.fa.fa-times
 
-					.btn-row(ng-show='currentNavItem=="invoiceDetail"' style='display:none')
+					.btn-row(ng-show='currentNavItem=="invoiceDetail"')
 						button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
-							md-icon.fa.fa-download.fa-lg
+							md-icon.fa.fa-download.fa-lg(style="color:white")
 						button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 							i.fa.fa-check
 						button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')

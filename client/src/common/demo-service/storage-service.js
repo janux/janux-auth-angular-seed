@@ -54,6 +54,7 @@ module.exports = ['security','config', function (security, config) {
 					try {
 						if (iKey) {
 							out = JSON.parse(localStorage.getItem(service._username + '-' + iKey));
+							// console.log('findItem', service._username, iKey, iField, out);
 							try {
 								out = JSON.parse(out[iField]);
 							} catch(e) {

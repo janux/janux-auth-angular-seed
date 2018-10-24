@@ -423,8 +423,16 @@ function ($rootScope, config, userService, security, partyService, $state, jnxSt
 		}
 	}
 
+	function menuState() {
+		var menuState = jnxStorage.findItem('menuState', true);
+		$rootScope.noneStyle = (!_.isNil(menuState)) ? menuState.noneStyle : true;
+		$rootScope.bodyCon = (!_.isNil(menuState)) ? menuState.bodyCon : false;
+	}
+
 	$rootScope.$on('AppLogIn', function () {
 		populateMenu();
+		// Menu state
+		menuState();
 	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState) {
@@ -463,10 +471,7 @@ function ($rootScope, config, userService, security, partyService, $state, jnxSt
 	security.requestCurrentUser().then(function (currentUser) {
 		if (!_.isNil(currentUser)) {
 			jnxStorage.setUsername(currentUser.username);
-
-			var menuState = jnxStorage.findItem('menuState', true);
-			$rootScope.noneStyle = (!_.isNil(menuState)) ? menuState.noneStyle : true;
-			$rootScope.bodyCon = (!_.isNil(menuState)) ? menuState.bodyCon : false;
+			menuState();
 		}
 	});
 

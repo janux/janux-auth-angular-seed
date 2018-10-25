@@ -55,7 +55,8 @@ module.exports = {
 			auth: {
 				user: 'user',
 				pass: 'pass'
-			}
+			},
+			enabled: true
 		},
 
 		log4js: {

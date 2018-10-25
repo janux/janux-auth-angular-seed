@@ -111,8 +111,8 @@ var config                              = require('config'),
     CommService                         = CommServiceImpl.createInstance(CommDataSource, config.serverAppContext.smtp),
     InvoiceSpecialServiceReportService  = new InvoiceSpecialServiceReportServiceImpl(InvoiceService, OperationPersistService, InvoiceDao, InvoiceOperationDao);
 
-// var	UserInvitationPersistenceService    = UserActionServiceDev.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService);
-var UserInvitationPersistenceService = UserActionServiceProd.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService);
+var UserInvitationPersistenceService = (config.serverAppContext.smtp.enabled) ? UserActionServiceProd.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService)
+	: UserActionServiceDev.createInstance(AccountInvDao, UserPersistenceService, PartyPersistenceService, CommService);
 
 module.exports = {
 	PartyPersistenceService           : PartyPersistenceService,

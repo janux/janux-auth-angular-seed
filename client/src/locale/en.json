@@ -265,7 +265,8 @@
 			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
 			"successDeletedContacts":"Selected contacts successfully deleted",
 			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
-			"supplierSaved": "Supplier successfully saved"
+			"supplierSaved": "Supplier successfully saved",
+			"supplierContactCreated": "Supplier contact successfully saved"
 		}
 	},
 	"peopleOrgs": {

@@ -2,11 +2,29 @@
 
 var _ = require('lodash');
 var moment = require('moment');
-var big = require('big.js');
-
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', 'FileSaver', 'localStorageService', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService, FileSaver, localStorageService) {
+	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', 'FileSaver', 'localStorageService', '$modal', '$filter', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService, FileSaver, localStorageService, $modal, $filter) {
+
+
+		const TIME_ENTRY_ASSOCIATED = "This time entry is already linked to another invoice";
+		const ATTRIBUTE_INVOICE_NUMBER = "invoiceNumber";
+		const MESSAGE_DUPLICATED = "There is another record with the same value";
+
+		function infoDialog(translateKey) {
+			$modal.open({
+				templateUrl: 'app/dialog-tpl/info-dialog.html',
+				controller : ['$scope', '$modalInstance',
+					function ($scope, $modalInstance) {
+						$scope.message = $filter('translate')(translateKey);
+
+						$scope.ok = function () {
+							$modalInstance.close();
+						};
+					}],
+				size       : 'md'
+			});
+		}
 
 		function fromJSON(object) {
 			const result = _.clone(object);
@@ -79,6 +97,15 @@ module.exports =
 			return result;
 		}
 
+		function handleError(errors) {
+			const error = errors.data.error[0];
+			if (error.attribute === ATTRIBUTE_INVOICE_NUMBER && error.message === MESSAGE_DUPLICATED) {
+				infoDialog('services.invoice.dialogs.duplicatedInvoiceNumber');
+			} else if (error.message === TIME_ENTRY_ASSOCIATED) {
+				infoDialog('services.invoice.dialogs.insertTimeEntriesInvoiceError');
+			}
+			return $q.reject(errors);
+		}
 
 		var service = {
 			fromJSON: function (object) {
@@ -156,6 +183,8 @@ module.exports =
 					[toJSON(invoice)]
 				).then(function (resp) {
 					return fromJSON(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -166,6 +195,8 @@ module.exports =
 					[toJSON(invoice), toJSONItem(invoiceItem)]
 				).then(function (resp) {
 					return fromJSON(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -181,12 +212,15 @@ module.exports =
 
 			insertInvoiceAndItem: function (invObj, invItemObj) {
 				// Insert time entry
-				return service.insert(invObj).then(function (insertedInvoice) {
-					console.log('Inserted invoice', insertedInvoice);
-					return service.insertInvoiceItem(invObj.invoiceNumber, invItemObj).then(function (insertedItem) {
+				return service.insert(invObj)
+					.then(function (insertedInvoice) {
+						console.log('Inserted invoice', insertedInvoice);
+						return service.insertInvoiceItem(invObj.invoiceNumber, invItemObj);
+					}).then(function (insertedItem) {
 						console.log('Inserted invoice item', insertedItem);
+					}, function (err) {
+						return handleError(err);
 					});
-				});
 			},
 
 			insertExpense: function (invoiceNumber, invoiceName, expense) {
@@ -206,6 +240,8 @@ module.exports =
 					[invoiceNumber, invoiceName, toJSONItemTimeEntry(itemTimeEntry)]
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 

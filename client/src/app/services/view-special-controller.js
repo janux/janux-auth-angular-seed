@@ -103,7 +103,7 @@ module.exports =
 				$scope.invoices = result;
 				$rootScope.$broadcast(config.invoice.events.invoiceListUpdated, result);
 				if ($scope.editModeInvoiceDetail) {
-					$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+					$rootScope.$broadcast(config.invoice.events.invoiceEditModeEnabled, $scope.invoice);
 				}
 			});
 	};
@@ -233,7 +233,7 @@ module.exports =
 
 	$scope.enableEditModeInvoiceDetail = function () {
 		$scope.editModeInvoiceDetail = true;
-		$scope.$broadcast(config.invoice.events.invoiceEditModeEnabled);
+		$scope.$broadcast(config.invoice.events.invoiceEditModeEnabled, $scope.invoice);
 	};
 
 	$scope.disableEditModeInvoiceDetail = function () {

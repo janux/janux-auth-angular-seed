@@ -38,8 +38,10 @@ DoNotInvoicePersonCellRenderer.prototype.init = function (params) {
 
 	};
 
-	params.$scope.$on('invoiceEditModeEnabled', function () {
-		params.$scope['agGridDoNotInvoicePersonDisabled'] = false;
+	params.$scope.$on('invoiceEditModeEnabled', function (event, invoice) {
+		if (invoice.status !== 'ended') {
+			params.$scope['agGridDoNotInvoicePersonDisabled'] = false;
+		}
 	});
 
 	params.$scope.$on('invoiceEditModeDisabled', function () {

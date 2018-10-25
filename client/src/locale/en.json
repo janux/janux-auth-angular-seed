@@ -527,7 +527,8 @@
 				"noRowsSelected": "Select at least one row to add",
 				"insertTimeEntries": "Time entries successfully added to the invoice",
 				"insertTimeEntriesInvoiceError": "Selected time entries can't be added to the invoice because one or more was already linked to an invoice",
-			    "invalidPercentage": "The percentage value is invalid"
+			    "invalidPercentage": "The percentage value is invalid",
+				"invoiceEnded": "Can't modify the invoice because the status es marked as ended"
 			}
 		}
 	},

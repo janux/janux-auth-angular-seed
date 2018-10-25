@@ -617,7 +617,7 @@ module.exports =
 		return invoiceService.findInvoiceNumbersByIdTimeEntries(timeEntriesIds).then(function (result) {
 			// console.log('Time entries related to invoice', result);
 			return _.every(result, function (timeEntry) {
-				return (_.isNil(timeEntry.invoiceNumber));
+				return (_.isNil(timeEntry.invoice));
 			});
 		});
 	};

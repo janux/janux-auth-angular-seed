@@ -180,7 +180,8 @@
 			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
-			"clientSaved": "Cliente guardado correctamente"
+			"clientSaved": "Cliente guardado correctamente",
+			"rateSaved": "Tarifas guardadas correctamente"
 		},
 	    "rates":{
 		    "typeTime": "Tipo",
@@ -264,7 +265,7 @@
 			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
 			"supplierSaved": "Proveedor guardado correctamente",
-			"rateSaved": "Tarifas guardadas correctamente"
+			"supplierContactCreated": "Contacto del proveedor guardado correctamente"
 		}
 	},
 	"peopleOrgs": {

@@ -520,6 +520,7 @@
 		    },
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",
+				"duplicatedInvoiceNumber":"Hay otra factura con el mismo número",
 				"missingInvoiceDate": "Por favor ingrese una fecha para la factura",
 			    "invalidGrandTotal" : "Por favor defina un importe correcto para la factura",
 				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",

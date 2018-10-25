@@ -520,6 +520,7 @@
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Please enter a valid invoice number",
+				"duplicatedInvoiceNumber":"There is another invoice with the same number",
 				"missingInvoiceDate": "Please enter a valid invoice date",
 			    "invalidGrandTotal" : "Please enter the total of the invoice",
 				"noRowsSelected": "Select at least one row to add",

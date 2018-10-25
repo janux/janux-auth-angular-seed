@@ -527,7 +527,8 @@
 				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",
 				"insertTimeEntries": "Registros de bitacora agregados a la factura",
 				"insertTimeEntriesInvoiceError": "Los registros de la bitacora seleccionados no se pueden agregar a la factura debido a que uno o mas ya fue relacionado con una factura.",
-			    "invalidPercentage": "El valor del porcentaje es inválido"
+			    "invalidPercentage": "El valor del porcentaje es inválido",
+				"invoiceEnded": "No se puede modificar la factura debido a que estado está marcado como terminada"
 			}
 		}
 	},

@@ -33,8 +33,11 @@ DoNotInvoiceVehicleCellRenderer.prototype.init = function (params) {
 		}
 	};
 
-	params.$scope.$on('invoiceEditModeEnabled', function () {
-		params.$scope['agGridDoNotInvoiceVehicleDisabled'] = false;
+	params.$scope.$on('invoiceEditModeEnabled', function (event, invoice) {
+		if (invoice.status !== 'ended') {
+			params.$scope['agGridDoNotInvoiceVehicleDisabled'] = false;
+		}
+
 	});
 
 	params.$scope.$on('invoiceEditModeDisabled', function () {

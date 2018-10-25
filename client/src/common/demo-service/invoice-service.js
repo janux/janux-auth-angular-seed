@@ -10,6 +10,7 @@ module.exports =
 		const TIME_ENTRY_ASSOCIATED = "This time entry is already linked to another invoice";
 		const ATTRIBUTE_INVOICE_NUMBER = "invoiceNumber";
 		const MESSAGE_DUPLICATED = "There is another record with the same value";
+		const MESSAGE_STATUS_ENDED = "Can't modify this invoice because the status is ended";
 
 		function infoDialog(translateKey) {
 			$modal.open({
@@ -103,6 +104,8 @@ module.exports =
 				infoDialog('services.invoice.dialogs.duplicatedInvoiceNumber');
 			} else if (error.message === TIME_ENTRY_ASSOCIATED) {
 				infoDialog('services.invoice.dialogs.insertTimeEntriesInvoiceError');
+			} else if (error.attribute === ATTRIBUTE_INVOICE_NUMBER && error.message === MESSAGE_STATUS_ENDED) {
+				infoDialog('services.invoice.dialogs.invoiceEnded');
 			}
 			return $q.reject(errors);
 		}
@@ -230,6 +233,8 @@ module.exports =
 					[invoiceNumber, invoiceName, toJSONExpense(expense)]
 				).then(function (resp) {
 					return fromJSONExpense(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -262,6 +267,8 @@ module.exports =
 					[toJSONItemTimeEntry(invoiceItemTE)]
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
+				},function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -272,6 +279,8 @@ module.exports =
 					[expensesCodes]
 				).then(function (resp) {
 					return resp.data.result;
+				},function (err) {
+					return handleError(err);
 				});
 			},
 

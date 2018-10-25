@@ -2,20 +2,12 @@
 
 var log4js           = require('log4js'),
 	_                = require('underscore'),
-	PartyServiceImpl = require('janux-persist').PartyServiceImpl,
-	UserInvServiceDev 	= require('./user-inv-service.ext.dev'),
-	UserInvServiceProd  = require('./user-inv-service.ext.prod'),
 	bluebird         = require('bluebird'),
 	log = log4js.getLogger('UserInvService'),
-	JanuxEnvironmentService = require('janux-persist').EnvironmentService,
 	config				  = require('config').serverAppContext;
 
 // variable to hold the singleton instance, if used in that manner
 var userInvServiceInstance = undefined;
-
-// var userServicePersistence = undefined;
-// var commServicePersistence = undefined;
-// var partyServicePersistence = undefined;
 var userInvServicePersistence = undefined;
 
 //
@@ -24,21 +16,10 @@ var userInvServicePersistence = undefined;
 
 var createInstance = function (userInvitationServiceReference) {
 
-	// userServicePersistence = userServiceReference;
-	// partyServicePersistence = partyServiceReference;
-	// commServicePersistence = commServiceReference;
 	userInvServicePersistence = userInvitationServiceReference;
 
-	// var env = JanuxEnvironmentService.getEnvironmentInfo().environment;
-	// var env = 'production'; // Needed because we are testing production methods en ops-staging
-	// var UserInvServiceExt = (env === 'development') ? UserInvServiceDev : UserInvServiceProd;
-	// var that;
-
 	// Constructor
-	function UserInvService() {
-		// UserInvServiceExt.call(this, userService, partyService, commService, userInvService);
-		// that = this;
-	}
+	function UserInvService() {}
 
 	// UserInvService.prototype = Object.create(UserInvServiceExt.prototype);
 	UserInvService.prototype = Object.create(null);
@@ -69,7 +50,6 @@ var createInstance = function (userInvitationServiceReference) {
 	};
 
 	UserInvService.prototype.recoverPassword = function (accountId, contactId, selectedEmail, callback) {
-		// return UserInvServiceExt.prototype.recoverPassword.call(that, accountId, contactId, selectedEmail).asCallback(callback);
 		var configObj = {
 			selectedEmail: selectedEmail,
 			msgSubject: 'Recuperación de contraseña para el sistema Glarus',
@@ -80,7 +60,6 @@ var createInstance = function (userInvitationServiceReference) {
 	};
 
 	UserInvService.prototype.inviteToCreateAccount = function (contactId, selectedEmail, assignedRoles, callback) {
-		// return UserInvServiceExt.prototype.recoverPassword.call(that, accountId, contactId, selectedEmail).asCallback(callback);
 		var  configObj = {
 			selectedEmail: selectedEmail,
 			msgSubject: 'Invitación al sistema de glarus',

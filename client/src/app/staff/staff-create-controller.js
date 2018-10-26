@@ -16,6 +16,7 @@ module.exports = [
 		staff.setContactMethod('Home', new PostalAddress());
 
 		$scope.staff = staff;
+		$scope.currentNavItem = 'general';
 		console.log('Staff: ',$scope.staff);
 
 		$scope.save = function () {

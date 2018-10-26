@@ -463,13 +463,16 @@ angular.module('agGridDirectives',[])
 		scope: false,
 		link: function(scope, element, attrs) {
 			var onResize = function(){
-				scope[attrs['agGridReload']]();
+				scope[attrs['agGridReload']](window.innerWidth);
 			};
 			angular.element(window).bind('resize', onResize);
 
 			scope.$on('$destroy', function () {
 				angular.element(window).off('resize', onResize);
 			});
+			//This line is responsable for getting the size of the window on load
+			//For AgGrid display
+			scope.$emit('agGridWindowSize',window.innerWidth);
 		}
 	};
 }]);

@@ -7,7 +7,7 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					span.title-breadcrum
+					span.title-breadcrum(ng-click='cancel()')
 						| {{ 'peopleOrgs.title' | translate }}
 					h2.title-bar-txt
 						| {{ 'user.editUser' | translate }}
@@ -27,7 +27,7 @@ side-bar
 
 						span(flex)
 
-						.btn-row
+						.btn-row.hide-mobile
 							button.btn(ng-click='openDeleteAuthContextDialog()')
 								i.fa.fa-trash
 							button.btn(ng-click='save()')
@@ -35,10 +35,19 @@ side-bar
 							button.btn(ng-click='cancel()')
 								i.fa.fa-times
 
+				.btn-row-fixed.hide-desktop
+					.btn-row
+						button.btn(ng-click='openDeleteAuthContextDialog()')
+							i.fa.fa-trash
+						button.btn(ng-click='save()')
+							i.fa.fa-check
+						button.btn(ng-click='cancel()')
+							i.fa.fa-times
+
 				.user-form(ng-show='currentNavItem=="user"')
 					div
 						user(data="user", section="user.user", password="false")
-					div
+					div.hide-mobile
 						user-roles(data="roles", section="user.roles")
 
 				.user-form(ng-show='currentNavItem=="contact"')

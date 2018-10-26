@@ -9,6 +9,7 @@ module.exports = [
 	console.log('staff being edited', staff);
 
 	$scope.staff = staff;
+	$scope.currentNavItem = 'general';
 
 	$scope.save = function () {
 		$scope.staff = partyService.clean($scope.staff);

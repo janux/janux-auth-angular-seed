@@ -7,7 +7,7 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					span.title-breadcrum
+					span.title-breadcrum(ng-click='cancel()')
 						| {{ 'peopleOrgs.title' | translate }}
 					h3.title-bar-txt-highlight
 						span(ng-class='{"active":(currentNavItem=="client")}') {{ client.name }}
@@ -36,7 +36,7 @@ side-bar
 
 						span(flex)
 
-						.btn-row
+						.btn-row.hide-mobile
 							button.btn(ng-show='currentNavItem=="client"')
 								i.fa.fa-trash
 							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="rates"')
@@ -51,6 +51,23 @@ side-bar
 								i.fa.fa-check
 							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact')
 								i.fa.fa-times
+
+				.btn-row-fixed.hide-desktop
+					.btn-row
+						button.btn(ng-show='currentNavItem=="client"')
+							i.fa.fa-trash
+						button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="rates"')
+							i.fa.fa-check
+						button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
+							i.fa.fa-check
+						button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
+							i.fa.fa-times
+						button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact)')
+							i.fa.fa-user-plus
+						button.btn(ng-click='updateRateMatrix()' ng-show='currentNavItem=="rates"')
+							i.fa.fa-check
+						button.btn(ng-click='cancel()' ng-show='!editContact && !addContact')
+							i.fa.fa-times
 
 				div(ng-show='currentNavItem=="client"')
 					include client-form

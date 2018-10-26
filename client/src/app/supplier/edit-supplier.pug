@@ -7,7 +7,7 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					span.title-breadcrum
+					span.title-breadcrum(ng-click='cancel()')
 						| {{ 'peopleOrgs.title' | translate }}
 					h3.title-bar-txt-highlight
 						span(ng-class='{"active":(currentNavItem=="supplier")}') {{ supplier.name }}
@@ -35,7 +35,7 @@ side-bar
 								| {{ 'supplier.tabMenu.tabMenuSecond' | translate | uppercase }}
 						span(flex)
 
-						.btn-row
+						.btn-row.hide-mobile
 							button.btn(ng-show='currentNavItem=="supplier"')
 								i.fa.fa-trash
 							button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="supplierStaff" && userRole.can("UPDATE",subOption.authContext)')
@@ -50,6 +50,23 @@ side-bar
 							// Cancel update supplier data
 							button.btn(ng-click='cancel()' ng-show='!editContact && !addContact && !addStaff && !editStaff')
 								i.fa.fa-times
+
+				.btn-row-fixed.hide-desktop
+					.btn-row
+						button.btn(ng-show='currentNavItem=="supplier"')
+							i.fa.fa-trash
+						button.btn(ng-click='save()' ng-show='currentNavItem!="contacts" && currentNavItem!="supplierStaff" && userRole.can("UPDATE",subOption.authContext)')
+							i.fa.fa-check
+						// Contacts
+						button.btn(ng-click='saveContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
+							i.fa.fa-check
+						button.btn(ng-click='cancelEditContact()' ng-show='currentNavItem=="contacts" && (editContact || addContact)')
+							i.fa.fa-times
+						button.btn(ng-click='addClientContact()' ng-show='currentNavItem=="contacts" && (!addContact && !editContact) && userRole.can("CREATE","SUPPLIER_CONTACTS")')
+							i.fa.fa-user-plus
+						// Cancel update supplier data
+						button.btn(ng-click='cancel()' ng-show='!editContact && !addContact && !addStaff && !editStaff')
+							i.fa.fa-times
 
 				div(ng-show='currentNavItem=="supplier"')
 					include supplier-form

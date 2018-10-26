@@ -8,6 +8,7 @@ module.exports = [
 	'$scope', 'partyService','validationService','dialogService', function (
 		$scope, partyService, validationService , dialogService) {
 
+		$scope.currentNavItem = 'organization';
 		// Create a new supplier
 		var supplier = new Organization();
 		supplier.setContactMethod('work', new PhoneNumber());

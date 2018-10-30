@@ -205,7 +205,7 @@ module.exports = [
 		var agGridSizeToFit = function () {
 			$timeout(function () {
 				$scope.gridOptions.api.sizeColumnsToFit();
-			}, 1000);
+			}, 1500);
 		};
 		$scope.agGridWindowSizeChange = function(windowWidth){
 			console.log('ancho de ventana',windowWidth);

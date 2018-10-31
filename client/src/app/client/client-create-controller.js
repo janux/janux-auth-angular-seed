@@ -15,6 +15,7 @@ module.exports = [
 		client.setContactMethod('work', new PostalAddress());
 
 		$scope.client = client;
+		$scope.currentNavItem = 'organization';
 		console.log('Staff: ',$scope.client);
 
 		$scope.addNewAddress = function() {

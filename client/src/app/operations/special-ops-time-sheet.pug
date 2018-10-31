@@ -2,7 +2,20 @@ login-toolbar(toolbar-title='operations.title')
 
 side-bar
 
-.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+.page-content-wrapper.time-sheet(ng-controller="sidePanel" ng-class="{'page-content-left' : noneStyle}")
+
+	md-sidenav.md-sidenav-right(md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events)
+		md-toolbar.md-theme-indigo
+			h1.md-toolbar-tools
+				| Create New Timesheet
+
+		md-content(layout-margin)
+			p
+				| This is the main container for the form
+			md-button(ng-click="toggleSidenav()" class="md-accent")
+				| Close Sidenav
+
+
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar
 			.md-toolbar-tools.form-toolbar-glarus
@@ -25,6 +38,9 @@ side-bar
 
 				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()')
 					md-icon.fa.fa-download.fa-lg
+
+				md-button.arrow.md-icon-button(aria-label="New" ng-click="toggleSidenav()")
+					md-icon.fa.fa-plus-square.fa-lg
 
 		.add-row-section
 			add-special-service

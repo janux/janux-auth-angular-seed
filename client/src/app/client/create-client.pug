@@ -7,7 +7,7 @@ side-bar
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
 				md-truncate
-					span.title-breadcrum
+					span.title-breadcrum(ng-click='cancel()')
 						| {{ 'peopleOrgs.title' | translate }}
 					h2.title-bar-txt
 						| {{ 'client.createClient' | translate }}
@@ -16,22 +16,29 @@ side-bar
 
 		.container-fluid-flex.spacing-bottom
 
-			md-content.spacing-ls(style="margin-top:20px")
-				.form-mid-toolbar-glarus
-					ul.arrowunderline
-						li
-							a.active(href="#")
+			md-content.tabs-glarus
+				md-toolbar.form-mid-toolbar.options-tabs
+					.md-toolbar-tools
+						md-nav-bar( md-selected-nav-item="currentNavItem" nav-bar-aria-label="links")
+							md-nav-item.active(md-nav-click="goto('organization')" name="organization")
 								| {{ 'client.tabMenu.tabMenuFirst' | translate }}
-						li
-							a(href="#")
-								| {{ 'client.tabMenu.tabMenuSecond' | translate }}
 
+						span(flex)
+
+						.btn-row.hide-mobile
+							button.btn(ng-click='save()')
+								i.fa.fa-check
+							button.btn( ng-click='cancel()')
+								i.fa.fa-times
+
+				.btn-row-fixed.hide-desktop
 					.btn-row
 						button.btn(ng-click='save()')
 							i.fa.fa-check
-						button.btn(ng-click='cancel()')
+						button.btn( ng-click='cancel()')
 							i.fa.fa-times
 
-				include client-form
+				.user-form(ng-show='currentNavItem=="organization"')
+					include client-form
 
 footer-Janux

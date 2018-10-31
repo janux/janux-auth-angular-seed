@@ -208,7 +208,7 @@ module.exports = [
 			}, 1500);
 		};
 		$scope.agGridWindowSizeChange = function(windowWidth){
-			console.log('ancho de ventana',windowWidth);
+			//console.log('ancho de ventana',windowWidth);
 			if(100 < windowWidth && windowWidth < 700){
 				_.mapValues(columnDefs, function (o) {
 					switch(o.field){
@@ -309,7 +309,7 @@ module.exports = [
 		});
 
 		$scope.$on('agGridWindowSize',function(event,windowWidth){
-			console.log('tamaño',windowWidth);
+			//console.log('tamaño',windowWidth);
 			if(100 < windowWidth && windowWidth < 700){
 				_.mapValues(columnDefs, function (o) {
 					switch(o.field){

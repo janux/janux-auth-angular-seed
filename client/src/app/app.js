@@ -548,6 +548,15 @@ function($scope, $aside, security, $translate, jnxStorage) {
 		moment.locale(langToSet);
 		jnxStorage.setItem('glarusLang',langToSet, true);
 	};
+}])
+
+.controller('sidePanel', ['$rootScope', '$mdSidenav',
+function ($rootScope, $mdSidenav) {
+	
+    function buildToggler(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
+    }
+    $rootScope.toggleSidenav = buildToggler('closeEventsDisabled');
 }]);
-
-

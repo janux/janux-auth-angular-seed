@@ -190,7 +190,41 @@ module.exports = [
 			$scope.gridOptions.api.sizeColumnsToFit();
 		}, 1000);
 	};
-	$scope.agGridSizeToFit = agGridSizeToFit;
+	$scope.agGridWindowSizeChange = function(windowWidth){
+		//console.log('ancho de ventana',windowWidth);
+		if(100 < windowWidth && windowWidth < 700){
+			_.mapValues(columnDefs, function (o) {
+				switch(o.field){
+					case 'usersDisplayRole':
+					case 'usersDisplayEmail':
+					case 'phone':
+					case 'selected':
+
+					o.hide=true;
+					break;
+				}
+
+				return o;
+			});
+			$scope.gridOptions.api.setColumnDefs(columnDefs);
+		}else{
+			_.mapValues(columnDefs, function (o) {
+				switch(o.field){
+					case 'usersDisplayRole':
+					case 'usersDisplayEmail':
+					case 'phone':
+					case 'selected':
+
+					o.hide=false;
+					break;
+				}
+
+				return o;
+			});
+			$scope.gridOptions.api.setColumnDefs(columnDefs);
+		}
+		agGridSizeToFit();
+	};
 
 	$scope.gridOptions = {
 		columnDefs               : columnDefs,
@@ -250,6 +284,26 @@ module.exports = [
 
 	$scope.$on('sideMenuSizeChange', function () {
 		agGridSizeToFit();
+	});
+
+	$scope.$on('agGridWindowSize',function(event,windowWidth){
+		//console.log('tamaño',windowWidth);
+		if(100 < windowWidth && windowWidth < 700){
+			_.mapValues(columnDefs, function (o) {
+				switch(o.field){
+					case 'usersDisplayRole':
+					case 'usersDisplayEmail':
+					case 'phone':
+					case 'selected':
+
+					o.hide=true;
+					break;
+				}
+
+				return o;
+			});
+			$scope.gridOptions.api.setColumnDefs(columnDefs);
+		}
 	});
 
 	// We need to reload because when the language changes ag-grid doesn't reload by itself

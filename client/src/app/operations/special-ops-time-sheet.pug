@@ -4,18 +4,15 @@ side-bar
 
 .page-content-wrapper.time-sheet(ng-controller="sidePanel" ng-class="{'page-content-left' : noneStyle}")
 
-	md-sidenav.md-sidenav-right(md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events)
+	md-sidenav.md-sidenav-right(md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events style="")
 		md-toolbar.md-theme-indigo
 			h1.md-toolbar-tools
 				| Create New Timesheet
 
 		md-content(layout-margin)
-			form
-				md-input-container
-
+			add-special-service-side-nav
 			md-button(ng-click="toggleSidenav()" class="md-accent")
 				| Close Sidenav
-
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar
@@ -42,9 +39,6 @@ side-bar
 
 				md-button.arrow.md-icon-button(aria-label="New" ng-click="toggleSidenav()")
 					md-icon.fa.fa-plus-square.fa-lg
-
-		.add-row-section
-			add-special-service
 
 		.container-body(style="margin-top:-20px; padding-bottom:50px;")
 			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")

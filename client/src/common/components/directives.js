@@ -791,7 +791,7 @@ angular.module('commonComponents', [])
 			scope      : false,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/add-special-service-side-nav.html',
-			controller: require("./controllers/add-special-service-controller")
+			controller: require("./controllers/add-special-service-side-nav-controller")
 		};
 	})
 	.directive('invoice', function () {

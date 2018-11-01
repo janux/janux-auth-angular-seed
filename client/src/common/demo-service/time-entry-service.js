@@ -20,6 +20,8 @@ module.exports =
 
 				result.begin = dateUtilService.stringToDate(result.begin);
 				result.end = dateUtilService.stringToDate(result.end);
+				result.beginWork = dateUtilService.stringToDate(result.beginWork);
+				result.endWork = dateUtilService.stringToDate(result.endWork);
 				result.principals = _.map(result.principals, function (o) {
 					return partyService.fromJSON(o);
 				});
@@ -110,7 +112,7 @@ module.exports =
 						[ids]
 					).then(function (resp) {
 						return resp.data.result;
-					},function (err) {
+					}, function (err) {
 						return handleErrorMessage(err);
 					});
 				},

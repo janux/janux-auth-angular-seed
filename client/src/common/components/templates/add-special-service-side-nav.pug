@@ -38,36 +38,86 @@ form
 						md-option(value="TRANSPORT") {{ 'operations.specialsTimeLog.transport' | translate }}
 
 			.element
-				md-input-container.jnx-datetime-picker
+				md-input-container
 					label {{ 'operations.specialsTimeLog.begin' | translate }}
+					md-datepicker(ng-model='lbRow.start')
+
+			.element
+				md-input-container
+					label {{ 'operations.specialsTimeLog.beginHour' | translate }}
 					input(mdc-datetime-picker=''
-					date='true'
+					date='false'
+					placeholder='Time'
 					time='true'
 					show-todays-date=''
 					minutes='true'
-					format='YYYY-MM-DD HH:mm'
+					min-date='lbRow.start'
+					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
 					minute-steps='1'
-					ng-model='lbRow.start'
+					ng-model='lbRow.startHour'
 					ng-model-options="{ debounce: 1000 }"
-					type='text' required='',
+					type='text',
+					lang='{{ lang }}',
+					today-text='{{ "label.today" | translate }}',
+					ok-text='{{ "label.ok" | translate }}',
+					cancel-text='{{ "label.cancel" | translate }}')
+				md-input-container
+					label {{ 'operations.specialsTimeLog.endHour' | translate }}
+					input(mdc-datetime-picker=''
+					date='false'
+					placeholder='Time'
+					time='true'
+					show-todays-date=''
+					minutes='true'
+					min-date='lbRow.endHour'
+					format='HH:mm'
+					edit-input='true'
+					click-outside-to-close='true'
+					show-icon='true'
+					minute-steps='1'
+					ng-model='lbRow.end'
+					ng-model-options="{ debounce: 1000 }"
+					type='text',
 					lang='{{ lang }}',
 					today-text='{{ "label.today" | translate }}',
 					ok-text='{{ "label.ok" | translate }}',
 					cancel-text='{{ "label.cancel" | translate }}')
 
 			.element
-				md-input-container.jnx-datetime-picker
-					label {{ 'operations.specialsTimeLog.end' | translate }}
+				md-input-container
+					label {{ 'operations.specialsTimeLog.beginHourWork' | translate }}
 					input(mdc-datetime-picker=''
-					date='true'
+					date='false'
+					placeholder='Time'
 					time='true'
 					show-todays-date=''
 					minutes='true'
 					min-date='lbRow.start'
-					format='YYYY-MM-DD HH:mm'
+					format='HH:mm'
+					edit-input='true'
+					click-outside-to-close='true'
+					show-icon='true'
+					minute-steps='1'
+					ng-model='lbRow.startHourWork'
+					ng-model-options="{ debounce: 1000 }"
+					type='text',
+					lang='{{ lang }}',
+					today-text='{{ "label.today" | translate }}',
+					ok-text='{{ "label.ok" | translate }}',
+					cancel-text='{{ "label.cancel" | translate }}')
+				md-input-container
+					label {{ 'operations.specialsTimeLog.endHourWork' | translate }}
+					input(mdc-datetime-picker=''
+					date='false'
+					placeholder='Time'
+					time='true'
+					show-todays-date=''
+					minutes='true'
+					min-date='lbRow.endHourWork'
+					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
@@ -90,6 +140,39 @@ form
 				md-floating-label="{{ 'operations.specialsTimeLog.vehicle' | translate }}")
 					md-item-template
 						p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
+			.element
+				md-input-container
+					label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
+					input(ng-model='lbRow.odometerStart' type="number" )
+				span(flex)
+				md-input-container
+					label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
+					input(ng-model='lbRow.odometerEnd' type="number" )
+
+			.element
+				md-input-container
+					label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
+					md-select(ng-model='lbRow.fuelStart')
+						md-option(value="F") F
+						md-option(value="7/8") 7/8
+						md-option(value="3/4") 3/4
+						md-option(value="5/8") 5/8
+						md-option(value="4/8") 1/2
+						md-option(value="3/8") 3/8
+						md-option(value="2/8") 1/4
+						md-option(value="1/8") 1/8
+				span(flex)
+				md-input-container
+					label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
+					md-select(ng-model='lbRow.fuelEnd')
+						md-option(value="F") F
+						md-option(value="7/8") 7/8
+						md-option(value="3/4") 3/4
+						md-option(value="5/8") 5/8
+						md-option(value="4/8") 1/2
+						md-option(value="3/8") 3/8
+						md-option(value="2/8") 1/4
+						md-option(value="1/8") 1/8
 
 		.staff-form-right
 			textarea(name="special-ops-description"
@@ -97,4 +180,4 @@ form
 			markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 			on-fullscreen="onFullScreenCallback()"
 			on-fullscreen-exit="onFullScreenExitCallback()"
-			rows="15")
+			rows="25")

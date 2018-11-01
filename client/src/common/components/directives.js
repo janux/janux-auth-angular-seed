@@ -786,6 +786,14 @@ angular.module('commonComponents', [])
 			controller: require("./controllers/add-special-service-controller")
 		};
 	})
+	.directive('addSpecialServiceSideNav', function () {
+		return {
+			scope      : false,
+			restrict   : 'E',
+			templateUrl: 'common/components/templates/add-special-service-side-nav.html',
+			controller: require("./controllers/add-special-service-controller")
+		};
+	})
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};
 		return {

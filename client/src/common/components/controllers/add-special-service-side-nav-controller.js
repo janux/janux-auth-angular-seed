@@ -9,7 +9,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 
 		operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 
-			var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+			// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 			var allDrivers = driversAndOps.allPersonnelAvailableForSelection;
 			var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
 			var vehiclesAssignedToOperations = driversAndOps.vehiclesAssignedToOperations;
@@ -20,23 +20,25 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 			var initRowModel = function () {
 				var today = moment().startOf('day').toDate();
 				$scope.lbRow = {
-					staff            : '',
-					operation        : '',
+					staff                 : '',
+					operation             : '',
 					// Start billable hour.
-					start            : undefined,
+					start                 : undefined,
 					//End billable work.
-					end              : undefined,
+					end                   : undefined,
 					// Star work hour.
-					startWork        : undefined,
+					startWork             : undefined,
 					// End work hour.
-					endWork          : undefined,
+					endWork               : undefined,
 					// The following dates and showed in the Form, with this info the controller calculates
 					// the correct dates.
-					startForm        : today,
-					startHourForm    : today,
-					startHourWorkForm: today,
-					endHourForm      : today,
-					endHourWorkForm  : today,
+					startForm             : today,
+					startHourForm         : today,
+					startHourWorkForm     : today,
+					endHourForm           : today,
+					endHourWorkForm       : today,
+					differenceTimeForm    : undefined,
+					differenceTimeWorkForm: undefined,
 
 					provider: '',
 					location: '',
@@ -196,8 +198,54 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 			 * Calculate end and endWork
 			 */
 			$scope.calculateDates = function () {
+				// console.log("Call to calculateDates");
+				var startMoment = moment($scope.lbRow.startForm);
+				var endMoment = moment($scope.lbRow.startForm);
+				var startWorkMoment = moment($scope.lbRow.startForm);
+				var endWorkMoment = moment($scope.lbRow.startForm);
+				var differenceHoursMoment;
+				var differenceHoursWorkMoment;
+				var startTemp;
+				var endTemp;
+
+
+				// Billable dates.
+				startTemp = moment($scope.lbRow.startHourForm);
+				startMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
+				endTemp = moment($scope.lbRow.endHourForm);
+				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
+					endMoment.add(endTemp.hours(), 'hours').add(24, 'hours').add(endTemp.minutes(), 'minutes');
+				} else {
+					endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				}
+				differenceHoursMoment = operationService.calculateDuration(startMoment.toDate(), endMoment.toDate());
+
+				//Workable dates.
+				startTemp = moment($scope.lbRow.startHourWorkForm);
+				startWorkMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
+				endTemp = moment($scope.lbRow.endHourWorkForm);
+				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
+					endWorkMoment.add(endTemp.hours(), 'hours').add(24, 'hours').add(endTemp.minutes(), 'minutes');
+				} else {
+					endWorkMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				}
+				differenceHoursWorkMoment = operationService.calculateDuration(startWorkMoment.toDate(), endWorkMoment.toDate());
+
+				$scope.lbRow.start = startMoment.toDate();
+				$scope.lbRow.end = endMoment.toDate();
+
+				$scope.lbRow.startWork = startWorkMoment.toDate();
+				$scope.lbRow.endWork = endWorkMoment.toDate();
+
+				$scope.lbRow.differenceTimeForm = differenceHoursMoment;
+				$scope.lbRow.differenceTimeWorkForm = differenceHoursWorkMoment;
 
 			};
 
+			$scope.init = function () {
+				$scope.calculateDates();
+			};
+
+			$scope.init();
 		});
 	}];

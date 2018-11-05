@@ -40,7 +40,8 @@ form
 			.element
 				md-input-container
 					label {{ 'operations.specialsTimeLog.begin' | translate }}
-					md-datepicker(ng-model='lbRow.startForm')
+					md-datepicker(ng-model='lbRow.startForm'
+					ng-change='calculateDates()')
 
 			.element
 				md-input-container
@@ -62,7 +63,8 @@ form
 					lang='{{ lang }}',
 					today-text='{{ "label.today" | translate }}',
 					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}')
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
 				md-input-container
 					label {{ 'operations.specialsTimeLog.endHour' | translate }}
 					input(mdc-datetime-picker=''
@@ -83,7 +85,11 @@ form
 					lang='{{ lang }}',
 					today-text='{{ "label.today" | translate }}',
 					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}')
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
+				md-input-container
+					| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}:
+					strong {{lbRow.differenceTimeForm}}
 
 			.element
 				md-input-container
@@ -106,7 +112,8 @@ form
 					lang='{{ lang }}',
 					today-text='{{ "label.today" | translate }}',
 					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}')
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
 				md-input-container
 					label {{ 'operations.specialsTimeLog.endHourWork' | translate }}
 					input(mdc-datetime-picker=''
@@ -128,7 +135,17 @@ form
 					lang='{{ lang }}',
 					today-text='{{ "label.today" | translate }}',
 					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}')
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
+				md-input-container
+					| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}:
+					strong {{lbRow.differenceTimeWorkForm}}
+
+			.element
+				md-input-container
+					div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
+					div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
+
 
 			.element
 				md-autocomplete(md-no-cache='false',
@@ -173,6 +190,8 @@ form
 						md-option(value="3/8") 3/8
 						md-option(value="2/8") 1/4
 						md-option(value="1/8") 1/8
+
+
 
 		.staff-form-right
 			textarea(name="special-ops-description"

@@ -347,6 +347,8 @@
 			"end": "End",
 			"endHour": "End hour",
 			"endHourWork": "End hour work",
+			"hoursBilled": "Billed hours",
+			"hoursWorked": "Worked hours",
 			"client": "Client",
 			"duration": "Duration",
 			"comment": "Comment",

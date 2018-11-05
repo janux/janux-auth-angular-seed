@@ -346,6 +346,8 @@
 			"end": "Término",
 			"endHour": "Hora fin",
 			"endHourWork": "Hora fin trabajo",
+			"hoursBilled": "Horas facturadas",
+			"hoursWorked": "Horas laboradas",
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",

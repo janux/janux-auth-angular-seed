@@ -40,7 +40,7 @@ form
 			.element
 				md-input-container
 					label {{ 'operations.specialsTimeLog.begin' | translate }}
-					md-datepicker(ng-model='lbRow.start')
+					md-datepicker(ng-model='lbRow.startForm')
 
 			.element
 				md-input-container
@@ -51,13 +51,12 @@ form
 					time='true'
 					show-todays-date=''
 					minutes='true'
-					min-date='lbRow.start'
 					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
 					minute-steps='1'
-					ng-model='lbRow.startHour'
+					ng-model='lbRow.startHourForm'
 					ng-model-options="{ debounce: 1000 }"
 					type='text',
 					lang='{{ lang }}',
@@ -72,13 +71,13 @@ form
 					time='true'
 					show-todays-date=''
 					minutes='true'
-					min-date='lbRow.endHour'
+					min-date='lbRow.startHourForm'
 					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
 					minute-steps='1'
-					ng-model='lbRow.end'
+					ng-model='lbRow.endHourForm'
 					ng-model-options="{ debounce: 1000 }"
 					type='text',
 					lang='{{ lang }}',
@@ -92,16 +91,16 @@ form
 					input(mdc-datetime-picker=''
 					date='false'
 					placeholder='Time'
+					id = "beginHourWork"
 					time='true'
 					show-todays-date=''
 					minutes='true'
-					min-date='lbRow.start'
 					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
 					minute-steps='1'
-					ng-model='lbRow.startHourWork'
+					ng-model='lbRow.startHourWorkForm'
 					ng-model-options="{ debounce: 1000 }"
 					type='text',
 					lang='{{ lang }}',
@@ -111,18 +110,19 @@ form
 				md-input-container
 					label {{ 'operations.specialsTimeLog.endHourWork' | translate }}
 					input(mdc-datetime-picker=''
+					id = "endHourWork"
 					date='false'
 					placeholder='Time'
 					time='true'
+					min-date='lbRow.startHourWorkForm'
 					show-todays-date=''
 					minutes='true'
-					min-date='lbRow.endHourWork'
 					format='HH:mm'
 					edit-input='true'
 					click-outside-to-close='true'
 					show-icon='true'
 					minute-steps='1'
-					ng-model='lbRow.end'
+					ng-model='lbRow.endHourWorkForm'
 					ng-model-options="{ debounce: 1000 }"
 					type='text',
 					lang='{{ lang }}',
@@ -136,18 +136,18 @@ form
 				md-selected-item='lbRow.vehicle',
 				md-search-text='lbSearch.vehicle',
 				md-item-text='item.resource.name + " " + item.resource.plateNumber',
-				md-min-length='0',
+				md-min-length='0',fend
 				md-floating-label="{{ 'operations.specialsTimeLog.vehicle' | translate }}")
 					md-item-template
 						p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
 			.element
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
-					input(ng-model='lbRow.odometerStart' type="number" )
+					input(ng-model='lbRow.odometerStart' type="number" id='odometerStart')
 				span(flex)
 				md-input-container
 					label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
-					input(ng-model='lbRow.odometerEnd' type="number" )
+					input(ng-model='lbRow.odometerEnd' type="number" id='odometerEnd')
 
 			.element
 				md-input-container

@@ -214,7 +214,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 				startMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
 				endTemp = moment($scope.lbRow.endHourForm);
 				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-					endMoment.add(endTemp.hours(), 'hours').add(24, 'hours').add(endTemp.minutes(), 'minutes');
+					endMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
 				} else {
 					endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
 				}
@@ -225,7 +225,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 				startWorkMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
 				endTemp = moment($scope.lbRow.endHourWorkForm);
 				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-					endWorkMoment.add(endTemp.hours(), 'hours').add(24, 'hours').add(endTemp.minutes(), 'minutes');
+					endWorkMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
 				} else {
 					endWorkMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
 				}

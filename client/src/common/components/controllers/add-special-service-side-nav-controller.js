@@ -1,11 +1,11 @@
 'use strict';
 
 var infoDialog = require('./info-dialog');
-var agGridComp = require('common/ag-grid-components');
+
 var _ = require('lodash');
 
-module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilService',
-	function ($scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilService) {
+module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav',
+	function ($scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav) {
 
 		operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 
@@ -179,7 +179,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 
 			// Add new record
 			$scope.addRow = function () {
-				operationUtilService.createAndInsertSpecialOpsTimeEntry(
+				operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry(
 					infoDialog, $modal, $scope, timeEntryService, $timeout, initRowModel, $filter
 				);
 			};

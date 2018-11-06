@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilService', 'dialogService',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilService, dialogService) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilService, dialogService, $mdSidenav) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -29,7 +29,8 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 		};
 
 		$scope.periodChange = function () {
-			console.log('All options ' + JSON.stringify($scope.periodFilterOptions));
+			// console.log('All options ' + JSON.stringify($scope.periodFilterOptions));
+			// console.log('$scope.periodFilterKey ' + $scope.periodFilterKey);
 			jnxStorage.setItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, $scope.periodFilterKey, true);
 			findTimeEntries($scope.periodFilterKey);
 		};
@@ -349,7 +350,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 		};
 
 		findTimeEntries = function (periodKey) {
-			console.log('Selected period key: ' + periodKey);
+			// console.log('Selected period key: ' + periodKey);
 			var period = timePeriods.specialOps[periodKey];
 			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
@@ -369,9 +370,11 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			// console.log('$translateChangeSuccess');
 			$state.reload();
 		});
 
-
+		$scope.toggleSideNav = function () {
+			$mdSidenav('specialOpsSideNav').toggle();
+		};
 	}];

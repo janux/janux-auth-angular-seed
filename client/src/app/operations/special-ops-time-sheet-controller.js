@@ -67,7 +67,6 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				dialogService.info('operations.dialogs.noRowSelectedError', false);
 			}
 		};
-
 		//
 		// AG-Grid
 		//

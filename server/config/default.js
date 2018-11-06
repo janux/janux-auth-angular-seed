@@ -61,7 +61,7 @@ module.exports = {
 
 		log4js: {
 			config        : require('./log4js.js'),
-			globalLogLevel: 'DEBUG'
+			globalLogLevel: 'INFO'
 		},
 
 		// janux-persistence settings

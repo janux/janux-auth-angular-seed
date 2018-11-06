@@ -5,42 +5,22 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilService',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilService) {
+module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilService', 'dialogService',
+	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 		var findTimeEntries;
 		$scope.driversAndOps = driversAndOps;
+		//$scope.periodFilterKey = undefined;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.lang = $translate.use();
 
-		$scope.periodChange = function () {
-			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
-			findTimeEntries($scope.periodFilterKey);
-		};
-
 		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-
-		var infoDialog = function (translateKey) {
-			$modal.open({
-				templateUrl: 'app/dialog-tpl/info-dialog.html',
-				controller : ['$scope', '$modalInstance',
-					function ($scope, $modalInstance) {
-						$scope.message = $filter('translate')(translateKey);
-
-						$scope.ok = function () {
-							$modalInstance.close();
-						};
-					}],
-				size       : 'md'
-			});
-		};
 
 		$scope.export = function () {
 			var ids = [];
-
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
@@ -48,10 +28,15 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 			timeEntryService.timeEntryReportSpecialOps(ids);
 		};
 
+		$scope.periodChange = function () {
+			console.log('All options ' + JSON.stringify($scope.periodFilterOptions));
+			jnxStorage.setItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, $scope.periodFilterKey, true);
+			findTimeEntries($scope.periodFilterKey);
+		};
+
 		function deleteConfirmed(rowsToDelete) {
 			var timeEntryIds = _.map(rowsToDelete, 'id');
 			timeEntryService.removeByIds(timeEntryIds).then(function () {
-				// infoDialog('The records were deleted correctly');
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
 		}
@@ -78,7 +63,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 					size       : 'md'
 				});
 			} else {
-				infoDialog('operations.dialogs.noRowSelectedError');
+				dialogService.info('operations.dialogs.noRowSelectedError', false);
 			}
 		};
 
@@ -336,7 +321,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				//
 				// specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
 				// specialOpsTimeEntryToUpdate.resources[0] = operationUtilService.setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
-				var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj, infoDialog);
+				var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj);
 
 				if (!_.isNil(specialOpsTimeEntryToUpdate)) {
 					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
@@ -364,8 +349,8 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 		};
 
 		findTimeEntries = function (periodKey) {
+			console.log('Selected period key: ' + periodKey);
 			var period = timePeriods.specialOps[periodKey];
-
 			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
 					// console.log(JSON.stringify(result));
@@ -388,7 +373,5 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 			$state.reload();
 		});
 
-		//
-		// End of AG-Grid
-		//
+
 	}];

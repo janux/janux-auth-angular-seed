@@ -394,6 +394,8 @@
 	  	},
 		"services": "Services",
 		"dialogs":{
+			"invalidStartDateForm": "Date must be defined",
+			"beginDateError":"Begin date must be defined",
 			"endDateError":"End date should be higher than begin date",
 			"invalidOperation":"Invalid operation selected",
 			"invalidFunction":"Invalid function selected",

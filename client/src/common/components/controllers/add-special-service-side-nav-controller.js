@@ -1,7 +1,5 @@
 'use strict';
 
-var infoDialog = require('./info-dialog');
-
 var _ = require('lodash');
 
 module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav',
@@ -178,7 +176,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 		// Add new record
 		$scope.addRow = function () {
 			operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry(
-				infoDialog, $modal, $scope, timeEntryService, $timeout, initRowModel, $filter
+				$scope, initRowModel
 			);
 		};
 

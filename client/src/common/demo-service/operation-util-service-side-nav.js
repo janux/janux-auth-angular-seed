@@ -9,8 +9,8 @@ var moment = require('moment');
 
 
 module.exports =
-	['config',
-		function (config) {
+	['config', 'dialogService', '$timeout', 'timeEntryService',
+		function (config, dialogService, $timeout, timeEntryService) {
 
 			/**
 			 * Set the external flag for special ops time entries.
@@ -44,6 +44,57 @@ module.exports =
 			}
 
 			/**
+			 * Validate form data before insert.
+			 * @param $scope
+			 * @return {boolean}
+			 */
+			function validateBeforeInsert($scope) {
+				var result = true;
+
+				// Selected person
+				if (!$scope.lbRow.staff) {
+					dialogService.info('operations.dialogs.invalidStaff', false);
+					result = false;
+				} else if (!$scope.lbRow.operation && !$scope.operationId) {
+					// Selected operation.
+					dialogService.info('operations.dialogs.invalidOperation', false);
+					result = false;
+				} else if (!$scope.lbRow.function) {
+					// Selected function.
+					dialogService.info('operations.dialogs.invalidFunction', false);
+					result = false;
+				} else if (!_.isDate($scope.lbRow.startForm)) {
+					dialogService.info('operations.dialogs.invalidStartDateForm', false);
+					result = false;
+				} else if (!_.isNil($scope.lbRow.odometerEnd) && !_.isNil($scope.lbRow.odometerStart) &&
+					// Validating odometer values.
+					_.toNumber($scope.lbRow.odometerStart) > _.toNumber($scope.lbRow.odometerEnd)) {
+					dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
+					result = false;
+				} else if (!_.isDate($scope.lbRow.start)) {
+					dialogService.info('operations.dialogs.beginDateError', false);
+					result = false;
+				} else {
+					var begin = $scope.lbRow.start;
+					var end = $scope.lbRow.end;
+					if (_.isNil($scope.lbRow.end) === false) {
+						if (begin > end) {
+							dialogService.info('operations.dialogs.endDateError', false);
+							result = false;
+						}
+					}
+				}
+
+
+				/// ?
+				// if (!!$scope.specialServiceAddForm.$valid) {
+				//
+				// }
+
+				return result;
+			}
+
+			/**
 			 * This service encapsulate common methods in the time sheets with the purpose to remove duplicated code.
 			 */
 			var service = {
@@ -51,57 +102,9 @@ module.exports =
 				/**************************
 				 *Special ops util methods
 				 *************************/
-
-				/**
-				 * Creates and insert a special ops time entry.
-				 * This method only helps to remove duplicated code
-				 * @param infoDialog The infoDialog instance from the controller
-				 * @param $modal The $modal reference from the controller.
-				 * @param $scope The $scope from the controller
-				 * @param timeEntryService  a TimeEntryService instance, from the controller
-				 * @param $timeout The angular $timeout, from the controller
-				 * @param initRowModel A method implemented in the controller that helps to create an empty form for new time entries.
-				 */
-				createAndInsertSpecialOpsTimeEntry: function (infoDialog, $modal, $scope, timeEntryService, $timeout, initRowModel, $filter) {
-
-					// Selected person
-
-					if (!$scope.lbRow.staff) {
-						infoDialog('operations.dialogs.invalidStaff', $modal, $filter);
-						return;
-					}
-
-					if (!$scope.lbRow.operation && !$scope.operationId) {
-						infoDialog('operations.dialogs.invalidOperation', $modal, $filter);
-						return;
-					}
-
-					if (!$scope.lbRow.function) {
-						infoDialog('operations.dialogs.invalidFunction', $modal, $filter);
-						return;
-					}
-
-					//////
-					if (!!$scope.specialServiceAddForm.$valid) {
-						var begin = moment($scope.lbRow.start);
-						var end = '', endToInsert;
-						var vehicle;
-
-						if (_.isNil($scope.lbRow.end) === false) {
-							end = moment($scope.lbRow.end);
-							endToInsert = end.toDate();
-
-							if (begin > end) {
-								infoDialog('operations.dialogs.endDateError', $modal, $filter);
-								return;
-							}
-						}
-
-						if (!_.isNil($scope.lbRow.odometerEnd) && !_.isNil($scope.lbRow.odometerStart) &&
-							_.toNumber($scope.lbRow.odometerStart) > _.toNumber($scope.lbRow.odometerEnd)) {
-							infoDialog('operations.dialogs.odometerStartGreaterThanEnd', $modal, $filter);
-							return;
-						}
+				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel) {
+					var vehicle;
+					if (validateBeforeInsert($scope)) {
 
 						var specialOpsTimeEntryToInsert = {
 							'resources'  : [_.clone($scope.lbRow.staff)],
@@ -109,12 +112,13 @@ module.exports =
 							'attributes' : [],
 							'type'       : 'SPECIAL_OPS',
 							'comment'    : $scope.lbRow.location,
-							'begin'      : begin.toDate(),
-							'end'        : endToInsert,
+							'begin'      : $scope.lbRow.start,
+							'end'        : $scope.lbRow.end,
+							'beginWork'  : $scope.lbRow.startWork,
+							'endWork'    : $scope.lbRow.endWork,
 							'billable'   : true,
 							'idOperation': $scope.operationId || $scope.lbRow.operation.id
 						};
-
 
 						specialOpsTimeEntryToInsert.resources[0].type = $scope.lbRow.function;
 						specialOpsTimeEntryToInsert.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToInsert.resources[0]);
@@ -151,10 +155,9 @@ module.exports =
 				/**
 				 * Creates a default special ops time entry for update.
 				 * @param rowObj
-				 * @param infoDialog
 				 * @return object Time entry or undefined if there are invalid values.
 				 */
-				createSpecialOpsTimeEntryForUpdate: function (rowObj, infoDialog) {
+				createSpecialOpsTimeEntryForUpdate: function (rowObj) {
 					var endToUpdate;
 
 					if (rowObj.data.end) {
@@ -184,15 +187,12 @@ module.exports =
 					if (!_.isNil(rowObj.data.vehicle)) {
 						specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
 						if (isInvalidOdometerValues(specialOpsTimeEntryToUpdate)) {
-							infoDialog('operations.dialogs.odometerStartGreaterThanEnd');
+							dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
 							specialOpsTimeEntryToUpdate = undefined;
 						}
 					}
-
 					return specialOpsTimeEntryToUpdate;
-
 				}
-
 			};
 			return service;
 		}];

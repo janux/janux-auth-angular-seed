@@ -30,12 +30,7 @@ module.exports =
 	$scope.invoices = invoices;
 	$scope.invoice = undefined;
 
-	console.log('Invoices', invoices);
-
-	$scope.periodChange = function () {
-		jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
-		findTimeEntries($scope.periodFilterKey);
-	};
+	// console.log('Invoices', invoices);
 
 	$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 	$scope.driversAndOps = driversAndOps;

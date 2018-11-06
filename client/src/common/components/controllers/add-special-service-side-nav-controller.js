@@ -2,8 +2,8 @@
 
 var _ = require('lodash');
 
-module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav',
-	function ($scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav',
+	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav) {
 
 
 		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -175,9 +175,7 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 
 		// Add new record
 		$scope.addRow = function () {
-			operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry(
-				$scope, initRowModel
-			);
+			operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, initRowModel, $rootScope);
 		};
 
 		$scope.export = function () {
@@ -249,6 +247,9 @@ module.exports = ['$scope', 'operationService', 'timeEntryService', '$mdDialog',
 				$scope.calculateDates();
 			});
 		};
+
+
+
 
 		$scope.init();
 	}];

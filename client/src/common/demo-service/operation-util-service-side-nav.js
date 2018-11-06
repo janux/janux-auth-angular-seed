@@ -102,7 +102,7 @@ module.exports =
 				/**************************
 				 *Special ops util methods
 				 *************************/
-				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel) {
+				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel, $rootScope) {
 					var vehicle;
 					if (validateBeforeInsert($scope)) {
 
@@ -139,6 +139,9 @@ module.exports =
 
 						timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
+
+							$rootScope.toggleSidenav();
+
 
 							// Wait before performing the form reset
 							$timeout(function () {

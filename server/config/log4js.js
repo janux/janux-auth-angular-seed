@@ -19,7 +19,7 @@ module.exports = {
 		},
 		{
 			type:'logLevelFilter',
-			level: 'DEBUG',
+			level: 'INFO',
 			appender: {
 				type: 'console',
 				layout: {

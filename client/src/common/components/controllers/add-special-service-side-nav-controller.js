@@ -13,6 +13,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		var allVehicles;
 		var operations;
 		var selectedDriver;
+		$scope.lbRow = {};
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
@@ -44,7 +45,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				endHourWorkForm       : today,
 				differenceTimeForm    : undefined,
 				differenceTimeWorkForm: undefined,
-
 				provider: '',
 				location: '',
 				function: ''
@@ -247,8 +247,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				$scope.calculateDates();
 			});
 		};
-
-
 
 
 		$scope.init();

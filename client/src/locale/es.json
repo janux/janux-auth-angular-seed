@@ -278,6 +278,7 @@
 	},
 	"operations": {
 		"title": "Operaciones",
+		"newTimeSheet":"Nuevo registro",
 		"drivers": "Choferes",
 	    "status":"Estado",
 	    "statuses" : {

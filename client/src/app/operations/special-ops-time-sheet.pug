@@ -7,14 +7,21 @@ side-bar
 	md-sidenav.md-sidenav-right(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events style="")
 		md-toolbar.md-theme-indigo
 			h1.md-toolbar-tools
-				| Create New Timesheet
+				| {{ 'operations.newTimeSheet' | translate }}
+				// TODO : Make suere use custom classes and not mateiral design
+				// layouts.
+				span(flex)
+				md-button(aria-label="New" ng-click="addRow()")
+					| {{ 'label.ok' | translate }}
+				md-button(aria-label="New" ng-click="toggleSideNav()")
+					| {{ 'label.cancel' | translate }}
 
 		md-content(layout-margin)
 			special-service-side-nav
-			md-button(ng-click="toggleSideNav()" class="md-accent")
-				| Close Sidenav
-			md-button(ng-click="addRow()" class="md-accent")
-				| Insert time entry
+			//md-button(ng-click="toggleSideNav()" class="md-accent")
+			//	| Close Sidenav
+			//md-button(ng-click="addRow()" class="md-accent")
+			//	| Insert time entry
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar

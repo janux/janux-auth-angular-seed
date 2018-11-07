@@ -140,14 +140,14 @@ module.exports =
 						timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
 							$scope.findTimeEntries($scope.periodFilterKey);
 
-							$rootScope.toggleSidenav();
+							$scope.toggleSideNav();
 
 
 							// Wait before performing the form reset
 							$timeout(function () {
 								initRowModel();
-								$scope.specialServiceAddForm.$setUntouched(true);
-								$scope.specialServiceAddForm.$setPristine(true);
+								// $scope.specialServiceAddForm.$setUntouched(true);
+								// $scope.specialServiceAddForm.$setPristine(true);
 								// Go to last page
 								// $scope.gridOptions.api.paginationGoToLastPage();
 							}, 10);
@@ -178,8 +178,10 @@ module.exports =
 						'attributes' : [],
 						'type'       : 'SPECIAL_OPS',
 						'comment'    : rowObj.data.comment,
-						'begin'      : moment(rowObj.data.begin).toDate(),
+						'begin'      : rowObj.data.begin,
 						'end'        : endToUpdate,
+						'beginWork'  : rowObj.data.beginWork,
+						'endWork'    : rowObj.data.endWork,
 						'billable'   : true,
 						'idOperation': rowObj.data.operation.id
 					};

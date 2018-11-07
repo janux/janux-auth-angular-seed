@@ -496,6 +496,8 @@ module.exports =
 							beginOnlyDate: begin.format(formatStringOnlyDate),
 							endOnlyHour  : endOnlyHour,
 							end          : timeEntry.end, //end,
+							beginWork    : timeEntry.beginWork,
+							endWork      : timeEntry.endWork,
 							duration     : duration,
 							absence      : absence,
 							comment      : timeEntry.comment,

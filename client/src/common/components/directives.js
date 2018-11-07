@@ -4,7 +4,6 @@ var Person = require('janux-people').Person;
 var PhoneNumber = require('janux-people').PhoneNumber;
 var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
-var agGridComp = require('common/ag-grid-components');
 var _ = require('lodash');
 var scopeDefinition = {"data": "=", "section": "@"};
 
@@ -786,12 +785,12 @@ angular.module('commonComponents', [])
 			controller: require("./controllers/add-special-service-controller")
 		};
 	})
-	.directive('addSpecialServiceSideNav', function () {
+	.directive('specialServiceSideNav', function () {
 		return {
 			scope      : false,
 			restrict   : 'E',
-			templateUrl: 'common/components/templates/add-special-service-side-nav.html',
-			controller: require("./controllers/add-special-service-side-nav-controller")
+			templateUrl: 'common/components/templates/special-ops-time-entry-side-nav.html',
+			controller: require("./controllers/special-ops-time-entry-side-nav-controller")
 		};
 	})
 	.directive('invoice', function () {

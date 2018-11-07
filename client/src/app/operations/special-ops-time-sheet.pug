@@ -10,7 +10,7 @@ side-bar
 				| Create New Timesheet
 
 		md-content(layout-margin)
-			add-special-service-side-nav
+			special-service-side-nav
 			md-button(ng-click="toggleSideNav()" class="md-accent")
 				| Close Sidenav
 			md-button(ng-click="addRow()" class="md-accent")
@@ -39,7 +39,7 @@ side-bar
 				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()')
 					md-icon.fa.fa-download.fa-lg
 
-				md-button.arrow.md-icon-button(aria-label="New" ng-click="toggleSidenav()")
+				md-button.arrow.md-icon-button(aria-label="New" ng-click="toggleSideNav()")
 					md-icon.fa.fa-plus-square.fa-lg
 
 		.container-body(style="margin-top:-20px; padding-bottom:50px;")

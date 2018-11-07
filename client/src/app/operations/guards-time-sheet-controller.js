@@ -216,7 +216,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					var operationId = selectedDriver.opId;
 					var staffOperations = _.filter(operations, {id: operationId});
 
-					console.log('Selected staff operations', staffOperations);
+					// console.log('Selected staff operations', staffOperations);
 					$scope.lbRow.operation = staffOperations[0];
 
 				}
@@ -615,12 +615,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					$scope.gridOptions.onFilterChanged();
 				}
 			},
-			onRowEditingStarted      : function (rowObj) {
+			onRowEditingStarted      : function () {
 				// Nothing to do yet
-				console.log('Row edition started', rowObj);
+				// console.log('Row edition started', rowObj);
 			},
 			onRowValueChanged        : function (rowObj) {
-				console.log('Row data changed', rowObj);
+				// console.log('Row data changed', rowObj);
 
 				var endToUpdate;
 
@@ -698,7 +698,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			// console.log('$translateChangeSuccess');
 			$state.reload();
 		});
 

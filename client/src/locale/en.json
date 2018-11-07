@@ -279,6 +279,7 @@
 	},
 	"operations": {
 		"title": "Time sheets",
+		"newTimeSheet":"New time sheet",
 		"drivers": "Drivers",
 	    "status":"Status",
 	    "statuses" : {

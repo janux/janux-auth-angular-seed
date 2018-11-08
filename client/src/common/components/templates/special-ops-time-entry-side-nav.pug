@@ -45,54 +45,6 @@ form(name="specialServiceAddForm")
 
 			.element
 				md-input-container
-					label {{ 'operations.specialsTimeLog.beginHour' | translate }}
-					input(mdc-datetime-picker=''
-					date='false'
-					placeholder='Time'
-					time='true'
-					show-todays-date=''
-					minutes='true'
-					format='HH:mm'
-					edit-input='true'
-					click-outside-to-close='true'
-					show-icon='true'
-					minute-steps='1'
-					ng-model='lbRow.startHourForm'
-					ng-model-options="{ debounce: 1000 }"
-					type='text',
-					lang='{{ lang }}',
-					today-text='{{ "label.today" | translate }}',
-					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}'
-					ng-change='calculateDates()')
-				md-input-container
-					label {{ 'operations.specialsTimeLog.endHour' | translate }}
-					input(mdc-datetime-picker=''
-					date='false'
-					placeholder='Time'
-					time='true'
-					show-todays-date=''
-					minutes='true'
-					min-date='lbRow.startHourForm'
-					format='HH:mm'
-					edit-input='true'
-					click-outside-to-close='true'
-					show-icon='true'
-					minute-steps='1'
-					ng-model='lbRow.endHourForm'
-					ng-model-options="{ debounce: 1000 }"
-					type='text',
-					lang='{{ lang }}',
-					today-text='{{ "label.today" | translate }}',
-					ok-text='{{ "label.ok" | translate }}',
-					cancel-text='{{ "label.cancel" | translate }}'
-					ng-change='calculateDates()')
-				md-input-container
-					| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}:
-					strong {{lbRow.differenceTimeForm}}
-
-			.element
-				md-input-container
 					label {{ 'operations.specialsTimeLog.beginHourWork' | translate }}
 					input(mdc-datetime-picker=''
 					date='false'
@@ -140,6 +92,54 @@ form(name="specialServiceAddForm")
 				md-input-container
 					| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}:
 					strong {{lbRow.differenceTimeWorkForm}}
+
+			.element
+				md-input-container
+					label {{ 'operations.specialsTimeLog.beginHour' | translate }}
+					input(mdc-datetime-picker=''
+					date='false'
+					placeholder='Time'
+					time='true'
+					show-todays-date=''
+					minutes='true'
+					format='HH:mm'
+					edit-input='true'
+					click-outside-to-close='true'
+					show-icon='true'
+					minute-steps='1'
+					ng-model='lbRow.startHourForm'
+					ng-model-options="{ debounce: 1000 }"
+					type='text',
+					lang='{{ lang }}',
+					today-text='{{ "label.today" | translate }}',
+					ok-text='{{ "label.ok" | translate }}',
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
+				md-input-container
+					label {{ 'operations.specialsTimeLog.endHour' | translate }}
+					input(mdc-datetime-picker=''
+					date='false'
+					placeholder='Time'
+					time='true'
+					show-todays-date=''
+					minutes='true'
+					min-date='lbRow.startHourForm'
+					format='HH:mm'
+					edit-input='true'
+					click-outside-to-close='true'
+					show-icon='true'
+					minute-steps='1'
+					ng-model='lbRow.endHourForm'
+					ng-model-options="{ debounce: 1000 }"
+					type='text',
+					lang='{{ lang }}',
+					today-text='{{ "label.today" | translate }}',
+					ok-text='{{ "label.ok" | translate }}',
+					cancel-text='{{ "label.cancel" | translate }}'
+					ng-change='calculateDates()')
+				md-input-container
+					| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}:
+					strong {{lbRow.differenceTimeForm}}
 
 			// show only to debug
 			//.element

@@ -15,7 +15,7 @@ CheckBoxRowSelection.prototype.init = function (params) {
 	var checkbox = document.createElement('md-checkbox');
 	checkbox.setAttribute('ng-model', this.model);
 	checkbox.onclick = function() {
-		console.log('row params', params);
+		// console.log('row params', params);
 		params.node.setSelected( !params.node.selected );
 	};
 

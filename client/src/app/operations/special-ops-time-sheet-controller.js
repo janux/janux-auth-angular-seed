@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'operationUtilServiceSideNav', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, $mdDialog, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, operationUtilServiceSideNav, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService, $mdSidenav) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -292,7 +292,7 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 				// headerCheckboxSelectionFilteredOnly: true,
 				// checkboxSelection: true,
 				cellRenderer   : agGridComp.checkBoxRowSelection,
-				cellEditor     : agGridComp.rowActions,
+				// cellEditor     : agGridComp.rowActions,
 				headerComponent: agGridComp.deleteRowsHeaderComponent,
 				editable       : true,
 				field          : 'selected',	// field needed to avoid ag-grid warning
@@ -337,50 +337,16 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 					$scope.gridOptions.onFilterChanged();
 				}
 			},
-			onRowEditingStarted      : function () {
+			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
-				// console.log('Row edition started', rowObj);
+				console.log('Row edition started', rowObj);
+				// Open the side panel.
+				$scope.toggleSideNav();
+				// Send the event to the side panel.
+				$scope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
 			},
 			onRowValueChanged        : function (rowObj) {
-				// console.log('Row data changed', rowObj);
-
-				// var endToUpdate;
-				//
-				// if (rowObj.data.end) {
-				// 	endToUpdate = moment(rowObj.data.end).toDate();
-				// }
-				//
-				// var resource = _.clone(rowObj.data.staff);
-				// // TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-				// delete resource.opId;
-				//
-				// var specialOpsTimeEntryToUpdate = {
-				// 	'id'         : rowObj.data.id,
-				// 	'resources'  : [_.clone(resource)],
-				// 	'principals' : [],
-				// 	'attributes' : [],
-				// 	'type'       : 'SPECIAL_OPS',
-				// 	'comment'    : rowObj.data.comment,
-				// 	'begin'      : moment(rowObj.data.begin).toDate(),
-				// 	'end'        : endToUpdate,
-				// 	'billable'   : true,
-				// 	'idOperation': rowObj.data.operation.id
-				// };
-				//
-				// specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
-				// specialOpsTimeEntryToUpdate.resources[0] = operationUtilServiceSideNav.setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
-				var specialOpsTimeEntryToUpdate = operationUtilServiceSideNav.createSpecialOpsTimeEntryForUpdate(rowObj);
-
-				if (!_.isNil(specialOpsTimeEntryToUpdate)) {
-					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-					}).finally(function () {
-						findTimeEntries($scope.periodFilterKey);
-					});
-				} else {
-					findTimeEntries($scope.periodFilterKey);
-				}
-
-
+				console.log('Row data changed', rowObj);
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
@@ -422,6 +388,31 @@ module.exports = ['$rootScope', '$scope', '$mdDialog', 'config', 'jnxStorage', '
 		});
 
 		$scope.toggleSideNav = function () {
-			$mdSidenav('specialOpsSideNav').toggle();
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 		};
+
+		/*
+		Given the time entries are modified using a different controller the following events are defined.
+		In order to know when the user modified the time entry.
+		 */
+
+		/**
+		 * This event is catch here when the user has updated a time entry using the side panel.
+		 * The value updated must be boolean.
+		 */
+		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
+			findTimeEntries();
+		});
+
+		/**
+		 * This method catches when the side panel is closing.
+		 * When the side panel is closed, no matter the outcome, I end the the ag-grid editing mode.
+		 */
+		$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
+			instance.onClose(function () {
+				// console.log('Catching close');
+				$scope.gridOptions.api.stopEditing();
+			});
+		});
+
 	}];

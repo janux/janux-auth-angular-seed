@@ -2,8 +2,8 @@
 
 var _ = require('lodash');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav', 'config',
+	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav, config) {
 
 
 		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -14,6 +14,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		var operations;
 		var selectedDriver;
 		$scope.lbRow = {};
+		$scope.timeEntryUpdate = {};
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
@@ -45,9 +46,9 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				endHourWorkForm       : today,
 				differenceTimeForm    : undefined,
 				differenceTimeWorkForm: undefined,
-				provider: '',
-				location: '',
-				function: ''
+				provider              : '',
+				location              : '',
+				function              : ''
 			};
 		};
 
@@ -248,6 +249,22 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			});
 		};
 
+		/*****
+		 The following events are defined in order so set the form.
+		 ****/
+		$rootScope.$on(config.timeEntry.specialOps.events.clearForm, function () {
+			initRowModel();
+		});
+
+		/**
+		 * When this event is catch, the form shows the selected data to update.
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
+			initRowModel();
+			$scope.timeEntryUpdate = timeEntry;
+			// Define the form data.
+
+		});
 
 		$scope.init();
 	}];

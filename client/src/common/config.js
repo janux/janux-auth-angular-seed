@@ -305,6 +305,16 @@ require('angular').module('config', [])
 			}
 		},
 		timeEntry             : {
-			attributeTransport: 'isTransport'
+			attributeTransport: 'isTransport',
+			specialOps        : {
+				sidePanel: {
+					id: 'specialOpsSideNav'
+				},
+				events   : {
+					clearForm    : "timeEntry.specialOps.clearFormEvent",
+					setUpdateMode: "timeEntry.specialOps.setUpdateModeEvent",
+					doneUpdate   : "timeEntry.specialOps.doneUpdateEvent"
+				}
+			}
 		}
 	});

@@ -20,7 +20,7 @@ CheckBoxRowSelection.prototype.init = function (params) {
 
 	checkbox.onclick = function () {
 		if (params.$scope['agGridDoNotInvoicePersonDisabled'] !== true) {
-			console.log('row params', params);
+			// console.log('row params', params);
 			params.node.setSelected(!params.node.selected);
 		}
 	};

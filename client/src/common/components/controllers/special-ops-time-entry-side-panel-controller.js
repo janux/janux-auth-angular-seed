@@ -13,6 +13,9 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		var allVehicles;
 		var operations;
 		var selectedDriver;
+		// This flags helps to prevent change the operation
+		// and vehicle when the system define the staff.
+		var automaticOperationAndVehicleChange = true;
 		$scope.lbRow = {};
 		$scope.timeEntryUpdate = {};
 
@@ -24,7 +27,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			vehicle  : ''
 		};
 
-		var initRowModel = function () {
+		var clearForm = function () {
+			console.debug("Call to clearForm");
 			var today = moment().startOf('day').toDate();
 			$scope.timeEntryUpdate = undefined;
 			$scope.lbRow = {
@@ -57,14 +61,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		// Staff autocomplete
 		//
 		$scope.staffSelectedItemChange = function (item) {
+			console.debug("Call to staffSelectedItemChange");
 			var filteredDrivers;
 			var operationId;
 			var staffOperations;
 			var candidateVehicle;
 			var selectedOperation;
-			if (typeof item !== 'undefined') {
+			if (typeof item !== 'undefined' && automaticOperationAndVehicleChange === true) {
 				// This item should contain the selected staff member
-				console.info('Item changed to ' + JSON.stringify(item));
+				console.debug('Item changed to ' + JSON.stringify(item));
 
 				filteredDrivers = _.filter(driversAssignedToOperations, function (o) {
 					return o.resource.id === item.resource.id;
@@ -97,7 +102,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					operationId = selectedOperation.id;
 					staffOperations = _.filter(operations, {id: operationId});
 
-					console.log('Selected staff operations', staffOperations);
+					console.debug('Selected staff operations', staffOperations);
 					$scope.lbRow.operation = staffOperations[0];
 					$scope.lbRow.function = selectedDriver.type;
 
@@ -117,14 +122,23 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				}
 			} else {
 				// This means that the entered search text is empty or doesn't match any staff member
+				console.debug("Not item changed, maybe the flag is marked as false or the user selected a blank record");
+				if (automaticOperationAndVehicleChange === false) {
+					console.debug("Setting the flag automaticOperationAndVehicleChange as true ");
+					automaticOperationAndVehicleChange = true;
+				}
+
+
 			}
 		};
 
 		$scope.staffSearch = function (query) {
+			console.debug("Call to staffSearch");
 			return query ? allDrivers.filter(nameQueryService.createFilterForStaff(query)) : allDrivers;
 		};
 
 		function createFilterForVehicle(query) {
+			console.debug("Call to createFilterForVehicle");
 			return function filterFn(elementVehicle) {
 				var displayName = elementVehicle.resource.name + elementVehicle.resource.plateNumber;
 				return displayName.toLowerCase().includes(query.toLowerCase());
@@ -132,22 +146,13 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		}
 
 		$scope.vehicleSearch = function (query) {
+			console.debug("Call to vehicleSearch");
 			return query ? allVehicles.filter(createFilterForVehicle(query)) : allVehicles;
 		};
 
-		//
-		// Operation autocomplete
-		//
-		$scope.opsSelectedItemChange = function (item) {
-			if (typeof item !== 'undefined') {
-				// This item should contain the selected operation
-				// console.info('Item changed to ' + JSON.stringify(item));
-			} else {
-				// This means that the entered search text is empty or doesn't match any operation
-			}
-		};
 
 		function createFilterForOps(query) {
+			console.debug("Call to createFilterForOps");
 			return function filterFn(operation) {
 				var contains = operation.name.toLowerCase().includes(query.toLowerCase());
 				return contains;
@@ -155,31 +160,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		}
 
 		$scope.opsSearch = function (query) {
+			console.debug("Call to opsSearch");
 			return query ? operations.filter(createFilterForOps(query)) : operations;
-		};
-
-		$scope.showVehicleDataPopup = function () {
-
-			// Show popup.
-			$mdDialog.show({
-				clickOutsideToClose: true,
-				templateUrl        : 'common/components/templates/vehicle-info-popup.html',
-				scope              : $scope,
-				preserveScope      : true,
-				controller         : function ($scope, $mdDialog) {
-
-					$scope.closeVehiclePopup = function () {
-						$mdDialog.hide();
-					};
-				}
-			});
 		};
 
 		// Add new record
 		$scope.acceptTimeEntry = function () {
 			if (_.isNil($scope.timeEntryUpdate)) {
 				// Perform an insert.
-				operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, initRowModel);
+				operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, clearForm);
 			} else {
 				// Perform an update.
 				operationUtilServiceSideNav.createSpecialOpsTimeEntryForUpdate($scope, $rootScope)
@@ -188,6 +177,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.export = function () {
+			console.debug("Call to export");
 			var ids = [];
 
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
@@ -201,6 +191,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * Calculate end and endWork
 		 */
 		$scope.calculateDates = function () {
+			console.debug("Call to calculateDates");
 			// console.log("Call to calculateDates");
 			var startMoment = moment($scope.lbRow.startForm);
 			var endMoment = moment($scope.lbRow.startForm);
@@ -248,13 +239,14 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.init = function () {
+			console.debug("Call to init");
 			operationService.findDriversAndSpecialOps().then(function (driversAndOps) {
 				allDrivers = driversAndOps.allPersonnelAvailableForSelection;
 				driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
 				vehiclesAssignedToOperations = driversAndOps.vehiclesAssignedToOperations;
 				allVehicles = driversAndOps.vehicles;
 				operations = driversAndOps.operations;
-				initRowModel();
+				clearForm();
 				$scope.calculateDates();
 			});
 		};
@@ -263,20 +255,27 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 The following events are defined in order so set the form.
 		 ****/
 		$rootScope.$on(config.timeEntry.specialOps.events.clearForm, function () {
-			initRowModel();
+			console.debug("Catch %s event", config.timeEntry.specialOps.events.clearForm);
+			clearForm();
 		});
 
 		/**
 		 * When this event is catch, the form shows the selected data to update.
 		 */
 		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
-			console.debug("Catch event " + config.timeEntry.specialOps.events.setUpdateMode + " with timeEntry %o", timeEntry);
+			console.debug("Catch event %s with timeEntry %o", config.timeEntry.specialOps.events.setUpdateMode, timeEntry);
 			//Fill form data.
 			fillFormData(timeEntry);
 
 		});
 
 		function fillFormData(timeEntry) {
+			console.debug("Call fillFormData with timeEntry: %o", timeEntry);
+			// Set the flag as false.
+			// When whe set the driver , the method staffSelectedItemChange is called. With this flag
+			// we avoid to change the operation and vehicle data when we define the staff.
+			console.debug("Setting the flag automaticOperationAndVehicleChange as false ");
+			automaticOperationAndVehicleChange = false;
 			$scope.timeEntryUpdate = timeEntry;
 			const resourceStaff = timeEntry.staff;
 			// Selecting the staff.
@@ -289,14 +288,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			}
 			// Selecting the operation
 			const operationId = timeEntry.operation.id;
+			console.debug("operationId %s", operationId);
 			for (var j = 0; j < operations.length; j++) {
 				var operationElement = operations[j];
 				if (operationElement.id === operationId) {
 					$scope.lbRow.operation = operationElement;
 					break;
 				}
-
 			}
+
 			$scope.lbRow.function = _.clone(resourceStaff.type);
 			// Setting the dates.
 			$scope.lbRow.start = _.clone(timeEntry.begin);
@@ -332,7 +332,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 			//Defining comments.
 			$scope.lbRow.location = timeEntry.comment;
-
 		}
 
 		$scope.init();

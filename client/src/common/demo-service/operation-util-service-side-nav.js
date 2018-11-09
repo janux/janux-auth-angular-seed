@@ -50,32 +50,32 @@ module.exports =
 				var result = true;
 
 				// Selected person
-				if (!$scope.lbRow.staff) {
+				if (!$scope.form.staff) {
 					dialogService.info('operations.dialogs.invalidStaff', false);
 					result = false;
-				} else if (!$scope.lbRow.operation && !$scope.operationId) {
+				} else if (!$scope.form.operation && !$scope.operationId) {
 					// Selected operation.
 					dialogService.info('operations.dialogs.invalidOperation', false);
 					result = false;
-				} else if (!$scope.lbRow.function) {
+				} else if (!$scope.form.function) {
 					// Selected function.
 					dialogService.info('operations.dialogs.invalidFunction', false);
 					result = false;
-				} else if (!_.isDate($scope.lbRow.startForm)) {
+				} else if (!_.isDate($scope.form.startForm)) {
 					dialogService.info('operations.dialogs.invalidStartDateForm', false);
 					result = false;
-				} else if (!_.isNil($scope.lbRow.odometerEnd) && !_.isNil($scope.lbRow.odometerStart) &&
+				} else if (!_.isNil($scope.form.odometerEnd) && !_.isNil($scope.form.odometerStart) &&
 					// Validating odometer values.
-					_.toNumber($scope.lbRow.odometerStart) > _.toNumber($scope.lbRow.odometerEnd)) {
+					_.toNumber($scope.form.odometerStart) > _.toNumber($scope.form.odometerEnd)) {
 					dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
 					result = false;
-				} else if (!_.isDate($scope.lbRow.start)) {
+				} else if (!_.isDate($scope.form.start)) {
 					dialogService.info('operations.dialogs.beginDateError', false);
 					result = false;
 				} else {
-					var begin = $scope.lbRow.start;
-					var end = $scope.lbRow.end;
-					if (_.isNil($scope.lbRow.end) === false) {
+					var begin = $scope.form.start;
+					var end = $scope.form.end;
+					if (_.isNil($scope.form.end) === false) {
 						if (begin > end) {
 							dialogService.info('operations.dialogs.endDateError', false);
 							result = false;
@@ -99,31 +99,31 @@ module.exports =
 					if (validateForm($scope)) {
 
 						var specialOpsTimeEntryToInsert = {
-							'resources'  : [_.clone($scope.lbRow.staff)],
+							'resources'  : [_.clone($scope.form.staff)],
 							'principals' : [],
 							'attributes' : [],
 							'type'       : 'SPECIAL_OPS',
-							'comment'    : $scope.lbRow.location,
-							'begin'      : $scope.lbRow.start,
-							'end'        : $scope.lbRow.end,
-							'beginWork'  : $scope.lbRow.startWork,
-							'endWork'    : $scope.lbRow.endWork,
+							'comment'    : $scope.form.location,
+							'begin'      : $scope.form.start,
+							'end'        : $scope.form.end,
+							'beginWork'  : $scope.form.startWork,
+							'endWork'    : $scope.form.endWork,
 							'billable'   : true,
-							'idOperation': $scope.operationId || $scope.lbRow.operation.id
+							'idOperation': $scope.operationId || $scope.form.operation.id
 						};
 
-						specialOpsTimeEntryToInsert.resources[0].type = $scope.lbRow.function;
+						specialOpsTimeEntryToInsert.resources[0].type = $scope.form.function;
 						specialOpsTimeEntryToInsert.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToInsert.resources[0]);
 						specialOpsTimeEntryToInsert = setTransportFlag(specialOpsTimeEntryToInsert);
 
 						// Adding the vehicle resource.
-						if (!_.isNil($scope.lbRow.vehicle)) {
-							vehicle = _.clone($scope.lbRow.vehicle);
+						if (!_.isNil($scope.form.vehicle)) {
+							vehicle = _.clone($scope.form.vehicle);
 							// Adding the vehicle fuel and odometer values.
-							vehicle.odometerStart = $scope.lbRow.odometerStart;
-							vehicle.odometerEnd = $scope.lbRow.odometerEnd;
-							vehicle.fuelStart = $scope.lbRow.fuelStart;
-							vehicle.fuelEnd = $scope.lbRow.fuelEnd;
+							vehicle.odometerStart = $scope.form.odometerStart;
+							vehicle.odometerEnd = $scope.form.odometerEnd;
+							vehicle.fuelStart = $scope.form.fuelStart;
+							vehicle.fuelEnd = $scope.form.fuelEnd;
 
 							specialOpsTimeEntryToInsert.resources[1] = vehicle;
 						}
@@ -142,7 +142,7 @@ module.exports =
 				createSpecialOpsTimeEntryForUpdate: function ($scope, $rootScope) {
 
 					if (validateForm($scope)) {
-						var resource = _.clone($scope.lbRow.staff);
+						var resource = _.clone($scope.form.staff);
 						// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 						delete resource.opId;
 
@@ -152,25 +152,25 @@ module.exports =
 							'principals' : [],
 							'attributes' : [],
 							'type'       : 'SPECIAL_OPS',
-							'comment'    : $scope.lbRow.location,
-							'begin'      : $scope.lbRow.start,
-							'end'        : $scope.lbRow.end,
-							'beginWork'  : $scope.lbRow.startWork,
-							'endWork'    : $scope.lbRow.endWork,
+							'comment'    : $scope.form.location,
+							'begin'      : $scope.form.start,
+							'end'        : $scope.form.end,
+							'beginWork'  : $scope.form.startWork,
+							'endWork'    : $scope.form.endWork,
 							'billable'   : true,
 							'idOperation': $scope.timeEntryUpdate.operation.id
 						};
 
-						specialOpsTimeEntryToUpdate.resources[0].type = $scope.lbRow.function;
+						specialOpsTimeEntryToUpdate.resources[0].type = $scope.form.function;
 						specialOpsTimeEntryToUpdate.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToUpdate.resources[0]);
 						specialOpsTimeEntryToUpdate = setTransportFlag(specialOpsTimeEntryToUpdate);
-						if (!_.isNil($scope.lbRow.vehicle)) {
-							const vehicle = _.clone($scope.lbRow.vehicle);
+						if (!_.isNil($scope.form.vehicle)) {
+							const vehicle = _.clone($scope.form.vehicle);
 							// Adding the vehicle fuel and odometer values.
-							vehicle.odometerStart = $scope.lbRow.odometerStart;
-							vehicle.odometerEnd = $scope.lbRow.odometerEnd;
-							vehicle.fuelStart = $scope.lbRow.fuelStart;
-							vehicle.fuelEnd = $scope.lbRow.fuelEnd;
+							vehicle.odometerStart = $scope.form.odometerStart;
+							vehicle.odometerEnd = $scope.form.odometerEnd;
+							vehicle.fuelStart = $scope.form.fuelStart;
+							vehicle.fuelEnd = $scope.form.fuelEnd;
 							specialOpsTimeEntryToUpdate.resources[1] = vehicle;
 						}
 

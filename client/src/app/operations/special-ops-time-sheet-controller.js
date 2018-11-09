@@ -139,19 +139,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			},
 			{
 				headerName  : $filter('translate')('operations.specialsTimeLog.client'),
-				field       : 'code',
 				editable    : false,
 				cellEditor  : agGridComp.clientCellUpdater,
 				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'},
 				valueGetter : function (params) {
-					var result;
-					if (_.isNil(params.data.code)) {
-						result = params.data.client;
-					} else {
-						result = params.data.code;
-					}
-					return result;
+					var client = params.data.operation.client;
+					return _.isNil(client.code) || client.code === '' ? client.name : client.code;
 				}
 			},
 			{
@@ -170,7 +164,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-					width         : 160
+				width         : 160
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHourWork'),

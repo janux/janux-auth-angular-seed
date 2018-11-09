@@ -394,6 +394,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		};
 
+		$scope.toggleSideNav = function(){
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+		};
+
 		/*
 		Given the time entries are modified using a different controller the following events are defined.
 		In order to know when the user modified the time entry.

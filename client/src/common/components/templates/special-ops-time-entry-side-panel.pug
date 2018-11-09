@@ -13,14 +13,14 @@ form(name="specialServiceAddForm")
 				md-item-template
 					span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}
 
-			.element(ng-show='!operationId')
+			.element()
 				md-autocomplete(md-no-cache='false',
+				ng-disabled='timeEntryUpdate!=null',
 				md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
 				md-menu-container-class='autocomplete-options-container-wider'
 				md-selected-item='lbRow.operation',
 				md-search-text-change='opsSearchTextChange(lbSearch.operation)',
 				md-search-text='lbSearch.operation',
-				md-selected-item-change='opsSelectedItemChange(item)',
 				md-item-text='item.name',
 				md-min-length='0',
 				md-floating-label="{{ 'operations.specialsTimeLog.operation' | translate }}")
@@ -142,10 +142,10 @@ form(name="specialServiceAddForm")
 					strong {{lbRow.differenceTimeForm}}
 
 			// show only to debug
-			.element
-				md-input-container
-					div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
-					div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
+			//.element
+			//	md-input-container
+			//		div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
+			//		div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
 
 
 

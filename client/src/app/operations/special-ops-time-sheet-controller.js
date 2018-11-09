@@ -31,8 +31,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		$scope.periodChange = function () {
-			// console.log('All options ' + JSON.stringify($scope.periodFilterOptions));
-			// console.log('$scope.periodFilterKey ' + $scope.periodFilterKey);
+			console.debug('All options ' + JSON.stringify($scope.periodFilterOptions));
+			console.debug('$scope.periodFilterKey ' + $scope.periodFilterKey);
 			jnxStorage.setItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, $scope.periodFilterKey, true);
 			findTimeEntries($scope.periodFilterKey);
 		};
@@ -340,14 +340,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			},
 			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
-				console.log('Row edition started', rowObj);
+				console.debug('Row edition started', rowObj);
 				// Open the side panel.
-				$scope.toggleSideNav();
+				$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 				// Send the event to the side panel.
 				$scope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
 			},
 			onRowValueChanged        : function (rowObj) {
-				console.log('Row data changed', rowObj);
+				console.debug('Row data changed', rowObj);
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
@@ -359,16 +359,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				var savedFilters;
 				savedFilters = $scope.gridOptions.api.getFilterModel();
 				jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
-				// console.log('savedFilters' + JSON.stringify(savedFilters));
+				console.debug('savedFilters' + JSON.stringify(savedFilters));
 			}
 		};
 
 		findTimeEntries = function (periodKey) {
-			// console.log('Selected period key: ' + periodKey);
+			console.debug('Selected period key: ' + periodKey);
 			var period = timePeriods.specialOps[periodKey];
 			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
-					// console.log(JSON.stringify(result));
+					console.debug(JSON.stringify(result));
 					var agGridRecords = operationService.mapTimeEntryData(result);
 
 					//Now put the ag-grid ready records to the ui.
@@ -384,18 +384,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			// console.log('$translateChangeSuccess');
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
 		$scope.insertNewTimeEntry = function () {
-			$scope.toggleSideNav();
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 			$scope.$emit(config.timeEntry.specialOps.events.clearForm);
 
-		};
-
-		$scope.toggleSideNav = function () {
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 		};
 
 		/*
@@ -417,7 +413,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 */
 		$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
 			instance.onClose(function () {
-				// console.log('Catching close');
+				console.debug('Catching close');
 				$scope.gridOptions.api.stopEditing();
 			});
 		});

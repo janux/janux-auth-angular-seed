@@ -1,9 +1,10 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav', 'config',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav, config) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'operationUtilServiceSideNav', 'config', 'nameQueryService',
+	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, operationUtilServiceSideNav, config, nameQueryService) {
 
 
 		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
@@ -28,6 +29,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		var clearForm = function () {
+			automaticOperationAndVehicleChange = true;
 			console.debug("Call to clearForm");
 			var today = moment().startOf('day').toDate();
 			$scope.timeEntryUpdate = undefined;
@@ -123,12 +125,10 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			} else {
 				// This means that the entered search text is empty or doesn't match any staff member
 				console.debug("Not item changed, maybe the flag is marked as false or the user selected a blank record");
-				if (automaticOperationAndVehicleChange === false) {
-					console.debug("Setting the flag automaticOperationAndVehicleChange as true ");
-					automaticOperationAndVehicleChange = true;
-				}
-
-
+				// if (automaticOperationAndVehicleChange === false) {
+				// 	console.debug("Setting the flag automaticOperationAndVehicleChange as true ");
+				// 	automaticOperationAndVehicleChange = true;
+				// }
 			}
 		};
 
@@ -154,8 +154,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		function createFilterForOps(query) {
 			console.debug("Call to createFilterForOps");
 			return function filterFn(operation) {
-				var contains = operation.name.toLowerCase().includes(query.toLowerCase());
-				return contains;
+				return operation.name.toLowerCase().includes(query.toLowerCase());
 			};
 		}
 
@@ -164,8 +163,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			return query ? operations.filter(createFilterForOps(query)) : operations;
 		};
 
-		// Add new record
-		$scope.acceptTimeEntry = function () {
+		// This event is called when the user has modified the form information in the side panel.
+		var acceptTimeEntry = function () {
 			if (_.isNil($scope.timeEntryUpdate)) {
 				// Perform an insert.
 				operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, clearForm);
@@ -173,7 +172,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// Perform an update.
 				operationUtilServiceSideNav.createSpecialOpsTimeEntryForUpdate($scope, $rootScope)
 			}
-
 		};
 
 		$scope.export = function () {
@@ -251,23 +249,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			});
 		};
 
-		/*****
-		 The following events are defined in order so set the form.
-		 ****/
-		$rootScope.$on(config.timeEntry.specialOps.events.clearForm, function () {
-			console.debug("Catch %s event", config.timeEntry.specialOps.events.clearForm);
-			clearForm();
-		});
-
-		/**
-		 * When this event is catch, the form shows the selected data to update.
-		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
-			console.debug("Catch event %s with timeEntry %o", config.timeEntry.specialOps.events.setUpdateMode, timeEntry);
-			//Fill form data.
-			fillFormData(timeEntry);
-
-		});
 
 		function fillFormData(timeEntry) {
 			console.debug("Call fillFormData with timeEntry: %o", timeEntry);
@@ -333,6 +314,36 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			//Defining comments.
 			$scope.lbRow.location = timeEntry.comment;
 		}
+
+		/*****
+		 * EVENTS:
+		 * The following events are defined in order so set the form.
+		 ****/
+		$rootScope.$on(config.timeEntry.specialOps.events.clearForm, function () {
+			console.debug("Catch %s event", config.timeEntry.specialOps.events.clearForm);
+			clearForm();
+		});
+
+		/**
+		 * When this event is catch, the form shows the selected data to update.
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
+			console.debug("Catch event %s with timeEntry %o", config.timeEntry.specialOps.events.setUpdateMode, timeEntry);
+			//Fill form data.
+			fillFormData(timeEntry);
+
+		});
+
+		/**
+		 * When this event is catch. It mean the uses has click in the "accept" button of the side panel header.
+		 *
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.submitForm, function () {
+			console.debug("Catch event %s", config.timeEntry.specialOps.events.submitForm);
+			// Calls the method that inserts or update a time entry.z
+			acceptTimeEntry();
+		});
+
 
 		$scope.init();
 	}];

@@ -313,7 +313,8 @@ require('angular').module('config', [])
 				events   : {
 					clearForm    : "timeEntry.specialOps.clearFormEvent",
 					setUpdateMode: "timeEntry.specialOps.setUpdateModeEvent",
-					doneUpdate   : "timeEntry.specialOps.doneUpdateEvent"
+					doneUpdate   : "timeEntry.specialOps.doneUpdateEvent",
+					submitForm   : "timeEntry.specialOps.submitForm"
 				}
 			}
 		}

@@ -5,8 +5,6 @@
 'use strict';
 
 var _ = require('lodash');
-var moment = require('moment');
-
 
 module.exports =
 	['config', 'dialogService', '$timeout', 'timeEntryService', '$mdSidenav',
@@ -44,7 +42,7 @@ module.exports =
 			}
 
 			/**
-			 * Validate form data before insert.
+			 * Validate form data before insert or update.
 			 * @param $scope
 			 * @return {boolean}
 			 */
@@ -85,12 +83,6 @@ module.exports =
 					}
 				}
 
-
-				/// ?
-				// if (!!$scope.specialServiceAddForm.$valid) {
-				//
-				// }
-
 				return result;
 			}
 
@@ -102,7 +94,7 @@ module.exports =
 				/**************************
 				 *Special ops util methods
 				 *************************/
-				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel) {
+				createAndInsertSpecialOpsTimeEntry: function ($scope) {
 					var vehicle;
 					if (validateForm($scope)) {
 
@@ -138,19 +130,10 @@ module.exports =
 						console.log('specialOpsTimeEntryToInsert', specialOpsTimeEntryToInsert);
 
 						timeEntryService.insert(specialOpsTimeEntryToInsert).then(function () {
-							$scope.findTimeEntries($scope.periodFilterKey);
-
-							$scope.toggleSideNav();
-
-
-							// Wait before performing the form reset
-							$timeout(function () {
-								initRowModel();
-								// $scope.specialServiceAddForm.$setUntouched(true);
-								// $scope.specialServiceAddForm.$setPristine(true);
-								// Go to last page
-								// $scope.gridOptions.api.paginationGoToLastPage();
-							}, 10);
+							// Close the side panel.
+							$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+							//Send an event indicating
+							$scope.$broadcast(config.timeEntry.specialOps.events.doneUpdate);
 						});
 					}
 				},
@@ -162,50 +145,42 @@ module.exports =
 						var resource = _.clone($scope.lbRow.staff);
 						// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
 						delete resource.opId;
-					}
 
+						var specialOpsTimeEntryToUpdate = {
+							'id'         : $scope.timeEntryUpdate.id,
+							'resources'  : [_.clone(resource)],
+							'principals' : [],
+							'attributes' : [],
+							'type'       : 'SPECIAL_OPS',
+							'comment'    : $scope.lbRow.location,
+							'begin'      : $scope.lbRow.start,
+							'end'        : $scope.lbRow.end,
+							'beginWork'  : $scope.lbRow.startWork,
+							'endWork'    : $scope.lbRow.endWork,
+							'billable'   : true,
+							'idOperation': $scope.timeEntryUpdate.operation.id
+						};
 
-					var specialOpsTimeEntryToUpdate = {
-						'id'         : $scope.timeEntryUpdate.id,
-						'resources'  : [_.clone(resource)],
-						'principals' : [],
-						'attributes' : [],
-						'type'       : 'SPECIAL_OPS',
-						'comment'    : $scope.lbRow.location,
-						'begin'      : $scope.lbRow.start,
-						'end'        : $scope.lbRow.end,
-						'beginWork'  : $scope.lbRow.startWork,
-						'endWork'    : $scope.lbRow.endWork,
-						'billable'   : true,
-						'idOperation': $scope.timeEntryUpdate.operation.id
-					};
-
-					specialOpsTimeEntryToUpdate.resources[0].type = $scope.lbRow.function;
-					specialOpsTimeEntryToUpdate.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToUpdate.resources[0]);
-					specialOpsTimeEntryToUpdate = setTransportFlag(specialOpsTimeEntryToUpdate);
-					if (!_.isNil($scope.lbRow.vehicle)) {
-						specialOpsTimeEntryToUpdate.resources[1] = _.clone($scope.lbRow.vehicle);
-						if (isInvalidOdometerValues(specialOpsTimeEntryToUpdate)) {
-							dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
-							specialOpsTimeEntryToUpdate = undefined;
+						specialOpsTimeEntryToUpdate.resources[0].type = $scope.lbRow.function;
+						specialOpsTimeEntryToUpdate.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToUpdate.resources[0]);
+						specialOpsTimeEntryToUpdate = setTransportFlag(specialOpsTimeEntryToUpdate);
+						if (!_.isNil($scope.lbRow.vehicle)) {
+							const vehicle = _.clone($scope.lbRow.vehicle);
+							// Adding the vehicle fuel and odometer values.
+							vehicle.odometerStart = $scope.lbRow.odometerStart;
+							vehicle.odometerEnd = $scope.lbRow.odometerEnd;
+							vehicle.fuelStart = $scope.lbRow.fuelStart;
+							vehicle.fuelEnd = $scope.lbRow.fuelEnd;
+							specialOpsTimeEntryToUpdate.resources[1] = vehicle;
 						}
-					}
 
-					if (!_.isNil(specialOpsTimeEntryToUpdate)) {
 						timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
 							// Send a notification the update was successful.
 							$rootScope.$broadcast(config.timeEntry.specialOps.events.doneUpdate);
 							// Close the panel.
 							$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-
 						});
-					} else {
-						// In this part of the code there was a validation error in the form.
-						// Let's just close panel.
-						$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 					}
-
-
 				}
 			};
 			return service;

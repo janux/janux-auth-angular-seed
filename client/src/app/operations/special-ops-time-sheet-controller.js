@@ -170,7 +170,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+					width         : 160
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHourWork'),
@@ -343,7 +343,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				console.debug('Row edition started', rowObj);
 				// Open the side panel.
 				$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-				// Send the event to the side panel.
+				// Send the event to the side panel indicating the user wants to update the time entry.
 				$scope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
 			},
 			onRowValueChanged        : function (rowObj) {
@@ -376,7 +376,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				});
 
 		};
-		$scope.findTimeEntries = findTimeEntries;
 
 		$scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
@@ -388,24 +387,42 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$state.reload();
 		});
 
-		$scope.insertNewTimeEntry = function () {
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-			$scope.$emit(config.timeEntry.specialOps.events.clearForm);
-
-		};
-
-		$scope.toggleSideNav = function(){
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-		};
-
-		/*
-		Given the time entries are modified using a different controller the following events are defined.
-		In order to know when the user modified the time entry.
+		/**
+		 * This method is called when the user wants to insert a new time entry.
 		 */
+		$scope.insertNewTimeEntry = function () {
+			// Open the side panel
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+			// Send an event to clear the form.
+			$scope.$emit(config.timeEntry.specialOps.events.clearForm);
+		};
 
 		/**
-		 * This event is catch here when the user has updated a time entry using the side panel.
-		 * The value updated must be boolean.
+		 * This method is called when the uses has filled the form data of the side panel and wants
+		 * to update or insert a time entry.
+		 *
+		 */
+		$scope.acceptTimeEntry = function () {
+			// Sends an event to the side panel indicating the user wants to insert or update the
+			// time entry
+			$scope.$emit(config.timeEntry.specialOps.events.submitForm);
+		};
+
+		/**
+		 * Open - closes the side panel.
+		 */
+		$scope.toggleSideNav = function () {
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+		};
+
+		/*****
+		 * EVENTS.
+		 * Given the time entries are modified using a different controller the following events are defined.
+		 * In order to know when the user modified the time entry.
+		 *****/
+
+		/**
+		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
@@ -413,11 +430,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		/**
 		 * This method catches when the side panel is closing.
-		 * When the side panel is closed, no matter the outcome, I end the the ag-grid editing mode.
+		 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
 		 */
 		$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
 			instance.onClose(function () {
-				console.debug('Catching close');
+				// console.debug('Catching close');
 				$scope.gridOptions.api.stopEditing();
 			});
 		});

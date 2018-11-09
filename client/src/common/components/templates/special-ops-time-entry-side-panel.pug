@@ -142,10 +142,11 @@ form(name="specialServiceAddForm")
 					strong {{lbRow.differenceTimeForm}}
 
 			// show only to debug
-			//.element
-			//	md-input-container
-			//		div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
-			//		div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
+			.element
+				md-input-container
+					div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
+					div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
+
 
 
 			.element

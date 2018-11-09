@@ -26,6 +26,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		var initRowModel = function () {
 			var today = moment().startOf('day').toDate();
+			$scope.timeEntryUpdate = undefined;
 			$scope.lbRow = {
 				staff                 : '',
 				operation             : '',
@@ -175,8 +176,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		// Add new record
-		$scope.addRow = function () {
-			operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, initRowModel, $rootScope);
+		$scope.acceptTimeEntry = function () {
+			if (_.isNil($scope.timeEntryUpdate)) {
+				// Perform an insert.
+				operationUtilServiceSideNav.createAndInsertSpecialOpsTimeEntry($scope, initRowModel);
+			} else {
+				// Perform an update.
+				operationUtilServiceSideNav.createSpecialOpsTimeEntryForUpdate($scope, $rootScope)
+			}
+
 		};
 
 		$scope.export = function () {
@@ -206,23 +214,25 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 			// Billable dates.
 			startTemp = moment($scope.lbRow.startHourForm);
-			startMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
+			startMoment = startMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
 			endTemp = moment($scope.lbRow.endHourForm);
 			if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-				endMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
+				endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
+				// endMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
 			} else {
-				endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
+				//endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
 			}
 			differenceHoursMoment = operationService.calculateDuration(startMoment.toDate(), endMoment.toDate());
 
 			//Workable dates.
 			startTemp = moment($scope.lbRow.startHourWorkForm);
-			startWorkMoment.add(startTemp.hours(), 'hours').add(startTemp.minutes(), 'minutes');
+			startWorkMoment = startWorkMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
 			endTemp = moment($scope.lbRow.endHourWorkForm);
 			if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-				endWorkMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
+				endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
 			} else {
-				endWorkMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
 			}
 			differenceHoursWorkMoment = operationService.calculateDuration(startWorkMoment.toDate(), endWorkMoment.toDate());
 
@@ -260,11 +270,70 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * When this event is catch, the form shows the selected data to update.
 		 */
 		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
-			initRowModel();
-			$scope.timeEntryUpdate = timeEntry;
-			// Define the form data.
+			console.debug("Catch event " + config.timeEntry.specialOps.events.setUpdateMode + " with timeEntry %o", timeEntry);
+			//Fill form data.
+			fillFormData(timeEntry);
 
 		});
+
+		function fillFormData(timeEntry) {
+			$scope.timeEntryUpdate = timeEntry;
+			const resourceStaff = timeEntry.staff;
+			// Selecting the staff.
+			for (var i = 0; i < allDrivers.length; i++) {
+				var staff = allDrivers[i];
+				if (staff.resource.id === resourceStaff.resource.id) {
+					$scope.lbRow.staff = staff;
+					break;
+				}
+			}
+			// Selecting the operation
+			const operationId = timeEntry.operation.id;
+			for (var j = 0; j < operations.length; j++) {
+				var operationElement = operations[j];
+				if (operationElement.id === operationId) {
+					$scope.lbRow.operation = operationElement;
+					break;
+				}
+
+			}
+			$scope.lbRow.function = _.clone(resourceStaff.type);
+			// Setting the dates.
+			$scope.lbRow.start = _.clone(timeEntry.begin);
+			$scope.lbRow.end = _.clone(timeEntry.end);
+			$scope.lbRow.startWork = _.clone(timeEntry.beginWork);
+			$scope.lbRow.endWork = _.clone(timeEntry.endWork);
+
+			$scope.lbRow.startForm = _.clone(timeEntry.begin);
+			$scope.lbRow.startHourForm = _.clone(timeEntry.begin);
+			$scope.lbRow.startHourWorkForm = _.clone(timeEntry.beginWork);
+
+			$scope.lbRow.endHourForm = _.clone(timeEntry.end);
+			$scope.lbRow.endHourWorkForm = _.clone(timeEntry.endWork);
+
+			// Calculate dates.
+			$scope.calculateDates();
+
+			//Selecting vehicle.
+			const vehicleResource = timeEntry.vehicle;
+			if (!_.isNil(vehicleResource)) {
+				for (var k = 0; k < allVehicles.length; k++) {
+					var vehicleElement = allVehicles[k];
+					if (vehicleResource.resource.id === vehicleElement.resource.id) {
+						$scope.lbRow.vehicle = vehicleElement;
+						break;
+					}
+				}
+				$scope.lbRow.odometerStart = vehicleResource.odometerStart;
+				$scope.lbRow.odometerEnd = vehicleResource.odometerEnd;
+				$scope.lbRow.fuelStart = vehicleResource.fuelStart;
+				$scope.lbRow.fuelEnd = vehicleResource.fuelEnd;
+			}
+
+			//Defining comments.
+			$scope.lbRow.location = timeEntry.comment;
+
+		}
 
 		$scope.init();
 	}];

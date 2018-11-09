@@ -409,10 +409,10 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					console.debug('Time entry to insert %o', timeEntryToSend);
 					// Perform an insert
 					timeEntryService.insert(timeEntryToSend).then(function () {
-						// Close the side panel.
+						// Send a notification the update was successful.
+						$rootScope.$broadcast(config.timeEntry.specialOps.events.doneUpdate);
+						// Close the panel.
 						$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-						//Send an event indicating
-						$scope.$broadcast(config.timeEntry.specialOps.events.doneUpdate);
 					});
 				} else {
 					// Add the id and perform an update

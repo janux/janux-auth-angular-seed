@@ -9,8 +9,8 @@ var moment = require('moment');
 
 
 module.exports =
-	['config', 'dialogService', '$timeout', 'timeEntryService',
-		function (config, dialogService, $timeout, timeEntryService) {
+	['config', 'dialogService', '$timeout', 'timeEntryService', '$mdSidenav',
+		function (config, dialogService, $timeout, timeEntryService, $mdSidenav) {
 
 			/**
 			 * Set the external flag for special ops time entries.
@@ -48,7 +48,7 @@ module.exports =
 			 * @param $scope
 			 * @return {boolean}
 			 */
-			function validateBeforeInsert($scope) {
+			function validateForm($scope) {
 				var result = true;
 
 				// Selected person
@@ -102,9 +102,9 @@ module.exports =
 				/**************************
 				 *Special ops util methods
 				 *************************/
-				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel, $rootScope) {
+				createAndInsertSpecialOpsTimeEntry: function ($scope, initRowModel) {
 					var vehicle;
-					if (validateBeforeInsert($scope)) {
+					if (validateForm($scope)) {
 
 						var specialOpsTimeEntryToInsert = {
 							'resources'  : [_.clone($scope.lbRow.staff)],
@@ -155,48 +155,57 @@ module.exports =
 					}
 				},
 
-				/**
-				 * Creates a default special ops time entry for update.
-				 * @param rowObj
-				 * @return object Time entry or undefined if there are invalid values.
-				 */
-				createSpecialOpsTimeEntryForUpdate: function (rowObj) {
-					var endToUpdate;
 
-					if (rowObj.data.end) {
-						endToUpdate = moment(rowObj.data.end).toDate();
+				createSpecialOpsTimeEntryForUpdate: function ($scope, $rootScope) {
+
+					if (validateForm($scope)) {
+						var resource = _.clone($scope.lbRow.staff);
+						// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
+						delete resource.opId;
 					}
 
-					var resource = _.clone(rowObj.data.staff);
-					// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-					delete resource.opId;
 
 					var specialOpsTimeEntryToUpdate = {
-						'id'         : rowObj.data.id,
+						'id'         : $scope.timeEntryUpdate.id,
 						'resources'  : [_.clone(resource)],
 						'principals' : [],
 						'attributes' : [],
 						'type'       : 'SPECIAL_OPS',
-						'comment'    : rowObj.data.comment,
-						'begin'      : rowObj.data.begin,
-						'end'        : endToUpdate,
-						'beginWork'  : rowObj.data.beginWork,
-						'endWork'    : rowObj.data.endWork,
+						'comment'    : $scope.lbRow.location,
+						'begin'      : $scope.lbRow.start,
+						'end'        : $scope.lbRow.end,
+						'beginWork'  : $scope.lbRow.startWork,
+						'endWork'    : $scope.lbRow.endWork,
 						'billable'   : true,
-						'idOperation': rowObj.data.operation.id
+						'idOperation': $scope.timeEntryUpdate.operation.id
 					};
 
-					specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
+					specialOpsTimeEntryToUpdate.resources[0].type = $scope.lbRow.function;
 					specialOpsTimeEntryToUpdate.resources[0] = setExtraFlagSpecialOpsTimeEntries(specialOpsTimeEntryToUpdate.resources[0]);
 					specialOpsTimeEntryToUpdate = setTransportFlag(specialOpsTimeEntryToUpdate);
-					if (!_.isNil(rowObj.data.vehicle)) {
-						specialOpsTimeEntryToUpdate.resources[1] = _.clone(rowObj.data.vehicle);
+					if (!_.isNil($scope.lbRow.vehicle)) {
+						specialOpsTimeEntryToUpdate.resources[1] = _.clone($scope.lbRow.vehicle);
 						if (isInvalidOdometerValues(specialOpsTimeEntryToUpdate)) {
 							dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
 							specialOpsTimeEntryToUpdate = undefined;
 						}
 					}
-					return specialOpsTimeEntryToUpdate;
+
+					if (!_.isNil(specialOpsTimeEntryToUpdate)) {
+						timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
+							// Send a notification the update was successful.
+							$rootScope.$broadcast(config.timeEntry.specialOps.events.doneUpdate);
+							// Close the panel.
+							$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+
+						});
+					} else {
+						// In this part of the code there was a validation error in the form.
+						// Let's just close panel.
+						$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+					}
+
+
 				}
 			};
 			return service;

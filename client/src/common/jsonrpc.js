@@ -41,7 +41,7 @@ require('angular').module('jsonrpc', ['LocalStorageModule']).config(['$provide',
 				var filteredParms = _.filter(parameters, function (parm) {
 					return !_.isString(parm.password)
 				});
-				console.debug('calling:' + url + ' - ' + method + ' - ' + JSON.stringify(filteredParms));
+				console.debug('calling:' + '%s - %s - %o', url, method, filteredParms);
 				return $delegate.post(url, data, angular.extend(
 					{'headers': headers}, config));
 			};

@@ -225,7 +225,7 @@ html {
 	bottom: 0px;
 	width: 100%;
 	height: 30px;
-	z-index: 9999;
+	z-index: 50;
 }
 .sd-page-footer-inner {
 	color: @white;
@@ -515,8 +515,9 @@ input[type='text'], input[type='password'] {
 }
 
 
-md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
-	min-width: 60vw !important;
-	width: 60vw !important;
-	max-width: 80vw !important;
+md-sidenav.sidebar{
+	min-width: 350px !important;
+	width: 350px !important;
+	max-width: 600px !important;
+	background: @glarus-green1;
 }

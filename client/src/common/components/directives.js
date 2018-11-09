@@ -787,7 +787,7 @@ angular.module('commonComponents', [])
 	})
 	.directive('specialServiceSidePanel', function () {
 		return {
-			scope      : false,
+			scope      : true,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-ops-time-entry-side-panel.html',
 			controller: require("./controllers/special-ops-time-entry-side-panel-controller")

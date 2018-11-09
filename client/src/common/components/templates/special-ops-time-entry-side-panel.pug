@@ -6,7 +6,7 @@ form(name="specialServiceAddForm")
 					md-autocomplete.full-panel(md-no-cache='false',
 					md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
 					md-menu-container-class='autocomplete-options-container-wider'
-					md-selected-item='lbRow.staff',
+					md-selected-item='form.staff',
 					md-search-text='lbSearch.staff',
 					md-selected-item-change='staffSelectedItemChange(item)',
 					md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
@@ -21,7 +21,7 @@ form(name="specialServiceAddForm")
 					ng-disabled='timeEntryUpdate!=null',
 					md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
 					md-menu-container-class='autocomplete-options-container-wider'
-					md-selected-item='lbRow.operation',
+					md-selected-item='form.operation',
 					md-search-text-change='opsSearchTextChange(lbSearch.operation)',
 					md-search-text='lbSearch.operation',
 					md-item-text='item.name',
@@ -33,7 +33,7 @@ form(name="specialServiceAddForm")
 				.an-material.nopadding
 					md-input-container.full-panel
 						label {{ 'operations.specialsTimeLog.function' | translate }}
-						md-select(ng-model="lbRow.function")
+						md-select(ng-model="form.function")
 							md-option(value="DRIVER") {{ 'operations.specialsTimeLog.driver' | translate }}
 							md-option(value="AGENT") {{ 'operations.specialsTimeLog.agent' | translate }}
 							md-option(value="AGENT_ARMED") {{ 'operations.specialsTimeLog.agentArmed' | translate }}
@@ -48,14 +48,14 @@ form(name="specialServiceAddForm")
 				.an-material.nopadding
 					md-input-container
 						label {{ 'operations.specialsTimeLog.begin' | translate }}
-						md-datepicker(ng-model='lbRow.startForm'
+						md-datepicker(ng-model='form.startForm'
 						ng-change='calculateDates()')
 
 			.container-flex-form-panel
 				.an-material.nopadding
 					.section-pad
 						| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}:
-						strong {{lbRow.differenceTimeWorkForm}}
+						strong {{form.differenceTimeWorkForm}}
 
 			.fieldset-flex
 				.an-material.nopadding
@@ -73,7 +73,7 @@ form(name="specialServiceAddForm")
 						click-outside-to-close='true'
 						show-icon='true'
 						minute-steps='1'
-						ng-model='lbRow.startHourWorkForm'
+						ng-model='form.startHourWorkForm'
 						ng-model-options="{ debounce: 1000 }"
 						type='text',
 						lang='{{ lang }}',
@@ -90,7 +90,7 @@ form(name="specialServiceAddForm")
 						date='false'
 						placeholder='Time'
 						time='true'
-						min-date='lbRow.startHourWorkForm'
+						min-date='form.startHourWorkForm'
 						show-todays-date=''
 						minutes='true'
 						format='HH:mm'
@@ -98,7 +98,7 @@ form(name="specialServiceAddForm")
 						click-outside-to-close='true'
 						show-icon='true'
 						minute-steps='1'
-						ng-model='lbRow.endHourWorkForm'
+						ng-model='form.endHourWorkForm'
 						ng-model-options="{ debounce: 1000 }"
 						type='text',
 						lang='{{ lang }}',
@@ -111,7 +111,7 @@ form(name="specialServiceAddForm")
 				.an-material.nopadding
 					.section-pad
 						| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}:
-						strong {{lbRow.differenceTimeForm}}
+						strong {{form.differenceTimeForm}}
 
 			.fieldset-flex
 				.an-material.nopadding
@@ -128,7 +128,7 @@ form(name="specialServiceAddForm")
 						click-outside-to-close='true'
 						show-icon='true'
 						minute-steps='1'
-						ng-model='lbRow.startHourForm'
+						ng-model='form.startHourForm'
 						ng-model-options="{ debounce: 1000 }"
 						type='text',
 						lang='{{ lang }}',
@@ -146,13 +146,13 @@ form(name="specialServiceAddForm")
 						time='true'
 						show-todays-date=''
 						minutes='true'
-						min-date='lbRow.startHourForm'
+						min-date='form.startHourForm'
 						format='HH:mm'
 						edit-input='true'
 						click-outside-to-close='true'
 						show-icon='true'
 						minute-steps='1'
-						ng-model='lbRow.endHourForm'
+						ng-model='form.endHourForm'
 						ng-model-options="{ debounce: 1000 }"
 						type='text',
 						lang='{{ lang }}',
@@ -164,8 +164,8 @@ form(name="specialServiceAddForm")
 			// show only to debug
 			//.element
 			//	md-input-container
-			//		div fechas {{lbRow.startWork | date:"short"}}  - {{lbRow.endWork | date:"short"}}
-			//		div fechas  {{lbRow.start | date:"short"}}  - {{lbRow.end | date:"short"}}
+			//		div fechas {{form.startWork | date:"short"}}  - {{form.endWork | date:"short"}}
+			//		div fechas  {{form.start | date:"short"}}  - {{form.end | date:"short"}}
 
 
 		.staff-form-right
@@ -174,30 +174,30 @@ form(name="specialServiceAddForm")
 					.an-material.nopadding
 						md-autocomplete.full-panel(md-no-cache='false',
 						md-items="item in vehicleSearch(lbSearch.vehicle) | orderBy:'name'",
-						md-selected-item='lbRow.vehicle',
+						md-selected-item='form.vehicle',
 						md-search-text='lbSearch.vehicle',
 						md-item-text='item.resource.name + " " + item.resource.plateNumber',
 						md-min-length='0',fend
 						md-floating-label="{{ 'operations.specialsTimeLog.vehicle' | translate }}")
 							md-item-template
 								p() {{item.resource.name}} #[br] {{ item.resource.plateNumber}}
-				
+
 				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full-panel
 							label {{ 'operations.specialsTimeLog.odometerStart' | translate }}
-							input(ng-model='lbRow.odometerStart' type="number" id='odometerStart')
-					
+							input(ng-model='form.odometerStart' type="number" id='odometerStart')
+
 					.an-material.nopadding
 						md-input-container.full-panel
 							label {{ 'operations.specialsTimeLog.odometerEnd' | translate }}
-							input(ng-model='lbRow.odometerEnd' type="number" id='odometerEnd')
+							input(ng-model='form.odometerEnd' type="number" id='odometerEnd')
 
 				.fieldset-flex
 					.an-material.nopadding
 						md-input-container.full-panel
 							label {{ 'operations.specialsTimeLog.fuelStart' | translate }}
-							md-select(ng-model='lbRow.fuelStart')
+							md-select(ng-model='form.fuelStart')
 								md-option(value="F") F
 								md-option(value="7/8") 7/8
 								md-option(value="3/4") 3/4
@@ -206,11 +206,11 @@ form(name="specialServiceAddForm")
 								md-option(value="3/8") 3/8
 								md-option(value="2/8") 1/4
 								md-option(value="1/8") 1/8
-					
+
 					.an-material.nopadding
 						md-input-container.full-panel
 							label {{ 'operations.specialsTimeLog.fuelEnd' | translate }}
-							md-select(ng-model='lbRow.fuelEnd')
+							md-select(ng-model='form.fuelEnd')
 								md-option(value="F") F
 								md-option(value="7/8") 7/8
 								md-option(value="3/4") 3/4
@@ -222,9 +222,9 @@ form(name="specialServiceAddForm")
 
 	.container-flex-form-panel
 		textarea(name="special-ops-description"
-			ng-model="lbRow.location"
+			ng-model="form.location"
 			markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 			on-fullscreen="onFullScreenCallback()"
 			on-fullscreen-exit="onFullScreenExitCallback()"
 			rows="25")
-			
+

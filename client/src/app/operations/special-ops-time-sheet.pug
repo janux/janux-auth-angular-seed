@@ -4,19 +4,20 @@ side-bar
 
 .page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
 
-	md-sidenav.md-sidenav-right(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events style="")
-		md-toolbar.md-theme-indigo
+	md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events style="")
+		md-toolbar(style="background:none;")
 			h1.md-toolbar-tools
-				| {{ 'operations.newTimeSheet' | translate }}
+				button.btn(aria-label="Expand")
+					i.fa.fa-expand
 				// TODO : Make suere use custom classes and not mateiral design
 				// layouts.
 				span(flex)
-				md-button(aria-label="New" ng-click="acceptTimeEntry()")
-					| {{ 'label.ok' | translate }}
-				md-button(aria-label="New" ng-click="toggleSideNav()")
-					| {{ 'label.cancel' | translate }}
+				button.btn(aria-label="New" ng-click="acceptTimeEntry()")
+					i.fa.fa-check
+				button.btn(aria-label="New" ng-click="toggleSideNav()")
+					i.fa.fa-times
 
-		md-content(layout-margin)
+		md-content(layout-margin style="background:none;")
 			special-service-side-panel
 			//md-button(ng-click="toggleSideNav()" class="md-accent")
 			//	| Close Sidenav
@@ -49,6 +50,6 @@ side-bar
 				md-button.arrow.md-icon-button(aria-label="New" ng-click="insertNewTimeEntry()")
 					md-icon.fa.fa-plus-square.fa-lg
 
-		.container-body(style="margin-top:-20px; padding-bottom:50px;")
+		.container-body
 			.driver-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 footer-Janux

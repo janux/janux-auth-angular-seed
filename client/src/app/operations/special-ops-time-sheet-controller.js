@@ -358,11 +358,11 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		};
 
 		findTimeEntries = function (periodKey) {
-			console.debug('Selected period key: ' + periodKey);
+			console.debug('Call findTimeEntries with periodKey: %s ', periodKey);
 			var period = timePeriods.specialOps[periodKey];
 			operationService.findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser(period.from(), period.to(), 'SPECIAL_OPS')
 				.then(function (result) {
-					console.debug(JSON.stringify(result));
+					console.debug('Result of findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser: \n  %o', result);
 					var agGridRecords = operationService.mapTimeEntryData(result);
 
 					//Now put the ag-grid ready records to the ui.

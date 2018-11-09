@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService, $mdSidenav) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -173,6 +173,36 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
+				headerName    : $filter('translate')('operations.specialsTimeLog.beginHourWork'),
+				field         : 'beginWork',
+				editable      : false,
+				filter        : 'date',
+				filterParams  : {
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
+				},
+				valueFormatter: function (params) {
+					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
+				},
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				width         : 160
+			},
+			{
+				headerName    : $filter('translate')('operations.specialsTimeLog.endHourWork'),
+				field         : 'endWork',
+				editable      : false,
+				filter        : 'date',
+				filterParams  : {
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
+				},
+				valueFormatter: function (params) {
+					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
+				},
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				width         : 160
+			},
+			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
 				field         : 'begin',
 				editable      : false,
@@ -210,36 +240,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				cellEditor: agGridComp.durationCellUpdater,
 				width     : 95
 			},
-			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHourWork'),
-				field         : 'beginWork',
-				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
-				valueFormatter: function (params) {
-					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
-				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
-			},
-			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHourWork'),
-				field         : 'endWork',
-				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
-				valueFormatter: function (params) {
-					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
-				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
-			},
+
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.comment'),
 				field         : 'comment',
@@ -387,6 +388,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$state.reload();
 		});
 
+		$scope.insertNewTimeEntry = function () {
+			$scope.toggleSideNav();
+			$scope.$emit(config.timeEntry.specialOps.events.clearForm);
+
+		};
+
 		$scope.toggleSideNav = function () {
 			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 		};
@@ -401,7 +408,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 * The value updated must be boolean.
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
-			findTimeEntries();
+			findTimeEntries($scope.periodFilterKey);
 		});
 
 		/**

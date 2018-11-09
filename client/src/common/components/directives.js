@@ -785,12 +785,12 @@ angular.module('commonComponents', [])
 			controller: require("./controllers/add-special-service-controller")
 		};
 	})
-	.directive('specialServiceSideNav', function () {
+	.directive('specialServiceSidePanel', function () {
 		return {
 			scope      : false,
 			restrict   : 'E',
-			templateUrl: 'common/components/templates/special-ops-time-entry-side-nav.html',
-			controller: require("./controllers/special-ops-time-entry-side-nav-controller")
+			templateUrl: 'common/components/templates/special-ops-time-entry-side-panel.html',
+			controller: require("./controllers/special-ops-time-entry-side-panel-controller")
 		};
 	})
 	.directive('invoice', function () {

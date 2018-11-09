@@ -337,6 +337,12 @@ input[type='text'], input[type='password'] {
 	.smallest-device({ padding-bottom:50px; margin-bottom:50px; });
 }
 
+.container-flex-form-panel {
+	width: 100%;
+	background: none;
+	padding-bottom: 0px;
+}
+
 .container-body{
 	display: flex;
 	display: -webkit-flex;
@@ -516,8 +522,15 @@ input[type='text'], input[type='password'] {
 
 
 md-sidenav.sidebar{
-	min-width: 350px !important;
-	width: 350px !important;
-	max-width: 600px !important;
+	min-width: 650px !important;
+	width: 650px !important;
+	max-width: 650px !important;
+	background: @glarus-green1;
+	.small-device({ min-width: 320px !important; width: 320px !important;});
+	.smallest-device({ min-width: 320px !important; width: 320px !important;});
+}
+
+.panel-form{
+	margin:0px 10px 0px 20px;
 	background: @glarus-green1;
 }

@@ -175,6 +175,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * @return {boolean} Returns true if the form data is valid.
 		 */
 		function validateForm() {
+			console.debug("special-ops-time-entry-side-panel-controller:  Call to validateForm");
 			var result = true;
 
 			// Selected person

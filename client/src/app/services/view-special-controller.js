@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'operationUtilService', '$mdSidenav', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, operationUtilService, $mdSidenav) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast',  function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast) {
 
 		console.log('Operation', operation);
 
@@ -409,7 +409,7 @@ module.exports =
 				// headerCheckboxSelectionFilteredOnly: true,
 				// checkboxSelection: true,
 				cellRenderer           : agGridComp.checkBoxRowSelection,
-				cellEditor             : agGridComp.rowActions,
+				// cellEditor             : agGridComp.rowActions,
 				// headerComponent: agGridComp.deleteRowsHeaderComponent,
 				editable               : true,
 				field                  : 'selected',	// field needed to avoid ag-grid warning
@@ -428,6 +428,7 @@ module.exports =
 		// Only init grid if necessary
 		$scope.gridOptions = {
 			columnDefs               : columnDefs,
+			editType                 : 'fullRow',
 			rowData                  : [],
 			enableFilter             : true,
 			angularCompileRows       : true,
@@ -463,13 +464,14 @@ module.exports =
 
 			onRowEditingStarted: function (rowObj) {
 				// Nothing to do yet
-				console.log('Row edition started', rowObj);
+				console.debug('Row edition started', rowObj);
+				$rootScope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
 				// rowObj.node.setRowHeight('45');
 				// $scope.gridOptions.api.onRowHeightChanged();
 			},
 
-			onRowValueChanged: function (rowObj) {
-				// console.log('Row data changed', rowObj);
+			onRowValueChanged: function () {
+				// console.debug('Row data changed', rowObj);
 				// rowObj.node.setRowHeight('25');
 				// $scope.gridOptions.api.onRowHeightChanged();
 
@@ -498,21 +500,21 @@ module.exports =
 				//
 				// specialOpsTimeEntryToUpdate.resources[0].type = rowObj.data.functionValue;
 				// specialOpsTimeEntryToUpdate.resources[0] =  operationUtilService.setExtraFlag(specialOpsTimeEntryToUpdate.resources[0]);
-				var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj, infoDialog);
-
-				if (!_.isNil(specialOpsTimeEntryToUpdate)) {
-					timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
-
-					}).finally(function () {
-						findTimeEntries($scope.periodFilterKey);
-						// Given this service is called with an interface that also contains
-						// invoices. We have to refresh the invoices content.
-						updateInvoiceList();
-						// infoDialog('Time entry successfully updated');
-					});
-				} else {
-					findTimeEntries($scope.periodFilterKey);
-				}
+				// var specialOpsTimeEntryToUpdate = operationUtilService.createSpecialOpsTimeEntryForUpdate(rowObj, infoDialog);
+				//
+				// if (!_.isNil(specialOpsTimeEntryToUpdate)) {
+				// 	timeEntryService.update(specialOpsTimeEntryToUpdate).then(function () {
+				//
+				// 	}).finally(function () {
+				// 		findTimeEntries($scope.periodFilterKey);
+				// 		// Given this service is called with an interface that also contains
+				// 		// invoices. We have to refresh the invoices content.
+				// 		updateInvoiceList();
+				// 		// infoDialog('Time entry successfully updated');
+				// 	});
+				// } else {
+				// 	findTimeEntries($scope.periodFilterKey);
+				// }
 
 			},
 			localeTextFunc   : function (key, defaultValue) {
@@ -525,9 +527,10 @@ module.exports =
 				var savedFilters;
 				savedFilters = $scope.gridOptions.api.getFilterModel();
 				jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
-				// console.log('savedFilters' + JSON.stringify(savedFilters));
+				// console.debug('savedFilters' + JSON.stringify(savedFilters));
 			},
 			onRowSelected    : function () {
+				console.debug('Event onRowSelected');
 				// Only one refresh at a time
 				if (!refreshing) {
 					refreshing = true;
@@ -549,7 +552,7 @@ module.exports =
 			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
 				operationsWithTimeEntries = result;
 				timeEntries = result[0].schedule;
-				console.log('Loaded time entries', timeEntries);
+				console.debug('Loaded time entries', timeEntries);
 				const ids = _.map(timeEntries, function (o) {
 					return o.id;
 				});
@@ -576,7 +579,7 @@ module.exports =
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
@@ -595,7 +598,7 @@ module.exports =
 		};
 
 		$scope.updateInvoiceHeader = function () {
-			// console.log(' inv update ' + JSON.stringify($scope.invoice));
+			// console.debug(' inv update ' + JSON.stringify($scope.invoice));
 			// Validate if percentage is greater then zero.
 			if (_.isNumber($scope.invoice.discountPersonPercentage) === false || $scope.invoice.discountPersonPercentage < 0 || $scope.invoice.discountPersonPercentage > 100) {
 				infoDialog('services.invoice.dialogs.invalidPercentage');
@@ -615,7 +618,7 @@ module.exports =
 		// Return true if time entries ids haven't been related to any invoice, otherwise return false
 		var checkTEBeforeInsertToInvoice = function (timeEntriesIds) {
 			return invoiceService.findInvoiceNumbersByIdTimeEntries(timeEntriesIds).then(function (result) {
-				// console.log('Time entries related to invoice', result);
+				// console.debug('Time entries related to invoice', result);
 				return _.every(result, function (timeEntry) {
 					return (_.isNil(timeEntry.invoice));
 				});
@@ -647,7 +650,7 @@ module.exports =
 				scope              : $scope,
 				preserveScope      : true,
 				controller         : ['$scope', '$mdDialog', 'invoiceService', 'config', function ($scope, $mdDialog, invoiceService, config) {
-					console.log('config.invoice.status.inRevision', config.invoice.status.inRevision);
+					console.debug('config.invoice.status.inRevision', config.invoice.status.inRevision);
 					$scope.newInvoiceNumber = '';
 					$scope.newInvoiceDate = '';
 
@@ -685,9 +688,9 @@ module.exports =
 
 											// Create invoice and add time entries
 											invoiceService.insertInvoiceAndItem(newInvoice, newItem).then(function (result) {
-												console.log('Invoice created result', result);
+												console.debug('Invoice created result', result);
 												invoiceService.insertInvoiceItemTimeEntry(newInvoice.invoiceNumber, newItem.name, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
-													console.log('Inserted time entries', insertedTimeEntries);
+													console.debug('Inserted time entries', insertedTimeEntries);
 													$mdToast.show(
 														$mdToast.simple()
 															.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
@@ -723,7 +726,7 @@ module.exports =
 				checkTEBeforeInsertToInvoice(agRowsToTE.timeEntryIds).then(function (checkTEResult) {
 					if (checkTEResult) {
 						invoiceService.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
-							console.log('Inserted invoice time entries', insertedTimeEntries);
+							console.debug('Inserted invoice time entries', insertedTimeEntries);
 							$mdToast.show(
 								$mdToast.simple()
 									.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
@@ -747,7 +750,7 @@ module.exports =
 		};
 
 		$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
-			console.log('invoice selected:' + invoiceNumber);
+			console.debug('invoice selected:' + invoiceNumber);
 			// Switch tab.
 			$scope.changeTab('invoiceDetail');
 			updatedSelectedInvoice(invoiceNumber);
@@ -758,19 +761,12 @@ module.exports =
 		* Special ops side panel
 		*/
 
-		$scope.acceptTimeEntry = function () {
+		$scope.insertNewTimeEntry = function () {
+			console.debug('Call to insertNewTimeEntry');
 			// Sends an event to the side panel indicating the user wants to insert or update the
 			// time entry
-			$scope.$emit(config.timeEntry.specialOps.events.submitForm);
+			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode);
 		};
-
-		/**
-		 * Open - closes the side panel.
-		 */
-		$scope.toggleSideNav = function () {
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-		};
-
 
 		/*****
 		 * EVENTS.
@@ -781,21 +777,14 @@ module.exports =
 		/**
 		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
-		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
+		$rootScope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
 		});
 
-		$scope.initSidePanel = function () {
-			/**
-			 * This method catches when the side panel is closing.
-			 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
-			 */
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
-				instance.onClose(function () {
-					// console.debug('Catching close');
-					$scope.gridOptions.api.stopEditing();
-				});
-			});
-		};
-
+		/**
+		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.canceled, function () {
+			findTimeEntries($scope.periodFilterKey);
+		});
 	}];

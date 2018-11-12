@@ -3,24 +3,8 @@ login-toolbar(toolbar-title='operations.title')
 side-bar
 
 .page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
-
-	special-service-side-panel(ng-init='initSidePanel()')
-	//md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events style="")
-	//	md-toolbar(style="background:none;")
-	//		h1.md-toolbar-tools
-	//			button.btn(aria-label="Expand")
-	//				i.fa.fa-expand
-	//			span(flex)
-	//			button.btn(aria-label="New" ng-click="acceptTimeEntry()")
-	//				i.fa.fa-check
-	//			button.btn(aria-label="Close" ng-click="toggleSideNav()")
-	//				i.fa.fa-times
-	//	md-content.panel-form
-	//		special-service-side-panel
-	//		//md-button(ng-click="toggleSideNav()" class="md-accent")
-	//		//	| Close Sidenav
-	//		//md-button(ng-click="addRow()" class="md-accent")
-	//		//	| Insert time entry
+	// Special ops side panel.
+	special-service-side-panel
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar

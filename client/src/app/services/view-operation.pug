@@ -1,11 +1,9 @@
 login-toolbar(toolbar-title='services.title')
 
 side-bar
-// Side panel
-special-service-side-panel(ng-init='initSidePanel()')
+// Special ops side panel.
+special-service-side-panel
 .page-content-wrapper.time-sheet.operations-page(ng-class="{'page-content-left' : noneStyle}")
-
-
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")
@@ -129,7 +127,7 @@ special-service-side-panel(ng-init='initSidePanel()')
 						md-truncate.add-form-container
 							form.add-form()
 								.btn-element-small
-									md-button.md-icon-button.stack(aria-label="Grid" ng-click="toggleSideNav()")
+									md-button.md-icon-button.stack(aria-label="Grid" ng-click="insertNewTimeEntry()")
 										md-icon.fa.fa-plus-square.fa-lg
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 

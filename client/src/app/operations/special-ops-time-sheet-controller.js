@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -335,10 +335,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
 				console.debug('Row edition started', rowObj);
-				// Open the side panel.
-				$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 				// Send the event to the side panel indicating the user wants to update the time entry.
-				$scope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
+				$rootScope.$emit(config.timeEntry.specialOps.events.setUpdateMode, rowObj.data);
 			},
 			onRowValueChanged        : function (rowObj) {
 				console.debug('Row data changed', rowObj);
@@ -384,31 +382,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		/**
 		 * This method is called when the user wants to insert a new time entry.
 		 */
-		$scope.insertNewTimeEntry = function () {
-			// Open the side panel
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-			// Send an event to clear the form.
-			$scope.$emit(config.timeEntry.specialOps.events.clearForm);
+		$rootScope.insertNewTimeEntry = function () {
+			// Send an event to open the side panel with a clean form.
+			$scope.$emit(config.timeEntry.specialOps.events.setInsertMode);
 		};
-
-		/**
-		 * This method is called when the uses has filled the form data of the side panel and wants
-		 * to update or insert a time entry.
-		 *
-		 */
-		// $scope.acceptTimeEntry = function () {
-		// 	// Sends an event to the side panel indicating the user wants to insert or update the
-		// 	// time entry
-		// 	$scope.$emit(config.timeEntry.specialOps.events.submitForm);
-		// };
-
-		/**
-		 * Open - closes the side panel.
-		 */
-		// $scope.toggleSideNav = function () {
-		// 	$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-		// 	$scope.gridOptions.api.stopEditing();
-		// };
 
 		/*****
 		 * EVENTS.
@@ -419,24 +396,16 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		/**
 		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
-		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
+		$rootScope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
+			$scope.gridOptions.api.stopEditing();
 		});
 
-
-		$scope.initSidePanel = function () {
-			/**
-			 * This method catches when the side panel is closing.
-			 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
-			 */
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
-				instance.onClose(function () {
-					// console.debug('Catching close');
-					$scope.gridOptions.api.stopEditing();
-				});
-			});
-		};
-
-
+		/**
+		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.canceled, function () {
+			$scope.gridOptions.api.stopEditing();
+		});
 
 	}];

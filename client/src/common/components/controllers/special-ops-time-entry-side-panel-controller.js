@@ -403,7 +403,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * This method is called when the user has modified the form information in the side panel and wants to insert
 		 * or update.
 		 */
-		var acceptTimeEntry = function () {
+		$scope.acceptTimeEntry = function () {
 			if (validateForm()) {
 				var timeEntryToSend = getFormData();
 				if (_.isNil($scope.timeEntryUpdate)) {
@@ -427,6 +427,11 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					});
 				}
 			}
+		};
+
+		$scope.toggleSideNav = function () {
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+			$scope.gridOptions.api.stopEditing();
 		};
 
 		/*****

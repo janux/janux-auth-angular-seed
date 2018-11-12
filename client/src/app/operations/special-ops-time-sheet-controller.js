@@ -396,19 +396,19 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 * to update or insert a time entry.
 		 *
 		 */
-		$scope.acceptTimeEntry = function () {
-			// Sends an event to the side panel indicating the user wants to insert or update the
-			// time entry
-			$scope.$emit(config.timeEntry.specialOps.events.submitForm);
-		};
+		// $scope.acceptTimeEntry = function () {
+		// 	// Sends an event to the side panel indicating the user wants to insert or update the
+		// 	// time entry
+		// 	$scope.$emit(config.timeEntry.specialOps.events.submitForm);
+		// };
 
 		/**
 		 * Open - closes the side panel.
 		 */
-		$scope.toggleSideNav = function () {
-			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
-			$scope.gridOptions.api.stopEditing();
-		};
+		// $scope.toggleSideNav = function () {
+		// 	$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+		// 	$scope.gridOptions.api.stopEditing();
+		// };
 
 		/*****
 		 * EVENTS.
@@ -422,5 +422,21 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
 		});
+
+
+		$scope.initSidePanel = function () {
+			/**
+			 * This method catches when the side panel is closing.
+			 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
+			 */
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
+				instance.onClose(function () {
+					// console.debug('Catching close');
+					$scope.gridOptions.api.stopEditing();
+				});
+			});
+		};
+
+
 
 	}];

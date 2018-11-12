@@ -768,7 +768,7 @@ module.exports =
 		 * Open - closes the side panel.
 		 */
 		$scope.toggleSideNav = function () {
-			$mdSidenav(config.timeEntry.specialOps.sidePanel2.id).toggle();
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
 		};
 
 
@@ -785,14 +785,17 @@ module.exports =
 			findTimeEntries($scope.periodFilterKey);
 		});
 
-		/**
-		 * This method catches when the side panel is closing.
-		 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
-		 */
-		$mdSidenav(config.timeEntry.specialOps.sidePanel2.id, true).then(function (instance) {
-			instance.onClose(function () {
-				// console.debug('Catching close');
-				$scope.gridOptions.api.stopEditing();
+		$scope.initSidePanel = function () {
+			/**
+			 * This method catches when the side panel is closing.
+			 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
+			 */
+			$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
+				instance.onClose(function () {
+					// console.debug('Catching close');
+					$scope.gridOptions.api.stopEditing();
+				});
 			});
-		});
+		};
+
 	}];

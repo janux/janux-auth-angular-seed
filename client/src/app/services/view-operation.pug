@@ -1,25 +1,11 @@
 login-toolbar(toolbar-title='services.title')
 
 side-bar
-
+// Side panel
+special-service-side-panel(ng-init='initSidePanel()')
 .page-content-wrapper.time-sheet.operations-page(ng-class="{'page-content-left' : noneStyle}")
 
-	md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav2" md-whiteframe="4" md-disable-close-events style="")
-		md-toolbar(style="background:none;")
-			h1.md-toolbar-tools
-				button.btn(aria-label="Expand")
-					i.fa.fa-expand
-				span(flex)
-				button.btn(aria-label="New" ng-click="acceptTimeEntry()")
-					i.fa.f    a-check
-				button.btn(aria-label="Close" ng-click="toggleSideNav()")
-					i.fa.fa-times
-		md-content.panel-form
-			special-service-side-panel
-			//md-button(ng-click="toggleSideNav()" class="md-accent")
-			//	| Close Sidenav
-			//md-button(ng-click="addRow()" class="md-accent")
-			//	| Insert time entry
+
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")

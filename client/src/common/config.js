@@ -307,18 +307,18 @@ require('angular').module('config', [])
 		timeEntry             : {
 			attributeTransport: 'isTransport',
 			specialOps        : {
-				sidePanel: {
+				sidePanel : {
 					id: 'specialOpsSideNav'
 				},
 				// Side panel used in the service section.
 				sidePanel2: {
 					id: 'specialOpsSideNav2'
 				},
-				events   : {
-					clearForm    : "timeEntry.specialOps.clearFormEvent",
-					setUpdateMode: "timeEntry.specialOps.setUpdateModeEvent",
-					doneUpdate   : "timeEntry.specialOps.doneUpdateEvent",
-					submitForm   : "timeEntry.specialOps.submitForm"
+				events    : {
+					setInsertMode     : "timeEntry.specialOps.setInsertMode",
+					setUpdateMode     : "timeEntry.specialOps.setUpdateModeEvent",
+					doneInsertOrUpdate: "timeEntry.specialOps.doneInsertOrUpdateEvent",
+					canceled          : "timeEntry.specialOps.canceled"
 				}
 			}
 		}

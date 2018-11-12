@@ -310,6 +310,10 @@ require('angular').module('config', [])
 				sidePanel: {
 					id: 'specialOpsSideNav'
 				},
+				// Side panel used in the service section.
+				sidePanel2: {
+					id: 'specialOpsSideNav2'
+				},
 				events   : {
 					clearForm    : "timeEntry.specialOps.clearFormEvent",
 					setUpdateMode: "timeEntry.specialOps.setUpdateModeEvent",

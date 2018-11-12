@@ -302,8 +302,8 @@ angular.module('commonComponents', [])
 			scope      : specialServiceScope,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-service.html',
-			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService','dialogService','validationService','partyService',
-				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService,dialogService,validationService, partyService) {
+			controller : ['$scope', 'resourceService', 'partyGroupService', 'resellerService', '$rootScope', '$mdDialog', '$mdToast', '$modal', '$filter', '$q', 'nameQueryService', 'invoiceService', 'config', 'operationService', 'dialogService', 'validationService', 'partyService',
+				function ($scope, resourceService, partyGroupService, resellerService, $rootScope, $mdDialog, $mdToast, $modal, $filter, $q, nameQueryService, invoiceService, config, operationService, dialogService, validationService, partyService) {
 
 					// console.log("invoices in directive " + $scope.invoices);
 
@@ -635,8 +635,8 @@ angular.module('commonComponents', [])
 
 												$mdDialog.cancel();
 											}).catch(function (err) {
-												dialogService.info(err, true);
-											});
+											dialogService.info(err, true);
+										});
 									} else {
 										infoDialog('party.dialogs.noContacts', $scope, $filter);
 									}
@@ -782,15 +782,15 @@ angular.module('commonComponents', [])
 			scope      : false,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/add-special-service.html',
-			controller: require("./controllers/add-special-service-controller")
+			controller : require("./controllers/add-special-service-controller")
 		};
 	})
 	.directive('specialServiceSidePanel', function () {
 		return {
-			scope      : true,
+			scope      : false,
 			restrict   : 'E',
 			templateUrl: 'common/components/templates/special-ops-time-entry-side-panel.html',
-			controller: require("./controllers/special-ops-time-entry-side-panel-controller")
+			controller : require("./controllers/special-ops-time-entry-side-panel-controller")
 		};
 	})
 	.directive('invoice', function () {

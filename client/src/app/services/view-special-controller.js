@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast','operationUtilService', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast,operationUtilService) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast','operationUtilService', '$mdSidenav', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast,operationUtilService, $mdSidenav) {
 
 	console.log('Operation', operation);
 
@@ -748,5 +748,17 @@ module.exports =
 		updatedSelectedInvoice(invoiceNumber);
 		updateInvoiceList();
 	});
+
+	/*
+	* Special ops side panel
+	*/
+
+	$scope.acceptTimeEntry = function () {
+		$mdSidenav('specialOpsSideNav2v').toggle();
+	};
+
+	$scope.toggleSideNav = function () {
+		$mdSidenav('specialOpsSideNav2').toggle();
+	};
 
 }];

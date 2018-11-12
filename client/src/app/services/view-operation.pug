@@ -3,6 +3,24 @@ login-toolbar(toolbar-title='services.title')
 side-bar
 
 .page-content-wrapper.time-sheet.operations-page(ng-class="{'page-content-left' : noneStyle}")
+
+	md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav2" md-whiteframe="4" md-disable-close-events style="")
+		md-toolbar(style="background:none;")
+			h1.md-toolbar-tools
+				button.btn(aria-label="Expand")
+					i.fa.fa-expand
+				span(flex)
+				button.btn(aria-label="New" ng-click="acceptTimeEntry()")
+					i.fa.fa-check
+				button.btn(aria-label="Close" ng-click="toggleSideNav()")
+					i.fa.fa-times
+		md-content.panel-form
+			special-service-side-panel
+			//md-button(ng-click="toggleSideNav()" class="md-accent")
+			//	| Close Sidenav
+			//md-button(ng-click="addRow()" class="md-accent")
+			//	| Insert time entry
+
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")
 			.md-toolbar-tools.form-toolbar-glarus
@@ -121,7 +139,12 @@ side-bar
 
 				.container-body(ng-show='currentNavItem=="time-sheet"')
 					.add-row-section
-						add-special-service
+						//add-special-service
+						md-truncate.add-form-container
+							form.add-form()
+								.btn-element-small
+									md-button.md-icon-button.stack(aria-label="Grid" ng-click="toggleSideNav()")
+										md-icon.fa.fa-plus-square.fa-lg
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 
 				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:150px;" )

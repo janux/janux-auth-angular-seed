@@ -67,7 +67,7 @@ require('angular').module('appServices', [
 		url: '/services-view-special/{id}',
 		templateUrl: 'app/services/view-operation.html',
 		authRequired: true,
-		controller: require('./view-special-controller.js'),
+		controller: require('./view-special-controller'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();
@@ -89,7 +89,7 @@ require('angular').module('appServices', [
 		url: '/services-view-consulting/{id}',
 		templateUrl: 'app/services/view-operation.html',
 		authRequired: true,
-		controller: require('./view-special-controller.js'),
+		controller: require('./view-special-controller'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();

@@ -407,6 +407,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 */
 		$scope.toggleSideNav = function () {
 			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).toggle();
+			$scope.gridOptions.api.stopEditing();
 		};
 
 		/*****
@@ -420,17 +421,6 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
-		});
-
-		/**
-		 * This method catches when the side panel is closing.
-		 * When the side panel is closed, no matter the outcome, we need to end the the ag-grid editing mode.
-		 */
-		$mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
-			instance.onClose(function () {
-				// console.debug('Catching close');
-				$scope.gridOptions.api.stopEditing();
-			});
 		});
 
 	}];

@@ -364,7 +364,8 @@
 			"greeter": "Greeter",
 			"coordinator": "Coordinador",
 			"transport": "Transporte",
-			"invoiceNumber": "Número de factura"
+			"invoiceNumber": "Número de factura",
+			"Comentario": "Comentario"
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",

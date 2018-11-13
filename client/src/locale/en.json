@@ -365,7 +365,8 @@
 			"greeter": "Greeter",
 			"coordinator": "Coordinator",
 			"transport": "Transport",
-			"invoiceNumber": "Invoice number"
+			"invoiceNumber": "Invoice number",
+			"Comment": "Comment"
 		},
 		"guards": "Guards",
 		"attendance": "Attendances",

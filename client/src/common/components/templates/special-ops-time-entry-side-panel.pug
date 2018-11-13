@@ -57,8 +57,9 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 
 					.container-flex-form-panel
 						.an-material.nopadding
-							md-input-container
-								label {{ 'operations.specialsTimeLog.begin' | translate }}
+							md-input-container.full-panel
+								h4.form-label 
+									| {{ 'operations.specialsTimeLog.begin' | translate }}
 								md-datepicker(ng-model='form.startForm'
 								ng-change='calculateDates()')
 
@@ -181,6 +182,9 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 
 				.staff-form-right
 					.section-pad
+						.close-btn-div
+							button.btn-close(aria-label="close")
+								i.fa.fa-times-circle
 						.container-flex-form-panel
 							.an-material.nopadding
 								md-autocomplete.full-panel(md-no-cache='false',
@@ -231,10 +235,10 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 										md-option(value="2/8") 1/4
 										md-option(value="1/8") 1/8
 
-			.container-flex-form-panel
-				textarea(name="special-ops-description"
-				ng-model="form.location"
-				markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
-				on-fullscreen="onFullScreenCallback()"
-				on-fullscreen-exit="onFullScreenExitCallback()"
-				rows="25")
+					textarea(name="special-ops-description"
+					ng-model="form.location"
+					markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
+					on-fullscreen="onFullScreenCallback()"
+					on-fullscreen-exit="onFullScreenExitCallback()"
+					rows="25")
+

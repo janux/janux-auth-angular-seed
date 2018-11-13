@@ -519,6 +519,17 @@ md-menu-content {
     }
 }
 
+.btn-close {
+    background: none;
+    border: none !important;
+    color: #56635d;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover{
+	    color: @glarus-blue;
+    }
+}
+
 .btn-plus {
     background-color: @glarus-blue;
     border: none;
@@ -555,7 +566,19 @@ md-menu-content {
 	width:98%; 
 	font-size:11px; 
 	padding:20px; 
-	margin-bottom:30px
+	margin-bottom:30px;
+	border-radius:5px;
+}
+
+.form-label{
+	font-size:11px; 
+	padding-left:5px;
+}
+
+.md-datepicker-input-container{
+	width: 80% !important;
+	.small-device({ max-width: 76% !important;});
+	.smallest-device({ max-width: 76% !important;});
 }
 
 //material dialog for mobile

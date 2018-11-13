@@ -512,6 +512,17 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			}
 		};
 
+		/*****
+		**This will hide the Vehicle Panel by default.
+		*****/
+        $scope.vehiclePanelIsVisible = false;
+        $scope.vehicleBtnIsVisible = true;
+        $scope.vehiclePanelShowHide = function () {
+            //If DIV is visible it will be hidden and vice versa, also button.
+            $scope.vehiclePanelIsVisible = $scope.vehiclePanelIsVisible ? false : true;
+            $scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
+        };
+
 		$scope.init();
 	}]
 ;

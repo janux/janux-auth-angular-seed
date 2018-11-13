@@ -51,8 +51,8 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 									md-option(value="GREETER") {{ 'operations.specialsTimeLog.greeter' | translate }}
 									md-option(value="COORDINATOR") {{ 'operations.specialsTimeLog.coordinator' | translate }}
 									md-option(value="TRANSPORT") {{ 'operations.specialsTimeLog.transport' | translate }}
-						div
-							button.btn(aria-label="Vehicle")
+						div(ng-show='vehicleBtnIsVisible')
+							button.btn(aria-label="Vehicle" ng-click="vehiclePanelShowHide()")
 								i.fa.fa-car
 
 					.container-flex-form-panel
@@ -181,9 +181,9 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 
 
 				.staff-form-right
-					.section-pad
+					.section-pad(ng-show='vehiclePanelIsVisible')
 						.close-btn-div
-							button.btn-close(aria-label="close")
+							button.btn-close(aria-label="close" ng-click="vehiclePanelShowHide()")
 								i.fa.fa-times-circle
 						.container-flex-form-panel
 							.an-material.nopadding

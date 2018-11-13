@@ -408,4 +408,5 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.$on(config.timeEntry.specialOps.events.canceled, function () {
 			$scope.gridOptions.api.stopEditing();
 		});
+		
 	}];

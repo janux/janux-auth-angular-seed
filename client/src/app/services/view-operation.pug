@@ -17,6 +17,12 @@ special-service-side-panel
 						| {{ 'services.consultingService' | translate }}: {{ data.name }}
 				span(flex)
 
+				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()' ng-show='currentNavItem=="time-sheet"')
+					md-icon.fa.fa-download.fa-lg
+
+				md-button.arrow.md-icon-button(aria-label="New" ng-show='currentNavItem=="time-sheet"' ng-click="insertNewTimeEntry()")
+					md-icon.fa.fa-plus-square.fa-lg
+
 
 		.container-fluid-flex.spacing-bottom
 			md-content.tabs-glarus
@@ -61,8 +67,6 @@ special-service-side-panel
 								md-menu-content
 									md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
 									md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
-							button.btn( ng-click='export()')
-								i.fa.fa-download
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
 
@@ -106,8 +110,6 @@ special-service-side-panel
 							md-menu-content
 								md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
 								md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
-						button.btn( ng-click='export()')
-							i.fa.fa-download
 						button.btn( ng-click='cancel()')
 							i.fa.fa-times
 
@@ -122,13 +124,6 @@ special-service-side-panel
 							i.fa.fa-times
 
 				.container-body(ng-show='currentNavItem=="time-sheet"')
-					.add-row-section
-						//add-special-service
-						md-truncate.add-form-container
-							form.add-form()
-								.btn-element-small
-									md-button.md-icon-button.stack(aria-label="Grid" ng-click="insertNewTimeEntry()")
-										md-icon.fa.fa-plus-square.fa-lg
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 
 				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:150px;" )

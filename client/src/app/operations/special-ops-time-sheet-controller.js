@@ -382,9 +382,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		/**
 		 * This method is called when the user wants to insert a new time entry.
 		 */
-		$rootScope.insertNewTimeEntry = function () {
+		$scope.insertNewTimeEntry = function () {
+			$scope.gridOptions.api.stopEditing();
 			// Send an event to open the side panel with a clean form.
-			$scope.$emit(config.timeEntry.specialOps.events.setInsertMode);
+			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode);
 		};
 
 		/*****
@@ -396,7 +397,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		/**
 		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
+		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
 			$scope.gridOptions.api.stopEditing();
 		});
@@ -404,8 +405,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		/**
 		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.canceled, function () {
+		$scope.$on(config.timeEntry.specialOps.events.canceled, function () {
 			$scope.gridOptions.api.stopEditing();
 		});
-
 	}];

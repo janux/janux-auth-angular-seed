@@ -3,9 +3,9 @@
 var _ = require('lodash');
 var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
-
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav', '$mdComponentRegistry',
+	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav, $mdComponentRegistry) {
+		var sidenavInstance;
 		var allDrivers;
 		var driversAssignedToOperations;
 		var vehiclesAssignedToOperations;
@@ -471,6 +471,20 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				$scope.calculateDates();
 			});
 
+			if (_.isNil(sidenavInstance)) {
+				sidenavInstance = $mdSidenav(config.timeEntry.specialOps.sidePanel.id, true);
+				if (_.isFunction(sidenavInstance.then)) {
+					sidenavInstance.then(function (instance) {
+						instance.onClose(function () {
+							$scope.timeEntryUpdate = undefined;
+							console.debug('Sending close');
+							// $scope.gridOptions.api.stopEditing();
+							$rootScope.$broadcast(config.timeEntry.specialOps.events.canceled);
+						});
+					});
+				}
+			}
+
 			// $mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
 			// 	instance.onClose(function () {
 			// 		$scope.timeEntryUpdate = undefined;
@@ -480,6 +494,23 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			// 	});
 			// });
 
+			// $mdComponentRegistry.when(config.timeEntry.specialOps.sidePanel.id)
+			// 	.then(function () {
+			// 		if (sidenavInstance) {
+			// 			sidenavInstance.destroy();
+			// 		}
+			// 		sidenavInstance = $mdSidenav(config.timeEntry.specialOps.sidePanel.id, true);
+			// 		$scope.$on("$destroy", sidenavInstance.destroy);
+			//
+			// 		sidenavInstance.then(function (instance) {
+			// 			instance.onClose(function () {
+			// 				$scope.timeEntryUpdate = undefined;
+			// 				console.debug('Sending close');
+			// 				// $scope.gridOptions.api.stopEditing();
+			// 				$rootScope.$broadcast(config.timeEntry.specialOps.events.canceled);
+			// 			});
+			// 		});
+			// 	});
 		};
 
 		$scope.init();

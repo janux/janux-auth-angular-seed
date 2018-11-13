@@ -763,6 +763,7 @@ module.exports =
 
 		$scope.insertNewTimeEntry = function () {
 			console.debug('Call to insertNewTimeEntry');
+			$scope.gridOptions.api.stopEditing();
 			// Sends an event to the side panel indicating the user wants to insert or update the
 			// time entry
 			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode);
@@ -777,14 +778,14 @@ module.exports =
 		/**
 		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
+		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
 		});
 
 		/**
 		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.canceled, function () {
-			findTimeEntries($scope.periodFilterKey);
+		$scope.$on(config.timeEntry.specialOps.events.canceled, function () {
+			$scope.gridOptions.api.stopEditing();
 		});
 	}];

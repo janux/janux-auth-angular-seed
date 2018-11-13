@@ -777,14 +777,14 @@ angular.module('commonComponents', [])
 				}]
 		};
 	})
-	.directive('addSpecialService', function () {
-		return {
-			scope      : false,
-			restrict   : 'E',
-			templateUrl: 'common/components/templates/add-special-service.html',
-			controller : require("./controllers/add-special-service-controller")
-		};
-	})
+	// .directive('addSpecialService', function () {
+	// 	return {
+	// 		scope      : false,
+	// 		restrict   : 'E',
+	// 		templateUrl: 'common/components/templates/add-special-service.html',
+	// 		controller : require("./controllers/add-special-service-controller")
+	// 	};
+	// })
 	.directive('specialServiceSidePanel', function () {
 		return {
 			scope      : true,

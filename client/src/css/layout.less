@@ -526,8 +526,14 @@ md-sidenav.sidebar{
 	width: 650px !important;
 	max-width: 650px !important;
 	background: @glarus-green1;
-	.small-device({ min-width: 320px !important; width: 320px !important;});
-	.smallest-device({ min-width: 320px !important; width: 320px !important;});
+	.small-device({ min-width: 100vw !important; width: 100vw !important;});
+	.smallest-device({ min-width: 100vw !important; width: 100vw !important;});
+}
+
+md-sidenav.sidebar.bigpanel{
+	min-width: 100vw !important;
+	width: 100vw !important;
+	max-width: 100vw !important;
 }
 
 .panel-form{

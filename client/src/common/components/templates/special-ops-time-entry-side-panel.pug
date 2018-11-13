@@ -1,8 +1,9 @@
-md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events style="")
+md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events ng-class="{ 'bigpanel': bigpanel }")
 	md-toolbar(style="background:none;")
 		h1.md-toolbar-tools
-			button.btn(aria-label="Expand")
-				i.fa.fa-expand
+			button.btn.hide-mobile(aria-label="Expand" ng-click='addRemoveExpandClass()')
+				i.fa.fa-expand(ng-show="!bigpanel")
+				i.fa.fa-compress(ng-show="bigpanel")
 			span(flex)
 			button.btn(aria-label="New" ng-click="acceptTimeEntry()")
 				i.fa.fa-check

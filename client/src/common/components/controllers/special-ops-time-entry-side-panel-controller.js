@@ -523,6 +523,18 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
             $scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
         };
 
+        /******
+        **Add functionality to the expand button
+        ******/
+        $scope.bigpanel = false;
+	    $scope.addRemoveExpandClass = function(){
+			if($scope.bigpanel){
+				$scope.bigpanel = false;
+			}else{
+				$scope.bigpanel = true;
+			}
+		};
+
 		$scope.init();
 	}]
 ;

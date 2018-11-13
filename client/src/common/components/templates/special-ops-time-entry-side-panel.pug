@@ -29,7 +29,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 					.container-flex-form-panel
 						.an-material.nopadding
 							md-autocomplete.full-panel(md-no-cache='false',
-							ng-disabled='timeEntryUpdate!=null',
+							ng-disabled='timeEntryUpdate!=null || operaitionIdInsert!=null',
 							md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
 							md-menu-container-class='autocomplete-options-container-wider'
 							md-selected-item='form.operation',

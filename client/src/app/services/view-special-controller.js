@@ -6,7 +6,7 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast',  function (
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', function (
 		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast) {
 
 		console.log('Operation', operation);
@@ -766,7 +766,7 @@ module.exports =
 			$scope.gridOptions.api.stopEditing();
 			// Sends an event to the side panel indicating the user wants to insert or update the
 			// time entry
-			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode);
+			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode, $scope.operationId);
 		};
 
 		/*****
@@ -776,7 +776,7 @@ module.exports =
 		 *****/
 
 		/**
-		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
+		 * This event is captured here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);

@@ -18,7 +18,10 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		// Form data
 		$scope.form = {};
 		// This variable contain the time entry reference when there is an update.
-		$scope.timeEntryUpdate = {};
+		$scope.timeEntryUpdate = undefined;
+
+		// This variable contains the operationId when there is an insert.
+		$scope.operaitionIdInsert = undefined;
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
@@ -63,11 +66,29 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		/**
+		 * Fil the operation select when inserting a time entry.
+		 * @param operationId
+		 */
+		function fillFormDataForInsert(operationId) {
+			if (_.isString(operationId) && operationId.trim() !== '') {
+				for (var j = 0; j < operations.length; j++) {
+					var operationElement = operations[j];
+					if (operationElement.id === operationId) {
+						automaticOperationAndVehicleChange = false;
+						$scope.operaitionIdInsert = operationId;
+						$scope.form.operation = operationElement;
+						break;
+					}
+				}
+			}
+		}
+
+		/**
 		 * Fill the form data given a time entry.
 		 * @param timeEntry
 		 */
-		function fillFormData(timeEntry) {
-			console.debug("Call fillFormData with timeEntry: %o", timeEntry);
+		function fillFormDataForUpdate(timeEntry) {
+			console.debug("Call fillFormDataForUpdate with timeEntry: %o", timeEntry);
 			// Set the flag as false.
 			// When whe set the driver , the method staffSelectedItemChange is called. With this flag
 			// we avoid to change the operation and vehicle data when we define the staff.
@@ -437,19 +458,24 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * EVENTS:
 		 * The following events are defined in order so set the form.
 		 ****/
-		$rootScope.$on(config.timeEntry.specialOps.events.setInsertMode, function () {
+
+		/**
+		 * This even is captured
+		 */
+		$rootScope.$on(config.timeEntry.specialOps.events.setInsertMode, function (event, operationId) {
 			console.debug("Catch %s event", config.timeEntry.specialOps.events.setInsertMode);
 			clearForm();
+			fillFormDataForInsert(operationId);
 			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).open();
 		});
 
 		/**
-		 * When this event is catch, the form shows the selected data to update.
+		 * When this event is captured, the form shows the selected data to update.
 		 */
 		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.specialOps.events.setUpdateMode, timeEntry);
 			clearForm();
-			fillFormData(timeEntry);
+			fillFormDataForUpdate(timeEntry);
 			$mdSidenav(config.timeEntry.specialOps.sidePanel.id).open();
 
 
@@ -484,33 +510,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					});
 				}
 			}
-
-			// $mdSidenav(config.timeEntry.specialOps.sidePanel.id, true).then(function (instance) {
-			// 	instance.onClose(function () {
-			// 		$scope.timeEntryUpdate = undefined;
-			// 		// console.debug('Catching close');
-			// 		// $scope.gridOptions.api.stopEditing();
-			// 		$rootScope.$broadcast(config.timeEntry.specialOps.events.canceled);
-			// 	});
-			// });
-
-			// $mdComponentRegistry.when(config.timeEntry.specialOps.sidePanel.id)
-			// 	.then(function () {
-			// 		if (sidenavInstance) {
-			// 			sidenavInstance.destroy();
-			// 		}
-			// 		sidenavInstance = $mdSidenav(config.timeEntry.specialOps.sidePanel.id, true);
-			// 		$scope.$on("$destroy", sidenavInstance.destroy);
-			//
-			// 		sidenavInstance.then(function (instance) {
-			// 			instance.onClose(function () {
-			// 				$scope.timeEntryUpdate = undefined;
-			// 				console.debug('Sending close');
-			// 				// $scope.gridOptions.api.stopEditing();
-			// 				$rootScope.$broadcast(config.timeEntry.specialOps.events.canceled);
-			// 			});
-			// 		});
-			// 	});
 		};
 
 		$scope.init();

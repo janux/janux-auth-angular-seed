@@ -395,7 +395,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		 *****/
 
 		/**
-		 * This event is catch here when the user has inserted or updated successfully a time entry using the side panel.
+		 * This event is captured here when the user has inserted or updated successfully a time entry using the side panel.
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);

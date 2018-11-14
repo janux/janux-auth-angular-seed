@@ -1,9 +1,8 @@
-md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events ng-class="{ 'bigpanel': bigpanel }")
+md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-whiteframe="4" md-disable-close-events ng-class="{ 'bigpanel': bigpanel, 'bigpanel': !vehicleBtnIsVisible }")
 	md-toolbar(style="background:none;")
 		h1.md-toolbar-tools
-			button.btn.hide-mobile(aria-label="Expand" ng-click='addRemoveExpandClass()')
-				i.fa.fa-expand(ng-show="!bigpanel")
-				i.fa.fa-compress(ng-show="bigpanel")
+			button.btn.hide-mobile(aria-label="Expand" ng-click='addRemoveExpandClass(); vehiclePanelShowHide()')
+				i.fa.fa-expand
 			span(flex)
 			button.btn(aria-label="New" ng-click="acceptTimeEntry()")
 				i.fa.fa-check
@@ -12,7 +11,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 	md-content.panel-form
 		form(name="specialServiceAddForm")
 			.container-flex-form-panel
-				.staff-form-left
+				.spanel-form-left(ng-class="{ 'spanel-form-left-100w': vehicleBtnIsVisible }")
 					.container-flex-form-panel
 						.an-material.nopadding
 							md-autocomplete.full-panel(md-no-cache='false',
@@ -64,13 +63,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 								md-datepicker(ng-model='form.startForm'
 								ng-change='calculateDates()')
 
-					.container-flex-form-panel
-						.an-material.nopadding
-							.section-pad
-								| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}:
-								strong {{form.differenceTimeWorkForm}}
-
-					.fieldset-flex
+					.fieldset-flex(style="padding-top:15px")
 						.an-material.nopadding
 							md-input-container.full-panel
 								label {{ 'operations.specialsTimeLog.beginHourWork' | translate }}
@@ -120,13 +113,11 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 								cancel-text='{{ "label.cancel" | translate }}'
 								ng-change='calculateDates()')
 
-					.container-flex-form-panel
 						.an-material.nopadding
-							.section-pad
-								| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}:
-								strong {{form.differenceTimeForm}}
+							h4.form-label
+								| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}: {{form.differenceTimeWorkForm}}
 
-					.fieldset-flex
+					.fieldset-flex(style="padding-top:15px")
 						.an-material.nopadding
 							md-input-container.full-panel
 								label {{ 'operations.specialsTimeLog.beginHour' | translate }}
@@ -174,6 +165,10 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 								cancel-text='{{ "label.cancel" | translate }}'
 								ng-change='calculateDates()')
 
+						.an-material.nopadding
+							h4.form-label
+								| {{ 'operations.specialsTimeLog.hoursBilled' | translate }}: {{form.differenceTimeForm}}
+
 					// show only to debug
 					//.element
 					//	md-input-container
@@ -181,8 +176,8 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 					//		div fechas  {{form.start | date:"short"}}  - {{form.end | date:"short"}}
 
 
-				.staff-form-right
-					.section-pad(ng-show='vehiclePanelIsVisible')
+				.spanel-form-right(ng-show='vehiclePanelIsVisible')
+					.section-pad
 						.close-btn-div
 							button.btn-close(aria-label="close" ng-click="vehiclePanelShowHide()")
 								i.fa.fa-times-circle
@@ -236,11 +231,11 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsSideNav" md-white
 										md-option(value="2/8") 1/4
 										md-option(value="1/8") 1/8
 
-					h4.form-label {{ 'operations.specialsTimeLog.comment' | translate }}
-					textarea(name="special-ops-description"
-					ng-model="form.location"
-					markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
-					on-fullscreen="onFullScreenCallback()"
-					on-fullscreen-exit="onFullScreenExitCallback()"
-					rows="25")
+				h4.form-label {{ 'operations.specialsTimeLog.comment' | translate }}
+				textarea(name="special-ops-description"
+				ng-model="form.location"
+				markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
+				on-fullscreen="onFullScreenCallback()"
+				on-fullscreen-exit="onFullScreenExitCallback()"
+				rows="15")
 

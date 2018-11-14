@@ -11,7 +11,9 @@ module.exports =
 
 		console.log('Operation', operation);
 
-		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
+		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 		var findTimeEntries;
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
@@ -353,15 +355,15 @@ module.exports =
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
-					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
-				field         : 'end',
+				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
+				field         : 'beginWork',
 				editable      : false,
 				filter        : 'date',
 				filterParams  : {
@@ -369,17 +371,35 @@ module.exports =
 					comparator   : agGridComp.dateFilterComparator
 				},
 				valueFormatter: function (params) {
-					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
+					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 160
 			},
 			{
-				headerName: $filter('translate')('operations.specialsTimeLog.duration'),
-				field     : 'duration',
-				editable  : false,
-				cellEditor: agGridComp.durationCellUpdater,
-				width     : 95
+				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
+				field         : 'endWork',
+				editable      : false,
+				filter        : 'date',
+				filterParams  : {
+					newRowsAction: 'keep',
+					comparator   : agGridComp.dateFilterComparator
+				},
+				valueFormatter: function (params) {
+					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
+				},
+				cellEditor    : agGridComp.dateTimeCellEditor,
+				width         : 160
+			},
+
+			{
+				headerName : $filter('translate')('operations.specialsTimeLog.duration'),
+				field      : 'duration',
+				editable   : false,
+				width      : 95,
+				valueGetter: function (params) {
+					return operationService.calculateDuration(params.data.beginWork, params.data.endWork);
+				}
 			},
 			{
 				headerName: $filter('translate')('operations.specialsTimeLog.comment'),

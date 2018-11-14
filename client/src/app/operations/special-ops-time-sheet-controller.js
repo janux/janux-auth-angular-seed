@@ -167,7 +167,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHourWork'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
 				field         : 'beginWork',
 				editable      : false,
 				filter        : 'date',
@@ -182,7 +182,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHourWork'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
 				field         : 'endWork',
 				editable      : false,
 				filter        : 'date',
@@ -197,42 +197,12 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				width         : 160
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
-				field         : 'begin',
-				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
-				valueFormatter: function (params) {
-					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
-				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
-			},
-
-			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
-				field         : 'end',
-				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
-				valueFormatter: function (params) {
-					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
-				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
-			},
-			{
-				headerName: $filter('translate')('operations.specialsTimeLog.duration'),
-				field     : 'duration',
-				editable  : false,
-				cellEditor: agGridComp.durationCellUpdater,
-				width     : 95
+				headerName : $filter('translate')('operations.specialsTimeLog.duration'),
+				editable   : false,
+				width      : 95,
+				valueGetter: function (params) {
+					return operationService.calculateDuration(params.data.beginWork, params.data.endWork);
+				}
 			},
 
 			{
@@ -408,5 +378,5 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.$on(config.timeEntry.specialOps.events.canceled, function () {
 			$scope.gridOptions.api.stopEditing();
 		});
-		
+
 	}];

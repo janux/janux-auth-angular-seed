@@ -561,12 +561,27 @@ md-menu-content {
     }
 }
 
+//Form for side Panel
+
+.spanel-form-left,
+.spanel-form-right{
+	width: 49%;
+	overflow: hidden;
+	padding-top: 12px;
+	display: inline-block;
+	vertical-align: top;
+	.small-device({ width: 100%;});
+	.smallest-device({ width: 100%;});
+}
+.spanel-form-left-100w{
+	width: 100% !important;	
+}
+
 .section-pad{
 	background:#96a79f; 
-	width:98%; 
+	width:100%; 
 	font-size:11px; 
-	padding:20px; 
-	margin-bottom:30px;
+	padding:20px 20px 40px 20px; 
 	border-radius:5px;
 }
 
@@ -579,6 +594,10 @@ md-menu-content {
 	width: 80% !important;
 	.small-device({ max-width: 76% !important;});
 	.smallest-device({ max-width: 76% !important;});
+}
+
+md-autocomplete{
+	height: 70px !important;
 }
 
 //material dialog for mobile

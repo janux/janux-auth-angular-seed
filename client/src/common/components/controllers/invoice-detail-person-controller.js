@@ -10,21 +10,6 @@ module.exports =
 		$scope, $modal, invoiceService, $state, $timeout, $filter, $rootScope, config, nameQueryService, operationService) {
 		$scope.persons = [];
 
-		var infoDialog = function (translateKey) {
-			$modal.open({
-				templateUrl: 'app/dialog-tpl/info-dialog.html',
-				controller : ['$scope', '$modalInstance',
-					function ($scope, $modalInstance) {
-						$scope.message = $filter('translate')(translateKey);
-
-						$scope.ok = function () {
-							$modalInstance.close();
-						};
-					}],
-				size       : 'md'
-			});
-		};
-
 
 		var columnDefs = [
 			{
@@ -65,18 +50,31 @@ module.exports =
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
-					return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
+					// improve  the way what hours are being used for invoice.
+					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) &&
+						params.data.timeEntry.end.getTime() > params.data.timeEntry.begin.getTime()) {
+						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
+					} else {
+						return (params.data.timeEntry.beginWork) ? moment(params.data.timeEntry.beginWork).format(config.dateFormats.hourOnlyFormat) : '';
+					}
 				}
 			},
 
 			// Duration
 			{
-				headerName  : $filter('translate')('services.invoice.invoiceDetail.duration'),
-				field       : 'timeEntry.duration',
-				filterParams: {
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.duration'),
+				// field       : 'timeEntry.duration',
+				filterParams  : {
 					newRowsAction: 'keep'
 				},
-				width       : 95
+				width         : 95,
+				valueFormatter: function (params) {
+					if (params.data.timeEntry.duration !== '0:00') {
+						return params.data.timeEntry.duration;
+					} else {
+						return params.data.timeEntry.durationWork;
+					}
+				}
 			},
 
 			//Type
@@ -201,7 +199,7 @@ module.exports =
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
@@ -229,6 +227,7 @@ module.exports =
 						return it.type !== 'VEHICLE';
 					});
 					o.timeEntry.duration = operationService.calculateDuration(o.timeEntry.begin, o.timeEntry.end);
+					o.timeEntry.durationWork = operationService.calculateDuration(o.timeEntry.beginWork, o.timeEntry.endWork);
 					return o;
 				});
 			}

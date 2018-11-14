@@ -1,9 +1,10 @@
 login-toolbar(toolbar-title='services.title')
 
 side-bar
-// Special ops side panel.
-special-service-side-panel
-.page-content-wrapper.time-sheet.operations-page(ng-class="{'page-content-left' : noneStyle}")
+
+.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+	// Special ops side panel.
+	special-service-side-panel
 
 	.container-fluid-flex
 		md-toolbar.form-root-toolbar(style="height:10px")
@@ -24,7 +25,7 @@ special-service-side-panel
 					md-icon.fa.fa-plus-square.fa-lg
 
 
-		.container-fluid-flex.spacing-bottom
+		.container-body.operations-page.spacing-bottom
 			md-content.tabs-glarus
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools

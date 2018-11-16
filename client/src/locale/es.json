@@ -303,6 +303,9 @@
 			"comment": "Comentario",
 			"filterLabel": "Ver:",
 			"absence": "Falta",
+			"hours": "Horas",
+			"beginHour": "Inicio",
+			"endHour": "Fin",
 			"absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",

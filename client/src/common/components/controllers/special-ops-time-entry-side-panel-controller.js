@@ -267,7 +267,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 */
 		$scope.calculateDates = function () {
 			console.debug("Call to calculateDates");
-			// console.log("Call to calculateDates");
+			// console.debug("Call to calculateDates");
 			var startMoment = moment($scope.form.startForm);
 			var endMoment = moment($scope.form.startForm);
 			var startWorkMoment = moment($scope.form.startForm);
@@ -523,14 +523,14 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
             $scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
         };
 
-        /******
-        **Add functionality to the expand button
-        ******/
-        $scope.bigpanel = false;
-	    $scope.addRemoveExpandClass = function(){
-			if($scope.bigpanel){
+		/******
+		 **Add functionality to the expand button
+		 ******/
+		$scope.bigpanel = false;
+		$scope.addRemoveExpandClass = function () {
+			if ($scope.bigpanel) {
 				$scope.bigpanel = false;
-			}else{
+			} else {
 				$scope.bigpanel = true;
 			}
 		};

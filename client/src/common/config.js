@@ -307,18 +307,36 @@ require('angular').module('config', [])
 		timeEntry             : {
 			attributeTransport: 'isTransport',
 			specialOps        : {
-				sidePanel : {
-					id: 'specialOpsSideNav'
+				sidePanel: {
+					id: 'specialOpsTimeEntrySideNav'
 				},
-				// Side panel used in the service section.
-				sidePanel2: {
-					id: 'specialOpsSideNav2'
-				},
-				events    : {
+				events   : {
 					setInsertMode     : "timeEntry.specialOps.setInsertMode",
 					setUpdateMode     : "timeEntry.specialOps.setUpdateModeEvent",
 					doneInsertOrUpdate: "timeEntry.specialOps.doneInsertOrUpdateEvent",
 					canceled          : "timeEntry.specialOps.canceled"
+				}
+			},
+			guard             : {
+				sidePanel: {
+					id: 'guardTimeEntrySideNav'
+				},
+				events   : {
+					setInsertMode     : "timeEntry.guard.setInsertMode",
+					setUpdateMode     : "timeEntry.guard.setUpdateModeEvent",
+					doneInsertOrUpdate: "timeEntry.guard.doneInsertOrUpdateEvent",
+					canceled          : "timeEntry.guard.canceled"
+				}
+			},
+			driver            : {
+				sidePanel: {
+					id: 'driverTimeEntrySideNav'
+				},
+				events   : {
+					setInsertMode     : "timeEntry.driver.setInsertMode",
+					setUpdateMode     : "timeEntry.driver.setUpdateModeEvent",
+					doneInsertOrUpdate: "timeEntry.driver.doneInsertOrUpdateEvent",
+					canceled          : "timeEntry.driver.canceled"
 				}
 			}
 		}

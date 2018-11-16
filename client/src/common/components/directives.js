@@ -772,8 +772,6 @@ angular.module('commonComponents', [])
 							);
 						}
 					};
-
-
 				}]
 		};
 	})
@@ -793,6 +791,16 @@ angular.module('commonComponents', [])
 			controller : require("./controllers/special-ops-time-entry-side-panel-controller")
 		};
 	})
+
+	.directive('driverSidePanel', function () {
+		return {
+			scope      : true,
+			restrict   : 'E',
+			templateUrl: 'common/components/templates/driver-time-entry-side-panel.html',
+			controller : require("./controllers/driver-time-entry-side-panel-controller")
+		};
+	})
+
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};
 		return {

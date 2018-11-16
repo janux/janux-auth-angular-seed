@@ -170,30 +170,18 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
 				field         : 'beginWork',
 				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
 				valueFormatter: function (params) {
 					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 160
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
 				field         : 'endWork',
 				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
 				valueFormatter: function (params) {
 					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 160
 			},
 			{

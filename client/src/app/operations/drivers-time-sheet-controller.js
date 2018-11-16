@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService',
-	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.driversTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.driversColumnsFilters;
@@ -20,99 +20,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$scope.findTimeEntries($scope.periodFilterKey);
 		};
 
-		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
-		var allDrivers = driversAndOps.allPersonnelAvailableForSelection;
-		var driversAssignedToOperations = driversAndOps.driversAssignedToOperations;
-		var operations = driversAndOps.operations;
-
-		var initRowModel = function () {
-			$scope.lbRow = {
-				staff    : '',
-				operation: '',
-				start    : moment().startOf('day').format(dateTimeFormatString),
-				end      : undefined,
-				provider : '',
-				location : '',
-				absence  : ''
-			};
-		};
-		initRowModel();
-
-		// Models used when entering the search query for the autocomplete fields
-		$scope.lbSearch = {
-			staff    : '',
-			operation: '',
-			provider : ''
-		};
-
-		var infoDialog = function (translateKey) {
-			$modal.open({
-				templateUrl: 'app/dialog-tpl/info-dialog.html',
-				controller : ['$scope', '$modalInstance',
-					function ($scope, $modalInstance) {
-						$scope.message = $filter('translate')(translateKey);
-
-						$scope.ok = function () {
-							$modalInstance.close();
-						};
-					}],
-				size       : 'md'
-			});
-		};
-
-		//
-		// Staff autocomplete
-		//
-		$scope.staffSelectedItemChange = function (item) {
-			if (typeof item !== 'undefined') {
-				// This item should contain the selected staff member
-				console.info('Item changed to ' + JSON.stringify(item));
-
-				var selectedDriver = _.find(driversAssignedToOperations, function (o) {
-					return o.resource.id === item.resource.id;
-				});
-
-				if (_.isNil(selectedDriver)) {
-					$scope.lbRow.operation = undefined;
-				} else {
-					var operationId = selectedDriver.opId;
-					var staffOperations = _.filter(operations, {id: operationId});
-
-					// console.log('Selected staff operations', staffOperations);
-					$scope.lbRow.operation = staffOperations[0];
-				}
-			} else {
-				// This means that the entered search text is empty or doesn't match any staff member
-			}
-		};
-
-		$scope.staffSearch = function (query) {
-			return query ? allDrivers.filter(nameQueryService.createFilterForStaff(query)) : allDrivers;
-		};
-
-		//
-		// Operation autocomplete
-		//
-		$scope.opsSelectedItemChange = function (item) {
-			if (typeof item !== 'undefined') {
-				// This item should contain the selected operation
-				// console.info('Item changed to ' + JSON.stringify(item));
-			} else {
-				// This means that the entered search text is empty or doesn't match any operation
-			}
-		};
-
-		function createFilterForOps(query) {
-			return function filterFn(operation) {
-				var contains = operation.name.toLowerCase().includes(query.toLowerCase());
-				return contains;
-			};
-		}
-
-		$scope.opsSearch = function (query) {
-			return query ? operations.filter(createFilterForOps(query)) : operations;
-		};
-
+		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
+		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 
 		$scope.export = function () {
 
@@ -162,7 +71,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					size       : 'md'
 				});
 			} else {
-				infoDialog('operations.dialogs.noRowSelectedError');
+				dialogService.info('operations.dialogs.noRowSelectedError');
 			}
 		};
 
@@ -231,25 +140,30 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
-					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
 				width         : 160
 			},
 			{
+				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				field         : 'begin',
+				editable      : false,
+				valueFormatter: function (params) {
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
+				},
+				sort          : 'desc',
+				width         : 160
+			},
+
+			{
 				headerName    : $filter('translate')('operations.driversTimeLog.end'),
 				field         : 'end',
 				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
 				valueFormatter: function (params) {
-					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
+					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 160
 			},
 			{

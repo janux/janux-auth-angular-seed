@@ -1,0 +1,137 @@
+md-sidenav.md-sidenav-right.sidebar(md-component-id="driverTimeEntrySideNav" md-whiteframe="4" md-disable-close-events ng-class="{ 'bigpanel': bigpanel}")
+	md-toolbar(style="background:none;")
+		h1.md-toolbar-tools
+			button.btn.hide-mobile(aria-label="Expand" ng-click='addRemoveExpandClass()')
+				i.fa.fa-expand
+			span(flex)
+			button.btn(aria-label="New" ng-click="acceptTimeEntry()")
+				i.fa.fa-check
+			button.btn(aria-label="Close" ng-click="toggleSideNav()")
+				i.fa.fa-check
+	md-content.panel-form
+		form(name="driverTimeEntrySideNav")
+			.container-flex-form-panel
+				.spanel-form-left(class='spanel-form-left-100w')
+					.container-flex-form-panel
+						.an-material.nopadding
+							md-autocomplete.full-panel(md-no-cache='false',
+							md-items="item in staffSearch(lbSearch.staff) | orderBy:'resource.name.last'",
+							md-menu-container-class='autocomplete-options-container-wider'
+							md-selected-item='form.staff',
+							md-search-text='lbSearch.staff',
+							md-selected-item-change='staffSelectedItemChange(item)',
+							md-item-text='item.resource.name.last+" "+item.resource.name.maternal+ " " +item.resource.name.first+" " + item.resource.name.middle',
+							md-min-length='0',
+							md-floating-label="{{ 'operations.driversTimeLog.staff' | translate }}")
+								md-item-template
+									span(md-highlight-text='lbSearch.staff', md-highlight-flags='^i') {{item.resource.name.last+' '+item.resource.name.maternal + ' '+ item.resource.name.first+' ' + item.resource.name.middle}}
+
+					.container-flex-form-panel
+						.an-material.nopadding
+							md-autocomplete.full-panel(md-no-cache='false',
+							ng-disabled='timeEntryUpdate!=null || operaitionIdInsert!=null',
+							md-items='item in opsSearch(lbSearch.operation) | orderBy : ["-start"]',
+							md-menu-container-class='autocomplete-options-container-wider'
+							md-selected-item='form.operation',
+							md-search-text-change='opsSearchTextChange(lbSearch.operation)',
+							md-search-text='lbSearch.operation',
+							md-item-text='item.name',
+							md-min-length='0',
+							md-floating-label="{{ 'operations.driversTimeLog.operation' | translate }}")
+								md-item-template
+									span(md-highlight-text='lbSearch.operation', md-highlight-flags='^i') {{item.name}}
+
+
+					.container-flex-form-panel
+						.an-material.nopadding
+							md-input-container.full-panel
+								h4.form-label
+									| {{ 'operations.driversTimeLog.begin' | translate }}
+								md-datepicker(ng-model='form.startForm'
+								ng-change='calculateDates()')
+
+
+					.fieldset-flex(style="padding-top:15px")
+						.an-material.nopadding
+							md-input-container.full-panel
+								label {{ 'operations.driversTimeLog.beginHour' | translate }}
+								input(mdc-datetime-picker=''
+								date='false'
+								placeholder='Time'
+								time='true'
+								show-todays-date=''
+								minutes='true'
+								format='HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='form.startHourForm'
+								ng-model-options="{ debounce: 1000 }"
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}'
+								ng-change='calculateDates()')
+
+						.an-material.nopadding
+							md-input-container(md-is-error="false").full-panel
+								label {{ 'operations.driversTimeLog.endHour' | translate }}
+								input(mdc-datetime-picker=''
+								ng-required='false'
+								date='false'
+								placeholder='Time'
+								time='true'
+								show-todays-date=''
+								minutes='true'
+								min-date='form.startHourForm'
+								format='HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='form.endHourForm'
+								ng-model-options="{ debounce: 1000 }"
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}'
+								ng-change='calculateDates()'
+								class=" md-input")
+
+						// .an-material.nopadding
+						// 	h4.form-label
+						// 		| {{ 'operations.driversTimeLog.hours' | translate }}: {{form.differenceTimeForm}}
+
+
+					.container-flex-form-panel
+						.an-material.nopadding
+							md-input-container.full-panel
+								label {{ 'operations.driversTimeLog.absence' | translate }}
+								md-select(ng-model='form.absence')
+									md-option(value='')
+									md-option(value='D') {{ 'operations.driversTimeLog.absenceOptions.D' | translate }}
+									md-option(value='V') {{ 'operations.driversTimeLog.absenceOptions.V' | translate }}
+									md-option(value='PS') {{ 'operations.driversTimeLog.absenceOptions.PS' | translate }}
+									md-option(value='F') {{ 'operations.driversTimeLog.absenceOptions.F' | translate }}
+									md-option(value='PC') {{ 'operations.driversTimeLog.absenceOptions.PC' | translate }}
+									md-option(value='I') {{ 'operations.driversTimeLog.absenceOptions.I' | translate }}
+									md-option(value='NO_SERVICE_PROVIDED') {{ 'operations.driversTimeLog.absenceOptions.NO_SERVICE_PROVIDED' | translate }}
+
+					// show only to debug
+					//.element
+					//	md-input-container
+					//		div fechas  {{form.start | date:"short"}}  - {{form.end | date:"short"}}
+					//		div fechas  {{form.startHourForm | date:"short"}}  - {{form.endHourForm | date:"short"}}
+
+
+				h4.form-label {{ 'operations.driversTimeLog.comment' | translate }}
+				textarea(name="special-ops-description"
+				ng-model="form.location"
+				markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
+				on-fullscreen="onFullScreenCallback()"
+				on-fullscreen-exit="onFullScreenExitCallback()"
+				rows="15")
+

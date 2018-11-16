@@ -225,7 +225,8 @@ module.exports =
 
 			operationService.update(operation).then(function (result) {
 				console.log('Updated operation', result);
-				$state.go('services.list');
+				//$state.go('services.list');
+				$scope.editMode = false;
 			});
 		};
 

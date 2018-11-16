@@ -303,6 +303,9 @@
 			"comment": "Comment",
 			"filterLabel": "List:",
 			"absence": "Absence",
+			"hours": "Hours",
+			"beginHour": "Start",
+			"endHour": "End",
 			"absenceOptions": {
 				"D": "Break (D)",
 				"V": "Holidays (V)",

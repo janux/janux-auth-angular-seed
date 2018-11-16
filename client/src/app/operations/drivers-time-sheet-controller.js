@@ -126,87 +126,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		};
 
-		function handleAbsence(timeEntry, absence) {
-			// If SF, then we must to set an empty value.
-			if (absence === 'NO_SERVICE_PROVIDED') {
-				timeEntry.extras = 'NO_SERVICE_PROVIDED';
-				timeEntry.resources = [];
-				timeEntry.billable = false;
-			} else if (absence === 'SF') {
-				timeEntry.resources[0].absence = '';
-				timeEntry.billable = true;
-				timeEntry.resources[0].type = 'DRIVER';
-			} else if (_.isNil(absence) || absence.trim() === '') {
-				timeEntry.resources[0].absence = '';
-				timeEntry.billable = true;
-				timeEntry.resources[0].type = 'DRIVER';
-			} else {
-				timeEntry.resources[0].absence = absence;
-				timeEntry.billable = false;
-				timeEntry.resources[0].type = 'DRIVER';
-			}
-			return timeEntry;
-		}
-
-
-		// Add new record
-		$scope.addRow = function () {
-			// Selected person
-			if ($scope.lbRow.absence === 'NO_SERVICE_PROVIDED' || !!$scope.lbRow.staff) {
-				if (!!$scope.lbRow.operation) {
-					if (!!$scope.driverTimeSheet.$valid) {
-						var begin = moment($scope.lbRow.start);
-						var end = '', endToInsert;
-
-						if (_.isNil($scope.lbRow.end) === false) {
-							end = moment($scope.lbRow.end);
-							endToInsert = end.toDate();
-
-							if (begin > end) {
-								infoDialog('operations.dialogs.endDateError');
-								return;
-							}
-						}
-
-						var guardTimeEntryToInsert = {
-							'resources'  : [_.clone($scope.lbRow.staff)],
-							'principals' : [],
-							'attributes' : [],
-							'type'       : 'DRIVER',
-							'comment'    : $scope.lbRow.location,
-							'begin'      : begin.toDate(),
-							'end'        : endToInsert,
-							'billable'   : true,
-							'idOperation': $scope.lbRow.operation.id
-						};
-
-
-						guardTimeEntryToInsert = handleAbsence(guardTimeEntryToInsert, $scope.lbRow.absence);
-
-						timeEntryService.insert(guardTimeEntryToInsert).then(function () {
-							$scope.findTimeEntries($scope.periodFilterKey);
-
-							// Wait before performing the form reset
-							$timeout(function () {
-								initRowModel();
-								$scope.driverTimeSheet.$setUntouched(true);
-								$scope.driverTimeSheet.$setPristine(true);
-								// Go to last page
-								// $scope.gridOptions.api.paginationGoToLastPage();
-							}, 10);
-						});
-					}
-				} else {
-					infoDialog('operations.dialogs.invalidOperation');
-				}
-			} else {
-				infoDialog('operations.dialogs.invalidStaff');
-			}
+		$scope.insertNewTimeEntry = function () {
+			$scope.gridOptions.api.stopEditing();
+			$rootScope.$emit(config.timeEntry.driver.events.setInsertMode);
 		};
 
+
 		function deleteConfirmed(rowsToDelete) {
-
-
 			var timeEntryIds = _.map(rowsToDelete, 'id');
 			timeEntryService.removeByIds(timeEntryIds).then(function () {
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
@@ -247,7 +173,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName  : $filter('translate')('operations.driversTimeLog.staff'),
 				field       : 'staff',
-				editable    : true,
+				editable    : false,
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter : function (params) {
 					var result;
@@ -266,7 +192,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName  : $filter('translate')('operations.driversTimeLog.operation'),
 				field       : 'operation',
-				editable    : true,
+				editable    : false,
 				// cellRenderer: agGridComp.operationCellRenderer,
 				valueGetter : function (params) {
 					return params.data.operation.name;
@@ -279,7 +205,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName  : $filter('translate')('operations.driversTimeLog.client'),
 				field       : 'code',
-				editable    : true,
+				editable    : false,
 				cellEditor  : agGridComp.clientCellUpdater,
 				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'},
@@ -296,7 +222,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
 				field         : 'begin',
-				editable      : true,
+				editable      : false,
 				filter        : 'date',
 				filterParams  : {
 					newRowsAction   : 'keep',
@@ -314,7 +240,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.end'),
 				field         : 'end',
-				editable      : true,
+				editable      : false,
 				filter        : 'date',
 				filterParams  : {
 					newRowsAction: 'keep',
@@ -329,14 +255,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.duration'),
 				field     : 'duration',
-				editable  : true,
+				editable  : false,
 				cellEditor: agGridComp.durationCellUpdater,
 				width     : 95
 			},
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.comment'),
 				field         : 'comment',
-				editable      : true,
+				editable      : false,
 				cellEditor    : agGridComp.commentCellEditor,
 				cellStyle     : {
 					'white-space': 'normal'
@@ -350,7 +276,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
 				field         : 'absence',
-				editable      : true,
+				editable      : false,
 				cellEditor    : agGridComp.driverAbsenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';
@@ -397,9 +323,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			{
 				headerName     : '',
 				cellRenderer   : agGridComp.checkBoxRowSelection,
-				cellEditor     : agGridComp.rowActions,
+				// cellEditor     : agGridComp.rowActions,
 				headerComponent: agGridComp.deleteRowsHeaderComponent,
-				editable       : true,
+				editable       : false,
 				field          : 'selected',	// field needed to avoid ag-grid warning
 				width          : 80
 			}
@@ -442,46 +368,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					$scope.gridOptions.onFilterChanged();
 				}
 			},
-			onRowEditingStarted      : function () {
+			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
-				// console.log('Row edition started', rowObj);
+				console.debug('Row edition started', rowObj);
+				// Send the event to the side panel indicating the user wants to update the time entry.
+				$rootScope.$emit(config.timeEntry.driver.events.setUpdateMode, rowObj.data);
 			},
-			onRowValueChanged        : function (rowObj) {
-				// console.log('Row data changed', rowObj);
+			onRowValueChanged        : function () {
 
-				var endToUpdate;
-
-				if (rowObj.data.end) {
-					endToUpdate = moment(rowObj.data.end).toDate();
-				}
-
-				var resource = _.clone(rowObj.data.staff);
-				// TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-				delete resource.opId;
-
-				var timeEntryToUpdate = {
-					'id'         : rowObj.data.id,
-					'resources'  : [_.clone(resource)],
-					'principals' : [],
-					'attributes' : [],
-					'type'       : 'DRIVER',
-					'comment'    : rowObj.data.comment,
-					'begin'      : moment(rowObj.data.begin).toDate(),
-					'end'        : endToUpdate,
-					'billable'   : true,
-					'idOperation': rowObj.data.operation.id
-				};
-
-				// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
-				timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
-
-
-				timeEntryService.update(timeEntryToUpdate).then(function () {
-					// $scope.findTimeEntries($scope.periodFilterKey);
-					// infoDialog('Time entry successfully updated');
-				}).finally(function () {
-					$scope.findTimeEntries($scope.periodFilterKey);
-				});
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
@@ -495,9 +389,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
 				// console.log('savedFilters' + JSON.stringify(savedFilters));
 			}
-			// components:{
-			// 	dateComponent: agGridComp.dateFilter
-			// }
+
 		};
 
 		$scope.findTimeEntries = function (periodKey) {
@@ -520,11 +412,30 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
-		//
-		// End of AG-Grid
-		//
+
+		/*****
+		 * EVENTS.
+		 * Given the time entries are modified using a different controller the following events are defined.
+		 * In order to know when the user modified the time entry.
+		 *****/
+
+		/**
+		 * This event is captured here when the user has inserted or updated successfully a time entry using the side panel.
+		 */
+		$scope.$on(config.timeEntry.driver.events.doneInsertOrUpdate, function () {
+			$scope.findTimeEntries($scope.periodFilterKey);
+			$scope.gridOptions.api.stopEditing();
+		});
+
+		/**
+		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
+		 */
+		$scope.$on(config.timeEntry.driver.events.canceled, function () {
+			$scope.gridOptions.api.stopEditing();
+		});
+
 	}];

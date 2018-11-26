@@ -304,8 +304,8 @@
 			"filterLabel": "Ver:",
 			"absence": "Falta",
 			"hours": "Horas",
-			"beginHour": "Inicio",
-			"endHour": "Fin",
+			"beginHour": "Hora inicio",
+			"endHour": "Hora fin",
 			"absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",
@@ -329,6 +329,9 @@
 			"absence": "Falta",
 			"extras": "Extras",
 			"isExternal": "Externo",
+			"hoursBilled":"Horas",
+			"beginHour":"Hora inicio",
+			"endHour":"Hora fin",
 			"extraOptions": {
 				"AF": "Adicional facturado (AF)",
 				"A": "Adicional no facturado (A)",

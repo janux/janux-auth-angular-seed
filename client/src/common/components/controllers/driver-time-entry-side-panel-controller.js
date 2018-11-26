@@ -33,7 +33,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			$scope.form = {
 				staff             : '',
 				operation         : '',
-				start             : undefined,
+				start             : today,
 				end               : undefined,
 				// The following dates and showed in the Form, with this info the controller calculates
 				// the correct dates.

@@ -21,6 +21,8 @@ module.exports =
 		var timeEntries = [];	// Global time entries object
 		var invoiceItemName = 'Total a facturar';
 
+		var operationsWithTimeEntries;
+
 		$scope.cl = clientsList;
 		$scope.editMode = false;
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
@@ -144,8 +146,7 @@ module.exports =
 			} else if (!_.isDate(operation.start)) {
 				infoDialog('services.specialForm.dialogs.startEmpty');
 				return;
-			}
-			else if (_.isDate(operation.end)) {
+			} else if (_.isDate(operation.end)) {
 				if (operation.start > operation.end) {
 					infoDialog('operations.dialogs.endDateError');
 					return;
@@ -179,7 +180,7 @@ module.exports =
 
 			operation.client = operation.client.object;
 			operation.interestedParty = operation.interestedParty.object;
-			operation.principals = _.chain(operation.principal)
+			operation.principals = _.chain(operation.principals)
 				.map('object')
 				.filter(function (principal) {
 					return (!_.isNil(principal));
@@ -565,14 +566,14 @@ module.exports =
 
 		// Load time entries
 		findTimeEntries = function (period) {
-			var operationsWithTimeEntries;
+
 			if (_.isString(period)) {
 				period = timePeriods.specialOps[period];
 			}
 			// Load data
 			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
 				operationsWithTimeEntries = result;
-				timeEntries = result[0].schedule;
+				timeEntries = result.length > 0 && _.isArray(result[0].schedule) ? result[0].schedule : [];
 				console.debug('Loaded time entries', timeEntries);
 				const ids = _.map(timeEntries, function (o) {
 					return o.id;
@@ -767,7 +768,7 @@ module.exports =
 		};
 
 		$scope.generateReport = function () {
-			invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber);
+			invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber, operation);
 		};
 
 		$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {

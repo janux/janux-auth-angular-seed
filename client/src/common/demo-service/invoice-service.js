@@ -267,7 +267,7 @@ module.exports =
 					[toJSONItemTimeEntry(invoiceItemTE)]
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
-				},function (err) {
+				}, function (err) {
 					return handleError(err);
 				});
 			},
@@ -279,7 +279,7 @@ module.exports =
 					[expensesCodes]
 				).then(function (resp) {
 					return resp.data.result;
-				},function (err) {
+				}, function (err) {
 					return handleError(err);
 				});
 			},
@@ -294,7 +294,14 @@ module.exports =
 				return timeEntries;
 			},
 
-			specialOpsInvoiceReport: function (invoiceNumber) {
+			/**
+			 * Generate the invoice report.
+			 * @param invoiceNumber The invoice number.
+			 * @param operation The operation associated to the invoice.
+			 */
+			specialOpsInvoiceReport: function (invoiceNumber, operation) {
+				var now = moment();
+				var invoiceFileName = 'anexo-factura-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx';
 				var headers = {
 					'Content-type': 'application/json',
 					'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -314,11 +321,28 @@ module.exports =
 					data        : {invoiceNumber: invoiceNumber, timeZone: timeZone},
 					headers     : headers
 				}).then(function (result) {
-					var now = moment();
+
 					var blob = new Blob([result.data], {
 						type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 					});
-					FileSaver.saveAs(blob, 'anexo-factura-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx');
+					// Define the name of
+					if (!_.isNil(operation) && operation.type === 'SPECIAL_OPS') {
+						var dateString = '';
+						var clientName;
+						var principalName = '';
+						console.debug("Replacing name with operation %o", operation);
+						if (_.isDate(operation.end)) {
+							dateString = moment(operation.end).format('YYYYMMDD');
+						}
+						clientName = _.isString(operation.client.object.code) && operation.client.object.code !== '' ? operation.client.object.code : operation.client.object.name;
+						if (_.isArray(operation.principals) && operation.principals.length > 0) {
+							const principal = operation.principals[0];
+							console.debug("Principal %o", principal);
+							principalName = principal.object.name.first;
+						}
+						invoiceFileName = dateString + '.' + clientName + '-' + principalName + '.xlsx';
+					}
+					FileSaver.saveAs(blob, invoiceFileName);
 				});
 			}
 

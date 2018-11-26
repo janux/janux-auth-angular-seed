@@ -801,6 +801,15 @@ angular.module('commonComponents', [])
 		};
 	})
 
+	.directive('guardsSidePanel', function () {
+		return {
+			scope      : true,
+			restrict   : 'E',
+			templateUrl: 'common/components/templates/guard-time-entry-side-panel.html',
+			controller : require("./controllers/guard-time-entry-side-panel-controller")
+		};
+	})
+
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};
 		return {

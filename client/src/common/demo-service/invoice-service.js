@@ -338,14 +338,13 @@ module.exports =
 						if (_.isArray(operation.principals) && operation.principals.length > 0) {
 							const principal = operation.principals[0];
 							console.debug("Principal %o", principal);
-							principalName = principal.object.name.first;
+							principalName = principal.object && principal.object.name ? principal.object.name.first : '';
 						}
-						invoiceFileName = dateString + '.' + clientName + '-' + principalName + '.xlsx';
+						invoiceFileName = dateString + '.' + clientName + (principalName !== '' ? '-' + principalName : "") + '.xlsx';
 					}
 					FileSaver.saveAs(blob, invoiceFileName);
 				});
 			}
-
 		};
 		return service;
 	}];

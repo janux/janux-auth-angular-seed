@@ -30,16 +30,13 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
-
 			timeEntryService.timeEntryReport(ids);
-
 		};
 
 		$scope.insertNewTimeEntry = function () {
 			$scope.gridOptions.api.stopEditing();
 			$rootScope.$emit(config.timeEntry.driver.events.setInsertMode);
 		};
-
 
 		function deleteConfirmed(rowsToDelete) {
 			var timeEntryIds = _.map(rowsToDelete, 'id');

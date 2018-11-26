@@ -304,8 +304,8 @@
 			"filterLabel": "List:",
 			"absence": "Absence",
 			"hours": "Hours",
-			"beginHour": "Start",
-			"endHour": "End",
+			"beginHour": "Begin hour",
+			"endHour": "End hour",
 			"absenceOptions": {
 				"D": "Break (D)",
 				"V": "Holidays (V)",
@@ -329,6 +329,9 @@
 			"absence": "Absence",
 			"extras": "Extras",
 			"isExternal": "External",
+			"hoursBilled":"Hours",
+			"beginHour":"Begin hour",
+			"endHour":"End hour",
 			"extraOptions": {
 				"AF": "Additional invoiced (AF)",
 				"A": "Additional not invoiced (A)",

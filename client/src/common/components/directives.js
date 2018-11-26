@@ -327,7 +327,7 @@ angular.module('commonComponents', [])
 						vehicles = _.filter(resources, function (o) {
 							return o.type === 'VEHICLE';
 						});
-						console.log('vehicles', vehicles);
+						console.debug('vehicles', vehicles);
 					});
 
 					var calculateName = function () {
@@ -669,7 +669,7 @@ angular.module('commonComponents', [])
 					// does not have access to usesRole via $rootScope.
 					$scope.userRole = $rootScope.userRole;
 
-					// Giver the value showinvoicemanual comes from a directive.
+					// Given the value showinvoicemanual comes from a directive.
 					// We need to compare the value a  string.
 					if ($scope.showinvoicemanual === 'true') {
 						$scope.operationStatus = operationService.generateStatus($scope.data, $scope.invoices);

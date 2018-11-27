@@ -25,7 +25,7 @@ side-bar
 					md-icon.fa.fa-plus-square.fa-lg
 
 
-		.container-body.operations-page.spacing-bottom
+		.container-body.operations-page
 			md-content.tabs-glarus
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools
@@ -127,9 +127,9 @@ side-bar
 				.container-body(ng-show='currentNavItem=="time-sheet"')
 					.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
 
-				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:150px;" )
+				.container-body(ng-show='currentNavItem=="invoices"' style="padding-bottom:150px;" )
 					invoice(invoices = "invoices" style='width: 100%')
 
-				.container-body(ng-show='currentNavItem=="invoiceDetail"', style="padding-bottom:150px;" )
+				.container-flex-form(ng-show='currentNavItem=="invoiceDetail"')
 					invoice-detail(invoice = 'invoice' style='width: 100%')
 footer-Janux

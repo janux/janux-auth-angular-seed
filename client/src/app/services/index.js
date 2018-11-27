@@ -65,7 +65,7 @@ require('angular').module('appServices', [
 	// Edit special service
 	.state('services.view-special', {
 		url: '/services-view-special/{id}',
-		templateUrl: 'app/services/view-operation.html',
+		templateUrl: 'app/services/view-special.html',
 		authRequired: true,
 		controller: require('./view-special-controller'),
 		resolve: {
@@ -87,7 +87,7 @@ require('angular').module('appServices', [
 	//Edit research service.
 	.state('services.view-consulting', {
 		url: '/services-view-consulting/{id}',
-		templateUrl: 'app/services/view-operation.html',
+		templateUrl: 'app/services/view-special.html',
 		authRequired: true,
 		controller: require('./view-special-controller'),
 		resolve: {

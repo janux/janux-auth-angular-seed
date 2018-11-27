@@ -1,60 +1,60 @@
 //Header data.
+.section-form(style="padding-bottom:40px")
+	fieldset.fieldset-flex
+		.fieldset-flex
+			.an-material.nopadding
+				md-input-container
+					label {{ 'services.invoice.invoiceNumber' | translate}}
+					input(ng-model='invoice.invoiceNumber' ng-disabled='true')
+			.an-material.nopadding
+				md-input-container
+					label {{'services.invoice.status' | translate}}
+					md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
+						md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
+						md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+			.an-material.nopadding
+				md-input-container
+					md-checkbox(ng-model='invoice.isPaid' ng-disabled='!editModeInvoiceDetail || invoice.status!=="ended"')
+						| {{'services.invoice.isPaid' | translate}}
+	md-divider.divider-line-glarus
+	// Detail person
+	div
+		strong {{'services.invoice.invoiceDetail.staff' | translate}}
+	div(style='height:300px;')
+		invoice-detail-person(invoice='invoice')
 
-fieldset.fieldset-flex
-	.fieldset-flex
-		.an-material.nopadding
-			md-input-container
-				label {{ 'services.invoice.invoiceNumber' | translate}}
-				input(ng-model='invoice.invoiceNumber' ng-disabled='true')
-		.an-material.nopadding
-			md-input-container
-				label {{'services.invoice.status' | translate}}
-				md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
-					md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
-					md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
-		.an-material.nopadding
-			md-input-container
-				md-checkbox(ng-model='invoice.isPaid' ng-disabled='!editModeInvoiceDetail || invoice.status!=="ended"')
-					| {{'services.invoice.isPaid' | translate}}
-md-divider.divider-line-glarus
-// Detail person
-div
-	strong {{'services.invoice.invoiceDetail.staff' | translate}}
-div(style='height:40%')
-	invoice-detail-person(invoice='invoice')
+	div(style="text-align: right")
+		strong {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (invoice.totalPerson | currency) }}
+		br
+		label {{ 'services.invoice.invoiceDetail.discountPercentage' | translate}}
+		input(type="number" ng-model='invoice.discountPersonPercentage' ng-disabled='!editModeInvoiceDetail' ng-hide='!editModeInvoiceDetail' min="0" max="100")
+		strong(ng-show='!editModeInvoiceDetail') {{invoice.discountPersonPercentage }}
+		strong %
+		br
+		strong {{'services.invoice.invoiceDetail.totalPersonAfterDiscount' | translate}}:{{(invoice.totalPersonAfterDiscount | currency)}}
+	md-divider.divider-line-glarus
 
-div(style="text-align: right")
-	strong {{'services.invoice.invoiceDetail.subTotalPerson' | translate}}:{{ (invoice.totalPerson | currency) }}
-	br
-	label {{ 'services.invoice.invoiceDetail.discountPercentage' | translate}}
-	input(type="number" ng-model='invoice.discountPersonPercentage' ng-disabled='!editModeInvoiceDetail' ng-hide='!editModeInvoiceDetail' min="0" max="100")
-	strong(ng-show='!editModeInvoiceDetail') {{invoice.discountPersonPercentage }}
-	strong %
-	br
-	strong {{'services.invoice.invoiceDetail.totalPersonAfterDiscount' | translate}}:{{(invoice.totalPersonAfterDiscount | currency)}}
-md-divider.divider-line-glarus
+	// Detail vehicle.
+	div
+		strong {{'services.invoice.invoiceDetail.vehicles' | translate}}
+	div(style='height:300px;')
+		invoice-detail-vehicle(invoice='invoice')
+	div(style="text-align: right")
+		strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (invoice.totalVehicle | currency) }}
+		br
+		strong {{'services.invoice.invoiceDetail.totalBeforeExpenses' | translate}}:{{(invoice.totalBeforeExpenses | currency)}}
+	md-divider.divider-line-glarus
 
-// Detail vehicle.
-div
-	strong {{'services.invoice.invoiceDetail.vehicles' | translate}}
-div(style='height:40%')
-	invoice-detail-vehicle(invoice='invoice')
-div(style="text-align: right")
-	strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (invoice.totalVehicle | currency) }}
-	br
-	strong {{'services.invoice.invoiceDetail.totalBeforeExpenses' | translate}}:{{(invoice.totalBeforeExpenses | currency)}}
-md-divider.divider-line-glarus
+	// Detail expenses
+	div
+		strong {{'services.invoice.invoiceDetail.expenses' | translate}}
+	div(style='height:300px;')
+		invoice-detail-expense(invoice='invoice')
+	div(style="text-align: right; margin-top:20px")
+		strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (invoice.totalExpenses | currency) }}
+	md-divider.divider-line-glarus
 
-// Detail expenses
-div
-	strong {{'services.invoice.invoiceDetail.expenses' | translate}}
-div(style='height:30%')
-	invoice-detail-expense(invoice='invoice')
-div(style="text-align: right; margin-top:20px")
-	strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (invoice.totalExpenses | currency) }}
-md-divider.divider-line-glarus
+	// Discounts and totals
 
-// Discounts and totals
-
-div(style="text-align: right;height:20%" )
-	strong {{'services.invoice.invoiceDetail.grandTotal' | translate}}:{{(invoice.grandTotal | currency)}}
+	div(style="text-align: right;height:20%" )
+		strong {{'services.invoice.invoiceDetail.grandTotal' | translate}}:{{(invoice.grandTotal | currency)}}

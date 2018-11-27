@@ -1,18 +1,38 @@
-md-dialog
-	md-dialog-content
-		.md-dialog-content
-			md-content
-				md-input-container
+//- md-dialog
+//- 	md-dialog-content
+//- 		.md-dialog-content
+//- 			md-content(style="overflow:hidden")
+//- 				md-input-container
+//- 					label {{ 'services.invoice.invoiceNumber' | translate }}
+//- 					input(ng-model='newInvoiceNumber' type="text", required='')
+
+//- 				md-input-container
+//- 					md-datepicker(
+//- 						lang='{{ lang }}',
+//- 						ng-model="newInvoiceDate",
+//- 						format='YYYY-MM-DD',
+//- 						md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}")
+
+//- 	md-dialog-actions
+//- 		button.btn.btn-ok(ng-click='createNewInvoice()') {{ 'label.ok' | translate }}
+//- 		button.btn.btn-cancel(ng-click='closeAddNewInvoice()') {{ 'label.cancel' | translate }}
+.modal-body(style="overflow:hidden")
+	.section-form
+		.fieldset-flex.flex-mobile(style="padding-right:20px;")
+			.an-material.nopadding
+				md-input-container.full
 					label {{ 'services.invoice.invoiceNumber' | translate }}
 					input(ng-model='newInvoiceNumber' type="text", required='')
 
-				md-input-container
-					md-datepicker(
-						lang='{{ lang }}',
-						ng-model="newInvoiceDate",
-						format='YYYY-MM-DD',
-						md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}")
+			.an-material.nopadding
+				md-datepicker.full(
+					lang='{{ lang }}',
+					ng-model="newInvoiceDate",
+					format='YYYY-MM-DD',
+					md-placeholder="{{ 'services.invoice.invoiceDate' | translate }}")
 
-	md-dialog-actions
-		button.btn.btn-ok(ng-click='createNewInvoice()') {{ 'label.ok' | translate }}
-		button.btn.btn-cancel(ng-click='closeAddNewInvoice()') {{ 'label.cancel' | translate }}
+.modal-footer
+
+	button.btn.btn-ok(ng-click='createNewInvoice()') {{ 'label.ok' | translate }}
+	| &nbsp;
+	button.btn.btn-cancel(ng-click='closeAddNewInvoice()') {{ 'label.cancel' | translate }}

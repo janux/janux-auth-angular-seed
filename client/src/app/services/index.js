@@ -87,18 +87,15 @@ require('angular').module('appServices', [
 	//Edit research service.
 	.state('services.view-consulting', {
 		url: '/services-view-consulting/{id}',
-		templateUrl: 'app/services/view-special.html',
+		templateUrl: 'app/services/view-consulting.html',
 		authRequired: true,
-		controller: require('./view-special-controller'),
+		controller: require('./view-consulting-controller'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();
 			}],
 			operation: ['operationService','$stateParams', function (operationService, $stateParams) {
 				return operationService.findById($stateParams.id);
-			}],
-			driversAndOps: ['operationService', function (operationService) {
-				return operationService.findDriversAndSpecialOps();
 			}],
 			invoices: ['invoiceService', '$stateParams', function (invoiceService, $stateParams) {
 				return invoiceService.findByIdOperation($stateParams.id);

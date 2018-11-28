@@ -3,31 +3,24 @@
 var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
-var timePeriods = require('common/time-periods');
+
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, dialogService) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'invoices', 'dialogService', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, localStorageService, $timeout, nameQueryService, jnxStorage, invoices, dialogService) {
 
 		console.debug('Operation', operation);
 
-		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
-		var findTimeEntries;
 		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 		var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
-		var timeEntries = [];	// Global time entries object
-		var invoiceItemName = 'Total a facturar';
-
-		var operationsWithTimeEntries;
 
 		$scope.cl = clientsList;
 		$scope.editMode = false;
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 		$scope.editModeInvoiceDetail = false;
-		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
@@ -37,48 +30,17 @@ module.exports =
 		// console.debug('Invoices', invoices);
 
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
-		$scope.driversAndOps = driversAndOps;
 		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
 
-		$scope.periodChange = function () {
-			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
-			findTimeEntries($scope.periodFilterKey);
-		};
-
-
-		var loadTimeEntries = function () {
-
-			var period;
-
-			if (!_.isNil(operation.end)) {
-				period = {
-					from: function () {
-						return moment().subtract(100, 'year').startOf('day').toDate();
-					},
-					to  : function () {
-						return moment().add(100, 'year').startOf('day').toDate();
-					}
-				};
-				$scope.showTimeSheetPeriodFilterList = false;
-			} else {
-				var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-				period = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-			}
-
-			findTimeEntries(period);
-		};
 
 		$scope.changeTab = function (tab) {
 			$scope.currentNavItem = tab;
 			if (tab !== 'invoiceDetail') {
 				jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
 			}
-			if (tab === 'time-sheet') {
-				$scope.showTimeSheetPeriodFilterList = true;
-				loadTimeEntries();
-			}
+
 		};
 
 		var updateInvoiceList = function () {
@@ -141,7 +103,6 @@ module.exports =
 				return;
 			}
 
-
 			operation.client = operation.client.object;
 			operation.interestedParty = operation.interestedParty.object;
 			operation.principals = _.chain(operation.principals)
@@ -186,8 +147,6 @@ module.exports =
 
 			console.debug('Operation to update', operation);
 
-			console.debug('Operation to save', operation);
-
 			operationService.update(operation).then(function (result) {
 				console.debug('Updated operation', result);
 				//$state.go('services.list');
@@ -216,42 +175,6 @@ module.exports =
 			$scope.$broadcast(config.invoice.events.invoiceEditModeDisabled);
 		};
 
-		function deleteConfirmed(rowsToDelete) {
-
-
-			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
-				// dialogService.info('The records were deleted correctly');
-				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
-			});
-		}
-
-		// Remove selected records
-		var removeSelected = function () {
-			var selectedData = $scope.gridOptions.api.getSelectedRows();
-			if (selectedData.length > 0) {
-				$modal.open({
-					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
-					controller : ['$scope', '$modalInstance',
-						function ($scope, $modalInstance) {
-							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
-
-							$scope.ok = function () {
-								deleteConfirmed(selectedData);
-								$modalInstance.close();
-							};
-
-							$scope.cancel = function () {
-								$modalInstance.close();
-							};
-						}],
-					size       : 'md'
-				});
-			} else {
-				dialogService.info('operations.dialogs.noRowSelectedError');
-			}
-		};
-		$scope.removeSelected = removeSelected;
 
 		//
 		// Time sheet (AG-Grid)
@@ -430,11 +353,6 @@ module.exports =
 			onGridReady              : function () {
 				agGridSizeToFit();
 
-				// This function is defined to be able to trigger the deletion
-				// of the rows from the header component that does not have access
-				// to the scope.
-				$scope.gridOptions.api.deleteRows = removeSelected;
-
 				// Restore filter model.
 				var filterModel = jnxStorage.findItem(columnsFiltersKey, true);
 				if (!_.isNil(filterModel)) {
@@ -455,21 +373,22 @@ module.exports =
 				// rowObj.node.setRowHeight('45');
 				// $scope.gridOptions.api.onRowHeightChanged();
 			},
-			onRowValueChanged  : function () {
+
+			onRowValueChanged: function () {
 			},
-			localeTextFunc     : function (key, defaultValue) {
+			localeTextFunc   : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;
 				var value = $filter('translate')(gridKey);
 				return value === gridKey ? defaultValue : value;
 			},
-			onFilterChanged    : function () {
+			onFilterChanged  : function () {
 				// Save filters to local storage.
 				var savedFilters;
 				savedFilters = $scope.gridOptions.api.getFilterModel();
 				jnxStorage.setItem(columnsFiltersKey, savedFilters, true);
 				// console.debug('savedFilters' + JSON.stringify(savedFilters));
 			},
-			onRowSelected      : function () {
+			onRowSelected    : function () {
 				console.debug('Event onRowSelected');
 				// Only one refresh at a time
 				if (!refreshing) {
@@ -481,36 +400,6 @@ module.exports =
 				}
 			}
 		};
-
-		// Load time entries
-		findTimeEntries = function (period) {
-
-			if (_.isString(period)) {
-				period = timePeriods.specialOps[period];
-			}
-			// Load data
-			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
-				operationsWithTimeEntries = result;
-				timeEntries = result.length > 0 && _.isArray(result[0].schedule) ? result[0].schedule : [];
-				console.debug('Loaded time entries', timeEntries);
-				const ids = _.map(timeEntries, function (o) {
-					return o.id;
-				});
-				return invoiceService.findInvoiceNumbersByIdTimeEntries(ids);
-			}).then(function (result) {
-				// timeEntries = invoiceService.mapTimeEntryDataAndInvoices(timeEntries, result);
-				var mappedValuesForAgGrid = operationService.mapTimeEntryData(operationsWithTimeEntries);
-				var mappedValuesWithInvoiceInfo = invoiceService.mapTimeEntryDataAndInvoices(mappedValuesForAgGrid, result);
-				$scope.gridOptions.api.setRowData(mappedValuesWithInvoiceInfo);
-				agGridSizeToFit();
-			});
-		};
-		$scope.findTimeEntries = loadTimeEntries;
-
-		// If we are on time sheet tab initially
-		if ($scope.currentNavItem === 'time-sheet') {
-			loadTimeEntries();
-		}
 
 
 		$scope.$on('sideMenuSizeChange', function () {
@@ -555,136 +444,6 @@ module.exports =
 			$mdMenu.open(ev);
 		};
 
-		// Return true if time entries ids haven't been related to any invoice, otherwise return false
-		var checkTEBeforeInsertToInvoice = function (timeEntriesIds) {
-			return invoiceService.findInvoiceNumbersByIdTimeEntries(timeEntriesIds).then(function (result) {
-				// console.debug('Time entries related to invoice', result);
-				return _.every(result, function (timeEntry) {
-					return (_.isNil(timeEntry.invoice));
-				});
-			});
-		};
-
-		var agGridRowsToTE = function (selectedRows) {
-			var invoiceItemsTE = [];
-			var timeEntryIds = [];
-
-			// Map ag-grid rows into item time entry objects
-			selectedRows.forEach(function (agGridRow) {
-				invoiceItemsTE.push({
-					doNotInvoice       : false,
-					doNotInvoiceVehicle: false,
-					timeEntry          : _.find(timeEntries, {id: agGridRow.id}),
-					total              : 0
-				});
-				timeEntryIds.push(agGridRow.id);
-			});
-			return {timeEntryIds: timeEntryIds, invoiceItemsTE: invoiceItemsTE};
-		};
-
-		$scope.showAddToNewInvoicePopup = function () {
-			// Show popup.
-			$mdDialog.show({
-				clickOutsideToClose: true,
-				templateUrl        : 'app/services/add-new-invoice.html',
-				scope              : $scope,
-				preserveScope      : true,
-				controller         : ['$scope', '$mdDialog', 'invoiceService', 'config', function ($scope, $mdDialog, invoiceService, config) {
-					console.debug('config.invoice.status.inRevision', config.invoice.status.inRevision);
-					$scope.newInvoiceNumber = '';
-					$scope.newInvoiceDate = '';
-
-					$scope.closeAddNewInvoice = function () {
-						$mdDialog.hide();
-					};
-
-					$scope.createNewInvoice = function () {
-						var selectedRows = $scope.gridOptions.api.getSelectedRows();
-						if (selectedRows.length > 0) {
-							var agRowsToTE = agGridRowsToTE(selectedRows);
-
-							checkTEBeforeInsertToInvoice(agRowsToTE.timeEntryIds).then(function (checkTEResult) {
-								if (checkTEResult) {
-									if ($scope.newInvoiceNumber !== '') {
-										if ($scope.newInvoiceDate !== '') {
-											$mdDialog.hide();
-
-											var newInvoice = {
-												client            : operation.client.object,
-												invoiceNumber     : $scope.newInvoiceNumber,
-												invoiceDate       : $scope.newInvoiceDate,
-												comments          : '',
-												items             : [],
-												status            : config.invoice.status.inRevision,
-												discount          : 0,
-												discountPercentage: 0
-											};
-
-											var newItem = {
-												itemNumber : 1,
-												name       : invoiceItemName,
-												timeEntries: []
-											};
-
-											// Create invoice and add time entries
-											invoiceService.insertInvoiceAndItem(newInvoice, newItem).then(function (result) {
-												console.debug('Invoice created result', result);
-												invoiceService.insertInvoiceItemTimeEntry(newInvoice.invoiceNumber, newItem.name, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
-													console.debug('Inserted time entries', insertedTimeEntries);
-													$mdToast.show(
-														$mdToast.simple()
-															.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-															.position('top right')
-															.hideDelay(3000)
-													);
-													updateInvoiceList();
-												});
-											});
-										} else {
-											dialogService.info('services.invoice.dialogs.missingInvoiceDate');
-										}
-									} else {
-										dialogService.info('services.invoice.dialogs.missingInvoiceNumber');
-									}
-								} else {
-									dialogService.info('services.invoice.dialogs.insertTimeEntriesInvoiceError');
-								}
-							});
-						} else {
-							dialogService.info('services.invoice.dialogs.noRowsSelected');
-						}
-					};
-				}]
-			});
-		};
-
-		$scope.addTimeEntriesToInvoice = function (invoiceNumber) {
-			var selectedRows = $scope.gridOptions.api.getSelectedRows();
-			if (selectedRows.length > 0) {
-				var agRowsToTE = agGridRowsToTE(selectedRows);
-
-				checkTEBeforeInsertToInvoice(agRowsToTE.timeEntryIds).then(function (checkTEResult) {
-					if (checkTEResult) {
-						invoiceService.insertInvoiceItemTimeEntry(invoiceNumber, invoiceItemName, agRowsToTE.invoiceItemsTE).then(function (insertedTimeEntries) {
-							console.debug('Inserted invoice time entries', insertedTimeEntries);
-							$mdToast.show(
-								$mdToast.simple()
-									.textContent($filter('translate')('services.invoice.dialogs.insertTimeEntries'))
-									.position('top right')
-									.hideDelay(3000)
-							);
-							updatedSelectedInvoice(invoiceNumber);
-							updateInvoiceList();
-						});
-					} else {
-						dialogService.info('services.invoice.dialogs.insertTimeEntriesInvoiceError');
-					}
-				});
-			} else {
-				dialogService.info('services.invoice.dialogs.noRowsSelected');
-			}
-		};
-
 		$scope.generateReport = function () {
 			invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber, operation);
 		};
@@ -697,37 +456,4 @@ module.exports =
 			updateInvoiceList();
 		});
 
-		/*
-		* Special ops side panel
-		*/
-
-		$scope.insertNewTimeEntry = function () {
-			console.debug('Call to insertNewTimeEntry');
-			$scope.gridOptions.api.stopEditing();
-			// Sends an event to the side panel indicating the user wants to insert or update the
-			// time entry
-			$rootScope.$emit(config.timeEntry.specialOps.events.setInsertMode, $scope.operationId);
-		};
-
-		/*****
-		 * EVENTS.
-		 * Given the time entries are modified using a different controller the following events are defined.
-		 * In order to know when the user modified the time entry.
-		 *****/
-
-		/**
-		 * This event is captured here when the user has inserted or updated successfully a time entry using the side panel.
-		 */
-		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
-			findTimeEntries($scope.periodFilterKey);
-			// Update invoice list.
-			updateInvoiceList();
-		});
-
-		/**
-		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
-		 */
-		$scope.$on(config.timeEntry.specialOps.events.canceled, function () {
-			$scope.gridOptions.api.stopEditing();
-		});
 	}];

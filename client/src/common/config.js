@@ -338,6 +338,17 @@ require('angular').module('config', [])
 					doneInsertOrUpdate: "timeEntry.driver.doneInsertOrUpdateEvent",
 					canceled          : "timeEntry.driver.canceled"
 				}
+			},
+			attendance            : {
+				sidePanel: {
+					id: 'attendanceTimeEntrySideNav'
+				},
+				events   : {
+					setInsertMode     : "timeEntry.attendance.setInsertMode",
+					setUpdateMode     : "timeEntry.attendance.setUpdateModeEvent",
+					doneInsertOrUpdate: "timeEntry.attendance.doneInsertOrUpdateEvent",
+					canceled          : "timeEntry.attendance.canceled"
+				}
 			}
 		}
 	});

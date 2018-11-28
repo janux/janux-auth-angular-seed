@@ -12,9 +12,7 @@ side-bar
 				md-truncate
 					span.title-breadcrum(ui-sref='services' style='cursor:pointer;')
 						| {{ 'services.title' | translate }}
-					h2.title-bar-txt(ng-show='data.type==="SPECIAL_OPS"')
-						| {{ 'services.specialService' | translate }}: {{ data.name }}
-					h2.title-bar-txt(ng-show='data.type==="CONSULTING"')
+					h2.title-bar-txt()
 						| {{ 'services.consultingService' | translate }}: {{ data.name }}
 				span(flex)
 
@@ -38,17 +36,7 @@ side-bar
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
 
-
-
-						// .btn-row(ng-show='currentNavItem=="invoices"')
-						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","FINANCE");')
-						// 		button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
-						// 			i.fa.fa-plus-circle &nbsp;
-						// 			| {{ 'services.invoice.insertManual' | translate }}
-
 						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
-							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
-								md-icon.fa.fa-download.fa-lg
 							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 								i.fa.fa-check
 							button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')
@@ -67,25 +55,7 @@ side-bar
 						button.btn( ng-click='cancel()')
 							i.fa.fa-times
 
-					//.btn-row(ng-show='currentNavItem=="time-sheet"')
-					//	button.btn( ng-click='removeSelected()')
-					//		i.fa.fa-trash &nbsp;
-					//		| {{ 'services.delete' | translate }}
-					//
-					//	md-menu(md-position-mode="target-right target" md-offset="6 -50" ng-show='userRole.can("UPDATE","FINANCE");')
-					//		button.btn( aria-label="Add" ng-click='openAddToInvoiceMenu($mdMenu, $event);'  )
-					//			i.fa.fa-plus-circle &nbsp;
-					//			| {{ 'services.addToInvoice' | translate }}
-					//
-					//		md-menu-content
-					//			md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
-					//			md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
-					//	button.btn( ng-click='cancel()')
-					//		i.fa.fa-times
-
 					.btn-row(ng-show='currentNavItem=="invoiceDetail"')
-						button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
-							md-icon.fa.fa-download.fa-lg(style="color:white")
 						button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 							i.fa.fa-check
 						button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')

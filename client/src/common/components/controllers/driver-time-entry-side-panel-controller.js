@@ -152,6 +152,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		function getFormData() {
+			$scope.calculateDates();
 			var timeEntry;
 			var begin = $scope.form.start;
 			var end = $scope.form.end;
@@ -172,6 +173,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		}
 
 		function validateForm() {
+			$scope.calculateDates();
 			var result = true;
 			if (_.isNil($scope.form.staff) && $scope.form.absence !== 'NO_SERVICE_PROVIDED') {
 				dialogService.info('operations.dialogs.invalidStaff');
@@ -289,6 +291,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			} else {
 				$scope.form.end = undefined;
 				$scope.form.differenceTimeForm = undefined;
+				$scope.form.differenceTimeForm = '';
 			}
 		};
 

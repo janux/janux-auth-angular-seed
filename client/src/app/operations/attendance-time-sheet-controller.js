@@ -26,17 +26,17 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		var allStaff = driversAndOps.allPersonnelAvailableForSelection;
 
 
-		var initRowModel = function () {
-			$scope.lbRow = {
-				staff    : '',
-				operation: '',
-				start    : moment().startOf('day').format(dateTimeFormatString),
-				end      : undefined,
-				location : '',
-				absence  : ''
-			};
-		};
-		initRowModel();
+		// var initRowModel = function () {
+		// 	$scope.lbRow = {
+		// 		staff    : '',
+		// 		operation: '',
+		// 		start    : moment().startOf('day').format(dateTimeFormatString),
+		// 		end      : undefined,
+		// 		location : '',
+		// 		absence  : ''
+		// 	};
+		// };
+		// initRowModel();
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
@@ -113,63 +113,63 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 		};
 
-		function handleAbsence(timeEntry, absence) {
-			timeEntry.billable = false;
-			timeEntry.resources[0].absence = absence;
-			return timeEntry;
-		}
+		// function handleAbsence(timeEntry, absence) {
+		// 	timeEntry.billable = false;
+		// 	timeEntry.resources[0].absence = absence;
+		// 	return timeEntry;
+		// }
 
 
 		// Add new record
-		$scope.addRow = function () {
-			// Selected person
-			if (!!$scope.lbRow.staff) {
-				if (!!$scope.driverTimeSheet.$valid) {
-					var begin = moment($scope.lbRow.start);
-					var end = '', endToInsert;
+		// $scope.addRow = function () {
+		// 	// Selected person
+		// 	if (!!$scope.lbRow.staff) {
+		// 		if (!!$scope.driverTimeSheet.$valid) {
+		// 			var begin = moment($scope.lbRow.start);
+		// 			var end = '', endToInsert;
 
-					if (_.isNil($scope.lbRow.end) === false) {
-						end = moment($scope.lbRow.end);
-						endToInsert = end.toDate();
+		// 			if (_.isNil($scope.lbRow.end) === false) {
+		// 				end = moment($scope.lbRow.end);
+		// 				endToInsert = end.toDate();
 
-						if (begin > end) {
-							infoDialog('operations.dialogs.endDateError');
-							return;
-						}
-					}
+		// 				if (begin > end) {
+		// 					infoDialog('operations.dialogs.endDateError');
+		// 					return;
+		// 				}
+		// 			}
 
-					var attendanceTimeEntryToInsert = {
-						'resources'  : [_.clone($scope.lbRow.staff)],
-						'principals' : [],
-						'attributes' : [],
-						'type'       : 'ATTENDANCE',
-						'comment'    : $scope.lbRow.location,
-						'begin'      : begin.toDate(),
-						'end'        : endToInsert,
-						'billable'   : true,
-						'idOperation': $scope.operation.id
-					};
+		// 			var attendanceTimeEntryToInsert = {
+		// 				'resources'  : [_.clone($scope.lbRow.staff)],
+		// 				'principals' : [],
+		// 				'attributes' : [],
+		// 				'type'       : 'ATTENDANCE',
+		// 				'comment'    : $scope.lbRow.location,
+		// 				'begin'      : begin.toDate(),
+		// 				'end'        : endToInsert,
+		// 				'billable'   : true,
+		// 				'idOperation': $scope.operation.id
+		// 			};
 
 
-					attendanceTimeEntryToInsert = handleAbsence(attendanceTimeEntryToInsert, $scope.lbRow.absence);
+		// 			attendanceTimeEntryToInsert = handleAbsence(attendanceTimeEntryToInsert, $scope.lbRow.absence);
 
-					timeEntryService.insert(attendanceTimeEntryToInsert).then(function () {
-						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
+		// 			timeEntryService.insert(attendanceTimeEntryToInsert).then(function () {
+		// 				$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 
-						// Wait before performing the form reset
-						$timeout(function () {
-							initRowModel();
-							$scope.driverTimeSheet.$setUntouched(true);
-							$scope.driverTimeSheet.$setPristine(true);
-							// Go to last page
-							// $scope.gridOptions.api.paginationGoToLastPage();
-						}, 10);
-					});
-				}
-			} else {
-				infoDialog('operations.dialogs.invalidStaff');
-			}
-		};
+		// 				// Wait before performing the form reset
+		// 				$timeout(function () {
+		// 					initRowModel();
+		// 					$scope.driverTimeSheet.$setUntouched(true);
+		// 					$scope.driverTimeSheet.$setPristine(true);
+		// 					// Go to last page
+		// 					// $scope.gridOptions.api.paginationGoToLastPage();
+		// 				}, 10);
+		// 			});
+		// 		}
+		// 	} else {
+		// 		infoDialog('operations.dialogs.invalidStaff');
+		// 	}
+		// };
 
 		function deleteConfirmed(rowsToDelete) {
 
@@ -416,46 +416,46 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				// console.log('Row edition started', rowObj);
 			},
 			onRowValueChanged        : function (rowObj) {
-				// console.log('Row data changed', rowObj);
+				console.log('Row data changed', rowObj);
 
-				var operation = rowObj.data.operation;
-				if (operation.type === 'ATTENDANCE') {
-					var endToUpdate;
+				// var operation = rowObj.data.operation;
+				// if (operation.type === 'ATTENDANCE') {
+				// 	var endToUpdate;
 
-					if (rowObj.data.end) {
-						endToUpdate = moment(rowObj.data.end).toDate();
-					}
+				// 	if (rowObj.data.end) {
+				// 		endToUpdate = moment(rowObj.data.end).toDate();
+				// 	}
 
-					var resource = _.clone(rowObj.data.staff);
-					delete resource.opId;
+				// 	var resource = _.clone(rowObj.data.staff);
+				// 	delete resource.opId;
 
-					var timeEntryToUpdate = {
-						'id'         : rowObj.data.id,
-						'resources'  : [_.clone(resource)],
-						'principals' : [],
-						'attributes' : [],
-						'type'       : 'ATTENDANCE',
-						'comment'    : rowObj.data.comment,
-						'begin'      : moment(rowObj.data.begin).toDate(),
-						'end'        : endToUpdate,
-						'billable'   : true,
-						'idOperation': rowObj.data.operation.id
-					};
+				// 	var timeEntryToUpdate = {
+				// 		'id'         : rowObj.data.id,
+				// 		'resources'  : [_.clone(resource)],
+				// 		'principals' : [],
+				// 		'attributes' : [],
+				// 		'type'       : 'ATTENDANCE',
+				// 		'comment'    : rowObj.data.comment,
+				// 		'begin'      : moment(rowObj.data.begin).toDate(),
+				// 		'end'        : endToUpdate,
+				// 		'billable'   : true,
+				// 		'idOperation': rowObj.data.operation.id
+				// 	};
 
-					// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
-					timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
+				// 	// Force the resource for the time entry is of type "DRIVER". In case of the user use a different type.
+				// 	timeEntryToUpdate = handleAbsence(timeEntryToUpdate, rowObj.data.absence);
 
 
-					timeEntryService.update(timeEntryToUpdate).then(function () {
-						// $scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
-						// infoDialog('Time entry successfully updated');
-					}).finally(function () {
-						$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
-					});
-				} else {
-					infoDialog('operations.dialogs.invalidOperationForAttendance');
-					$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
-				}
+				// 	timeEntryService.update(timeEntryToUpdate).then(function () {
+				// 		// $scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
+				// 		// infoDialog('Time entry successfully updated');
+				// 	}).finally(function () {
+				// 		$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
+				// 	});
+				// } else {
+				// 	infoDialog('operations.dialogs.invalidOperationForAttendance');
+				// 	$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
+				// }
 
 			},
 
@@ -486,4 +486,22 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		//
 		// End of AG-Grid
 		//
+
+		$scope.insertNewTimeEntry = function () {
+			$scope.gridOptions.api.stopEditing();
+			$rootScope.$emit(config.timeEntry.guard.events.setInsertMode);
+		};
+
+
+		$scope.$on(config.timeEntry.guard.events.doneInsertOrUpdate, function () {
+			$scope.findTimeEntries($scope.periodFilterKey);
+			$scope.gridOptions.api.stopEditing();
+		});
+
+		/**
+		 * This event is captured when the user decided to cancel any changes in the special ops side panel.
+		 */
+		$scope.$on(config.timeEntry.attendance.events.canceled, function () {
+			$scope.gridOptions.api.stopEditing();
+		});
 	}];

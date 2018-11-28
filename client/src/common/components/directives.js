@@ -810,6 +810,15 @@ angular.module('commonComponents', [])
 		};
 	})
 
+	.directive('attendancesSidePanel', function () {
+		return {
+			scope      : true,
+			restrict   : 'E',
+			templateUrl: 'common/components/templates/attendances-time-entry-side-panel.html',
+			controller : require("./controllers/attendances-time-entry-side-panel-controller")
+		};
+	})
+
 	.directive('invoice', function () {
 		var scopeDefinition = {'invoices': '='};
 		return {

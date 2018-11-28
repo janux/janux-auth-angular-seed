@@ -802,6 +802,8 @@ module.exports =
 		 */
 		$scope.$on(config.timeEntry.specialOps.events.doneInsertOrUpdate, function () {
 			findTimeEntries($scope.periodFilterKey);
+			// Update invoice list.
+			updateInvoiceList();
 		});
 
 		/**

@@ -46,11 +46,11 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 								label {{ 'operations.specialsTimeLog.function' | translate }}
 								md-select(ng-model="form.function")
 									md-option(value="DRIVER") {{ 'operations.specialsTimeLog.driver' | translate }}
+									md-option(value="TRANSPORT") {{ 'operations.specialsTimeLog.transport' | translate }}
 									md-option(value="AGENT") {{ 'operations.specialsTimeLog.agent' | translate }}
 									md-option(value="AGENT_ARMED") {{ 'operations.specialsTimeLog.agentArmed' | translate }}
 									md-option(value="GREETER") {{ 'operations.specialsTimeLog.greeter' | translate }}
 									md-option(value="COORDINATOR") {{ 'operations.specialsTimeLog.coordinator' | translate }}
-									md-option(value="TRANSPORT") {{ 'operations.specialsTimeLog.transport' | translate }}
 						div(ng-show='vehicleBtnIsVisible')
 							button.btn(aria-label="Vehicle" ng-click="vehiclePanelShowHide()")
 								i.fa.fa-car

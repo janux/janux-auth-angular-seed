@@ -181,7 +181,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				valueFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
-					return agGridComp.util.truncate(comment, maxLength, '...');
+					return _.isString(comment) ? agGridComp.util.truncate(comment, maxLength, '...') : '';
 				}
 			},
 			{

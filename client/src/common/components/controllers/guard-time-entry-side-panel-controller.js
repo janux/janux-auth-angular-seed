@@ -44,7 +44,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// the correct dates.
 				startForm    : today,
 				startHourForm: today,
-				location     : '',
+				extras     : '',
 				isExternal   : false
 			};
 		};
@@ -61,6 +61,35 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			// we avoid to change the operation and vehicle data when we define the staff.
 			console.debug("Setting the flag automaticOperationAndVehicleChange as false ");
 			automaticOperationAndVehicleChange = false;
+			$scope.timeEntryUpdate = timeEntry;
+			if (_.isNil(timeEntry.staff)) {
+				$scope.lbSearch.staff = undefined;
+			} else {
+				for (var i = 0; i < allGuards.length; i++) {
+					var guard = allGuards[i];
+					if (guard.resource.id === timeEntry.staff.resource.id) {
+						$scope.form.staff = guard;
+						break;
+					}
+				}
+			}
+
+			for (var k = 0; k < operations.length; k++) {
+				var operation = operations[k];
+				if (operation.id === timeEntry.operation.id) {
+					$scope.form.operation = operation;
+					break;
+				}
+			}
+			$scope.form.start = _.clone(timeEntry.begin);
+			$scope.form.end = _.clone(timeEntry.end);
+			$scope.form.startForm = _.clone(timeEntry.begin);
+			$scope.form.startHourForm = _.clone(timeEntry.begin);
+			$scope.form.endHourForm = _.clone(timeEntry.end);
+			$scope.form.location = timeEntry.comment;
+			$scope.form.extras = timeEntry.extras;
+			$scope.form.isExternal = timeEntry.isExternal;
+			$scope.calculateDates();
 			
 		}
 
@@ -81,7 +110,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				'end'        : end,
 				'billable'   : true,
 				'idOperation': $scope.form.operation.id,
-				'extras'     : $scope.form.extras
+				'extras'     : $scope.form.extras,
+				'isExternal' : $scope.form.isExternal
 			};
 
 			timeEntry = setResourceType(timeEntry);

@@ -1,0 +1,104 @@
+login-toolbar(toolbar-title='services.title')
+
+side-bar
+
+.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+	// Special ops side panel.
+	special-service-side-panel
+
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum(ui-sref='services' style='cursor:pointer;')
+						| {{ 'services.title' | translate }}
+					h2.title-bar-txt(ng-show='data.type==="SPECIAL_OPS"')
+						| {{ 'services.specialService' | translate }}: {{ data.name }}
+					h2.title-bar-txt(ng-show='data.type==="CONSULTING"')
+						| {{ 'services.consultingService' | translate }}: {{ data.name }}
+				span(flex)
+
+		.container-body.operations-page.spacing-bottom
+			md-content.tabs-glarus
+				md-toolbar.form-mid-toolbar.options-tabs
+					.md-toolbar-tools
+						md-nav-bar( md-selected-nav-item="currentNavItem==='invoiceDetail' ? 'invoices': currentNavItem" nav-bar-aria-label="links")
+							md-nav-item.active(md-nav-click="changeTab('summary')" name="summary")
+								| {{ 'services.tabs.summary' | translate | uppercase }}
+							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
+								| {{ 'services.tabs.invoices' | translate | uppercase }}
+
+						span(flex)
+
+						.btn-row.hide-mobile(ng-show='currentNavItem=="summary"')
+							button.btn(ng-show='editMode' ng-click='save()')
+								i.fa.fa-check
+							button.btn(ng-show='userRole.can("UPDATE","SERVICE") && !editMode' ng-click='editMode=!editMode')
+								i.fa.fa-pencil
+							button.btn( ng-click='cancel()')
+								i.fa.fa-times
+
+
+
+						// .btn-row(ng-show='currentNavItem=="invoices"')
+						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","FINANCE");')
+						// 		button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
+						// 			i.fa.fa-plus-circle &nbsp;
+						// 			| {{ 'services.invoice.insertManual' | translate }}
+
+						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
+							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
+								md-icon.fa.fa-download.fa-lg
+							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
+								i.fa.fa-check
+							button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')
+								i.fa.fa-pencil
+							button.btn( ng-click="cancelInvoiceDetail('invoices')")
+								i.fa.fa-times
+
+				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', invoices='invoices', disabled='!editMode', disableautomaticname='{{true}}' ,showinvoicemanual='{{true}}')
+
+				.btn-row-fixed.hide-desktop
+					.btn-row(ng-show='currentNavItem=="summary"')
+						button.btn(ng-show='editMode' ng-click='save()')
+							i.fa.fa-check
+						button.btn(ng-show='userRole.can("UPDATE","SERVICE") && !editMode' ng-click='editMode=!editMode')
+							i.fa.fa-pencil
+						button.btn( ng-click='cancel()')
+							i.fa.fa-times
+
+					//.btn-row(ng-show='currentNavItem=="time-sheet"')
+					//	button.btn( ng-click='removeSelected()')
+					//		i.fa.fa-trash &nbsp;
+					//		| {{ 'services.delete' | translate }}
+					//
+					//	md-menu(md-position-mode="target-right target" md-offset="6 -50" ng-show='userRole.can("UPDATE","FINANCE");')
+					//		button.btn( aria-label="Add" ng-click='openAddToInvoiceMenu($mdMenu, $event);'  )
+					//			i.fa.fa-plus-circle &nbsp;
+					//			| {{ 'services.addToInvoice' | translate }}
+					//
+					//		md-menu-content
+					//			md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
+					//			md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
+					//	button.btn( ng-click='cancel()')
+					//		i.fa.fa-times
+
+					.btn-row(ng-show='currentNavItem=="invoiceDetail"')
+						button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
+							md-icon.fa.fa-download.fa-lg(style="color:white")
+						button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
+							i.fa.fa-check
+						button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')
+							i.fa.fa-pencil
+						button.btn( ng-click="cancelInvoiceDetail('invoices')")
+							i.fa.fa-times
+
+				//.container-body(ng-show='currentNavItem=="time-sheet"')
+				//	.service-time-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+
+				.container-body(ng-show='currentNavItem=="invoices"', style="padding-bottom:150px;" )
+					invoice(invoices = "invoices" style='width: 100%')
+
+				.container-body(ng-show='currentNavItem=="invoiceDetail"', style="padding-bottom:150px;" )
+					invoice-detail(invoice = 'invoice' style='width: 100%')
+footer-Janux

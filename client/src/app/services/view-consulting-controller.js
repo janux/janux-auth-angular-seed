@@ -14,15 +14,12 @@ module.exports =
 		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 		var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 
 		$scope.cl = clientsList;
 		$scope.editMode = false;
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 		$scope.editModeInvoiceDetail = false;
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
 		$scope.invoices = invoices;
 		$scope.invoice = undefined;
@@ -30,8 +27,6 @@ module.exports =
 		// console.debug('Invoices', invoices);
 
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
 
 
@@ -444,9 +439,6 @@ module.exports =
 			$mdMenu.open(ev);
 		};
 
-		$scope.generateReport = function () {
-			invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber, operation);
-		};
 
 		$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
 			console.debug('invoice selected:' + invoiceNumber);

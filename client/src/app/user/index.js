@@ -36,7 +36,7 @@ require('angular').module('appUsers', [
 					var parties = _.map(result, function (o) {
 
 						o.usersDisplayName = o.contact.displayName;
-						o.usersDisplayEmail = o.contact.emails[0].address;
+						o.usersDisplayEmail = _.isString(o.contact.emails[0].address) ? o.contact.emails[0].address  : undefined;
 						o.usersDisplayRole = o.roles;
 
 						return o;

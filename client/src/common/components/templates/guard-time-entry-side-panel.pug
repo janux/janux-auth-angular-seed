@@ -102,6 +102,24 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="guardTimeEntrySideNav" md-w
 							h4.form-label
 								| {{ 'operations.guardsTimeLog.hoursBilled' | translate }}: {{form.differenceTimeForm}}
 
+					.fieldset-flex(style="padding-top:5px")
+						.an-material.nopadding
+							md-input-container.full-panel
+								label {{ 'operations.guardsTimeLog.extras' | translate }}
+								md-select(ng-model='form.extras')
+									md-option(value='')
+									md-option(value='AF') {{ 'operations.guardsTimeLog.extraOptions.AF' | translate }}
+									md-option(value='A') {{ 'operations.guardsTimeLog.extraOptions.A' | translate }}
+									md-option(value='NM') {{ 'operations.guardsTimeLog.extraOptions.NM' | translate }}
+									md-option(value='NRM') {{ 'operations.guardsTimeLog.extraOptions.NRM' | translate }}
+									md-option(value='CLOSED') {{ 'operations.guardsTimeLog.extraOptions.CLOSED' | translate }}
+									md-option(value='NOT COVERED') {{ 'operations.guardsTimeLog.extraOptions.NOT_COVERED' | translate }}
+									md-option(value='GUARD_SHIFT_MANAGER') {{ 'operations.guardsTimeLog.extraOptions.GUARD_SHIFT_MANAGER' | translate }}
+
+						div
+							md-checkbox.md-primary(aria-label='External' ng-model='form.isExternal')
+								| {{ 'operations.guardsTimeLog.isExternal' | translate }}
+
 					// show only to debug
 					//.element
 					//	md-input-container
@@ -115,5 +133,5 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="guardTimeEntrySideNav" md-w
 				markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 				on-fullscreen="onFullScreenCallback()"
 				on-fullscreen-exit="onFullScreenExitCallback()"
-				rows="15")
+				rows="5")
 

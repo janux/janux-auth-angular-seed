@@ -604,7 +604,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			onRowValueChanged        : function (rowObj) {
 
 				console.log('Row data changed', rowObj);
-				$rootScope.$emit(config.timeEntry.guard.events.setUpdateMode, rowObj.data);
+				// $rootScope.$emit(config.timeEntry.guard.events.setUpdateMode, rowObj.data);
 				// var endToUpdate;
 				//
 				// if (rowObj.data.end) {

@@ -123,11 +123,12 @@
 									label {{ 'services.specialForm.function' | translate }}
 									md-select(ng-model='staff.object.type' ng-disabled='disabled')
 										md-option(value='DRIVER') {{ 'services.specialForm.staffDriver' | translate }}
+										md-option(value='TRANSPORT') {{ 'services.specialForm.staffTransport' | translate }}
 										md-option(value='AGENT') {{ 'services.specialForm.staffGuard' | translate }}
 										md-option(value='AGENT_ARMED') {{ 'services.specialForm.staffGuardArmed' | translate }}
 										md-option(value='GREETER') {{ 'services.specialForm.staffGreeter' | translate }}
 										md-option(value='COORDINATOR') {{ 'services.specialForm.staffCoordinator' | translate }}
-										md-option(value='TRANSPORT') {{ 'services.specialForm.staffTransport' | translate }}
+
 							div(ng-hide='disabled')
 								button.btn-trash(ng-click="removeStaff($index)")
 									i.fa.fa-trash

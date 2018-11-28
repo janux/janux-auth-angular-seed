@@ -322,7 +322,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				cellFormatter: function (params) {
 					var maxLength = 35;
 					var comment = params.data.comment;
-					return agGridComp.util.truncate(comment, maxLength, '...');
+					return _.isString(comment) ? agGridComp.util.truncate(comment, maxLength, '...') : '';
 				}
 			},
 			{

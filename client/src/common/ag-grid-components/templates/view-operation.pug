@@ -1,5 +1,5 @@
 div.text-center
 	span.fa.fa-eye(ng-if='opType=="SPECIAL_OPS"', ui-sref='services.view-special({id:opId})')
-	span.fa.fa-eye(ng-if='opType=="DRIVER"')
+	span.fa.fa-eye(ng-if='opType=="DRIVER"', ui-sref='services.view-driver({id:opId})')
 	span.fa.fa-eye(ng-if='opType=="GUARD"')
 	span.fa.fa-eye(ng-if='opType=="CONSULTING"', ui-sref='services.view-consulting({id:opId})')

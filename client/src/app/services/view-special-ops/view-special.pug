@@ -12,12 +12,9 @@ side-bar
 				md-truncate
 					span.title-breadcrum(ui-sref='services' style='cursor:pointer;')
 						| {{ 'services.title' | translate }}
-					h2.title-bar-txt(ng-show='data.type==="SPECIAL_OPS"')
+					h2.title-bar-txt()
 						| {{ 'services.specialService' | translate }}: {{ data.name }}
-					h2.title-bar-txt(ng-show='data.type==="CONSULTING"')
-						| {{ 'services.consultingService' | translate }}: {{ data.name }}
 				span(flex)
-
 				md-button.arrow.md-icon-button(aria-label="Upload" ng-click='export()' ng-show='currentNavItem=="time-sheet"')
 					md-icon.fa.fa-download.fa-lg
 

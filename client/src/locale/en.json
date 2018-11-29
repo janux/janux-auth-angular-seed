@@ -445,6 +445,7 @@
 		"addSpecial": "Add special service",
 		"specialService": "Special service",
 		"consultingService": "Consulting service",
+		"driverService": "Fixed driver service",
 		"specialForm": {
 			"name": "Service name",
 			"begin": "Begin",

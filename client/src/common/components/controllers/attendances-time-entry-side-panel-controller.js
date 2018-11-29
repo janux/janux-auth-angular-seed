@@ -44,8 +44,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// the correct dates.
 				startForm    : today,
 				startHourForm: today,
-				extras     : '',
-				isExternal   : false
+				absence     : ''
 			};
 		};
 
@@ -104,7 +103,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				'resources'  : [_.clone($scope.form.staff)],
 				'principals' : [],
 				'attributes' : [],
-				'type'       : 'GUARD',
+				'type'       : 'ATTENDANCE',
 				'comment'    : $scope.form.location,
 				'begin'      : begin,
 				'end'        : end,
@@ -424,9 +423,9 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					// Perform an insert
 					timeEntryService.insert(timeEntryToSend).then(function () {
 						// Send a notification the update was successful.
-						$rootScope.$broadcast(config.timeEntry.guard.events.doneInsertOrUpdate);
+						$rootScope.$broadcast(config.timeEntry.attendance.events.doneInsertOrUpdate);
 						// Close the panel.
-						$mdSidenav(config.timeEntry.guard.sidePanel.id).toggle();
+						$mdSidenav(config.timeEntry.attendance.sidePanel.id).toggle();
 					});
 				} else {
 					// Add the id and perform an update
@@ -434,16 +433,16 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					console.debug('Time entry to update %o', timeEntryToSend);
 					timeEntryService.update(timeEntryToSend).then(function () {
 						// Send a notification the update was successful.
-						$rootScope.$broadcast(config.timeEntry.guard.events.doneInsertOrUpdate);
+						$rootScope.$broadcast(config.timeEntry.attendance.events.doneInsertOrUpdate);
 						// Close the panel.
-						$mdSidenav(config.timeEntry.guard.sidePanel.id).toggle();
+						$mdSidenav(config.timeEntry.attendance.sidePanel.id).toggle();
 					});
 				}
 			}
 		};
 
 		$scope.toggleSideNav = function () {
-			$mdSidenav(config.timeEntry.guard.sidePanel.id).toggle();
+			$mdSidenav(config.timeEntry.attendance.sidePanel.id).toggle();
 		};
 
 		/*****
@@ -454,20 +453,20 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * This even is captured
 		 */
-		$rootScope.$on(config.timeEntry.guard.events.setInsertMode, function () {
-			console.debug("Catch %s event", config.timeEntry.guard.events.setInsertMode);
+		$rootScope.$on(config.timeEntry.attendance.events.setInsertMode, function () {
+			console.debug("Catch %s event", config.timeEntry.attendance.events.setInsertMode);
 			clearForm();
-			$mdSidenav(config.timeEntry.guard.sidePanel.id).open();
+			$mdSidenav(config.timeEntry.attendance.sidePanel.id).open();
 		});
 
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		$rootScope.$on(config.timeEntry.guard.events.setUpdateMode, function (event, timeEntry) {
-			console.debug("Catch event %s with timeEntry %o", config.timeEntry.guard.events.setUpdateMode, timeEntry);
+		$rootScope.$on(config.timeEntry.attendance.events.setUpdateMode, function (event, timeEntry) {
+			console.debug("Catch event %s with timeEntry %o", config.timeEntry.attendance.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);
-			$mdSidenav(config.timeEntry.guard.sidePanel.id).open();
+			$mdSidenav(config.timeEntry.attendance.sidePanel.id).open();
 		});
 
 		/*****
@@ -484,14 +483,14 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				});
 
 			if (_.isNil(sidenavInstance)) {
-				sidenavInstance = $mdSidenav(config.timeEntry.guard.sidePanel.id, true);
+				sidenavInstance = $mdSidenav(config.timeEntry.attendance.sidePanel.id, true);
 				if (_.isFunction(sidenavInstance.then)) {
 					sidenavInstance.then(function (instance) {
 						instance.onClose(function () {
 							$scope.timeEntryUpdate = undefined;
 							console.debug('Sending close');
 							// $scope.gridOptions.api.stopEditing();
-							$rootScope.$broadcast(config.timeEntry.guard.events.canceled);
+							$rootScope.$broadcast(config.timeEntry.attendance.events.canceled);
 						});
 					});
 				}

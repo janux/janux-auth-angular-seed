@@ -216,7 +216,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			{
 				headerName  : $filter('translate')('operations.attendanceTimeLog.staff'),
 				field       : 'staff',
-				editable    : true,
+				editable    : false,
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter : function (params) {
 					var result;
@@ -274,7 +274,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
 				field         : 'begin',
-				editable      : true,
+				editable      : false,
 				filter        : 'date',
 				filterParams  : {
 					newRowsAction   : 'keep',
@@ -292,7 +292,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.end'),
 				field         : 'end',
-				editable      : true,
+				editable      : false,
 				filter        : 'date',
 				filterParams  : {
 					newRowsAction: 'keep',
@@ -307,14 +307,14 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			{
 				headerName: $filter('translate')('operations.attendanceTimeLog.duration'),
 				field     : 'duration',
-				editable  : true,
+				editable  : false,
 				cellEditor: agGridComp.durationCellUpdater,
 				width     : 95
 			},
 			{
 				headerName   : $filter('translate')('operations.attendanceTimeLog.comment'),
 				field        : 'comment',
-				editable     : true,
+				editable     : false,
 				cellEditor   : agGridComp.commentCellEditor,
 				cellStyle    : {
 					'white-space': 'normal'
@@ -328,7 +328,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.absence'),
 				field         : 'absence',
-				editable      : true,
+				editable      : false,
 				cellEditor    : agGridComp.absenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';
@@ -368,7 +368,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				cellRenderer   : agGridComp.checkBoxRowSelection,
 				cellEditor     : agGridComp.rowActions,
 				headerComponent: agGridComp.deleteRowsHeaderComponent,
-				editable       : true,
+				editable       : false,
 				field          : 'selected',	// field needed to avoid ag-grid warning
 				width          : 80
 			}
@@ -411,9 +411,10 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					$scope.gridOptions.onFilterChanged();
 				}
 			},
-			onRowEditingStarted      : function () {
+			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
 				// console.log('Row edition started', rowObj);
+				$rootScope.$emit(config.timeEntry.attendance.events.setUpdateMode, rowObj.data);
 			},
 			onRowValueChanged        : function (rowObj) {
 				console.log('Row data changed', rowObj);
@@ -489,11 +490,11 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 		$scope.insertNewTimeEntry = function () {
 			$scope.gridOptions.api.stopEditing();
-			$rootScope.$emit(config.timeEntry.guard.events.setInsertMode);
+			$rootScope.$emit(config.timeEntry.attendance.events.setInsertMode);
 		};
 
 
-		$scope.$on(config.timeEntry.guard.events.doneInsertOrUpdate, function () {
+		$scope.$on(config.timeEntry.attendance.events.doneInsertOrUpdate, function () {
 			$scope.findTimeEntries($scope.periodFilterKey);
 			$scope.gridOptions.api.stopEditing();
 		});

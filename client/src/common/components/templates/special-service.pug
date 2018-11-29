@@ -57,9 +57,9 @@
 		// Principals section
 		.section-form(ng-show='data.type==="SPECIAL_OPS"')
 			p.form-section-glarus
-					| {{ 'services.specialForm.principal' | translate}}
+				| {{ 'services.specialForm.principal' | translate}}
 			fieldset.fieldset-flex
-				
+
 				.fieldset-flex
 					.an-material.nopadding
 						.fieldset-flex.many-of-kind(ng-repeat="principal in data.principals track by $index")
@@ -96,9 +96,9 @@
 						//		i.fa.fa-plus-square
 
 		// Resources section.
-		.section-form(ng-show='data.type==="SPECIAL_OPS"')
+		.section-form(ng-show='data.type==="SPECIAL_OPS" || data.type==="DRIVER"')
 			p.form-section-glarus
-					| {{ 'services.specialForm.resources' | translate }}
+				| {{ 'services.specialForm.resources' | translate }}
 			fieldset.fieldset-flex
 				.fieldset-flex
 					.an-material.nopadding

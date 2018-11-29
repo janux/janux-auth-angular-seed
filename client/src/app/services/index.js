@@ -52,9 +52,9 @@ require('angular').module('appServices', [
 	// Create research service
 	.state('services.create-research', {
 		url: '/services-create-research',
-		templateUrl: 'app/services/create-operation-consulting.html',
+		templateUrl: 'app/services/view-consulting/create-operation-consulting.html',
 		authRequired: true,
-		controller: require('./create-operation-research-consulting'),
+		controller: require('./view-consulting/create-operation-research-consulting'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();

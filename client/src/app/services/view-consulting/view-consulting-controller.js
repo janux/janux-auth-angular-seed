@@ -11,7 +11,7 @@ module.exports =
 
 		console.debug('Operation', operation);
 
-		var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
+		var storedTab = jnxStorage.findItem('consultingViewSelectedTab', true);
 
 		$scope.cl = clientsList;
 		$scope.editMode = false;
@@ -30,7 +30,7 @@ module.exports =
 		$scope.changeTab = function (tab) {
 			$scope.currentNavItem = tab;
 			if (tab !== 'invoiceDetail') {
-				jnxStorage.setItem('specialOpsViewSelectedTab', $scope.currentNavItem, true);
+				jnxStorage.setItem('consultingViewSelectedTab', $scope.currentNavItem, true);
 			}
 
 		};

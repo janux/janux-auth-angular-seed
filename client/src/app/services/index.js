@@ -65,9 +65,9 @@ require('angular').module('appServices', [
 	// Edit special service
 	.state('services.view-special', {
 		url: '/services-view-special/{id}',
-		templateUrl: 'app/services/view-special.html',
+		templateUrl: 'app/services/view-special-ops/view-special.html',
 		authRequired: true,
-		controller: require('./view-special-controller'),
+		controller: require('./view-special-ops/view-special-controller'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();
@@ -84,12 +84,35 @@ require('angular').module('appServices', [
 		}
 	})
 
-	//Edit research service.
+
+	// Edit driver service
+	.state('services.view-driver', {
+		url: '/services-view-driver/{id}',
+		templateUrl: 'app/services/view-driver/view-driver.html',
+		authRequired: true,
+		controller: require('./view-driver/view-driver-controller'),
+		resolve: {
+			clientsList: ['partyService',function (partyService) {
+				return partyService.findOrganizations();
+			}],
+			operation: ['operationService','$stateParams', function (operationService, $stateParams) {
+				return operationService.findById($stateParams.id);
+			}],
+			driversAndOps: ['operationService', function (operationService) {
+				return operationService.findDriversAndOperations();
+			}],
+			invoices: ['invoiceService', '$stateParams', function (invoiceService, $stateParams) {
+				return invoiceService.findByIdOperation($stateParams.id);
+			}]
+		}
+	})
+
+	//Edit consulting service.
 	.state('services.view-consulting', {
 		url: '/services-view-consulting/{id}',
-		templateUrl: 'app/services/view-consulting.html',
+		templateUrl: 'app/services/view-consulting/view-consulting.html',
 		authRequired: true,
-		controller: require('./view-consulting-controller'),
+		controller: require('./view-consulting/view-consulting-controller'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
 				return partyService.findOrganizations();

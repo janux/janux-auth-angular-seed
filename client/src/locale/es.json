@@ -453,6 +453,7 @@
 		"addSpecial": "Agregar servicio especial",
 		"specialService": "Servicio especial",
 		"consultingService": "Servicio consultoría",
+		"driverService": "Servicio chofer",
 		"specialForm": {
 			"name": "Nombre del servicio",
 			"begin": "Inicio",

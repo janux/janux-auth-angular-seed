@@ -413,8 +413,14 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			},
 			onRowEditingStarted      : function (rowObj) {
 				// Nothing to do yet
-				// console.log('Row edition started', rowObj);
-				$rootScope.$emit(config.timeEntry.attendance.events.setUpdateMode, rowObj.data);
+				var operation = rowObj.data.operation;
+				console.log('Type:', operation.type);
+				
+				if (operation.type === 'ATTENDANCE'){
+					$rootScope.$emit(config.timeEntry.attendance.events.setUpdateMode, rowObj.data);
+				}else{
+					infoDialog('operations.dialogs.invalidOperationForAttendance');
+				}
 			},
 			onRowValueChanged        : function (rowObj) {
 				console.log('Row data changed', rowObj);

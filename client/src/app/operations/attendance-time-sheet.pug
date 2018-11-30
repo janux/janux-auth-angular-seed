@@ -18,15 +18,13 @@ side-bar
 				//- md-truncate.filter-label
 				//- 	| {{ 'operations.driversTimeLog.filterLabel' | translate }}
 
-				md-truncate.add-form.filter-label
-					md-input-container
+				md-truncate.add-form.attendance-filter-label
+					md-input-container(style="margin-right:10px;")
 						label
 							| {{ 'operations.attendanceTimeLog.filterLabel' | translate }}
 						md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
 							md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
 
-
-				md-truncate.add-form.filter-label
 					md-input-container(style="width:250px;")
 						label
 							| {{ 'operations.attendanceTimeLog.staff' | translate }}

@@ -9,7 +9,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		var allGuards;
 		var guardsAssignedToOperations;
-		var operations;
+		var operation;
 		var selectedGuard;
 		// This flags helps to prevent change the operation
 		// and vehicle when the system define the staff.
@@ -48,6 +48,12 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			};
 		};
 
+		function handleAbsence(timeEntry, absence) {
+			timeEntry.billable = false;
+			timeEntry.resources[0].absence = absence;
+			return timeEntry;
+		}
+
 
 		/**
 		 * Fill the form data given a time entry.
@@ -73,21 +79,21 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				}
 			}
 
-			for (var k = 0; k < operations.length; k++) {
-				var operation = operations[k];
-				if (operation.id === timeEntry.operation.id) {
-					$scope.form.operation = operation;
-					break;
-				}
-			}
+			// for (var k = 0; k < operations.length; k++) {
+			// 	var operation = operations[k];
+			// 	if (operation.id === timeEntry.operation.id) {
+			// 		$scope.form.operation = operation;
+			// 		break;
+			// 	}
+			// }
+
 			$scope.form.start = _.clone(timeEntry.begin);
 			$scope.form.end = _.clone(timeEntry.end);
 			$scope.form.startForm = _.clone(timeEntry.begin);
 			$scope.form.startHourForm = _.clone(timeEntry.begin);
 			$scope.form.endHourForm = _.clone(timeEntry.end);
 			$scope.form.location = timeEntry.comment;
-			$scope.form.extras = timeEntry.extras;
-			$scope.form.isExternal = timeEntry.isExternal;
+			$scope.form.absence = timeEntry.absence;
 			$scope.calculateDates();
 			
 		}
@@ -108,15 +114,16 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				'begin'      : begin,
 				'end'        : end,
 				'billable'   : true,
-				'idOperation': $scope.form.operation.id,
-				'extras'     : $scope.form.extras,
-				'isExternal' : $scope.form.isExternal
+				'idOperation': operation.id,
+				'absence'    : $scope.form.absence
 			};
 
 			timeEntry = setResourceType(timeEntry);
 			timeEntry = setBillableFlag(timeEntry);
-			timeEntry = setHoursInResource($scope.form.operation, timeEntry);
+			timeEntry = setHoursInResource(operation, timeEntry);
 			timeEntry = setExternalFlag(timeEntry, $scope.form.isExternal);
+			timeEntry = handleAbsence(timeEntry, $scope.form.absence);
+			
 			return timeEntry;
 		};
 
@@ -264,11 +271,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		function validateForm() {
 			console.debug("Call to validateForm");
 			var result = true;
-			if (_.isNil($scope.form.staff) && $scope.form.extras !== 'CLOSED' && $scope.form.extras !== 'NOT COVERED') {
+			if (_.isNil($scope.form.staff)) {
 				dialogService.info('operations.dialogs.invalidStaff');
-				result = false;
-			} else if (_.isNil($scope.form.operation)) {
-				dialogService.info('operations.dialogs.invalidOperation');
 				result = false;
 			} else {
 				if (_.isNil($scope.form.end) === false) {
@@ -360,7 +364,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					$scope.form.operation = undefined;
 				} else {
 
-					var candidateOperations = _.filter(operations, function (o) {
+					var candidateOperations = _.filter(operation, function (o) {
 						return _.find(filteredGuards, function (it) {
 							return it.opId === o.id;
 						});
@@ -381,7 +385,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 					// Setting the associated person.
 					operationId = selectedOperation.id;
-					staffOperations = _.filter(operations, {id: operationId});
+					staffOperations = _.filter(operation, {id: operationId});
 
 					console.debug('Selected staff operations', staffOperations);
 					$scope.form.operation = staffOperations[0];
@@ -408,7 +412,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		$scope.opsSearch = function (query) {
 			console.debug("Call to opsSearch");
-			return query ? operations.filter(createFilterForOps(query)) : operations;
+			return query ? operation.filter(createFilterForOps(query)) : operation;
 		};
 
 		/**
@@ -475,11 +479,11 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		$scope.init = function () {
 			console.debug("Call to init");
-			operationService.findGuardsAndOperations()
+			operationService.findStaffAndOperationAttendance()
 				.then(function (driversAndOps) {
 					allGuards = driversAndOps.allPersonnelAvailableForSelection;
 					guardsAssignedToOperations = driversAndOps.guardsAssignedToOperations;
-					operations = driversAndOps.operations;
+					operation = driversAndOps.operation;
 				});
 
 			if (_.isNil(sidenavInstance)) {

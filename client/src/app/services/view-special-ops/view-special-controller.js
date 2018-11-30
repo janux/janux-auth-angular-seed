@@ -697,6 +697,14 @@ module.exports =
 			updateInvoiceList();
 		});
 
+		$scope.export = function () {
+			var ids = [];
+			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
+				ids.push(item.data.id);
+			});
+			timeEntryService.timeEntryReportSpecialOps(ids);
+		};
+
 		/*
 		* Special ops side panel
 		*/

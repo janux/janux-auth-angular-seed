@@ -16,7 +16,7 @@ module.exports =
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 		var findTimeEntries;
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 		var storedTab = jnxStorage.findItem('driverViewSelectedTab', true);
 		var timeEntries = [];	// Global time entries object
 		var invoiceItemName = 'Total a facturar';
@@ -43,7 +43,7 @@ module.exports =
 		$scope.operationId = $stateParams.id;
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
+			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);
 			findTimeEntries($scope.periodFilterKey);
 		};
 
@@ -63,7 +63,7 @@ module.exports =
 				};
 				$scope.showTimeSheetPeriodFilterList = false;
 			} else {
-				var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
+				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
 				period = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 			}
 
@@ -390,6 +390,53 @@ module.exports =
 				}
 			},
 			{
+				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
+				field         : 'absence',
+				editable      : false,
+				cellEditor    : agGridComp.driverAbsenceCellEditor,
+				valueFormatter: function (params) {
+					var val = '';
+					switch (params.value) {
+						case 'D':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.D');
+							break;
+						case 'V':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.V');
+							break;
+						case 'PS':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PS');
+							break;
+						case 'F':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.F');
+							break;
+						case 'PC':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.PC');
+							break;
+						case 'I':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.I');
+							break;
+						case 'NO_SERVICE_PROVIDED':
+							val = $filter('translate')('operations.driversTimeLog.absenceOptions.NO_SERVICE_PROVIDED');
+							break;
+						default:
+							val = '';
+							break;
+					}
+					return val;
+				},
+				filterParams  : {
+					newRowsAction: 'keep',
+					textFormatter: function (value) {
+						if (value === 'sin falta') {
+							return 'SF';
+						} else {
+							return value;
+						}
+					}
+				},
+				width         : 130
+			},
+			{
 				headerName             : '',
 				headerCheckboxSelection: true,
 				// headerCheckboxSelectionFilteredOnly: true,
@@ -509,6 +556,7 @@ module.exports =
 
 		// If we are on time sheet tab initially
 		if ($scope.currentNavItem === 'time-sheet') {
+			$scope.showTimeSheetPeriodFilterList = true;
 			loadTimeEntries();
 		}
 
@@ -707,6 +755,14 @@ module.exports =
 			// Sends an event to the side panel indicating the user wants to insert or update the
 			// time entry
 			$rootScope.$emit(config.timeEntry.driver.events.setInsertMode, $scope.operationId);
+		};
+
+		$scope.export = function () {
+			var ids = [];
+			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
+				ids.push(item.data.id);
+			});
+			timeEntryService.timeEntryReport(ids);
 		};
 
 		/*****

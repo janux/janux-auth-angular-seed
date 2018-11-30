@@ -36,7 +36,9 @@ side-bar
 							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
 								| {{ 'services.tabs.invoices' | translate | uppercase }}
 
-						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet" && showTimeSheetPeriodFilterList')
+						span(flex)
+
+						div.add-form.filter(ng-show='currentNavItem=="time-sheet" && showTimeSheetPeriodFilterList')
 							label {{ 'operations.specialsTimeLog.filterLabel' | translate }}
 							md-input-container
 								//label
@@ -44,7 +46,7 @@ side-bar
 								md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
 									md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
 
-						span(flex)
+
 
 						.btn-row.hide-mobile(ng-show='currentNavItem=="summary"')
 							button.btn(ng-show='editMode' ng-click='save()')
@@ -77,7 +79,7 @@ side-bar
 						// 			| {{ 'services.invoice.insertManual' | translate }}
 
 						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
-							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
+							button.btn(ng-click='generateReport()')
 								md-icon.fa.fa-download.fa-lg
 							button.btn(ng-show='editModeInvoiceDetail' ng-click='updateInvoiceHeader()')
 								i.fa.fa-check

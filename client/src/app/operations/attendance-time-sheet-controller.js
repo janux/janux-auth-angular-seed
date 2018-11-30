@@ -363,7 +363,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					infoDialog('operations.dialogs.invalidOperationForAttendance');
 				}
 			},
-			onRowValueChanged        : function (rowObj) {
+			onRowValueChanged        : function () {
 				//console.log('Row data changed', rowObj);
 			},
 

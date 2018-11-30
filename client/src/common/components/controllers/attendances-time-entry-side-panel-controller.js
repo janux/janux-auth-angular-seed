@@ -328,64 +328,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		};
 
-		/**
-		 * Sets the selected staff record in the UI.
-		 * Also, if the staff has a relation to an operation, also define the operation and the associated vehicle.
-		 * The association with the operation and vehicle only occurs when the flag automaticOperationAndVehicleChange
-		 * is marked as true.
-		 * @param item
-		 */
-		$scope.staffSelectedItemChange = function (item) {
-			console.debug("Call to staffSelectedItemChange");
-			var filteredGuards;
-			var operationId;
-			var staffOperations;
-			var selectedOperation;
-			if (typeof item !== 'undefined' && automaticOperationAndVehicleChange === true) {
-				// This item should contain the selected staff member
-				console.debug('Item changed to ' + JSON.stringify(item));
-
-				filteredGuards = _.filter(guardsAssignedToOperations, function (o) {
-					return o.resource.id === item.resource.id;
-				});
-
-				if (filteredGuards.length === 0) {
-					$scope.form.operation = undefined;
-				} else {
-
-					var candidateOperations = _.filter(operation, function (o) {
-						return _.find(filteredGuards, function (it) {
-							return it.opId === o.id;
-						});
-					});
-
-					if (candidateOperations.length === 0) {
-						$scope.form.operation = undefined;
-						return;
-					}
-
-					candidateOperations = _.orderBy(candidateOperations, ['start'], ['desc']);
-					selectedOperation = candidateOperations[0];
-
-					// Looking for operation.
-					selectedGuard = _.find(guardsAssignedToOperations, function (o) {
-						return o.opId === selectedOperation.id;
-					});
-
-					// Setting the associated person.
-					operationId = selectedOperation.id;
-					staffOperations = _.filter(operation, {id: operationId});
-
-					console.debug('Selected staff operations', staffOperations);
-					$scope.form.operation = staffOperations[0];
-
-				}
-			} else {
-				// This means that the entered search text is empty or doesn't match any staff member
-				console.debug("Not item changed, maybe the flag is marked as false or the user selected a blank record");
-			}
-		};
-
 		$scope.staffSearch = function (query) {
 			console.debug("Call to staffSearch");
 			return query ? allGuards.filter(nameQueryService.createFilterForStaff(query)) : allGuards;

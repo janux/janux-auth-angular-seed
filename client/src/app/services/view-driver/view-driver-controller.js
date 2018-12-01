@@ -28,19 +28,13 @@ module.exports =
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 		$scope.editModeInvoiceDetail = false;
 		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
+		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'oneYear';
 		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
 		$scope.invoices = invoices;
 		$scope.invoice = undefined;
 
 		// console.debug('Invoices', invoices);
-
-		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
-		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilterSpecialOps;
-		$scope.operationId = $stateParams.id;
 
 		$scope.periodChange = function () {
 			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);

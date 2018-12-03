@@ -250,6 +250,21 @@ function ($q, $http, dateUtilService, $log) {
 			return party;
 		},
 
+		/**
+		 * Get the first email address ,
+		 * if the party has no email address, return and empty string.
+		 * @param party
+		 */
+		getDefaultEmailAddress: function(party){
+			var email;
+			if (_.isArray(party.contactMethods.emails) && party.contactMethods.emails.length > 0) {
+				email = party.contactMethods.emails[0].address;
+			} else {
+				email = '';
+			}
+			return email;
+		},
+
 		fromJSON: function (object) {
 			return fromJSON(object);
 		},

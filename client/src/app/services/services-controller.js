@@ -85,9 +85,8 @@ module.exports =
 		},
 		{
 			headerName    : $filter('translate')('services.list.type'),
-			field         : 'type',
-			valueFormatter: function (params) {
-				return $filter('translate')('services.list.' + params.value);
+			valueGetter: function (params) {
+				return $filter('translate')('services.list.' + params.data.type);
 			},
 			width         : 80
 		},

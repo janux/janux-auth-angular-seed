@@ -4,13 +4,13 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 
 module.exports = [
-	'$scope','$rootScope', '$state', 'clientsList','$timeout','$filter', function ($scope, $rootScope, $state, clientsList, $timeout, $filter) {
+	'$scope', '$rootScope', '$state', 'clientsList', '$timeout', '$filter', 'partyService', function ($scope, $rootScope, $state, clientsList, $timeout, $filter, partyService) {
 
 		$scope.editClient = function (id) {
-			$state.go('client.edit', {id: id, tab:'client'});
+			$state.go('client.edit', {id: id, tab: 'client'});
 		};
 
-		console.log('Cadena Clients List',clientsList);
+		console.log('Cadena Clients List', clientsList);
 		$scope.clientsList = clientsList;
 
 		//
@@ -54,10 +54,12 @@ module.exports = [
 			},
 			{
 				headerName  : $filter('translate')('client.email'),
-				field       : 'email',
 				editable    : false,
 				filter      : 'agTextColumnFilter',
-				filterParams: {newRowsAction: 'keep'}
+				filterParams: {newRowsAction: 'keep'},
+				valueGetter : function (params) {
+					return partyService.getDefaultEmailAddress(params.data);
+				}
 			},
 			{
 				headerName  : $filter('translate')('client.phone'),
@@ -82,10 +84,10 @@ module.exports = [
 			// 	filterParams: {newRowsAction: 'keep'}
 			// },
 			{
-				headerName     : '',
-				field          : 'id',
-				width          : 50,
-				cellRenderer   : agGridComp.editClientCellRenderer
+				headerName  : '',
+				field       : 'id',
+				width       : 50,
+				cellRenderer: agGridComp.editClientCellRenderer
 			}
 		];
 
@@ -94,35 +96,35 @@ module.exports = [
 				$scope.gridOptions.api.sizeColumnsToFit();
 			}, 1000);
 		};
-		$scope.agGridWindowSizeChange = function(windowWidth){
+		$scope.agGridWindowSizeChange = function (windowWidth) {
 			//console.log('ancho de ventana',windowWidth);
-			if(100 < windowWidth && windowWidth < 700){
+			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'code':
 						case 'contact':
 						case 'email':
 						case 'phone':
 						case 'celphone':
 
-						o.hide=true;
-						break;
+							o.hide = true;
+							break;
 					}
 
 					return o;
 				});
 				$scope.gridOptions.api.setColumnDefs(columnDefs);
-			}else{
+			} else {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'code':
 						case 'contact':
 						case 'email':
 						case 'phone':
 						case 'celphone':
 
-						o.hide=false;
-						break;
+							o.hide = false;
+							break;
 					}
 
 					return o;
@@ -193,19 +195,19 @@ module.exports = [
 			agGridSizeToFit();
 		});
 
-		$scope.$on('agGridWindowSize',function(event,windowWidth){
+		$scope.$on('agGridWindowSize', function (event, windowWidth) {
 			//console.log('tamaño',windowWidth);
-			if(100 < windowWidth && windowWidth < 700){
+			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'code':
 						case 'contact':
 						case 'email':
 						case 'phone':
 						case 'celphone':
 
-						o.hide=true;
-						break;
+							o.hide = true;
+							break;
 					}
 
 					return o;

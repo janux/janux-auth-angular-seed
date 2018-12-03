@@ -265,45 +265,6 @@ module.exports =
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.function'),
-				field         : 'functionValue',
-				editable      : false,
-				cellEditor    : agGridComp.specialOpsFunctionCellEditor,
-				filter        : 'agTextColumnFilter',
-				filterParams  : {newRowsAction: 'keep'},
-				width         : 80,
-				valueFormatter: function (params) {
-					var locale;
-					if (!_.isNil(params.data)) {
-						switch (params.data.functionValue) {
-							case 'DRIVER':
-								locale = 'operations.specialsTimeLog.driver';
-								break;
-							case 'AGENT':
-								locale = 'operations.specialsTimeLog.agent';
-								break;
-							case 'AGENT_ARMED':
-								locale = 'operations.specialsTimeLog.agentArmed';
-								break;
-							case 'GREETER':
-								locale = 'operations.specialsTimeLog.greeter';
-								break;
-							case 'COORDINATOR':
-								locale = 'operations.specialsTimeLog.coordinator';
-								break;
-							case 'TRANSPORT':
-								locale = 'operations.specialsTimeLog.transport';
-								break;
-						}
-					}
-					if (!_.isNil(locale)) {
-						return $filter('translate')(locale);
-					} else {
-						return '';
-					}
-				}
-			},
-			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 				field         : 'begin',
 				editable      : false,
@@ -319,7 +280,7 @@ module.exports =
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 130
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
@@ -334,7 +295,7 @@ module.exports =
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 95
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
@@ -349,7 +310,7 @@ module.exports =
 					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 95
 			},
 
 			{

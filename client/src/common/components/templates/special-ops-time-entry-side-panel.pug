@@ -47,6 +47,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 								md-select(ng-model="form.function")
 									md-option(value="DRIVER") {{ 'operations.specialsTimeLog.driver' | translate }}
 									md-option(value="TRANSPORT") {{ 'operations.specialsTimeLog.transport' | translate }}
+									md-option(value="DRIVER_PLUS_VEHICLE") {{ 'operations.specialsTimeLog.driverPlusVehicle' | translate }}
 									md-option(value="AGENT") {{ 'operations.specialsTimeLog.agent' | translate }}
 									md-option(value="AGENT_ARMED") {{ 'operations.specialsTimeLog.agentArmed' | translate }}
 									md-option(value="GREETER") {{ 'operations.specialsTimeLog.greeter' | translate }}
@@ -58,7 +59,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 					.container-flex-form-panel
 						.an-material.nopadding
 							md-input-container.full-panel
-								h4.form-label 
+								h4.form-label
 									| {{ 'operations.specialsTimeLog.begin' | translate }}
 								md-datepicker(ng-model='form.startForm'
 								ng-change='calculateDates()')

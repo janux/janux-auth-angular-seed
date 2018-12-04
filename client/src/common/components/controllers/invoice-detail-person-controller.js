@@ -84,10 +84,16 @@ module.exports =
 				filter        : 'agTextColumnFilter',
 				filterParams  : {newRowsAction: 'keep'},
 				valueFormatter: function (params) {
-					var locale
+					var locale;
 					const resourcePerson = _.find(params.data.timeEntry.resources, function (it) {
 						return it.type !== 'VEHICLE'
 					});
+
+					const resourceVehicle = _.find(params.data.timeEntry.resources, function (it) {
+						return it.type === 'VEHICLE'
+					});
+
+					const isArmored = resourceVehicle && resourceVehicle.resource.isArmored === true;
 					switch (resourcePerson.type) {
 						case 'DRIVER':
 							locale = 'operations.specialsTimeLog.driver';
@@ -105,7 +111,18 @@ module.exports =
 							locale = 'operations.specialsTimeLog.coordinator';
 							break;
 						case 'TRANSPORT':
-							locale = 'operations.specialsTimeLog.transport';
+							if (isArmored === false)    {
+								locale = 'operations.specialsTimeLog.transport';
+							} else {
+								locale = 'operations.specialsTimeLog.transferArmoredVehicle';
+							}
+							break;
+						case 'DRIVER_PLUS_VEHICLE':
+							if (isArmored === false) {
+								locale = 'operations.specialsTimeLog.driverPlusVehicle';
+							} else {
+								locale = 'operations.specialsTimeLog.driverPlusVehicleArmored';
+							}
 							break;
 					}
 					if (!_.isNil(locale)) {
@@ -113,7 +130,6 @@ module.exports =
 					} else {
 						return '';
 					}
-
 				}
 			},
 

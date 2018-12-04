@@ -665,6 +665,43 @@ module.exports =
 				}
 				$log.debug("generateStatus: Returning result " + result);
 				return result;
+			},
+
+			/**
+			 *  Return the value of the function type of an special ops time entry.
+			 */
+			generateFunctionLocale: function (timeEntry) {
+				var locale;
+				if (!_.isNil(timeEntry)) {
+					switch (timeEntry.functionValue) {
+						case 'DRIVER':
+							locale = 'operations.specialsTimeLog.driver';
+							break;
+						case 'AGENT':
+							locale = 'operations.specialsTimeLog.agent';
+							break;
+						case 'AGENT_ARMED':
+							locale = 'operations.specialsTimeLog.agentArmed';
+							break;
+						case 'GREETER':
+							locale = 'operations.specialsTimeLog.greeter';
+							break;
+						case 'COORDINATOR':
+							locale = 'operations.specialsTimeLog.coordinator';
+							break;
+						case 'TRANSPORT':
+							locale = 'operations.specialsTimeLog.transport';
+							break;
+						case 'DRIVER_PLUS_VEHICLE':
+							locale = 'operations.specialsTimeLog.driverPlusVehicle';
+							break;
+					}
+				}
+				if (!_.isNil(locale)) {
+					return $filter('translate')(locale);
+				} else {
+					return '';
+				}
 			}
 
 		};

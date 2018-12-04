@@ -185,8 +185,8 @@ module.exports =
 			rowHeight                : 30,
 			headerHeight             : 35,
 			enableSorting            : true,
-			pagination               : true,
-			paginationAutoPageSize   : true,
+			pagination               : false,
+			paginationAutoPageSize   : false,
 			onGridReady              : function () {
 				agGridSizeToFit();
 			},
@@ -240,6 +240,13 @@ module.exports =
 		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterPersons();
+
+			var personsGridHeight = ($scope.persons.length * $scope.gridOptions.rowHeight)+($scope.gridOptions.headerHeight+16);
+			if(personsGridHeight<=51){
+				personsGridHeight=130;
+			}
+			$rootScope.$broadcast(config.invoice.events.invoicePersonsUpdated, personsGridHeight);
+
 			agGridSizeToFit();
 		});
 

@@ -20,7 +20,7 @@
 	// Detail person
 	div
 		strong {{'services.invoice.invoiceDetail.staff' | translate}}
-	div(style='height:300px;')
+	div(style='height: {{ personsGridHeight }}px;')
 		invoice-detail-person(invoice='invoice')
 
 	div(style="text-align: right")
@@ -37,7 +37,7 @@
 	// Detail vehicle.
 	div
 		strong {{'services.invoice.invoiceDetail.vehicles' | translate}}
-	div(style='height:300px;')
+	div(style='height: {{ vehiclesGridHeight }}px;')
 		invoice-detail-vehicle(invoice='invoice')
 	div(style="text-align: right")
 		strong {{'services.invoice.invoiceDetail.subTotalVehicle' | translate}}:{{ (invoice.totalVehicle | currency) }}
@@ -48,7 +48,7 @@
 	// Detail expenses
 	div
 		strong {{'services.invoice.invoiceDetail.expenses' | translate}}
-	div(style='height:300px;')
+	div(style='height: {{ expensesGridHeight }}px;')
 		invoice-detail-expense(invoice='invoice')
 	div(style="text-align: right; margin-top:20px")
 		strong {{'services.invoice.invoiceDetail.subTotalExpenses' | translate}}:{{ (invoice.totalExpenses | currency) }}

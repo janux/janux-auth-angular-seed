@@ -301,7 +301,10 @@ require('angular').module('config', [])
 				invoiceListUpdated     : 'invoiceListUpdated',
 				invoiceDetailUpdated   : 'invoiceDetailUpdated',
 				invoiceEditModeEnabled : 'invoiceEditModeEnabled',
-				invoiceEditModeDisabled: 'invoiceEditModeDisabled'
+				invoiceEditModeDisabled: 'invoiceEditModeDisabled',
+				invoicePersonsUpdated  : 'invoicePersonsUpdated',
+				invoiceVehiclesUpdated  : 'invoiceVehiclesUpdated',
+				invoiceExpensesUpdated  : 'invoiceExpensesUpdated'
 			}
 		},
 		timeEntry             : {

@@ -67,5 +67,17 @@ module.exports =
 		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
 			$scope.editModeInvoiceDetail = false;
 		});
+		$scope.$on(config.invoice.events.invoicePersonsUpdated, function (event, personsGridHeight) {
+			$scope.personsGridHeight = personsGridHeight;
+			//console.log("Height:", $scope.personsGridHeight);
+		});
+		$scope.$on(config.invoice.events.invoiceVehiclesUpdated, function (event, vehiclesGridHeight) {
+			$scope.vehiclesGridHeight = vehiclesGridHeight;
+			//console.log("Height:", $scope.personsGridHeight);
+		});
+		$scope.$on(config.invoice.events.invoiceExpensesUpdated, function (event, expensesGridHeight) {
+			$scope.expensesGridHeight = expensesGridHeight;
+			console.log("Height Expenses:", $scope.expensesGridHeight);
+		});
 
 	}];

@@ -279,34 +279,7 @@ module.exports =
 				filterParams  : {newRowsAction: 'keep'},
 				width         : 80,
 				valueFormatter: function (params) {
-					var locale;
-					if (!_.isNil(params.data)) {
-						switch (params.data.functionValue) {
-							case 'DRIVER':
-								locale = 'operations.specialsTimeLog.driver';
-								break;
-							case 'AGENT':
-								locale = 'operations.specialsTimeLog.agent';
-								break;
-							case 'AGENT_ARMED':
-								locale = 'operations.specialsTimeLog.agentArmed';
-								break;
-							case 'GREETER':
-								locale = 'operations.specialsTimeLog.greeter';
-								break;
-							case 'COORDINATOR':
-								locale = 'operations.specialsTimeLog.coordinator';
-								break;
-							case 'TRANSPORT':
-								locale = 'operations.specialsTimeLog.transport';
-								break;
-						}
-					}
-					if (!_.isNil(locale)) {
-						return $filter('translate')(locale);
-					} else {
-						return '';
-					}
+					return operationService.generateFunctionLocale(params.data);
 				}
 			},
 			{

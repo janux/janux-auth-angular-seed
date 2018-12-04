@@ -2,7 +2,7 @@ login-toolbar(toolbar-title='services.title')
 
 side-bar
 
-.page-content-wrapper.time-sheet(ng-class="{'page-content-left' : noneStyle}")
+.page-content-wrapper.staff-sheet(ng-class="{'page-content-left' : noneStyle}")
 	// Special ops side panel.
 	special-service-side-panel
 
@@ -21,8 +21,7 @@ side-bar
 				md-button.arrow.md-icon-button(aria-label="New" ng-show='currentNavItem=="time-sheet"' ng-click="insertNewTimeEntry()")
 					md-icon.fa.fa-plus-square.fa-lg
 
-
-		.container-body.operations-page
+		.container-fluid-flex.operations-page
 			md-content.tabs-glarus
 				md-toolbar.form-mid-toolbar.options-tabs
 					.md-toolbar-tools
@@ -67,12 +66,6 @@ side-bar
 									md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
-
-						// .btn-row(ng-show='currentNavItem=="invoices"')
-						// 	md-menu(md-position-mode="target-right target" md-offset="-6 50" ng-show='userRole.can("UPDATE","FINANCE");')
-						// 		button.btn( aria-label="Add" ng-click='insertManualInvoice()'  )
-						// 			i.fa.fa-plus-circle &nbsp;
-						// 			| {{ 'services.invoice.insertManual' | translate }}
 
 						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
 							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
@@ -129,4 +122,5 @@ side-bar
 
 				.container-flex-form(ng-show='currentNavItem=="invoiceDetail"')
 					invoice-detail(invoice = 'invoice' style='width: 100%')
+
 footer-Janux

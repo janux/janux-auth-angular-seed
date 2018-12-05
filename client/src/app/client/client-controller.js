@@ -10,7 +10,7 @@ module.exports = [
 			$state.go('client.edit', {id: id, tab: 'client'});
 		};
 
-		console.log('Cadena Clients List', clientsList);
+		console.debug('Cadena Clients List', clientsList);
 		$scope.clientsList = clientsList;
 
 		//
@@ -97,7 +97,7 @@ module.exports = [
 			}, 1000);
 		};
 		$scope.agGridWindowSizeChange = function (windowWidth) {
-			//console.log('ancho de ventana',windowWidth);
+			//console.debug('ancho de ventana',windowWidth);
 			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
 					switch (o.field) {
@@ -168,10 +168,10 @@ module.exports = [
 			},
 			onRowEditingStarted      : function () {
 				// Nothing to do yet
-				// console.log('Row edition started', rowObj);
+				// console.debug('Row edition started', rowObj);
 			},
 			onRowValueChanged        : function (rowObj) {
-				console.log(rowObj);
+				console.debug(rowObj);
 
 			}
 			// localeTextFunc           : function (key, defaultValue) {
@@ -184,7 +184,7 @@ module.exports = [
 			// 	var savedFilters;
 			// 	savedFilters = $scope.gridOptions.api.getFilterModel();
 			// 	localStorageService.set(columnsFiltersKey, savedFilters);
-			// 	// console.log('savedFilters' + JSON.stringify(savedFilters));
+			// 	// console.debug('savedFilters' + JSON.stringify(savedFilters));
 			// }
 			// components:{
 			// 	dateComponent: agGridComp.dateFilter
@@ -196,7 +196,7 @@ module.exports = [
 		});
 
 		$scope.$on('agGridWindowSize', function (event, windowWidth) {
-			//console.log('tamaño',windowWidth);
+			//console.debug('tamaño',windowWidth);
 			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
 					switch (o.field) {
@@ -218,11 +218,11 @@ module.exports = [
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
 		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
-		console.log($scope.gridOptions);
+		console.debug($scope.gridOptions);
 
 		// $scope.init();
 

@@ -405,9 +405,9 @@ module.exports =
 						});
 
 						var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type === 'VEHICLE' && o.vendor.id === config.glarus;
+							return o.type === 'VEHICLE';
 						});
-
+						console.debug("allVehiclesAvailableForSelection %o", allVehiclesAvailableForSelection);
 
 						return {
 							driversAssignedToOperations      : driversAssignedToOperations,

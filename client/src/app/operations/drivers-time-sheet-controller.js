@@ -117,10 +117,10 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				filterParams: {newRowsAction: 'keep'},
 				valueGetter : function (params) {
 					var result;
-					if (_.isNil(params.data.code)) {
-						result = params.data.client;
-					} else {
+					if (_.isString(params.data.code) && params.data.code !== '') {
 						result = params.data.code;
+					} else {
+						result = params.data.client;
 					}
 					return result;
 				}

@@ -298,7 +298,7 @@ module.exports =
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 200
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),

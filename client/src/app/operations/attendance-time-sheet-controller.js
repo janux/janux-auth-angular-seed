@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService',
-	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService) {
+module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.attendanceTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.attendanceColumnsFilters;
@@ -22,21 +22,9 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 		};
 
-		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
+		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var allStaff = driversAndOps.allPersonnelAvailableForSelection;
-
-
-		// var initRowModel = function () {
-		// 	$scope.lbRow = {
-		// 		staff    : '',
-		// 		operation: '',
-		// 		start    : moment().startOf('day').format(dateTimeFormatString),
-		// 		end      : undefined,
-		// 		location : '',
-		// 		absence  : ''
-		// 	};
-		// };
-		// initRowModel();
 
 		// Models used when entering the search query for the autocomplete fields
 		$scope.lbSearch = {
@@ -44,22 +32,6 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			operation: '',
 			provider : ''
 		};
-
-		var infoDialog = function (translateKey) {
-			$modal.open({
-				templateUrl: 'app/dialog-tpl/info-dialog.html',
-				controller : ['$scope', '$modalInstance',
-					function ($scope, $modalInstance) {
-						$scope.message = $filter('translate')(translateKey);
-
-						$scope.ok = function () {
-							$modalInstance.close();
-						};
-					}],
-				size       : 'md'
-			});
-		};
-
 
 		//
 		// Staff autocomplete
@@ -96,7 +68,6 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			console.log('item   ' + JSON.stringify(item));
 		};
 
-
 		$scope.staffSearch = function (query) {
 			return query ? allStaff.filter(nameQueryService.createFilterForStaff(query)) : allStaff;
 		};
@@ -127,14 +98,12 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		var removeSelected = function () {
 			var selectedData = $scope.gridOptions.api.getSelectedRows();
 
-			//TODO: Validate only attendance rows.
-
 			if (selectedData.length > 0) {
 				$modal.open({
 					templateUrl: 'app/dialog-tpl/confirm-dialog.html',
 					controller : ['$scope', '$modalInstance',
 						function ($scope, $modalInstance) {
-							$scope.message = $filter('translate')('operations.dialogs.confirmDe;letion');
+							$scope.message = $filter('translate')('operations.dialogs.confirmDeletion');
 
 							$scope.ok = function () {
 								deleteConfirmed(selectedData);
@@ -148,7 +117,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					size       : 'md'
 				});
 			} else {
-				infoDialog('operations.dialogs.noRowSelectedError');
+				dialogService.info('operations.dialogs.noRowSelectedError');
 			}
 		};
 
@@ -215,7 +184,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				}
 			},
 			{
-				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
+				headerName    : $filter('translate')('operations.attendanceTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -226,26 +195,30 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
-					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 120
+			},
+			{
+				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
+				field         : 'begin',
+				editable      : false,
+				valueFormatter: function (params) {
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
+				},
+				sort          : 'desc',
+				width         : 90
 			},
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.end'),
 				field         : 'end',
 				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
 				valueFormatter: function (params) {
-					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
+					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 90
 			},
 			{
 				headerName: $filter('translate')('operations.attendanceTimeLog.duration'),
@@ -357,10 +330,11 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			onRowEditingStarted      : function (rowObj) {
 				// Validate if operation is attendance type
 				var operation = rowObj.data.operation;
-				if (operation.type === 'ATTENDANCE'){
+				if (operation.type === 'ATTENDANCE') {
 					$rootScope.$emit(config.timeEntry.attendance.events.setUpdateMode, rowObj.data);
-				}else{
-					infoDialog('operations.dialogs.invalidOperationForAttendance');
+				} else {
+					dialogService.info('operations.dialogs.invalidOperationForAttendance');
+					$scope.gridOptions.api.stopEditing();
 				}
 			},
 			onRowValueChanged        : function () {

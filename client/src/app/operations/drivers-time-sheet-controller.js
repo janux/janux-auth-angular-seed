@@ -126,7 +126,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				}
 			},
 			{
-				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
+				headerName    : $filter('translate')('operations.driversTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -141,7 +141,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 120
 			},
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
@@ -151,9 +151,8 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
 				},
 				sort          : 'desc',
-				width         : 160
+				width         : 90
 			},
-
 			{
 				headerName    : $filter('translate')('operations.driversTimeLog.end'),
 				field         : 'end',
@@ -161,7 +160,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
-				width         : 160
+				width         : 90
 			},
 			{
 				headerName: $filter('translate')('operations.driversTimeLog.duration'),

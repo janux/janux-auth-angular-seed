@@ -121,7 +121,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 					.fieldset-flex(style="padding-top:15px")
 						.an-material.nopadding
 							md-input-container.full-panel
-								label {{ 'operations.specialsTimeLog.beginHour' | translate }}
+								label {{ 'operations.specialsTimeLog.beginHourBillable' | translate }}
 								input(mdc-datetime-picker=''
 								date='false'
 								placeholder='Time'
@@ -144,7 +144,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 
 						.an-material.nopadding
 							md-input-container.full-panel
-								label {{ 'operations.specialsTimeLog.endHour' | translate }}
+								label {{ 'operations.specialsTimeLog.endHourBillable' | translate }}
 								input(mdc-datetime-picker=''
 								date='false'
 								placeholder='Time'
@@ -238,5 +238,5 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 				markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 				on-fullscreen="onFullScreenCallback()"
 				on-fullscreen-exit="onFullScreenExitCallback()"
-				rows="15")
+				rows="5")
 

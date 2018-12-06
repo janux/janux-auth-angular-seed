@@ -79,6 +79,13 @@ module.exports =
 				$scope.showTimeSheetPeriodFilterList = true;
 				loadTimeEntries();
 			}
+			/* Check if there is only one invoice in the list and goes directly to it */
+			if(tab==='invoices'){
+				if($scope.invoices.length===1){
+					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
+					//console.log('Lista',$scope.invoices[0]);
+				}
+			}
 		};
 
 		var updateInvoiceList = function () {

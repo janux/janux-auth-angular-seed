@@ -292,7 +292,11 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 		var agGridSizeToFit = function () {
 			$timeout(function () {
-				$scope.gridOptions.api.sizeColumnsToFit();
+				if (!_.isNil($scope.gridOptions.api)) {
+					$scope.gridOptions.api.sizeColumnsToFit();
+				} else {
+					console.warn('Trying to access null ag-grid from attendance-time-sheet-controller');
+				}
 			}, 500);
 		};
 		$scope.agGridSizeToFit = agGridSizeToFit;

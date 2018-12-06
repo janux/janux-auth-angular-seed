@@ -22,7 +22,8 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 			$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 		};
 
-		var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
+		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
+		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var allStaff = driversAndOps.allPersonnelAvailableForSelection;
 
 		// Models used when entering the search query for the autocomplete fields
@@ -183,7 +184,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				}
 			},
 			{
-				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
+				headerName    : $filter('translate')('operations.attendanceTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -194,26 +195,30 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 					filterOptions   : ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 				},
 				valueFormatter: function (params) {
-					return (params.data.begin) ? moment(params.data.begin).format(dateTimeFormatString) : '';
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 120
+			},
+			{
+				headerName    : $filter('translate')('operations.attendanceTimeLog.begin'),
+				field         : 'begin',
+				editable      : false,
+				valueFormatter: function (params) {
+					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
+				},
+				sort          : 'desc',
+				width         : 90
 			},
 			{
 				headerName    : $filter('translate')('operations.attendanceTimeLog.end'),
 				field         : 'end',
 				editable      : false,
-				filter        : 'date',
-				filterParams  : {
-					newRowsAction: 'keep',
-					comparator   : agGridComp.dateFilterComparator
-				},
 				valueFormatter: function (params) {
-					return (params.data.end) ? moment(params.data.end).format(dateTimeFormatString) : '';
+					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 90
 			},
 			{
 				headerName: $filter('translate')('operations.attendanceTimeLog.duration'),

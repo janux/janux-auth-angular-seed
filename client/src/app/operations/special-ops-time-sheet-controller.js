@@ -122,7 +122,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				}
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -137,25 +137,25 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 160
+				width         : 120
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 				field         : 'beginWork',
 				editable      : false,
 				valueFormatter: function (params) {
 					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
 				},
-				width         : 160
+				width         : 90
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
 				field         : 'endWork',
 				editable      : false,
 				valueFormatter: function (params) {
 					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
 				},
-				width         : 160
+				width         : 90
 			},
 			{
 				headerName : $filter('translate')('operations.specialsTimeLog.duration'),

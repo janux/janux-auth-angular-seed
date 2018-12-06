@@ -265,7 +265,7 @@ module.exports =
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -280,10 +280,10 @@ module.exports =
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 130
+				width         : 120
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -295,10 +295,10 @@ module.exports =
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 95
+				width         : 90
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
 				field         : 'end',
 				editable      : false,
 				filter        : 'date',
@@ -310,7 +310,7 @@ module.exports =
 					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 95
+				width         : 90
 			},
 
 			{
@@ -330,18 +330,6 @@ module.exports =
 				cellStyle : {
 					'white-space': 'normal',
 					'padding-top': '0'
-				}
-			},
-			{
-				headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
-				editable   : false,
-				hide       : !$rootScope.userRole.can('READ', 'FINANCE'),
-				valueGetter: function (params) {
-					var result = '';
-					if (!_.isNil(params.data.invoiceInfo) && !_.isNil(params.data.invoiceInfo.invoice)) {
-						result = params.data.invoiceInfo.invoice.invoiceNumber;
-					}
-					return result;
 				}
 			},
 			{
@@ -390,6 +378,18 @@ module.exports =
 					}
 				},
 				width         : 130
+			},
+			{
+				headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
+				editable   : false,
+				hide       : !$rootScope.userRole.can('READ', 'FINANCE'),
+				valueGetter: function (params) {
+					var result = '';
+					if (!_.isNil(params.data.invoiceInfo) && !_.isNil(params.data.invoiceInfo.invoice)) {
+						result = params.data.invoiceInfo.invoice.invoiceNumber;
+					}
+					return result;
+				}
 			},
 			{
 				headerName             : '',

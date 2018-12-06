@@ -283,7 +283,7 @@ module.exports =
 				}
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -298,10 +298,10 @@ module.exports =
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
-				width         : 200
+				width         : 120
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.beginHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
 				field         : 'beginWork',
 				editable      : false,
 				filter        : 'date',
@@ -313,10 +313,10 @@ module.exports =
 					return (params.data.beginWork) ? moment(params.data.beginWork).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 90
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.endHour'),
+				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
 				field         : 'endWork',
 				editable      : false,
 				filter        : 'date',
@@ -328,7 +328,7 @@ module.exports =
 					return (params.data.endWork) ? moment(params.data.endWork).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 160
+				width         : 90
 			},
 
 			{

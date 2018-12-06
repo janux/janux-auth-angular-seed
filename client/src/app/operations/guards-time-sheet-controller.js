@@ -601,51 +601,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				// console.log('Row edition started', rowObj);
 				$rootScope.$emit(config.timeEntry.guard.events.setUpdateMode, rowObj.data);
 			},
-			onRowValueChanged        : function (rowObj) {
-
-				console.log('Row data changed', rowObj);
-				// $rootScope.$emit(config.timeEntry.guard.events.setUpdateMode, rowObj.data);
-				// var endToUpdate;
-				//
-				// if (rowObj.data.end) {
-				// 	endToUpdate = moment(rowObj.data.end).toDate();
-				// }
-				//
-				// var resource = _.clone(rowObj.data.staff);
-				// // TODO: Temporary solution, remove once we obtain the list of operations and staff separately
-				// if (!_.isNil(resource)) {
-				// 	delete resource.opId;
-				// }
-				//
-				//
-				// var timeEntryToUpdate = {
-				// 	'id'         : rowObj.data.id,
-				// 	'resources'  : _.isNil(resource) ? [] : [_.clone(resource)],
-				// 	'principals' : [],
-				// 	'attributes' : [],
-				// 	'type'       : 'GUARD',
-				// 	'comment'    : rowObj.data.comment,
-				// 	'begin'      : moment(rowObj.data.begin).toDate(),
-				// 	'end'        : endToUpdate,
-				// 	'billable'   : true,
-				// 	'idOperation': rowObj.data.operation.id,
-				// 	'extras'     : rowObj.data.extras
-				// };
-				//
-				//
-				// timeEntryToUpdate = setExtraFlag(timeEntryToUpdate);
-				// timeEntryToUpdate = setResourceType(timeEntryToUpdate);
-				// timeEntryToUpdate = setBillableFlag(timeEntryToUpdate);
-				// timeEntryToUpdate = setHoursInResource(rowObj.data.operation, timeEntryToUpdate);
-				// timeEntryToUpdate = setExternalFlag(timeEntryToUpdate, rowObj.data.isExternal);
-				//
-				//
-				// timeEntryService.update(timeEntryToUpdate).then(function () {
-				// 	// $scope.findTimeEntries($scope.periodFilterKey);
-				// 	// dialogService.info('Time entry successfully updated');
-				// }).finally(function () {
-				// 	$scope.findTimeEntries($scope.periodFilterKey);
-				// });
+			onRowValueChanged        : function () {
 			},
 			localeTextFunc           : function (key, defaultValue) {
 				var gridKey = 'grid.' + key;

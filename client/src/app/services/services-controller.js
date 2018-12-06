@@ -34,7 +34,11 @@ module.exports =
 
 	var agGridSizeToFit = function () {
 		$timeout(function () {
-			$scope.gridOptions.api.sizeColumnsToFit();
+			if (!_.isNil($scope.gridOptions.api)) {
+				$scope.gridOptions.api.sizeColumnsToFit();
+			} else {
+				console.warn('Trying to access null ag-grid from services-controller');
+			}
 		}, 1000);
 	};
 	$scope.agGridSizeToFit = agGridSizeToFit;

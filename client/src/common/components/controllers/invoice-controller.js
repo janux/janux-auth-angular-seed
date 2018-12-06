@@ -2,6 +2,7 @@
 
 var agGridComp = require('common/ag-grid-components');
 var moment = require('moment');
+var _ = require('lodash');
 
 module.exports =
 	['$scope', '$modal', 'invoiceService', '$state', '$timeout', '$filter', '$rootScope', 'config', function (
@@ -100,7 +101,11 @@ module.exports =
 
 		var agGridSizeToFit = function () {
 			$timeout(function () {
-				$scope.gridOptions.api.sizeColumnsToFit();
+				if (!_.isNil($scope.gridOptions.api)) {
+					$scope.gridOptions.api.sizeColumnsToFit();
+				} else {
+					console.warn('Trying to access null ag-grid from invoice-controller');
+				}
 			}, 1000);
 		};
 
@@ -135,21 +140,40 @@ module.exports =
 			}
 		};
 
-		$scope.$on('sideMenuSizeChange', function () {
+		var deregister1 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
-			console.log('$translateChangeSuccess');
+		var deregister2 = $rootScope.$on('$translateChangeSuccess', function () {
+			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
 
 		// This is a custom event that helps to update the invoice list.
-		$rootScope.$on(config.invoice.events.invoiceListUpdated, function (event, invoices) {
+		var deregister3 = $rootScope.$on(config.invoice.events.invoiceListUpdated, function (event, invoices) {
 			$scope.invoices = invoices;
-			$scope.gridOptions.api.setRowData($scope.invoices);
-			agGridSizeToFit();
+			if (_.isNil($scope.gridOptions.api)) {
+				console.warn('Event ' + config.invoice.events.invoiceListUpdated + ' with no ag-grid on invoice-controller')
+			} else {
+				$scope.gridOptions.api.setRowData($scope.invoices);
+				agGridSizeToFit();
+			}
 		});
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+
+			}
+			if (_.isFunction(deregister2)) {
+				deregister2();
+			}
+			if (_.isFunction(deregister3)) {
+				deregister3();
+			}
+		});
+
 	}];

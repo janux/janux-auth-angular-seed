@@ -408,7 +408,11 @@ module.exports =
 		var refreshing = false;		// Flag to indicate if ag-grid is in refresh process
 		var agGridSizeToFit = function () {
 			$timeout(function () {
-				$scope.gridOptions.api.sizeColumnsToFit();
+				if (!_.isNil($scope.gridOptions.api)) {
+					$scope.gridOptions.api.sizeColumnsToFit();
+				} else {
+					console.warn('Trying to access null ag-grid from view-driver-controller');
+				}
 			}, 2000);
 		};
 		$scope.agGridSizeToFit = agGridSizeToFit;
@@ -477,7 +481,11 @@ module.exports =
 				if (!refreshing) {
 					refreshing = true;
 					$timeout(function () {
-						$scope.gridOptions.api.sizeColumnsToFit();
+						if (!_.isNil($scope.gridOptions.api)) {
+							$scope.gridOptions.api.sizeColumnsToFit();
+						} else {
+							console.warn('Trying to access null ag-grid from special-ops-time-sheet-controller at onRowSelected');
+						}
 						refreshing = false;
 					}, 200);
 				}

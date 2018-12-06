@@ -111,7 +111,11 @@ module.exports =
 
 		var agGridSizeToFit = function () {
 			$timeout(function () {
-				$scope.gridOptions.api.sizeColumnsToFit();
+				if (!_.isNil($scope.gridOptions.api)) {
+					$scope.gridOptions.api.sizeColumnsToFit();
+				} else {
+					console.warn('Trying to access null ag-grid from invoice-detail-vehicle-controller');
+				}
 			}, 1000);
 		};
 
@@ -163,39 +167,64 @@ module.exports =
 			}
 
 			$scope.vehicles = result;
-			$scope.gridOptions.api.setRowData($scope.vehicles);
+			if (_.isNil($scope.gridOptions.api)) {
+				console.warn("Call to setRowData with ag-grid null in invoice-detail-vehicle-controller");
+			} else {
+				$scope.gridOptions.api.setRowData($scope.vehicles);
+			}
 		};
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
+		var deregister1 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.log('$translateChangeSuccess');
 			$state.reload();
 		});
 
 		//This event is captured, when the information of the selected invoice changes.
-		$rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+		var deregister2 = $rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterVehicle();
 
-			var vehiclesGridHeight = ($scope.vehicles.length * $scope.gridOptions.rowHeight)+($scope.gridOptions.headerHeight+16);
-			if(vehiclesGridHeight<=51){
-				vehiclesGridHeight=130;
+			var vehiclesGridHeight = ($scope.vehicles.length * $scope.gridOptions.rowHeight) + ($scope.gridOptions.headerHeight + 16);
+			if (vehiclesGridHeight <= 51) {
+				vehiclesGridHeight = 130;
 			}
 			$rootScope.$broadcast(config.invoice.events.invoiceVehiclesUpdated, vehiclesGridHeight);
 
 			agGridSizeToFit();
 		});
 
-		$scope.$on('sideMenuSizeChange', function () {
+		var deregister3 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
 		$scope.agGridSizeToFit = agGridSizeToFit;
 
-		$scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
+		var deregister4 = $scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
 			$scope.editModeInvoiceDetail = true;
 		});
-		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
+
+		var deregister5 = $scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
 			$scope.editModeInvoiceDetail = false;
+		});
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+
+			}
+			if (_.isFunction(deregister2)) {
+				deregister2();
+			}
+			if (_.isFunction(deregister3)) {
+				deregister3();
+			}
+			if (_.isFunction(deregister4)) {
+				deregister4();
+			}
+			if (_.isFunction(deregister5)) {
+				deregister5();
+			}
 		});
 	}];

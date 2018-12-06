@@ -140,19 +140,19 @@ module.exports =
 			}
 		};
 
-		var deregister1 = $scope.$on('sideMenuSizeChange', function () {
+		var unbindFunction1 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		var deregister2 = $rootScope.$on('$translateChangeSuccess', function () {
+		var unbindFunction2 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
 
 		// This is a custom event that helps to update the invoice list.
-		var deregister3 = $rootScope.$on(config.invoice.events.invoiceListUpdated, function (event, invoices) {
+		var unbindFunction3 = $rootScope.$on(config.invoice.events.invoiceListUpdated, function (event, invoices) {
 			$scope.invoices = invoices;
 			if (_.isNil($scope.gridOptions.api)) {
 				console.warn('Event ' + config.invoice.events.invoiceListUpdated + ' with no ag-grid on invoice-controller')
@@ -164,15 +164,15 @@ module.exports =
 
 		// Unregister listeners
 		$scope.$on('$destroy', function () {
-			if (_.isFunction(deregister1)) {
-				deregister1();
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
 
 			}
-			if (_.isFunction(deregister2)) {
-				deregister2();
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
 			}
-			if (_.isFunction(deregister3)) {
-				deregister3();
+			if (_.isFunction(unbindFunction3)) {
+				unbindFunction3();
 			}
 		});
 

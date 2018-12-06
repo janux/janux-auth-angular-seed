@@ -240,7 +240,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * This even is captured
 		 */
-		$rootScope.$on(config.timeEntry.driver.events.setInsertMode, function () {
+		var unbindFunction1 = $rootScope.$on(config.timeEntry.driver.events.setInsertMode, function () {
 			console.debug("Catch %s event", config.timeEntry.driver.events.setInsertMode);
 			clearForm();
 			// fillFormDataForInsert(operationId);
@@ -250,7 +250,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		$rootScope.$on(config.timeEntry.driver.events.setUpdateMode, function (event, timeEntry) {
+		var unbindFunction2 = $rootScope.$on(config.timeEntry.driver.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.driver.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);
@@ -339,6 +339,16 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.init();
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
+			}
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
+			}
+		});
 
 	}]
 ;

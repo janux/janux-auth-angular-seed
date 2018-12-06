@@ -44,7 +44,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// the correct dates.
 				startForm    : today,
 				startHourForm: today,
-				extras     : '',
+				extras       : '',
 				isExternal   : false
 			};
 		};
@@ -90,7 +90,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			$scope.form.extras = timeEntry.extras;
 			$scope.form.isExternal = timeEntry.isExternal;
 			$scope.calculateDates();
-			
+
 		}
 
 		/**
@@ -317,7 +317,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				$scope.form.start = startMoment.toDate();
 				$scope.form.end = endMoment.toDate();
 				$scope.form.differenceTimeForm = differenceHoursMoment;
-			}else{
+			} else {
 				$scope.form.start = startMoment.toDate();
 				$scope.form.end = undefined;
 				$scope.form.differenceTimeForm = '';
@@ -443,7 +443,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * This even is captured
 		 */
-		$rootScope.$on(config.timeEntry.guard.events.setInsertMode, function () {
+		var deregister1 = $rootScope.$on(config.timeEntry.guard.events.setInsertMode, function () {
 			console.debug("Catch %s event", config.timeEntry.guard.events.setInsertMode);
 			clearForm();
 			$mdSidenav(config.timeEntry.guard.sidePanel.id).open();
@@ -452,7 +452,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		$rootScope.$on(config.timeEntry.guard.events.setUpdateMode, function (event, timeEntry) {
+		var deregister2 =$rootScope.$on(config.timeEntry.guard.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.guard.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);
@@ -497,5 +497,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.init();
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+			}
+			if (_.isFunction(deregister2)) {
+				deregister2();
+			}
+		});
 	}]
 ;

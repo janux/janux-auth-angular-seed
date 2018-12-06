@@ -370,7 +370,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
+		var unbindFunction1 = $rootScope.$on('$translateChangeSuccess', function () {
 			// console.log('$translateChangeSuccess');
 			$state.reload();
 		});
@@ -397,4 +397,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$scope.gridOptions.api.stopEditing();
 		});
 
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
+			}
+		});
 	}];

@@ -462,7 +462,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * This even is captured
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.setInsertMode, function (event, operationId) {
+		var unbindFunction1 = $rootScope.$on(config.timeEntry.specialOps.events.setInsertMode, function (event, operationId) {
 			console.debug("Catch %s event", config.timeEntry.specialOps.events.setInsertMode);
 			clearForm();
 			fillFormDataForInsert(operationId);
@@ -472,7 +472,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		$rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
+		var unbindFunction2 = $rootScope.$on(config.timeEntry.specialOps.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.specialOps.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);
@@ -513,15 +513,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		/*****
-		**This will hide the Vehicle Panel by default.
-		*****/
-        $scope.vehiclePanelIsVisible = false;
-        $scope.vehicleBtnIsVisible = true;
-        $scope.vehiclePanelShowHide = function () {
-            //If DIV is visible it will be hidden and vice versa, also button.
-            $scope.vehiclePanelIsVisible = $scope.vehiclePanelIsVisible ? false : true;
-            $scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
-        };
+		 **This will hide the Vehicle Panel by default.
+		 *****/
+		$scope.vehiclePanelIsVisible = false;
+		$scope.vehicleBtnIsVisible = true;
+		$scope.vehiclePanelShowHide = function () {
+			//If DIV is visible it will be hidden and vice versa, also button.
+			$scope.vehiclePanelIsVisible = $scope.vehiclePanelIsVisible ? false : true;
+			$scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
+		};
 
 		/******
 		 **Add functionality to the expand button
@@ -536,5 +536,14 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.init();
+
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
+			}
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
+			}
+		});
 	}]
 ;

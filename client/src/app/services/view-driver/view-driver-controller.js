@@ -529,7 +529,7 @@ module.exports =
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
+		var deregister1 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
@@ -700,7 +700,7 @@ module.exports =
 			invoiceService.specialOpsInvoiceReport($scope.invoice.invoiceNumber, operation);
 		};
 
-		$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
+		var deregister2 = $rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
 			console.debug('invoice selected:' + invoiceNumber);
 			// Switch tab.
 			$scope.changeTab('invoiceDetail');
@@ -748,5 +748,16 @@ module.exports =
 		 */
 		$scope.$on(config.timeEntry.driver.events.canceled, function () {
 			$scope.gridOptions.api.stopEditing();
+		});
+
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+			}
+			if (_.isFunction(deregister2)) {
+				deregister2();
+			}
 		});
 	}];

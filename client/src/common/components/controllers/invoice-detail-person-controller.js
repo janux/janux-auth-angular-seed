@@ -218,7 +218,7 @@ module.exports =
 		};
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		var deregister1 = $rootScope.$on('$translateChangeSuccess', function () {
+		var unbindFunction1 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
@@ -261,7 +261,7 @@ module.exports =
 		};
 
 		//This event is captured, when the information of the selected invoice changes.
-		var deregister2 = $rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
+		var unbindFunction2 = $rootScope.$on(config.invoice.events.invoiceDetailUpdated, function (event, invoice) {
 			$scope.invoice = invoice;
 			$scope.filterPersons();
 
@@ -275,38 +275,38 @@ module.exports =
 		});
 
 
-		var deregister3 = $scope.$on('sideMenuSizeChange', function () {
+		var unbindFunction3 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
 		$scope.agGridSizeToFit = agGridSizeToFit;
 
-		var deregister4 = $scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
+		var unbindFunction4 = $scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
 			$scope.editModeInvoiceDetail = true;
 		});
 
-		var deregister5 = $scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
+		var unbindFunction5 = $scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
 			$scope.editModeInvoiceDetail = false;
 		});
 
 
 		// Unregister listeners
 		$scope.$on('$destroy', function () {
-			if (_.isFunction(deregister1)) {
-				deregister1();
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
 
 			}
-			if (_.isFunction(deregister2)) {
-				deregister2();
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
 			}
-			if (_.isFunction(deregister3)) {
-				deregister3();
+			if (_.isFunction(unbindFunction3)) {
+				unbindFunction3();
 			}
-			if (_.isFunction(deregister4)) {
-				deregister4();
+			if (_.isFunction(unbindFunction4)) {
+				unbindFunction4();
 			}
-			if (_.isFunction(deregister5)) {
-				deregister5();
+			if (_.isFunction(unbindFunction5)) {
+				unbindFunction5();
 			}
 		});
 

@@ -4,16 +4,19 @@
 		.fieldset-flex
 			.an-material.nopadding
 				div
-					label {{ 'services.invoice.invoiceNumber' | translate}} :
-					input(ng-model='invoice.invoiceNumber' ng-disabled='true' style='border:1px solid #ff0000;')
-			.an-material.nopadding
-				div.custom-select
-					label {{'services.invoice.status' | translate}} :
-					select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail' style='border:1px solid #ff0000;')
-						option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
-						option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+					label
+						| {{ 'services.invoice.invoiceNumber' | translate}} : 
+					md-input-container
+						input(ng-model='invoice.invoiceNumber' ng-disabled='true' type='text')
 			.an-material.nopadding
 				div
+					label {{'services.invoice.status' | translate}} :
+					md-input-container
+						md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
+							md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
+							md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+			.an-material.nopadding
+				md-input-container
 					md-checkbox(ng-model='invoice.isPaid' ng-disabled='!editModeInvoiceDetail || invoice.status!=="ended"')
 						| {{'services.invoice.isPaid' | translate}}
 	md-divider.divider-line-glarus

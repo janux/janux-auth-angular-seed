@@ -67,6 +67,10 @@ side-bar
 							button.btn( ng-click='cancel()')
 								i.fa.fa-times
 
+						.btn-row.hide-mobile(ng-show='currentNavItem=="invoices"')
+							button.btn( ng-click='cancel()')
+								i.fa.fa-times
+
 						.btn-row.hide-mobile(ng-show='currentNavItem=="invoiceDetail"')
 							button.btn(ng-show='data.type==="SPECIAL_OPS"' ng-click='generateReport()')
 								md-icon.fa.fa-download.fa-lg
@@ -74,7 +78,9 @@ side-bar
 								i.fa.fa-check
 							button.btn(ng-show='!editModeInvoiceDetail' ng-click='enableEditModeInvoiceDetail()')
 								i.fa.fa-pencil
-							button.btn( ng-click="cancelInvoiceDetail('invoices')")
+							button.btn( ng-click="cancelInvoiceDetail('invoices')" ng-show='closeBtn')
+								i.fa.fa-times
+							button.btn( ng-click="cancel()" ng-show='!closeBtn')
 								i.fa.fa-times
 
 				special-service(ng-show='currentNavItem=="summary"', data="data", cl='cl', invoices='invoices', disabled='!editMode', disableautomaticname='{{true}}' ,showinvoicemanual='{{true}}')
@@ -101,6 +107,10 @@ side-bar
 							md-menu-content
 								md-button(ng-click='showAddToNewInvoicePopup()') {{ 'services.newInvoice' | translate }}
 								md-button(ng-repeat='invoice in invoices', ng-click='addTimeEntriesToInvoice(invoice.invoiceNumber)') {{ invoice.invoiceNumber }}
+						button.btn( ng-click='cancel()')
+							i.fa.fa-times
+
+					.btn-row(ng-show='currentNavItem=="invoices"')
 						button.btn( ng-click='cancel()')
 							i.fa.fa-times
 

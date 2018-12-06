@@ -34,6 +34,8 @@ module.exports =
 		$scope.invoices = invoices;
 		$scope.invoice = undefined;
 
+		$scope.closeBtn=true;
+
 		// console.debug('Invoices', invoices);
 
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
@@ -83,6 +85,7 @@ module.exports =
 			if(tab==='invoices'){
 				if($scope.invoices.length===1){
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
+					$scope.closeBtn=false;
 					//console.log('Lista',$scope.invoices[0]);
 				}
 			}

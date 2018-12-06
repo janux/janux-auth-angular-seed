@@ -100,6 +100,7 @@ module.exports = [
 				}
 			}, 1000);
 		};
+
 		$scope.agGridWindowSizeChange = function (windowWidth) {
 			//console.debug('ancho de ventana',windowWidth);
 			if (100 < windowWidth && windowWidth < 700) {
@@ -155,51 +156,21 @@ module.exports = [
 			paginationAutoPageSize   : true,
 			onGridReady              : function () {
 				agGridSizeToFit();
-
-				// This function is defined to be able to trigger the deletion
-				// of the rows from the header component that does not have access
-				// to the scope.
-
-				//$scope.gridOptions.api.deleteRows = removeSelected;
-
-				// Restore filter model.
-
-				// var filterModel = localStorageService.get(columnsFiltersKey);
-				// if (!_.isNil(filterModel)) {
-				// 	$scope.gridOptions.api.setFilterModel(filterModel);
-				// 	$scope.gridOptions.onFilterChanged();
-				// }
 			},
 			onRowEditingStarted      : function () {
 				// Nothing to do yet
 				// console.debug('Row edition started', rowObj);
 			},
-			onRowValueChanged        : function (rowObj) {
-				console.debug(rowObj);
-
+			onRowValueChanged        : function () {
 			}
-			// localeTextFunc           : function (key, defaultValue) {
-			// 	var gridKey = 'grid.' + key;
-			// 	var value = $filter('translate')(gridKey);
-			// 	return value === gridKey ? defaultValue : value;
-			// },
-			// onFilterChanged          : function () {
-			// 	// Save filters to local storage.
-			// 	var savedFilters;
-			// 	savedFilters = $scope.gridOptions.api.getFilterModel();
-			// 	localStorageService.set(columnsFiltersKey, savedFilters);
-			// 	// console.debug('savedFilters' + JSON.stringify(savedFilters));
-			// }
-			// components:{
-			// 	dateComponent: agGridComp.dateFilter
-			// }
+
 		};
 
-		$scope.$on('sideMenuSizeChange', function () {
+		var unbindFunction2 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
-		$scope.$on('agGridWindowSize', function (event, windowWidth) {
+		var unbindFunction3 = $scope.$on('agGridWindowSize', function (event, windowWidth) {
 			//console.debug('tamaño',windowWidth);
 			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
@@ -221,14 +192,23 @@ module.exports = [
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
+		var unbindFunction1 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.debug('$translateChangeSuccess');
 			$state.reload();
 		});
 
-		console.debug($scope.gridOptions);
+		//console.debug($scope.gridOptions);
 
-		// $scope.init();
-
-
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
+			}
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
+			}
+			if (_.isFunction(unbindFunction3)) {
+				unbindFunction3();
+			}
+		});
 	}];

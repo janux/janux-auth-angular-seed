@@ -207,12 +207,19 @@ module.exports =
 		};
 
 
-		$rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
+		var deregister1 = $rootScope.$on(config.invoice.events.invoiceDetailSelected, function (event, invoiceNumber) {
 			console.debug('invoice selected:' + invoiceNumber);
 			// Switch tab.
 			$scope.changeTab('invoiceDetail');
 			updatedSelectedInvoice(invoiceNumber);
 			updateInvoiceList();
+		});
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+			}
 		});
 
 	}];

@@ -44,7 +44,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// the correct dates.
 				startForm    : today,
 				startHourForm: today,
-				absence     : ''
+				absence      : ''
 			};
 		};
 
@@ -95,7 +95,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			$scope.form.location = timeEntry.comment;
 			$scope.form.absence = timeEntry.absence;
 			$scope.calculateDates();
-			
+
 		}
 
 		/**
@@ -124,7 +124,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			timeEntry = setHoursInResource(operation, timeEntry);
 			timeEntry = setExternalFlag(timeEntry, $scope.form.isExternal);
 			timeEntry = handleAbsence(timeEntry, $scope.form.absence);
-			
+
 			return timeEntry;
 		};
 
@@ -320,7 +320,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				$scope.form.start = startMoment.toDate();
 				$scope.form.end = endMoment.toDate();
 				$scope.form.differenceTimeForm = differenceHoursMoment;
-			}else{
+			} else {
 				$scope.form.start = startMoment.toDate();
 				$scope.form.end = undefined;
 				$scope.form.differenceTimeForm = '';
@@ -388,7 +388,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * This even is captured
 		 */
-		$rootScope.$on(config.timeEntry.attendance.events.setInsertMode, function () {
+		var deregister1 = $rootScope.$on(config.timeEntry.attendance.events.setInsertMode, function () {
 			console.debug("Catch %s event", config.timeEntry.attendance.events.setInsertMode);
 			clearForm();
 			$mdSidenav(config.timeEntry.attendance.sidePanel.id).open();
@@ -397,7 +397,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		$rootScope.$on(config.timeEntry.attendance.events.setUpdateMode, function (event, timeEntry) {
+		var deregister2 = $rootScope.$on(config.timeEntry.attendance.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.attendance.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);
@@ -442,5 +442,16 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		$scope.init();
+
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(deregister1)) {
+				deregister1();
+			}
+			if (_.isFunction(deregister2)) {
+				deregister2();
+			}
+		})
 	}]
 ;

@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 
 module.exports = [
-'$scope', '$rootScope', 'userService','$state','users','$modal', '$q', '$filter', 'security', '$timeout', function(
- $scope , $rootScope, userService , $state , users , $modal, $q, $filter, security, $timeout) {
+'$scope', '$rootScope', 'userService', '$state', 'users', '$modal', '$q', '$filter', 'security', '$timeout', function (
+	$scope, $rootScope, userService, $state, users, $modal, $q, $filter, security, $timeout) {
 
 	$scope.usersMatch = users;
 	$scope.searchField = 'username';
@@ -14,24 +14,24 @@ module.exports = [
 
 	$scope.searchFields = ['username', 'name', 'email', 'phone'];
 
-	var infoDialog = function(translateKey){
+	var infoDialog = function (translateKey) {
 		$modal.open({
 			templateUrl: 'app/dialog-tpl/info-dialog.html',
-			controller: ['$scope','$modalInstance',
-				function($scope , $modalInstance) {
-					$scope.message= $filter('translate')(translateKey);
+			controller : ['$scope', '$modalInstance',
+				function ($scope, $modalInstance) {
+					$scope.message = $filter('translate')(translateKey);
 
-					$scope.ok = function() {
+					$scope.ok = function () {
 						$modalInstance.close();
 					};
 				}],
-			size: 'md'
+			size       : 'md'
 		});
 	};
 
-	$scope.findUsers = function() {
-		userService.findBy($scope.searchField, $scope.searchString, security.currentUser.username).then(function(usersMatch) {
-			$scope.usersMatch = _.map(usersMatch,function(user){
+	$scope.findUsers = function () {
+		userService.findBy($scope.searchField, $scope.searchString, security.currentUser.username).then(function (usersMatch) {
+			$scope.usersMatch = _.map(usersMatch, function (user) {
 				user.cdate = moment(user.cdate).format('YYYY-MM-DD HH:mm:ss');
 				return user;
 			});
@@ -39,8 +39,8 @@ module.exports = [
 		});
 	};
 
-	$scope.editUser = function(userId) {
-		$state.go('users.edit', { userId: userId });
+	$scope.editUser = function (userId) {
+		$state.go('users.edit', {userId: userId});
 	};
 
 	function deleteConfirmed(rowsToDelete) {
@@ -117,7 +117,7 @@ module.exports = [
 	// 	}
 	// };
 
-	console.log('Cadena Users List',users);
+	console.debug('Cadena Users List', users);
 	$scope.usersList = users;
 
 	//
@@ -166,10 +166,10 @@ module.exports = [
 			filterParams: {newRowsAction: 'keep'}
 		},
 		{
-			headerName     : '',
-			field          : 'userId',
-			width          : 50,
-			cellRenderer   : agGridComp.editUsersCellRenderer
+			headerName  : '',
+			field       : 'userId',
+			width       : 50,
+			cellRenderer: agGridComp.editUsersCellRenderer
 		},
 		{
 			headerName     : '',
@@ -194,33 +194,33 @@ module.exports = [
 			}
 		}, 1000);
 	};
-	$scope.agGridWindowSizeChange = function(windowWidth){
+	$scope.agGridWindowSizeChange = function (windowWidth) {
 		//console.log('ancho de ventana',windowWidth);
-		if(100 < windowWidth && windowWidth < 700){
+		if (100 < windowWidth && windowWidth < 700) {
 			_.mapValues(columnDefs, function (o) {
-				switch(o.field){
+				switch (o.field) {
 					case 'usersDisplayRole':
 					case 'usersDisplayEmail':
 					case 'phone':
 					case 'selected':
 
-					o.hide=true;
-					break;
+						o.hide = true;
+						break;
 				}
 
 				return o;
 			});
 			$scope.gridOptions.api.setColumnDefs(columnDefs);
-		}else{
+		} else {
 			_.mapValues(columnDefs, function (o) {
-				switch(o.field){
+				switch (o.field) {
 					case 'usersDisplayRole':
 					case 'usersDisplayEmail':
 					case 'phone':
 					case 'selected':
 
-					o.hide=false;
-					break;
+						o.hide = false;
+						break;
 				}
 
 				return o;
@@ -254,7 +254,7 @@ module.exports = [
 			$scope.gridOptions.api.deleteRows = removeSelected;
 
 			// Restore filter model.
-			
+
 			// var filterModel = localStorageService.get(columnsFiltersKey);
 			// if (!_.isNil(filterModel)) {
 			// 	$scope.gridOptions.api.setFilterModel(filterModel);
@@ -265,9 +265,9 @@ module.exports = [
 			// Nothing to do yet
 			// console.log('Row edition started', rowObj);
 		},
-		onRowValueChanged        : function (rowObj) {
-			console.log(rowObj);
-			
+		onRowValueChanged        : function () {
+			// console.log(rowObj);
+
 		}
 		// localeTextFunc           : function (key, defaultValue) {
 		// 	var gridKey = 'grid.' + key;
@@ -286,22 +286,22 @@ module.exports = [
 		// }
 	};
 
-	$scope.$on('sideMenuSizeChange', function () {
+	var unbindFunction2 = $scope.$on('sideMenuSizeChange', function () {
 		agGridSizeToFit();
 	});
 
-	$scope.$on('agGridWindowSize',function(event,windowWidth){
+	var unbindFunction3 = $scope.$on('agGridWindowSize', function (event, windowWidth) {
 		//console.log('tamaño',windowWidth);
-		if(100 < windowWidth && windowWidth < 700){
+		if (100 < windowWidth && windowWidth < 700) {
 			_.mapValues(columnDefs, function (o) {
-				switch(o.field){
+				switch (o.field) {
 					case 'usersDisplayRole':
 					case 'usersDisplayEmail':
 					case 'phone':
 					case 'selected':
 
-					o.hide=true;
-					break;
+						o.hide = true;
+						break;
 				}
 
 				return o;
@@ -311,12 +311,25 @@ module.exports = [
 	});
 
 	// We need to reload because when the language changes ag-grid doesn't reload by itself
-	$rootScope.$on('$translateChangeSuccess', function () {
-		console.log('$translateChangeSuccess');
+	var unbindFunction1 = $rootScope.$on('$translateChangeSuccess', function () {
+		console.debug('$translateChangeSuccess');
 		$state.reload();
 	});
 
-	console.log($scope.gridOptions);
+	console.debug($scope.gridOptions);
+
+	// Unregister listeners
+	$scope.$on('$destroy', function () {
+		if (_.isFunction(unbindFunction1)) {
+			unbindFunction1();
+		}
+		if (_.isFunction(unbindFunction2)) {
+			unbindFunction2();
+		}
+		if (_.isFunction(unbindFunction3)) {
+			unbindFunction3();
+		}
+	});
 
 	// $scope.init();
 

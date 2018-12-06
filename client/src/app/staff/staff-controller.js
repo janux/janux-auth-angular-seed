@@ -5,7 +5,7 @@ var agGridComp = require('common/ag-grid-components');
 
 
 module.exports = [
-	'$scope', '$rootScope', '$state', 'partyService', 'partyGroupService', 'resourceService', 'config', '$timeout','$filter', 'staffList', 'assignableResources','supplier',
+	'$scope', '$rootScope', '$state', 'partyService', 'partyGroupService', 'resourceService', 'config', '$timeout', '$filter', 'staffList', 'assignableResources', 'supplier',
 	function ($scope, $rootScope, $state, partyService, partyGroupService, resourceService, config, $timeout, $filter, staffList, assignableResources, supplier) {
 
 		$scope.editStaff = function (id) {
@@ -15,8 +15,8 @@ module.exports = [
 		// console.log('Cadena Staff List',staffList);
 		// console.log('supplier', supplier);
 
-		$scope.$on('agGridAvalabilityCheckboxChange',function(event,value){
-			console.log('agGridAvalabilityCheckboxChange',value);
+		var unbindFunction2 = $scope.$on('agGridAvalabilityCheckboxChange', function (event, value) {
+			console.log('agGridAvalabilityCheckboxChange', value);
 
 			if (value.isAvailable === false) {
 				// Remove the resource.
@@ -153,10 +153,10 @@ module.exports = [
 							switch (inv.status) {
 								case 'pending':
 									result = '';
-								break;
+									break;
 								case 'completed':
 									result = params.data.user.username;
-								break;
+									break;
 							}
 						} else {
 							result = params.data.user.username;
@@ -172,7 +172,7 @@ module.exports = [
 			{
 				headerName  : $filter('translate')('staff.contractor'),
 				field       : 'contractor',
-				cellRenderer   : agGridComp.contractorStaffCellRenderer,
+				cellRenderer: agGridComp.contractorStaffCellRenderer,
 				editable    : false,
 				valueGetter : function (params) {
 					var result;
@@ -188,17 +188,17 @@ module.exports = [
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName     : $filter('translate')('supplier.available'),
-				cellRenderer   : agGridComp.checkBoxStaffAvalability,
+				headerName  : $filter('translate')('supplier.available'),
+				cellRenderer: agGridComp.checkBoxStaffAvalability,
 				//headerComponent: agGridComp.deleteRowsHeaderComponent,
-				field          : 'availableColumn',
-				width          : 100
+				field       : 'availableColumn',
+				width       : 100
 			},
 			{
-				headerName     : '',
-				field          : 'id',
-				width          : 50,
-				cellRenderer   : agGridComp.editStaffCellRenderer
+				headerName  : '',
+				field       : 'id',
+				width       : 50,
+				cellRenderer: agGridComp.editStaffCellRenderer
 			}
 		];
 
@@ -211,11 +211,11 @@ module.exports = [
 				}
 			}, 1500);
 		};
-		$scope.agGridWindowSizeChange = function(windowWidth){
+		$scope.agGridWindowSizeChange = function (windowWidth) {
 			//console.log('ancho de ventana',windowWidth);
-			if(100 < windowWidth && windowWidth < 700){
+			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'staffDisplayPhone':
 						case 'staffDisplayEmail':
 						case 'jobDepartment':
@@ -223,16 +223,16 @@ module.exports = [
 						case 'contractor':
 						case 'availableColumn':
 
-						o.hide=true;
-						break;
+							o.hide = true;
+							break;
 					}
 
 					return o;
 				});
 				$scope.gridOptions.api.setColumnDefs(columnDefs);
-			}else{
+			} else {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'staffDisplayPhone':
 						case 'staffDisplayEmail':
 						case 'jobDepartment':
@@ -240,8 +240,8 @@ module.exports = [
 						case 'contractor':
 						case 'availableColumn':
 
-						o.hide=false;
-						break;
+							o.hide = false;
+							break;
 					}
 
 					return o;
@@ -308,15 +308,15 @@ module.exports = [
 			// }
 		};
 
-		$scope.$on('sideMenuSizeChange', function () {
+		var unbindFunction3 = $scope.$on('sideMenuSizeChange', function () {
 			agGridSizeToFit();
 		});
 
-		$scope.$on('agGridWindowSize',function(event,windowWidth){
+		var unbindFunction4 = $scope.$on('agGridWindowSize', function (event, windowWidth) {
 			//console.log('tamaño',windowWidth);
-			if(100 < windowWidth && windowWidth < 700){
+			if (100 < windowWidth && windowWidth < 700) {
 				_.mapValues(columnDefs, function (o) {
-					switch(o.field){
+					switch (o.field) {
 						case 'staffDisplayPhone':
 						case 'staffDisplayEmail':
 						case 'jobDepartment':
@@ -324,8 +324,8 @@ module.exports = [
 						case 'contractor':
 						case 'availableColumn':
 
-						o.hide=true;
-						break;
+							o.hide = true;
+							break;
 					}
 
 					return o;
@@ -335,12 +335,28 @@ module.exports = [
 		});
 
 		// We need to reload because when the language changes ag-grid doesn't reload by itself
-		$rootScope.$on('$translateChangeSuccess', function () {
+		var unbindFunction1 = $rootScope.$on('$translateChangeSuccess', function () {
 			console.log('$translateChangeSuccess');
 			$state.reload();
 		});
 
 		console.log($scope.gridOptions);
+
+		// Unregister listeners
+		$scope.$on('$destroy', function () {
+			if (_.isFunction(unbindFunction1)) {
+				unbindFunction1();
+			}
+			if (_.isFunction(unbindFunction2)) {
+				unbindFunction2();
+			}
+			if (_.isFunction(unbindFunction3)) {
+				unbindFunction3();
+			}
+			if (_.isFunction(unbindFunction4)) {
+				unbindFunction4();
+			}
+		});
 
 		// $scope.init();
 	}];

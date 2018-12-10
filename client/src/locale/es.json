@@ -523,6 +523,7 @@
 				"duration": "Duración",
 				"amountDay": "Días",
 				"amountHour": "Horas",
+				"costFixed": "Costo fijo",
 				"costDay": "Costo diario",
 				"costHour": "Costo hora",
 				"doNotInvoice": "No facturar",

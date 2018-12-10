@@ -524,6 +524,7 @@
 				"duration": "Duration",
 				"amountDay": "Days",
 				"amountHour": "Hours",
+				"costFixed": "Fixed rate",
 				"costDay": "Day rate",
 				"costHour": "Hour rate",
 				"doNotInvoice": "Do not invoice",

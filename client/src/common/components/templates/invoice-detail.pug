@@ -1,20 +1,18 @@
 //Header data.
 .section-form(style="padding-bottom:40px")
 	fieldset.fieldset-flex
-		.fieldset-flex
+		.fieldset-flex(style="margin-top:-15px;")
 			.an-material.nopadding
 				div
-					label
-						| {{ 'services.invoice.invoiceNumber' | translate}} : 
-					md-input-container
-						input(ng-model='invoice.invoiceNumber' ng-disabled='true' type='text')
+					label(style='display:inline-block') {{ 'services.invoice.invoiceNumber' | translate}} : 
+					input.input-text-invoice(ng-model='invoice.invoiceNumber' ng-disabled='true')
 			.an-material.nopadding
 				div
-					label {{'services.invoice.status' | translate}} :
-					md-input-container
-						md-select(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
-							md-option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
-							md-option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
+					p.select-wrapper
+						label {{'services.invoice.status' | translate}} :
+						select.select-input-invoice(ng-model='invoice.status' ng-disabled='!editModeInvoiceDetail')
+							option(value='inRevision') {{ 'services.invoice.statuses.inRevision' | translate}}
+							option(value= 'ended') {{ 'services.invoice.statuses.ended' | translate}}
 			.an-material.nopadding
 				md-input-container
 					md-checkbox(ng-model='invoice.isPaid' ng-disabled='!editModeInvoiceDetail || invoice.status!=="ended"')

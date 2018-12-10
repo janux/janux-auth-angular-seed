@@ -132,8 +132,29 @@ module.exports =
 					}
 				}
 			},
+			//Rate day person (fixed)
+			{
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.costFixed'),
+				field         : 'parameters.ratePerson.costDay',
+				filterParams  : {
+					newRowsAction: 'keep'
+				},
+				valueFormatter: function (params) {
+					const resourcePerson = _.find(params.data.timeEntry.resources, function (it) {
+						return it.type !== 'VEHICLE'
+					});
 
-			//Rate day person.
+					//return $filter('currency')(params.value);
+					if (resourcePerson.type === 'TRANSPORT' || resourcePerson.type === 'DRIVER_PLUS_VEHICLE') {
+						return $filter('currency')(params.value);
+					} else {
+						return '';
+					}
+				},
+				width         : 120,
+				cellStyle     : {'text-align': 'right'}
+			},
+			//Rate day person (non fixed).
 			{
 				headerName    : $filter('translate')('services.invoice.invoiceDetail.costDay'),
 				field         : 'parameters.ratePerson.costDay',
@@ -141,7 +162,16 @@ module.exports =
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
-					return $filter('currency')(params.value);
+					const resourcePerson = _.find(params.data.timeEntry.resources, function (it) {
+						return it.type !== 'VEHICLE'
+					});
+
+					if (resourcePerson.type !== 'TRANSPORT' && resourcePerson.type !== 'DRIVER_PLUS_VEHICLE') {
+						return $filter('currency')(params.value);
+					} else {
+						return '';
+					}
+
 				},
 				width         : 120,
 				cellStyle     : {'text-align': 'right'}

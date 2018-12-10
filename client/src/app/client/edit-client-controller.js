@@ -80,11 +80,11 @@ module.exports = [
 			updateRateValueByType($scope.rateForm.rates.AGENT.inputParameters);
 			updateRateValueByType($scope.rateForm.rates.AGENT_ARMED.inputParameters);
 			updateRateValueByType($scope.rateForm.rates.GREETER.inputParameters);
-			updateRateValueByType($scope.rateForm.rates.CORRDINATOR.inputParameters);
+			updateRateValueByType($scope.rateForm.rates.COORDINATOR.inputParameters);
 		};
 
 		$scope.updateRateMatrix = function () {
-
+			$scope.updateRatesValuesSpecialOps();
 			// Validate info.
 			if ($scope.validateRateForm()) {
 				rateMatrixService.update($scope.rateForm)

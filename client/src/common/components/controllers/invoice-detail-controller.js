@@ -62,7 +62,9 @@ module.exports =
 		}
 
 		$scope.$on(config.invoice.events.invoiceEditModeEnabled, function () {
-			$scope.editModeInvoiceDetail = true;
+			if ($scope.invoice.status !== config.invoice.status.ended) {
+				$scope.editModeInvoiceDetail = true;
+			}
 		});
 		$scope.$on(config.invoice.events.invoiceEditModeDisabled, function () {
 			$scope.editModeInvoiceDetail = false;

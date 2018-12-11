@@ -39,10 +39,12 @@ module.exports =
 		// console.debug('Invoices', invoices);
 
 		/* Check if there is only one invoice in the list and goes directly to it */
+		/* Timeout is also required in order to wait until all data is loaded */
 		if(storedTab==='invoices'){
 			if($scope.invoices.length===1){
 				$timeout(function () {
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
+					$scope.closeBtn=false;
 				}, 200);
 			}
 		}

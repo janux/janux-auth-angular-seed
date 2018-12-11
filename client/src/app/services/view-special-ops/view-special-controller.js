@@ -38,11 +38,14 @@ module.exports =
 
 		// console.debug('Invoices', invoices);
 
-		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
-		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilterSpecialOps;
-		$scope.operationId = $stateParams.id;
+		/* Check if there is only one invoice in the list and goes directly to it */
+		if(storedTab==='invoices'){
+			if($scope.invoices.length===1){
+				$timeout(function () {
+					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
+				}, 200);
+			}
+		}
 
 		$scope.periodChange = function () {
 			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);

@@ -3,7 +3,6 @@
 var moment = require('moment');
 var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
-var timePeriods = require('common/time-periods');
 
 module.exports =
 	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
@@ -16,7 +15,6 @@ module.exports =
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
 		var findTimeEntries;
-		var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
 		var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 		var timeEntries = [];	// Global time entries object
 		var invoiceItemName = 'Total a facturar';
@@ -28,23 +26,21 @@ module.exports =
 		$scope.currentNavItem = (storedTab) ? storedTab : 'summary';
 		$scope.editModeInvoiceDetail = false;
 		$scope.driversAndOps = driversAndOps;
-		$scope.periodFilterKey = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-		$scope.periodFilterOptions = config.periodFilterSpecialOps;
 		$scope.operationId = $stateParams.id;
 		$scope.invoices = invoices;
 		$scope.invoice = undefined;
 
-		$scope.closeBtn=true;
+		$scope.closeBtn = true;
 
 		// console.debug('Invoices', invoices);
 
 		/* Check if there is only one invoice in the list and goes directly to it */
 		/* Timeout is also required in order to wait until all data is loaded */
-		if(storedTab==='invoices'){
-			if($scope.invoices.length===1){
+		if (storedTab === 'invoices') {
+			if ($scope.invoices.length === 1) {
 				$timeout(function () {
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
-					$scope.closeBtn=false;
+					$scope.closeBtn = false;
 				}, 200);
 			}
 		}
@@ -55,28 +51,6 @@ module.exports =
 		};
 
 
-		var loadTimeEntries = function () {
-
-			var period;
-
-			if (!_.isNil(operation.end)) {
-				period = {
-					from: function () {
-						return moment().subtract(100, 'year').startOf('day').toDate();
-					},
-					to  : function () {
-						return moment().add(100, 'year').startOf('day').toDate();
-					}
-				};
-				$scope.showTimeSheetPeriodFilterList = false;
-			} else {
-				var storedFilterPeriod = jnxStorage.findItem('specialOpsTimeLogFilterPeriod', true);
-				period = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
-			}
-
-			findTimeEntries(period);
-		};
-
 		$scope.changeTab = function (tab) {
 			$scope.currentNavItem = tab;
 			if (tab !== 'invoiceDetail') {
@@ -84,13 +58,13 @@ module.exports =
 			}
 			if (tab === 'time-sheet') {
 				$scope.showTimeSheetPeriodFilterList = true;
-				loadTimeEntries();
+				findTimeEntries();
 			}
 			/* Check if there is only one invoice in the list and goes directly to it */
-			if(tab==='invoices'){
-				if($scope.invoices.length===1){
+			if (tab === 'invoices') {
+				if ($scope.invoices.length === 1) {
 					$rootScope.$broadcast(config.invoice.events.invoiceDetailSelected, $scope.invoices[0].invoiceNumber);
-					$scope.closeBtn=false;
+					$scope.closeBtn = false;
 					//console.log('Lista',$scope.invoices[0]);
 				}
 			}
@@ -479,13 +453,11 @@ module.exports =
 		};
 
 		// Load time entries
-		findTimeEntries = function (period) {
-
-			if (_.isString(period)) {
-				period = timePeriods.specialOps[period];
-			}
+		findTimeEntries = function () {
+			var begin = moment().subtract(100, 'year').startOf('day').toDate();
+			var end = moment().add(100, 'year').startOf('day').toDate();
 			// Load data
-			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
+			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], begin, end).then(function (result) {
 				operationsWithTimeEntries = result;
 				timeEntries = result.length > 0 && _.isArray(result[0].schedule) ? result[0].schedule : [];
 				console.debug('Loaded time entries', timeEntries);
@@ -501,11 +473,10 @@ module.exports =
 				agGridSizeToFit();
 			});
 		};
-		$scope.findTimeEntries = loadTimeEntries;
 
 		// If we are on time sheet tab initially
 		if ($scope.currentNavItem === 'time-sheet') {
-			loadTimeEntries();
+			findTimeEntries();
 		}
 
 

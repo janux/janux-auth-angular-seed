@@ -411,7 +411,13 @@ module.exports =
 
 			getRowHeight: function (rowObj) {
 				// assuming 50 characters per line, working how how many lines we need
-				return 18 * (Math.floor(rowObj.data.comment.length / 15) + 1);
+				var colHeight = 18 * (Math.floor(rowObj.data.comment.length / 15)+1);
+				// Condition to avoid cutting content of the row (45 is the Row Height)
+				if(colHeight < $scope.gridOptions.rowHeight){
+					colHeight = $scope.gridOptions.rowHeight;
+				}
+				//console.log('colHeight:',colHeight);
+				return colHeight;
 			},
 
 			onRowEditingStarted: function (rowObj) {

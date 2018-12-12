@@ -294,7 +294,7 @@
 			"paid": "Pagada"
 		},
 		"errorMessages": {
-			"cantUpdateDueInvoiceAssociation": "El registro de bitacora no puede ser cambiado de servicio o removido debido a que está asociado a una factura"
+			"cantUpdateDueInvoiceAssociation": "El registro de bitacora no puede ser modificado o removido debido a que está asociado a una factura"
 		},
 		"driversTimeLog": {
 			"title": "Bitácora de Choferes",

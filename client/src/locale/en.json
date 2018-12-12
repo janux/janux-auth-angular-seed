@@ -294,7 +294,7 @@
 			"paid": "Paid"
 		},
 		"errorMessages": {
-			"cantUpdateDueInvoiceAssociation": "The time entry record cannot be modified to another service or removed because it is associated to an invoice"
+			"cantUpdateDueInvoiceAssociation": "The time entry record cannot be modified or removed because it is associated to an invoice"
 		},
 		"driversTimeLog": {
 			"title": "Drivers Time Log",

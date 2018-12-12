@@ -33,14 +33,6 @@ side-bar
 							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
 								| {{ 'services.tabs.invoices' | translate | uppercase }}
 
-						md-truncate.add-form.filter(ng-show='currentNavItem=="time-sheet" && showTimeSheetPeriodFilterList')
-							label {{ 'operations.specialsTimeLog.filterLabel' | translate }}
-							md-input-container
-								//label
-									| {{ 'operations.specialsTimeLog.filterLabel' | translate }}
-								md-select(aria-label='option' ng-model='periodFilterKey' ng-change='periodChange()')
-									md-option(ng-value='option.key', ng-repeat='option in periodFilterOptions') {{ option.label | translate }}
-
 						span(flex)
 
 						.btn-row.hide-mobile(ng-show='currentNavItem=="summary"')

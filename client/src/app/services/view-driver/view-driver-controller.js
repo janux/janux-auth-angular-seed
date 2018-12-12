@@ -295,7 +295,7 @@ module.exports =
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 90
+				width         : 80
 			},
 			{
 				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
@@ -310,7 +310,7 @@ module.exports =
 					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
 				cellEditor    : agGridComp.dateTimeCellEditor,
-				width         : 90
+				width         : 80
 			},
 
 			{
@@ -326,6 +326,7 @@ module.exports =
 				headerName: $filter('translate')('operations.specialsTimeLog.comment'),
 				field     : 'comment',
 				editable  : false,
+				width     : 250,
 				cellEditor: agGridComp.commentCellEditor,
 				cellStyle : {
 					'white-space': 'normal',
@@ -382,6 +383,7 @@ module.exports =
 			{
 				headerName : $filter('translate')('operations.specialsTimeLog.invoiceNumber'),
 				editable   : false,
+				width      : 90,
 				hide       : !$rootScope.userRole.can('READ', 'FINANCE'),
 				valueGetter: function (params) {
 					var result = '';
@@ -451,7 +453,7 @@ module.exports =
 
 			getRowHeight: function (rowObj) {
 				// assuming 50 characters per line, working how how many lines we need
-				var colHeight = 18 * (Math.floor(rowObj.data.comment.length / 15)+1);
+				var colHeight = 12 * (Math.floor(rowObj.data.comment.length / 15)+1);
 				// Condition to avoid cutting content of the row (45 is the Row Height)
 				if(colHeight < $scope.gridOptions.rowHeight){
 					colHeight = $scope.gridOptions.rowHeight;

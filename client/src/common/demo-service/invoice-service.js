@@ -354,8 +354,8 @@ module.exports =
 			 */
 			showBillableDate: function (timeEntry) {
 				if (timeEntry.type === 'SPECIAL_OPS') {
-					return _.isDate(timeEntry.begin) && _.isDate(timeEntry.end) &&
-						timeEntry.end.getTime() > timeEntry.begin.getTime()
+					return _.isDate(timeEntry.beginInvoice) && _.isDate(timeEntry.endInvoice) &&
+						timeEntry.endInvoice.getTime() > timeEntry.beginInvoice.getTime()
 				} else {
 					return true;
 				}

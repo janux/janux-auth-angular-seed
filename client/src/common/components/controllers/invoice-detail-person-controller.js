@@ -52,9 +52,9 @@ module.exports =
 				valueFormatter: function (params) {
 					// improve  the way what hours are being used for invoice.
 					if (invoiceService.showBillableDate(params.data.timeEntry)) {
-						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.beginInvoice) ? moment(params.data.timeEntry.beginInvoice).format(config.dateFormats.hourOnlyFormat) : '';
 					} else {
-						return (params.data.timeEntry.beginWork) ? moment(params.data.timeEntry.beginWork).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},
@@ -69,9 +69,9 @@ module.exports =
 				valueFormatter: function (params) {
 					// improve  the way what hours are being used for invoice.
 					if (invoiceService.showBillableDate(params.data.timeEntry)) {
-						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.endInvoice) ? moment(params.data.timeEntry.endInvoice).format(config.dateFormats.hourOnlyFormat) : '';
 					} else {
-						return (params.data.timeEntry.endWork) ? moment(params.data.timeEntry.endWork).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},
@@ -86,9 +86,9 @@ module.exports =
 				width         : 95,
 				valueFormatter: function (params) {
 					if (invoiceService.showBillableDate(params.data.timeEntry)) {
-						return params.data.timeEntry.duration;
+						return params.data.timeEntry.durationInvoice;
 					} else {
-						return params.data.timeEntry.durationWork;
+						return params.data.timeEntry.duration;
 					}
 				}
 			},
@@ -293,7 +293,7 @@ module.exports =
 						return it.type !== 'VEHICLE';
 					});
 					o.timeEntry.duration = operationService.calculateDuration(o.timeEntry.begin, o.timeEntry.end);
-					o.timeEntry.durationWork = operationService.calculateDuration(o.timeEntry.beginWork, o.timeEntry.endWork);
+					o.timeEntry.durationInvoice = operationService.calculateDuration(o.timeEntry.beginInvoice, o.timeEntry.endInvoice);
 					return o;
 				});
 			}

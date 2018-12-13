@@ -66,7 +66,7 @@ module.exports =
 					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
 						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
 					} else {
-						return (params.data.timeEntry.beginWork) ? moment(params.data.timeEntry.beginWork).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.beginInvoice) ? moment(params.data.timeEntry.beginInvoice).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},
@@ -83,7 +83,7 @@ module.exports =
 					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
 						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
 					} else {
-						return (params.data.timeEntry.endWork) ? moment(params.data.timeEntry.endWork).format(config.dateFormats.hourOnlyFormat) : '';
+						return (params.data.timeEntry.endInvoice) ? moment(params.data.timeEntry.endInvoice).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},

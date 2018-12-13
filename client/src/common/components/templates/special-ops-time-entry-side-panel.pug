@@ -64,6 +64,7 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 								md-datepicker(ng-model='form.startForm'
 								ng-change='calculateDates()')
 
+					// Working hours
 					.fieldset-flex(style="padding-top:15px")
 						.an-material.nopadding
 							md-input-container.full-panel
@@ -72,59 +73,6 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 								date='false'
 								placeholder='Time'
 								id = "beginHourWork"
-								time='true'
-								show-todays-date=''
-								minutes='true'
-								format='HH:mm'
-								edit-input='true'
-								click-outside-to-close='true'
-								show-icon='true'
-								minute-steps='1'
-								ng-model='form.startHourWorkForm'
-								ng-model-options="{ debounce: 1000 }"
-								type='text',
-								lang='{{ lang }}',
-								today-text='{{ "label.today" | translate }}',
-								ok-text='{{ "label.ok" | translate }}',
-								cancel-text='{{ "label.cancel" | translate }}'
-								ng-change='calculateDates()')
-
-						.an-material.nopadding
-							md-input-container.full-panel
-								label {{ 'operations.specialsTimeLog.endHourWork' | translate }}
-								input(mdc-datetime-picker=''
-								id = "endHourWork"
-								date='false'
-								placeholder='Time'
-								time='true'
-								min-date='form.startHourWorkForm'
-								show-todays-date=''
-								minutes='true'
-								format='HH:mm'
-								edit-input='true'
-								click-outside-to-close='true'
-								show-icon='true'
-								minute-steps='1'
-								ng-model='form.endHourWorkForm'
-								ng-model-options="{ debounce: 1000 }"
-								type='text',
-								lang='{{ lang }}',
-								today-text='{{ "label.today" | translate }}',
-								ok-text='{{ "label.ok" | translate }}',
-								cancel-text='{{ "label.cancel" | translate }}'
-								ng-change='calculateDates()')
-
-						.an-material.nopadding
-							h4.form-label
-								| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}: {{form.differenceTimeWorkForm}}
-
-					.fieldset-flex(style="padding-top:15px")
-						.an-material.nopadding
-							md-input-container.full-panel
-								label {{ 'operations.specialsTimeLog.beginHourBillable' | translate }}
-								input(mdc-datetime-picker=''
-								date='false'
-								placeholder='Time'
 								time='true'
 								show-todays-date=''
 								minutes='true'
@@ -144,6 +92,60 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 
 						.an-material.nopadding
 							md-input-container.full-panel
+								label {{ 'operations.specialsTimeLog.endHourWork' | translate }}
+								input(mdc-datetime-picker=''
+								id = "endHourWork"
+								date='false'
+								placeholder='Time'
+								time='true'
+								min-date='form.startHourForm'
+								show-todays-date=''
+								minutes='true'
+								format='HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='form.endHourForm'
+								ng-model-options="{ debounce: 1000 }"
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}'
+								ng-change='calculateDates()')
+
+						.an-material.nopadding
+							h4.form-label
+								| {{ 'operations.specialsTimeLog.hoursWorked' | translate }}: {{form.differenceTimeWorkForm}}
+
+					// Invoice hours
+					.fieldset-flex(style="padding-top:15px")
+						.an-material.nopadding
+							md-input-container.full-panel
+								label {{ 'operations.specialsTimeLog.beginHourBillable' | translate }}
+								input(mdc-datetime-picker=''
+								date='false'
+								placeholder='Time'
+								time='true'
+								show-todays-date=''
+								minutes='true'
+								format='HH:mm'
+								edit-input='true'
+								click-outside-to-close='true'
+								show-icon='true'
+								minute-steps='1'
+								ng-model='form.startHourInvoiceForm'
+								ng-model-options="{ debounce: 1000 }"
+								type='text',
+								lang='{{ lang }}',
+								today-text='{{ "label.today" | translate }}',
+								ok-text='{{ "label.ok" | translate }}',
+								cancel-text='{{ "label.cancel" | translate }}'
+								ng-change='calculateDates()')
+
+						.an-material.nopadding
+							md-input-container.full-panel
 								label {{ 'operations.specialsTimeLog.endHourBillable' | translate }}
 								input(mdc-datetime-picker=''
 								date='false'
@@ -151,13 +153,13 @@ md-sidenav.md-sidenav-right.sidebar(md-component-id="specialOpsTimeEntrySideNav"
 								time='true'
 								show-todays-date=''
 								minutes='true'
-								min-date='form.startHourForm'
+								min-date='form.startHourInvoiceForm'
 								format='HH:mm'
 								edit-input='true'
 								click-outside-to-close='true'
 								show-icon='true'
 								minute-steps='1'
-								ng-model='form.endHourForm'
+								ng-model='form.endHourInvoiceForm'
 								ng-model-options="{ debounce: 1000 }"
 								type='text',
 								lang='{{ lang }}',

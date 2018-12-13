@@ -20,8 +20,8 @@ module.exports =
 
 				result.begin = dateUtilService.stringToDate(result.begin);
 				result.end = dateUtilService.stringToDate(result.end);
-				result.beginWork = dateUtilService.stringToDate(result.beginWork);
-				result.endWork = dateUtilService.stringToDate(result.endWork);
+				result.beginInvoice = dateUtilService.stringToDate(result.beginInvoice);
+				result.endInvoice = dateUtilService.stringToDate(result.endInvoice);
 				result.principals = _.map(result.principals, function (o) {
 					return partyService.fromJSON(o);
 				});

@@ -63,7 +63,7 @@ module.exports =
 		}
 
 		function calculateDuration(begin, end) {
-			var duration = '0:0';
+			var duration = '0:00';
 
 			if (_.isNil(end) === false) {
 				end = moment(end);

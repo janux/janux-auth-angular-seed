@@ -344,6 +344,21 @@ module.exports =
 					}
 					FileSaver.saveAs(blob, invoiceFileName);
 				});
+			},
+
+			/**
+			 * Given a time entry, this functions help to determine
+			 * if to show billable hours or working hours
+			 * @param timeEntry
+			 * @return {*}
+			 */
+			showBillableDate: function (timeEntry) {
+				if (timeEntry.type === 'SPECIAL_OPS') {
+					return _.isDate(timeEntry.begin) && _.isDate(timeEntry.end) &&
+						timeEntry.end.getTime() > timeEntry.begin.getTime()
+				} else {
+					return true;
+				}
 			}
 		};
 		return service;

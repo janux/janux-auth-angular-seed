@@ -280,16 +280,19 @@ require('angular').module('config', [])
 			}
 		],
 		jnxStoreKeys          : {
-			storeObjectSufix             : 'glarusStorage',
-			servicesColumnsFilters       : 'servicesColumnsFilters',
-			specialOpsColumnsFilters     : 'specialOpsColumnsFilters',
-			specialOpsTimeLogFilterPeriod: 'specialOpsTimeLogFilterPeriod',
-			attendanceTimeLogFilterPeriod: 'attendanceTimeLogFilterPeriod',
-			attendanceColumnsFilters     : 'attendanceColumnsFilters',
-			driversColumnsFilters        : 'driversColumnsFilters',
-			driversTimeLogFilterPeriod   : 'driversTimeLogFilterPeriod',
-			guardsColumnsFilters         : 'guardsColumnsFilters',
-			guardsTimeLogFilterPeriod    : 'guardsTimeLogFilterPeriod'
+			storeObjectSufix                        : 'glarusStorage',
+			servicesColumnsFilters                  : 'servicesColumnsFilters',
+			specialOpsColumnsFilters                : 'specialOpsColumnsFilters',
+			specialOpsTimeLogFilterPeriod           : 'specialOpsTimeLogFilterPeriod',
+			attendanceTimeLogFilterPeriod           : 'attendanceTimeLogFilterPeriod',
+			attendanceColumnsFilters                : 'attendanceColumnsFilters',
+			driversColumnsFilters                   : 'driversColumnsFilters',
+			driversTimeLogFilterPeriod              : 'driversTimeLogFilterPeriod',
+			driversTimeLogFilterPeriodServiceSection: 'driversTimeLogFilterPeriodServiceSection',
+			guardsColumnsFilters                    : 'guardsColumnsFilters',
+			guardsTimeLogFilterPeriod               : 'guardsTimeLogFilterPeriod',
+			specialOpsColumnsFiltersServiceSection  : 'specialOpsColumnsFiltersServiceSection',
+			driversColumnsFiltersServiceSection     : 'driversColumnsFiltersServiceSection'
 		},
 		invoice               : {
 			status: {

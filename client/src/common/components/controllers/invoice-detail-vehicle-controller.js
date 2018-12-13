@@ -54,16 +54,37 @@ module.exports =
 					return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.dateOnlyFormat) : '';
 				}
 			},
-			// Time Entry only hour.
+			// Time Entry only hour begin.
 			{
-				headerName    : $filter('translate')('services.invoice.invoiceDetail.hour'),
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.begin'),
 				field         : 'timeEntry.begin',
 				width         : 95,
 				filterParams  : {
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
-					return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
+					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
+						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
+					} else {
+						return (params.data.timeEntry.beginWork) ? moment(params.data.timeEntry.beginWork).format(config.dateFormats.hourOnlyFormat) : '';
+					}
+				}
+			},
+			// Time Entry only hour end.
+			{
+				headerName    : $filter('translate')('services.invoice.invoiceDetail.end'),
+				field         : 'timeEntry.begin',
+				width         : 95,
+				filterParams  : {
+					newRowsAction: 'keep'
+				},
+				valueFormatter: function (params) {
+					// improve  the way what hours are being used for invoice.
+					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
+						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
+					} else {
+						return (params.data.timeEntry.endWork) ? moment(params.data.timeEntry.endWork).format(config.dateFormats.hourOnlyFormat) : '';
+					}
 				}
 			},
 			{

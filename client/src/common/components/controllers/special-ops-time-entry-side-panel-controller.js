@@ -53,10 +53,10 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				// The following dates and showed in the Form, with this info the controller calculates
 				// the correct dates.
 				startForm             : today,
-				startHourForm         : today,
-				startHourWorkForm     : today,
-				endHourForm           : today,
-				endHourWorkForm       : today,
+				startHourForm         : undefined,
+				startHourWorkForm     : undefined,
+				endHourForm           : undefined,
+				endHourWorkForm       : undefined,
 				differenceTimeForm    : undefined,
 				differenceTimeWorkForm: undefined,
 				provider              : '',
@@ -212,26 +212,32 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				dialogService.info('operations.dialogs.invalidFunction', false);
 				result = false;
 			} else if (!_.isDate($scope.form.startForm)) {
+				// At least there must be a defined data.
 				dialogService.info('operations.dialogs.invalidStartDateForm', false);
 				result = false;
 			} else if (!_.isNil($scope.form.odometerEnd) && !_.isNil($scope.form.odometerStart) &&
-				// Validating odometer values.
 				_.toNumber($scope.form.odometerStart) > _.toNumber($scope.form.odometerEnd)) {
+				// Validating odometer values.
 				dialogService.info('operations.dialogs.odometerStartGreaterThanEnd', false);
 				result = false;
-			} else if (!_.isDate($scope.form.start)) {
+			} else if (_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
+				// Validating billable hours if they are not undefined.
+				dialogService.info('operations.dialogs.beginBillableDateError', false);
+				result = false;
+				// } else if (!_.isDate($scope.form.endHourForm) && _.isDate($scope.form.startHourForm)) {
+				// 	// Validating billable hours if they are not undefined.
+				// 	dialogService.info('operations.dialogs.endBillableDateError', false);
+				// 	result = false;
+				//
+			} else if (_.isDate($scope.form.endHourWorkForm) && !_.isDate($scope.form.startHourWorkForm)) {
+				// Validating working hours if they are not undefined.
+				dialogService.info('operations.dialogs.beginWorkDateError', false);
+				result = false;
+			} else if (!_.isDate($scope.form.startHourForm) && !_.isDate($scope.form.startHourWorkForm)) {
 				dialogService.info('operations.dialogs.beginDateError', false);
 				result = false;
-			} else {
-				var begin = $scope.form.start;
-				var end = $scope.form.end;
-				if (_.isNil($scope.form.end) === false) {
-					if (begin > end) {
-						dialogService.info('operations.dialogs.endDateError', false);
-						result = false;
-					}
-				}
 			}
+
 
 			return result;
 		}
@@ -263,10 +269,10 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		}
 
 		/**
-		 * Calculate form dates.
+		 * Calculate form dates special ops.
 		 */
 		$scope.calculateDates = function () {
-			console.debug("Call to calculateDates");
+			console.debug("Call to calculateDates special ops");
 			// console.debug("Call to calculateDates");
 			var startMoment = moment($scope.form.startForm);
 			var endMoment = moment($scope.form.startForm);
@@ -278,38 +284,59 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			var endTemp;
 
 			// Billable dates.
-			startTemp = moment($scope.form.startHourForm);
-			startMoment = startMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
-			endTemp = moment($scope.form.endHourForm);
-			if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-				endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
-				// endMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
+			if (_.isDate($scope.form.startHourForm) && _.isDate($scope.form.endHourForm)) {
+				startTemp = moment($scope.form.startHourForm);
+				startMoment = startMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
+				endTemp = moment($scope.form.endHourForm);
+				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
+					endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
+					// endMoment.add(endTemp.hours(), 'hours').add(1, 'days').add(endTemp.minutes(), 'minutes');
+				} else {
+					endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
+					//endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				}
+				$scope.form.start = startMoment.toDate();
+				$scope.form.end = endMoment.toDate();
+				differenceHoursMoment = operationService.calculateDuration(startMoment.toDate(), endMoment.toDate());
+				$scope.form.differenceTimeForm = differenceHoursMoment;
+			} else if (_.isDate($scope.form.startHourForm)) {
+				startTemp = moment($scope.form.startHourForm);
+				startMoment = startMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
+				$scope.form.start = startMoment.toDate();
+				$scope.form.end = undefined;
+				$scope.form.differenceTimeForm = '';
 			} else {
-				endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
-				//endMoment.add(endTemp.hours(), 'hours').add(endTemp.minutes(), 'minutes');
+				$scope.form.start = startMoment.hours(0);
+				$scope.form.end = undefined;
+				$scope.form.differenceTimeForm = '';
 			}
-			differenceHoursMoment = operationService.calculateDuration(startMoment.toDate(), endMoment.toDate());
+
 
 			//Workable dates.
-			startTemp = moment($scope.form.startHourWorkForm);
-			startWorkMoment = startWorkMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
-			endTemp = moment($scope.form.endHourWorkForm);
-			if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
-				endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
+			if (_.isDate($scope.form.startHourWorkForm) && _.isDate($scope.form.endHourWorkForm)) {
+				startTemp = moment($scope.form.startHourWorkForm);
+				startWorkMoment = startWorkMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
+				endTemp = moment($scope.form.endHourWorkForm);
+				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
+					endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
+				} else {
+					endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
+				}
+				differenceHoursWorkMoment = operationService.calculateDuration(startWorkMoment.toDate(), endWorkMoment.toDate());
+				$scope.form.startWork = startWorkMoment.toDate();
+				$scope.form.endWork = endWorkMoment.toDate();
+				$scope.form.differenceTimeWorkForm = differenceHoursWorkMoment;
+			} else if (_.isDate($scope.form.startHourWorkForm)) {
+				startTemp = moment($scope.form.startHourWorkForm);
+				startWorkMoment = startWorkMoment.hours(startTemp.hours()).minutes(startTemp.minutes());
+				$scope.form.startWork = startWorkMoment.toDate();
+				$scope.form.endWork = undefined;
+				$scope.form.differenceTimeWorkForm = '';
 			} else {
-				endWorkMoment = endWorkMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
+				$scope.form.startWork = undefined;
+				$scope.form.endWork = undefined;
+				$scope.form.differenceTimeWorkForm = '';
 			}
-			differenceHoursWorkMoment = operationService.calculateDuration(startWorkMoment.toDate(), endWorkMoment.toDate());
-
-			$scope.form.start = startMoment.toDate();
-			$scope.form.end = endMoment.toDate();
-
-			$scope.form.startWork = startWorkMoment.toDate();
-			$scope.form.endWork = endWorkMoment.toDate();
-
-			$scope.form.differenceTimeForm = differenceHoursMoment;
-			$scope.form.differenceTimeWorkForm = differenceHoursWorkMoment;
-
 		};
 
 		/**
@@ -425,6 +452,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		 * or update.
 		 */
 		$scope.acceptTimeEntry = function () {
+			$scope.calculateDates();
 			if (validateForm()) {
 				var timeEntryToSend = getFormData();
 				if (_.isNil($scope.timeEntryUpdate)) {
@@ -519,8 +547,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		$scope.vehicleBtnIsVisible = true;
 		$scope.vehiclePanelShowHide = function () {
 			//If DIV is visible it will be hidden and vice versa, also button.
-			$scope.vehiclePanelIsVisible = $scope.vehiclePanelIsVisible ? false : true;
-			$scope.vehicleBtnIsVisible = $scope.vehicleBtnIsVisible ? false : true;
+			$scope.vehiclePanelIsVisible = !$scope.vehiclePanelIsVisible;
+			$scope.vehicleBtnIsVisible = !$scope.vehicleBtnIsVisible;
 		};
 
 		/******

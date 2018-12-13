@@ -16,7 +16,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 		$scope.lang = $translate.use();
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);
+			jnxStorage.setItem(config.jnxStoreKeys.driversTimeLogFilterPeriod, $scope.periodFilterKey, true);
 			$scope.findTimeEntries($scope.periodFilterKey);
 		};
 

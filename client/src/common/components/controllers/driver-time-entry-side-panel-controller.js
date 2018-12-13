@@ -134,15 +134,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 						// Close the panel.
 						$mdSidenav(config.timeEntry.driver.sidePanel.id).toggle();
 					});
-				} else {
-					timeEntryToSend.id = $scope.timeEntryUpdate.id;
-					console.debug('Time entry to update %o', timeEntryToSend);
-					timeEntryService.update(timeEntryToSend).then(function () {
-						// Send a notification the update was successful.
-						$rootScope.$broadcast(config.timeEntry.driver.events.doneInsertOrUpdate);
-						// Close the panel.
-						$mdSidenav(config.timeEntry.driver.sidePanel.id).toggle();
-					});
+				} else if(_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
+					dialogService.info('operations.dialogs.beginDateError', false);
 				}
 			}
 		};

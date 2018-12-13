@@ -13,7 +13,7 @@ module.exports =
 		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
-		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
+		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFiltersServiceSection;
 		var findTimeEntries;
 		var storedTab = jnxStorage.findItem('specialOpsViewSelectedTab', true);
 		var timeEntries = [];	// Global time entries object
@@ -44,12 +44,6 @@ module.exports =
 				}, 200);
 			}
 		}
-
-		$scope.periodChange = function () {
-			jnxStorage.setItem('specialOpsTimeLogFilterPeriod', $scope.periodFilterKey, true);
-			findTimeEntries($scope.periodFilterKey);
-		};
-
 
 		$scope.changeTab = function (tab) {
 			$scope.currentNavItem = tab;

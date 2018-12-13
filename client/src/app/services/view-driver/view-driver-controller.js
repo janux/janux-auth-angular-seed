@@ -14,9 +14,9 @@ module.exports =
 		// var dateTimeFormatString = agGridComp.dateTimeCellEditor.formatString;
 		var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 		var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
-		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
+		var columnsFiltersKey = config.jnxStoreKeys.driversColumnsFiltersServiceSection;
 		var findTimeEntries;
-		var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.driversTimeLogFilterPeriodServiceSection, true);
 		var storedTab = jnxStorage.findItem('driverViewSelectedTab', true);
 		var timeEntries = [];	// Global time entries object
 		var invoiceItemName = 'Total a facturar';
@@ -37,10 +37,9 @@ module.exports =
 		// console.debug('Invoices', invoices);
 
 		$scope.periodChange = function () {
-			jnxStorage.setItem('driversTimeLogFilterPeriod', $scope.periodFilterKey, true);
+			jnxStorage.setItem(config.jnxStoreKeys.driversTimeLogFilterPeriodServiceSection, $scope.periodFilterKey, true);
 			findTimeEntries($scope.periodFilterKey);
 		};
-
 
 		var loadTimeEntries = function () {
 
@@ -57,7 +56,7 @@ module.exports =
 				};
 				$scope.showTimeSheetPeriodFilterList = false;
 			} else {
-				var storedFilterPeriod = jnxStorage.findItem('driversTimeLogFilterPeriod', true);
+				var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.driversTimeLogFilterPeriodServiceSection, true);
 				period = (storedFilterPeriod) ? storedFilterPeriod : 'last7Days';
 			}
 

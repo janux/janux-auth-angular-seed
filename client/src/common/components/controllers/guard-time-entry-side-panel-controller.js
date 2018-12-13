@@ -272,15 +272,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			} else if (_.isNil($scope.form.operation)) {
 				dialogService.info('operations.dialogs.invalidOperation');
 				result = false;
-			} else {
-				if (_.isNil($scope.form.end) === false) {
-					var begin = $scope.form.start;
-					var end = $scope.form.end;
-					if (begin.getTime() > end.getTime()) {
-						dialogService.info('operations.dialogs.endDateError');
-						result = false;
-					}
-				}
+			} else if(_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
+				dialogService.info('operations.dialogs.beginDateError', false);
 			}
 
 			return result;

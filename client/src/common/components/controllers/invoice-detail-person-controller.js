@@ -254,6 +254,10 @@ module.exports =
 			pagination               : false,
 			paginationAutoPageSize   : false,
 			onGridReady              : function () {
+				// Set an initial ordering settings.
+				$scope.gridOptions.api.setSortModel([
+					{colId: 'timeEntry.begin', sort: 'asc'}
+				]);
 				agGridSizeToFit();
 			},
 			localeTextFunc           : function (key, defaultValue) {

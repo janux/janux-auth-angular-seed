@@ -63,10 +63,11 @@ module.exports =
 					newRowsAction: 'keep'
 				},
 				valueFormatter: function (params) {
-					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
-						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
-					} else {
+					// improve  the way what hours are being used for invoice.
+					if (invoiceService.showBillableDate(params.data.timeEntry)) {
 						return (params.data.timeEntry.beginInvoice) ? moment(params.data.timeEntry.beginInvoice).format(config.dateFormats.hourOnlyFormat) : '';
+					} else {
+						return (params.data.timeEntry.begin) ? moment(params.data.timeEntry.begin).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},
@@ -80,10 +81,10 @@ module.exports =
 				},
 				valueFormatter: function (params) {
 					// improve  the way what hours are being used for invoice.
-					if (_.isDate(params.data.timeEntry.begin) && _.isDate(params.data.timeEntry.end) && params.data.timeEntry.duration !== '0:00') {
-						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
-					} else {
+					if (invoiceService.showBillableDate(params.data.timeEntry)) {
 						return (params.data.timeEntry.endInvoice) ? moment(params.data.timeEntry.endInvoice).format(config.dateFormats.hourOnlyFormat) : '';
+					} else {
+						return (params.data.timeEntry.end) ? moment(params.data.timeEntry.end).format(config.dateFormats.hourOnlyFormat) : '';
 					}
 				}
 			},
@@ -155,6 +156,10 @@ module.exports =
 			pagination               : false,
 			paginationAutoPageSize   : false,
 			onGridReady              : function () {
+				// Set an initial ordering settings.
+				$scope.gridOptions.api.setSortModel([
+					{colId: 'timeEntry.begin', sort: 'asc'}
+				]);
 				agGridSizeToFit();
 			},
 			localeTextFunc           : function (key, defaultValue) {

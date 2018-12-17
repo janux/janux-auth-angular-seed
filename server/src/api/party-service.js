@@ -133,7 +133,7 @@ var createInstance = function (serviceReference) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
 			})
 			.catch(function (err) {
-				callback(new Error(err[0].message));
+				callback(err, null);
 			});
 	};
 
@@ -150,7 +150,7 @@ var createInstance = function (serviceReference) {
 				return Promise.resolve(PartyServiceImplClass.toJSON(result)).asCallback(callback);
 			})
 			.catch(function (err) {
-				callback(new Error(err[0].message));
+				callback(err, null);
 			});
 	};
 

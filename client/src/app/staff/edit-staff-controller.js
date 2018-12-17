@@ -22,8 +22,6 @@ module.exports = [
 		partyService.update($scope.staff).then(function () {
 			console.log('Staff has been saved!');
 			window.history.back();
-		}).catch(function (err) {
-			dialogService.info(err, true);
 		});
 	};
 

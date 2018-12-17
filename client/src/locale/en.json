@@ -698,7 +698,9 @@
 			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
 			"noContacts": "There is no associated group of contacts",
 			"addingContact": "Adding contact",
-			"invalidEmail": "The email address you entered is invalid"
+			"invalidEmail": "The email address you entered is invalid",
+			"duplicatedEmail": "There is another record with the same email address",
+			"contactDuplicated": "The contact with the duplicated record is "
 		},
 		"contactType": {
 			"HOME": "Home",

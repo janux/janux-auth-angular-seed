@@ -5,22 +5,22 @@ var _ = require('lodash');
  * Common dialog service
  */
 
-module.exports = ['$modal','$filter', function ($modal, $filter) {
+module.exports = ['$modal', '$filter', function ($modal, $filter) {
 
 	var service = {
 
 		info: function (translateKey, skipTranslate) {
 			$modal.open({
 				templateUrl: 'app/dialog-tpl/info-dialog.html',
-				controller: ['$scope', '$modalInstance',
+				controller : ['$scope', '$modalInstance',
 					function ($scope, $modalInstance) {
-						$scope.message = (skipTranslate)?translateKey:$filter('translate')(translateKey);
+						$scope.message = (skipTranslate) ? translateKey : $filter('translate')(translateKey);
 
 						$scope.ok = function () {
 							$modalInstance.close();
 						};
 					}],
-				size: 'md'
+				size       : 'md'
 			});
 		}
 	};

@@ -5,8 +5,8 @@ var Email = require('janux-people').EmailAddress;
 var PostalAddress = require('janux-people').PostalAddress;
 
 module.exports = [
-	'$scope', 'partyService','validationService','dialogService', function (
-		$scope, partyService, validationService , dialogService) {
+	'$scope', 'partyService', 'validationService', 'dialogService', function (
+		$scope, partyService, validationService, dialogService) {
 
 		$scope.currentNavItem = 'organization';
 		// Create a new supplier
@@ -56,8 +56,6 @@ module.exports = [
 			partyService.insert($scope.supplier).then(function (resp) {
 				console.log('Client has been saved!', resp);
 				window.history.back();
-			}).catch(function (err) {
-				dialogService.info(err, true);
 			});
 		};
 

@@ -696,7 +696,9 @@
 			"unsavedContact": "Tiene cambios sin guardar para este contacto. Desea guardarlos?",
 			"noContacts": "No hay grupo de contactos asociado",
 			"addingContact": "Agregar contacto",
-			"invalidEmail": "El correo electrónico ingresado es invalido"
+			"invalidEmail": "El correo electrónico ingresado es invalido",
+			"duplicatedEmail": "Existe otro conctacto con la misma dirección de correo",
+			"contactDuplicated": "El conctacto con el registro duplicado es "
 		},
 		"contactType": {
 			"HOME": "Residencia",

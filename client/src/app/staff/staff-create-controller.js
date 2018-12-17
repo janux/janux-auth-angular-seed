@@ -26,11 +26,6 @@ module.exports = [
 				return false;
 			}
 
-			// console.log('staff about to save', $scope.staff);
-			// partyService.insert($scope.staff).then(function (resp) {
-			// 	console.log('Staff has been saved!', resp);
-			// 	window.history.back();
-			// });
 			partyGroupService.addItemNewParty('glarus_staff_group',$scope.staff,{})
 				.then(function (result) {
 					console.log('Staff has been saved!', result);

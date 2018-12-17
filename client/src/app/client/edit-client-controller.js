@@ -150,8 +150,6 @@ module.exports = [
 				if (!preventDefault) {
 					window.history.back();
 				}
-			}).catch(function (err) {
-				dialogService.info(err, true);
 			});
 		};
 		$scope.save = save;
@@ -217,8 +215,6 @@ module.exports = [
 					if (!preventDefault) {
 						$state.go('client.edit', {id: client.id, tab: 'contacts'}, {reload: true});
 					}
-				}).catch(function (err) {
-					dialogService.info(err, true);
 				});
 			} else if ($scope.addContact) {
 				// Insert client contact

@@ -55,8 +55,6 @@ module.exports = [
 			partyService.insert($scope.client).then(function (resp) {
 				console.log('Client has been saved!', resp);
 				window.history.back();
-			}).catch(function (err) {
-				dialogService.info(err, true);
 			});
 		};
 

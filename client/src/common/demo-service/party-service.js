@@ -10,8 +10,10 @@ var _ = require('lodash');
 
 
 module.exports =
-['$q', '$http', 'dateUtilService', '$log',
-function ($q, $http, dateUtilService, $log) {
+	['$q', '$http', 'dateUtilService', '$log', 'dialogService', '$filter',
+function ($q, $http, dateUtilService, $log, dialogService, $filter) {
+
+	var DUPLICATED_EMAIL = 'There is another record with the same email address';
 
 	/**
 	 * Convert a json object to a PartyAbstract instance.
@@ -63,6 +65,22 @@ function ($q, $http, dateUtilService, $log) {
 		contact.functionsReceived = object.functionsReceived;
 		contact.staff = object.staff;
 		return contact;
+	}
+
+
+	function handleError(errors) {
+		// For the moment handle the first error.
+		const error = _.isArray(errors.data.error) ? errors.data.error[0] : errors.data.error;
+		const value = error.value;
+		const serverMessage = error.message;
+		var message;
+		if (serverMessage === DUPLICATED_EMAIL) {
+			message = $filter('translate')('party.dialogs.duplicatedEmail') + ". " +
+				$filter('translate')('party.dialogs.contactDuplicated') + (value.displayName ? value.displayName : value.name) + ".";
+		} else {
+			message = serverMessage;
+		}
+		dialogService.info(message, false);
 	}
 
 	var service = {
@@ -209,6 +227,7 @@ function ($q, $http, dateUtilService, $log) {
 				contact = fromJSON(contact);
 				return contact;
 			}).catch(function (err) {
+				handleError(err);
 				return Promise.reject(err.data.error.message);
 			});
 		},
@@ -228,6 +247,7 @@ function ($q, $http, dateUtilService, $log) {
 				contact = fromJSON(contact);
 				return contact;
 			}).catch(function (err) {
+				handleError(err);
 				return Promise.reject(err.data.error.message);
 			});
 		},
@@ -255,7 +275,7 @@ function ($q, $http, dateUtilService, $log) {
 		 * if the party has no email address, return and empty string.
 		 * @param party
 		 */
-		getDefaultEmailAddress: function(party){
+		getDefaultEmailAddress: function (party) {
 			var email;
 			if (_.isArray(party.contactMethods.emails) && party.contactMethods.emails.length > 0) {
 				email = party.contactMethods.emails[0].address;
@@ -271,6 +291,10 @@ function ($q, $http, dateUtilService, $log) {
 
 		toJSON: function (object) {
 			return toJSON(object)
+		},
+
+		handleError: function (errors) {
+			handleError(errors);
 		}
 	};
 	return service;

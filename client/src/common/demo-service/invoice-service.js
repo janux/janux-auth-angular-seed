@@ -357,7 +357,7 @@ module.exports =
 					return _.isDate(timeEntry.beginInvoice) && _.isDate(timeEntry.endInvoice) &&
 						timeEntry.endInvoice.getTime() > timeEntry.beginInvoice.getTime()
 				} else {
-					return true;
+					return false;
 				}
 			}
 		};

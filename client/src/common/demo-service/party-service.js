@@ -39,9 +39,10 @@ function ($q, $http, dateUtilService, $log, dialogService, $filter) {
 		contact.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
 		contact.isSupplier = result.isSupplier;
 		contact.isReseller = result.isReseller;
-		contact.functionsProvided = result.functionsProvided;
-		contact.functionsReceived = result.functionsReceived;
+		contact.functionsProvided = _.isArray(result.functionsProvided) ? result.functionsProvided : [];
+		contact.functionsReceived = _.isArray(result.functionsReceived) ?  result.functionsReceived : [];
 		contact.staff = result.staff;
+		contact.taxIdentificationCode = result.taxIdentificationCode;
 		return contact;
 	}
 
@@ -64,6 +65,7 @@ function ($q, $http, dateUtilService, $log, dialogService, $filter) {
 		contact.functionsProvided = object.functionsProvided;
 		contact.functionsReceived = object.functionsReceived;
 		contact.staff = object.staff;
+		contact.taxIdentificationCode = object.taxIdentificationCode;
 		return contact;
 	}
 

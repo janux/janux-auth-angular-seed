@@ -452,9 +452,9 @@ module.exports =
 
 			getRowHeight: function (rowObj) {
 				// assuming 50 characters per line, working how how many lines we need
-				var colHeight = 12 * (Math.floor(rowObj.data.comment.length / 15)+1);
+				var colHeight = 12 * (Math.floor(rowObj.data.comment.length / 15) + 1);
 				// Condition to avoid cutting content of the row (45 is the Row Height)
-				if(colHeight < $scope.gridOptions.rowHeight){
+				if (colHeight < $scope.gridOptions.rowHeight) {
 					colHeight = $scope.gridOptions.rowHeight;
 				}
 				//console.log('colHeight:',colHeight);
@@ -583,16 +583,22 @@ module.exports =
 			});
 		};
 
+
+		// Generating invoice item time entries for drivers.
 		var agGridRowsToTE = function (selectedRows) {
 			var invoiceItemsTE = [];
 			var timeEntryIds = [];
 
 			// Map ag-grid rows into item time entry objects
 			selectedRows.forEach(function (agGridRow) {
+				var timeEntry = _.find(timeEntries, {id: agGridRow.id});
+				var resourcePersonWithAbsence = _.find(timeEntry.resources, function (resource) {
+					return _.isString(resource.absence) && resource.absence !== '';
+				});
 				invoiceItemsTE.push({
-					doNotInvoice       : false,
+					doNotInvoice       : !_.isNil(resourcePersonWithAbsence),
 					doNotInvoiceVehicle: false,
-					timeEntry          : _.find(timeEntries, {id: agGridRow.id}),
+					timeEntry          : timeEntry,
 					total              : 0
 				});
 				timeEntryIds.push(agGridRow.id);

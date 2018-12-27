@@ -348,26 +348,6 @@
 				"NOT_COVERED": "Not covered (NOT COVERED)"
 			}
 		},
-		"guardsTimeLog": {
-			"title": "Guards Time Log",
-			"staff": "Staff",
-			"operation": "Operation",
-			"begin": "Begin",
-			"end": "End",
-			"client": "Client",
-			"duration": "Duration",
-			"comment": "Comment",
-			"filterLabel": "List:",
-			"absence": "Absence",
-		  	"extras": "Extras",
-			"extraOptions": {
-				"AF": "Additional invoiced (AF)",
-				"A": "Additional not invoiced (A)",
-				"NM": "Night shift maintenance (NM)",
-				"NRM": "Night shift goods receipt (NRM)",
-			    "CLOSED" : "Closed store (CLOSED)"
-			}
-		},
 		"specials": "Specials",
 		"specialsTimeLog": {
 			"title": "Special ops time log",
@@ -590,22 +570,6 @@
 				"invalidPercentage": "The percentage value is invalid",
 				"invoiceEnded": "Can't modify the invoice because the status es marked as ended"
 			}
-		}
-	},
-	"services": {
-		"title": "Services",
-		"listTitle": "List of services",
-		"list": {
-			"type":"Type",
-			"name":"Name",
-			"client":"Client",
-			"assigned":"Assigned personal",
-			"duration": "Duration",
-			"begin": "Begin",
-			"end": "End",
-			"DRIVER": "Fixed driver",
-			"GUARD": "Guard",
-			"SPECIAL": "Special"
 		}
 	},
 	"authSchema": {

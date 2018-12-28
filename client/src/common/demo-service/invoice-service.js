@@ -10,6 +10,7 @@ module.exports =
 		const TIME_ENTRY_ASSOCIATED = "This time entry is already linked to another invoice";
 		const ATTRIBUTE_INVOICE_NUMBER = "invoiceNumber";
 		const MESSAGE_DUPLICATED = "There is another record with the same value";
+		const MESSAGE_STATUS_ENDED = "Can't modify this invoice because the status is ended";
 
 		function infoDialog(translateKey) {
 			$modal.open({
@@ -103,6 +104,8 @@ module.exports =
 				infoDialog('services.invoice.dialogs.duplicatedInvoiceNumber');
 			} else if (error.message === TIME_ENTRY_ASSOCIATED) {
 				infoDialog('services.invoice.dialogs.insertTimeEntriesInvoiceError');
+			} else if (error.attribute === ATTRIBUTE_INVOICE_NUMBER && error.message === MESSAGE_STATUS_ENDED) {
+				infoDialog('services.invoice.dialogs.invoiceEnded');
 			}
 			return $q.reject(errors);
 		}
@@ -230,6 +233,8 @@ module.exports =
 					[invoiceNumber, invoiceName, toJSONExpense(expense)]
 				).then(function (resp) {
 					return fromJSONExpense(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -262,6 +267,8 @@ module.exports =
 					[toJSONItemTimeEntry(invoiceItemTE)]
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -272,6 +279,8 @@ module.exports =
 					[expensesCodes]
 				).then(function (resp) {
 					return resp.data.result;
+				}, function (err) {
+					return handleError(err);
 				});
 			},
 
@@ -285,7 +294,14 @@ module.exports =
 				return timeEntries;
 			},
 
-			specialOpsInvoiceReport: function (invoiceNumber) {
+			/**
+			 * Generate the invoice report.
+			 * @param invoiceNumber The invoice number.
+			 * @param operation The operation associated to the invoice.
+			 */
+			specialOpsInvoiceReport: function (invoiceNumber, operation) {
+				var now = moment();
+				var invoiceFileName = 'anexo-factura-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx';
 				var headers = {
 					'Content-type': 'application/json',
 					'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -305,14 +321,45 @@ module.exports =
 					data        : {invoiceNumber: invoiceNumber, timeZone: timeZone},
 					headers     : headers
 				}).then(function (result) {
-					var now = moment();
+
 					var blob = new Blob([result.data], {
 						type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 					});
-					FileSaver.saveAs(blob, 'anexo-factura-especiales' + now.format('YYYYMMDDHHmm') + '.xlsx');
+					// Define the name of
+					if (!_.isNil(operation) && operation.type === 'SPECIAL_OPS') {
+						var dateString = '';
+						var clientName;
+						var principalName = '';
+						console.debug("Replacing name with operation %o", operation);
+						if (_.isDate(operation.end)) {
+							dateString = moment(operation.end).format('YYYYMMDD');
+						}
+						clientName = _.isString(operation.client.object.code) && operation.client.object.code !== '' ? operation.client.object.code : operation.client.object.name;
+						if (_.isArray(operation.principals) && operation.principals.length > 0) {
+							const principal = operation.principals[0];
+							console.debug("Principal %o", principal);
+							principalName = principal.object && principal.object.name ? principal.object.name.first : '';
+						}
+						invoiceFileName = dateString + '.' + clientName + (principalName !== '' ? '-' + principalName : "") + '.xlsx';
+					}
+					FileSaver.saveAs(blob, invoiceFileName);
 				});
-			}
+			},
 
+			/**
+			 * Given a time entry, this functions help to determine
+			 * if to show billable hours or working hours
+			 * @param timeEntry
+			 * @return {*}
+			 */
+			showBillableDate: function (timeEntry) {
+				if (timeEntry.type === 'SPECIAL_OPS') {
+					return _.isDate(timeEntry.beginInvoice) && _.isDate(timeEntry.endInvoice) &&
+						timeEntry.endInvoice.getTime() > timeEntry.beginInvoice.getTime()
+				} else {
+					return false;
+				}
+			}
 		};
 		return service;
 	}];

@@ -76,9 +76,9 @@
 		"passExpirationDate": "Password Expiration Date",
 		"renew": "Renew password",
 		"title": "People & Organizations",
-		"dialogs":{
-			"noRowSelectedError":"Select at least one row to delete",
-			"confirmDeletion":"Are you sure you want to delete the row selection?",
+		"dialogs": {
+			"noRowSelectedError": "Select at least one row to delete",
+			"confirmDeletion": "Are you sure you want to delete the row selection?",
 			"nameEmpty": "The user's contact name can not be empty",
 			"emailEmpty": "The user's contact email can not be empty",
 			"noRoles": "You must select at least one role from the list",
@@ -98,7 +98,7 @@
 	"role": {
 		"title": "Roles",
 		"dialogs": {
-			"rolePosition":"Role position successfully updated"
+			"rolePosition": "Role position successfully updated"
 		}
 	},
 	"permission": {
@@ -112,7 +112,7 @@
 		"title": "Authorization Schema",
 		"dialogs": {
 			"AuthContextPosition": "Authorization context position successfully updated",
-			"GroupPosition":"Group position successfully updated"
+			"GroupPosition": "Group position successfully updated"
 		}
 	},
 	"staff": {
@@ -135,11 +135,11 @@
 		"admissionDate": "Admission Date",
 		"first": "Main",
 		"tabMenu": {
-			"tabMenuFirst":"General Data",
-			"tabMenuSecond":"Human Resources",
-			"tabMenuThird":"Roster Time Log"
+			"tabMenuFirst": "General Data",
+			"tabMenuSecond": "Human Resources",
+			"tabMenuThird": "Roster Time Log"
 		},
-		"contractor":"Contractor",
+		"contractor": "Contractor",
 		"inviteTip": "Invite user to the system",
 		"dialogs": {
 			"inviteTo": "Invite to",
@@ -162,79 +162,82 @@
 		"edit": "Edit",
 		"createClient": "Create client",
 		"editClient": "Edit client",
-		"Organization":"Organization",
+		"Organization": "Organization",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
-	    "functionsReceived": "Functions provided to the client",
+		"functionsReceived": "Functions provided to the client",
 		"addressesTitle": "Adresses",
 		"country": "Country",
 		"delete": "Delete",
 		"creation": "Creation",
 		"tabMenu": {
-			"tabMenuFirst":"Organization",
-			"tabMenuSecond":"Contacts",
-		    "tabMenuRates":"Rates",
-		    "staff":"Staff"
+			"tabMenuFirst": "Organization",
+			"tabMenuSecond": "Contacts",
+			"tabMenuRates": "Rates",
+			"staff": "Staff"
 		},
 		"dialogs": {
-			"noRowSelectedError":"Select at least one client contact to delete",
-			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
-			"successDeletedContacts":"Selected contacts successfully deleted",
+			"noRowSelectedError": "Select at least one client contact to delete",
+			"confirmDeletion": "Are you sure you want to delete the contacts selected?",
+			"successDeletedContacts": "Selected contacts successfully deleted",
 			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
 			"clientSaved": "Client successfully saved",
 			"rateSaved": "Rates successfully saved"
 		},
-	    "rates":{
-		    "typeTime": "Type",
-		    "typeTimeDay": "Rate by day",
-		    "typeTimeHour": "Rate by hour",
-	 		"specialOps":"Special Ops",
-			"guards":"Guards",
-			"research":"Research",
-			"staff":"Staff",
-			"researchRates":"Research rates",
-			"vehicle":"Vehicle",
-			"vehiclePlusStaff":"Vehicle + Staff",
-		    "function": "Function",
+		"rates": {
+			"typeTime": "Type",
+			"typeTimeDay": "Rate by day",
+			"typeTimeHour": "Rate by hour",
+			"specialOps": "Special Ops",
+			"guards": "Guards",
+			"research": "Research",
+			"staff": "Staff",
+			"researchRates": "Research rates",
+			"vehicle": "Vehicle",
+			"vehiclePlusStaff": "Vehicle + Staff",
+			"function": "Function",
 			"rateDay": "Daily rate",
 			"hoursFullDay": "Hours working day",
 			"rateMinimum": "Minimum rate",
-			"hoursHalfDay":"Minimum hours working day",
-			"rateExtraHour":"Extra time rate",
-		    "driver": "Driver",
-		    "agent": "Agent",
-		    "agentArmed":"Agent (armed)",
-		    "greeter":"Greeter",
-		    "coordinator": "Coordinator",
-		    "vehicleArmored":"Armored vehicle",
-		    "transport":"Transport",
-		    "guard":"Guard",
-		    "guardShiftManager":"Guard (shift manager)",
-		    "guardNightShitMaintenance":"Guard (night shift maintenance)",
-		    "guardsGoodsReceipt":"Guard goods receipt",
-		    "guardSupport":"Guard support",
-		    "researchLegal":"Research (legal)",
-		    "researchCriminal":"Research ( criminal)",
-		    "researchOfficial":"Research (official)",
-		    "researchRPP":"Research (RPP)",
-		    "researchForeigner":"Research foreigner",
-		    "researchSAT":"Research (SAT)",
-		    "researchSHCP":"Research (SHCP)",
-		    "researchInvestigation":"Investigation",
-		    "invalidHours": "Make sure hours working day and minimum hour are correct",
-		    "missingHoursFullDay": "Make sure hours working day are defined",
-		    "missingHoursHalfDay": "Make sure minimum hours working day are defined",
-		    "missingRateDay": "Make sure daily rate is defined",
-		    "discount" : "Discounts",
-		    "discountsClient": "Discount client",
-		    "discountsReseller": "Discount client",
-		    "staffDiscount": "Staff discount",
-		    "discountPercentage": "Discount",
-		    "invalidDiscount":"Make sure the discount values are correct"
-	    }
-
+			"hoursHalfDay": "Minimum hours working day",
+			"rateExtraHour": "Extra time rate",
+			"driver": "Driver",
+			"agent": "Agent",
+			"agentArmed": "Agent (armed)",
+			"greeter": "Greeter",
+			"coordinator": "Coordinator",
+			"vehicleArmored": "Armored vehicle",
+			"transport": "Transfer",
+			"guard": "Guard",
+			"guardShiftManager": "Guard (shift manager)",
+			"guardNightShitMaintenance": "Guard (night shift maintenance)",
+			"guardsGoodsReceipt": "Guard goods receipt",
+			"guardSupport": "Guard support",
+			"researchLegal": "Research (legal)",
+			"researchCriminal": "Research ( criminal)",
+			"researchOfficial": "Research (official)",
+			"researchRPP": "Research (RPP)",
+			"researchForeigner": "Research foreigner",
+			"researchSAT": "Research (SAT)",
+			"researchSHCP": "Research (SHCP)",
+			"researchInvestigation": "Investigation",
+			"vehicleExternalSupplier": "Vehicle external supplier",
+			"transportArmored": "Transfer armored vehicle",
+			"driverPlusVehicle": "Driver plus vehicle",
+			"driverPlusVehicleArmored": "Driver plus armored vehicle",
+			"invalidHours": "Make sure hours working day and minimum hour are correct",
+			"missingHoursFullDay": "Make sure hours working day are defined",
+			"missingHoursHalfDay": "Make sure minimum hours working day are defined",
+			"missingRateDay": "Make sure daily rate is defined",
+			"discount": "Discounts",
+			"discountsClient": "Discount client",
+			"discountsReseller": "Discount client",
+			"staffDiscount": "Staff discount",
+			"discountPercentage": "Discount",
+			"invalidDiscount": "Make sure the discount values are correct"
+		}
 	},
-    "supplier":{
+	"supplier": {
 		"name": "Business name",
 		"code": "Code",
 		"listTitle": "Suppliers",
@@ -247,25 +250,26 @@
 		"edit": "Edit",
 		"createSupplier": "Create supplier",
 		"editClient": "Edit supplier",
-		"Organization":"Organization",
+		"Organization": "Organization",
 		"phonesTitle": "Phones",
 		"mailsTitle": "Mails",
 		"addressesTitle": "Adresses",
 		"country": "Country",
 		"delete": "Delete",
 		"creation": "Creation",
-	    "available": "Available",
+		"available": "Available",
 		"tabMenu": {
-			"tabMenuFirst":"Organization",
-			"tabMenuSecond":"Contacts",
-		    "tabMenuThird":"Staff"
+			"tabMenuFirst": "Organization",
+			"tabMenuSecond": "Contacts",
+			"tabMenuThird": "Staff"
 		},
 		"dialogs": {
-			"noRowSelectedError":"Select at least one client contact to delete",
-			"confirmDeletion":"Are you sure you want to delete the contacts selected?",
-			"successDeletedContacts":"Selected contacts successfully deleted",
+			"noRowSelectedError": "Select at least one client contact to delete",
+			"confirmDeletion": "Are you sure you want to delete the contacts selected?",
+			"successDeletedContacts": "Selected contacts successfully deleted",
 			"unsavedClient": "You have unsaved changes for this client. Do you want to save them?",
-			"supplierSaved": "Supplier successfully saved"
+			"supplierSaved": "Supplier successfully saved",
+			"supplierContactCreated": "Supplier contact successfully saved"
 		}
 	},
 	"peopleOrgs": {
@@ -273,28 +277,30 @@
 		"users": "Users",
 		"staff": "Staff",
 		"clients": "Clients",
-	    "suppliers": "Suppliers",
-	    "contacts": "Contacts"
+		"suppliers": "Suppliers",
+		"contacts": "Contacts"
 	},
 	"operations": {
 		"title": "Time sheets",
+		"newTimeSheet": "New time sheet",
 		"drivers": "Drivers",
-	    "status":"Status",
-	    "statuses" : {
-	  	    "upcoming":"Upcoming",
-	  	    "inProgress":"In progress",
-	  	    "completed": "Completed",
-	  	    "invoiced": "Invoiced",
-	  	    "invoicedMissingTimeEntries" : "Invoiced missing time entries",
-	  	    "paid":"Paid"
-	    },
-	    "errorMessages":{
-		    "cantUpdateDueInvoiceAssociation":"The time entry record cannot be modified to another service or removed because it is associated to an invoice"
+		"status": "Status",
+		"statuses": {
+			"upcoming": "Upcoming",
+			"inProgress": "In progress",
+			"completed": "Completed",
+			"invoiced": "Invoiced",
+			"invoicedMissingTimeEntries": "Invoiced missing time entries",
+			"paid": "Paid"
+		},
+		"errorMessages": {
+			"cantUpdateDueInvoiceAssociation": "The time entry record cannot be modified or removed because it is associated to an invoice"
 		},
 		"driversTimeLog": {
 			"title": "Drivers Time Log",
 			"staff": "Staff",
 			"operation": "Operation",
+			"date": "Date",
 			"begin": "Begin",
 			"end": "End",
 			"client": "Client",
@@ -302,6 +308,9 @@
 			"comment": "Comment",
 			"filterLabel": "List:",
 			"absence": "Absence",
+			"hours": "Hours",
+			"beginHour": "Begin hour",
+			"endHour": "End hour",
 			"absenceOptions": {
 				"D": "Break (D)",
 				"V": "Holidays (V)",
@@ -309,13 +318,14 @@
 				"F": "Absence (F)",
 				"PC": "PC",
 				"I": "I",
-			    "NO_SERVICE_PROVIDED": "No serviced provided"
+				"NO_SERVICE_PROVIDED": "No serviced provided"
 			}
 		},
 		"guardsTimeLog": {
 			"title": "Guards Time Log",
 			"staff": "Staff",
 			"operation": "Operation",
+			"date": "Date",
 			"begin": "Begin",
 			"end": "End",
 			"client": "Client",
@@ -323,101 +333,129 @@
 			"comment": "Comment",
 			"filterLabel": "List:",
 			"absence": "Absence",
-		  	"extras": "Extras",
-		    "isExternal" : "External",
+			"extras": "Extras",
+			"isExternal": "External",
+			"hoursBilled": "Hours",
+			"beginHour": "Begin hour",
+			"endHour": "End hour",
 			"extraOptions": {
 				"AF": "Additional invoiced (AF)",
 				"A": "Additional not invoiced (A)",
 				"NM": "Night shift maintenance (NM)",
 				"NRM": "Night shift goods receipt (NRM)",
-			    "CLOSED" : "Closed store (CLOSED)",
-			    "GUARD_SHIFT_MANAGER": "Shift manager",
-			    "NOT_COVERED":"Not covered (NOT COVERED)"
+				"CLOSED": "Closed store (CLOSED)",
+				"GUARD_SHIFT_MANAGER": "Shift manager",
+				"NOT_COVERED": "Not covered (NOT COVERED)"
 			}
-		}, "specials": "Specials",
-		"specialsTimeLog":{
+		},
+		"specials": "Specials",
+		"specialsTimeLog": {
 			"title": "Special ops time log",
 			"filterLabel": "List:",
 			"staff": "Personal",
 			"operation": "Operaton",
+			"date": "Date",
 			"begin": "Begin",
 			"end": "End",
+			"beginHourBillable": "Begin hour",
+			"beginHourWork": "Begin hour work",
+			"endHourWork": "End hour work",
+			"endHourBillable": "End hour",
+			"hoursBilled": "Billed hours",
+			"hoursWorked": "Worked hours",
 			"client": "Client",
 			"duration": "Duration",
 			"comment": "Comment",
-		  	"odometerStart": "Km start",
-		  	"odometerEnd": "Km end",
-		  	"vehicle" : "Vehicle",
-		    "fuelStart": "F start",
-		    "fuelEnd": "F end",
-		    "function": "Function",
-		    "driver": "Driver",
-		    "agent" :"Agent",
-		    "agentArmed": "Agent armed",
-		    "greeter": "Greeter",
-		    "coordinator": "Coordinator",
-		    "transport": "Transport",
-		    "invoiceNumber": "Invoice number"
+			"odometerStart": "Km start",
+			"odometerEnd": "Km end",
+			"vehicle": "Vehicle",
+			"fuelStart": "Fuel start",
+			"fuelEnd": "Fuel end",
+			"function": "Function",
+			"driver": "Driver",
+			"agent": "Agent",
+			"agentArmed": "Agent armed",
+			"greeter": "Greeter",
+			"coordinator": "Coordinator",
+			"transport": "Transfer",
+			"transferArmoredVehicle": "Transfer armored vehicle",
+			"driverPlusVehicle": "Driver plus vehicle",
+			"driverPlusVehicleArmored": "Driver plus vehicle armored",
+			"invoiceNumber": "Invoice number",
+			"Comment": "Comment"
 		},
 		"guards": "Guards",
-	  	"attendance": "Attendances",
-	    "attendanceTimeLog":{
-			"title" : "Attendances time log",
+		"attendance": "Attendances",
+		"attendanceTimeLog": {
+			"title": "Attendances time log",
 			"operation": "Operation",
 			"operationType": "Type",
-		    "operationTypeDriver": "Driver",
-		    "operationTypeGuard": "Guard",
-		    "operationTypeSpecialOps": "Special Ops",
-		    "operationTypeAttendance": "Attendance",
+			"operationTypeDriver": "Driver",
+			"operationTypeGuard": "Guard",
+			"operationTypeSpecialOps": "Special Ops",
+			"operationTypeAttendance": "Attendance",
 			"filterLabel": "List:",
-			"staff" : "Staff",
-			"begin":"Begin",
+			"staff": "Staff",
+			"date": "Date",
+			"begin": "Begin",
 			"end": "End",
-			"duration":"Duration",
-			"comment":"Comments",
-			"absence":"Absence",
+			"beginHour": "Begin hour",
+			"beginHourWork": "Begin hour work",
+			"duration": "Duration",
+			"comment": "Comments",
+			"absence": "Absence",
+			"endHour": "End hour",
+			"endHourWork": "End hour work",
+			"hoursBilled": "Billed hours",
+			"hoursWorked": "Worked hours",
 			"absenceOptions": {
-			  "D": "Break (D)",
-			  "V": "Holidays (V)",
-			  "PS": "Leave of absence (PS)",
-			  "F": "Absence (F)",
-			  "PC": "PC",
-			  "I": "I"
-		 	}
-	  	},
+				"D": "Break (D)",
+				"V": "Holidays (V)",
+				"PS": "Leave of absence (PS)",
+				"F": "Absence (F)",
+				"PC": "PC",
+				"I": "I"
+			}
+		},
 		"services": "Services",
-		"dialogs":{
-			"endDateError":"End date should be higher than begin date",
-			"invalidOperation":"Invalid operation selected",
-			"invalidFunction":"Invalid function selected",
-			"invalidStaff":"Invalid staff member selected",
-			"noRowSelectedError":"Select at least one row to delete",
-			"confirmDeletion":"Are you sure you want to delete the row selection?",
-		    "clientContactCreated": "Client contact inserted correctly",
+		"dialogs": {
+			"invalidStartDateForm": "Date must be defined",
+			"beginBillableDateError": "Begin billable hour must be defined",
+			"endBillableDateError": "End billable hour should be defined",
+			"beginDateError": "Begin hour must be defined",
+			"endDateError": "End hour should be defined",
+			"beginWorkDateError": "Begin work hour must be defined",
+			"endWorkDateError": "End work hour must be defined",
+			"invalidOperation": "Invalid operation selected",
+			"invalidFunction": "Invalid function selected",
+			"invalidStaff": "Invalid staff member selected",
+			"noRowSelectedError": "Select at least one row to delete",
+			"confirmDeletion": "Are you sure you want to delete the row selection?",
+			"clientContactCreated": "Client contact inserted correctly",
 			"principalCreated": "Principal inserted correctly",
 			"addingPrincipal": "Adding principal",
-			"addedSpecialOp":"Special operation added correctly",
-		    "invalidOperationForAttendance": "The time entry to update is not of the type attendance",
-		    "odometerStartGreaterThanEnd" : "Invalid values for odometer information"
+			"addedSpecialOp": "Special operation added correctly",
+			"invalidOperationForAttendance": "The time entry to update is not of the type attendance",
+			"odometerStartGreaterThanEnd": "Invalid values for odometer information"
 		}
 	},
 	"services": {
 		"title": "Services",
 		"listTitle": "List of services",
 		"list": {
-			"type":"Type",
-			"name":"Name",
-			"client":"Client",
-			"code":"Code",
-			"assigned":"Assigned personal",
+			"type": "Type",
+			"name": "Name",
+			"client": "Client",
+			"code": "Code",
+			"assigned": "Assigned personal",
 			"duration": "Duration",
 			"begin": "Begin",
 			"end": "End",
-		    "status": "Status",
+			"status": "Status",
 			"DRIVER": "Fixed driver",
 			"GUARD": "Guard",
 			"SPECIAL_OPS": "Special",
-		    "CONSULTING" : "Consulting",
+			"CONSULTING": "Consulting",
 			"details": "Details"
 		},
 		"tabs": {
@@ -428,16 +466,17 @@
 		"delete": "Delete",
 		"addToInvoice": "Add to",
 		"newInvoice": "New invoice",
-		"addSpecial":"Add special service",
+		"addSpecial": "Add special service",
 		"specialService": "Special service",
 		"consultingService": "Consulting service",
+		"driverService": "Fixed driver service",
 		"specialForm": {
 			"name": "Service name",
 			"begin": "Begin",
 			"end": "End",
 			"client": "Client",
 			"requester": "Requester",
-			"addRequester":"Add new requester",
+			"addRequester": "Add new requester",
 			"principal": "Principal",
 			"addPrincipal": "Add new principal",
 			"resources": "Resources",
@@ -448,7 +487,7 @@
 			"staffGuardArmed": "Agent armed",
 			"staffCoordinator": "Coordinator",
 			"staffGreeter": "Greeter",
-		    "staffTransport": "Transport",
+			"staffTransport": "Transfer",
 			"vehicle": "Vehicle",
 			"details": "Details",
 			"addingPrincipal": "Add principal",
@@ -466,67 +505,70 @@
 				"contactLastNameEmpty": "Contact last name can't be empty"
 			}
 		},
-		"invoice" : {
-		    "invoice" : "Invoice",
+		"invoice": {
+			"invoice": "Invoice",
 			"title": "Invoices",
-			"invoiceNumber" : "Invoice number",
-			"grandTotal" : "Total",
-			"invoiceDate" : "Date",
-		    "isPaid" : "Pagada",
-			"status" : "Status",
-		    "insertManual":"Insert invoice",
-		    "updatePaid" : "Update",
-		    "statuses": {
-				"inRevision" : "In revision",
-			    "ended": "Ended"
+			"invoiceNumber": "Invoice number",
+			"grandTotal": "Total",
+			"invoiceDate": "Date",
+			"isPaid": "Pagada",
+			"status": "Status",
+			"insertManual": "Insert invoice",
+			"updatePaid": "Update",
+			"statuses": {
+				"inRevision": "In revision",
+				"ended": "Ended"
 			},
-		    "invoiceDetail":{
-		   		"date": "Date",
-		   		"personName": "Name",
-		   		"vehicle": "Vehicle",
-		   		"function": "Function",
-		   		"hour": "Hour",
-		   		"duration":"Duration",
-		   		"amountDay": "Days",
-		   		"amountHour": "Hours",
-		   		"costDay": "Day rate",
-		   		"costHour": "Hour rate",
-		   		"doNotInvoice":"Do not invoice",
-		   		"subTotal": "Subtotal",
-			    "expenseName": "Name",
-			    "totalBeforeDiscount": "Sub total",
-			    "discount": "Discount",
-			    "discountPercentage": "Descuento",
-			    "totalPersonAfterDiscount": "Subtotal",
-			    "grandTotal": "Total",
-			    "subTotalPerson": "Total persons",
-			    "subTotalVehicle" : "Total vehicles",
-			    "subTotalExpenses" : "Total expenses",
-			    "totalBeforeExpenses" : "Subtotal",
-			    "staff": "Staff",
-			    "vehicles" : "Vehicles",
-			    "expenses": "Expenses"
+			"invoiceDetail": {
+				"date": "Date",
+				"personName": "Name",
+				"vehicle": "Vehicle",
+				"function": "Function",
+				"begin": "Begin",
+				"end": "End",
+				"duration": "Duration",
+				"amountDay": "Days",
+				"amountHour": "Hours",
+				"costFixed": "Fixed rate",
+				"costDay": "Day rate",
+				"costHour": "Hour rate",
+				"doNotInvoice": "Do not invoice",
+				"subTotal": "Subtotal",
+				"expenseName": "Name",
+				"totalBeforeDiscount": "Sub total",
+				"discount": "Discount",
+				"discountPercentage": "Descuento",
+				"totalPersonAfterDiscount": "Subtotal",
+				"grandTotal": "Total",
+				"subTotalPerson": "Total persons",
+				"subTotalVehicle": "Total vehicles",
+				"subTotalExpenses": "Total expenses",
+				"totalBeforeExpenses": "Subtotal",
+				"staff": "Staff",
+				"vehicles": "Vehicles",
+				"expenses": "Expenses"
 			},
-		    "expenses":{
-			    "insert" :"Insert expense",
-			    "staff":"Staff",
-			    "name": "Name",
-			    "date": "Date",
-			    "cost": "Cost",
-			    "invalidCost": "The cost must be a value greater than zero",
-			    "invalidName": "Must define a concept",
-			    "invalidDate": "Must define a date",
-			    "invalidPerson": "Must define a staff from the list"
+			"expenses": {
+				"insert": "Insert expense",
+				"staff": "Staff",
+				"name": "Name",
+				"date": "Date",
+				"cost": "Cost",
+				"invalidCost": "The cost must be a value greater than zero",
+				"invalidName": "Must define a concept",
+				"invalidDate": "Must define a date",
+				"invalidPerson": "Must define a staff from the list"
 			},
 			"dialogs": {
 				"missingInvoiceNumber": "Please enter a valid invoice number",
-				"duplicatedInvoiceNumber":"There is another invoice with the same number",
+				"duplicatedInvoiceNumber": "There is another invoice with the same number",
 				"missingInvoiceDate": "Please enter a valid invoice date",
-			    "invalidGrandTotal" : "Please enter the total of the invoice",
+				"invalidGrandTotal": "Please enter the total of the invoice",
 				"noRowsSelected": "Select at least one row to add",
 				"insertTimeEntries": "Time entries successfully added to the invoice",
 				"insertTimeEntriesInvoiceError": "Selected time entries can't be added to the invoice because one or more was already linked to an invoice",
-			    "invalidPercentage": "The percentage value is invalid"
+				"invalidPercentage": "The percentage value is invalid",
+				"invoiceEnded": "Can't modify the invoice because the status es marked as ended"
 			}
 		}
 	},
@@ -534,8 +576,8 @@
 		"title": "Authorization Schema",
 		"roles": "Roles",
 		"authorizations": "Authorizations",
-		"dialogs":{
-			"warningDeletion":"You can not delete this group because it contains {{ value }} linked authorization contexts"
+		"dialogs": {
+			"warningDeletion": "You can not delete this group because it contains {{ value }} linked authorization contexts"
 		}
 	},
 	"grid": {
@@ -572,16 +614,16 @@
 		"last90Days": "Last 90 days",
 		"currentQuarter": "Current quarter",
 		"lastQuarter": "Last quarter",
-	  	"oneYear":"One year",
-	    "yearToDate":"Year to date",
-	    "lastYear":"Last year",
-	    "firstBiWeekCurrentMonth": "First bi week of the current month",
-	    "secondBiWeekCurrentMonth": "Second bi week of the current month",
-	    "firstBiWeekPreviousMonth": "First bi week of the previous month",
-	    "secondBiWeekPreviousMonth": "Second bi week of the previous month"
+		"oneYear": "One year",
+		"yearToDate": "Year to date",
+		"lastYear": "Last year",
+		"firstBiWeekCurrentMonth": "First bi week of the current month",
+		"secondBiWeekCurrentMonth": "Second bi week of the current month",
+		"firstBiWeekPreviousMonth": "First bi week of the previous month",
+		"secondBiWeekPreviousMonth": "Second bi week of the previous month"
 	},
-	"dialogs":{
-		"delete":"Are you sure to delete the ",
+	"dialogs": {
+		"delete": "Are you sure to delete the ",
 		"accessDenied": "You do not have enough access privileges for this operation"
 	},
 	"party": {
@@ -593,7 +635,7 @@
 			"job": "Job Title",
 			"type": "Type",
 			"area": "Area",
-		    "isExternal" : "External contractor",
+			"isExternal": "External contractor",
 			"dialogs": {
 				"noEmail": "There is no registered email address for this person"
 			}
@@ -622,21 +664,8 @@
 		"wsp": "WSP",
 		"first": "Main",
 		"type": "Type",
-	    "functionsProvided":{
-		  	"title":"Provided functions",
-	  		"driver": "Diver",
-	  		"agent": "Agent",
-	  		"agent_armed": "Agent armed",
-	  		"greeter": "Greeter",
-	  		"coordinator": "Coordinator",
-	  		"guard": "Guard",
-	  		"guard_support": "Guard (additional)",
-	  		"guard_shift_manager": "Guardia (shift manager)",
-	  		"guard_night_shift_maintenance": "Guard (night shift maintenance)",
-	  		"guard_goods_receipt": "Guard (goods receipt)"
-	    },
-	  	"functionsReceived":{
-			"title":"Provided functions",
+		"functionsProvided": {
+			"title": "Provided functions",
 			"driver": "Diver",
 			"agent": "Agent",
 			"agent_armed": "Agent armed",
@@ -647,7 +676,20 @@
 			"guard_shift_manager": "Guardia (shift manager)",
 			"guard_night_shift_maintenance": "Guard (night shift maintenance)",
 			"guard_goods_receipt": "Guard (goods receipt)"
-	  	},
+		},
+		"functionsReceived": {
+			"title": "Provided functions",
+			"driver": "Diver",
+			"agent": "Agent",
+			"agent_armed": "Agent armed",
+			"greeter": "Greeter",
+			"coordinator": "Coordinator",
+			"guard": "Guard",
+			"guard_support": "Guard (additional)",
+			"guard_shift_manager": "Guardia (shift manager)",
+			"guard_night_shift_maintenance": "Guard (night shift maintenance)",
+			"guard_goods_receipt": "Guard (goods receipt)"
+		},
 		"dialogs": {
 			"editContact": "Editing contact",
 			"contactSaved": "Contact successfully saved",
@@ -656,7 +698,9 @@
 			"unsavedContact": "You have unsaved changes for this contact. Do you want to save them?",
 			"noContacts": "There is no associated group of contacts",
 			"addingContact": "Adding contact",
-			"invalidEmail": "The email address you entered is invalid"
+			"invalidEmail": "The email address you entered is invalid",
+			"duplicatedEmail": "There is another record with the same email address",
+			"contactDuplicated": "The contact with the duplicated record is "
 		},
 		"contactType": {
 			"HOME": "Home",

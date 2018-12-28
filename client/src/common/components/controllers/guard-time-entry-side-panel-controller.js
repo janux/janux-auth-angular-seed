@@ -334,7 +334,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			if (typeof item !== 'undefined' && automaticOperationAndVehicleChange === true) {
 				// This item should contain the selected staff member
 				console.debug('Item changed to ' + JSON.stringify(item));
-
+				$scope.form.isExternal = item.resource.staff && item.resource.staff.isExternal === true;
 				filteredGuards = _.filter(guardsAssignedToOperations, function (o) {
 					return o.resource.id === item.resource.id;
 				});

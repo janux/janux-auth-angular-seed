@@ -119,6 +119,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			timeEntry = setBillableFlag(timeEntry);
 			timeEntry = setHoursInResource($scope.form.operation, timeEntry);
 			timeEntry = setExternalFlag(timeEntry, $scope.form.isExternal);
+			timeEntry = setExtraFlag(timeEntry);
 			return timeEntry;
 		};
 
@@ -238,12 +239,12 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 
 		// Replacing base por empty string.
 		// "BASE" is a temporal string that help to filter data in the ag-grid.
-		//function setExtraFlag(timeEntry) {
-		//	if (timeEntry.extras === 'BASE') {
-		//		timeEntry.extras = '';
-		//	}
-		//	return timeEntry;
-		//}
+		function setExtraFlag(timeEntry) {
+			if (timeEntry.extras === 'BASE') {
+				timeEntry.extras = '';
+			}
+			return timeEntry;
+		}
 
 		function setExternalFlag(timeEntry, isExternal) {
 			if (timeEntry.resources.length > 0) {

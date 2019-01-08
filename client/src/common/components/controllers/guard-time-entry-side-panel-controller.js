@@ -276,7 +276,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			} else if(_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
 				dialogService.info('operations.dialogs.beginDateError', false);
 			}
-
 			return result;
 		}
 

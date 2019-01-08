@@ -27,15 +27,16 @@ module.exports = {
 			staffDao              : 'staffDao',
 			// Glarus services daos.
 			vehicleDao            : 'vehicleDao',
-			timeEntryPrincipalDao : 'timeEntryPrincipalDao',
+			taskRelationDao       : 'taskRelationDao',
+			timeRecordPrincipalDao: 'timeRecordPrincipalDao',
 			operationDao          : 'operationDao',
 			operationAttributeDao : 'operationAttributeDao',
 			operationPrincipalDao : 'operationPrincipalDao',
-			timeEntryDao          : 'timeEntryDao',
+			timeRecordDao         : 'timeRecordDao',
 			resourceDao           : 'resourceDao',
 			currentResourceDao    : 'currentResourceDao',
-			timeEntryAttributeDao : 'timeEntryAttributeDao',
-			timeEntryResourceDao  : 'timeEntryResourceDao',
+			timeRecordAttributeDao: 'timeRecordAttributeDao',
+			timeRecordResourceDao : 'timeRecordResourceDao',
 			taskTypeDao           : 'taskTypeDao',
 			rateDao               : 'rateDao',
 			rateMatrixDao         : 'rateMatrixDao',
@@ -43,16 +44,16 @@ module.exports = {
 			invoiceItemDao        : 'invoiceItemDao',
 			expenseDao            : 'expenseDao',
 			invoiceItemTE         : 'invoiceItemTE',
-			commDataSource		  : 'commDataSource',
+			commDataSource        : 'commDataSource',
 			invoiceOperationDao   : 'invoiceOperationDao'
 			// End glarus services daos.
 		},
 
 		smtp: {
-			host: 'smtp.server.com',
-			from: 'test@email.com',
-			port: 587,
-			auth: {
+			host   : 'smtp.server.com',
+			from   : 'test@email.com',
+			port   : 587,
+			auth   : {
 				user: 'user',
 				pass: 'pass'
 			},
@@ -70,14 +71,15 @@ module.exports = {
 			//Because this setting is not used for the daos. Just make use
 			//the db you are going to use for user geeration is the same
 			//for the daos.
+			// Warning: Not all DAOs has a lokijs implementation for glarus-services.
 			dbEngine    : "mongoose",
 			//If mongodb is chosen for user generation and daos, you must define the connection url.
-			mongoConnUrl: "mongodb://localhost/opsGlarus",
+			mongoConnUrl: "mongodb://localhost/glarusTransform",
 			//If lokijs is defined for user generation and daos, you must define the path of the file database.
 			lokiJsDBPath: "../server/janux-people.db"
 		},
 
-		system:{
+		system: {
 			environment: "development"
 		}
 	}

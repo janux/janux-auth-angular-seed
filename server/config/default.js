@@ -6,7 +6,7 @@ module.exports = {
 
 	serverAppContext: {
 		server: {
-			port      : 10000,
+			port      : 9000,
 			staticUrl : '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
@@ -74,7 +74,7 @@ module.exports = {
 			// Warning: Not all DAOs has a lokijs implementation for glarus-services.
 			dbEngine    : "mongoose",
 			//If mongodb is chosen for user generation and daos, you must define the connection url.
-			mongoConnUrl: "mongodb://localhost/glarusTransform",
+			mongoConnUrl: "mongodb://localhost/opsGlarus",
 			//If lokijs is defined for user generation and daos, you must define the path of the file database.
 			lokiJsDBPath: "../server/janux-people.db"
 		},

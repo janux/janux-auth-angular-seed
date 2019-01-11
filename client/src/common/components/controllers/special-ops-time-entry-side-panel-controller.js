@@ -3,8 +3,8 @@
 var _ = require('lodash');
 var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, operationService, timeRecordService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
 		var sidenavInstance;
 		var allDrivers;
 		var driversAssignedToOperations;
@@ -321,7 +321,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				$scope.form.startInvoice = startMoment.toDate();
 				$scope.form.endInvoice = undefined;
 				$scope.form.differenceTimeForm = '';
-			}else {
+			} else {
 				$scope.form.startInvoice = undefined;
 				$scope.form.endInvoice = undefined;
 				$scope.form.differenceTimeForm = '';
@@ -395,7 +395,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		};
 
 		/**
-		 * Sets the selected staff record in the UI.
+		 * Sets the selected staff record in the UI for special ops.
 		 * Also, if the staff has a relation to an operation, also define the operation and the associated vehicle.
 		 * The association with the operation and vehicle only occurs when the flag automaticOperationAndVehicleChange
 		 * is marked as true.
@@ -513,7 +513,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				if (_.isNil($scope.timeEntryUpdate)) {
 					console.debug('Time entry to insert %o', timeEntryToSend);
 					// Perform an insert
-					timeEntryService.insert(timeEntryToSend).then(function () {
+					timeRecordService.insert(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.specialOps.events.doneInsertOrUpdate);
 						// Close the panel.
@@ -523,7 +523,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					// Add the id and perform an update
 					timeEntryToSend.id = $scope.timeEntryUpdate.id;
 					console.debug('Time entry to update %o', timeEntryToSend);
-					timeEntryService.update(timeEntryToSend).then(function () {
+					timeRecordService.update(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.specialOps.events.doneInsertOrUpdate);
 						// Close the panel.

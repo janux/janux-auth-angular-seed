@@ -3,7 +3,7 @@
  * Created by ernesto on 10/31/17.
  */
 var _ = require('lodash');
-var InvoiceServiceImpl = require('glarus-services').InvoiceServiceImpl;
+var InvoiceServiceImpl = require('glarus-services').InvoiceService;
 
 
 var log4js = require('log4js'),

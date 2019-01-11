@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
-	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', 'resourceService', '$q', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeRecordService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, resourceService, $q, $timeout, $modal, $interval, driversAndOps, timeEntries, timeRecordService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.guardsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.guardsColumnsFilters;
@@ -29,14 +29,14 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
-			timeEntryService.timeEntryReportGuard(ids);
+			timeRecordService.timeRecordReportGuard(ids);
 		};
 
 		function deleteConfirmed(rowsToDelete) {
 			$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 
 			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
+			timeRecordService.removeByIds(timeEntryIds).then(function () {
 				// dialogService.info('The records were deleted correctly');
 			});
 		}

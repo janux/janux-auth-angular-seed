@@ -3,7 +3,7 @@
  * Created by ernesto on 10/31/17.
  */
 var _ = require('lodash');
-var OperationServiceImp = require('glarus-services').OperationServiceImpl;
+var OperationServiceClass = require('glarus-services').OperationService;
 
 
 var log4js = require('log4js'),
@@ -59,7 +59,7 @@ var createInstance = function (operationServiceReference, userOperationServiceRe
 	// Insert an operation
 	OperationService.prototype.insert = function (operation, callback) {
 
-		var instance = OperationServiceImp.fromJSON(operation);
+		var instance = OperationServiceClass.fromJSON(operation);
 
 		return operationServiceReferenceInstance.insert(instance).asCallback(callback);
 	};
@@ -67,7 +67,7 @@ var createInstance = function (operationServiceReference, userOperationServiceRe
 	// Update an operation
 	OperationService.prototype.update = function (operation, callback) {
 
-		var instance = OperationServiceImp.fromJSON(operation);
+		var instance = OperationServiceClass.fromJSON(operation);
 
 		return operationServiceReferenceInstance.update(instance).asCallback(callback);
 	};

@@ -3,8 +3,8 @@
 var _ = require('lodash');
 var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $filter, config, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService', '$mdDialog', '$timeout', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, operationService, timeRecordService, $mdDialog, $timeout, $filter, config, nameQueryService, dialogService, $mdSidenav) {
 
 		var sidenavInstance;
 		var allDrivers;
@@ -128,16 +128,16 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				var timeEntryToSend = getFormData();
 				if (_.isNil($scope.timeEntryUpdate)) {
 					console.debug('Driver time entry to insert %o', timeEntryToSend);
-					timeEntryService.insert(timeEntryToSend).then(function () {
+					timeRecordService.insert(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.driver.events.doneInsertOrUpdate);
 						// Close the panel.
 						$mdSidenav(config.timeEntry.driver.sidePanel.id).toggle();
 					});
-				} else  {
+				} else {
 					timeEntryToSend.id = $scope.timeEntryUpdate.id;
 					console.debug('Time entry to update %o', timeEntryToSend);
-					timeEntryService.update(timeEntryToSend).then(function () {
+					timeRecordService.update(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.driver.events.doneInsertOrUpdate);
 						// Close the panel.

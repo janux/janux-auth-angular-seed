@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
-	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
+module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'operationService', 'resourceService', '$timeout', '$modal', '$interval', 'driversAndOps', 'timeEntries', 'timeRecordService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, $log, config, jnxStorage, operationService, resourceService, $timeout, $modal, $interval, driversAndOps, timeEntries, timeRecordService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.attendanceTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.attendanceColumnsFilters;
@@ -80,7 +80,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 				ids.push(item.data.id);
 			});
 
-			timeEntryService.timeEntryReportAttendance(ids);
+			timeRecordService.timeRecordReportAttendance(ids);
 
 		};
 
@@ -88,7 +88,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 		function deleteConfirmed(rowsToDelete) {
 
 			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
+			timeRecordService.removeByIds(timeEntryIds).then(function () {
 				// infoDialog('The records were deleted correctly');
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
@@ -380,7 +380,7 @@ module.exports = ['$rootScope', '$scope', '$log', 'config', 'jnxStorage', 'opera
 
 
 		$scope.$on(config.timeEntry.attendance.events.doneInsertOrUpdate, function () {
-			$scope.findTimeEntries($scope.periodFilterKey);
+			$scope.findTimeEntries($scope.periodFilterKey, $scope.selectedStaffSearch);
 			$scope.gridOptions.api.stopEditing();
 		});
 

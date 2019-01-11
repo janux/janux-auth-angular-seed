@@ -50,7 +50,7 @@ module.exports =
 		if(operation.name === '') {
 			infoDialog('services.specialForm.dialogs.nameEmpty');
 			return;
-		} else if (!_.isDate(operation.start)) {
+		} else if (!_.isDate(operation.begin)) {
 			infoDialog('services.specialForm.dialogs.startEmpty');
 			return;
 		}
@@ -58,12 +58,12 @@ module.exports =
 		// 	infoDialog('services.specialForm.dialogs.endEmpty');
 		// 	return;
 		// }
-		// else if (operation.start > operation.end) {
+		// else if (operation.begin > operation.end) {
 		// 	infoDialog('operations.dialogs.endDateError');
 		// 	return;
 		// }
 		else if(_.isDate(operation.end)){
-			if (operation.start > operation.end) {
+			if (operation.begin > operation.end) {
 				infoDialog('operations.dialogs.endDateError');
 				return;
 			}
@@ -115,8 +115,8 @@ module.exports =
 
 		resources = resources.concat(vehicles);
 
-		operation.currentResources = resources;
-		operation.start = moment(operation.start).toDate();
+		operation.resources = resources;
+		operation.begin = moment(operation.begin).toDate();
 		operation.end = (!_.isNil(operation.end))?moment(operation.end).toDate():null;
 
 		delete operation.staff;

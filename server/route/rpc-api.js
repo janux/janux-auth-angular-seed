@@ -16,7 +16,7 @@ var services = {
 	authContext      : require(apiRoot).AuthContextService,
 	role             : require(apiRoot).RoleService,
 	operation        : require(apiRoot).OperationService,
-	timeEntry        : require(apiRoot).TimeEntryService,
+	timeRecord       : require(apiRoot).TimeRecordService,
 	partyService     : require(apiRoot).PartyService,
 	operationService : require(apiRoot).OperationService,
 	resourceService  : require(apiRoot).ResourceService,

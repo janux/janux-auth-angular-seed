@@ -3,8 +3,8 @@
 var _ = require('lodash');
 var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, operationService, timeRecordService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
 		var sidenavInstance;
 
 		var allGuards;
@@ -349,7 +349,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				if (_.isNil($scope.timeEntryUpdate)) {
 					console.debug('Time entry to insert %o', timeEntryToSend);
 					// Perform an insert
-					timeEntryService.insert(timeEntryToSend).then(function () {
+					timeRecordService.insert(timeEntryToSend, operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.attendance.events.doneInsertOrUpdate);
 						// Close the panel.
@@ -359,7 +359,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					// Add the id and perform an update
 					timeEntryToSend.id = $scope.timeEntryUpdate.id;
 					console.debug('Time entry to update %o', timeEntryToSend);
-					timeEntryService.update(timeEntryToSend).then(function () {
+					// No needed for a new operation.
+					timeRecordService.update(timeEntryToSend).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.attendance.events.doneInsertOrUpdate);
 						// Close the panel.

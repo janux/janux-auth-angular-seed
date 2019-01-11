@@ -24,7 +24,7 @@
 					.an-material.nopadding
 						md-input-container.full
 							label {{ 'services.specialForm.begin' | translate }}
-							md-datepicker(ng-model="data.start" ng-disabled='disabled' required='' ng-change='startDateChange()')
+							md-datepicker(ng-model="data.begin" ng-disabled='disabled' required='' ng-change='startDateChange()')
 
 					.an-material.nopadding
 						md-input-container.full
@@ -239,11 +239,11 @@
 
 		.section-form(ng-hide='disabled')
 			textarea(name="special-ops-description"
-			ng-model="data.description"
+			ng-model="data.comment"
 			markdown-editor="{'iconlibrary': 'fa', addExtraButtons: false, resize: 'vertical'}"
 			on-fullscreen="onFullScreenCallback()"
 			on-fullscreen-exit="onFullScreenExitCallback()"
 			rows="15")
 
 		.section-form(ng-show='disabled')
-			.markdown.outline(marked="data.description")
+			.markdown.outline(marked="data.comment")

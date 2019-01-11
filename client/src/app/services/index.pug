@@ -71,8 +71,8 @@ side-bar
 				| {{ 'services.list.type' | translate }}: 
 				strong {{'services.list.' + operation.type | translate }}
 				br
-				span(ng-show='operation.start!=undefined')
-					| {{ 'services.list.begin' | translate }}: {{operation.start | date:'yyyy-MM-dd'}} 
+				span(ng-show='operation.begin!=undefined')
+					| {{ 'services.list.begin' | translate }}: {{operation.begin | date:'yyyy-MM-dd'}}
 				span(ng-show='operation.end!=undefined')
 					| , {{ 'services.list.end' | translate }}: {{operation.end  | date:'yyyy-MM-dd'}}
 					br 

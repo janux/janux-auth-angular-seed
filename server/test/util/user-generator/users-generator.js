@@ -1,30 +1,28 @@
 "use strict";
 
-var faker = require('faker'),
-	md5 = require('md5');
+var faker = require("faker"),
+	md5 = require("md5");
 
-var Person = require('janux-people').Person;
-var PhoneNumber = require('janux-people').PhoneNumber;
-var Email = require('janux-people').EmailAddress;
-var PostalAddress = require('janux-people').PostalAddress;
+var Person = require("janux-people").Person;
+var PhoneNumber = require("janux-people").PhoneNumber;
+var Email = require("janux-people").EmailAddress;
+var PostalAddress = require("janux-people").PostalAddress;
 
 //
 // Generate fake users powered by faker.js
 //
 
-var UsersGenerator = (function () {
-
+var UsersGenerator = (function() {
 	// Constructor
 	function UsersGenerator(n) {
-		this._n = (typeof n === 'number')?n:0;
+		this._n = typeof n === "number" ? n : 0;
 	}
 
 	// Proceed to generate n fake users
-	UsersGenerator.prototype.generateUsers = function (n) {
-
+	UsersGenerator.prototype.generateUsers = function(n) {
 		var out = [];
 
-		this._n = (typeof n === 'number')?n:faker.random.number(50);
+		this._n = typeof n === "number" ? n : faker.random.number(50);
 
 		for (var x = 0; x < this._n; x++) {
 			out.push(this.generateUser());
@@ -33,28 +31,28 @@ var UsersGenerator = (function () {
 	};
 
 	// Generate a single user
-	UsersGenerator.prototype.generateUser = function (userObj) {
+	UsersGenerator.prototype.generateUser = function(userObj) {
 		var aDate = faker.date.past();
-		
+
 		var randUsr = {
 			username: faker.internet.userName(),
 			password: md5(faker.internet.password()),
-			roles: ['DESIGNER']
+			roles: ["DESIGNER"]
 		};
-		
-		var userObj = (typeof userObj !== 'undefined')? userObj : randUsr;
-		
-		userObj.userId =  faker.random.uuid();
+
+		var userObj = typeof userObj !== "undefined" ? userObj : randUsr;
+
+		userObj.userId = faker.random.uuid();
 		userObj.contact = this.generateContact();
 		userObj.mdate = aDate;
 		userObj.cdate = aDate;
-		
+
 		return userObj;
 	};
 
 	// Generate contact for a user
-	UsersGenerator.prototype.generateContact = function (gender) {
-		if (typeof gender !== 'number') {
+	UsersGenerator.prototype.generateContact = function(gender) {
+		if (typeof gender !== "number") {
 			gender = faker.random.number(1);
 		}
 
@@ -62,18 +60,18 @@ var UsersGenerator = (function () {
 		var person = new Person(
 			faker.name.prefix(gender),
 			faker.name.firstName(gender),
-			'',
+			"",
 			faker.name.lastName(gender),
 			faker.name.suffix(gender)
 		);
-		
+
 		// Create a new fake phone for this person
-		var aPhone = new PhoneNumber( faker.phone.phoneNumber() );
-		person.setContactMethod('work', aPhone);
+		var aPhone = new PhoneNumber(faker.phone.phoneNumber());
+		person.setContactMethod("work", aPhone);
 
 		// Create a new fake email for this person
-		var aEmail = new Email( faker.internet.email() );
-		person.setContactMethod('work', aEmail);
+		var aEmail = new Email(faker.internet.email());
+		person.setContactMethod("work", aEmail);
 
 		// Create a new fake postal address for this person
 		var aPostalAddr = new PostalAddress();
@@ -82,13 +80,12 @@ var UsersGenerator = (function () {
 		aPostalAddr.cityText = faker.address.city();
 		aPostalAddr.stateText = faker.address.state();
 		aPostalAddr.postalCode = faker.address.zipCode();
-		person.setContactMethod('Home', aPostalAddr);
+		person.setContactMethod("Home", aPostalAddr);
 
 		return person.toJSON();
 	};
 
 	return UsersGenerator;
-}());
+})();
 
 exports.UsersGenerator = UsersGenerator;
-

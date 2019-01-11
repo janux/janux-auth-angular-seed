@@ -4,7 +4,7 @@ var _ = require('lodash');
 var moment = require('moment');
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'dateUtilService', 'operationService', 'FileSaver', 'localStorageService', '$modal', '$filter', function ($q, $http, partyService, timeEntryService, dateUtilService, operationService, FileSaver, localStorageService, $modal, $filter) {
+	['$q', '$http', 'partyService', 'timeRecordService', 'dateUtilService', 'operationService', 'FileSaver', 'localStorageService', '$modal', '$filter', function ($q, $http, partyService, timeRecordService, dateUtilService, operationService, FileSaver, localStorageService, $modal, $filter) {
 
 
 		const TIME_ENTRY_ASSOCIATED = "This time entry is already linked to another invoice";
@@ -64,7 +64,7 @@ module.exports =
 
 		function fromJSONItemTimeEntry(object) {
 			const result = _.clone(object);
-			result.timeEntry = timeEntryService.fromJSON(object.timeEntry);
+			result.timeEntry = timeRecordService.fromJSON(object.timeEntry);
 			result.total = _.isNil(object.total) ? undefined : Number(object.total);
 			return result;
 		}
@@ -94,7 +94,7 @@ module.exports =
 
 		function toJSONItemTimeEntry(object) {
 			const result = _.clone(object);
-			result.timeEntry = timeEntryService.toJSON(object.timeEntry);
+			result.timeEntry = timeRecordService.toJSON(object.timeEntry);
 			return result;
 		}
 

@@ -12,698 +12,664 @@ var formatStringOnlyHour = agGridComp.dateTimeCellEditor.formatStringOnlyHour;
 var formatStringOnlyDate = agGridComp.dateTimeCellEditor.formatStringOnlyDate;
 
 module.exports =
-	['$q', '$http', 'partyService', 'timeEntryService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', '$filter','$log',
-		function ($q, $http, partyService, timeEntryService, resourceService, dateUtilService, partyGroupService, security, config, $filter, $log) {
+	['$q', '$http', 'partyService', 'timeRecordService', 'resourceService', 'dateUtilService', 'partyGroupService', 'security', 'config', '$filter', '$log',
+		function ($q, $http, partyService, timeRecordService, resourceService, dateUtilService, partyGroupService, security, config, $filter, $log) {
 
 
-		const INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES = 'invoice.operation.timeEntries';
-		const OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT = 'timeEntry.count';
+			const INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES = 'invoice.operation.timeEntries';
+			const OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT = 'timeEntry.count';
 
-		function fromJSON(object) {
-			if (_.isNil(object)) return object;
-			var result = _.cloneDeep(object);
+			function fromJSON(object) {
+				if (_.isNil(object)) return object;
+				var result = _.cloneDeep(object);
 
-			result.client = partyService.fromJSON(result.client);
-			result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
-			result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
-			result.start = dateUtilService.stringToDate(result.start);
-			result.end = dateUtilService.stringToDate(result.end);
-			result.interestedParty = partyService.fromJSON(result.interestedParty);
-			result.principals = _.map(result.principals, function (o) {
-				return partyService.fromJSON(o);
-			});
+				result.client = partyService.fromJSON(result.client);
+				result.dateCreated = dateUtilService.stringToDate(result.dateCreated);
+				result.lastUpdate = dateUtilService.stringToDate(result.lastUpdate);
+				result.begin = dateUtilService.stringToDate(result.begin);
+				result.end = dateUtilService.stringToDate(result.end);
+				result.interestedParty = partyService.fromJSON(result.interestedParty);
+				result.principals = _.map(result.principals, function (o) {
+					return partyService.fromJSON(o);
+				});
 
-			result.currentResources = _.map(result.currentResources, function (o) {
-				return resourceService.fromJSON(o);
-			});
+				result.resources = _.map(result.resources, function (o) {
+					return resourceService.fromJSON(o);
+				});
 
-			result.schedule = _.map(result.schedule, function (o) {
-				return timeEntryService.fromJSON(o);
-			});
+				result.tasks = _.map(result.tasks, function (o) {
+					return timeRecordService.fromJSON(o);
+				});
 
-			return result;
-		}
-
-		function toJSON(object) {
-			if (_.isNil(object)) return object;
-			var result = _.cloneDeep(object);
-			result.client = partyService.toJSON(result.client);
-			result.interestedParty = (!_.isNil(result.interestedParty)) ? partyService.toJSON(result.interestedParty) : null;
-			result.principals = _.map(result.principals, function (o) {
-				return partyService.toJSON(o);
-			});
-			result.currentResources = _.map(result.currentResources, function (o) {
-				return resourceService.toJSON(o);
-			});
-
-			result.schedule = _.map(result.schedule, function (o) {
-				return timeEntryService.toJSON(o);
-			});
-			return result;
-		}
-
-		function calculateDuration(begin, end) {
-			var duration = '0:00';
-
-			if (_.isNil(end) === false) {
-				end = moment(end);
-				var durationMoment = moment.duration(end.diff(begin));
-				var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
-				duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00' + durationMoment.get("minutes")).slice(-2);
+				return result;
 			}
-			return duration;
-		}
 
-		var service = {
-
-			findById: function (operationId) {
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findById',
-					[operationId]
-				).then(function (resp) {
-					return fromJSON(resp.data.result[0]);
+			function toJSON(object) {
+				if (_.isNil(object)) return object;
+				var result = _.cloneDeep(object);
+				result.client = partyService.toJSON(result.client);
+				result.interestedParty = (!_.isNil(result.interestedParty)) ? partyService.toJSON(result.interestedParty) : null;
+				result.principals = _.map(result.principals, function (o) {
+					return partyService.toJSON(o);
 				});
-			},
+				result.resources = _.map(result.resources, function (o) {
+					return resourceService.toJSON(o);
+				});
 
-			/*findWithTimeEntriesByDateBetweenAndType: function (initDate, endDate, type) {
-				// Handle optional parameter type.
-				var params;
-				if (_.isNil(type)) {
-					params = [initDate, endDate];
-				} else {
-					params = [initDate, endDate, type];
+				result.tasks = _.map(result.tasks, function (o) {
+					return timeRecordService.toJSON(o);
+				});
+				return result;
+			}
+
+			function calculateDuration(begin, end) {
+				var duration = '0:00';
+
+				if (_.isNil(end) === false) {
+					end = moment(end);
+					var durationMoment = moment.duration(end.diff(begin));
+					var daysToHours = (durationMoment.get("days") > 0) ? durationMoment.get("days") * 24 : 0;
+					duration = (durationMoment.get("hours") + daysToHours) + ":" + ('00' + durationMoment.get("minutes")).slice(-2);
 				}
+				return duration;
+			}
 
+			var service = {
 
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithTimeEntriesByDateBetweenAndType',
-					params
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				findById: function (operationId) {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findById',
+						[operationId]
+					).then(function (resp) {
+						return fromJSON(resp.data.result[0]);
 					});
-				});
-			},*/
+				},
 
-			findWithTimeEntriesByDateAndPartyAndType: function (initDate, endDate, idParty, type) {
-				// Handle optional parameter type.
-				var params;
-				if (_.isNil(type)) {
-					params = [initDate, endDate, idParty];
-				} else {
-					params = [initDate, endDate, idParty, type];
-				}
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithTimeEntriesByDateAndPartyAndType',
-					params
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				findWithTimeEntriesByDateAndPartyAndType: function (initDate, endDate, idParty, type) {
+					// Handle optional parameter type.
+					var params;
+					if (_.isNil(type)) {
+						params = [initDate, endDate, idParty];
+					} else {
+						params = [initDate, endDate, idParty, type];
+					}
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findWithTimeEntriesByDateAndPartyAndType',
+						params
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
-				});
-			},
+				},
 
-			findWithTimeEntriesByDateBetweenAndVendor: function (initDate, endDate, idVendor) {
-				// Handle optional parameter type.
-				var params;
-				params = [initDate, endDate, idVendor];
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithTimeEntriesByDateBetweenAndVendor',
-					params
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				findWithTimeEntriesByDateBetweenAndVendor: function (initDate, endDate, idVendor) {
+					// Handle optional parameter type.
+					var params;
+					params = [initDate, endDate, idVendor];
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findWithTimeEntriesByDateBetweenAndVendor',
+						params
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
-				});
-			},
+				},
 
-			findWithTimeEntriesByIdsAndDate: function (ids, initDate, endDate) {
-				var params;
-				params = [ids, initDate, endDate];
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithTimeEntriesByIdsAndDate',
-					params
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				findWithTimeEntriesByIdsAndDate: function (ids, initDate, endDate) {
+					var params;
+					params = [ids, initDate, endDate];
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findWithTimeEntriesByIdsAndDate',
+						params
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
-				});
-			},
+				},
 
-
-			// findWithoutTimeEntryByAuthenticatedUser: function () {
-			// 	return $http.jsonrpc(
-			// 		'/rpc/2.0/operation',
-			// 		'findWithoutTimeEntryByAuthenticatedUser'
-			// 	).then(function (resp) {
-			// 		return _.map(resp.data.result, function (o) {
-			// 			return fromJSON(o);
-			// 		});
-			// 	});
-			// },
-
-
-			findByType: function (type) {
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findByType',
-					[type]
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				findByType: function (type) {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findByType',
+						[type]
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
-				});
-			},
+				},
 
-			// Insert an operation
-			insert: function (operation) {
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'insert',
-					[toJSON(operation)]
-				).then(function (resp) {
-					return fromJSON(resp.data.result);
-				});
-			},
-
-			// Update an operation
-			update: function (operation) {
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'update',
-					[toJSON(operation)]
-				).then(function (resp) {
-					return resp.data.result;
-				});
-			},
-
-			// Methods where an username is required.
-
-			findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser: function (initDate, endDate, type) {
-				var params;
-				var username = security.currentUser.username;
-				if (_.isNil(type)) {
-					params = [initDate, endDate, username];
-				} else {
-					params = [initDate, endDate, username, type];
-				}
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithTimeEntriesByDateBetweenAndUserAndType',
-					params
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				// Insert an operation
+				insert: function (operation) {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'insert',
+						[toJSON(operation)]
+					).then(function (resp) {
+						return fromJSON(resp.data.result);
 					});
-				});
-			},
+				},
 
-			findWithoutTimeEntryByAuthenticatedUser: function () {
-				var username = security.currentUser.username;
-				return $http.jsonrpc(
-					'/rpc/2.0/operation',
-					'findWithoutTimeEntryByUsername',
-					[username]
-				).then(function (resp) {
-					return _.map(resp.data.result, function (o) {
-						return fromJSON(o);
+				// Update an operation
+				update: function (operation) {
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'update',
+						[toJSON(operation)]
+					).then(function (resp) {
+						return resp.data.result;
 					});
-				});
-			},
+				},
 
-			findGuardsAndOperations: function () {
-				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
-					var guardsAssignedToOperations = [];
-					var operationsAvailableForSelection = [];
-					result.forEach(function (op) {
+				// Methods where an username is required.
 
-						//Filter all resources associated with the operation marked as guards.
-						var resourcesMarkedAsGuards = _.filter(op.currentResources, {type: 'GUARD'});
-						if (resourcesMarkedAsGuards.length > 0) {
-							resourcesMarkedAsGuards.forEach(function (res, resId) {
-								resourcesMarkedAsGuards[resId].opId = op.id;
-							});
-							// Fill the list of guards assigned to an operation.
-							// This list helps to auto-select an operation when the users selects a guard.
-							guardsAssignedToOperations = guardsAssignedToOperations.concat(resourcesMarkedAsGuards);
-
-						}
-
-						//Only shows the operation marked as guards.
-						if (op.type === "GUARD") {
-							var opWithOutRes = _.clone(op);
-							delete opWithOutRes.currentResources;
-							operationsAvailableForSelection = operationsAvailableForSelection.concat(opWithOutRes);
-						}
-
-
+				findWithTimeEntriesByDateBetweenAndTypeByAuthenticatedUser: function (initDate, endDate, type) {
+					var params;
+					var username = security.currentUser.username;
+					if (_.isNil(type)) {
+						params = [initDate, endDate, username];
+					} else {
+						params = [initDate, endDate, username, type];
+					}
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findWithTimeEntriesByDateBetweenAndUserAndType',
+						params
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
 					});
+				},
 
-					return resourceService.findAvailableResources([
-						'GUARD',
-						'GUARD_SHIFT_MANAGER',
-						'GUARD_NIGHT_SHIFT_MAINTENANCE',
-						'GUARD_GOODS_RECEIPT',
-						'GUARD_SUPPORT'
-					]).then(function (allGuardsAvailableForSelection) {
+				findWithoutTimeEntryByAuthenticatedUser: function () {
+					var username = security.currentUser.username;
+					return $http.jsonrpc(
+						'/rpc/2.0/operation',
+						'findWithoutTimeEntryByUsername',
+						[username]
+					).then(function (resp) {
+						return _.map(resp.data.result, function (o) {
+							return fromJSON(o);
+						});
+					});
+				},
 
-						// Filter only persons.
-						allGuardsAvailableForSelection = _.filter(allGuardsAvailableForSelection, function (o) {
-							return o.type !== 'VEHICLE';
+				findGuardsAndOperations: function () {
+					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+						var guardsAssignedToOperations = [];
+						var operationsAvailableForSelection = [];
+						result.forEach(function (op) {
+
+							//Filter all resources associated with the operation marked as guards.
+							var resourcesMarkedAsGuards = _.filter(op.resources, {type: 'GUARD'});
+							if (resourcesMarkedAsGuards.length > 0) {
+								resourcesMarkedAsGuards.forEach(function (res, resId) {
+									resourcesMarkedAsGuards[resId].opId = op.id;
+								});
+								// Fill the list of guards assigned to an operation.
+								// This list helps to auto-select an operation when the users selects a guard.
+								guardsAssignedToOperations = guardsAssignedToOperations.concat(resourcesMarkedAsGuards);
+
+							}
+
+							//Only shows the operation marked as guards.
+							if (op.type === "GUARD") {
+								var opWithOutRes = _.clone(op);
+								delete opWithOutRes.resources;
+								operationsAvailableForSelection = operationsAvailableForSelection.concat(opWithOutRes);
+							}
+
+
 						});
 
-						return {
-							guardsAssignedToOperations       : guardsAssignedToOperations,
-							allPersonnelAvailableForSelection: allGuardsAvailableForSelection,
-							operations                       : operationsAvailableForSelection
-						};
-					});
-				});
-			},
+						return resourceService.findAvailableResources([
+							'GUARD',
+							'GUARD_SHIFT_MANAGER',
+							'GUARD_NIGHT_SHIFT_MAINTENANCE',
+							'GUARD_GOODS_RECEIPT',
+							'GUARD_SUPPORT'
+						]).then(function (allGuardsAvailableForSelection) {
 
+							// Filter only persons.
+							allGuardsAvailableForSelection = _.filter(allGuardsAvailableForSelection, function (o) {
+								return o.type !== 'VEHICLE';
+							});
 
-			findStaffAndOperationAttendance: function () {
-				var operation;
-				var vendor;
-				return service.findByType('ATTENDANCE')
-					.then(function (resultOperations) {
-						// We expect this method returns one and only one record.
-
-						operation = resultOperations[0];
-
-						//Get glarus company. In order to emulate a vendor.
-						return partyService.findOne(config.glarus);
-					})
-					.then(function (resultCompany) {
-						vendor = resultCompany;
-						return partyGroupService.findOne('glarus_staff_group');
-					})
-					.then(function (resultGroup) {
-						//TODO. Exclude "external" staff.
-
-						// The variable to define, allPersonnelAvailableForSelection, has to be
-						// of type resource because is used as a resource in different time entries
-						// logs an cell editors. In this case we are going to define fictional resources.
-						var parties = _.map(resultGroup.values, function (o) {
 							return {
-								type    : "PERSON_ATTENDANCE",
-								resource: o.party,
-								vendor  : vendor
+								guardsAssignedToOperations       : guardsAssignedToOperations,
+								allPersonnelAvailableForSelection: allGuardsAvailableForSelection,
+								operations                       : operationsAvailableForSelection
 							};
 						});
-
-						return {
-							allPersonnelAvailableForSelection: parties,
-							operation                        : operation
-						};
-
 					});
-			},
+				},
 
-			findDriversAndOperations: function () {
-				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
-					var driversAssignedToOperations = [];
-					var operations = [];
-					result.forEach(function (op) {
-						var resourcesMarkedAsDrivers = _.filter(op.currentResources, {type: 'DRIVER'});
 
-						// If the operation has at least one driver
-						if (resourcesMarkedAsDrivers.length > 0) {
-							resourcesMarkedAsDrivers.forEach(function (res, resId) {
-								resourcesMarkedAsDrivers[resId].opId = op.id;
+				findStaffAndOperationAttendance: function () {
+					var operation;
+					var vendor;
+					return service.findByType('ATTENDANCE')
+						.then(function (resultOperations) {
+							// We expect this method returns one and only one record.
+
+							operation = resultOperations[0];
+
+							//Get glarus company. In order to emulate a vendor.
+							return partyService.findOne(config.glarus);
+						})
+						.then(function (resultCompany) {
+							vendor = resultCompany;
+							return partyGroupService.findOne('glarus_staff_group');
+						})
+						.then(function (resultGroup) {
+							//TODO. Exclude "external" staff.
+
+							// The variable to define, allPersonnelAvailableForSelection, has to be
+							// of type resource because is used as a resource in different time entries
+							// logs an cell editors. In this case we are going to define fictional resources.
+							var parties = _.map(resultGroup.values, function (o) {
+								return {
+									type    : "PERSON_ATTENDANCE",
+									resource: o.party,
+									vendor  : vendor
+								};
 							});
 
-							// Fill the list of drivers assigned to an operation.
-							// This list helps to auto-select an operation when the users selects a driver.
-							driversAssignedToOperations = driversAssignedToOperations.concat(resourcesMarkedAsDrivers);
+							return {
+								allPersonnelAvailableForSelection: parties,
+								operation                        : operation
+							};
 
-						}
+						});
+				},
 
-						// Only shows the operations marked as driver.
-						if (op.type === "DRIVER") {
-							var opWithOutRes = _.clone(op);
-							delete opWithOutRes.currentResources;
-							operations = operations.concat(opWithOutRes);
-						}
+				findDriversAndOperations: function () {
+					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+						var driversAssignedToOperations = [];
+						var operations = [];
+						result.forEach(function (op) {
+							var resourcesMarkedAsDrivers = _.filter(op.resources, {type: 'DRIVER'});
 
-					});
+							// If the operation has at least one driver
+							if (resourcesMarkedAsDrivers.length > 0) {
+								resourcesMarkedAsDrivers.forEach(function (res, resId) {
+									resourcesMarkedAsDrivers[resId].opId = op.id;
+								});
 
-					return resourceService.findAvailableResources(['DRIVER']).then(function (allDriversAvailableForSelection) {
+								// Fill the list of drivers assigned to an operation.
+								// This list helps to auto-select an operation when the users selects a driver.
+								driversAssignedToOperations = driversAssignedToOperations.concat(resourcesMarkedAsDrivers);
 
-						// Filter only persons and resources that belongs to glarus.
-						allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
-							return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
+							}
+
+							// Only shows the operations marked as driver.
+							if (op.type === "DRIVER") {
+								var opWithOutRes = _.clone(op);
+								delete opWithOutRes.resources;
+								operations = operations.concat(opWithOutRes);
+							}
+
 						});
 
-						return {
-							driversAssignedToOperations      : driversAssignedToOperations,
-							allPersonnelAvailableForSelection: allDriversAvailableForSelection,
-							operations                       : operations
-						};
-					});
-				});
-			},
+						return resourceService.findAvailableResources(['DRIVER']).then(function (allDriversAvailableForSelection) {
 
-			findDriversAndSpecialOps: function () {
-				return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
-					var driversAssignedToOperations = [];
-					var vehiclesAssignedToOperations = [];
-					var operations = [];
-					result.forEach(function (op) {
-
-						if (op.type === "SPECIAL_OPS") {
-							var resourcesMarkedAsSpecialOps = _.map(op.currentResources, function (o) {
-								var result = _.cloneDeep(o);
-								result.opId = op.id;
-								return result;
+							// Filter only persons and resources that belongs to glarus.
+							allDriversAvailableForSelection = _.filter(allDriversAvailableForSelection, function (o) {
+								return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
 							});
 
-							driversAssignedToOperations = driversAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
-								return o.type !== "VEHICLE";
-							}));
-
-							vehiclesAssignedToOperations = vehiclesAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
-								return o.type === "VEHICLE";
-							}));
-
-							var opWithOutRes = _.clone(op);
-							delete opWithOutRes.currentResources;
-							operations = operations.concat(opWithOutRes);
-						}
+							return {
+								driversAssignedToOperations      : driversAssignedToOperations,
+								allPersonnelAvailableForSelection: allDriversAvailableForSelection,
+								operations                       : operations
+							};
+						});
 					});
+				},
 
-					return resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER', 'TRANSPORT']).then(function (allResources) {
+				findDriversAndSpecialOps: function () {
+					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+						var driversAssignedToOperations = [];
+						var vehiclesAssignedToOperations = [];
+						var operations = [];
+						result.forEach(function (op) {
 
-						// Filter only persons and resources that belongs to glarus.
-						var allDriversAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
+							if (op.type === "SPECIAL_OPS") {
+								var resourcesMarkedAsSpecialOps = _.map(op.resources, function (o) {
+									var result = _.cloneDeep(o);
+									result.opId = op.id;
+									return result;
+								});
+
+								driversAssignedToOperations = driversAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
+									return o.type !== "VEHICLE";
+								}));
+
+								vehiclesAssignedToOperations = vehiclesAssignedToOperations.concat(_.filter(resourcesMarkedAsSpecialOps, function (o) {
+									return o.type === "VEHICLE";
+								}));
+
+								var opWithOutRes = _.clone(op);
+								delete opWithOutRes.resources;
+								operations = operations.concat(opWithOutRes);
+							}
 						});
 
-						var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
-							return o.type === 'VEHICLE';
-						});
-						console.debug("allVehiclesAvailableForSelection %o", allVehiclesAvailableForSelection);
+						return resourceService.findAvailableResources(['DRIVER', 'AGENT', 'AGENT_ARMED', 'COORDINATOR', 'GREETER', 'TRANSPORT']).then(function (allResources) {
 
-						return {
-							driversAssignedToOperations      : driversAssignedToOperations,
-							vehiclesAssignedToOperations     : vehiclesAssignedToOperations,
-							allPersonnelAvailableForSelection: allDriversAvailableForSelection,
-							vehicles                         : allVehiclesAvailableForSelection,
-							operations                       : operations
-						};
+							// Filter only persons and resources that belongs to glarus.
+							var allDriversAvailableForSelection = _.filter(allResources, function (o) {
+								return o.type !== 'VEHICLE' && o.vendor.id === config.glarus;
+							});
+
+							var allVehiclesAvailableForSelection = _.filter(allResources, function (o) {
+								return o.type === 'VEHICLE';
+							});
+							console.debug("allVehiclesAvailableForSelection %o", allVehiclesAvailableForSelection);
+
+							return {
+								driversAssignedToOperations      : driversAssignedToOperations,
+								vehiclesAssignedToOperations     : vehiclesAssignedToOperations,
+								allPersonnelAvailableForSelection: allDriversAvailableForSelection,
+								vehicles                         : allVehiclesAvailableForSelection,
+								operations                       : operations
+							};
+						});
 					});
-				});
-			},
+				},
 
-			// Map an operation record to a easy-to show ag-grid row.
-			mapTimeEntryData: function (record) {
-				var result = [];
-				for (var i = 0; i < record.length; i++) {
-					var operation = record[i];
-					for (var j = 0; j < operation.schedule.length; j++) {
-						var absence;
-						var timeEntry = operation.schedule[j];
-						var begin = moment(timeEntry.begin);
-						var functionValue;
+				// Map an operation record to a easy-to show ag-grid row.
+				mapTimeEntryData: function (record) {
+					var result = [];
+					for (var i = 0; i < record.length; i++) {
+						var operation = record[i];
+						for (var j = 0; j < operation.tasks.length; j++) {
+							var absence;
+							var timeEntry = operation.tasks[j];
+							var begin = moment(timeEntry.begin);
+							var functionValue;
 
-						var duration = calculateDuration(timeEntry.begin, timeEntry.end);
-						var end = '', endOnlyHour = '';
-						absence = undefined;
+							var duration = calculateDuration(timeEntry.begin, timeEntry.end);
+							var end = '', endOnlyHour = '';
+							absence = undefined;
 
-						if (_.isNil(timeEntry.end) === false) {
-							end = moment(timeEntry.end);
-							endOnlyHour = end.format(formatStringOnlyHour);
-							end = end.format(dateTimeFormatString);
-						}
-						// Temporary solution to mark records without absence
-						// or records with no resource.
-						if (operation.type === 'DRIVER') {
-
-							if (!_.isNil(timeEntry.extras) && timeEntry.extras === 'NO_SERVICE_PROVIDED') {
-								absence = "NO_SERVICE_PROVIDED";
-							} else {
-								absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
-									timeEntry.resources[0].absence : 'SF';
+							if (_.isNil(timeEntry.end) === false) {
+								end = moment(timeEntry.end);
+								endOnlyHour = end.format(formatStringOnlyHour);
+								end = end.format(dateTimeFormatString);
 							}
-						}
+							// Temporary solution to mark records without absence
+							// or records with no resource.
+							if (operation.type === 'DRIVER') {
 
-						if (operation.type === 'ATTENDANCE') {
-							absence = timeEntry.resources[0].absence;
-						}
-
-						// Temporary solution for empty extras.
-						if (operation.type === 'GUARD') {
-							if (_.isNil(timeEntry.extras) || timeEntry.extras === '') {
-								timeEntry.extras = 'BASE';
+								if (!_.isNil(timeEntry.extras) && timeEntry.extras === 'NO_SERVICE_PROVIDED') {
+									absence = "NO_SERVICE_PROVIDED";
+								} else {
+									absence = (!_.isNil(timeEntry.resources[0].absence) && timeEntry.resources[0].absence !== '') ?
+										timeEntry.resources[0].absence : 'SF';
+								}
 							}
 
-							if (timeEntry.resources.length > 0 && timeEntry.resources[0].isExternal === true) {
-								timeEntry.isExternal = true;
+							if (operation.type === 'ATTENDANCE') {
+								absence = timeEntry.resources[0].absence;
 							}
-						}
 
+							// Temporary solution for empty extras.
+							if (operation.type === 'GUARD') {
+								if (_.isNil(timeEntry.extras) || timeEntry.extras === '') {
+									timeEntry.extras = 'BASE';
+								}
 
-						// Separating staff and vehicle.
-						var staff = _.find(timeEntry.resources, function (o) {
-							return o.type !== "VEHICLE"
-						});
-
-						// Separating vehicle.
-						var vehicle = _.find(timeEntry.resources, function (o) {
-							return o.type === "VEHICLE"
-						});
-
-						//Special ops data. Temporary solution.
-						if (operation.type === 'SPECIAL_OPS') {
-							functionValue = !_.isNil(staff) ? staff.type : undefined;
-						}
-
-
-						result.push({
-							client       : operation.client.name,
-							code         : operation.client.code,
-							id           : timeEntry.id,
-							operation    : operation,
-							staff        : staff,
-							vehicle      : vehicle,
-							begin        : timeEntry.begin, //begin.format(dateTimeFormatString),
-							beginOnlyHour: begin.format(formatStringOnlyHour),
-							beginOnlyDate: begin.format(formatStringOnlyDate),
-							endOnlyHour  : endOnlyHour,
-							end          : timeEntry.end, //end,
-							beginInvoice : timeEntry.beginInvoice,
-							endInvoice   : timeEntry.endInvoice,
-							duration     : duration,
-							absence      : absence,
-							comment      : timeEntry.comment,
-							extras       : timeEntry.extras,
-							isExternal   : timeEntry.isExternal,
-							functionValue: functionValue
-						});
-					}
-				}
-				return result;
-			},
-
-			// Map operations properties in order to create a list with ag-grid or similar
-			mapOperations: function (operations,invoices) {
-
-				return _.map(operations, function (operation) {
-
-					const duration = (!_.isNil(operation.start)) ? moment(operation.start).diff(moment(operation.end)) : '';
-					// const start = (!_.isNil(operation.start)) ? moment(operation.start).format('YYYY-MM-DD') : '';
-					// const end = (!_.isNil(operation.end)) ? moment(operation.end).format('YYYY-MM-DD') : '';
-
-					var assigned = '';
-					var resourcePerson = _.find(operation.currentResources, function (o) {
-						return o.type !== "VEHICLE";
-					});
-					if (!_.isNil(resourcePerson)) {
-						assigned = resourcePerson.resource;
-						assigned = assigned.name.last + ' ' + assigned.name.first;
-					}
-
-					return {
-						id          : operation.id,
-						view        : {id: operation.id, type: operation.type},
-						type        : operation.type,
-						name        : operation.name,
-						client      : operation.client.name,
-						code        : operation.client.code,
-						attributes  : operation.attributes,
-						assigned    : assigned,
-						duration    : duration,
-						start       : operation.start,
-						end         : operation.end,
-						description : operation.description,
-						status      : service.generateStatus(operation, invoices)
-					}
-				});
-			},
-
-			calculateDuration: function (begin, end) {
-				return calculateDuration(begin, end);
-			},
-
-			fromJSON: function (object) {
-				return fromJSON(object);
-			},
-
-			toJSON: function (object) {
-				return toJSON(object);
-			},
-
-			/**
-			 *
-			 * @param operation The operation to know the stats.
-			 * @param invoices The invoices to look for in order to determine the status.
-			 * @return {string} The result.
-			 */
-			generateStatus: function (operation, invoices) {
-				$log.debug("Call to generateStatus with " + operation.id + " invoices " + invoices.length);
-				var result = '';
-				var today = moment().hour(0).minutes(0).seconds(0).toDate();
-				var totalTimeEntriesInvoiced = 0;
-				var totalTimeEntriesPaid = 0;
-				var operationAttribute = _.find(operation.attributes, function (o) {
-					return o.name === OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT;
-				});
-				var totalTimeEntriesOperation = operationAttribute != null ? Number(operationAttribute.value) : 0;
-				var invoicesAssociated = _.filter(invoices, function (invoice) {
-					var result = false;
-
-					// Validate for default operation.
-
-
-					var attribute = _.find(invoice.attributes, function (attribute) {
-						return attribute.name === INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES;
-					});
-					if (attribute) {
-						result = attribute.value[operation.id] && attribute.value[operation.id] > 0;
-						if (result) {
-							totalTimeEntriesInvoiced += attribute.value[operation.id];
-							if (invoice.isPaid === true) {
-								totalTimeEntriesPaid += attribute.value[operation.id];
+								if (timeEntry.resources.length > 0 && timeEntry.resources[0].isExternal === true) {
+									timeEntry.isExternal = true;
+								}
 							}
+
+
+							// Separating staff and vehicle.
+							var staff = _.find(timeEntry.resources, function (o) {
+								return o.type !== "VEHICLE"
+							});
+
+							// Separating vehicle.
+							var vehicle = _.find(timeEntry.resources, function (o) {
+								return o.type === "VEHICLE"
+							});
+
+							//Special ops data. Temporary solution.
+							if (operation.type === 'SPECIAL_OPS') {
+								functionValue = !_.isNil(staff) ? staff.type : undefined;
+							}
+
+
+							result.push({
+								client       : operation.client.name,
+								code         : operation.client.code,
+								id           : timeEntry.id,
+								operation    : operation,
+								staff        : staff,
+								vehicle      : vehicle,
+								begin        : timeEntry.begin, //begin.format(dateTimeFormatString),
+								beginOnlyHour: begin.format(formatStringOnlyHour),
+								beginOnlyDate: begin.format(formatStringOnlyDate),
+								endOnlyHour  : endOnlyHour,
+								end          : timeEntry.end, //end,
+								beginInvoice : timeEntry.beginInvoice,
+								endInvoice   : timeEntry.endInvoice,
+								duration     : duration,
+								absence      : absence,
+								comment      : timeEntry.comment,
+								extras       : timeEntry.extras,
+								isExternal   : timeEntry.isExternal,
+								functionValue: functionValue
+							});
 						}
 					}
-
-					if (!_.isNil(invoice.defaultOperation) && invoice.defaultOperation.id === operation.id) {
-						result = true;
-					}
-
 					return result;
-				});
-				switch (operation.type) {
-					case 'SPECIAL_OPS':
-						if (invoicesAssociated.length === 0) {
-							// In this case, there are not invoices associated to the operations.
-							// The only thing we can show if if the service has started or ended.
-							if (_.isDate(operation.start) && operation.start.getTime() > today.getTime()) {
-								// Upcoming.
-								result = $filter('translate')('operations.statuses.upcoming');
-							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
-								_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
-								// In progress
-								result = $filter('translate')('operations.statuses.inProgress');
-							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
-								_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
-								// Completed
-								result = $filter('translate')('operations.statuses.completed');
-							}
-						} else if (totalTimeEntriesOperation > 0) {
-							// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
-							// But only show something if the operation has time entries associated.
-							if (totalTimeEntriesOperation === totalTimeEntriesPaid) {
-								result = $filter('translate')('operations.statuses.paid');
-							} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
-								result = $filter('translate')('operations.statuses.invoiced');
-							} else {
-								result = $filter('translate')('operations.statuses.invoicedMissingTimeEntries');
-							}
-						} else if (totalTimeEntriesOperation === 0 && invoicesAssociated.length === 1) {
-							// It seems it is a historical operation.
-							if (invoicesAssociated[0].isPaid === true) {
-								result = $filter('translate')('operations.statuses.paid');
-							}else{
-								result = $filter('translate')('operations.statuses.invoiced');
-							}
-						}
-						break;
-					case 'CONSULTING':
-						if (invoicesAssociated.length === 0) {
-							// In this case, there are not invoices associated to the operations.
-							// The only thing we can show if if the service has started or ended.
-							if (_.isDate(operation.start) && operation.start.getTime() > today.getTime()) {
-								// Upcoming.
-								result = $filter('translate')('operations.statuses.upcoming');
-							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
-								_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
-								// In progress
-								result = $filter('translate')('operations.statuses.inProgress');
-							} else if (_.isDate(operation.start) && today.getTime() > operation.start.getTime() &&
-								_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
-								// Completed
-								result = $filter('translate')('operations.statuses.completed');
-							}
-						} else {
-							var onlyInvoice = invoicesAssociated[0];
-							// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
-							// But only show something if the operation has time entries associated.
-							if (onlyInvoice.isPaid===true) {
-								result = $filter('translate')('operations.statuses.paid');
-							} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
-								result = $filter('translate')('operations.statuses.invoiced');
-							}
-						}
-						break;
-				}
-				$log.debug("generateStatus: Returning result " + result);
-				return result;
-			},
+				},
 
-			/**
-			 *  Return the value of the function type of an special ops time entry.
-			 */
-			generateFunctionLocale: function (timeEntry) {
-				var locale;
-				if (!_.isNil(timeEntry)) {
-					switch (timeEntry.functionValue) {
-						case 'DRIVER':
-							locale = 'operations.specialsTimeLog.driver';
+				// Map operations properties in order to create a list with ag-grid or similar
+				mapOperations: function (operations, invoices) {
+
+					return _.map(operations, function (operation) {
+
+						const duration = (!_.isNil(operation.begin)) ? moment(operation.begin).diff(moment(operation.end)) : '';
+						// const start = (!_.isNil(operation.begin)) ? moment(operation.start).format('YYYY-MM-DD') : '';
+						// const end = (!_.isNil(operation.end)) ? moment(operation.end).format('YYYY-MM-DD') : '';
+
+						var assigned = '';
+						var resourcePerson = _.find(operation.resources, function (o) {
+							return o.type !== "VEHICLE";
+						});
+						if (!_.isNil(resourcePerson)) {
+							assigned = resourcePerson.resource;
+							assigned = assigned.name.last + ' ' + assigned.name.first;
+						}
+
+						return {
+							id        : operation.id,
+							view      : {id: operation.id, type: operation.type},
+							type      : operation.type,
+							name      : operation.name,
+							client    : operation.client.name,
+							code      : operation.client.code,
+							attributes: operation.attributes,
+							assigned  : assigned,
+							duration  : duration,
+							begin     : operation.begin,
+							end       : operation.end,
+							comment   : operation.comment,
+							status    : service.generateStatus(operation, invoices)
+						}
+					});
+				},
+
+				calculateDuration: function (begin, end) {
+					return calculateDuration(begin, end);
+				},
+
+				fromJSON: function (object) {
+					return fromJSON(object);
+				},
+
+				toJSON: function (object) {
+					return toJSON(object);
+				},
+
+				/**
+				 *
+				 * @param operation The operation to know the stats.
+				 * @param invoices The invoices to look for in order to determine the status.
+				 * @return {string} The result.
+				 */
+				generateStatus: function (operation, invoices) {
+					$log.debug("Call to generateStatus with " + operation.id + " invoices " + invoices.length);
+					var result = '';
+					var today = moment().hour(0).minutes(0).seconds(0).toDate();
+					var totalTimeEntriesInvoiced = 0;
+					var totalTimeEntriesPaid = 0;
+					var operationAttribute = _.find(operation.attributes, function (o) {
+						return o.name === OPERATION_ATTRIBUTE_TIME_ENTRY_COUNT;
+					});
+					var totalTimeEntriesOperation = operationAttribute != null ? Number(operationAttribute.value) : 0;
+					var invoicesAssociated = _.filter(invoices, function (invoice) {
+						var result = false;
+
+						// Validate for default operation.
+
+
+						var attribute = _.find(invoice.attributes, function (attribute) {
+							return attribute.name === INVOICE_ATTRIBUTE_OPERATION_TIME_ENTRIES;
+						});
+						if (attribute) {
+							result = attribute.value[operation.id] && attribute.value[operation.id] > 0;
+							if (result) {
+								totalTimeEntriesInvoiced += attribute.value[operation.id];
+								if (invoice.isPaid === true) {
+									totalTimeEntriesPaid += attribute.value[operation.id];
+								}
+							}
+						}
+
+						if (!_.isNil(invoice.defaultOperation) && invoice.defaultOperation.id === operation.id) {
+							result = true;
+						}
+
+						return result;
+					});
+					switch (operation.type) {
+						case 'SPECIAL_OPS':
+							if (invoicesAssociated.length === 0) {
+								// In this case, there are not invoices associated to the operations.
+								// The only thing we can show if if the service has started or ended.
+								if (_.isDate(operation.begin) && operation.begin.getTime() > today.getTime()) {
+									// Upcoming.
+									result = $filter('translate')('operations.statuses.upcoming');
+								} else if (_.isDate(operation.begin) && today.getTime() > operation.begin.getTime() &&
+									_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
+									// In progress
+									result = $filter('translate')('operations.statuses.inProgress');
+								} else if (_.isDate(operation.begin) && today.getTime() > operation.begin.getTime() &&
+									_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
+									// Completed
+									result = $filter('translate')('operations.statuses.completed');
+								}
+							} else if (totalTimeEntriesOperation > 0) {
+								// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
+								// But only show something if the operation has time entries associated.
+								if (totalTimeEntriesOperation === totalTimeEntriesPaid) {
+									result = $filter('translate')('operations.statuses.paid');
+								} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
+									result = $filter('translate')('operations.statuses.invoiced');
+								} else {
+									result = $filter('translate')('operations.statuses.invoicedMissingTimeEntries');
+								}
+							} else if (totalTimeEntriesOperation === 0 && invoicesAssociated.length === 1) {
+								// It seems it is a historical operation.
+								if (invoicesAssociated[0].isPaid === true) {
+									result = $filter('translate')('operations.statuses.paid');
+								} else {
+									result = $filter('translate')('operations.statuses.invoiced');
+								}
+							}
 							break;
-						case 'AGENT':
-							locale = 'operations.specialsTimeLog.agent';
-							break;
-						case 'AGENT_ARMED':
-							locale = 'operations.specialsTimeLog.agentArmed';
-							break;
-						case 'GREETER':
-							locale = 'operations.specialsTimeLog.greeter';
-							break;
-						case 'COORDINATOR':
-							locale = 'operations.specialsTimeLog.coordinator';
-							break;
-						case 'TRANSPORT':
-							locale = 'operations.specialsTimeLog.transport';
-							break;
-						case 'DRIVER_PLUS_VEHICLE':
-							locale = 'operations.specialsTimeLog.driverPlusVehicle';
+						case 'CONSULTING':
+							if (invoicesAssociated.length === 0) {
+								// In this case, there are not invoices associated to the operations.
+								// The only thing we can show if if the service has started or ended.
+								if (_.isDate(operation.begin) && operation.begin.getTime() > today.getTime()) {
+									// Upcoming.
+									result = $filter('translate')('operations.statuses.upcoming');
+								} else if (_.isDate(operation.begin) && today.getTime() > operation.begin.getTime() &&
+									_.isDate(operation.end) && today.getTime() < operation.end.getTime()) {
+									// In progress
+									result = $filter('translate')('operations.statuses.inProgress');
+								} else if (_.isDate(operation.begin) && today.getTime() > operation.begin.getTime() &&
+									_.isDate(operation.end) && today.getTime() > operation.end.getTime()) {
+									// Completed
+									result = $filter('translate')('operations.statuses.completed');
+								}
+							} else {
+								var onlyInvoice = invoicesAssociated[0];
+								// In this case, given there are associated invoices, we define if the status is invoiced or missing entries to be invoiced.
+								// But only show something if the operation has time entries associated.
+								if (onlyInvoice.isPaid === true) {
+									result = $filter('translate')('operations.statuses.paid');
+								} else if (totalTimeEntriesOperation === totalTimeEntriesInvoiced) {
+									result = $filter('translate')('operations.statuses.invoiced');
+								}
+							}
 							break;
 					}
-				}
-				if (!_.isNil(locale)) {
-					return $filter('translate')(locale);
-				} else {
-					return '';
-				}
-			}
+					$log.debug("generateStatus: Returning result " + result);
+					return result;
+				},
 
-		};
-		return service;
-	}];
+				/**
+				 *  Return the value of the function type of an special ops time entry.
+				 */
+				generateFunctionLocale: function (timeEntry) {
+					var locale;
+					if (!_.isNil(timeEntry)) {
+						switch (timeEntry.functionValue) {
+							case 'DRIVER':
+								locale = 'operations.specialsTimeLog.driver';
+								break;
+							case 'AGENT':
+								locale = 'operations.specialsTimeLog.agent';
+								break;
+							case 'AGENT_ARMED':
+								locale = 'operations.specialsTimeLog.agentArmed';
+								break;
+							case 'GREETER':
+								locale = 'operations.specialsTimeLog.greeter';
+								break;
+							case 'COORDINATOR':
+								locale = 'operations.specialsTimeLog.coordinator';
+								break;
+							case 'TRANSPORT':
+								locale = 'operations.specialsTimeLog.transport';
+								break;
+							case 'DRIVER_PLUS_VEHICLE':
+								locale = 'operations.specialsTimeLog.driverPlusVehicle';
+								break;
+						}
+					}
+					if (!_.isNil(locale)) {
+						return $filter('translate')(locale);
+					} else {
+						return '';
+					}
+				}
+
+			};
+			return service;
+		}];

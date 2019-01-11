@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, dialogService) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeRecordService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeRecordService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, dialogService) {
 
 		console.debug('Operation', operation);
 
@@ -83,13 +83,13 @@ module.exports =
 			}) : [{object: null, search: ''}];
 
 			// Filter Vehicles
-			operation.vehicles = _.filter(operation.currentResources, {type: 'VEHICLE'});
+			operation.vehicles = _.filter(operation.resources, {type: 'VEHICLE'});
 			operation.vehicles = (operation.vehicles.length > 0) ? _.map(operation.vehicles, function (vehicle) {
 				return {object: vehicle, search: ''};
 			}) : [{object: null, search: ''}];
 
 			// Filter staff
-			operation.staff = _.filter(operation.currentResources, function (resource) {
+			operation.staff = _.filter(operation.resources, function (resource) {
 				return (resource.type !== 'VEHICLE');
 			});
 			operation.staff = (operation.staff.length > 0) ? _.map(operation.staff, function (staff) {
@@ -102,7 +102,7 @@ module.exports =
 		$scope.data = mapOperationToEditable(operation);
 		console.debug('editable operation', $scope.data);
 
-		// Update operation
+		// Update operation special ops
 		$scope.save = function () {
 			// Process operation to insert
 			var operation = _.clone($scope.data);
@@ -111,11 +111,11 @@ module.exports =
 			if (operation.name === '') {
 				dialogService.info('services.specialForm.dialogs.nameEmpty');
 				return;
-			} else if (!_.isDate(operation.start)) {
+			} else if (!_.isDate(operation.begin)) {
 				dialogService.info('services.specialForm.dialogs.startEmpty');
 				return;
 			} else if (_.isDate(operation.end)) {
-				if (operation.start > operation.end) {
+				if (operation.begin > operation.end) {
 					dialogService.info('operations.dialogs.endDateError');
 					return;
 				}
@@ -160,8 +160,8 @@ module.exports =
 
 			resources = resources.concat(vehicles);
 
-			operation.currentResources = resources;
-			operation.start = moment(operation.start).toDate();
+			operation.resources = resources;
+			operation.begin = moment(operation.begin).toDate();
 			operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
 
 			delete operation.staff;
@@ -203,7 +203,7 @@ module.exports =
 
 
 			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
+			timeRecordService.removeByIds(timeEntryIds).then(function () {
 				// dialogService.info('The records were deleted correctly');
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
@@ -466,7 +466,7 @@ module.exports =
 			// Load data
 			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], begin, end).then(function (result) {
 				operationsWithTimeEntries = result;
-				timeEntries = result.length > 0 && _.isArray(result[0].schedule) ? result[0].schedule : [];
+				timeEntries = result.length > 0 && _.isArray(result[0].tasks) ? result[0].tasks : [];
 				console.debug('Loaded time entries', timeEntries);
 				const ids = _.map(timeEntries, function (o) {
 					return o.id;
@@ -676,7 +676,7 @@ module.exports =
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
-			timeEntryService.timeEntryReportSpecialOps(ids);
+			timeRecordService.timeRecordReportSpecialOps(ids);
 		};
 
 		/*

@@ -54,13 +54,13 @@ module.exports =
 			}) : [{object: null, search: ''}];
 
 			// Filter Vehicles
-			operation.vehicles = _.filter(operation.currentResources, {type: 'VEHICLE'});
+			operation.vehicles = _.filter(operation.resources, {type: 'VEHICLE'});
 			operation.vehicles = (operation.vehicles.length > 0) ? _.map(operation.vehicles, function (vehicle) {
 				return {object: vehicle, search: ''};
 			}) : [{object: null, search: ''}];
 
 			// Filter staff
-			operation.staff = _.filter(operation.currentResources, function (resource) {
+			operation.staff = _.filter(operation.resources, function (resource) {
 				return (resource.type !== 'VEHICLE');
 			});
 			operation.staff = (operation.staff.length > 0) ? _.map(operation.staff, function (staff) {
@@ -82,11 +82,11 @@ module.exports =
 			if (operation.name === '') {
 				dialogService.info('services.specialForm.dialogs.nameEmpty');
 				return;
-			} else if (!_.isDate(operation.start)) {
+			} else if (!_.isDate(operation.begin)) {
 				dialogService.info('services.specialForm.dialogs.startEmpty');
 				return;
 			} else if (_.isDate(operation.end)) {
-				if (operation.start > operation.end) {
+				if (operation.begin > operation.end) {
 					dialogService.info('operations.dialogs.endDateError');
 					return;
 				}
@@ -130,8 +130,8 @@ module.exports =
 
 			resources = resources.concat(vehicles);
 
-			operation.currentResources = resources;
-			operation.start = moment(operation.start).toDate();
+			operation.resources = resources;
+			operation.begin = moment(operation.begin).toDate();
 			operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
 
 			delete operation.staff;

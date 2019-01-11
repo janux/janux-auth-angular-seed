@@ -6,7 +6,7 @@ module.exports = {
 
 	serverAppContext: {
 		server: {
-			port      : 9000,
+			port      : 10000,
 			staticUrl : '',
 			distFolder: path.join('..', 'client', 'dist'),
 			livereload: false,
@@ -34,7 +34,7 @@ module.exports = {
 			operationPrincipalDao : 'operationPrincipalDao',
 			timeRecordDao         : 'timeRecordDao',
 			resourceDao           : 'resourceDao',
-			currentResourceDao    : 'currentResourceDao',
+			operationResourceDao  : 'operationResourceDao',
 			timeRecordAttributeDao: 'timeRecordAttributeDao',
 			timeRecordResourceDao : 'timeRecordResourceDao',
 			taskTypeDao           : 'taskTypeDao',
@@ -69,7 +69,7 @@ module.exports = {
 		db: {
 			//Default db engine to use for user generator.
 			//Because this setting is not used for the daos. Just make use
-			//the db you are going to use for user geeration is the same
+			//the db you are going to use for user generation is the same
 			//for the daos.
 			// Warning: Not all DAOs has a lokijs implementation for glarus-services.
 			dbEngine    : "mongoose",

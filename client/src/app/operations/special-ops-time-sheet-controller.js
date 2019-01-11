@@ -5,8 +5,8 @@ var _ = require('lodash');
 var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
-module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', 'driversAndOps', 'timeEntries', 'timeEntryService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
-	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, driversAndOps, timeEntries, timeEntryService, $filter, $state, $translate, nameQueryService, dialogService) {
+module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationService', '$timeout', '$modal', 'driversAndOps', 'timeEntries', 'timeRecordService', '$filter', '$state', '$translate', 'nameQueryService', 'dialogService',
+	function ($rootScope, $scope, config, jnxStorage, operationService, $timeout, $modal, driversAndOps, timeEntries, timeRecordService, $filter, $state, $translate, nameQueryService, dialogService) {
 
 		var storedFilterPeriod = jnxStorage.findItem(config.jnxStoreKeys.specialOpsTimeLogFilterPeriod, true);
 		var columnsFiltersKey = config.jnxStoreKeys.specialOpsColumnsFilters;
@@ -27,7 +27,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				ids.push(item.data.id);
 			});
 
-			timeEntryService.timeEntryReportSpecialOps(ids);
+			timeRecordService.timeRecordReportSpecialOps(ids);
 		};
 
 		$scope.periodChange = function () {
@@ -39,7 +39,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 
 		function deleteConfirmed(rowsToDelete) {
 			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
+			timeRecordService.removeByIds(timeEntryIds).then(function () {
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
 		}
@@ -135,7 +135,7 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
+				// cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
 				width         : 120
 			},

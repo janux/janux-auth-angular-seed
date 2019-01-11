@@ -84,30 +84,34 @@ module.exports =
 			}
 
 			var service = {
-				insert     : function (timeEntry) {
+				insert: function (timeRecord, idOperation) {
+					var params = _.isNil(idOperation) ? [toJSON(timeRecord)] : [toJSON(timeRecord), idOperation];
 					return $http.jsonrpc(
-						'/rpc/2.0/timeEntry',
+						'/rpc/2.0/timeRecord',
 						'insert',
-						[toJSON(timeEntry)]
+						params
 					).then(function (resp) {
 						return fromJSON(resp.data.result);
 					});
 				},
-				update     : function (timeEntry) {
+
+				update: function (timeRecord, idOperation) {
+					var params = _.isNil(idOperation) ? [toJSON(timeRecord)] : [toJSON(timeRecord), idOperation];
 					return $http.jsonrpc(
-						'/rpc/2.0/timeEntry',
+						'/rpc/2.0/timeRecord',
 						'update',
-						[toJSON(timeEntry)]
+						params
 					).then(function (resp) {
 						return fromJSON(resp.data.result);
 					}, function (err) {
-						// $log.error("Error updating timeEntryService " + JSON.stringify(err));
+						// $log.error("Error updating timeRecordService " + JSON.stringify(err));
 						return handleErrorMessage(err);
 					});
 				},
+
 				removeByIds: function (ids) {
 					return $http.jsonrpc(
-						'/rpc/2.0/timeEntry',
+						'/rpc/2.0/timeRecord',
 						'removeByIds',
 						[ids]
 					).then(function (resp) {
@@ -125,7 +129,7 @@ module.exports =
 					return toJSON(object);
 				},
 
-				timeEntryReport: function (ids) {
+				timeRecordReport: function (ids) {
 					var headers = {
 						'Content-type': 'application/json',
 						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -153,7 +157,7 @@ module.exports =
 					});
 				},
 
-				timeEntryReportGuard: function (ids) {
+				timeRecordReportGuard: function (ids) {
 					var headers = {
 						'Content-type': 'application/json',
 						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -181,7 +185,7 @@ module.exports =
 					});
 				},
 
-				timeEntryReportAttendance: function (ids) {
+				timeRecordReportAttendance: function (ids) {
 					var headers = {
 						'Content-type': 'application/json',
 						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -209,7 +213,7 @@ module.exports =
 					});
 				},
 
-				timeEntryReportSpecialOps: function (ids) {
+				timeRecordReportSpecialOps: function (ids) {
 					var headers = {
 						'Content-type': 'application/json',
 						'Accept'      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

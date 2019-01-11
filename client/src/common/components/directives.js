@@ -691,8 +691,8 @@ angular.module('commonComponents', [])
 							// For the purpose to insert an invoice we can alter this object.
 							operationReference.client = operationReference.client.object;
 							operationReference.principals = [];
-							operationReference.currentResources = [];
-							operationReference.schedule = [];
+							operationReference.resources = [];
+							operationReference.tasks = [];
 							operationReference.interestedParty = null;
 							var newInvoice = {
 								client                  : operationReference.client,

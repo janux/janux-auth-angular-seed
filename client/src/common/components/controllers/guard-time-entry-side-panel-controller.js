@@ -3,8 +3,8 @@
 var _ = require('lodash');
 var moment = require('moment');
 
-module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
-	function ($rootScope, $scope, operationService, timeEntryService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
+module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService', '$mdDialog', '$timeout', '$modal', '$filter', 'config', 'nameQueryService', 'dialogService', '$mdSidenav',
+	function ($rootScope, $scope, operationService, timeRecordService, $mdDialog, $timeout, $modal, $filter, config, nameQueryService, dialogService, $mdSidenav) {
 		var sidenavInstance;
 
 		var allGuards;
@@ -102,17 +102,17 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			var begin = $scope.form.start;
 			var end = $scope.form.end;
 			var timeEntry = {
-				'resources'  : [_.clone($scope.form.staff)],
-				'principals' : [],
-				'attributes' : [],
-				'type'       : 'GUARD',
-				'comment'    : $scope.form.location,
-				'begin'      : begin,
-				'end'        : end,
-				'billable'   : true,
-				'idOperation': $scope.form.operation.id,
-				'extras'     : $scope.form.extras,
-				'isExternal' : $scope.form.isExternal
+				'resources' : [_.clone($scope.form.staff)],
+				'principals': [],
+				'attributes': [],
+				'type'      : 'GUARD',
+				'comment'   : $scope.form.location,
+				'begin'     : begin,
+				'end'       : end,
+				'billable'  : true,
+				// 'idOperation': $scope.form.operation.id,
+				'extras'    : $scope.form.extras,
+				'isExternal': $scope.form.isExternal
 			};
 
 			timeEntry = setResourceType(timeEntry);
@@ -254,6 +254,15 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					timeEntry.resources[0].vendor.id = config.glarus;
 				} else {
 					timeEntry.resources[0].isExternal = false;
+
+					var filteredGuards = _.filter(guardsAssignedToOperations, function (o) {
+						return o.resource.id === timeEntry.resources[0].resource.id;
+					});
+
+					if (filteredGuards.length > 0) {
+						timeEntry.resources[0].vendor = _.clone(filteredGuards[0].vendor);
+					}
+
 				}
 			}
 
@@ -273,7 +282,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 			} else if (_.isNil($scope.form.operation)) {
 				dialogService.info('operations.dialogs.invalidOperation');
 				result = false;
-			} else if(_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
+			} else if (_.isDate($scope.form.endHourForm) && !_.isDate($scope.form.startHourForm)) {
 				dialogService.info('operations.dialogs.beginDateError', false);
 			}
 			return result;
@@ -404,7 +413,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 				if (_.isNil($scope.timeEntryUpdate)) {
 					console.debug('Time entry to insert %o', timeEntryToSend);
 					// Perform an insert
-					timeEntryService.insert(timeEntryToSend).then(function () {
+					timeRecordService.insert(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.guard.events.doneInsertOrUpdate);
 						// Close the panel.
@@ -414,7 +423,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 					// Add the id and perform an update
 					timeEntryToSend.id = $scope.timeEntryUpdate.id;
 					console.debug('Time entry to update %o', timeEntryToSend);
-					timeEntryService.update(timeEntryToSend).then(function () {
+					timeRecordService.update(timeEntryToSend, $scope.form.operation.id).then(function () {
 						// Send a notification the update was successful.
 						$rootScope.$broadcast(config.timeEntry.guard.events.doneInsertOrUpdate);
 						// Close the panel.
@@ -445,7 +454,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeEntryService'
 		/**
 		 * When this event is captured, the form shows the selected data to update.
 		 */
-		var deregister2 =$rootScope.$on(config.timeEntry.guard.events.setUpdateMode, function (event, timeEntry) {
+		var deregister2 = $rootScope.$on(config.timeEntry.guard.events.setUpdateMode, function (event, timeEntry) {
 			console.debug("Catch event %s with timeEntry %o", config.timeEntry.guard.events.setUpdateMode, timeEntry);
 			clearForm();
 			fillFormDataForUpdate(timeEntry);

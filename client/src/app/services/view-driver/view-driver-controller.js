@@ -6,8 +6,8 @@ var agGridComp = require('common/ag-grid-components');
 var timePeriods = require('common/time-periods');
 
 module.exports =
-	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeEntryService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
-		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeEntryService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, dialogService) {
+	['$scope', '$rootScope', 'clientsList', '$state', '$stateParams', 'config', 'operationService', 'invoiceService', 'operation', '$modal', '$filter', 'timeRecordService', 'localStorageService', '$timeout', 'nameQueryService', 'jnxStorage', 'driversAndOps', 'invoices', '$mdDialog', '$mdToast', 'dialogService', function (
+		$scope, $rootScope, clientsList, $state, $stateParams, config, operationService, invoiceService, operation, $modal, $filter, timeRecordService, localStorageService, $timeout, nameQueryService, jnxStorage, driversAndOps, invoices, $mdDialog, $mdToast, dialogService) {
 
 		console.debug('Operation', operation);
 
@@ -93,13 +93,13 @@ module.exports =
 			}) : [{object: null, search: ''}];
 
 			// Filter Vehicles
-			operation.vehicles = _.filter(operation.currentResources, {type: 'VEHICLE'});
+			operation.vehicles = _.filter(operation.resources, {type: 'VEHICLE'});
 			operation.vehicles = (operation.vehicles.length > 0) ? _.map(operation.vehicles, function (vehicle) {
 				return {object: vehicle, search: ''};
 			}) : [{object: null, search: ''}];
 
 			// Filter staff
-			operation.staff = _.filter(operation.currentResources, function (resource) {
+			operation.staff = _.filter(operation.resources, function (resource) {
 				return (resource.type !== 'VEHICLE');
 			});
 			operation.staff = (operation.staff.length > 0) ? _.map(operation.staff, function (staff) {
@@ -124,8 +124,8 @@ module.exports =
 			if (operation.name === '') {
 				dialogService.info('services.specialForm.dialogs.nameEmpty');
 				return;
-			} else if (_.isDate(operation.start) && _.isDate(operation.end)) {
-				if (operation.start > operation.end) {
+			} else if (_.isDate(operation.begin) && _.isDate(operation.end)) {
+				if (operation.begin > operation.end) {
 					dialogService.info('operations.dialogs.endDateError');
 					return;
 				}
@@ -170,8 +170,8 @@ module.exports =
 
 			resources = resources.concat(vehicles);
 
-			operation.currentResources = resources;
-			operation.start = moment(operation.start).toDate();
+			operation.resources = resources;
+			operation.begin = moment(operation.begin).toDate();
 			operation.end = (!_.isNil(operation.end)) ? moment(operation.end).toDate() : null;
 
 			delete operation.staff;
@@ -213,7 +213,7 @@ module.exports =
 
 
 			var timeEntryIds = _.map(rowsToDelete, 'id');
-			timeEntryService.removeByIds(timeEntryIds).then(function () {
+			timeRecordService.removeByIds(timeEntryIds).then(function () {
 				// dialogService.info('The records were deleted correctly');
 				$scope.gridOptions.api.updateRowData({remove: rowsToDelete});
 			});
@@ -251,20 +251,26 @@ module.exports =
 		//
 		var columnDefs = [
 			{
-				headerName  : $filter('translate')('operations.specialsTimeLog.staff'),
+				headerName  : $filter('translate')('operations.driversTimeLog.staff'),
 				field       : 'staff',
 				editable    : false,
 				// cellRenderer: agGridComp.staffCellRenderer,
 				valueGetter : function (params) {
-					var res = params.data.staff.resource;
-					return nameQueryService.createLongNameLocalized(res);
+					var result;
+					if (_.isNil(params.data.staff)) {
+						result = '';
+					} else {
+						result = params.data.staff.resource;
+						result = nameQueryService.createLongNameLocalized(result);
+					}
+					return result;
 				},
-				cellEditor  : agGridComp.autocompleteStaffCellEditor,
+				// cellEditor  : agGridComp.autocompleteStaffCellEditor,
 				filter      : 'agTextColumnFilter',
 				filterParams: {newRowsAction: 'keep'}
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.date'),
+				headerName    : $filter('translate')('operations.driversTimeLog.date'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -277,12 +283,12 @@ module.exports =
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyDate) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
+				// cellEditor    : agGridComp.dateTimeCellEditor,
 				sort          : 'desc',
 				width         : 120
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.begin'),
+				headerName    : $filter('translate')('operations.driversTimeLog.begin'),
 				field         : 'begin',
 				editable      : false,
 				filter        : 'date',
@@ -293,11 +299,11 @@ module.exports =
 				valueFormatter: function (params) {
 					return (params.data.begin) ? moment(params.data.begin).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
+				// cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 80
 			},
 			{
-				headerName    : $filter('translate')('operations.specialsTimeLog.end'),
+				headerName    : $filter('translate')('operations.driversTimeLog.end'),
 				field         : 'end',
 				editable      : false,
 				filter        : 'date',
@@ -308,12 +314,12 @@ module.exports =
 				valueFormatter: function (params) {
 					return (params.data.end) ? moment(params.data.end).format(formatStringOnlyHour) : '';
 				},
-				cellEditor    : agGridComp.dateTimeCellEditor,
+				// cellEditor    : agGridComp.dateTimeCellEditor,
 				width         : 80
 			},
 
 			{
-				headerName : $filter('translate')('operations.specialsTimeLog.duration'),
+				headerName : $filter('translate')('operations.driversTimeLog.duration'),
 				field      : 'duration',
 				editable   : false,
 				width      : 95,
@@ -322,11 +328,11 @@ module.exports =
 				}
 			},
 			{
-				headerName: $filter('translate')('operations.specialsTimeLog.comment'),
+				headerName: $filter('translate')('operations.driversTimeLog.comment'),
 				field     : 'comment',
 				editable  : false,
 				width     : 250,
-				cellEditor: agGridComp.commentCellEditor,
+				// cellEditor: agGridComp.commentCellEditor,
 				cellStyle : {
 					'white-space': 'normal',
 					'padding-top': '0'
@@ -336,7 +342,7 @@ module.exports =
 				headerName    : $filter('translate')('operations.driversTimeLog.absence'),
 				field         : 'absence',
 				editable      : false,
-				cellEditor    : agGridComp.driverAbsenceCellEditor,
+				// cellEditor    : agGridComp.driverAbsenceCellEditor,
 				valueFormatter: function (params) {
 					var val = '';
 					switch (params.value) {
@@ -508,7 +514,7 @@ module.exports =
 			// Load data
 			operationService.findWithTimeEntriesByIdsAndDate([$stateParams.id], period.from(), period.to()).then(function (result) {
 				operationsWithTimeEntries = result;
-				timeEntries = result.length > 0 && _.isArray(result[0].schedule) ? result[0].schedule : [];
+				timeEntries = result.length > 0 && _.isArray(result[0].tasks) ? result[0].tasks : [];
 				console.debug('Loaded time entries', timeEntries);
 				const ids = _.map(timeEntries, function (o) {
 					return o.id;
@@ -732,7 +738,7 @@ module.exports =
 			$scope.gridOptions.api.forEachNodeAfterFilter(function (item) {
 				ids.push(item.data.id);
 			});
-			timeEntryService.timeEntryReport(ids);
+			timeRecordService.timeRecordReport(ids);
 		};
 
 		/*****

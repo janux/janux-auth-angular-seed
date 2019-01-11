@@ -9,7 +9,7 @@ var moment = require('moment');
 var log4js = require('log4js'),
     log    = log4js.getLogger('resource-service');
 
-var ReourceServiceImplClass = require('glarus-services').ResourceServiceImpl;
+var ResourceServiceImplClass = require('glarus-services').ResourceService;
 
 var resourceServiceInstance = undefined;
 var resourceServiceReferenceInstance = undefined;
@@ -44,7 +44,7 @@ var createInstance = function (resourceServiceReference) {
 	ResourceService.prototype.insertMany = function (resources, callback) {
 		log.debug("Call to insertMany with resources %j", resources);
 		var resourcesInstances = _.map(resources, function (o) {
-			return ReourceServiceImplClass.fromJSON(o);
+			return ResourceServiceImplClass.fromJSON(o);
 		});
 		return resourceServiceReferenceInstance.insertMany(resourcesInstances).asCallback(callback);
 	};

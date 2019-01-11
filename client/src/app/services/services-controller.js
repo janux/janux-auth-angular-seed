@@ -127,17 +127,16 @@ module.exports =
 		},
 		{
 			headerName    : $filter('translate')('services.list.begin'),
-			field         : 'start',
+			field         : 'begin',
 			filter        : 'date',
 			width         : 100,
 			sort          : 'desc',
 			valueFormatter: function (params) {
-				if (_.isDate(params.data.start)) {
-					return moment(params.data.start).format(config.dateFormats.dateOnlyFormat);
+				if (_.isDate(params.data.begin)) {
+					return moment(params.data.begin).format(config.dateFormats.dateOnlyFormat);
 				} else {
 					return '';
 				}
-
 			}
 
 		},

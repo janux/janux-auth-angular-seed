@@ -1,7 +1,7 @@
 "use strict";
 
 var config = require("config").serverAppContext;
-var dataSourceHandler = require('janux-persist').DataSourceHandler;
+var dataSourceHandler = require("janux-persist").DataSourceHandler;
 var authGenerator = require("./auth-generator");
 var lokiJsDBPath = config.db.lokiJsDBPath;
 var mongoConnUrl = config.db.mongoConnUrl;
@@ -12,11 +12,11 @@ console.log("Inserting authorization contexts and roles at " + dbEngine + " in t
 console.log("Authorization scheme is being generated");
 
 authGenerator.AuthGenerator.generateAuthDataInTheDatabase(dbEngine, path)
-.then(function () {
-    console.log("Authorization contexts and roles generated successfully");
-    process.exit(0);
-})
-.catch(function (error) {
-    console.log("There was an error inserting the authorization scheme.\n" + JSON.stringify(error));
-    process.exit(-1);
-});
+	.then(function() {
+		console.log("Authorization contexts and roles generated successfully");
+		process.exit(0);
+	})
+	.catch(function(error) {
+		console.log("There was an error inserting the authorization scheme.\n" + JSON.stringify(error));
+		process.exit(-1);
+	});

@@ -76,9 +76,9 @@
 		"passExpirationDate": "Fecha de Expiración de Contraseña",
 		"renew": "Renovar contraseña",
 		"title": "Personas & Organizaciones",
-		"dialogs":{
-			"noRowSelectedError":"Selecciona al menos un registro para borrar",
-			"confirmDeletion":"De verdad deseas borrar la selección?",
+		"dialogs": {
+			"noRowSelectedError": "Selecciona al menos un registro para borrar",
+			"confirmDeletion": "De verdad deseas borrar la selección?",
 			"nameEmpty": "El nombre del contacto del usuario no puede estar vacio",
 			"emailEmpty": "El correo electrónico del usuario no puede estar vacio",
 			"noRoles": "Debe seleccionar al menos un role de la lista",
@@ -96,7 +96,7 @@
 	"role": {
 		"title": "Roles",
 		"dialogs": {
-			"rolePosition":"Se actualizó correctamente la posición del role"
+			"rolePosition": "Se actualizó correctamente la posición del role"
 		}
 	},
 	"permission": {
@@ -110,7 +110,7 @@
 		"title": "Esquema de autorización",
 		"dialogs": {
 			"AuthContextPosition": "Se actualizó correctamente la posición del contexto de autorización",
-			"GroupPosition":"Se actualizó correctamente la posición del grupo"
+			"GroupPosition": "Se actualizó correctamente la posición del grupo"
 		}
 	},
 	"staff": {
@@ -125,7 +125,7 @@
 		"addressTitle": "Dirección",
 		"phoneTitle": "Telefono",
 		"mailTitle": "Correo",
-	    "functionsReceived": "Funciones que se le proveen al cliente",
+		"functionsReceived": "Funciones que se le proveen al cliente",
 		"email": "E-mail",
 		"edit": "Editar",
 		"delete": "Eliminar",
@@ -134,11 +134,11 @@
 		"admissionDate": "Fecha de admisión",
 		"first": "Principal",
 		"tabMenu": {
-			"tabMenuFirst":"DATOS GENERALES",
-			"tabMenuSecond":"RECURSOS HUMANOS",
-			"tabMenuThird":"BITACORA NÓMINA"
+			"tabMenuFirst": "DATOS GENERALES",
+			"tabMenuSecond": "RECURSOS HUMANOS",
+			"tabMenuThird": "BITACORA NÓMINA"
 		},
-		"contractor":"Externo",
+		"contractor": "Externo",
 		"inviteTip": "Invitar usuario al sistema",
 		"dialogs": {
 			"inviteTo": "Invitar al sistema a",
@@ -161,77 +161,82 @@
 		"edit": "Editar",
 		"createClient": "Agregar cliente",
 		"editClient": "Editar cliente",
-		"Organization":"Organización",
+		"Organization": "Organización",
 		"jobTitle": "Funciones",
 		"phonesTitle": "Teléfonos",
 		"mailsTitle": "Correos",
-	    "functionsReceived": "Funciones que se le proveen al cliente",
-	    "addressesTitle": "Direcciones",
+		"functionsReceived": "Funciones que se le proveen al cliente",
+		"addressesTitle": "Direcciones",
 		"country": "País",
 		"delete": "Eliminar",
 		"creation": "Creación",
 		"tabMenu": {
-		"tabMenuFirst":"Organización",
-		"tabMenuSecond":"Contactos",
-		"tabMenuRates":"Tarifas"
+			"tabMenuFirst": "Organización",
+			"tabMenuSecond": "Contactos",
+			"tabMenuRates": "Tarifas"
 		},
 		"dialogs": {
-			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
-			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
-			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
+			"noRowSelectedError": "Seleccione al menos un contacto del cliente para eliminar",
+			"confirmDeletion": "Está seguro que desea eliminar los contactos seleccionados?",
+			"successDeletedContacts": "Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
-			"clientSaved": "Cliente guardado correctamente"
+			"clientSaved": "Cliente guardado correctamente",
+			"rateSaved": "Tarifas guardadas correctamente"
 		},
-	    "rates":{
-		    "typeTime": "Tipo",
-		    "typeTimeDay": "Tarifa por día",
-		    "typeTimeHour": "Tarifa por hora",
-			"specialOps":"Servicios especiales",
-			"guards":"Guardias",
-			"research":"Investigación",
-		    "researchRates":"Costos de investigación",
-			"staff":"Personal",
-		    "vehicle":"Vehículo",
-		    "vehiclePlusStaff":"Vehículo + Personal",
+		"rates": {
+			"typeTime": "Tipo",
+			"typeTimeDay": "Tarifa por día",
+			"typeTimeHour": "Tarifa por hora",
+			"specialOps": "Servicios especiales",
+			"guards": "Guardias",
+			"research": "Investigación",
+			"researchRates": "Costos de investigación",
+			"staff": "Personal",
+			"vehicle": "Vehículo",
+			"vehiclePlusStaff": "Vehículo + Personal",
 			"function": "Función",
 			"rateDay": "Cargo por día",
 			"hoursFullDay": "Jornada",
 			"rateMinimum": "Cargo mínimo",
-			"hoursHalfDay":"Jornada mínima",
-			"rateExtraHour":"Cargo por hora extra",
-		    "driver": "Chofer",
-		    "agent": "Agente",
-		    "agentArmed":"Agente armado",
-		    "greeter":"Greeter",
-		    "coordinator": "Coordinador",
-		    "vehicleArmored":"Vehículo blindado",
-		    "transport":"Transporte",
-		    "guard":"Guardia",
-			"guardShiftManager":"Jefe de turno",
-			"guardNightShitMaintenance":"Mantenimiento nocturno",
-			"guardsGoodsReceipt":"Recibo de mercancía",
-			"guardSupport":"Guard (soporte)",
-		    "researchLegal":"Investigación  legal",
-		    "researchCriminal":"Investigación criminal",
-		    "researchOfficial":"Investigación oficial",
-		    "researchRPP":"Investigación (RPP)",
-		    "researchForeigner":"Investigación foraneo",
-		    "researchSAT":"Investigación (SAT)",
-		    "researchSHCP":"Investigación (SHCP)",
-		    "researchInvestigation":"Investigaciónes",
-		    "invalidHours": "Revise que las horas de jornada y jornada mínima sean correctas",
-		    "missingHoursFullDay": "Revise que las horas de jordana estén definidas",
-		    "missingHoursHalfDay": "Revise que las horas de jordana mínimia estén definidas",
-		    "missingRateDay": "Revise que las tarifa diaria esté definida",
-		    "discount" : "Descuentos",
-		    "discountsClient": "Descuentos cliente",
-		    "discountsReseller": "Descuentos revendedor",
-		    "staffDiscount": "Descuento personal",
-		    "discountPercentage": "Descuento",
-		    "invalidDiscount":"Revise que los descuentos sean correctos"
-	    }
+			"hoursHalfDay": "Jornada mínima",
+			"rateExtraHour": "Cargo por hora extra",
+			"driver": "Chofer",
+			"agent": "Agente",
+			"agentArmed": "Agente armado",
+			"greeter": "Greeter",
+			"coordinator": "Coordinador",
+			"vehicleArmored": "Vehículo blindado",
+			"transport": "Traslado",
+			"guard": "Guardia",
+			"guardShiftManager": "Jefe de turno",
+			"guardNightShitMaintenance": "Mantenimiento nocturno",
+			"guardsGoodsReceipt": "Recibo de mercancía",
+			"guardSupport": "Guard (soporte)",
+			"researchLegal": "Investigación  legal",
+			"researchCriminal": "Investigación criminal",
+			"researchOfficial": "Investigación oficial",
+			"researchRPP": "Investigación (RPP)",
+			"researchForeigner": "Investigación foraneo",
+			"researchSAT": "Investigación (SAT)",
+			"researchSHCP": "Investigación (SHCP)",
+			"researchInvestigation": "Investigaciónes",
+			"vehicleExternalSupplier": "Vehículo proveedor externo",
+			"transportArmored": "Traslado vehículo blindado",
+			"driverPlusVehicle": "Chofer más vehículo",
+			"driverPlusVehicleArmored": "Chofer más vehículo blindado",
+			"invalidHours": "Revise que las horas de jornada y jornada mínima sean correctas",
+			"missingHoursFullDay": "Revise que las horas de jordana estén definidas",
+			"missingHoursHalfDay": "Revise que las horas de jordana mínimia estén definidas",
+			"missingRateDay": "Revise que las tarifa diaria esté definida",
+			"discount": "Descuentos",
+			"discountsClient": "Descuentos cliente",
+			"discountsReseller": "Descuentos revendedor",
+			"staffDiscount": "Descuento personal",
+			"discountPercentage": "Descuento",
+			"invalidDiscount": "Revise que los descuentos sean correctos"
+		}
 	},
-    "supplier": {
+	"supplier": {
 		"name": "Nombre del negocio",
 		"code": "Código",
 		"listTitle": "Proveedores",
@@ -244,7 +249,7 @@
 		"edit": "Editar",
 		"createSupplier": "Agregar proveedor",
 		"editClient": "Editar proveedor",
-		"Organization":"Organización",
+		"Organization": "Organización",
 		"jobTitle": "Funciones",
 		"phonesTitle": "Teléfonos",
 		"mailsTitle": "Correos",
@@ -252,19 +257,19 @@
 		"country": "País",
 		"delete": "Eliminar",
 		"creation": "Creación",
-	    "available": "Disponible",
+		"available": "Disponible",
 		"tabMenu": {
-			"tabMenuFirst":"Organización",
-			"tabMenuSecond":"Contactos",
-			"tabMenuThird":"Personal"
+			"tabMenuFirst": "Organización",
+			"tabMenuSecond": "Contactos",
+			"tabMenuThird": "Personal"
 		},
 		"dialogs": {
-			"noRowSelectedError":"Seleccione al menos un contacto del cliente para eliminar",
-			"confirmDeletion":"Está seguro que desea eliminar los contactos seleccionados?",
-			"successDeletedContacts":"Los contactos seleccionados han sido eliminados",
+			"noRowSelectedError": "Seleccione al menos un contacto del cliente para eliminar",
+			"confirmDeletion": "Está seguro que desea eliminar los contactos seleccionados?",
+			"successDeletedContacts": "Los contactos seleccionados han sido eliminados",
 			"unsavedClient": "Tiene cambios sin guardar para este cliente. Desea guardarlos?",
 			"supplierSaved": "Proveedor guardado correctamente",
-			"rateSaved": "Tarifas guardadas correctamente"
+			"supplierContactCreated": "Contacto del proveedor guardado correctamente"
 		}
 	},
 	"peopleOrgs": {
@@ -272,35 +277,40 @@
 		"users": "Usuarios",
 		"staff": "Personal",
 		"clients": "Clientes",
-	  	"suppliers": "Proveedores",
-	    "contacts" : "Contactos"
+		"suppliers": "Proveedores",
+		"contacts": "Contactos"
 	},
 	"operations": {
-		"title": "Operaciones",
+		"title": "Bitácoras",
+		"newTimeSheet": "Nuevo registro",
 		"drivers": "Choferes",
-	    "status":"Estado",
-	    "statuses" : {
-	        "upcoming":"Pendiente",
-	        "inProgress":"En progreso",
-	        "completed": "Completo",
-	        "invoiced": "Facturado",
-	        "invoicedMissingTimeEntries" : "Registros de bitacoran pendientes por asignar a factura",
-	        "paid":"Pagada"
-	    },
-	    "errorMessages":{
-		    "cantUpdateDueInvoiceAssociation":"El registro de bitacora no puede ser cambiado de servicio o removido debido a que está asociado a una factura"
-	    },
+		"status": "Estado",
+		"statuses": {
+			"upcoming": "Pendiente",
+			"inProgress": "En progreso",
+			"completed": "Completo",
+			"invoiced": "Facturado",
+			"invoicedMissingTimeEntries": "Registros de bitacoran pendientes por asignar a factura",
+			"paid": "Pagada"
+		},
+		"errorMessages": {
+			"cantUpdateDueInvoiceAssociation": "El registro de bitacora no puede ser modificado o removido debido a que está asociado a una factura"
+		},
 		"driversTimeLog": {
 			"title": "Bitácora de Choferes",
 			"staff": "Personal",
 			"operation": "Servicio",
+			"date": "Fecha",
 			"begin": "Inicio",
-			"end": "Término",
+			"end": "Fin",
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
 			"filterLabel": "Ver:",
 			"absence": "Falta",
+			"hours": "Horas",
+			"beginHour": "Hora inicio",
+			"endHour": "Hora fin",
 			"absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",
@@ -308,7 +318,7 @@
 				"F": "Falta (F)",
 				"PC": "PC",
 				"I": "I",
-			    "NO_SERVICE_PROVIDED": "No se requirió servicio"
+				"NO_SERVICE_PROVIDED": "No se requirió servicio"
 			}
 		},
 		"guardsTimeLog": {
@@ -316,108 +326,135 @@
 			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
+			"date": "Fecha",
 			"begin": "Inicio",
-			"end": "Término",
+			"end": "Fin",
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
 			"absence": "Falta",
 			"extras": "Extras",
-		    "isExternal" : "Externo",
+			"isExternal": "Externo",
+			"hoursBilled": "Horas",
+			"beginHour": "Hora inicio",
+			"endHour": "Hora fin",
 			"extraOptions": {
 				"AF": "Adicional facturado (AF)",
 				"A": "Adicional no facturado (A)",
 				"NM": "Nocturno mantenimiento (NM)",
 				"NRM": "Nocturno recibo mercancia (NRM)",
-			    "CLOSED" : "Tienda cerrada (CLOSED)",
-			    "GUARD_SHIFT_MANAGER": "Jefe de turno",
-			    "NOT_COVERED" : "No se cubrió (NOT COVERED)"
+				"CLOSED": "Tienda cerrada (CLOSED)",
+				"GUARD_SHIFT_MANAGER": "Jefe de turno",
+				"NOT_COVERED": "No se cubrió (NOT COVERED)"
 			}
 		},
-	  	"specialsTimeLog":{
+		"specialsTimeLog": {
 			"title": "Operaciones especiales",
 			"filterLabel": "Ver:",
 			"staff": "Personal",
 			"operation": "Servicio",
+			"date": "Fecha",
 			"begin": "Inicio",
-			"end": "Término",
+			"end": "Fin",
+			"beginHourBillable": "Hora inicio",
+			"beginHourWork": "Hora inicio trabajo",
+			"endHourWork": "Hora fin trabajo",
+			"endHourBillable": "Hora fin",
+			"hoursBilled": "Horas facturadas",
+			"hoursWorked": "Horas laboradas",
 			"client": "Cliente",
 			"duration": "Duración",
 			"comment": "Comentario",
-		    "odometerStart": "Km ini",
-		    "odometerEnd": "Km fin",
-		    "fuelStart": "G ini",
-		    "fuelEnd": "G fin",
-		    "vehicle" : "Vehículo",
-		    "function": "Función",
-		    "driver": "Chofer",
-		    "agent" :"Agente",
-		    "agentArmed": "Agente armado",
-		    "greeter": "Greeter",
-		    "coordinator": "Coordinador",
-		    "transport": "Transporte",
-		    "invoiceNumber": "Número de factura"
-
+			"odometerStart": "Km ini",
+			"odometerEnd": "Km fin",
+			"fuelStart": "Gasolina ini",
+			"fuelEnd": "Gasolina fin",
+			"vehicle": "Vehículo",
+			"function": "Función",
+			"driver": "Chofer",
+			"agent": "Agente",
+			"agentArmed": "Agente armado",
+			"greeter": "Greeter",
+			"coordinator": "Coordinador",
+			"transport": "Traslado",
+			"transferArmoredVehicle": "Traslado vehículo blindado",
+			"driverPlusVehicle": "Chofer más vehículo",
+			"driverPlusVehicleArmored": "Chofer más vehículo blindado",
+			"invoiceNumber": "Número de factura",
+			"Comentario": "Comentario"
 		},
 		"specials": "Especiales",
 		"guards": "Guardias",
-	    "attendance": "Asistencias",
-	    "attendanceTimeLog":{
-			"title" : "Bitácora de asistencias",
-		    "operation": "Servicio",
-		    "operationType": "Tipo",
-		    "operationTypeDriver": "Chofer fijo",
-		    "operationTypeGuard": "Guardia",
-		    "operationTypeSpecialOps": "Operacion especial",
-		    "operationTypeAttendance": "Asistencia",
-		    "filterLabel": "Ver:",
-		    "staff" : "Personal",
-		  	"begin":"Inicio",
-		    "end": "Fin",
-		    "duration":"Duración",
-		    "comment":"Comentarios",
-		    "absence":"Absence",
-		    "absenceOptions": {
+		"attendance": "Asistencias",
+		"attendanceTimeLog": {
+			"title": "Bitácora de asistencias",
+			"operation": "Servicio",
+			"operationType": "Tipo",
+			"operationTypeDriver": "Chofer fijo",
+			"operationTypeGuard": "Guardia",
+			"operationTypeSpecialOps": "Operacion especial",
+			"operationTypeAttendance": "Asistencia",
+			"filterLabel": "Ver:",
+			"staff": "Personal",
+			"date": "Fecha",
+			"begin": "Inicio",
+			"end": "Fin",
+			"beginHour": "Hora inicio",
+			"beginHourWork": "Hora inicio trabajo",
+			"duration": "Duración",
+			"comment": "Comentarios",
+			"absence": "Absence",
+			"endHour": "Hora fin",
+			"endHourWork": "Hora fin trabajo",
+			"hoursBilled": "Horas facturadas",
+			"hoursWorked": "Horas laboradas",
+			"absenceOptions": {
 				"D": "Descanso (D)",
 				"V": "Vacaciones (V)",
 				"F": "Falta (F)",
-			    "PS": "Permiso sin goce de sueldo (PS)",
-			    "PC": "PC",
-			    "I": "I"
-		    }
+				"PS": "Permiso sin goce de sueldo (PS)",
+				"PC": "PC",
+				"I": "I"
+			}
 		},
 		"services": "Servicios",
-		"dialogs":{
-			"endDateError":"La fecha de término debe ser mayor a la fecha de inicio",
-			"invalidOperation":"La operación seleccionada es invalida",
-			"invalidFunction":"La función seleccionada es invalida",
-			"invalidStaff":"El personal seleccionado es invalido",
-			"noRowSelectedError":"Selecciona al menos un registro para borrar",
-			"confirmDeletion":"De verdad deseas borrar la selección?",
+		"dialogs": {
+			"invalidStartDateForm": "Debe definir una fecha",
+			"beginBillableDateError": "Debe definir la hora de inicio facturable",
+			"endBillableDateError": "Debe definir la hora fin facturable",
+			"beginDateError": "Debe definir la hora de inicio",
+			"endDateError": "Debe definir la hora fin",
+			"beginWorkDateError": "Debe definir la hora de inicio laboral",
+			"endWorkDateError": "Debe definir la hora de inicio laboral",
+			"invalidOperation": "La operación seleccionada es invalida",
+			"invalidFunction": "La función seleccionada es invalida",
+			"invalidStaff": "El personal seleccionado es invalido",
+			"noRowSelectedError": "Selecciona al menos un registro para borrar",
+			"confirmDeletion": "De verdad deseas borrar la selección?",
 			"clientContactCreated": "Contacto del cliente insertado correctamente",
 			"addingPrincipal": "Agregar principal",
-			"addedSpecialOp":"Operación especial agregada exitosamente",
-            "invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia",
-		    "odometerStartGreaterThanEnd" : "Valores inválidos en el kilometraje del vehículo"
+			"addedSpecialOp": "Operación especial agregada exitosamente",
+			"invalidOperationForAttendance": "El registro a actualizar no es del tipo asistencia",
+			"odometerStartGreaterThanEnd": "Valores inválidos en el kilometraje del vehículo"
 		}
 	},
 	"services": {
 		"title": "Servicios",
 		"listTitle": "Lista de servicios",
 		"list": {
-			"type":"Tipo",
-			"name":"Nombre",
-			"client":"Cliente",
-			"code":"Código",
-			"assigned":"Personal asignado",
+			"type": "Tipo",
+			"name": "Nombre",
+			"client": "Cliente",
+			"code": "Código",
+			"assigned": "Personal asignado",
 			"duration": "Duracion",
 			"begin": "Inicio",
 			"end": "Fin",
-		    "status": "Estado",
+			"status": "Estado",
 			"DRIVER": "Chofer fijo",
 			"GUARD": "Guardia",
 			"SPECIAL_OPS": "Especial",
-		    "CONSULTING" : "Consultoría",
+			"CONSULTING": "Consultoría",
 			"details": "Detalles"
 		},
 		"tabs": {
@@ -428,16 +465,17 @@
 		"delete": "Borrar",
 		"addToInvoice": "Agregar a",
 		"newInvoice": "Factura nueva",
-		"addSpecial":"Agregar servicio especial",
+		"addSpecial": "Agregar servicio especial",
 		"specialService": "Servicio especial",
-	    "consultingService": "Consulting service",
+		"consultingService": "Servicio consultoría",
+		"driverService": "Servicio chofer",
 		"specialForm": {
 			"name": "Nombre del servicio",
 			"begin": "Inicio",
 			"end": "Término",
 			"client": "Cliente",
 			"requester": "Solicitante",
-			"addRequester":"Agregar nuevo solicitante",
+			"addRequester": "Agregar nuevo solicitante",
 			"principal": "Principal",
 			"addPrincipal": "Crear nuevo principal",
 			"resources": "Recursos",
@@ -447,8 +485,8 @@
 			"staffGuard": "Agente",
 			"staffGuardArmed": "Agente armado",
 			"staffCoordinator": "Coordinador",
-		    "staffGreeter": "Greeter",
-		    "staffTransport": "Transporte",
+			"staffGreeter": "Greeter",
+			"staffTransport": "Traslado",
 			"vehicle": "Vehículo",
 			"details": "Detalles",
 			"addingPrincipal": "Agregar principal",
@@ -466,67 +504,70 @@
 				"contactLastNameEmpty": "El apellido del contacto no puede estar vacio"
 			}
 		},
-	    "invoice" : {
-		    "invoice" : "Factura",
-		    "title": "Facturas",
-			"invoiceNumber" : "Número",
-		    "grandTotal" : "Total",
-		    "invoiceDate" : "Fecha",
-		    "isPaid" : "Pagada",
-		    "status" : "Estado",
-		    "insertManual":"Insertar factura",
-		    "updatePaid" : "Actualizar",
-   		    "statuses": {
-			  "inRevision" : "En revisión",
-			  "ended": "Terminada"
-		    },
-		    "invoiceDetail":{
-			  "date": "Fecha",
-			  "personName": "Personal",
-			  "vehicle": "Vehiculo",
-			  "function": "Función",
-			  "hour": "Hora",
-			  "duration":"Duración",
-			  "amountDay": "Días",
-			  "amountHour": "Horas",
-			  "costDay": "Costo diario",
-			  "costHour": "Costo hora",
-			  "doNotInvoice":"No facturar",
-			  "subTotal": "Subtotal",
-			  "expenseName": "Concepto",
-			  "totalBeforeDiscount": "Sub total",
-			  "discount": "Descuento",
-			  "discountPercentage": "Descuento",
-			  "totalPersonAfterDiscount": "Subtotal",
-			  "grandTotal": "Total",
-			  "subTotalPerson": "Total personal",
-			  "subTotalVehicle" : "Total vehículos",
-			  "subTotalExpenses" : "Total gastos",
-			  "totalBeforeExpenses" : "Subtotal",
-			  "staff": "Personal",
-			  "vehicles" : "Vehículos",
-			  "expenses": "Gastos"
+		"invoice": {
+			"invoice": "Factura",
+			"title": "Facturas",
+			"invoiceNumber": "Número",
+			"grandTotal": "Total",
+			"invoiceDate": "Fecha",
+			"isPaid": "Pagada",
+			"status": "Estado",
+			"insertManual": "Insertar factura",
+			"updatePaid": "Actualizar",
+			"statuses": {
+				"inRevision": "En revisión",
+				"ended": "Terminada"
 			},
-		    "expenses":{
-			  "insert" :"Insertar gasto",
-			  "staff":"Personal",
-			  "name": "Concepto",
-			  "date": "Fecha",
-			  "cost": "Costo",
-			  "invalidCost": "The cost must be a value greater than zero",
-			  "invalidName": "Must define a concept",
-			  "invalidDate": "Must define a date",
-			  "invalidPerson": "Must define a staff from the list"
-		    },
+			"invoiceDetail": {
+				"date": "Fecha",
+				"personName": "Personal",
+				"vehicle": "Vehiculo",
+				"function": "Función",
+				"begin": "Inicio",
+				"end": "Fin",
+				"duration": "Duración",
+				"amountDay": "Días",
+				"amountHour": "Horas",
+				"costFixed": "Costo fijo",
+				"costDay": "Costo diario",
+				"costHour": "Costo hora",
+				"doNotInvoice": "No facturar",
+				"subTotal": "Subtotal",
+				"expenseName": "Concepto",
+				"totalBeforeDiscount": "Sub total",
+				"discount": "Descuento",
+				"discountPercentage": "Descuento",
+				"totalPersonAfterDiscount": "Subtotal",
+				"grandTotal": "Total",
+				"subTotalPerson": "Total personal",
+				"subTotalVehicle": "Total vehículos",
+				"subTotalExpenses": "Total gastos",
+				"totalBeforeExpenses": "Subtotal",
+				"staff": "Personal",
+				"vehicles": "Vehículos",
+				"expenses": "Gastos"
+			},
+			"expenses": {
+				"insert": "Insertar gasto",
+				"staff": "Personal",
+				"name": "Concepto",
+				"date": "Fecha",
+				"cost": "Costo",
+				"invalidCost": "The cost must be a value greater than zero",
+				"invalidName": "Must define a concept",
+				"invalidDate": "Must define a date",
+				"invalidPerson": "Must define a staff from the list"
+			},
 			"dialogs": {
 				"missingInvoiceNumber": "Por favor ingrese un folio de factura",
-				"duplicatedInvoiceNumber":"Hay otra factura con el mismo número",
+				"duplicatedInvoiceNumber": "Hay otra factura con el mismo número",
 				"missingInvoiceDate": "Por favor ingrese una fecha para la factura",
-			    "invalidGrandTotal" : "Por favor defina un importe correcto para la factura",
+				"invalidGrandTotal": "Por favor defina un importe correcto para la factura",
 				"noRowsSelected": "Seleccione al menos una fila para agregar a la factura",
 				"insertTimeEntries": "Registros de bitacora agregados a la factura",
 				"insertTimeEntriesInvoiceError": "Los registros de la bitacora seleccionados no se pueden agregar a la factura debido a que uno o mas ya fue relacionado con una factura.",
-			    "invalidPercentage": "El valor del porcentaje es inválido"
+				"invalidPercentage": "El valor del porcentaje es inválido",
+				"invoiceEnded": "No se puede modificar la factura debido a que estado está marcado como terminada"
 			}
 		}
 	},
@@ -534,8 +575,8 @@
 		"title": "Esquema de autorización",
 		"roles": "Roles",
 		"authorizations": "Autorizaciones",
-		"dialogs":{
-			"warningDeletion":"No puedes eliminar este grupo por que contiene {{ value }} esquemas de autorización vinculados"
+		"dialogs": {
+			"warningDeletion": "No puedes eliminar este grupo por que contiene {{ value }} esquemas de autorización vinculados"
 		}
 	},
 	"grid": {
@@ -572,16 +613,16 @@
 		"last90Days": "Últimos 90 dias",
 		"currentQuarter": "Trimestre actual",
 		"lastQuarter": "Trimestre pasado",
-	    "oneYear": "Últimos 365 días",
-	    "yearToDate":"Este año",
-	    "lastYear":"Año pasado",
-	    "firstBiWeekCurrentMonth": "Primera quincena del mes actual",
-	    "secondBiWeekCurrentMonth": "Segunda quincena del mes actual",
-	    "firstBiWeekPreviousMonth": "Primera quincena del mes anterior",
-	    "secondBiWeekPreviousMonth": "Segunda quincena del mes anterior"
+		"oneYear": "Últimos 365 días",
+		"yearToDate": "Este año",
+		"lastYear": "Año pasado",
+		"firstBiWeekCurrentMonth": "Primera quincena del mes actual",
+		"secondBiWeekCurrentMonth": "Segunda quincena del mes actual",
+		"firstBiWeekPreviousMonth": "Primera quincena del mes anterior",
+		"secondBiWeekPreviousMonth": "Segunda quincena del mes anterior"
 	},
-	"dialogs":{
-		"delete":"Estas seguro que quieres borrar ",
+	"dialogs": {
+		"delete": "Estas seguro que quieres borrar ",
 		"accessDenied": "No tiene suficientes permisos para realizar esta operación"
 	},
 	"party": {
@@ -592,7 +633,7 @@
 			"maternalName": "Apellido materno",
 			"job": "Puesto",
 			"type": "Tipo",
-		    "isExternal" : "Externo",
+			"isExternal": "Externo",
 			"dialogs": {
 				"noEmail": "Esta persona no tiene dirección de correo electrónico asociada"
 			}
@@ -621,8 +662,8 @@
 		"wsp": "WSP",
 		"first": "Principal",
 		"type": "Tipo",
-	    "functionsProvided":{
-		    "title": "Funciones que ofrece",
+		"functionsProvided": {
+			"title": "Funciones que ofrece",
 			"driver": "Chofer",
 			"agent": "Agente",
 			"agent_armed": "Agente armado",
@@ -634,19 +675,19 @@
 			"guard_night_shift_maintenance": "Guardia mantenimiento nocturno",
 			"guard_goods_receipt": "Guardia recibo de mercancia"
 		},
-	    "functionsReceived":{
+		"functionsReceived": {
 			"title": "Funciones que ofrece",
 			"driver": "Chofer",
 			"agent": "Agente",
 			"agent_armed": "Agente armado",
-		    "greeter": "Greeter",
+			"greeter": "Greeter",
 			"coordinator": "Coordinador",
 			"guard": "Guardia",
 			"guard_support": "Guardia adicional",
 			"guard_shift_manager": "Guardia jefe de turno",
 			"guard_night_shift_maintenance": "Guardia mantenimiento nocturno",
 			"guard_goods_receipt": "Guardia recibo de mercancia"
-	     },
+		},
 		"dialogs": {
 			"c": "Editando el contacto",
 			"contactSaved": "Contacto actualizado correctamente",
@@ -655,7 +696,9 @@
 			"unsavedContact": "Tiene cambios sin guardar para este contacto. Desea guardarlos?",
 			"noContacts": "No hay grupo de contactos asociado",
 			"addingContact": "Agregar contacto",
-			"invalidEmail": "El correo electrónico ingresado es invalido"
+			"invalidEmail": "El correo electrónico ingresado es invalido",
+			"duplicatedEmail": "Existe otro conctacto con la misma dirección de correo",
+			"contactDuplicated": "El conctacto con el registro duplicado es "
 		},
 		"contactType": {
 			"HOME": "Residencia",

@@ -58,7 +58,7 @@ side-bar
 			//- 		md-icon.fa.fa-ellipsis-v.fa-lg.points
 
 
-	.service-item(ng-repeat="operation in operations | orderBy:'-start'" ng-if="operation.type=='SPECIAL_OPS'")
+	.service-item(ng-repeat="operation in operations | orderBy:'-begin'" ng-if="operation.type=='SPECIAL_OPS'")
 		.service-title(ui-sref='services.view-special({id:operation.id})')
 			.service-name
 				span(ng-show='operation.type!="SPECIAL_OPS"') {{operation.name}}

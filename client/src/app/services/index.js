@@ -35,6 +35,68 @@ require('angular').module('appServices', [
 			}]
 		}
 	})
+	.state('services.specials', {
+		url: '/services/specials',
+		templateUrl: 'app/services/special-ops-services.html',
+		authRequired: true,
+		controller: require('./special-ops-services-controller.js'),
+		resolve: {
+			operations: ['operationService','invoices', function (operationService,invoices) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+					console.log('Operations before mapping', operations);
+					return operationService.mapOperations(operations,invoices);
+				});
+			}],
+			invoices : ['invoiceService', 'security', function (invoiceService, security) {
+				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
+					// console.log('Operations before mapping', operations);
+					return invoices;
+				});
+			}]
+		}
+	})
+
+	.state('services.drivers', {
+		url: '/services/drivers',
+		templateUrl: 'app/services/drivers-services.html',
+		authRequired: true,
+		controller: require('./drivers-services-controller.js'),
+		resolve: {
+			operations: ['operationService','invoices', function (operationService,invoices) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+					console.log('Operations before mapping', operations);
+					return operationService.mapOperations(operations,invoices);
+				});
+			}],
+			invoices : ['invoiceService', 'security', function (invoiceService, security) {
+				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
+					// console.log('Operations before mapping', operations);
+					return invoices;
+				});
+			}]
+		}
+	})
+
+	.state('services.guards', {
+		url: '/services/guards',
+		templateUrl: 'app/services/guards-services.html',
+		authRequired: true,
+		controller: require('./guards-services-controller.js'),
+		resolve: {
+			operations: ['operationService','invoices', function (operationService,invoices) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+					console.log('Operations before mapping', operations);
+					return operationService.mapOperations(operations,invoices);
+				});
+			}],
+			invoices : ['invoiceService', 'security', function (invoiceService, security) {
+				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
+					// console.log('Operations before mapping', operations);
+					return invoices;
+				});
+			}]
+		}
+	})
 
 	// Create special service
 	.state('services.create-special', {

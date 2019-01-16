@@ -458,10 +458,22 @@
 			"CONSULTING": "Consulting",
 			"details": "Details"
 		},
+		"guards": "Guards",
+		"drivers": "Drivers",
+		"specials": "Specials",
 		"tabs": {
 			"summary": "Summary",
 			"timeSheet": "Time sheet",
 			"invoices": "Invoices"
+		},
+		"driversServices": {
+			"title": "List of services for Drivers"
+		},
+		"guardsServices": {
+			"title": "List of services for Guards"
+		},
+		"specialsServices": {
+			"title": "List of services for Specials"
 		},
 		"delete": "Delete",
 		"addToInvoice": "Add to",

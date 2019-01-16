@@ -457,10 +457,22 @@
 			"CONSULTING": "Consultoría",
 			"details": "Detalles"
 		},
+		"guards": "Guardias",
+		"drivers": "Choferes",
+		"specials": "Especiales",
 		"tabs": {
 			"summary": "Resumen",
 			"timeSheet": "Bitacora",
 			"invoices": "Facturas"
+		},
+		"driversServices": {
+			"title": "Lista de servicios de Choferes"
+		},
+		"guardsServices": {
+			"title": "Lista de servicios de Guardias"
+		},
+		"specialsServices": {
+			"title": "Lista de servicios Especiales"
 		},
 		"delete": "Borrar",
 		"addToInvoice": "Agregar a",

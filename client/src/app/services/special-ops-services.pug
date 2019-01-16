@@ -1,0 +1,86 @@
+login-toolbar(toolbar-title='peopleOrgs.title')
+
+side-bar
+
+.page-content-wrapper.time-sheet.ops-sheet-page.hide-mobile(ng-class="{'page-content-left' : noneStyle}")
+	.container-fluid-flex
+		md-toolbar.form-root-toolbar(style="height:10px;")
+			.md-toolbar-tools.form-toolbar-glarus
+				md-truncate
+					span.title-breadcrum
+						| {{ 'services.title' | translate }}
+					h2.title-bar-txt
+						| {{ 'services.specialsServices.title' | translate }}
+
+				span(flex)
+
+				md-menu(md-position-mode="target-right target" md-offset="-6 50" )
+					md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-click='openAddOperationMenu($mdMenu, $event);' ng-show='userRole.can("CREATE",option.authContext);')
+						md-icon.fa.fa-plus-square.fa-lg
+
+					md-menu-content
+						//md-button Drivers
+						md-button(ui-sref='services.create-special') {{ 'services.specialService' | translate }}
+						md-button(ui-sref='services.create-research') {{ 'services.consultingService' | translate }}
+						//md-button Guards
+
+				md-button.arrow.md-icon-button(aria-label="Export")
+					md-icon.fa.fa-download.fa-lg
+
+		.container-body
+			.ops-sheet.ag-fresh(ag-grid="gridOptions" ag-grid-reload="agGridSizeToFit")
+
+//Lista de Servicios solo visto en moviles
+
+.list-services.hide-desktop
+	md-toolbar.form-root-toolbar(style="height:10px;")
+		.md-toolbar-tools.form-toolbar-glarus
+			md-truncate
+				span.title-breadcrum
+					| {{ 'services.title' | translate }}
+				h2.title-bar-txt
+					| {{ 'services.listTitle' | translate }}
+
+			span(flex)
+
+			md-menu(md-position-mode="target-right target" md-offset="-6 50" )
+				md-button.add.md-icon-button.form-btn-toolbar(aria-label="Add" ng-click='openAddOperationMenu($mdMenu, $event);' ng-show='userRole.can("CREATE",option.authContext);')
+					md-icon.fa.fa-plus-square.fa-lg
+
+				md-menu-content
+					//md-button Drivers
+					md-button(ui-sref='services.create-special') {{ 'services.specialService' | translate }}
+					md-button(ui-sref='services.create-research') {{ 'services.consultingService' | translate }}
+					//md-button Guards
+
+			//- md-menu(md-position-mode="target-right target" md-offset="-6 50")
+			//- 	md-button.md-icon-button.options(aria-label="Options")
+			//- 		md-icon.fa.fa-ellipsis-v.fa-lg.points
+
+
+	.service-item(ng-repeat="operation in operations | orderBy:'-start'" ng-if="operation.type=='SPECIAL_OPS'")
+		.service-title(ui-sref='services.view-special({id:operation.id})')
+			.service-name
+				span(ng-show='operation.type!="SPECIAL_OPS"') {{operation.name}}
+				a(ng-show='operation.type=="SPECIAL_OPS"') 
+					| {{operation.name}}
+			.service-status
+				| {{operation.status}}
+		.service-detail
+			.service-info
+				| {{ 'services.list.type' | translate }}: 
+				strong {{'services.list.' + operation.type | translate }}
+				br
+				span(ng-show='operation.begin!=undefined')
+					| {{ 'services.list.begin' | translate }}: {{operation.begin | date:'yyyy-MM-dd'}}
+				span(ng-show='operation.end!=undefined')
+					| , {{ 'services.list.end' | translate }}: {{operation.end  | date:'yyyy-MM-dd'}}
+					br 
+				| {{ 'services.list.duration' | translate }}: {{operation.duration | amDurationFormat}}
+				br 
+				| {{ 'services.list.assigned' | translate }}: {{operation.assigned}}
+			//- .service-tools
+			//- 	md-checkbox(aria-label="Trash" class="md-primary" style="margin-top:8px; margin-left:10px; background:none")
+
+
+footer-Janux

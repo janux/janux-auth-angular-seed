@@ -74,8 +74,23 @@ require('angular').module('config', [])
 				translateKey: 'services.title',
 				iconClass   : 'fa-tachometer',
 				state       : 'services',
-				authContext : 'SERVICE',
-				subOptions  : {}
+				subOptions  : {
+					drivers : {
+						state       : 'services.drivers',
+						translate   : 'services.drivers',
+						authContext : 'SERVICE'
+					},
+					specials : {
+						state       : 'services.specials',
+						translate   : 'services.specials',
+						authContext : 'SERVICE'
+					},
+					guards : {
+						state       : 'services.guards',
+						translate   : 'services.guards',
+						authContext : 'SERVICE'
+					}
+				}
 			},
 			{
 				key         : 'authSchema',

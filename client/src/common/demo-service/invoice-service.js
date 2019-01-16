@@ -109,6 +109,16 @@ module.exports =
 		function toJSONItemTimeEntry(object) {
 			const result = _.clone(object);
 			result.timeEntry = timeRecordService.toJSON(object.timeEntry);
+			// Let's remove unnecessary data.
+			if (!_.isNil(result.timeEntry.attributes)) {
+				delete result.timeEntry.attributes;
+			}
+			if (!_.isNil(result.timeEntry.resources)) {
+				delete result.timeEntry.resources;
+			}
+			if (!_.isNil(result.timeEntry.principals)) {
+				delete result.timeEntry.principals;
+			}
 			return result;
 		}
 
@@ -252,11 +262,11 @@ module.exports =
 				});
 			},
 
-			insertInvoiceItemTimeEntry: function (invoiceNumber, invoiceName, itemTimeEntry) {
+			insertInvoiceItemTimeEntry: function (invoiceNumber, invoiceName, itemTimeEntries) {
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',
 					'insertInvoiceItemTimeEntry',
-					[invoiceNumber, invoiceName, toJSONItemTimeEntry(itemTimeEntry)]
+					[invoiceNumber, invoiceName, _.map(itemTimeEntries,toJSONItemTimeEntry)]
 				).then(function (resp) {
 					return fromJSONItemTimeEntry(resp.data.result);
 				}, function (err) {

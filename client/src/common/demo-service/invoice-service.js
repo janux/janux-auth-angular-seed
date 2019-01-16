@@ -78,6 +78,20 @@ module.exports =
 			return result;
 		}
 
+		/**
+		 * This to json method avoid filling the items data
+		 * in order to generate a very big body request.
+		 * @param object
+		 * @return {*}
+		 */
+		function toJSONForUpdate(object) {
+			const result = _.clone(object);
+			result.client = partyService.toJSON(object.client);
+			result.items = [];
+			result.defaultOperation = _.isNil(object.defaultOperation) ? undefined : operationService.toJSON(object.defaultOperation);
+			return result;
+		}
+
 		function toJSONItem(object) {
 			const result = _.clone(object);
 			result.expenses = _.map(object.expenses, toJSONExpense);
@@ -173,7 +187,7 @@ module.exports =
 				return $http.jsonrpc(
 					'/rpc/2.0/invoice',
 					'update',
-					[toJSON(invoice)]
+					[toJSONForUpdate(invoice)]
 				).then(function (resp) {
 					return fromJSON(resp.data.result);
 				});

@@ -78,8 +78,8 @@ var createInstance = function (operationServiceReference, userOperationServiceRe
 		return userOperationServiceReferenceInstance.findWithTimeEntriesByDateBetweenAndUserAndType(initDate, endDate, username, type).asCallback(callback);
 	};
 
-	OperationService.prototype.findWithoutTimeEntryByUsername = function (username, callback) {
-		return userOperationServiceReferenceInstance.findWithoutTimeEntryByUsername(username).asCallback(callback);
+	OperationService.prototype.findWithoutTimeEntryByUsernameAndType = function (username, type, callback) {
+		return userOperationServiceReferenceInstance.findWithoutTimeEntryByUsernameAndType(username, type).asCallback(callback);
 	};
 
 	return new OperationService();

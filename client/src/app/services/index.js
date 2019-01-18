@@ -22,7 +22,7 @@ require('angular').module('appServices', [
 		controller: require('./services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType().then(function (operations) {
 					console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations,invoices);
 				});
@@ -42,7 +42,7 @@ require('angular').module('appServices', [
 		controller: require('./special-ops-services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType('SPECIAL_OPS').then(function (operations) {
 					console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations,invoices);
 				});
@@ -63,7 +63,7 @@ require('angular').module('appServices', [
 		controller: require('./drivers-services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType('DRIVER').then(function (operations) {
 					console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations,invoices);
 				});
@@ -84,7 +84,7 @@ require('angular').module('appServices', [
 		controller: require('./guards-services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType('GUARD').then(function (operations) {
 					console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations,invoices);
 				});
@@ -105,7 +105,7 @@ require('angular').module('appServices', [
 		controller: require('./consulting-services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType('CONSULTING').then(function (operations) {
 					console.log('Operations before mapping', operations);
 					return operationService.mapOperations(operations,invoices);
 				});

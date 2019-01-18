@@ -189,12 +189,13 @@ module.exports =
 					});
 				},
 
-				findWithoutTimeEntryByAuthenticatedUser: function () {
+				findWithoutTimeEntryByAuthenticatedUserAndType: function (type) {
 					var username = security.currentUser.username;
+					var params = _.isNil(type) ? [username] : [username, type];
 					return $http.jsonrpc(
 						'/rpc/2.0/operation',
-						'findWithoutTimeEntryByUsername',
-						[username]
+						'findWithoutTimeEntryByUsernameAndType',
+						params
 					).then(function (resp) {
 						return _.map(resp.data.result, function (o) {
 							return fromJSON(o);
@@ -203,7 +204,7 @@ module.exports =
 				},
 
 				findGuardsAndOperations: function () {
-					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+					return service.findWithoutTimeEntryByAuthenticatedUserAndType().then(function (result) {
 						var guardsAssignedToOperations = [];
 						var operationsAvailableForSelection = [];
 						result.forEach(function (op) {
@@ -292,7 +293,7 @@ module.exports =
 				},
 
 				findDriversAndOperations: function () {
-					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+					return service.findWithoutTimeEntryByAuthenticatedUserAndType().then(function (result) {
 						var driversAssignedToOperations = [];
 						var operations = [];
 						result.forEach(function (op) {
@@ -336,7 +337,7 @@ module.exports =
 				},
 
 				findDriversAndSpecialOps: function () {
-					return service.findWithoutTimeEntryByAuthenticatedUser().then(function (result) {
+					return service.findWithoutTimeEntryByAuthenticatedUserAndType().then(function (result) {
 						var driversAssignedToOperations = [];
 						var vehiclesAssignedToOperations = [];
 						var operations = [];

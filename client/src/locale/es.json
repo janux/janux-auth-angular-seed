@@ -460,7 +460,7 @@
 		"guards": "Guardias",
 		"drivers": "Choferes",
 		"specials": "Especiales",
-		"consultancy": "Consultoría",
+		"consulting": "Consultoría",
 		"tabs": {
 			"summary": "Resumen",
 			"timeSheet": "Bitacora",
@@ -475,7 +475,7 @@
 		"specialsServices": {
 			"title": "Lista de servicios Especiales"
 		},
-		"consultancyServices": {
+		"consultingServices": {
 			"title": "Lista de servicios de Consultoría"
 		},
 		"delete": "Borrar",

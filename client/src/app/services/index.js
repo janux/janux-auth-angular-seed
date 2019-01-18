@@ -98,11 +98,11 @@ require('angular').module('appServices', [
 		}
 	})
 
-	.state('services.consultancy', {
-		url: '/services/consultancy',
-		templateUrl: 'app/services/consultancy-services.html',
+	.state('services.consulting', {
+		url: '/services/consulting',
+		templateUrl: 'app/services/consulting-services.html',
 		authRequired: true,
-		controller: require('./consultancy-services-controller.js'),
+		controller: require('./consulting-services-controller.js'),
 		resolve: {
 			operations: ['operationService','invoices', function (operationService,invoices) {
 				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {

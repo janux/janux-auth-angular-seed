@@ -89,6 +89,11 @@ require('angular').module('config', [])
 						state       : 'services.guards',
 						translate   : 'services.guards',
 						authContext : 'SERVICE'
+					},
+					consultancy : {
+						state       : 'services.consultancy',
+						translate   : 'services.consultancy',
+						authContext : 'SERVICE'
 					}
 				}
 			},

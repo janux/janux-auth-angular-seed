@@ -98,6 +98,27 @@ require('angular').module('appServices', [
 		}
 	})
 
+	.state('services.consultancy', {
+		url: '/services/consultancy',
+		templateUrl: 'app/services/consultancy-services.html',
+		authRequired: true,
+		controller: require('./consultancy-services-controller.js'),
+		resolve: {
+			operations: ['operationService','invoices', function (operationService,invoices) {
+				return operationService.findWithoutTimeEntryByAuthenticatedUser().then(function (operations) {
+					console.log('Operations before mapping', operations);
+					return operationService.mapOperations(operations,invoices);
+				});
+			}],
+			invoices : ['invoiceService', 'security', function (invoiceService, security) {
+				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
+					// console.log('Operations before mapping', operations);
+					return invoices;
+				});
+			}]
+		}
+	})
+
 	// Create special service
 	.state('services.create-special', {
 		url: '/services-create-special',

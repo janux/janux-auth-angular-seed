@@ -220,15 +220,12 @@ module.exports =
 								guardsAssignedToOperations = guardsAssignedToOperations.concat(resourcesMarkedAsGuards);
 
 							}
-
 							//Only shows the operation marked as guards.
 							if (op.type === "GUARD") {
 								var opWithOutRes = _.clone(op);
 								delete opWithOutRes.resources;
 								operationsAvailableForSelection = operationsAvailableForSelection.concat(opWithOutRes);
 							}
-
-
 						});
 
 						return resourceService.findAvailableResources([
@@ -500,8 +497,9 @@ module.exports =
 							view      : {id: operation.id, type: operation.type},
 							type      : operation.type,
 							name      : operation.name,
-							client    : operation.client.name,
-							code      : operation.client.code,
+							clientName: operation.client.name,
+							clientCode: operation.client.code,
+							code      : operation.code,
 							attributes: operation.attributes,
 							assigned  : assigned,
 							duration  : duration,

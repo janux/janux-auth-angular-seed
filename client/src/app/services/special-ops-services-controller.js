@@ -100,15 +100,19 @@ module.exports =
 			width     : 160
 		},
 		{
-			headerName: $filter('translate')('services.list.client'),
+			headerName: $filter('translate')('services.list.code'),
 			field     : 'code',
+			width     : 80
+		},
+		{
+			headerName: $filter('translate')('services.list.client'),
 			width     : 100,
 			valueGetter : function (params) {
 				var result;
-				if (_.isString(params.data.code) && params.data.code.trim() !== '') {
-					result = params.data.code;
+				if (_.isString(params.data.clientCode) && params.data.clientCode.trim() !== '') {
+					result = params.data.clientCode;
 				}else{
-					result = params.data.client;
+					result = params.data.clientName;
 				}
 				return result;
 			}

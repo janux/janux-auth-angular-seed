@@ -30,7 +30,7 @@
 						md-input-container.full
 							label {{ 'services.specialForm.end' | translate }}
 							md-datepicker(ng-model="data.end" ng-disabled='disabled' required='' md-min-date='data.start')
-
+		// Requester.
 		.section-form
 			fieldset.fieldset-flex
 				.fieldset-flex
@@ -226,6 +226,7 @@
 		// End invoice section form.
 
 	.special-right
+		// name
 		.section-form
 			fieldset.fieldset-flex
 				.fieldset-flex.first-row
@@ -233,7 +234,14 @@
 						md-input-container.full
 							label {{ 'services.specialForm.name' | translate }}
 							input(ng-model='data.name' ng-disabled='disabled')
-
+		// code
+		.section-form
+			fieldset.fieldset-flex
+				.fieldset-flex.first-row
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.specialForm.code' | translate }}
+							input(ng-model='data.code' ng-disabled='disabled')
 		.section-form
 			span {{ 'services.specialForm.details' | translate }}:
 

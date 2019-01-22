@@ -467,21 +467,22 @@
 			"invoices": "Facturas"
 		},
 		"driversServices": {
-			"title": "Lista de servicios de Choferes"
+			"title": "Servicios de Choferes"
 		},
 		"guardsServices": {
-			"title": "Lista de servicios de Guardias"
+			"title": "Servicios de Guardias"
 		},
 		"specialsServices": {
-			"title": "Lista de servicios Especiales"
+			"title": "Servicios Especiales"
 		},
 		"consultingServices": {
-			"title": "Lista de servicios de Consultoría"
+			"title": "Servicios de Consultoría"
 		},
 		"delete": "Borrar",
 		"addToInvoice": "Agregar a",
 		"newInvoice": "Factura nueva",
 		"addSpecial": "Agregar servicio especial",
+		"addConsulting": "Agregar servicio de consultoría",
 		"specialService": "Servicio especial",
 		"consultingService": "Servicio consultoría",
 		"driverService": "Servicio chofer",

@@ -141,14 +141,14 @@ module.exports =
 
 			operationService.update(operation).then(function (result) {
 				console.debug('Updated operation', result);
-				//$state.go('services.list');
+				//$state.go('services.consulting');
 				$scope.editMode = false;
 			});
 		};
 
 		// Return to operations list
 		$scope.cancel = function () {
-			$state.go('services.list');
+			$state.go('services.consulting');
 		};
 
 		$scope.enableEditModeInvoiceDetail = function () {

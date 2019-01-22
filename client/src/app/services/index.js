@@ -15,28 +15,9 @@ require('angular').module('appServices', [
 		authRequired: true,
 		redirectTo: 'services.list'
 	})
-	.state('services.list', {
-		url: '/services-list',
-		templateUrl: 'app/services/index.html',
-		authRequired: true,
-		controller: require('./services-controller.js'),
-		resolve: {
-			operations: ['operationService','invoices', function (operationService,invoices) {
-				return operationService.findWithoutTimeEntryByAuthenticatedUserAndType().then(function (operations) {
-					console.log('Operations before mapping', operations);
-					return operationService.mapOperations(operations,invoices);
-				});
-			}],
-			invoices : ['invoiceService', 'security', function (invoiceService, security) {
-				return invoiceService.findByUserName(security.currentUser.username).then( function (invoices) {
-					// console.log('Operations before mapping', operations);
-					return invoices;
-				});
-			}]
-		}
-	})
+
 	.state('services.specials', {
-		url: '/services/specials',
+		url: '/specials',
 		templateUrl: 'app/services/special-ops-services.html',
 		authRequired: true,
 		controller: require('./special-ops-services-controller.js'),
@@ -57,7 +38,7 @@ require('angular').module('appServices', [
 	})
 
 	.state('services.drivers', {
-		url: '/services/drivers',
+		url: '/drivers',
 		templateUrl: 'app/services/drivers-services.html',
 		authRequired: true,
 		controller: require('./drivers-services-controller.js'),
@@ -78,7 +59,7 @@ require('angular').module('appServices', [
 	})
 
 	.state('services.guards', {
-		url: '/services/guards',
+		url: '/guards',
 		templateUrl: 'app/services/guards-services.html',
 		authRequired: true,
 		controller: require('./guards-services-controller.js'),
@@ -99,7 +80,7 @@ require('angular').module('appServices', [
 	})
 
 	.state('services.consulting', {
-		url: '/services/consulting',
+		url: '/consulting',
 		templateUrl: 'app/services/consulting-services.html',
 		authRequired: true,
 		controller: require('./consulting-services-controller.js'),
@@ -121,12 +102,13 @@ require('angular').module('appServices', [
 
 	// Create special service
 	.state('services.create-special', {
-		url: '/services-create-special',
+		url: '/create-special',
 		templateUrl: 'app/services/create-operation.html',
 		authRequired: true,
 		controller: require('./create-special-controller.js'),
 		resolve: {
 			clientsList: ['partyService',function (partyService) {
+				console.log('tries to call ');
 				return partyService.findOrganizations();
 			}]
 		}

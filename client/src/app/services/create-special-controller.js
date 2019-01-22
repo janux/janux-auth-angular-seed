@@ -132,13 +132,13 @@ module.exports =
 					.position( 'top right' )
 					.hideDelay(3000)
 			);
-			$state.go('services.list');
+			$state.go('services.specials');
 		});
 	};
 
 	// Return to operations list
 	$scope.cancel = function () {
-		$state.go('services.list');
+		$state.go('services.specials');
 	};
 }];
 

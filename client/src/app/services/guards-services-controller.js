@@ -80,20 +80,20 @@ module.exports =
 	// AG-Grid
 	//
 	var columnDefs = [
-		{
-			headerName     : '',
-			field          : 'view',
-			width          : 50,
-			cellRenderer: agGridComp.viewOperationCellRenderer,
-			hide        : !$rootScope.userRole.can('READ', 'SERVICE')
-		},
-		{
-			headerName    : $filter('translate')('services.list.type'),
-			valueGetter: function (params) {
-				return $filter('translate')('services.list.' + params.data.type);
-			},
-			width         : 80
-		},
+		// {
+		// 	headerName     : '',
+		// 	field          : 'view',
+		// 	width          : 50,
+		// 	cellRenderer: agGridComp.viewOperationCellRenderer,
+		// 	hide        : !$rootScope.userRole.can('READ', 'SERVICE')
+		// },
+		// {
+		// 	headerName    : $filter('translate')('services.list.type'),
+		// 	valueGetter: function (params) {
+		// 		return $filter('translate')('services.list.' + params.data.type);
+		// 	},
+		// 	width         : 80
+		// },
 		{
 			headerName: $filter('translate')('services.list.name'),
 			field     : 'name',

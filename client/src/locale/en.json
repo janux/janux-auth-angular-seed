@@ -345,7 +345,8 @@
 				"NRM": "Night shift goods receipt (NRM)",
 				"CLOSED": "Closed store (CLOSED)",
 				"GUARD_SHIFT_MANAGER": "Shift manager",
-				"NOT_COVERED": "Not covered (NOT COVERED)"
+				"NOT_COVERED": "Not covered (NOT COVERED)",
+				"NOT_COVERED_SUPPORT": "Not covered additional (NOT COVERED SUPPORT)"
 			}
 		},
 		"specials": "Specials",

@@ -142,6 +142,9 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService
 			} else if (timeEntry.extras === 'NOT COVERED') {
 				// If the record is "Not covered". We remove the assigned resource.
 				timeEntry.resources = [];
+			} else if (timeEntry.extras === 'NOT COVERED SUPPORT') {
+				// If the record is "Not covered support". We remove the assigned resource.
+				timeEntry.resources = [];
 			} else if (timeEntry.extras === 'GUARD_SHIFT_MANAGER') {
 				timeEntry.resources[0].type = 'GUARD_SHIFT_MANAGER';
 			} else {
@@ -231,7 +234,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService
 
 		// Set isBillableFlag given the user input.
 		function setBillableFlag(timeEntry) {
-			if (timeEntry.extras === 'A' || timeEntry.extras === 'CLOSED' || timeEntry.extras === 'NOT COVERED') {
+			if (timeEntry.extras === 'A' || timeEntry.extras === 'CLOSED' || timeEntry.extras === 'NOT COVERED' || timeEntry.extras === 'NOT COVERED SUPPORT') {
 				timeEntry.billable = false;
 			}
 			return timeEntry;
@@ -276,7 +279,7 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService
 		function validateForm() {
 			console.debug("Call to validateForm");
 			var result = true;
-			if (_.isNil($scope.form.staff) && $scope.form.extras !== 'CLOSED' && $scope.form.extras !== 'NOT COVERED') {
+			if (_.isNil($scope.form.staff) && $scope.form.extras !== 'CLOSED' && $scope.form.extras !== 'NOT COVERED' && $scope.form.extras !== 'NOT COVERED SUPPORT') {
 				dialogService.info('operations.dialogs.invalidStaff');
 				result = false;
 			} else if (_.isNil($scope.form.operation)) {
@@ -287,7 +290,6 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService
 			}
 			return result;
 		}
-
 
 		/**
 		 * Calculate form dates.
@@ -310,10 +312,8 @@ module.exports = ['$rootScope', '$scope', 'operationService', 'timeRecordService
 				endTemp = moment($scope.form.endHourForm);
 				if (startTemp.hours() > endTemp.hours() || (startTemp.hours() === endTemp.hours() && endTemp.minutes() < startTemp.minutes())) {
 					endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes()).add(1, 'days');
-
 				} else {
 					endMoment = endMoment.hours(endTemp.hours()).minutes(endTemp.minutes());
-
 				}
 				differenceHoursMoment = operationService.calculateDuration(startMoment.toDate(), endMoment.toDate());
 				$scope.form.start = startMoment.toDate();

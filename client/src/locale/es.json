@@ -345,7 +345,8 @@
 				"NRM": "Nocturno recibo mercancia (NRM)",
 				"CLOSED": "Tienda cerrada (CLOSED)",
 				"GUARD_SHIFT_MANAGER": "Jefe de turno",
-				"NOT_COVERED": "No se cubrió (NOT COVERED)"
+				"NOT_COVERED": "No se cubrió (NOT COVERED)",
+				"NOT_COVERED_SUPPORT": "No se cubrió adicional (NOT COVERED SUPPORT)"
 			}
 		},
 		"specialsTimeLog": {

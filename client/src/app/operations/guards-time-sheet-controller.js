@@ -146,6 +146,9 @@ module.exports = ['$rootScope', '$scope', 'config', 'jnxStorage', 'operationServ
 						case 'NOT COVERED':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NOT_COVERED');
 							break;
+						case 'NOT COVERED SUPPORT':
+							val = $filter('translate')('operations.guardsTimeLog.extraOptions.NOT_COVERED_SUPPORT');
+							break;
 						case 'GUARD_SHIFT_MANAGER':
 							val = $filter('translate')('operations.guardsTimeLog.extraOptions.GUARD_SHIFT_MANAGER');
 							break;

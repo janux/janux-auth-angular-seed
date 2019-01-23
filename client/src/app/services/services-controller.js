@@ -101,7 +101,7 @@ module.exports =
 		},
 		{
 			headerName: $filter('translate')('services.list.client'),
-			field     : 'code',
+			// field     : 'code',
 			width     : 100,
 			valueGetter : function (params) {
 				var result;

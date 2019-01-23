@@ -490,7 +490,6 @@
 		"driverService": "Fixed driver service",
 		"specialForm": {
 			"name": "Service name",
-			"code": "Service code",
 			"begin": "Begin",
 			"end": "End",
 			"client": "Client",

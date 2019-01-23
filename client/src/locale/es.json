@@ -489,7 +489,6 @@
 		"driverService": "Servicio chofer",
 		"specialForm": {
 			"name": "Nombre del servicio",
-			"code": "Código del servicio",
 			"begin": "Inicio",
 			"end": "Término",
 			"client": "Cliente",

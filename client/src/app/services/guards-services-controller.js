@@ -100,6 +100,11 @@ module.exports =
 			width     : 160
 		},
 		{
+			headerName: 'store code',
+			field     : 'storeCode',
+			width     : 80
+		},
+		{
 			headerName: $filter('translate')('services.list.client'),
 			width     : 100,
 			valueGetter : function (params) {

@@ -234,6 +234,15 @@
 						md-input-container.full
 							label {{ 'services.specialForm.name' | translate }}
 							input(ng-model='data.name' ng-disabled='disabled')
+
+		// store code  ( only for guards )
+		.section-form(ng-show="services.specialForm.type==='GUARD'")
+			fieldset.fieldset-flex
+				.fieldset-flex.first-row
+					.an-material.nopadding
+						md-input-container.full
+							label {{ 'services.specialForm.storeCode' | translate }}
+							input(ng-model='data.storeCode' ng-disabled='disabled')
 		.section-form
 			span {{ 'services.specialForm.details' | translate }}:
 

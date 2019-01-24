@@ -504,7 +504,9 @@ module.exports =
 							begin     : operation.begin,
 							end       : operation.end,
 							comment   : operation.comment,
-							status    : service.generateStatus(operation, invoices)
+							status    : service.generateStatus(operation, invoices),
+							// Only for store guards
+							storeCode : operation.storeCode
 						}
 					});
 				},

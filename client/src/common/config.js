@@ -78,22 +78,22 @@ require('angular').module('config', [])
 					drivers : {
 						state       : 'services.drivers',
 						translate   : 'services.drivers',
-						authContext : 'SERVICE'
+						authContext : 'SERVICE_DRIVER'
 					},
 					specials : {
 						state       : 'services.specials',
 						translate   : 'services.specials',
-						authContext : 'SERVICE'
+						authContext : 'SERVICE_OPS'
 					},
 					guards : {
 						state       : 'services.guards',
 						translate   : 'services.guards',
-						authContext : 'SERVICE'
+						authContext : 'SERVICE_GUARD'
 					},
 					consulting : {
 						state       : 'services.consulting',
 						translate   : 'services.consulting',
-						authContext : 'SERVICE'
+						authContext : 'SERVICE_CONSULTING'
 					}
 				}
 			},

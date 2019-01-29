@@ -9,6 +9,9 @@ module.exports =
   $scope , $modal , $filter , $timeout , operations , invoices , $state , $rootScope , config , jnxStorage,  operationService){
 
 	console.log('operations', operations);
+	
+	$scope.sectionAuthContext = 'SERVICE_CONSULTING';
+	/*TO DO: THIS SHOULD COME FROM MENU CONFIG*/
 
 	$scope.operations = operations;
 

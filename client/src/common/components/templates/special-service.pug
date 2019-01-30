@@ -172,7 +172,7 @@
 						//	button.btn-plus(ng-click="addVehicle()")
 						//		i.fa.fa-plus-square
 		// Begin invoice section form.
-		div(ng-show='userRole.can("UPDATE","FINANCE") && showinvoicemanual==="true"').section-form
+		div(ng-show='showinvoicemanual==="true"').section-form
 			p.form-section-glarus
 				| {{ 'services.invoice.invoice' | translate }}
 			fieldset.fieldset-flex

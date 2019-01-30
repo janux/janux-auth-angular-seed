@@ -22,8 +22,8 @@ side-bar
 						md-nav-bar( md-selected-nav-item="currentNavItem==='invoiceDetail' ? 'invoices': currentNavItem" nav-bar-aria-label="links")
 							md-nav-item.active(md-nav-click="changeTab('summary')" name="summary")
 								| {{ 'services.tabs.summary' | translate | uppercase }}
-							md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
-								| {{ 'services.tabs.invoices' | translate | uppercase }}
+							//- md-nav-item(md-nav-click="changeTab('invoices')" name="invoices" ng-show='userRole.can("READ","FINANCE");')
+							//- 	| {{ 'services.tabs.invoices' | translate | uppercase }}
 
 						span(flex)
 

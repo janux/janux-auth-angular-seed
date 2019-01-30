@@ -168,7 +168,7 @@ module.exports =
 			headerComponent: agGridComp.deleteRowsHeaderComponent,
 			field          : 'selected',	// field needed to avoid ag-grid warning
 			width          : 50,
-			hide           : !$rootScope.userRole.can('DELETE', 'SERVICE')
+			hide           : !$rootScope.userRole.can('DELETE', 'SERVICE_CONSULTING')
 		}
 	];
 
